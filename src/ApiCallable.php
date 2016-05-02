@@ -41,6 +41,7 @@ use InvalidArgumentException;
 class ApiCallable
 {
     const GRPC_CALLABLE_PARAM_COUNT = 3;
+    const GRPC_CALLABLE_METADATA_INDEX = 1;
     const GRPC_CALLABLE_OPTION_INDEX = 2;
     const GRPC_RESPONSE_STATUS_INDEX = 1;
 
@@ -111,12 +112,34 @@ class ApiCallable
         return $inner;
     }
 
+    private static function setCustomHeader($callable, $headerDescriptor)
+    {
+        $inner = function() use ($callable, $headerDescriptor) {
+            $params = func_get_args();
+            if (count($params) != self::GRPC_CALLABLE_PARAM_COUNT ||
+                gettype($params[self::GRPC_CALLABLE_METADATA_INDEX]) != 'array') {
+                throw new InvalidArgumentException('Metadata argument is not found.');
+            } else {
+                $metadata = $params[self::GRPC_CALLABLE_METADATA_INDEX];
+                $params[self::GRPC_CALLABLE_METADATA_INDEX] =
+                    array_merge($metadata, $headerDescriptor->getHeader());
+                call_user_func_array($callable, $params);
+            }
+        };
+        return $inner;
+    }
+
     /**
      * @param \Grpc\BaseStub $stub the gRPC stub to make calls through.
      * @param string $methodName the method name on the stub to call.
      * @param \Google\GAX\CallSettings the call settings to use for this call.
+     * @param \Google\GAX\PageStreamingDescriptor
+     *     the descriptor used for page-streaming. Default is null.
+     * @param \Google\GAX\AgentHeaderDescriptor
+     *     the descriptor used for creating GAPIC header. Default is null.
      */
-    public static function createApiCall($stub, $methodName, CallSettings $settings)
+    public static function createApiCall($stub, $methodName, CallSettings $settings,
+        $pageStreamingDescriptor = null, $headerDescriptor = null)
     {
         $apiCall = function() use ($stub, $methodName) {
             list($response, $status) =
@@ -136,11 +159,13 @@ class ApiCallable
             $apiCall = self::setTimeout($apiCall, $settings->getTimeoutMillis());
         }
 
-        if (!is_null($settings->getPageStreamingDescriptor())) {
-            $apiCall = self::setPageStreaming(
-                $apiCall, $settings->getPageStreamingDescriptor());
+        if (!is_null($pageStreamingDescriptor)) {
+            $apiCall = self::setPageStreaming($apiCall, $pageStreamingDescriptor);
         }
 
+        if (!is_null($headerDescriptor)) {
+            $apiCall = self::setCustomHeader($apiCall, $headerDescriptor);
+        }
         return $apiCall;
     }
 }
