@@ -208,8 +208,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resource'
         ]);
-        $callSettings = CallSettings::createInternal();
-        $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings, $descriptor);
+        $callSettings = new CallSettings();
+        $apiCall = ApiCallable::createApiCall(
+            $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $resources = $apiCall($request, [], []);
         $this->assertEquals(0, count($stub->actualCalls));
         $actualResources = [];
@@ -241,9 +242,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resource'
         ]);
-        $callSettings = CallSettings::createInternal(
-            ['timeout' => 1000]);
-        $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings, $descriptor);
+        $callSettings = new CallSettings(['timeout' => 1000]);
+        $apiCall = ApiCallable::createApiCall(
+            $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $resources = $apiCall($request, [], []);
         $this->assertEquals(0, count($stub->actualCalls));
         $actualResources = [];
@@ -270,7 +271,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'phpVersion' => '5.5.0',
         ]);
         $apiCall = ApiCallable::createApiCall(
-            $stub, 'takeAction', CallSettings::createInternal(), null, $headerDescriptor);
+            $stub, 'takeAction', new CallSettings(), ['headerDescriptor' => $headerDescriptor]);
         $resources = $apiCall(new MockRequest(), [], []);
         $actualCalls = $stub->actualCalls;
         $this->assertEquals(1, count($actualCalls));

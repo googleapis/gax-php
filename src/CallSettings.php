@@ -80,9 +80,9 @@ class CallSettings
                 $retrySettings = $retryingOverrides[$phpMethodKey];
             }
 
-            $callSettings[$phpMethodKey] =
-                    self::createInternal(['timeoutMillis' => $timeoutMillis,
-                                          'retrySettings' => $retrySettings]);
+            $callSettings[$phpMethodKey] = new CallSettings(
+                ['timeoutMillis' => $timeoutMillis,
+                 'retrySettings' => $retrySettings]);
         }
         return $callSettings;
     }
@@ -136,27 +136,19 @@ class CallSettings
     }
 
     /**
-     * Used internally to create instances of CallSettings.
-     */
-    public static function createInternal($settings = [])
-    {
-        $callSettings = new CallSettings($settings);
-        return $callSettings;
-    }
-
-    /**
      * Construct an instance.
      *
      * @param array $options {
-     *     @type \Google\GAX\RetrySettings $retrySettings
-     *           Retry settings to use for this method. If present, then
-     *           $timeout is ignored.
-     *     @type integer $timeoutMillis
-     *           Timeout to use for the call. Only used if $retrySettings
-     *           is not set.
+     *    Optional.
+     *    @type \Google\GAX\RetrySettings $retrySettings
+     *          Retry settings to use for this method. If present, then
+     *          $timeout is ignored.
+     *    @type integer $timeoutMillis
+     *          Timeout to use for the call. Only used if $retrySettings
+     *          is not set.
      * }
      */
-    public function __construct($settings)
+    public function __construct($settings = [])
     {
         $this->timeoutMillis = self::INHERIT_TIMEOUT;
         $this->retrySettings = RetrySettings::inherit();
@@ -189,7 +181,7 @@ class CallSettings
     public function merge(CallSettings $otherSettings = null)
     {
         if (is_null($otherSettings)) {
-            return self::createInternal([
+            return new CallSettings([
                 'timeoutMillis' => $this->timeoutMillis,
                 'retrySettings' => $this->retrySettings]);
         } else {
