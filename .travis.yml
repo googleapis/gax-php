@@ -1,0 +1,22 @@
+language: php
+php:
+  - '5.5'
+  - '5.6'
+sudo: required
+dist: trusty
+#before_script: phpenv config-add php-custom-config.ini
+install:
+  - php --info
+  - rvm install 2.2.4
+  - rvm use 2.2.4
+  - git clone https://github.com/stanley-cheung/Protobuf-PHP
+  - gem install rake ronn
+  - cd Protobuf-PHP
+  - rake pear:package version=1.0
+  - pear install Protobuf-1.0.tgz
+  - cd ..
+  - pecl install grpc-beta
+  - composer install
+script: vendor/bin/phpunit
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
