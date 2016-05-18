@@ -109,7 +109,7 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
             'interfaces' => [
                 $serviceName => [
                     'methods' => [
-                        'simpleMethod' => null
+                        'SimpleMethod' => null
                     ]
                 ]
             ]
@@ -135,15 +135,11 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
             'interfaces' => [
                 $serviceName => [
                     'retry_codes' => [
-                        'foo_retry' => [],
+                        'bar_retry' => [],
                         'baz_retry' => ['code_a']
                     ],
                     'retry_params' => [
                         'default' => [
-                            'initial_retry_delay_millis' => 200,
-                            'retry_delay_multiplier' => 1.5
-                        ],
-                        '10x' => [
                             'initial_retry_delay_millis' => 1000,
                             'retry_delay_multiplier' => 1.2,
                             'max_retry_delay_millis' => 10000,
@@ -154,11 +150,9 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
                         ]
                     ],
                     'methods' => [
-                        'PageStreamingMethod' => [
-                            'retry_codes_name' => 'baz_retry'
-                        ],
                         'SimpleMethod' => [
-                            'retry_params_name' => '10x'
+                            'retry_params_name' => 'default',
+                            'retry_codes_name' => 'baz_retry'
                         ]
                     ]
                 ]
@@ -170,14 +164,19 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $simpleMethod = $defaultCallSettings['simpleMethod'];
         $backoff = $simpleMethod->getRetrySettings()->getBackoffSettings();
         $this->assertEquals($backoff->getInitialRetryDelayMillis(), 1000);
-        $this->assertEmpty($simpleMethod->getRetrySettings()->getRetryableCodes());
+        $this->assertEquals($simpleMethod->getRetrySettings()->getRetryableCodes(),
+                            [$statusCodes['code_a']]);
+
+        // pageStreamingMethod is unaffected because it's not specified in
+        // overrides. 'bar_retry' or 'default' definitions in overrides should
+        // not affect the methods which are not in the overrides.
         $pageStreamingMethod = $defaultCallSettings['pageStreamingMethod'];
         $backoff = $pageStreamingMethod->getRetrySettings()->getBackoffSettings();
-        $this->assertEquals($backoff->getInitialRetryDelayMillis(), 200);
-        $this->assertEquals($backoff->getRetryDelayMultiplier(), 1.5);
+        $this->assertEquals($backoff->getInitialRetryDelayMillis(), 100);
+        $this->assertEquals($backoff->getRetryDelayMultiplier(), 1.2);
         $this->assertEquals($backoff->getMaxRetryDelayMillis(), 1000);
         $this->assertEquals($pageStreamingMethod->getRetrySettings()->getRetryableCodes(),
-                            [$statusCodes['code_a']]);
+                            [$statusCodes['code_c']]);
     }
 
     public function testMergeEmpty()

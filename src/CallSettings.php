@@ -70,15 +70,23 @@ class CallSettings
         $serviceConfig = $clientConfig['interfaces'][$serviceName];
 
         $overrides = @$configOverrides['interfaces'][$serviceName];
+        $overrideRetryCodes = @$overrides['retry_codes'];
+        $overrideRetryParams = @$overrides['retry_params'];
+        $overrideMethods = $overrides['methods'];
 
-        $serviceConfig = self::overrideConfig($serviceConfig, $overrides);
         foreach ($serviceConfig['methods'] as $methodName => $methodConfig) {
             $phpMethodKey = lcfirst($methodName);
-            $retrySettings = null;
             $retrySettings = self::constructRetry(
                 $methodConfig, $statusCodes,
-               $serviceConfig['retry_codes'], $serviceConfig['retry_params']);
+                $serviceConfig['retry_codes'], $serviceConfig['retry_params']);
 
+            if (!empty($overrideMethods) && array_key_exists($methodName, $overrideMethods)) {
+                $retrySettings = self::mergeRetryOptions(
+                    $retrySettings,
+                    self::constructRetry(
+                        $overrideMethods[$methodName], $statusCodes,
+                        $overrideRetryCodes, $overrideRetryParams));
+            }
             $callSettings[$phpMethodKey] = new CallSettings(
                 ['timeoutMillis' => $timeoutMillis,
                  'retrySettings' => $retrySettings]);
@@ -86,50 +94,34 @@ class CallSettings
         return $callSettings;
     }
 
-    private static function overrideConfig($configBase, $overrides) {
-        if (empty($overrides)) {
-            return $configBase;
+    private static function mergeRetryOptions($retry, $overrides)
+    {
+        if ($overrides == null) {
+            return null;
         }
-        $newConfig = $configBase;
-        if (array_key_exists('retry_codes', $overrides)) {
-            $newConfig['retry_codes'] = array_replace($newConfig['retry_codes'],
-                                                      $overrides['retry_codes']);
+
+        if ($overrides->getRetryableCodes() == null && $overrides->getBackoffSettings() == null) {
+            return $retry;
         }
-        if (array_key_exists('retry_params', $overrides)) {
-            foreach($overrides['retry_params'] as $name => $params) {
-                if (array_key_exists($name, $newConfig['retry_params'])) {
-                    $newConfig['retry_params'][$name] = array_replace(
-                        $newConfig['retry_params'][$name], $params);
-                } else {
-                    $newConfig['retry_params'][$name] = $params;
-                }
-            }
+
+        $codes = $retry->getRetryableCodes();
+        if ($overrides->getRetryableCodes() != null) {
+            $codes = $overrides->getRetryableCodes();
         }
-        if (array_key_exists('methods', $overrides)) {
-            foreach($overrides['methods'] as $name => $params) {
-                if (empty($params)) {
-                    $newConfig['methods'][$name] = null;
-                } else {
-                    foreach ($params as $key => $param) {
-                        if (!array_key_exists($key, $newConfig['methods'][$name])) {
-                            continue;
-                        }
-                        if ($key == 'bundling' && !empty($param)) {
-                            $newConfig['methods'][$name][$key] = array_replace(
-                                $newConfig['methods'][$name][$key], $param);
-                        } else {
-                            $newConfig['methods'][$name][$key] = $param;
-                        }
-                    }
-                }
-            }
+        $backoffSettings = $retry->getBackoffSettings();
+        if ($overrides->getBackoffSettings() != null) {
+            $backoffSettings = $overrides->getBackoffSettings();
         }
-        return $newConfig;
+        return new RetrySettings($codes, $backoffSettings);
     }
 
     private static function constructRetry($methodConfig, $statusCodes,
                                            $retryCodes, $retryParams)
     {
+        if ($methodConfig == null) {
+            return null;
+        }
+
         $codes = [];
         if (!empty($retryCodes)) {
             foreach ($retryCodes as $retryCodesName => $retryCodeList) {
@@ -153,11 +145,7 @@ class CallSettings
                 }
             }
         }
-        if (!empty($backoffSettings)) {
-            return new RetrySettings($codes, $backoffSettings);
-        } else {
-            return null;
-        }
+        return new RetrySettings($codes, $backoffSettings);
     }
 
     /**
