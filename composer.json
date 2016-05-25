@@ -14,13 +14,8 @@
     },
     "autoload": {
         "psr-4": {
-          "Google\\GAX\\":"src/",
-          "google\\protobuf\\":"src/generated/",
-          "google\\api\\":"src/generated/",
-          "google\\rpc\\":"src/generated/",
-          "google\\type\\":"src/generated/",
-          "google\\longrunning\\":"src/generated/",
-          "google\\logging\\":"src/generated/"
-        }
+          "Google\\GAX\\":"src/"
+        },
+        "classmap": ["src/generated"]
     }
 }
