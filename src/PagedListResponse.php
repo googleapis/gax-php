@@ -29,21 +29,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX;
 
-namespace Google\GAX\Testing;
-
-class MockRequest
+class PagedListResponse
 {
-    public $pageToken;
+    private $parameters;
+    private $callable;
+    private $pageStreamingDescriptor;
 
-    public static function createPageStreamingRequest($pageToken)
-    {
-        $request = new MockRequest();
-        $request->pageToken = $pageToken;
-        return $request;
+    public function __construct($params, $callable, $pageStreamingDescriptor) {
+        if (empty($params) || !is_object($params[0])) {
+            throw new InvalidArgumentException('First argument must be a request object.');
+        }
+        $this->parameters = $params;
+        $this->callable = $callable;
+        $this->pageStreamingDescriptor = $pageStreamingDescriptor;
     }
 
-    public function setPageSize($pageSize) {
-        // do nothing
+    public function iterateAllElements($pageSize = null) {
+        foreach ($this->iteratePages($pageSize) as $page) {
+            foreach ($page->iteratePageElements() as $element) {
+                yield $element;
+            }
+        }
+    }
+
+    public function getPage($pageSize = null) {
+        if (isset($pageSize)) {
+            $this->parameters[0]->setPageSize($pageSize);
+        }
+        return new Page($this->parameters, $this->callable, $this->pageStreamingDescriptor);
+    }
+
+    public function iteratePages($pageSize = null) {
+        return $this->getPage($pageSize)->iteratePages();
+    }
+
+    public function getFixedSizeCollection($collectionSize) {
+        return new FixedSizeCollection($this->getPage($collectionSize), $collectionSize);
+    }
+
+    public function iterateFixedSizeCollections($collectionSize) {
+        return $this->getFixedSizeCollection($collectionSize)->iterateCollections();
     }
 }
