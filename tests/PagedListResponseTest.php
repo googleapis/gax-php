@@ -30,14 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-use Google\GAX\PageAccessor;
+use Google\GAX\PagedListResponse;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\Testing\MockStub;
 use Google\GAX\Testing\MockStatus;
 use Google\GAX\Testing\MockRequest;
 use Google\GAX\Testing\MockResponse;
 
-class PageAccessorTest extends PHPUnit_Framework_TestCase
+class PagedListResponseTest extends PHPUnit_Framework_TestCase
 {
     public function testNextPageToken()
     {
@@ -54,8 +54,9 @@ class PageAccessorTest extends PHPUnit_Framework_TestCase
                 call_user_func_array(array($stub, 'takeAction'), func_get_args())->wait();
             return $response;
         };
-        $pageAccessor = new PageAccessor([$mockRequest, [], []], $mockApiCall, $descriptor);
-        $this->assertEquals($pageAccessor->nextPageToken(), 'nextPageToken1');
-        $this->assertEquals($pageAccessor->currentPageValues(), ['resource1']);
+        $pageAccessor = new PagedListResponse([$mockRequest, [], []], $mockApiCall, $descriptor);
+        $page = $pageAccessor->getPage();
+        $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
+        $this->assertEquals(iterator_to_array($page->iteratePageElements()), ['resource1']);
     }
 }

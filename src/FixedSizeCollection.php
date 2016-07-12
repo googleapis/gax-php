@@ -55,7 +55,11 @@ class FixedSizeCollection implements IteratorAggregate
     }
 
     public function getCollectionSize() {
-        return $this->collectionSize;
+        $size = 0;
+        foreach ($this->pageList as $page) {
+            $size += $page->getPageElementCount();
+        }
+        return $size;
     }
 
     public function hasNextCollection() {
