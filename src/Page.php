@@ -33,8 +33,14 @@ namespace Google\GAX;
 
 use IteratorAggregate;
 
+/**
+ * A Page object wraps an API list method response and provides methods
+ * to retrieve additional pages using the page token.
+ */
 class Page implements IteratorAggregate
 {
+    const FINAL_PAGE_TOKEN = "";
+
     private $parameters;
     private $callable;
     private $pageStreamingDescriptor;
@@ -58,16 +64,32 @@ class Page implements IteratorAggregate
         $this->response = call_user_func_array($this->callable, $this->parameters);
     }
 
+    /**
+     * Returns true if there are more pages that can be retrieved from the
+     * API.
+     */
     public function hasNextPage() {
-        return !is_null($this->getNextPageToken());
+        return strcmp($this->getNextPageToken(), Page::FINAL_PAGE_TOKEN) != 0;
     }
 
+    /**
+     * Returns the next page token from the response.
+     */
     public function getNextPageToken() {
         $responsePageTokenField = $this->pageStreamingDescriptor->getResponsePageTokenField();
         return $this->getResponseObject()->$responsePageTokenField;
     }
 
+    /**
+     * Retrieves the next Page object using the next page token.
+     */
     public function getNextPage($pageSize = null) {
+        if (!$this->hasNextPage()) {
+            throw new ValidationException(
+                'Could not complete getNextPage operation: ' .
+                'there are no more pages to retrieve.');
+        }
+
         $newRequest = clone $this->getRequestObject();
 
         $requestPageTokenField = $this->pageStreamingDescriptor->getRequestPageTokenField();
@@ -82,11 +104,17 @@ class Page implements IteratorAggregate
         return new Page($nextParameters, $this->callable, $this->pageStreamingDescriptor);
     }
 
+    /**
+     * Return the number of elements in the response.
+     */
     public function getPageElementCount() {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
         return count($this->getResponseObject()->$resourceField);
     }
 
+    /**
+     * Return an iterator over the elements in the response.
+     */
     public function iteratePageElements() {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
         foreach ($this->getResponseObject()->$resourceField as $element) {
@@ -94,10 +122,18 @@ class Page implements IteratorAggregate
         }
     }
 
+    /**
+     * Return an iterator over the elements in the response.
+     */
     public function getIterator() {
         return $this->iteratePageElements();
     }
 
+    /**
+     * Return an iterator over Page objects, beginning with this object.
+     * Additional Page objects are retrieved lazily via API calls until
+     * all elements have been retrieved.
+     */
     public function iteratePages() {
         $currentPage = $this;
         yield $this;
@@ -107,10 +143,16 @@ class Page implements IteratorAggregate
         }
     }
 
+    /**
+     * Gets the request object used to generate the Page.
+     */
     public function getRequestObject() {
         return $this->parameters[0];
     }
 
+    /**
+     * Gets the API response object.
+     */
     public function getResponseObject() {
         return $this->response;
     }

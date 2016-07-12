@@ -33,6 +33,12 @@ namespace Google\GAX;
 
 use IteratorAggregate;
 
+/**
+ * A collection of elements retrieved using one or more API calls. The
+ * collection will attempt to retrieve a fixed number of elements, and
+ * will make API calls until that fixed number is reached, or there
+ * are no more elements to retrieve.
+ */
 class FixedSizeCollection implements IteratorAggregate
 {
     private $collectionSize;
@@ -44,16 +50,22 @@ class FixedSizeCollection implements IteratorAggregate
                 "collectionSize must be > 0. collectionSize: $collectionSize");
         }
         if ($collectionSize < $initialPage->getPageElementCount()) {
+            $ipc = $initialPage->getPageElementCount();
             throw new InvalidArgumentException(
                 "collectionSize must be greater than or equal to the number of " +
                 "elements in initialPage. collectionSize: $collectionSize, " +
-                "initialPage size: $initialPage->getPageElementCount()");
+                "initialPage size: $ipc");
         }
         $this->collectionSize = $collectionSize;
 
         $this->pageList = FixedSizeCollection::createPageArray($initialPage, $collectionSize);
     }
 
+    /**
+     * Returns the number of elements in the collection. This will be
+     * equal to the collectionSize parameter used at construction
+     * unless there are no elements remaining to be retrieved.
+     */
     public function getCollectionSize() {
         $size = 0;
         foreach ($this->pageList as $page) {
@@ -62,20 +74,34 @@ class FixedSizeCollection implements IteratorAggregate
         return $size;
     }
 
+    /**
+     * Returns true if there are more elements that can be retrieved
+     * from the API.
+     */
     public function hasNextCollection() {
-        return !is_null($this->getNextPageToken());
+        return $this->getLastPage()->hasNextPage();
     }
 
+    /**
+     * Returns a page token that can be passed into the API list
+     * method to retrieve additional elements.
+     */
     public function getNextPageToken() {
         return $this->getLastPage()->getNextPageToken();
     }
 
+    /**
+     * Retrieves the next FixedSizeCollection using one or more API calls.
+     */
     public function getNextCollection() {
         $lastPage = $this->getLastPage();
         $nextPage = $lastPage->getNextPage($this->collectionSize);
         return new FixedSizeCollection($nextPage, $this->collectionSize);
     }
 
+    /**
+     * Returns an iterator over the elements of the collection.
+     */
     public function iterateCollectionElements() {
         foreach ($this->pageList as $page) {
             foreach ($page as $element) {
@@ -84,10 +110,18 @@ class FixedSizeCollection implements IteratorAggregate
         }
     }
 
+    /**
+     * Returns an iterator over the elements of the collection.
+     */
     public function getIterator() {
         return $this->iterateCollectionElements();
     }
 
+    /**
+     * Returns an iterator over FixedSizeCollections, starting with this
+     * and making API calls as required until all of the elements have
+     * been retrieved.
+     */
     public function iterateCollections() {
         $currentCollection = $this;
         yield $this;

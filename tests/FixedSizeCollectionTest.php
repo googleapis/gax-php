@@ -63,7 +63,7 @@ class FixedSizeCollectionTest extends PHPUnit_Framework_TestCase
             ['resource3', 'resource4', 'resource5']);
         $responseC = MockResponse::createPageStreamingResponse('nextPageToken3',
             ['resource6', 'resource7']);
-        $responseD = MockResponse::createPageStreamingResponse(null,
+        $responseD = MockResponse::createPageStreamingResponse('',
             ['resource8', 'resource9']);
         $page = FixedSizeCollectionTest::createPage([
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
@@ -85,7 +85,7 @@ class FixedSizeCollectionTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($nextCollection->getCollectionSize(), 4);
         $this->assertEquals($nextCollection->hasNextCollection(), false);
-        $this->assertEquals($nextCollection->getNextPageToken(), null);
+        $this->assertEquals($nextCollection->getNextPageToken(), '');
         $results = iterator_to_array($nextCollection);
         $this->assertEquals($results,
             ['resource6', 'resource7', 'resource8', 'resource9']);
