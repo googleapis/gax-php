@@ -57,7 +57,7 @@ class PageTest extends PHPUnit_Framework_TestCase
 
     public function testNextPageMethods() {
         $responseA = MockResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
-        $responseB = MockResponse::createPageStreamingResponse(null, ['resource2']);
+        $responseB = MockResponse::createPageStreamingResponse('', ['resource2']);
         $page = PageTest::createPage([
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
@@ -69,7 +69,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         $nextPage = $page->getNextPage();
 
         $this->assertEquals($nextPage->hasNextPage(), false);
-        $this->assertEquals($nextPage->getNextPageToken(), null);
+        $this->assertEquals($nextPage->getNextPageToken(), '');
     }
 
     public function testPageElementMethods() {
