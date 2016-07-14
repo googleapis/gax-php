@@ -52,9 +52,9 @@ class CallSettings
      *     the client config file.
      * @param array $clientConfig
      *     An array parsed from the standard API client config file.
-     * @param array $retryingOverrides
-     *     A dictionary of method names to RetrySettings that
-     *     override those specified in $clientConfig.
+     * @param array $configOverrides
+     *     An array in the same structure of client_config to override
+     *     the settings.
      * @param array $statusCodes
      *     An array which maps the strings referring to response status
      *     codes to the PHP objects representing those codes.
@@ -62,24 +62,31 @@ class CallSettings
      *     The timeout (in milliseconds) to use for calls that don't
      *     have a retry configured.
      */
-    public static function load($serviceName, $clientConfig, $retryingOverrides,
+    public static function load($serviceName, $clientConfig, $configOverrides,
                                 $statusCodes, $timeoutMillis)
     {
         $callSettings = [];
 
         $serviceConfig = $clientConfig['interfaces'][$serviceName];
+
+        $overrides = @$configOverrides['interfaces'][$serviceName];
+        $overrideRetryCodes = @$overrides['retry_codes'];
+        $overrideRetryParams = @$overrides['retry_params'];
+        $overrideMethods = $overrides['methods'];
+
         foreach ($serviceConfig['methods'] as $methodName => $methodConfig) {
             $phpMethodKey = lcfirst($methodName);
-            $retrySettings = null;
-            if (self::inheritRetrySettings($retryingOverrides, $phpMethodKey)) {
-                $retrySettings =
-                        self::constructRetry(
-                            $methodConfig, $statusCodes,
-                            $serviceConfig['retry_codes'], $serviceConfig['retry_params']);
-            } else {
-                $retrySettings = $retryingOverrides[$phpMethodKey];
-            }
+            $retrySettings = self::constructRetry(
+                $methodConfig, $statusCodes,
+                $serviceConfig['retry_codes'], $serviceConfig['retry_params']);
 
+            if (!empty($overrideMethods) && array_key_exists($methodName, $overrideMethods)) {
+                $retrySettings = self::mergeRetryOptions(
+                    $retrySettings,
+                    self::constructRetry(
+                        $overrideMethods[$methodName], $statusCodes,
+                        $overrideRetryCodes, $overrideRetryParams));
+            }
             $callSettings[$phpMethodKey] = new CallSettings(
                 ['timeoutMillis' => $timeoutMillis,
                  'retrySettings' => $retrySettings]);
@@ -87,24 +94,34 @@ class CallSettings
         return $callSettings;
     }
 
-    private static function inheritRetrySettings($retryingOverrides, $phpMethodKey) {
-        if (empty($retryingOverrides)) {
-            return true;
+    private static function mergeRetryOptions($retry, $overrides)
+    {
+        if ($overrides == null) {
+            return null;
         }
-        if (!array_key_exists($phpMethodKey, $retryingOverrides)) {
-            return true;
+
+        if ($overrides->getRetryableCodes() == null && $overrides->getBackoffSettings() == null) {
+            return $retry;
         }
-        $retrySettings = $retryingOverrides[$phpMethodKey];
-        if (is_null($retrySettings)) {
-            // Retry has been turned off explicitly.
-            return false;
+
+        $codes = $retry->getRetryableCodes();
+        if ($overrides->getRetryableCodes() != null) {
+            $codes = $overrides->getRetryableCodes();
         }
-        return $retrySettings->shouldInherit();
+        $backoffSettings = $retry->getBackoffSettings();
+        if ($overrides->getBackoffSettings() != null) {
+            $backoffSettings = $overrides->getBackoffSettings();
+        }
+        return new RetrySettings($codes, $backoffSettings);
     }
 
     private static function constructRetry($methodConfig, $statusCodes,
                                            $retryCodes, $retryParams)
     {
+        if ($methodConfig == null) {
+            return null;
+        }
+
         $codes = [];
         if (!empty($retryCodes)) {
             foreach ($retryCodes as $retryCodesName => $retryCodeList) {
@@ -128,11 +145,7 @@ class CallSettings
                 }
             }
         }
-        if (!empty($codes) && !empty($backoffSettings)) {
-            return new RetrySettings($codes, $backoffSettings);
-        } else {
-            return null;
-        }
+        return new RetrySettings($codes, $backoffSettings);
     }
 
     /**

@@ -105,10 +105,18 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         global $serviceName, $inputConfig, $statusCodes, $pageStreamingDescriptors;
 
         // Turn off retries for simpleMethod
-        $retryingOverride = ['simpleMethod' => null];
+        $overrides = [
+            'interfaces' => [
+                $serviceName => [
+                    'methods' => [
+                        'SimpleMethod' => null
+                    ]
+                ]
+            ]
+        ];
         $defaultCallSettings =
                 CallSettings::load(
-                    $serviceName, $inputConfig, $retryingOverride, $statusCodes, 30);
+                    $serviceName, $inputConfig, $overrides, $statusCodes, 30);
         $simpleMethod = $defaultCallSettings['simpleMethod'];
         $this->assertEquals(30, $simpleMethod->getTimeoutMillis());
         $simpleMethodRetry = $simpleMethod->getRetrySettings();
@@ -116,6 +124,59 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $pageStreamingMethod = $defaultCallSettings['pageStreamingMethod'];
         $pageStreamingMethodRetry = $pageStreamingMethod->getRetrySettings();
         $this->assertEquals(['code_val_c'], $pageStreamingMethodRetry->getRetryableCodes());
+    }
+
+    public function testConstructSettingsOverride2()
+    {
+        global $serviceName, $inputConfig, $statusCodes, $pageStreamingDescriptors;
+
+        // More comprehensive overrides.
+        $overrides = [
+            'interfaces' => [
+                $serviceName => [
+                    'retry_codes' => [
+                        'bar_retry' => [],
+                        'baz_retry' => ['code_a']
+                    ],
+                    'retry_params' => [
+                        'default' => [
+                            'initial_retry_delay_millis' => 1000,
+                            'retry_delay_multiplier' => 1.2,
+                            'max_retry_delay_millis' => 10000,
+                            'initial_rpc_timeout_millis' => 3000,
+                            'rpc_timeout_multiplier' => 1.3,
+                            'max_rpc_timeout_millis' => 30000,
+                            'total_timeout_millis' => 300000
+                        ]
+                    ],
+                    'methods' => [
+                        'SimpleMethod' => [
+                            'retry_params_name' => 'default',
+                            'retry_codes_name' => 'baz_retry'
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        $defaultCallSettings =
+                CallSettings::load(
+                    $serviceName, $inputConfig, $overrides, $statusCodes, 30);
+        $simpleMethod = $defaultCallSettings['simpleMethod'];
+        $backoff = $simpleMethod->getRetrySettings()->getBackoffSettings();
+        $this->assertEquals($backoff->getInitialRetryDelayMillis(), 1000);
+        $this->assertEquals($simpleMethod->getRetrySettings()->getRetryableCodes(),
+                            [$statusCodes['code_a']]);
+
+        // pageStreamingMethod is unaffected because it's not specified in
+        // overrides. 'bar_retry' or 'default' definitions in overrides should
+        // not affect the methods which are not in the overrides.
+        $pageStreamingMethod = $defaultCallSettings['pageStreamingMethod'];
+        $backoff = $pageStreamingMethod->getRetrySettings()->getBackoffSettings();
+        $this->assertEquals($backoff->getInitialRetryDelayMillis(), 100);
+        $this->assertEquals($backoff->getRetryDelayMultiplier(), 1.2);
+        $this->assertEquals($backoff->getMaxRetryDelayMillis(), 1000);
+        $this->assertEquals($pageStreamingMethod->getRetrySettings()->getRetryableCodes(),
+                            [$statusCodes['code_c']]);
     }
 
     public function testMergeEmpty()
