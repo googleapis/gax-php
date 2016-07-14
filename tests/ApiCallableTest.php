@@ -212,7 +212,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         foreach ($response->iterateAllElements() as $element) {
             array_push($actualResources, $element);
@@ -242,12 +242,12 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         $actualTokens = [];
-        foreach ($response->iteratePages() as $page) {
+        foreach ($response->iterateAllPages() as $page) {
             array_push($actualTokens, $page->getRequestObject()->pageToken);
-            foreach ($page as $element) {
+            foreach ($page->iteratePageElements() as $element) {
                 array_push($actualResources, $element);
             }
         }
@@ -276,9 +276,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ]);
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
-            $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
-        $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+            $stub, 'takeAction', $callSettings,
+            ['pageStreamingDescriptor' => $descriptor]);
+        $response = $apiCall($request, [], ['page_size' => 2]);
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         $collectionCount = 0;
         $collectionSize = 2;
@@ -314,7 +315,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         foreach ($response->iterateAllElements() as $element) {
             array_push($actualResources, $element);

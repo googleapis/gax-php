@@ -80,7 +80,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         ]);
 
         $this->assertEquals($page->getPageElementCount(), 3);
-        $results = iterator_to_array($page);
+        $results = iterator_to_array($page->iteratePageElements());
         $this->assertEquals($results, ['resource1', 'resource2', 'resource3']);
     }
 }

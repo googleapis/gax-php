@@ -104,7 +104,7 @@ class FixedSizeCollection implements IteratorAggregate
      */
     public function iterateCollectionElements() {
         foreach ($this->pageList as $page) {
-            foreach ($page as $element) {
+            foreach ($page->iteratePageElements() as $element) {
                 yield $element;
             }
         }

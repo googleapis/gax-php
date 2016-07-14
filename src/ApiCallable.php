@@ -107,7 +107,7 @@ class ApiCallable
     private static function setPageStreaming($callable, $pageStreamingDescriptor)
     {
         $inner = function() use ($callable, $pageStreamingDescriptor) {
-            return new PagedListResponse(func_get_args(), $callable, $pageStreamingDescriptor);
+            return new Page(func_get_args(), $callable, $pageStreamingDescriptor);
         };
         return $inner;
     }

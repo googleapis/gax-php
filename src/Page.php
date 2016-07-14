@@ -31,13 +31,13 @@
  */
 namespace Google\GAX;
 
-use IteratorAggregate;
+use RuntimeException;
 
 /**
  * A Page object wraps an API list method response and provides methods
- * to retrieve additional pages using the page token.
+ * to retrieve additional elements or pages from the API.
  */
-class Page implements IteratorAggregate
+class Page
 {
     const FINAL_PAGE_TOKEN = "";
 
@@ -123,24 +123,72 @@ class Page implements IteratorAggregate
     }
 
     /**
-     * Return an iterator over the elements in the response.
-     */
-    public function getIterator() {
-        return $this->iteratePageElements();
-    }
-
-    /**
      * Return an iterator over Page objects, beginning with this object.
      * Additional Page objects are retrieved lazily via API calls until
      * all elements have been retrieved.
      */
-    public function iteratePages() {
+    public function iterateAllPages() {
         $currentPage = $this;
         yield $this;
         while ($currentPage->hasNextPage()) {
             $currentPage = $currentPage->getNextPage();
             yield $currentPage;
         }
+    }
+
+    /**
+     * Return an iterator over all elements provided by the list method.
+     * Elements are retrieved lazily via API calls until all elements
+     * have been retrieved.
+     */
+    public function iterateAllElements() {
+        foreach ($this->iterateAllPages() as $page) {
+            foreach ($page->iteratePageElements() as $element) {
+                yield $element;
+            }
+        }
+    }
+
+    /**
+     * Returns a collection of elements with a fixed size set by
+     * the collectionSize parameter. The collection will only contain
+     * fewer than collectionSize elements if there are no more
+     * elements to be retrieved. If the collection has not previously
+     * been accessed, it will be retrieved with at least one and
+     * potentially multiple calls to the underlying API to retrieve
+     * collectionSize elements.
+     */
+    public function expandToFixedSizeCollection($collectionSize) {
+        $parameters = $this->parameters;
+        if (!array_key_exists(2, $parameters) ||
+            !array_key_exists('page_size', $parameters[2])) {
+            throw new RuntimeException("A FixedSizeCollection cannot be created from " .
+                "a Page object that was retrieved without specifying the optional " .
+                "page_size parameter.");
+        }
+        $pageSizeParameter = $parameters[2]['page_size'];
+        if ($pageSizeParameter > $collectionSize) {
+            throw new InvalidArgumentException(
+                "collectionSize must be greater than or equal to the page_size " .
+                "parameter used to retrieve the response. " .
+                "collectionSize: $collectionSize, page_size: $pageSizeParameter");
+        }
+        if ($this->getPageElementCount() > $pageSizeParameter) {
+            throw new RuntimeException("Server error: server returned too many elements");
+        }
+        return new FixedSizeCollection($this, $collectionSize);
+    }
+
+    /**
+     * Returns an iterator over fixed size collections of results.
+     * The collections are retrieved lazily from the underlying API.
+     *
+     * Each collection will have collectionSize elements, with the
+     * exception of the final collection which may contain fewer
+     * elements.
+     */
+    public function iterateFixedSizeCollections($collectionSize) {
+        return $this->expandToFixedSizeCollection($collectionSize)->iterateCollections();
     }
 
     /**
