@@ -8,7 +8,7 @@
     "require": {
         "php": ">=5.5",
         "google/auth": "0.9",
-        "grpc/grpc": "v0.15.0"
+        "grpc/grpc": "v0.15.2"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*"
