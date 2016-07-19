@@ -145,8 +145,14 @@ class FixedSizeCollection implements IteratorAggregate
         while ($itemCount < $collectionSize && $currentPage->hasNextPage()) {
             $remainingCount = $collectionSize - $itemCount;
             $currentPage = $currentPage->getNextPage($remainingCount);
+            $rxElementCount = $currentPage->getPageElementCount();
+            if ($rxElementCount > $remainingCount) {
+                throw new LengthException("API returned a number of elements " .
+                    "exceeding the specified page_size limit. page_size: " .
+                    "$page_size, elements received: $rxElementCount");
+            }
             array_push($pageList, $currentPage);
-            $itemCount += $currentPage->getPageElementCount();
+            $itemCount += $rxElementCount;
         }
         return $pageList;
     }

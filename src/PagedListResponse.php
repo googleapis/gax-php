@@ -62,6 +62,8 @@ class PagedListResponse
     private $callable;
     private $pageStreamingDescriptor;
 
+    private $firstPage;
+
     public function __construct($params, $callable, $pageStreamingDescriptor) {
         if (empty($params) || !is_object($params[0])) {
             throw new InvalidArgumentException('First argument must be a request object.');
@@ -69,14 +71,17 @@ class PagedListResponse
         $this->parameters = $params;
         $this->callable = $callable;
         $this->pageStreamingDescriptor = $pageStreamingDescriptor;
+
+        // Eagerly construct the first page
+        $this->getPage();
     }
 
     /**
      * Returns an iterator over the full list of elements. Elements
      * of the list are retrieved lazily using the underlying API.
      */
-    public function iterateAllElements($pageSize = null) {
-        foreach ($this->iteratePages($pageSize) as $page) {
+    public function iterateAllElements() {
+        foreach ($this->iteratePages() as $page) {
             foreach ($page->iteratePageElements() as $element) {
                 yield $element;
             }
@@ -87,45 +92,51 @@ class PagedListResponse
      * Return the current page of results. If the page has not
      * previously been accessed, it will be retrieved with a call to
      * the underlying API.
-     *
-     * The pageSize parameter is used to specify the maximum number of
-     * elements in the page. If pageSize is not specified, the value
-     * provided in the optional parameters argument is used. If no
-     * value was provided in the optional parameters, the API default
-     * value is used.
      */
-    public function getPage($pageSize = null) {
-        if (isset($pageSize)) {
-            $this->parameters[0]->setPageSize($pageSize);
+    public function getPage() {
+        if (!isset($this->firstPage)) {
+            $this->firstPage = new Page(
+                $this->parameters, $this->callable, $this->pageStreamingDescriptor);
         }
-        return new Page($this->parameters, $this->callable, $this->pageStreamingDescriptor);
+        return $this->firstPage;
     }
 
     /**
      * Returns an iterator over pages of results. The pages are
      * retrieved lazily from the underlying API.
-     *
-     * The pageSize parameter is used to specify the maximum number of
-     * elements in a page. If pageSize is not specified, the value
-     * provided in the optional parameters argument is used. If no
-     * value was provided in the optional parameters, the API default
-     * value is used.
      */
-    public function iteratePages($pageSize = null) {
-        return $this->getPage($pageSize)->iteratePages();
+    public function iteratePages() {
+        return $this->getPage()->iteratePages();
     }
 
     /**
      * Returns a collection of elements with a fixed size set by
      * the collectionSize parameter. The collection will only contain
      * fewer than collectionSize elements if there are no more
-     * elements to be retrieved. If the collection has not previously
-     * been accessed, it will be retrieved with at least one and
-     * potentially multiple calls to the underlying API to retrieve
-     * collectionSize elements.
+     * elements to be retrieved.
+     *
+     * NOTE: it is an error to call this method if the optional parameter
+     * 'page_size' has not been set in the original API call. It is also
+     * an error if the collectionSize parameter is less than the
+     * page_size.
      */
-    public function getFixedSizeCollection($collectionSize) {
-        return new FixedSizeCollection($this->getPage($collectionSize), $collectionSize);
+    public function expandToFixedSizeCollection($collectionSize) {
+        if (!array_key_exists(2, $this->parameters) ||
+                !array_key_exists('page_size', $this->parameters[2])) {
+            throw new ValidationException(
+                "Error while expanding Page to FixedSizeCollection: No page_size " .
+                "parameter found. The page_size parameter must be set in the API " .
+                "optional arguments array, and must be less than the collectionSize " .
+                "parameter, in order to create a FixedSizeCollection object.");
+        }
+        $page_size = $this->parameters[2]['page_size'];
+        if ($page_size > $collectionSize) {
+            throw new ValidationException(
+                "Error while expanding Page to FixedSizeCollection: collectionSize " .
+                "parameter is less than the page_size optional argument specified in " .
+                "the API call. collectionSize: $collectionSize, page_size: $page_size");
+        }
+        return new FixedSizeCollection($this->getPage(), $collectionSize);
     }
 
     /**
@@ -135,6 +146,11 @@ class PagedListResponse
      * Each collection will have collectionSize elements, with the
      * exception of the final collection which may contain fewer
      * elements.
+     *
+     * NOTE: it is an error to call this method if the optional parameter
+     * 'page_size' has not been set in the original API call. It is also
+     * an error if the collectionSize parameter is less than the
+     * page_size.
      */
     public function iterateFixedSizeCollections($collectionSize) {
         return $this->getFixedSizeCollection($collectionSize)->iterateCollections();
