@@ -42,15 +42,15 @@ namespace Google\GAX;
  *
  * The list elements can be accessed in the following ways:
  *  - As a single iterable using the iterateAllElements method
- *  - As pages fo elements, using the getPage and iteratePages methods
+ *  - As pages of elements, using the getPage and iteratePages methods
  *  - As fixed size collections of elements, using the
  *    getFixedSizeCollection and iterateFixedSizeCollections methods
  *
  * @param array $params {
  *     The parameters used to make the API call.
- *     @type object the request object
- *     @type array the metadata
- *     @type array the options of the API call
+ *     @type  object the request object
+ *     @type  array the metadata
+ *     @type  array the options of the API call
  * }
  * @param \Google\GAX\ApiCallable $callable the callable object that makes the API method calls.
  * @param \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor the descriptor that
@@ -64,7 +64,8 @@ class PagedListResponse
 
     private $firstPage;
 
-    public function __construct($params, $callable, $pageStreamingDescriptor) {
+    public function __construct($params, $callable, $pageStreamingDescriptor) 
+    {
         if (empty($params) || !is_object($params[0])) {
             throw new InvalidArgumentException('First argument must be a request object.');
         }
@@ -80,7 +81,8 @@ class PagedListResponse
      * Returns an iterator over the full list of elements. Elements
      * of the list are retrieved lazily using the underlying API.
      */
-    public function iterateAllElements() {
+    public function iterateAllElements() 
+    {
         foreach ($this->iteratePages() as $page) {
             foreach ($page->iteratePageElements() as $element) {
                 yield $element;
@@ -93,10 +95,12 @@ class PagedListResponse
      * previously been accessed, it will be retrieved with a call to
      * the underlying API.
      */
-    public function getPage() {
+    public function getPage() 
+    {
         if (!isset($this->firstPage)) {
             $this->firstPage = new Page(
-                $this->parameters, $this->callable, $this->pageStreamingDescriptor);
+                $this->parameters, $this->callable, $this->pageStreamingDescriptor
+            );
         }
         return $this->firstPage;
     }
@@ -105,7 +109,8 @@ class PagedListResponse
      * Returns an iterator over pages of results. The pages are
      * retrieved lazily from the underlying API.
      */
-    public function iteratePages() {
+    public function iteratePages() 
+    {
         return $this->getPage()->iteratePages();
     }
 
@@ -113,28 +118,32 @@ class PagedListResponse
      * Returns a collection of elements with a fixed size set by
      * the collectionSize parameter. The collection will only contain
      * fewer than collectionSize elements if there are no more
-     * elements to be retrieved.
+     * pages to be retrieved from the server.
      *
      * NOTE: it is an error to call this method if the optional parameter
      * 'page_size' has not been set in the original API call. It is also
      * an error if the collectionSize parameter is less than the
      * page_size.
      */
-    public function expandToFixedSizeCollection($collectionSize) {
-        if (!array_key_exists(2, $this->parameters) ||
-                !array_key_exists('page_size', $this->parameters[2])) {
+    public function expandToFixedSizeCollection($collectionSize) 
+    {
+        if (!array_key_exists(2, $this->parameters) 
+            || !array_key_exists('page_size', $this->parameters[2])
+        ) {
             throw new ValidationException(
                 "Error while expanding Page to FixedSizeCollection: No page_size " .
                 "parameter found. The page_size parameter must be set in the API " .
                 "optional arguments array, and must be less than the collectionSize " .
-                "parameter, in order to create a FixedSizeCollection object.");
+                "parameter, in order to create a FixedSizeCollection object."
+            );
         }
         $page_size = $this->parameters[2]['page_size'];
         if ($page_size > $collectionSize) {
             throw new ValidationException(
                 "Error while expanding Page to FixedSizeCollection: collectionSize " .
                 "parameter is less than the page_size optional argument specified in " .
-                "the API call. collectionSize: $collectionSize, page_size: $page_size");
+                "the API call. collectionSize: $collectionSize, page_size: $page_size"
+            );
         }
         return new FixedSizeCollection($this->getPage(), $collectionSize);
     }
@@ -152,7 +161,8 @@ class PagedListResponse
      * an error if the collectionSize parameter is less than the
      * page_size.
      */
-    public function iterateFixedSizeCollections($collectionSize) {
+    public function iterateFixedSizeCollections($collectionSize) 
+    {
         return $this->getFixedSizeCollection($collectionSize)->iterateCollections();
     }
 }

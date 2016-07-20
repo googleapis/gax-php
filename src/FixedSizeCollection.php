@@ -102,19 +102,12 @@ class FixedSizeCollection implements IteratorAggregate
     /**
      * Returns an iterator over the elements of the collection.
      */
-    public function iterateCollectionElements() {
+    public function getIterator() {
         foreach ($this->pageList as $page) {
             foreach ($page as $element) {
                 yield $element;
             }
         }
-    }
-
-    /**
-     * Returns an iterator over the elements of the collection.
-     */
-    public function getIterator() {
-        return $this->iterateCollectionElements();
     }
 
     /**

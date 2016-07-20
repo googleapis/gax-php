@@ -83,7 +83,7 @@ class Page implements IteratorAggregate
     /**
      * Retrieves the next Page object using the next page token.
      */
-    public function getNextPage($pageSize = null) {
+    public function getNextPage() {
         if (!$this->hasNextPage()) {
             throw new ValidationException(
                 'Could not complete getNextPage operation: ' .
@@ -94,10 +94,6 @@ class Page implements IteratorAggregate
 
         $requestPageTokenField = $this->pageStreamingDescriptor->getRequestPageTokenField();
         $newRequest->$requestPageTokenField = $this->getNextPageToken();
-
-        if (isset($pageSize)) {
-            $newRequest->setPageSize($pageSize);
-        }
 
         $nextParameters = [$newRequest, $this->parameters[1], $this->parameters[2]];
 
@@ -115,18 +111,11 @@ class Page implements IteratorAggregate
     /**
      * Return an iterator over the elements in the response.
      */
-    public function iteratePageElements() {
+    public function getIterator() {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
         foreach ($this->getResponseObject()->$resourceField as $element) {
             yield $element;
         }
-    }
-
-    /**
-     * Return an iterator over the elements in the response.
-     */
-    public function getIterator() {
-        return $this->iteratePageElements();
     }
 
     /**
