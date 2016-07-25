@@ -32,6 +32,7 @@
 namespace Google\GAX;
 
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\CredentialsLoader;
 use Grpc\ChannelCredentials;
 
 /**
@@ -39,6 +40,15 @@ use Grpc\ChannelCredentials;
  */
 class GrpcBootstrap
 {
+
+    private $keyFile = null;
+    private $authCache = [];
+
+    public function setKeyFile($keyFile)
+    {
+        $this->keyFile = $keyFile;
+    }
+
     /**
      * Provides a default instance of GrpcBootstrap.
      */
@@ -55,9 +65,20 @@ class GrpcBootstrap
      */
     public function createCallCredentialsCallback($scopes)
     {
-        $authCredentials = $this->getADCCredentials($scopes);
+        if (array_key_exists($scopes[0], $this->authCache)) {
+            echo "Using cached credentials " . $scopes[0] . "\n";
+            $authCredentials = $this->authCache[$scopes[0]];
+        } elseif (!is_null($this->keyFile)) {
+            echo "Using keyFile credentials " . $scopes[0] . "\n";
+            $authCredentials = $this->getKeyFileCredentials($scopes, $this->keyFile);
+            $this->authCache[$scopes[0]] = $authCredentials;
+        } else {
+            echo "Using ADC credentials " . $scopes[0] . "\n";
+            $authCredentials = $this->getADCCredentials($scopes);
+        }
         $callback = function ($context) use ($authCredentials) {
-            return $authCredentials->updateMetadata([], $context->service_url);
+            $token = $authCredentials->fetchAuthToken();
+            return ['Authorization' => array('Bearer ' . $token['access_token'])];
         };
         return $callback;
     }
@@ -68,6 +89,11 @@ class GrpcBootstrap
     protected function getADCCredentials($scopes)
     {
         return ApplicationDefaultCredentials::getCredentials($scopes);
+    }
+
+    protected function getKeyFileCredentials($scopes, $keyFile) {
+        return CredentialsLoader::makeCredentials(
+            $scopes, json_decode(file_get_contents($keyFile), true));
     }
 
     // TODO(garrettjones):
