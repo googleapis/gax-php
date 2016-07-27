@@ -101,7 +101,9 @@ class PagedListResponse
     {
         if (!isset($this->firstPage)) {
             $this->firstPage = new Page(
-                $this->parameters, $this->callable, $this->pageStreamingDescriptor
+                $this->parameters,
+                $this->callable,
+                $this->pageStreamingDescriptor
             );
         }
         return $this->firstPage;

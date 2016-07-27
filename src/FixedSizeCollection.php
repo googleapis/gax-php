@@ -44,17 +44,20 @@ class FixedSizeCollection implements IteratorAggregate
     private $collectionSize;
     private $pageList;
 
-    public function __construct($initialPage, $collectionSize) {
+    public function __construct($initialPage, $collectionSize)
+    {
         if ($collectionSize <= 0) {
             throw new InvalidArgumentException(
-                "collectionSize must be > 0. collectionSize: $collectionSize");
+                "collectionSize must be > 0. collectionSize: $collectionSize"
+            );
         }
         if ($collectionSize < $initialPage->getPageElementCount()) {
             $ipc = $initialPage->getPageElementCount();
             throw new InvalidArgumentException(
                 "collectionSize must be greater than or equal to the number of " +
                 "elements in initialPage. collectionSize: $collectionSize, " +
-                "initialPage size: $ipc");
+                "initialPage size: $ipc"
+            );
         }
         $this->collectionSize = $collectionSize;
 
@@ -66,7 +69,8 @@ class FixedSizeCollection implements IteratorAggregate
      * equal to the collectionSize parameter used at construction
      * unless there are no elements remaining to be retrieved.
      */
-    public function getCollectionSize() {
+    public function getCollectionSize()
+    {
         $size = 0;
         foreach ($this->pageList as $page) {
             $size += $page->getPageElementCount();
@@ -78,7 +82,8 @@ class FixedSizeCollection implements IteratorAggregate
      * Returns true if there are more elements that can be retrieved
      * from the API.
      */
-    public function hasNextCollection() {
+    public function hasNextCollection()
+    {
         return $this->getLastPage()->hasNextPage();
     }
 
@@ -86,14 +91,16 @@ class FixedSizeCollection implements IteratorAggregate
      * Returns a page token that can be passed into the API list
      * method to retrieve additional elements.
      */
-    public function getNextPageToken() {
+    public function getNextPageToken()
+    {
         return $this->getLastPage()->getNextPageToken();
     }
 
     /**
      * Retrieves the next FixedSizeCollection using one or more API calls.
      */
-    public function getNextCollection() {
+    public function getNextCollection()
+    {
         $lastPage = $this->getLastPage();
         $nextPage = $lastPage->getNextPage($this->collectionSize);
         return new FixedSizeCollection($nextPage, $this->collectionSize);
@@ -102,7 +109,8 @@ class FixedSizeCollection implements IteratorAggregate
     /**
      * Returns an iterator over the elements of the collection.
      */
-    public function getIterator() {
+    public function getIterator()
+    {
         foreach ($this->pageList as $page) {
             foreach ($page as $element) {
                 yield $element;
@@ -115,7 +123,8 @@ class FixedSizeCollection implements IteratorAggregate
      * and making API calls as required until all of the elements have
      * been retrieved.
      */
-    public function iterateCollections() {
+    public function iterateCollections()
+    {
         $currentCollection = $this;
         yield $this;
         while ($currentCollection->hasNextCollection()) {
@@ -124,14 +133,16 @@ class FixedSizeCollection implements IteratorAggregate
         }
     }
 
-    private function getLastPage() {
+    private function getLastPage()
+    {
         $pageList = $this->pageList;
         // Get last element in array...
         $lastPage = array_pop((array_slice($pageList, -1)));
         return $lastPage;
     }
 
-    private static function createPageArray($initialPage, $collectionSize) {
+    private static function createPageArray($initialPage, $collectionSize)
+    {
         $pageList = [$initialPage];
         $currentPage = $initialPage;
         $itemCount = $currentPage->getPageElementCount();

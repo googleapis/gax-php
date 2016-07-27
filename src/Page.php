@@ -49,7 +49,8 @@ class Page implements IteratorAggregate
 
     private $response;
 
-    public function __construct($params, $callable, $pageStreamingDescriptor) {
+    public function __construct($params, $callable, $pageStreamingDescriptor)
+    {
         if (empty($params) || !is_object($params[0])) {
             throw new InvalidArgumentException('First argument must be a request object.');
         }
@@ -68,14 +69,16 @@ class Page implements IteratorAggregate
      * Returns true if there are more pages that can be retrieved from the
      * API.
      */
-    public function hasNextPage() {
+    public function hasNextPage()
+    {
         return strcmp($this->getNextPageToken(), Page::FINAL_PAGE_TOKEN) != 0;
     }
 
     /**
      * Returns the next page token from the response.
      */
-    public function getNextPageToken() {
+    public function getNextPageToken()
+    {
         $responsePageTokenField = $this->pageStreamingDescriptor->getResponsePageTokenField();
         return $this->getResponseObject()->$responsePageTokenField;
     }
@@ -83,11 +86,13 @@ class Page implements IteratorAggregate
     /**
      * Retrieves the next Page object using the next page token.
      */
-    public function getNextPage() {
+    public function getNextPage()
+    {
         if (!$this->hasNextPage()) {
             throw new ValidationException(
                 'Could not complete getNextPage operation: ' .
-                'there are no more pages to retrieve.');
+                'there are no more pages to retrieve.'
+            );
         }
 
         $newRequest = clone $this->getRequestObject();
@@ -103,7 +108,8 @@ class Page implements IteratorAggregate
     /**
      * Return the number of elements in the response.
      */
-    public function getPageElementCount() {
+    public function getPageElementCount()
+    {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
         return count($this->getResponseObject()->$resourceField);
     }
@@ -111,7 +117,8 @@ class Page implements IteratorAggregate
     /**
      * Return an iterator over the elements in the response.
      */
-    public function getIterator() {
+    public function getIterator()
+    {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
         foreach ($this->getResponseObject()->$resourceField as $element) {
             yield $element;
@@ -123,7 +130,8 @@ class Page implements IteratorAggregate
      * Additional Page objects are retrieved lazily via API calls until
      * all elements have been retrieved.
      */
-    public function iteratePages() {
+    public function iteratePages()
+    {
         $currentPage = $this;
         yield $this;
         while ($currentPage->hasNextPage()) {
@@ -135,18 +143,21 @@ class Page implements IteratorAggregate
     /**
      * Gets the request object used to generate the Page.
      */
-    public function getRequestObject() {
+    public function getRequestObject()
+    {
         return $this->parameters[0];
     }
 
     /**
      * Gets the API response object.
      */
-    public function getResponseObject() {
+    public function getResponseObject()
+    {
         return $this->response;
     }
 
-    private static function createNewRequest($previousRequest, $nextPageToken, $pageSize = null) {
+    private static function createNewRequest($previousRequest, $nextPageToken, $pageSize = null)
+    {
         $newRequest = clone $previousRequest;
         $requestPageTokenField = $this->pageStreamingDescriptor->getRequestPageTokenField();
         $newRequest->$requestPageTokenField = $nextPageToken;
