@@ -155,15 +155,4 @@ class Page implements IteratorAggregate
     {
         return $this->response;
     }
-
-    private static function createNewRequest($previousRequest, $nextPageToken, $pageSize = null)
-    {
-        $newRequest = clone $previousRequest;
-        $requestPageTokenField = $this->pageStreamingDescriptor->getRequestPageTokenField();
-        $newRequest->$requestPageTokenField = $nextPageToken;
-        if (isset($pageSize)) {
-            $newRequest->setPageSize($pageSize);
-        }
-        return $newRequest;
-    }
 }
