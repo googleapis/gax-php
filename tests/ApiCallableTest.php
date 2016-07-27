@@ -220,7 +220,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         foreach ($response->iterateAllElements() as $element) {
             array_push($actualResources, $element);
@@ -250,7 +250,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         $actualTokens = [];
         foreach ($response->iteratePages() as $page) {
@@ -282,14 +282,14 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resource'
         ]);
+        $collectionSize = 2;
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
-        $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $response = $apiCall($request, [], ['page_size' => $collectionSize]);
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         $collectionCount = 0;
-        $collectionSize = 2;
         foreach ($response->iterateFixedSizeCollections($collectionSize) as $collection) {
             $collectionCount += 1;
             foreach ($collection as $element) {
@@ -299,6 +299,54 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($stub->actualCalls));
         $this->assertEquals(2, $collectionCount);
         $this->assertEquals(['resource1', 'resource2', 'resource3', 'resource4'], $actualResources);
+    }
+
+    /**
+     * @expectedException Google\GAX\ValidationException
+     */
+    public function testPageStreamingFixedSizeFailNoPageSize()
+    {
+        $request = MockRequest::createPageStreamingRequest('token');
+        $responseA = MockResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
+        $responseSequence = [
+            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+                             ];
+        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $descriptor = new PageStreamingDescriptor([
+            'requestPageTokenField' => 'pageToken',
+            'responsePageTokenField' => 'nextPageToken',
+            'resourceField' => 'resource'
+        ]);
+        $collectionSize = 2;
+        $callSettings = new CallSettings();
+        $apiCall = ApiCallable::createApiCall(
+            $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
+        $response = $apiCall($request, [], []);
+        $response->expandToFixedSizeCollection($collectionSize);
+    }
+
+    /**
+     * @expectedException Google\GAX\ValidationException
+     */
+    public function testPageStreamingFixedSizeFailPageSizeTooLarge()
+    {
+        $request = MockRequest::createPageStreamingRequest('token');
+        $responseA = MockResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
+        $responseSequence = [
+            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+                             ];
+        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $descriptor = new PageStreamingDescriptor([
+            'requestPageTokenField' => 'pageToken',
+            'responsePageTokenField' => 'nextPageToken',
+            'resourceField' => 'resource'
+        ]);
+        $collectionSize = 2;
+        $callSettings = new CallSettings();
+        $apiCall = ApiCallable::createApiCall(
+            $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
+        $response = $apiCall($request, [], ['page_size' => ($collectionSize + 1)]);
+        $response->expandToFixedSizeCollection($collectionSize);
     }
 
     public function testPageStreamingWithTimeout()
@@ -322,7 +370,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $apiCall = ApiCallable::createApiCall(
             $stub, 'takeAction', $callSettings, ['pageStreamingDescriptor' => $descriptor]);
         $response = $apiCall($request, [], []);
-        $this->assertEquals(0, count($stub->actualCalls));
+        $this->assertEquals(1, count($stub->actualCalls));
         $actualResources = [];
         foreach ($response->iterateAllElements() as $element) {
             array_push($actualResources, $element);

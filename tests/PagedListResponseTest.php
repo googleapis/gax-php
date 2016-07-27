@@ -56,6 +56,6 @@ class PagedListResponseTest extends PHPUnit_Framework_TestCase
         $pageAccessor = new PagedListResponse([$mockRequest, [], []], $mockApiCall, $descriptor);
         $page = $pageAccessor->getPage();
         $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
-        $this->assertEquals(iterator_to_array($page->iteratePageElements()), ['resource1']);
+        $this->assertEquals(iterator_to_array($page->getIterator()), ['resource1']);
     }
 }

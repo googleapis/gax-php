@@ -31,6 +31,8 @@
  */
 namespace Google\GAX;
 
+use Google\GAX\ValidationException;
+
 /**
  * Response object for paged results from a list API method
  *
@@ -64,7 +66,7 @@ class PagedListResponse
 
     private $firstPage;
 
-    public function __construct($params, $callable, $pageStreamingDescriptor) 
+    public function __construct($params, $callable, $pageStreamingDescriptor)
     {
         if (empty($params) || !is_object($params[0])) {
             throw new InvalidArgumentException('First argument must be a request object.');
@@ -81,10 +83,10 @@ class PagedListResponse
      * Returns an iterator over the full list of elements. Elements
      * of the list are retrieved lazily using the underlying API.
      */
-    public function iterateAllElements() 
+    public function iterateAllElements()
     {
         foreach ($this->iteratePages() as $page) {
-            foreach ($page->iteratePageElements() as $element) {
+            foreach ($page as $element) {
                 yield $element;
             }
         }
@@ -95,7 +97,7 @@ class PagedListResponse
      * previously been accessed, it will be retrieved with a call to
      * the underlying API.
      */
-    public function getPage() 
+    public function getPage()
     {
         if (!isset($this->firstPage)) {
             $this->firstPage = new Page(
@@ -109,7 +111,7 @@ class PagedListResponse
      * Returns an iterator over pages of results. The pages are
      * retrieved lazily from the underlying API.
      */
-    public function iteratePages() 
+    public function iteratePages()
     {
         return $this->getPage()->iteratePages();
     }
@@ -125,9 +127,9 @@ class PagedListResponse
      * an error if the collectionSize parameter is less than the
      * page_size.
      */
-    public function expandToFixedSizeCollection($collectionSize) 
+    public function expandToFixedSizeCollection($collectionSize)
     {
-        if (!array_key_exists(2, $this->parameters) 
+        if (!array_key_exists(2, $this->parameters)
             || !array_key_exists('page_size', $this->parameters[2])
         ) {
             throw new ValidationException(
@@ -161,8 +163,8 @@ class PagedListResponse
      * an error if the collectionSize parameter is less than the
      * page_size.
      */
-    public function iterateFixedSizeCollections($collectionSize) 
+    public function iterateFixedSizeCollections($collectionSize)
     {
-        return $this->getFixedSizeCollection($collectionSize)->iterateCollections();
+        return $this->expandToFixedSizeCollection($collectionSize)->iterateCollections();
     }
 }
