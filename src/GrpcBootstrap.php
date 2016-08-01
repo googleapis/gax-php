@@ -32,6 +32,7 @@
 namespace Google\GAX;
 
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\CredentialsLoader;
 use Grpc\ChannelCredentials;
 
 /**
@@ -39,25 +40,47 @@ use Grpc\ChannelCredentials;
  */
 class GrpcBootstrap
 {
+    private $authCredentials;
+
     /**
-     * Provides a default instance of GrpcBootstrap.
+     * Accept an optional keyFile argument, which can be used to load credentials
+     * instead of using ApplicationDefaultCredentials
      */
-    public static function defaultInstance()
+    public function __construct($scopes, $options = [])
     {
-        return new GrpcBootstrap();
+        if (array_key_exists('keyFile', $options) && !is_null($options['keyFile'])) {
+            # Get credentials from the keyFile provided
+            $jsonData = json_decode(file_get_contents($options['keyFile']), true);
+            $this->authCredentials = CredentialsLoader::makeCredentials($scopes, $jsonData);
+        } else {
+            # Get the Application Default Credentials
+            $this->authCredentials = ApplicationDefaultCredentials::getCredentials($scopes);
+        }
     }
 
     /**
      * Creates the callback function to be passed to gRPC for providing the credentials
      * for a call.
-     *
-     * @param scopes The scopes for Oauth2 credentials.
      */
-    public function createCallCredentialsCallback($scopes)
+    public function createCallCredentialsCallback()
     {
-        $authCredentials = $this->getADCCredentials($scopes);
+        # Previously a new authCredentials object was created each time a new
+        # callback function was created. Instead, the authCredentials object
+        # is created when the GrpcBootstrap object is constructed, and is
+        # reused.
+        #
+        # NOTE: currently, this code causes a segmentation fault in gRPC when
+        # authCredentials is created using ApplicationDefaultCredentials and
+        # it is used more than once. This issue does not occur when using
+        # credentials loaded from a json file.
+        $authCredentials = $this->authCredentials;
         $callback = function ($context) use ($authCredentials) {
-            return $authCredentials->updateMetadata([], $context->service_url);
+            # This call used to use updateMetadata on an empty array. That is
+            # changed here to invoke fetchAuthToken directly, and construct a
+            # metadata array manually. This will allow the authCredentials
+            # object to be wrapped with a caching implementation.
+            $token = $authCredentials->fetchAuthToken();
+            return ['Authorization' => array('Bearer ' . $token['access_token'])];
         };
         return $callback;
     }
@@ -68,6 +91,11 @@ class GrpcBootstrap
     protected function getADCCredentials($scopes)
     {
         return ApplicationDefaultCredentials::getCredentials($scopes);
+    }
+
+    protected function getKeyFileCredentials($scopes, $keyFile) {
+        return CredentialsLoader::makeCredentials(
+            $scopes, json_decode(file_get_contents($keyFile), true));
     }
 
     // TODO(garrettjones):
@@ -92,11 +120,11 @@ class GrpcBootstrap
      *           Grpc\ChannelCredentials::createSsl()
      * }
      */
-    public function createStub($generatedCreateStub, $serviceAddress, $port, $options = array())
+    public static function createStub($generatedCreateStub, $serviceAddress, $port, $options = array())
     {
         $stubOpts = [];
         if (empty($options['sslCreds'])) {
-            $stubOpts['credentials'] = $this->createSslChannelCredentials();
+            $stubOpts['credentials'] = GrpcBootstrap::createSslChannelCredentials();
         } else {
             $stubOpts['credentials'] = $options['sslCreds'];
         }
@@ -110,7 +138,7 @@ class GrpcBootstrap
     /**
      * Gets credentials from ADC. This exists to allow overriding in unit tests.
      */
-    protected function createSslChannelCredentials()
+    protected static function createSslChannelCredentials()
     {
         return ChannelCredentials::createSsl();
     }
