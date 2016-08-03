@@ -59,8 +59,8 @@ class GrpcCredentialsHelper
      *     @var Google\Auth\CredentialsLoader $credentialsLoader
      *          A user-created CredentialsLoader object. Defaults to using
      *          ApplicationDefaultCredentials
-     *     @var boolean $disableCaching
-     *          Disable caching of access tokens. Defaults to false
+     *     @var boolean $enableCaching
+     *          Enable caching of access tokens. Defaults to true
      * }
      *
      */
@@ -68,7 +68,7 @@ class GrpcCredentialsHelper
     {
         $defaultOptions = [
             'credentialsLoader' => null,
-            'disableCaching' => false,
+            'enableCaching' => true,
         ];
         $opts = array_merge($defaultOptions, $optionalArgs);
         $cachingOptions = array_diff_key($opts, $defaultOptions);
@@ -81,7 +81,7 @@ class GrpcCredentialsHelper
             $credentialsLoader = $this->getADCCredentials($scopes);
         }
 
-        if (!$opts['disableCaching']) {
+        if ($opts['enableCaching']) {
             $credentialsLoader = new FetchAuthTokenCache(
                 $credentialsLoader, $cachingOptions, new MemoryCacheItemPool());
         }

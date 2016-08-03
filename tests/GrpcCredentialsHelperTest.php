@@ -70,7 +70,7 @@ class GrpcCredentialsHelperTest extends PHPUnit_Framework_TestCase
         $grpcCredentialsHelper = new GrpcCredentialsHelperForTesting($this->defaultScope,
             ['credentialsLoader' => new MockCredentialsLoader(
                 $this->defaultScope, $this->defaultTokens),
-            'disableCaching' => true]);
+            'enableCaching' => false]);
         $callback = $grpcCredentialsHelper->createCallCredentialsCallback();
         $callbackResult = $callback();
         $this->assertEquals(['Bearer accessToken'], $callbackResult['Authorization']);
