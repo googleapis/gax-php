@@ -32,42 +32,74 @@
 namespace Google\GAX;
 
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\CredentialsLoader;
+use Google\Auth\FetchAuthTokenCache;
+use Google\Auth\Cache\MemoryCacheItemPool;
 use Grpc\ChannelCredentials;
 
 /**
- * Class that provides helpful utility functions for bootstrapping a gRPC client.
+ * A class that manages credentials for an API object using the Google Auth library
  */
-class GrpcBootstrap
+class GrpcCredentialsHelper
 {
+    private $scopes;
+    private $credentialsLoader;
+
     /**
-     * Provides a default instance of GrpcBootstrap.
+     * Accepts an optional credentialsLoader argument, to be used instead of using
+     * the ApplicationDefaultCredentials
+     *
+     * @param string[] $scopes A list of scopes required for API access
+     *
+     * @param array $optionalArgs {
+     *     Optional arguments. Arguments in addition to those documented below
+     *     will be passed as optional arguments to Google\Auth\FetchAuthTokenCache
+     *     when caching is not disabled.
+     *
+     *     @var Google\Auth\CredentialsLoader $credentialsLoader
+     *          A user-created CredentialsLoader object. Defaults to using
+     *          ApplicationDefaultCredentials
+     *     @var boolean $disableCaching
+     *          Disable caching of access tokens. Defaults to false
+     * }
+     *
      */
-    public static function defaultInstance()
+    public function __construct($scopes, $optionalArgs = [])
     {
-        return new GrpcBootstrap();
+        $defaultOptions = [
+            'credentialsLoader' => null,
+            'disableCaching' => false,
+        ];
+        $opts = array_merge($defaultOptions, $optionalArgs);
+        $cachingOptions = array_diff_key($opts, $defaultOptions);
+
+        $this->scopes = $scopes;
+
+        if (isset($opts['credentialsLoader'])) {
+            $credentialsLoader = $opts['credentialsLoader'];
+        } else {
+            $credentialsLoader = $this->getADCCredentials($scopes);
+        }
+
+        if (!$opts['disableCaching']) {
+            $credentialsLoader = new FetchAuthTokenCache(
+                $credentialsLoader, $cachingOptions, new MemoryCacheItemPool());
+        }
+        $this->credentialsLoader = $credentialsLoader;
     }
 
     /**
      * Creates the callback function to be passed to gRPC for providing the credentials
      * for a call.
-     *
-     * @param scopes The scopes for Oauth2 credentials.
      */
-    public function createCallCredentialsCallback($scopes)
+    public function createCallCredentialsCallback()
     {
-        $authCredentials = $this->getADCCredentials($scopes);
-        $callback = function ($context) use ($authCredentials) {
-            return $authCredentials->updateMetadata([], $context->service_url);
+        $credentialsLoader = $this->credentialsLoader;
+        $callback = function () use ($credentialsLoader) {
+            $token = $credentialsLoader->fetchAuthToken();
+            return ['Authorization' => array('Bearer ' . $token['access_token'])];
         };
         return $callback;
-    }
-
-    /**
-     * Gets credentials from ADC. This exists to allow overriding in unit tests.
-     */
-    protected function getADCCredentials($scopes)
-    {
-        return ApplicationDefaultCredentials::getCredentials($scopes);
     }
 
     // TODO(garrettjones):
@@ -76,7 +108,7 @@ class GrpcBootstrap
     /**
      * Creates a gRPC client stub.
      *
-     * @oaram function $generatedCreateStub
+     * @param function $generatedCreateStub
      *        Function callback which must accept two arguments ($hostname, $opts)
      *        and return an instance of the stub of the specific API to call.
      *        Generally, this should just call the stub's constructor and return
@@ -92,7 +124,7 @@ class GrpcBootstrap
      *           Grpc\ChannelCredentials::createSsl()
      * }
      */
-    public function createStub($generatedCreateStub, $serviceAddress, $port, $options = array())
+    public function createStub($generatedCreateStub, $serviceAddress, $port, $options = [])
     {
         $stubOpts = [];
         if (empty($options['sslCreds'])) {
@@ -109,6 +141,14 @@ class GrpcBootstrap
 
     /**
      * Gets credentials from ADC. This exists to allow overriding in unit tests.
+     */
+    protected function getADCCredentials($scopes)
+    {
+        return ApplicationDefaultCredentials::getCredentials($scopes);
+    }
+
+    /**
+     * Construct ssl channel credentials. This exists to allow overriding in unit tests.
      */
     protected function createSslChannelCredentials()
     {
