@@ -54,7 +54,7 @@ class GrpcCredentialsHelper
      * @param array $optionalArgs {
      *     Optional arguments. Arguments in addition to those documented below
      *     will be passed as optional arguments to Google\Auth\FetchAuthTokenCache
-     *     when caching is not disabled.
+     *     when caching is enabled.
      *
      *     @var Google\Auth\CredentialsLoader $credentialsLoader
      *          A user-created CredentialsLoader object. Defaults to using
