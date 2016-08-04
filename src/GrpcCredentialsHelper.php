@@ -83,7 +83,10 @@ class GrpcCredentialsHelper
 
         if ($opts['enableCaching']) {
             $credentialsLoader = new FetchAuthTokenCache(
-                $credentialsLoader, $cachingOptions, new MemoryCacheItemPool());
+                $credentialsLoader,
+                $cachingOptions,
+                new MemoryCacheItemPool()
+            );
         }
         $this->credentialsLoader = $credentialsLoader;
     }
