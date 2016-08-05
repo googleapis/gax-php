@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Google.html">\Google</a></li>
+                                                        <li><a href="../namespaces/google.html">\google</a></li>
+                                                        <li><a href="../namespaces/Jison.html">\Jison</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">1202</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">5</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1894341271"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1894341271" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-649662292"></a>
+                                <a href="../namespaces/Google.html" style="margin-left: 30px; padding-left: 0">Google</a>
+            </div>
+            <div id="namespace-649662292" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1344803936"></a>
+                                <a href="../namespaces/Google.GAX.html" style="margin-left: 30px; padding-left: 0">GAX</a>
+            </div>
+            <div id="namespace-1344803936" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-447158379"></a>
+                                <a href="../namespaces/Google.GAX.Testing.html" style="margin-left: 30px; padding-left: 0">Testing</a>
+            </div>
+            <div id="namespace-447158379" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Google.GAX.Testing.MockGrpcCall.html">MockGrpcCall</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.Testing.MockRequest.html">MockRequest</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.Testing.MockResponse.html">MockResponse</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.Testing.MockStatus.html">MockStatus</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.Testing.MockStub.html">MockStub</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Google.GAX.AgentHeaderDescriptor.html">AgentHeaderDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.ApiCallable.html">ApiCallable</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.ApiException.html">ApiException</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.BackoffSettings.html">BackoffSettings</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.CallSettings.html">CallSettings</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.GrpcBootstrap.html">GrpcBootstrap</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.GrpcConstants.html">GrpcConstants</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.PageAccessor.html">PageAccessor</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.PageStreamingDescriptor.html">PageStreamingDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.Parser.html">Parser</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.PathTemplate.html">PathTemplate</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.RetrySettings.html">RetrySettings</a></li>
+                                                    <li class="class"><a href="../classes/Google.GAX.ValidationException.html">ValidationException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1350280848"></a>
+                                <a href="../namespaces/google.html" style="margin-left: 30px; padding-left: 0">google</a>
+            </div>
+            <div id="namespace-1350280848" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1142170888"></a>
+                                <a href="../namespaces/google.api.html" style="margin-left: 30px; padding-left: 0">api</a>
+            </div>
+            <div id="namespace-1142170888" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-960986012"></a>
+                                <a href="../namespaces/google.api.LabelDescriptor.html" style="margin-left: 30px; padding-left: 0">LabelDescriptor</a>
+            </div>
+            <div id="namespace-960986012" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.LabelDescriptor.ValueType.html">ValueType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1496260014"></a>
+                                <a href="../namespaces/google.api.Logging.html" style="margin-left: 30px; padding-left: 0">Logging</a>
+            </div>
+            <div id="namespace-1496260014" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.Logging.LoggingDestination.html">LoggingDestination</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-690257622"></a>
+                                <a href="../namespaces/google.api.Metric.html" style="margin-left: 30px; padding-left: 0">Metric</a>
+            </div>
+            <div id="namespace-690257622" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.Metric.LabelsEntry.html">LabelsEntry</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1703684321"></a>
+                                <a href="../namespaces/google.api.MetricDescriptor.html" style="margin-left: 30px; padding-left: 0">MetricDescriptor</a>
+            </div>
+            <div id="namespace-1703684321" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.MetricDescriptor.MetricKind.html">MetricKind</a></li>
+                                                    <li class="class"><a href="../classes/google.api.MetricDescriptor.ValueType.html">ValueType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1597582395"></a>
+                                <a href="../namespaces/google.api.MonitoredResource.html" style="margin-left: 30px; padding-left: 0">MonitoredResource</a>
+            </div>
+            <div id="namespace-1597582395" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.MonitoredResource.LabelsEntry.html">LabelsEntry</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1694157219"></a>
+                                <a href="../namespaces/google.api.Monitoring.html" style="margin-left: 30px; padding-left: 0">Monitoring</a>
+            </div>
+            <div id="namespace-1694157219" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.Monitoring.MonitoringDestination.html">MonitoringDestination</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1195281668"></a>
+                                <a href="../namespaces/google.api.Property.html" style="margin-left: 30px; padding-left: 0">Property</a>
+            </div>
+            <div id="namespace-1195281668" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.Property.PropertyType.html">PropertyType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.api.Authentication.html">Authentication</a></li>
+                                                    <li class="class"><a href="../classes/google.api.AuthenticationRule.html">AuthenticationRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.AuthProvider.html">AuthProvider</a></li>
+                                                    <li class="class"><a href="../classes/google.api.AuthRequirement.html">AuthRequirement</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Backend.html">Backend</a></li>
+                                                    <li class="class"><a href="../classes/google.api.BackendRule.html">BackendRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Billing.html">Billing</a></li>
+                                                    <li class="class"><a href="../classes/google.api.BillingStatusRule.html">BillingStatusRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Context.html">Context</a></li>
+                                                    <li class="class"><a href="../classes/google.api.ContextRule.html">ContextRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Control.html">Control</a></li>
+                                                    <li class="class"><a href="../classes/google.api.CustomHttpPattern.html">CustomHttpPattern</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Documentation.html">Documentation</a></li>
+                                                    <li class="class"><a href="../classes/google.api.DocumentationRule.html">DocumentationRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Http.html">Http</a></li>
+                                                    <li class="class"><a href="../classes/google.api.HttpRule.html">HttpRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.LabelDescriptor.html">LabelDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/google.api.LogDescriptor.html">LogDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Logging.html">Logging</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Metric.html">Metric</a></li>
+                                                    <li class="class"><a href="../classes/google.api.MetricDescriptor.html">MetricDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/google.api.MonitoredResource.html">MonitoredResource</a></li>
+                                                    <li class="class"><a href="../classes/google.api.MonitoredResourceDescriptor.html">MonitoredResourceDescriptor</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Monitoring.html">Monitoring</a></li>
+                                                    <li class="class"><a href="../classes/google.api.OAuthRequirements.html">OAuthRequirements</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Page.html">Page</a></li>
+                                                    <li class="class"><a href="../classes/google.api.ProjectProperties.html">ProjectProperties</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Property.html">Property</a></li>
+                                                    <li class="class"><a href="../classes/google.api.Service.html">Service</a></li>
+                                                    <li class="class"><a href="../classes/google.api.SystemParameter.html">SystemParameter</a></li>
+                                                    <li class="class"><a href="../classes/google.api.SystemParameterRule.html">SystemParameterRule</a></li>
+                                                    <li class="class"><a href="../classes/google.api.SystemParameters.html">SystemParameters</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-68076887"></a>
+                                <a href="../namespaces/google.logging.html" style="margin-left: 30px; padding-left: 0">logging</a>
+            </div>
+            <div id="namespace-68076887" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1172332095"></a>
+                                <a href="../namespaces/google.logging.type.html" style="margin-left: 30px; padding-left: 0">type</a>
+            </div>
+            <div id="namespace-1172332095" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.logging.type.HttpRequest.html">HttpRequest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-410027248"></a>
+                                <a href="../namespaces/google.longrunning.html" style="margin-left: 30px; padding-left: 0">longrunning</a>
+            </div>
+            <div id="namespace-410027248" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.longrunning.CancelOperationRequest.html">CancelOperationRequest</a></li>
+                                                    <li class="class"><a href="../classes/google.longrunning.DeleteOperationRequest.html">DeleteOperationRequest</a></li>
+                                                    <li class="class"><a href="../classes/google.longrunning.GetOperationRequest.html">GetOperationRequest</a></li>
+                                                    <li class="class"><a href="../classes/google.longrunning.ListOperationsRequest.html">ListOperationsRequest</a></li>
+                                                    <li class="class"><a href="../classes/google.longrunning.ListOperationsResponse.html">ListOperationsResponse</a></li>
+                                                    <li class="class"><a href="../classes/google.longrunning.Operation.html">Operation</a></li>
+                                                    <li class="class"><a href="../classes/google.longrunning.OperationsClient.html">OperationsClient</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-797869560"></a>
+                                <a href="../namespaces/google.protobuf.html" style="margin-left: 30px; padding-left: 0">protobuf</a>
+            </div>
+            <div id="namespace-797869560" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1331540464"></a>
+                                <a href="../namespaces/google.protobuf.DescriptorProto.html" style="margin-left: 30px; padding-left: 0">DescriptorProto</a>
+            </div>
+            <div id="namespace-1331540464" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.DescriptorProto.ExtensionRange.html">ExtensionRange</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.DescriptorProto.ReservedRange.html">ReservedRange</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1157646714"></a>
+                                <a href="../namespaces/google.protobuf.Field.html" style="margin-left: 30px; padding-left: 0">Field</a>
+            </div>
+            <div id="namespace-1157646714" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.Field.Cardinality.html">Cardinality</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Field.Kind.html">Kind</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-821690793"></a>
+                                <a href="../namespaces/google.protobuf.FieldDescriptorProto.html" style="margin-left: 30px; padding-left: 0">FieldDescriptorProto</a>
+            </div>
+            <div id="namespace-821690793" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.FieldDescriptorProto.Label.html">Label</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FieldDescriptorProto.Type.html">Type</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-843972998"></a>
+                                <a href="../namespaces/google.protobuf.FieldOptions.html" style="margin-left: 30px; padding-left: 0">FieldOptions</a>
+            </div>
+            <div id="namespace-843972998" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.FieldOptions.CType.html">CType</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FieldOptions.JSType.html">JSType</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-283915579"></a>
+                                <a href="../namespaces/google.protobuf.FileOptions.html" style="margin-left: 30px; padding-left: 0">FileOptions</a>
+            </div>
+            <div id="namespace-283915579" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.FileOptions.OptimizeMode.html">OptimizeMode</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-34593402"></a>
+                                <a href="../namespaces/google.protobuf.SourceCodeInfo.html" style="margin-left: 30px; padding-left: 0">SourceCodeInfo</a>
+            </div>
+            <div id="namespace-34593402" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.SourceCodeInfo.Location.html">Location</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1844713127"></a>
+                                <a href="../namespaces/google.protobuf.UninterpretedOption.html" style="margin-left: 30px; padding-left: 0">UninterpretedOption</a>
+            </div>
+            <div id="namespace-1844713127" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.UninterpretedOption.NamePart.html">NamePart</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.protobuf.Any.html">Any</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Api.html">Api</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.BoolValue.html">BoolValue</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.BytesValue.html">BytesValue</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.DescriptorProto.html">DescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.DoubleValue.html">DoubleValue</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Duration.html">Duration</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.EmptyC.html">EmptyC</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Enum.html">Enum</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.EnumDescriptorProto.html">EnumDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.EnumOptions.html">EnumOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.EnumValue.html">EnumValue</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.EnumValueDescriptorProto.html">EnumValueDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.EnumValueOptions.html">EnumValueOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Field.html">Field</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FieldDescriptorProto.html">FieldDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FieldOptions.html">FieldOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FileDescriptorProto.html">FileDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FileDescriptorSet.html">FileDescriptorSet</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FileOptions.html">FileOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.FloatValue.html">FloatValue</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Int32Value.html">Int32Value</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Int64Value.html">Int64Value</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.MessageOptions.html">MessageOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Method.html">Method</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.MethodDescriptorProto.html">MethodDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.MethodOptions.html">MethodOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Mixin.html">Mixin</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.OneofDescriptorProto.html">OneofDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Option.html">Option</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.ServiceDescriptorProto.html">ServiceDescriptorProto</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.ServiceOptions.html">ServiceOptions</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.SourceCodeInfo.html">SourceCodeInfo</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.SourceContext.html">SourceContext</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.StringValue.html">StringValue</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Syntax.html">Syntax</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.Type.html">Type</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.UInt32Value.html">UInt32Value</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.UInt64Value.html">UInt64Value</a></li>
+                                                    <li class="class"><a href="../classes/google.protobuf.UninterpretedOption.html">UninterpretedOption</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-74070313"></a>
+                                <a href="../namespaces/google.rpc.html" style="margin-left: 30px; padding-left: 0">rpc</a>
+            </div>
+            <div id="namespace-74070313" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-647181094"></a>
+                                <a href="../namespaces/google.rpc.BadRequest.html" style="margin-left: 30px; padding-left: 0">BadRequest</a>
+            </div>
+            <div id="namespace-647181094" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.rpc.BadRequest.FieldViolation.html">FieldViolation</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1070357169"></a>
+                                <a href="../namespaces/google.rpc.Help.html" style="margin-left: 30px; padding-left: 0">Help</a>
+            </div>
+            <div id="namespace-1070357169" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.rpc.Help.Link.html">Link</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-117608228"></a>
+                                <a href="../namespaces/google.rpc.QuotaFailure.html" style="margin-left: 30px; padding-left: 0">QuotaFailure</a>
+            </div>
+            <div id="namespace-117608228" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.rpc.QuotaFailure.Violation.html">Violation</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.rpc.BadRequest.html">BadRequest</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.Code.html">Code</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.DebugInfo.html">DebugInfo</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.Help.html">Help</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.QuotaFailure.html">QuotaFailure</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.RequestInfo.html">RequestInfo</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.ResourceInfo.html">ResourceInfo</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.RetryInfo.html">RetryInfo</a></li>
+                                                    <li class="class"><a href="../classes/google.rpc.Status.html">Status</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2239380"></a>
+                                <a href="../namespaces/google.type.html" style="margin-left: 30px; padding-left: 0">type</a>
+            </div>
+            <div id="namespace-2239380" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/google.type.Color.html">Color</a></li>
+                                                    <li class="class"><a href="../classes/google.type.Date.html">Date</a></li>
+                                                    <li class="class"><a href="../classes/google.type.DayOfWeek.html">DayOfWeek</a></li>
+                                                    <li class="class"><a href="../classes/google.type.LatLng.html">LatLng</a></li>
+                                                    <li class="class"><a href="../classes/google.type.Money.html">Money</a></li>
+                                                    <li class="class"><a href="../classes/google.type.TimeOfDay.html">TimeOfDay</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-420493763"></a>
+                                <a href="../namespaces/Jison.html" style="margin-left: 30px; padding-left: 0">Jison</a>
+            </div>
+            <div id="namespace-420493763" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Jison.JisonParser.html">JisonParser</a></li>
+                                                    <li class="class"><a href="../classes/Jison.LexerConditions.html">LexerConditions</a></li>
+                                                    <li class="class"><a href="../classes/Jison.LexerError.html">LexerError</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserAction.html">ParserAction</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserCachedAction.html">ParserCachedAction</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserError.html">ParserError</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserLocation.html">ParserLocation</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserProduction.html">ParserProduction</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserRange.html">ParserRange</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserState.html">ParserState</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserSymbol.html">ParserSymbol</a></li>
+                                                    <li class="class"><a href="../classes/Jison.ParserValue.html">ParserValue</a></li>
+                                                    <li class="class"><a href="../classes/Jison.Segment.html">Segment</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/google.api.html">\google\api</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\google\api</small>ContextRule</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/google.api.ContextRule.html#method_descriptor" class="">descriptor()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_hasSelector" class="">hasSelector()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_clearSelector" class="">clearSelector()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_getSelector" class="">getSelector()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_setSelector" class="">setSelector()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_hasRequested" class="">hasRequested()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_clearRequested" class="">clearRequested()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_getRequested" class="">getRequested()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_setRequested" class="">setRequested()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_getRequestedList" class="">getRequestedList()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_addRequested" class="">addRequested()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_hasProvided" class="">hasProvided()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_clearProvided" class="">clearProvided()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_getProvided" class="">getProvided()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_setProvided" class="">setProvided()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_getProvidedList" class="">getProvidedList()</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#method_addProvided" class="">addProvided()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/google.api.ContextRule.html#property_selector" class="">$selector</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#property_requested" class="">$requested</a><br />
+                                                                    <a href="../classes/google.api.ContextRule.html#property_provided" class="">$provided</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/google.api.ContextRule.html#property___extensions" class="">$__extensions</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/generated.context.html"><div class="path-wrapper">generated/context.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper">\DrSlump\Protobuf\Message</div>
+                                                                                                    <div class="namespace-wrapper">\google\api\ContextRule</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_selector" name="property_selector" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$selector</h3>
+                <pre class="signature">$selector : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_requested" name="property_requested" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$requested</h3>
+                <pre class="signature">$requested : array&lt;mixed,string&gt;</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array&lt;mixed,string&gt;
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_provided" name="property_provided" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$provided</h3>
+                <pre class="signature">$provided : array&lt;mixed,string&gt;</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array&lt;mixed,string&gt;
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property___extensions" name="property___extensions" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$__extensions</h3>
+                <pre class="signature">$__extensions : array&lt;mixed,\Closure&gt;</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array&lt;mixed,\Closure&gt;
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_descriptor" name="method_descriptor" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">descriptor()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">descriptor() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasSelector" name="method_hasSelector" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hasSelector()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasSelector() : boolean</pre>
+                <p><em>Check if &lt;selector&gt; has a value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clearSelector" name="method_clearSelector" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">clearSelector()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clearSelector() : \google\api\ContextRule</pre>
+                <p><em>Clear &lt;selector&gt; value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSelector" name="method_getSelector" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSelector()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSelector() : string</pre>
+                <p><em>Get &lt;selector&gt; value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setSelector" name="method_setSelector" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setSelector()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setSelector(string  <span class="argument">$value</span>) : \google\api\ContextRule</pre>
+                <p><em>Set &lt;selector&gt; value</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasRequested" name="method_hasRequested" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hasRequested()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasRequested() : boolean</pre>
+                <p><em>Check if &lt;requested&gt; has a value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clearRequested" name="method_clearRequested" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">clearRequested()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clearRequested() : \google\api\ContextRule</pre>
+                <p><em>Clear &lt;requested&gt; value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRequested" name="method_getRequested" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRequested()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRequested(integer  <span class="argument">$idx = NULL</span>) : string</pre>
+                <p><em>Get &lt;requested&gt; value</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$idx </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRequested" name="method_setRequested" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRequested()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRequested(string  <span class="argument">$value</span>,   <span class="argument">$idx = NULL</span>) : \google\api\ContextRule</pre>
+                <p><em>Set &lt;requested&gt; value</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$idx </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRequestedList" name="method_getRequestedList" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRequestedList()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRequestedList() : array&lt;mixed,string&gt;</pre>
+                <p><em>Get all elements of &lt;requested&gt;</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addRequested" name="method_addRequested" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addRequested()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addRequested(string  <span class="argument">$value</span>) : \google\api\ContextRule</pre>
+                <p><em>Add a new element to &lt;requested&gt;</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasProvided" name="method_hasProvided" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hasProvided()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasProvided() : boolean</pre>
+                <p><em>Check if &lt;provided&gt; has a value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clearProvided" name="method_clearProvided" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">clearProvided()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clearProvided() : \google\api\ContextRule</pre>
+                <p><em>Clear &lt;provided&gt; value</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getProvided" name="method_getProvided" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getProvided()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getProvided(integer  <span class="argument">$idx = NULL</span>) : string</pre>
+                <p><em>Get &lt;provided&gt; value</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$idx </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setProvided" name="method_setProvided" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setProvided()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setProvided(string  <span class="argument">$value</span>,   <span class="argument">$idx = NULL</span>) : \google\api\ContextRule</pre>
+                <p><em>Set &lt;provided&gt; value</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$idx </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getProvidedList" name="method_getProvidedList" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getProvidedList()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getProvidedList() : array&lt;mixed,string&gt;</pre>
+                <p><em>Get all elements of &lt;provided&gt;</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addProvided" name="method_addProvided" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addProvided()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addProvided(string  <span class="argument">$value</span>) : \google\api\ContextRule</pre>
+                <p><em>Add a new element to &lt;provided&gt;</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/google.api.ContextRule.html">\google\api\ContextRule</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">context.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/generated/context.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Google.html">\Google</a></li>
+                                                                            <li><a href="../namespaces/google.html">\google</a></li>
+                                                                            <li><a href="../namespaces/Jison.html">\Jison</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 5th, 2016 at 16:47.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
