@@ -39,6 +39,8 @@ use InvalidArgumentException;
 class PageStreamingDescriptor
 {
     private $requestPageTokenField;
+    private $requestHasPageSizeField;
+    private $requestPageSizeField;
     private $responsePageTokenField;
     private $resourceField;
 
@@ -55,6 +57,13 @@ class PageStreamingDescriptor
     {
         self::validate($descriptor);
         $this->requestPageTokenField = $descriptor['requestPageTokenField'];
+        if (isset($descriptor['requestPageSizeField'])) {
+            $this->requestHasPageSizeField = true;
+            $this->requestPageSizeField = $descriptor['requestPageSizeField'];
+        } else {
+            $this->requestHasPageSizeField = false;
+            $this->requestPageSizeField = null;
+        }
         $this->responsePageTokenField = $descriptor['responsePageTokenField'];
         $this->resourceField = $descriptor['resourceField'];
     }
@@ -62,6 +71,16 @@ class PageStreamingDescriptor
     public function getRequestPageTokenField()
     {
         return $this->requestPageTokenField;
+    }
+
+    public function getRequestPageSizeField()
+    {
+        return $this->requestPageSizeField;
+    }
+
+    public function requestHasPageSizeField()
+    {
+        return $this->requestHasPageSizeField;
     }
 
     public function getResponsePageTokenField()
