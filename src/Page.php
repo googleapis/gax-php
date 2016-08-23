@@ -104,7 +104,8 @@ class Page implements IteratorAggregate
             if (!$this->pageStreamingDescriptor->requestHasPageSizeField()) {
                 throw new ValidationException(
                     'pageSize argument was defined, but the method does not ' .
-                    'support a page size parameter in the optional array argument');
+                    'support a page size parameter in the optional array argument'
+                );
             }
             $requestPageSizeField = $this->pageStreamingDescriptor->getRequestPageSizeField();
             $newRequest->$requestPageSizeField = $pageSize;

@@ -135,7 +135,8 @@ class PagedListResponse
             throw new ValidationException(
                 "FixedSizeCollection is not supported for this method, because " .
                 "the method does not support an optional argument to set the " .
-                "page size.");
+                "page size."
+            );
         }
         // The first page has been eagerly constructed, so we do not need to
         // update the page size parameter before calling getPage
