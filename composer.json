@@ -17,7 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-          "Google\\GAX\\":"src/"
+          "Google\\GAX\\":"src/",
+          "Google\\GAX\\Testing\\":"src/testing"
         },
         "classmap": ["src/generated", "src/generated/well-known-types"]
     }

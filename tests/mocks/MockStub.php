@@ -32,6 +32,9 @@
 
 namespace Google\GAX\Testing;
 
+use InvalidArgumentException;
+use UnderflowException;
+
 class MockStub
 {
     // invariant: count($responseSequence) >= 1
@@ -44,6 +47,10 @@ class MockStub
         $this->actualCalls = [];
     }
 
+    /**
+     * @param mixed $responseObject
+     * @return MockStub
+     */
     public static function create($responseObject)
     {
         $stub = new MockStub();
@@ -55,11 +62,13 @@ class MockStub
     /**
      * Creates a sequence such that the responses are returned in order,
      * and once there is only one left, it is repeated indefinitely.
+     * @param mixed[] $sequence
+     * @return MockStub
      */
     public static function createWithResponseSequence($sequence)
     {
         if (count($sequence) == 0) {
-            throw new \InvalidArgumentException("createResponseSequence: need at least 1 response");
+            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
         }
         $stub = new MockStub();
         $stub->responseSequence = $sequence;
@@ -81,26 +90,10 @@ class MockStub
             'options' => $options,
         ];
         array_push($this->actualCalls, $actualCall);
-        if (count($this->responseSequence) == 1) {
-            return new MockGrpcCall($this->responseSequence[0]);
-        } else {
-            $response = array_shift($this->responseSequence);
-            return new MockGrpcCall($response);
+        if (count($this->responseSequence) < 1) {
+            throw new UnderflowException("ran out of responses");
         }
-    }
-}
-
-class MockGrpcCall
-{
-    // this will be an array of [responseObject, status]
-    private $response;
-    public function __construct($response)
-    {
-        $this->response = $response;
-    }
-
-    public function wait()
-    {
-        return $this->response;
+        $response = array_shift($this->responseSequence);
+        return new MockUnaryCall($response[0], null, $response[1]);
     }
 }
