@@ -39,7 +39,7 @@ use InvalidArgumentException;
  */
 class AgentHeaderDescriptor
 {
-    const AGENT_HEADER_KEY = 'x-google-apis-agent';
+    const AGENT_HEADER_KEY = 'x-goog-api-client';
 
     private $clientName;
     private $clientVersion;
