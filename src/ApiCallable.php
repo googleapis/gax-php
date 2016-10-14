@@ -152,7 +152,6 @@ class ApiCallable
     public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
     {
         $apiCall = function () use ($stub, $methodName) {
-
             list($response, $status) =
                 call_user_func_array(array($stub, $methodName), func_get_args())->wait();
             if ($status->code == Grpc\STATUS_OK) {
