@@ -29,6 +29,31 @@ while (true) {
     $op->refresh();
 }
 
+// Sample using operation proto object
+$op = $sampleApi->longRunningRpc();
+// ... do stuff ...
+$op->pollUntilComplete();
+$opProto = $op->getProtoResponse();
+// ... use opProto ...
+
+
+//////////////////////////////////////////////////////////////////
+// Samples when returning an array with flag for checking success
+list($success, $response) = $sampleApi->longRunningRpc()->pollUntilComplete();
+if ($success) {
+    // handle success
+} else {
+    // handle failure
+}
+
+list($statusCode, $response) = $sampleApi->longRunningRpc()->pollUntilComplete();
+if ($statusCode == Google\Rpc\Code::OK) {
+    // handle success
+} else {
+    // handle failure
+}
+
+
 class OperationResponse
 {
     private $operationProto;
@@ -94,6 +119,11 @@ class OperationResponse
             return unpack_response($this->operationsProto->getResponse());
         }
         throw new Exception("this should never happen...");
+    }
+
+    public function getProtoResponse()
+    {
+        return $this->operationProto;
     }
 
     public function cancel()
