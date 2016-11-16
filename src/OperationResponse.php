@@ -1,129 +1,95 @@
 <?php
 
-// Simple case
-$op = $sampleApi->longRunningRpc();
-// ... do stuff ...
-$op->pollUntilComplete();
-$result = $op->getResult();
+namespace Google\GAX;
 
-// Save handle and resume
-$opName = $sampleApi->longRunningRpc()->getName();
-// ... do stuff ...
-$op = $sampleApi->getOperationsApi()->getOperation($opName);
-$op->pollUntilComplete();
-$result = $op->getResult();
-
-// Polling loop
-$op = $sampleApi->longRunningRpc();
-while (!$op->isDone()) {
-    // ... do stuff ...
-    $op->refresh();
-}
-$result = $op->getResult();
-
-// Polling loop with promise
-$op = $sampleApi->longRunningRpc();
-$op->promise()->then($funcToHandleResponse, $funcToHandleError);
-while (true) {
-    // ... do stuff ...
-    $op->refresh();
-}
-
-// Sample using operation proto object
-$op = $sampleApi->longRunningRpc();
-// ... do stuff ...
-$op->pollUntilComplete();
-$opProto = $op->getProtoResponse();
-// ... use opProto ...
-
-
-//////////////////////////////////////////////////////////////////
-// Samples when returning an array with flag for checking success
-list($success, $response) = $sampleApi->longRunningRpc()->pollUntilComplete();
-if ($success) {
-    // handle success
-} else {
-    // handle failure
-}
-
-list($statusCode, $response) = $sampleApi->longRunningRpc()->pollUntilComplete();
-if ($statusCode == Google\Rpc\Code::OK) {
-    // handle success
-} else {
-    // handle failure
-}
-
+use Google\Longrunning\OperationsApi;
 
 class OperationResponse
 {
-    private $operationProto;
+    private $operationName;
     private $operationsApi;
+    private $operationReturnType;
+    private $lastProtoResponse;
 
-    // OPTIONAL: support promises using a deferred object using
-    // https://github.com/reactphp/promise#deferred or similar
-    private $deferred;
+    public static function resumeOperation($operationName, $serviceAddress)
+    {
+        $operationsApi = new OperationsApi(['serviceAddress' => $serviceAddress]);
+        $longRunningDescriptor = [
+            'operationsApi' => $operationsApi,
+            'operationReturnType' => null,
+        ];
+        return new OperationResponse($operationName, $longRunningDescriptor, null);
+    }
+
+    public function __construct($operationName, $longRunningDescriptor, $lastProtoResponse = null)
+    {
+        $this->operationName = $operationName;
+        $this->operationsApi = $longRunningDescriptor['operationsApi'];
+        $this->operationReturnType = $longRunningDescriptor['operationReturnType'];
+        $this->lastProtoResponse = $lastProtoResponse;
+    }
 
     public function isDone()
     {
-        return $this->operationProto->getDone();
+         return is_null($this->lastProtoResponse)
+             ? false
+             : $this->lastProtoResponse->getDone();
     }
 
     public function getName()
     {
-        return $this->operationProto->getName();
+        return $this->operationName;
     }
 
-    public function pollUntilComplete($pollSettings = [])
+    public function pollUntilComplete($handler = null, $pollSettings = [])
     {
         while (!$this->isDone()) {
             // TODO: use poll settings
             sleep(1);
+            echo "refreshing...\n";
             $this->refresh();
         }
+
+        if (!is_null($handler)) {
+            return $handler($this);
+        }
+
+        return $this->lastProtoResponse->hasResponse();
     }
 
-    // OPTIONAL: provide a promise (using https://github.com/reactphp/promise)
-    public function promise() {
-        return $this->deferred->promise();
-    }
-
-    public function refresh($resolvePromiseOnComplete = true)
+    public function refresh()
     {
         $name = $this->getName();
-        $this->operationsProto = $this->operationsApi->getOperation($name);
-
-        // OPTIONAL: resolve promise
-        if ($resolvePromiseOnComplete && $this->isDone()) {
-            if ($this->operationsProto->hasError()) {
-                $this->deferred->reject($this->operationsProto->getError());
-            } elseif ($this->operationsProto->hasResponse()) {
-                $this->deferred->resolve($this->operationsProto->getResponse());
-            } else {
-                throw new Exception("this should never happen");
-            }
-        }
+        $this->lastProtoResponse = $this->operationsApi->getOperation($name);
     }
 
     public function getResult()
     {
-        if (!$this->isDone()) {
+        if (!$this->isDone() || !$this->lastProtoResponse->hasResponse()) {
             return null;
         }
-        if ($this->operationsProto->hasError()) {
-            // TODO: throw detailed exception
-            $error = $this->operationsProto->getError();
-            throw new Exception("$error");
+
+        $anyResponse = $this->lastProtoResponse->getResponse();
+        if (is_null($this->operationReturnType)) {
+            return $anyResponse;
         }
-        if ($this->opertationsProto->hasResponse()) {
-            // TODO: implement unpacking
-            return unpack_response($this->operationsProto->getResponse());
-        }
-        throw new Exception("this should never happen...");
+        $operationReturnType = $this->operationReturnType;
+        $response = new $operationReturnType();
+        $response->parse($anyResponse->getValue());
+        return $response;
     }
 
-    public function getProtoResponse()
+    public function getError()
     {
-        return $this->operationProto;
+        if (!$this->isDone() || !$this->lastProtoResponse->hasError()) {
+            return null;
+        }
+        return $this->lastProtoResponse->getError();
+    }
+
+    public function getLastProtoResponse()
+    {
+        return $this->lastProtoResponse;
     }
 
     public function cancel()

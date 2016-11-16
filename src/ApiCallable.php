@@ -120,6 +120,16 @@ class ApiCallable
         return $inner;
     }
 
+    private static function setLongRunnning($callable, $longRunningDescriptor)
+    {
+        $inner = function () use ($callable, $longRunningDescriptor) {
+            $response = call_user_func_array($callable, func_get_args());
+            $name = $response->getName();
+            return new OperationResponse($response->getName(), $longRunningDescriptor, $response);
+        };
+        return $inner;
+    }
+
     private static function setCustomHeader($callable, $headerDescriptor)
     {
         $inner = function () use ($callable, $headerDescriptor) {
@@ -174,6 +184,10 @@ class ApiCallable
 
         if (array_key_exists('pageStreamingDescriptor', $options)) {
             $apiCall = self::setPageStreaming($apiCall, $options['pageStreamingDescriptor']);
+        }
+
+        if (array_key_exists('longRunningDescriptor', $options)) {
+            $apiCall = self::setLongRunnning($apiCall, $options['longRunningDescriptor']);
         }
 
         if (array_key_exists('headerDescriptor', $options)) {
