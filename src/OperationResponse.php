@@ -6,6 +6,8 @@ use Google\Longrunning\OperationsApi;
 
 class OperationResponse
 {
+    const DEFAULT_POLLING_INTERVAL = 1.0;
+
     private $operationName;
     private $operationsApi;
     private $operationReturnType;
@@ -43,6 +45,7 @@ class OperationResponse
 
     public function pollUntilComplete($handler = null, $pollSettings = [])
     {
+
         while (!$this->isDone()) {
             // TODO: use poll settings
             sleep(1);
