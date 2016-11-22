@@ -87,67 +87,66 @@ class OperationsApi
     const _CODEGEN_NAME = 'GAPIC';
     const _CODEGEN_VERSION = '0.0.0';
 
-private static $operationPathNameTemplate;
+    private static $operationPathNameTemplate;
 
-private $grpcCredentialsHelper;
-private $operationsStub;
-private $scopes;
-private $defaultCallSettings;
-private $descriptors;
+    private $grpcCredentialsHelper;
+    private $operationsStub;
+    private $scopes;
+    private $defaultCallSettings;
+    private $descriptors;
 
     /**
      * Formats a string containing the fully-qualified path to represent
      * a operation_path resource.
      */
-public static function formatOperationPathName($operationPath)
-{
-    return self::getOperationPathNameTemplate()->render([
-    'operation_path' => $operationPath,
-    ]);
-}
+    public static function formatOperationPathName($operationPath)
+    {
+        return self::getOperationPathNameTemplate()->render([
+            'operation_path' => $operationPath,
+        ]);
+    }
 
     /**
      * Parses the operation_path from the given fully-qualified path which
      * represents a operation_path resource.
      */
-public static function parseOperationPathFromOperationPathName($operationPathName)
-{
-    return self::getOperationPathNameTemplate()->match($operationPathName)['operation_path'];
-}
-
-
-private static function getOperationPathNameTemplate()
-{
-    if (self::$operationPathNameTemplate == null) {
-        self::$operationPathNameTemplate = new PathTemplate('operations/{operation_path=**}');
+    public static function parseOperationPathFromOperationPathName($operationPathName)
+    {
+        return self::getOperationPathNameTemplate()->match($operationPathName)['operation_path'];
     }
 
-    return self::$operationPathNameTemplate;
-}
+    private static function getOperationPathNameTemplate()
+    {
+        if (self::$operationPathNameTemplate == null) {
+            self::$operationPathNameTemplate = new PathTemplate('operations/{operation_path=**}');
+        }
 
-private static function getPageStreamingDescriptors()
-{
-    $listOperationsPageStreamingDescriptor =
-        new PageStreamingDescriptor([
-            'requestPageTokenField' => 'page_token',
-            'requestPageSizeField' => 'page_size',
-            'responsePageTokenField' => 'next_page_token',
-            'resourceField' => 'operations',
-        ]);
+        return self::$operationPathNameTemplate;
+    }
 
-    $pageStreamingDescriptors = [
-    'listOperations' => $listOperationsPageStreamingDescriptor,
-    ];
+    private static function getPageStreamingDescriptors()
+    {
+        $listOperationsPageStreamingDescriptor =
+                new PageStreamingDescriptor([
+                    'requestPageTokenField' => 'page_token',
+                    'requestPageSizeField' => 'page_size',
+                    'responsePageTokenField' => 'next_page_token',
+                    'resourceField' => 'operations',
+                ]);
 
-    return $pageStreamingDescriptors;
-}
+        $pageStreamingDescriptors = [
+            'listOperations' => $listOperationsPageStreamingDescriptor,
+        ];
+
+        return $pageStreamingDescriptors;
+    }
 
     // TODO(garrettjones): add channel (when supported in gRPC)
     /**
      * Constructor.
      *
      * @param array $options {
-     *     Optional. Options for configuring the service API wrapper.
+     *                       Optional. Options for configuring the service API wrapper.
      *
      *     @type string $serviceAddress The domain name of the API remote host.
      *                                  Default 'longrunning.googleapis.com'.
@@ -175,73 +174,73 @@ private static function getPageStreamingDescriptors()
      *                              Google\Auth library.
      * }
      */
-public function __construct($options = [])
-{
-    $defaultScopes = [
-    ];
-    $defaultOptions = [
-    'serviceAddress' => self::SERVICE_ADDRESS,
-    'port' => self::DEFAULT_SERVICE_PORT,
-    'scopes' => $defaultScopes,
-    'retryingOverride' => null,
-    'timeoutMillis' => self::DEFAULT_TIMEOUT_MILLIS,
-    'appName' => 'gax',
-    'appVersion' => self::_GAX_VERSION,
-    'credentialsLoader' => null,
-    ];
-    $options = array_merge($defaultOptions, $options);
+    public function __construct($options = [])
+    {
+        $defaultScopes = [
+        ];
+        $defaultOptions = [
+            'serviceAddress' => self::SERVICE_ADDRESS,
+            'port' => self::DEFAULT_SERVICE_PORT,
+            'scopes' => $defaultScopes,
+            'retryingOverride' => null,
+            'timeoutMillis' => self::DEFAULT_TIMEOUT_MILLIS,
+            'appName' => 'gax',
+            'appVersion' => self::_GAX_VERSION,
+            'credentialsLoader' => null,
+        ];
+        $options = array_merge($defaultOptions, $options);
 
-    $headerDescriptor = new AgentHeaderDescriptor([
-    'clientName' => $options['appName'],
-    'clientVersion' => $options['appVersion'],
-    'codeGenName' => self::_CODEGEN_NAME,
-    'codeGenVersion' => self::_CODEGEN_VERSION,
-    'gaxVersion' => self::_GAX_VERSION,
-    'phpVersion' => phpversion(),
-    ]);
+        $headerDescriptor = new AgentHeaderDescriptor([
+            'clientName' => $options['appName'],
+            'clientVersion' => $options['appVersion'],
+            'codeGenName' => self::_CODEGEN_NAME,
+            'codeGenVersion' => self::_CODEGEN_VERSION,
+            'gaxVersion' => self::_GAX_VERSION,
+            'phpVersion' => phpversion(),
+        ]);
 
-    $defaultDescriptors = ['headerDescriptor' => $headerDescriptor];
-    $this->descriptors = [
-    'getOperation' => $defaultDescriptors,
-    'listOperations' => $defaultDescriptors,
-    'cancelOperation' => $defaultDescriptors,
-    'deleteOperation' => $defaultDescriptors,
-    ];
-    $pageStreamingDescriptors = self::getPageStreamingDescriptors();
-    foreach ($pageStreamingDescriptors as $method => $pageStreamingDescriptor) {
-        $this->descriptors[$method]['pageStreamingDescriptor'] = $pageStreamingDescriptor;
-    }
+        $defaultDescriptors = ['headerDescriptor' => $headerDescriptor];
+        $this->descriptors = [
+            'getOperation' => $defaultDescriptors,
+            'listOperations' => $defaultDescriptors,
+            'cancelOperation' => $defaultDescriptors,
+            'deleteOperation' => $defaultDescriptors,
+        ];
+        $pageStreamingDescriptors = self::getPageStreamingDescriptors();
+        foreach ($pageStreamingDescriptors as $method => $pageStreamingDescriptor) {
+            $this->descriptors[$method]['pageStreamingDescriptor'] = $pageStreamingDescriptor;
+        }
 
-    $clientConfigJsonString = file_get_contents(__DIR__ . '/resources/operations_client_config.json');
-    $clientConfig = json_decode($clientConfigJsonString, true);
-    $this->defaultCallSettings =
-        CallSettings::load(
-            'google.longrunning.Operations',
-            $clientConfig,
-            $options['retryingOverride'],
-            GrpcConstants::getStatusCodeNames(),
-            $options['timeoutMillis']
-        );
+        $clientConfigJsonString = file_get_contents(__DIR__.'/resources/operations_client_config.json');
+        $clientConfig = json_decode($clientConfigJsonString, true);
+        $this->defaultCallSettings =
+                CallSettings::load(
+                    'google.longrunning.Operations',
+                    $clientConfig,
+                    $options['retryingOverride'],
+                    GrpcConstants::getStatusCodeNames(),
+                    $options['timeoutMillis']
+                );
 
-    $this->scopes = $options['scopes'];
+        $this->scopes = $options['scopes'];
 
-    $createStubOptions = [];
-    if (!empty($options['sslCreds'])) {
-        $createStubOptions['sslCreds'] = $options['sslCreds'];
-    }
-    $grpcCredentialsHelperOptions = array_diff_key($options, $defaultOptions);
-    $this->grpcCredentialsHelper = new GrpcCredentialsHelper($this->scopes, $grpcCredentialsHelperOptions);
+        $createStubOptions = [];
+        if (!empty($options['sslCreds'])) {
+            $createStubOptions['sslCreds'] = $options['sslCreds'];
+        }
+        $grpcCredentialsHelperOptions = array_diff_key($options, $defaultOptions);
+        $this->grpcCredentialsHelper = new GrpcCredentialsHelper($this->scopes, $grpcCredentialsHelperOptions);
 
-    $createOperationsStubFunction = function ($hostname, $opts) {
-        return new OperationsClient($hostname, $opts);
-    };
+        $createOperationsStubFunction = function ($hostname, $opts) {
+            return new OperationsClient($hostname, $opts);
+        };
         $this->operationsStub = $this->grpcCredentialsHelper->createStub(
             $createOperationsStubFunction,
             $options['serviceAddress'],
             $options['port'],
             $createStubOptions
         );
-}
+    }
 
     /**
      * Gets the latest state of a long-running operation.  Clients can use this
@@ -261,9 +260,10 @@ public function __construct($options = [])
      * }
      * ```
      *
-     * @param string $name The name of the operation resource.
-     * @param array $optionalArgs {
-     *     Optional.
+     * @param string $name         The name of the operation resource.
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
      *     @type Google\GAX\RetrySettings $retrySettings
      *          Retry settings to use for this call. If present, then
      *          $timeoutMillis is ignored.
@@ -276,33 +276,33 @@ public function __construct($options = [])
      *
      * @throws Google\GAX\ApiException if the remote call fails
      */
-public function getOperation($name, $optionalArgs = [])
-{
-    $request = new GetOperationRequest();
-    $request->setName($name);
+    public function getOperation($name, $optionalArgs = [])
+    {
+        $request = new GetOperationRequest();
+        $request->setName($name);
 
-    $mergedSettings = $this->defaultCallSettings['getOperation']->merge(
-        new CallSettings($optionalArgs)
-    );
-    $callable = ApiCallable::createApiCall(
-        $this->operationsStub,
-        'GetOperation',
-        $mergedSettings,
-        $this->descriptors['getOperation']
-    );
+        $mergedSettings = $this->defaultCallSettings['getOperation']->merge(
+            new CallSettings($optionalArgs)
+        );
+        $callable = ApiCallable::createApiCall(
+            $this->operationsStub,
+            'GetOperation',
+            $mergedSettings,
+            $this->descriptors['getOperation']
+        );
 
-    return $callable(
-    $request,
-    [],
-    ['call_credentials_callback' => $this->createCredentialsCallback()]);
-}
+        return $callable(
+            $request,
+            [],
+            ['call_credentials_callback' => $this->createCredentialsCallback()]);
+    }
 
     /**
      * Lists operations that match the specified filter in the request. If the
      * server doesn't support this method, it returns `UNIMPLEMENTED`.
      *
      * NOTE: the `name` binding below allows API services to override the binding
-     * to use different resource name schemes, such as `users/* /operations`.
+     * to use different resource name schemes, such as `users/{@*}/operations`.
      *
      * Sample code:
      * ```
@@ -311,46 +311,43 @@ public function getOperation($name, $optionalArgs = [])
      *     $name = "";
      *     $filter = "";
      *     foreach ($operationsApi->listOperations($name, $filter) as $element) {
-        *         // doThingsWith(element);
-        *
-     }
-        *
-     } finally {
-                   *     if (isset($operationsApi)) {
-                       *         $operationsApi->close();
-                       *
-                   }
-                    *
-        }
-        * ```
-        *
-        * @param string $name The name of the operation collection.
-        * @param string $filter The standard list filter.
-        * @param array $optionalArgs {
-        *     Optional.
-        *     @type int $pageSize
-        *          The maximum number of resources contained in the underlying API
-        *          response. The API may return fewer values in a page, even if
-        *          there are additional values to be retrieved.
-        *     @type string $pageToken
-        *          A page token is used to specify a page of values to be returned.
-        *          If no page token is specified (the default), the first page
-        *          of values will be returned. Any page token used here must have
-        *          been generated by a previous call to the API.
-        *     @type Google\GAX\RetrySettings $retrySettings
-        *          Retry settings to use for this call. If present, then
-        *          $timeoutMillis is ignored.
-        *     @type int $timeoutMillis
-        *          Timeout to use for this call. Only used if $retrySettings
-        *          is not set.
-        * }
-        *
-        * @return Google\GAX\PagedListResponse
-        *
-        * @throws Google\GAX\ApiException if the remote call fails
-        */
-        public function listOperations($name, $filter, $optionalArgs = [])
-        {
+     *         // doThingsWith(element);
+     *     }
+     * } finally {
+     *     if (isset($operationsApi)) {
+     *         $operationsApi->close();
+     *     }
+     * }
+     * ```
+     *
+     * @param string $name         The name of the operation collection.
+     * @param string $filter       The standard list filter.
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
+     *     @type int $pageSize
+     *          The maximum number of resources contained in the underlying API
+     *          response. The API may return fewer values in a page, even if
+     *          there are additional values to be retrieved.
+     *     @type string $pageToken
+     *          A page token is used to specify a page of values to be returned.
+     *          If no page token is specified (the default), the first page
+     *          of values will be returned. Any page token used here must have
+     *          been generated by a previous call to the API.
+     *     @type Google\GAX\RetrySettings $retrySettings
+     *          Retry settings to use for this call. If present, then
+     *          $timeoutMillis is ignored.
+     *     @type int $timeoutMillis
+     *          Timeout to use for this call. Only used if $retrySettings
+     *          is not set.
+     * }
+     *
+     * @return Google\GAX\PagedListResponse
+     *
+     * @throws Google\GAX\ApiException if the remote call fails
+     */
+    public function listOperations($name, $filter, $optionalArgs = [])
+    {
         $request = new ListOperationsRequest();
         $request->setName($name);
         $request->setFilter($filter);
@@ -362,135 +359,146 @@ public function getOperation($name, $optionalArgs = [])
         }
 
         $mergedSettings = $this->defaultCallSettings['listOperations']->merge(
-            new CallSettings($optionalArgs));
+            new CallSettings($optionalArgs)
+        );
         $callable = ApiCallable::createApiCall(
-            $this->operationsStub, 'ListOperations', $mergedSettings, $this->descriptors['listOperations']);
+            $this->operationsStub,
+            'ListOperations',
+            $mergedSettings,
+            $this->descriptors['listOperations']
+        );
 
         return $callable(
             $request,
             [],
             ['call_credentials_callback' => $this->createCredentialsCallback()]);
-        }
+    }
 
-        /**
-        * Starts asynchronous cancellation on a long-running operation.  The server
-        * makes a best effort to cancel the operation, but success is not
-        * guaranteed.  If the server doesn't support this method, it returns
-        * `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
-        * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or
-        * other methods to check whether the cancellation succeeded or whether the
-        * operation completed despite cancellation. On successful cancellation,
-        * the operation is not deleted; instead, it becomes an operation with
-        * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-        * corresponding to `Code.CANCELLED`.
-        *
-        * Sample code:
-        * ```
-        * try {
-            *     $operationsApi = new OperationsApi();
-            *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
-            *     $operationsApi->cancelOperation($formattedName);
-            *
-        } finally {
-            *     if (isset($operationsApi)) {
-                *         $operationsApi->close();
-                *
-            }
-            *
-        }
-            * ```
-            *
-            * @param string $name The name of the operation resource to be cancelled.
-            * @param array $optionalArgs {
-            *     Optional.
-            *     @type Google\GAX\RetrySettings $retrySettings
-            *          Retry settings to use for this call. If present, then
-            *          $timeoutMillis is ignored.
-            *     @type int $timeoutMillis
-            *          Timeout to use for this call. Only used if $retrySettings
-            *          is not set.
-            * }
-            *
-            * @throws Google\GAX\ApiException if the remote call fails
-            */
-            public function cancelOperation($name, $optionalArgs = [])
-            {
-            $request = new CancelOperationRequest();
-            $request->setName($name);
+    /**
+     * Starts asynchronous cancellation on a long-running operation.  The server
+     * makes a best effort to cancel the operation, but success is not
+     * guaranteed.  If the server doesn't support this method, it returns
+     * `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
+     * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+     * other methods to check whether the cancellation succeeded or whether the
+     * operation completed despite cancellation. On successful cancellation,
+     * the operation is not deleted; instead, it becomes an operation with
+     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
+     * corresponding to `Code.CANCELLED`.
+     *
+     * Sample code:
+     * ```
+     * try {
+     *     $operationsApi = new OperationsApi();
+     *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
+     *     $operationsApi->cancelOperation($formattedName);
+     * } finally {
+     *     if (isset($operationsApi)) {
+     *         $operationsApi->close();
+     *     }
+     * }
+     * ```
+     *
+     * @param string $name         The name of the operation resource to be cancelled.
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
+     *     @type Google\GAX\RetrySettings $retrySettings
+     *          Retry settings to use for this call. If present, then
+     *          $timeoutMillis is ignored.
+     *     @type int $timeoutMillis
+     *          Timeout to use for this call. Only used if $retrySettings
+     *          is not set.
+     * }
+     *
+     * @throws Google\GAX\ApiException if the remote call fails
+     */
+    public function cancelOperation($name, $optionalArgs = [])
+    {
+        $request = new CancelOperationRequest();
+        $request->setName($name);
 
-            $mergedSettings = $this->defaultCallSettings['cancelOperation']->merge(
-            new CallSettings($optionalArgs));
-            $callable = ApiCallable::createApiCall(
-            $this->operationsStub, 'CancelOperation', $mergedSettings, $this->descriptors['cancelOperation']);
+        $mergedSettings = $this->defaultCallSettings['cancelOperation']->merge(
+            new CallSettings($optionalArgs)
+        );
+        $callable = ApiCallable::createApiCall(
+            $this->operationsStub,
+            'CancelOperation',
+            $mergedSettings,
+            $this->descriptors['cancelOperation']
+        );
 
-            return $callable(
+        return $callable(
             $request,
             [],
             ['call_credentials_callback' => $this->createCredentialsCallback()]);
-            }
+    }
 
-            /**
-            * Deletes a long-running operation. This method indicates that the client is
-            * no longer interested in the operation result. It does not cancel the
-            * operation. If the server doesn't support this method, it returns
-            * `google.rpc.Code.UNIMPLEMENTED`.
-            *
-            * Sample code:
-            * ```
-            * try {
-                   *     $operationsApi = new OperationsApi();
-                   *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
-                   *     $operationsApi->deleteOperation($formattedName);
-                   *
-            } finally {
-                *     if (isset($operationsApi)) {
-                    *         $operationsApi->close();
-                    *
-                }
-                *
-            }
-                    * ```
-                    *
-                    * @param string $name The name of the operation resource to be deleted.
-                    * @param array $optionalArgs {
-                    *     Optional.
-                    *     @type Google\GAX\RetrySettings $retrySettings
-                    *          Retry settings to use for this call. If present, then
-                    *          $timeoutMillis is ignored.
-                    *     @type int $timeoutMillis
-                    *          Timeout to use for this call. Only used if $retrySettings
-                    *          is not set.
-                    * }
-                    *
-                    * @throws Google\GAX\ApiException if the remote call fails
-                    */
-                    public function deleteOperation($name, $optionalArgs = [])
-                    {
-                    $request = new DeleteOperationRequest();
-                    $request->setName($name);
+    /**
+     * Deletes a long-running operation. This method indicates that the client is
+     * no longer interested in the operation result. It does not cancel the
+     * operation. If the server doesn't support this method, it returns
+     * `google.rpc.Code.UNIMPLEMENTED`.
+     *
+     * Sample code:
+     * ```
+     * try {
+     *     $operationsApi = new OperationsApi();
+     *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
+     *     $operationsApi->deleteOperation($formattedName);
+     * } finally {
+     *     if (isset($operationsApi)) {
+     *         $operationsApi->close();
+     *     }
+     * }
+     * ```
+     *
+     * @param string $name         The name of the operation resource to be deleted.
+     * @param array  $optionalArgs {
+     *                             Optional.
+     *
+     *     @type Google\GAX\RetrySettings $retrySettings
+     *          Retry settings to use for this call. If present, then
+     *          $timeoutMillis is ignored.
+     *     @type int $timeoutMillis
+     *          Timeout to use for this call. Only used if $retrySettings
+     *          is not set.
+     * }
+     *
+     * @throws Google\GAX\ApiException if the remote call fails
+     */
+    public function deleteOperation($name, $optionalArgs = [])
+    {
+        $request = new DeleteOperationRequest();
+        $request->setName($name);
 
-                    $mergedSettings = $this->defaultCallSettings['deleteOperation']->merge(
-                    new CallSettings($optionalArgs));
-                    $callable = ApiCallable::createApiCall(
-                    $this->operationsStub, 'DeleteOperation', $mergedSettings, $this->descriptors['deleteOperation']);
+        $mergedSettings = $this->defaultCallSettings['deleteOperation']->merge(
+            new CallSettings($optionalArgs)
+        );
+        $callable = ApiCallable::createApiCall(
+            $this->operationsStub,
+            'DeleteOperation',
+            $mergedSettings,
+            $this->descriptors['deleteOperation']
+        );
 
-                    return $callable(
-                    $request,
-                    [],
-                    ['call_credentials_callback' => $this->createCredentialsCallback()]);
-                    }
+        return $callable(
+            $request,
+            [],
+            ['call_credentials_callback' => $this->createCredentialsCallback()]);
+    }
 
-                    /**
-                    * Initiates an orderly shutdown in which preexisting calls continue but new
-                    * calls are immediately cancelled.
-                    */
-                    public function close()
-                    {
-                    $this->operationsStub->close();
-                    }
+    /**
+     * Initiates an orderly shutdown in which preexisting calls continue but new
+     * calls are immediately cancelled.
+     */
+    public function close()
+    {
+        $this->operationsStub->close();
+    }
 
-                    private function createCredentialsCallback()
-                    {
-                    return $this->grpcCredentialsHelper->createCallCredentialsCallback();
-                    }
-            }
+    private function createCredentialsCallback()
+    {
+        return $this->grpcCredentialsHelper->createCallCredentialsCallback();
+    }
+}
