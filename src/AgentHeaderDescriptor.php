@@ -84,7 +84,8 @@ class AgentHeaderDescriptor
     /**
      * Returns the version string for GAX.
      */
-    public static function getGaxVersion() {
+    public static function getGaxVersion()
+    {
         return self::GAX_VERSION;
     }
 
