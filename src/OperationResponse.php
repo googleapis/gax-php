@@ -2,33 +2,41 @@
 
 namespace Google\GAX;
 
-use Google\Longrunning\OperationsApi;
+use Google\Longrunning\OperationsClient;
 
+/**
+ * Response object from a long running API method
+ *
+ * The OperationResponse object is returned by API methods that perform
+ * a long running operation. It provides methods that can be used to
+ * poll the status of the operation, retrieve the results, and cancel
+ * the operation.
+ *
+ * To support a long running operation, the server must implement the
+ * Operations API, which is used by the OperationResponse object. If
+ * more control is required, it is possible to make calls against the
+ * Operations API directly instead of via the OperationResponse object
+ * using an OperationsClient instance.
+ */
 class OperationResponse
 {
     const DEFAULT_POLLING_INTERVAL = 1.0;
 
     private $operationName;
-    private $operationsApi;
+    private $operationsClient;
     private $operationReturnType;
     private $lastProtoResponse;
 
-    public static function resumeOperation($operationName, $serviceAddress)
-    {
-        $operationsApi = new OperationsApi(['serviceAddress' => $serviceAddress]);
-        $longRunningDescriptor = [
-            'operationsApi' => $operationsApi,
-            'operationReturnType' => null,
-        ];
-        return new OperationResponse($operationName, $longRunningDescriptor, null);
-    }
-
-    public function __construct($operationName, $longRunningDescriptor, $lastProtoResponse = null)
+    public function __construct($operationName, $operationsClient, $options = [])
     {
         $this->operationName = $operationName;
-        $this->operationsApi = $longRunningDescriptor['operationsApi'];
-        $this->operationReturnType = $longRunningDescriptor['operationReturnType'];
-        $this->lastProtoResponse = $lastProtoResponse;
+        $this->operationsClient = $operationsClient;
+        if (isset($options['operationReturnType'])) {
+            $this->operationReturnType = $options['operationReturnType'];
+        }
+        if (isset($options['lastProtoResponse'])) {
+            $this->lastProtoResponse = $options['lastProtoResponse'];
+        }
     }
 
     public function isDone()
@@ -45,11 +53,15 @@ class OperationResponse
 
     public function pollUntilComplete($handler = null, $pollSettings = [])
     {
+        $defaultPollSettings = [
+            'pollingIntervalSeconds' => this::DEFAULT_POLLING_INTERVAL,
+        ];
+        $pollSettings = array_merge($defaultPollSettings, $pollSettings);
+
+        $pollingIntervalMicros = $pollSettings['pollingIntervalSeconds'] * 1000000;
 
         while (!$this->isDone()) {
-            // TODO: use poll settings
-            sleep(1);
-            echo "refreshing...\n";
+            usleep($pollingIntervalMicros);
             $this->refresh();
         }
 
@@ -63,7 +75,7 @@ class OperationResponse
     public function refresh()
     {
         $name = $this->getName();
-        $this->lastProtoResponse = $this->operationsApi->getOperation($name);
+        $this->lastProtoResponse = $this->operationsClient->getOperation($name);
     }
 
     public function getResult()
@@ -95,8 +107,13 @@ class OperationResponse
         return $this->lastProtoResponse;
     }
 
+    public function getOperationsClient()
+    {
+        return $this->operationsClient;
+    }
+
     public function cancel()
     {
-        $this->operationsApi->cancelOperation($this->getName());
+        $this->operationsClient->cancelOperation($this->getName());
     }
 }

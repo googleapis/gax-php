@@ -125,7 +125,11 @@ class ApiCallable
         $inner = function () use ($callable, $longRunningDescriptor) {
             $response = call_user_func_array($callable, func_get_args());
             $name = $response->getName();
-            return new OperationResponse($response->getName(), $longRunningDescriptor, $response);
+            $client = $longRunningDescriptor['operationsClient'];
+            $options = $longRunningDescriptor + [
+                'lastProtoResponse' => $response,
+            ]
+            return new OperationResponse($name, $client, $options);
         };
         return $inner;
     }
