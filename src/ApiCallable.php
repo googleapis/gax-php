@@ -128,7 +128,7 @@ class ApiCallable
             $client = $longRunningDescriptor['operationsClient'];
             $options = $longRunningDescriptor + [
                 'lastProtoResponse' => $response,
-            ]
+            ];
             return new OperationResponse($name, $client, $options);
         };
         return $inner;
