@@ -36,18 +36,18 @@ use Grpc;
 /**
  * ClientStreamingResponse is the response object from a gRPC client streaming API call.
  */
-class ClientStreamingResponse
+class BidiStreamingResponse
 {
     private $call;
 
     /**
-     * ClientStreamingResponse constructor.
+     * BidiStreamingResponse constructor.
      *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
+     * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      */
-    public function __construct($clientStreamingCall)
+    public function __construct($bidiStreamingCall)
     {
-        $this->call = $clientStreamingCall;
+        $this->call = $bidiStreamingCall;
     }
 
     /**
@@ -61,41 +61,57 @@ class ClientStreamingResponse
     }
 
     /**
-     * Wait for the server to return a response object.
+     * Write all data in $dataArray, and return an iterator of response objects.
      *
-     * @return mixed The response object from the server
+     * @param mixed[] $dataArray An iterator of data objects to write to the server
+     * @return \Generator|mixed[]
+     */
+    public function writeAllAndReadAll($dataArray = [])
+    {
+        foreach ($dataArray as $data) {
+            $this->write($data);
+        }
+        $this->call->writesDone();
+        return $this->readAll();
+    }
+
+    /**
+     * Read the next response from the server. Returns null if no response is available.
+     *
+     * @return mixed
+     */
+    public function read()
+    {
+        return $this->call->read();
+    }
+
+    /**
+     * Read all available responses from the server, and check the status once all response are
+     * exhausted.
+     *
+     * @return \Generator|mixed[]
      * @throws ApiException
      */
-    public function wait()
+    public function readAll()
     {
-        list($response, $status) = $this->call->wait();
-        if ($status->code == Grpc\STATUS_OK) {
-            return $response;
-        } else {
+        $response = $this->read();
+        while (!is_null($response)) {
+            yield $response;
+            $response = $this->read();
+        }
+        $status = $this->call->getStatus();
+        if (!($status->code == Grpc\STATUS_OK)) {
             throw new ApiException($status->details, $status->code);
         }
     }
 
     /**
-     * Write all data in $dataArray and wait for the server to return a response object.
-     *
-     * @param mixed[] $dataArray An iterator of data objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndWait($dataArray)
-    {
-        foreach ($dataArray as $data) {
-            $this->write($data);
-        }
-        return $this->wait();
-    }
-
-    /**
      * Return the underlying gRPC call object
      *
-     * @return \Grpc\ClientStreamingCall
+     * @return \Grpc\BidiStreamingCall
      */
-    public function getClientStreamingCall() {
+    public function getBidiStreamingCall()
+    {
         return $this->call;
     }
 }
