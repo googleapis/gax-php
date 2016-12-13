@@ -2,10 +2,8 @@
 
 namespace Google\GAX;
 
-use Google\Longrunning\OperationsClient;
-
 /**
- * Response object from a long running API method
+ * Response object from a long running API method.
  *
  * The OperationResponse object is returned by API methods that perform
  * a long running operation. It provides methods that can be used to
@@ -39,6 +37,11 @@ class OperationResponse
         }
     }
 
+    /**
+     * Check whether the operation has completed.
+     *
+     * @return bool
+     */
     public function isDone()
     {
          return is_null($this->lastProtoResponse)
@@ -46,11 +49,34 @@ class OperationResponse
              : $this->lastProtoResponse->getDone();
     }
 
+    /**
+     * Get the formatted name of the operation
+     *
+     * @return string The formatted name of the operation
+     */
     public function getName()
     {
         return $this->operationName;
     }
 
+    /**
+     * Poll the server in a loop until the operation is complete.
+     *
+     * If the $handler callable is not null, then call $handler (with $this as argument) and return
+     * the result. Otherwise, return true if the operation completed successfully, otherwise return
+     * false.
+     *
+     * The $pollSettings optional argument can be used to control the polling loop.
+     *
+     * @param callable $handler An optional callable which accepts $this as its argument. If not
+     * null, $handler will be called once the operation is complete (when $this->isDone() is true).
+     * @param array $pollSettings {
+     *      An optional array to control the polling behavior.
+     *      @type float $pollingIntervalSeconds The polling interval to use, in seconds.
+     *                                          Default: 1.0
+     * }
+     * @return mixed
+     */
     public function pollUntilComplete($handler = null, $pollSettings = [])
     {
         $defaultPollSettings = [
@@ -62,7 +88,7 @@ class OperationResponse
 
         while (!$this->isDone()) {
             usleep($pollingIntervalMicros);
-            $this->refresh();
+            $this->reload();
         }
 
         if (!is_null($handler)) {
@@ -72,12 +98,20 @@ class OperationResponse
         return $this->lastProtoResponse->hasResponse();
     }
 
-    public function refresh()
+    /**
+     * Reload the status of the operation with a request to the service.
+     */
+    public function reload()
     {
         $name = $this->getName();
         $this->lastProtoResponse = $this->operationsClient->getOperation($name);
     }
 
+    /**
+     * Return the result of the operation. If the operation is not complete, or if the operation
+     * failed, return null.
+     * @return mixed The result of the operation, or null if the operation failed or is not complete
+     */
     public function getResult()
     {
         if (!$this->isDone() || !$this->lastProtoResponse->hasResponse()) {
@@ -94,6 +128,13 @@ class OperationResponse
         return $response;
     }
 
+    /**
+     * If the operation failed, return the status. If the operation succeeded or is not complete,
+     * return null.
+     *
+     * @return \google\rpc\Status|null The status of the operation in case of failure, otherwise
+     *                                 null.
+     */
     public function getError()
     {
         if (!$this->isDone() || !$this->lastProtoResponse->hasError()) {
@@ -102,16 +143,26 @@ class OperationResponse
         return $this->lastProtoResponse->getError();
     }
 
+    /**
+     * @return \google\longrunning\Operation The last Operation object received from the server.
+     */
     public function getLastProtoResponse()
     {
         return $this->lastProtoResponse;
     }
 
+    /**
+     * @return \Google\Longrunning\OperationsClient The OperationsClient object used to make
+     * requests to the operations API.
+     */
     public function getOperationsClient()
     {
         return $this->operationsClient;
     }
 
+    /**
+     * Cancel the operation.
+     */
     public function cancel()
     {
         $this->operationsClient->cancelOperation($this->getName());

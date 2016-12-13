@@ -18,6 +18,10 @@
  * This file was generated from the file
  * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
  * and updates to that file get reflected here through a refresh process.
+ *
+ * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
+ * more frequently than those which have been declared beta or 1.0, including changes which break
+ * backwards compatibility.
  */
 
 namespace Google\Longrunning;
@@ -28,12 +32,11 @@ use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
-use Google\GAX\PathTemplate;
 use google\longrunning\CancelOperationRequest;
 use google\longrunning\DeleteOperationRequest;
 use google\longrunning\GetOperationRequest;
 use google\longrunning\ListOperationsRequest;
-use google\longrunning\OperationsClient;
+use google\longrunning\OperationsGrpcClient;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -46,17 +49,21 @@ use google\longrunning\OperationsClient;
  * returns long-running operations should implement the `Operations` interface
  * so developers can have a consistent client experience.
  *
+ * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
+ * more frequently than those which have been declared beta or 1.0, including changes which break
+ * backwards compatibility.
+ *
  * This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
  * ```
  * try {
- *     $operationsApi = new OperationsApi();
- *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
- *     $response = $operationsApi->getOperation($formattedName);
+ *     $operationsClient = new OperationsClient();
+ *     $name = "";
+ *     $response = $operationsClient->getOperation($name);
  * } finally {
- *     if (isset($operationsApi)) {
- *         $operationsApi->close();
+ *     if (isset($operationsClient)) {
+ *         $operationsClient->close();
  *     }
  * }
  * ```
@@ -66,7 +73,7 @@ use google\longrunning\OperationsClient;
  * a parse method to extract the individual identifiers contained within names that are
  * returned.
  */
-class OperationsApi
+class OperationsClient
 {
     /**
      * The default address of the service.
@@ -83,46 +90,14 @@ class OperationsApi
      */
     const DEFAULT_TIMEOUT_MILLIS = 30000;
 
-    const _GAX_VERSION = '0.1.0';
-    const _CODEGEN_NAME = 'GAPIC';
-    const _CODEGEN_VERSION = '0.0.0';
-
-    private static $operationPathNameTemplate;
+    const _CODEGEN_NAME = 'gapic';
+    const _CODEGEN_VERSION = '0.1.0';
 
     private $grpcCredentialsHelper;
     private $operationsStub;
     private $scopes;
     private $defaultCallSettings;
     private $descriptors;
-
-    /**
-     * Formats a string containing the fully-qualified path to represent
-     * a operation_path resource.
-     */
-    public static function formatOperationPathName($operationPath)
-    {
-        return self::getOperationPathNameTemplate()->render([
-            'operation_path' => $operationPath,
-        ]);
-    }
-
-    /**
-     * Parses the operation_path from the given fully-qualified path which
-     * represents a operation_path resource.
-     */
-    public static function parseOperationPathFromOperationPathName($operationPathName)
-    {
-        return self::getOperationPathNameTemplate()->match($operationPathName)['operation_path'];
-    }
-
-    private static function getOperationPathNameTemplate()
-    {
-        if (self::$operationPathNameTemplate == null) {
-            self::$operationPathNameTemplate = new PathTemplate('operations/{operation_path=**}');
-        }
-
-        return self::$operationPathNameTemplate;
-    }
 
     private static function getPageStreamingDescriptors()
     {
@@ -185,8 +160,7 @@ class OperationsApi
             'retryingOverride' => null,
             'timeoutMillis' => self::DEFAULT_TIMEOUT_MILLIS,
             'appName' => 'gax',
-            'appVersion' => self::_GAX_VERSION,
-            'credentialsLoader' => null,
+            'appVersion' => AgentHeaderDescriptor::getGaxVersion(),
         ];
         $options = array_merge($defaultOptions, $options);
 
@@ -195,7 +169,7 @@ class OperationsApi
             'clientVersion' => $options['appVersion'],
             'codeGenName' => self::_CODEGEN_NAME,
             'codeGenVersion' => self::_CODEGEN_VERSION,
-            'gaxVersion' => self::_GAX_VERSION,
+            'gaxVersion' => AgentHeaderDescriptor::getGaxVersion(),
             'phpVersion' => phpversion(),
         ]);
 
@@ -225,14 +199,14 @@ class OperationsApi
         $this->scopes = $options['scopes'];
 
         $createStubOptions = [];
-        if (!empty($options['sslCreds'])) {
+        if (array_key_exists('sslCreds', $options)) {
             $createStubOptions['sslCreds'] = $options['sslCreds'];
         }
         $grpcCredentialsHelperOptions = array_diff_key($options, $defaultOptions);
         $this->grpcCredentialsHelper = new GrpcCredentialsHelper($this->scopes, $grpcCredentialsHelperOptions);
 
         $createOperationsStubFunction = function ($hostname, $opts) {
-            return new OperationsClient($hostname, $opts);
+            return new OperationsGrpcClient($hostname, $opts);
         };
         $this->operationsStub = $this->grpcCredentialsHelper->createStub(
             $createOperationsStubFunction,
@@ -250,12 +224,12 @@ class OperationsApi
      * Sample code:
      * ```
      * try {
-     *     $operationsApi = new OperationsApi();
-     *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
-     *     $response = $operationsApi->getOperation($formattedName);
+     *     $operationsClient = new OperationsClient();
+     *     $name = "";
+     *     $response = $operationsClient->getOperation($name);
      * } finally {
-     *     if (isset($operationsApi)) {
-     *         $operationsApi->close();
+     *     if (isset($operationsClient)) {
+     *         $operationsClient->close();
      *     }
      * }
      * ```
@@ -264,7 +238,7 @@ class OperationsApi
      * @param array  $optionalArgs {
      *                             Optional.
      *
-     *     @type Google\GAX\RetrySettings $retrySettings
+     *     @type \Google\GAX\RetrySettings $retrySettings
      *          Retry settings to use for this call. If present, then
      *          $timeoutMillis is ignored.
      *     @type int $timeoutMillis
@@ -272,9 +246,9 @@ class OperationsApi
      *          is not set.
      * }
      *
-     * @return google\longrunning\Operation
+     * @return \google\longrunning\Operation
      *
-     * @throws Google\GAX\ApiException if the remote call fails
+     * @throws \Google\GAX\ApiException if the remote call fails
      */
     public function getOperation($name, $optionalArgs = [])
     {
@@ -302,20 +276,20 @@ class OperationsApi
      * server doesn't support this method, it returns `UNIMPLEMENTED`.
      *
      * NOTE: the `name` binding below allows API services to override the binding
-     * to use different resource name schemes, such as `users/{@*}/operations`.
+     * to use different resource name schemes, such as `users/&#42;/operations`.
      *
      * Sample code:
      * ```
      * try {
-     *     $operationsApi = new OperationsApi();
+     *     $operationsClient = new OperationsClient();
      *     $name = "";
      *     $filter = "";
-     *     foreach ($operationsApi->listOperations($name, $filter) as $element) {
+     *     foreach ($operationsClient->listOperations($name, $filter) as $element) {
      *         // doThingsWith(element);
      *     }
      * } finally {
-     *     if (isset($operationsApi)) {
-     *         $operationsApi->close();
+     *     if (isset($operationsClient)) {
+     *         $operationsClient->close();
      *     }
      * }
      * ```
@@ -334,7 +308,7 @@ class OperationsApi
      *          If no page token is specified (the default), the first page
      *          of values will be returned. Any page token used here must have
      *          been generated by a previous call to the API.
-     *     @type Google\GAX\RetrySettings $retrySettings
+     *     @type \Google\GAX\RetrySettings $retrySettings
      *          Retry settings to use for this call. If present, then
      *          $timeoutMillis is ignored.
      *     @type int $timeoutMillis
@@ -342,9 +316,9 @@ class OperationsApi
      *          is not set.
      * }
      *
-     * @return Google\GAX\PagedListResponse
+     * @return \Google\GAX\PagedListResponse
      *
-     * @throws Google\GAX\ApiException if the remote call fails
+     * @throws \Google\GAX\ApiException if the remote call fails
      */
     public function listOperations($name, $filter, $optionalArgs = [])
     {
@@ -389,12 +363,12 @@ class OperationsApi
      * Sample code:
      * ```
      * try {
-     *     $operationsApi = new OperationsApi();
-     *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
-     *     $operationsApi->cancelOperation($formattedName);
+     *     $operationsClient = new OperationsClient();
+     *     $name = "";
+     *     $operationsClient->cancelOperation($name);
      * } finally {
-     *     if (isset($operationsApi)) {
-     *         $operationsApi->close();
+     *     if (isset($operationsClient)) {
+     *         $operationsClient->close();
      *     }
      * }
      * ```
@@ -403,7 +377,7 @@ class OperationsApi
      * @param array  $optionalArgs {
      *                             Optional.
      *
-     *     @type Google\GAX\RetrySettings $retrySettings
+     *     @type \Google\GAX\RetrySettings $retrySettings
      *          Retry settings to use for this call. If present, then
      *          $timeoutMillis is ignored.
      *     @type int $timeoutMillis
@@ -411,7 +385,7 @@ class OperationsApi
      *          is not set.
      * }
      *
-     * @throws Google\GAX\ApiException if the remote call fails
+     * @throws \Google\GAX\ApiException if the remote call fails
      */
     public function cancelOperation($name, $optionalArgs = [])
     {
@@ -443,12 +417,12 @@ class OperationsApi
      * Sample code:
      * ```
      * try {
-     *     $operationsApi = new OperationsApi();
-     *     $formattedName = OperationsApi::formatOperationPathName("[OPERATION_PATH]");
-     *     $operationsApi->deleteOperation($formattedName);
+     *     $operationsClient = new OperationsClient();
+     *     $name = "";
+     *     $operationsClient->deleteOperation($name);
      * } finally {
-     *     if (isset($operationsApi)) {
-     *         $operationsApi->close();
+     *     if (isset($operationsClient)) {
+     *         $operationsClient->close();
      *     }
      * }
      * ```
@@ -457,7 +431,7 @@ class OperationsApi
      * @param array  $optionalArgs {
      *                             Optional.
      *
-     *     @type Google\GAX\RetrySettings $retrySettings
+     *     @type \Google\GAX\RetrySettings $retrySettings
      *          Retry settings to use for this call. If present, then
      *          $timeoutMillis is ignored.
      *     @type int $timeoutMillis
@@ -465,7 +439,7 @@ class OperationsApi
      *          is not set.
      * }
      *
-     * @throws Google\GAX\ApiException if the remote call fails
+     * @throws \Google\GAX\ApiException if the remote call fails
      */
     public function deleteOperation($name, $optionalArgs = [])
     {
