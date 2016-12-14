@@ -80,7 +80,7 @@ class OperationResponse
     public function pollUntilComplete($handler = null, $pollSettings = [])
     {
         $defaultPollSettings = [
-            'pollingIntervalSeconds' => this::DEFAULT_POLLING_INTERVAL,
+            'pollingIntervalSeconds' => $this::DEFAULT_POLLING_INTERVAL,
         ];
         $pollSettings = array_merge($defaultPollSettings, $pollSettings);
 
