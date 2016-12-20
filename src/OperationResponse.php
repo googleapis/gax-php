@@ -23,7 +23,9 @@ class OperationResponse
     private $operationName;
     private $operationsClient;
     private $operationReturnType;
+    private $metadataReturnType;
     private $lastProtoResponse;
+    private $deleted = false;
 
     public function __construct($operationName, $operationsClient, $options = [])
     {
@@ -31,6 +33,9 @@ class OperationResponse
         $this->operationsClient = $operationsClient;
         if (isset($options['operationReturnType'])) {
             $this->operationReturnType = $options['operationReturnType'];
+        }
+        if (isset($options['metadataReturnType'])) {
+            $this->metadataReturnType = $options['metadataReturnType'];
         }
         if (isset($options['lastProtoResponse'])) {
             $this->lastProtoResponse = $options['lastProtoResponse'];
@@ -44,7 +49,7 @@ class OperationResponse
      */
     public function isDone()
     {
-         return is_null($this->lastProtoResponse)
+         return (is_null($this->lastProtoResponse) || is_null($this->lastProtoResponse->getDone()))
              ? false
              : $this->lastProtoResponse->getDone();
     }
@@ -103,6 +108,9 @@ class OperationResponse
      */
     public function reload()
     {
+        if ($this->deleted) {
+            throw new ValidationException("Cannot call reload() on a deleted operation");
+        }
         $name = $this->getName();
         $this->lastProtoResponse = $this->operationsClient->getOperation($name);
     }
@@ -161,10 +169,55 @@ class OperationResponse
     }
 
     /**
-     * Cancel the operation.
+     * Starts asynchronous cancellation on a long-running operation. The server
+     * makes a best effort to cancel the operation, but success is not
+     * guaranteed. If the server doesn't support this method, it will throw an
+     * ApiException with code \google\rpc\Code::UNIMPLEMENTED. Clients can continue
+     * to use reload and pollUntilComplete methods to check whether the cancellation
+     * succeeded or whether the operation completed despite cancellation.
+     * On successful cancellation, the operation is not deleted; instead, it becomes
+     * an operation with a getError() value with a \google\rpc\Status code of 1,
+     * corresponding to \google\rpc\Code::CANCELLED.
      */
     public function cancel()
     {
         $this->operationsClient->cancelOperation($this->getName());
+    }
+
+    /**
+     * Delete the long-running operation. This method indicates that the client is
+     * no longer interested in the operation result. It does not cancel the operation.
+     * If the server doesn't support this method, it will throw an ApiException with
+     * code google\rpc\Code::UNIMPLEMENTED.
+     */
+    public function delete()
+    {
+        $this->operationsClient->deleteOperation($this->getName());
+        $this->deleted = true;
+    }
+
+    /**
+     * Get the metadata returned with the last proto response. If a metadata type was provided, then
+     * the return value will be of that type - otherwise, the return value will be of type Any. If
+     * no metadata object is available, returns null.
+     *
+     * @return mixed The metadata returned from the server in the last response.
+     */
+    public function getMetadata()
+    {
+        if (is_null($this->lastProtoResponse)) {
+            return null;
+        }
+        $any = $this->lastProtoResponse->getMetadata();
+        if (is_null($this->metadataReturnType)) {
+            return $any;
+        }
+        if (is_null($any) || is_null($any->getValue())) {
+            return null;
+        }
+        $metadataReturnType = $this->metadataReturnType;
+        $metadata = new $metadataReturnType();
+        $metadata->parse($any->getValue());
+        return $metadata;
     }
 }

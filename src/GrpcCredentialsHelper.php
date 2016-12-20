@@ -121,10 +121,10 @@ class GrpcCredentialsHelper
      * @param array $options {
      *     Optional. Options for configuring the gRPC stub.
      *
-     *     @type Grpc\ChannelCredentials $sslCreds
+     *     @type \Grpc\ChannelCredentials $sslCreds
      *           A `ChannelCredentials` for use with an SSL-enabled channel.
      *           Default: a credentials object returned from
-     *           Grpc\ChannelCredentials::createSsl()
+     *           \Grpc\ChannelCredentials::createSsl()
      * }
      */
     public function createStub($generatedCreateStub, $serviceAddress, $port, $options = [])

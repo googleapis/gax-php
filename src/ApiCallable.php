@@ -152,16 +152,18 @@ class ApiCallable
     }
 
     /**
-     * @param Grpc\BaseStub $stub the gRPC stub to make calls through.
+     * @param \Grpc\BaseStub $stub the gRPC stub to make calls through.
      * @param string $methodName the method name on the stub to call.
-     * @param Google\GAX\CallSettings $settings the call settings to use for this call.
+     * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
      * @param array $options {
      *     Optional.
-     *     @type Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
+     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
      *           the descriptor used for page-streaming.
-     *     @type Google\GAX\AgentHeaderDescriptor $headerDescriptor
+     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
      *           the descriptor used for creating GAPIC header.
      * }
+     *
+     * @return callable
      */
     public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
     {

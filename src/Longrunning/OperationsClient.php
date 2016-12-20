@@ -208,6 +208,9 @@ class OperationsClient
         $createOperationsStubFunction = function ($hostname, $opts) {
             return new OperationsGrpcClient($hostname, $opts);
         };
+        if (array_key_exists('createOperationsStubFunction', $options)) {
+            $createOperationsStubFunction = $options['createOperationsStubFunction'];
+        }
         $this->operationsStub = $this->grpcCredentialsHelper->createStub(
             $createOperationsStubFunction,
             $options['serviceAddress'],
