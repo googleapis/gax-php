@@ -80,37 +80,31 @@ class OperationResponse
     /**
      * Poll the server in a loop until the operation is complete.
      *
-     * If the $handler callable is not null, then call $handler (with $this as argument) and return
-     * the result. Otherwise, return true if the operation completed successfully, otherwise return
+     * Return true if the operation completed successfully, otherwise return
      * false.
      *
      * The $pollSettings optional argument can be used to control the polling loop.
      *
-     * @param callable $handler An optional callable which accepts $this as its argument. If not
-     * null, $handler will be called once the operation is complete (when $this->isDone() is true).
-     * @param array $pollSettings {
-     *      An optional array to control the polling behavior.
-     *      @type float $pollingIntervalSeconds The polling interval to use, in seconds.
+     * @param array $options {
+     *                       Options for configuring the polling behaviour.
+     *
+     *     @type float $pollingIntervalSeconds The polling interval to use, in seconds.
      *                                          Default: 1.0
      * }
-     * @return mixed
+     * @return boolean Indicates if the operation completed successfully.
      */
-    public function pollUntilComplete($handler = null, $pollSettings = [])
+    public function pollUntilComplete($options = [])
     {
         $defaultPollSettings = [
             'pollingIntervalSeconds' => $this::DEFAULT_POLLING_INTERVAL,
         ];
-        $pollSettings = array_merge($defaultPollSettings, $pollSettings);
+        $pollSettings = array_merge($defaultPollSettings, $options);
 
         $pollingIntervalMicros = $pollSettings['pollingIntervalSeconds'] * 1000000;
 
         while (!$this->isDone()) {
             usleep($pollingIntervalMicros);
             $this->reload();
-        }
-
-        if (!is_null($handler)) {
-            return $handler($this);
         }
 
         return $this->lastProtoResponse->hasResponse();

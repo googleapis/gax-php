@@ -562,7 +562,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame(1, count($callStub->actualCalls));
         $this->assertSame(0, count($opStub->actualCalls));
 
-        $response->pollUntilComplete(null, ['pollingIntervalSeconds' => 0.1]);
+        $response->pollUntilComplete(['pollingIntervalSeconds' => 0.1]);
 
         $this->assertTrue($response->isDone());
 
