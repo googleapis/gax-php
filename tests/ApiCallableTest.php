@@ -42,10 +42,8 @@ use Google\GAX\Testing\MockRequest;
 use Google\GAX\Testing\MockResponse;
 use google\longrunning\Operation;
 use Google\Longrunning\OperationsClient;
-use google\protobuf\Any;
 use google\protobuf\EmptyC;
 use google\rpc\Code;
-use google\rpc\Status;
 
 class ApiCallableTest extends PHPUnit_Framework_TestCase
 {

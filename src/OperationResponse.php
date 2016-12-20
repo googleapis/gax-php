@@ -27,6 +27,19 @@ class OperationResponse
     private $lastProtoResponse;
     private $deleted = false;
 
+    /**
+     * OperationResponse constructor.
+     *
+     * @param string $operationName
+     * @param \Google\Longrunning\OperationsClient $operationsClient
+     * @param array $options {
+     *                       Optional. Options for configuring the Operation response object.
+     *
+     *     @type string $operationReturnType The return type of the longrunning operation.
+     *     @type string $metadataReturnType The type of the metadata returned in the Operation response.
+     *     @type \google\longrunning\Operation $lastProtoResponse A response already received from the server.
+     * }
+     */
     public function __construct($operationName, $operationsClient, $options = [])
     {
         $this->operationName = $operationName;
