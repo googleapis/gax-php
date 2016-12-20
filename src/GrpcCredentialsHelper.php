@@ -56,7 +56,7 @@ class GrpcCredentialsHelper
      *     will be passed as optional arguments to Google\Auth\FetchAuthTokenCache
      *     when caching is enabled.
      *
-     *     @var Google\Auth\CredentialsLoader $credentialsLoader
+     *     @var \Google\Auth\CredentialsLoader $credentialsLoader
      *          A user-created CredentialsLoader object. Defaults to using
      *          ApplicationDefaultCredentials
      *     @var boolean $enableCaching
@@ -111,7 +111,7 @@ class GrpcCredentialsHelper
     /**
      * Creates a gRPC client stub.
      *
-     * @param function $generatedCreateStub
+     * @param callable $generatedCreateStub
      *        Function callback which must accept two arguments ($hostname, $opts)
      *        and return an instance of the stub of the specific API to call.
      *        Generally, this should just call the stub's constructor and return
