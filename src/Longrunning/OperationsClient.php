@@ -32,6 +32,7 @@ use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
+use Google\GAX\ValidationException;
 use google\longrunning\CancelOperationRequest;
 use google\longrunning\DeleteOperationRequest;
 use google\longrunning\GetOperationRequest;
@@ -76,11 +77,6 @@ use google\longrunning\OperationsGrpcClient;
 class OperationsClient
 {
     /**
-     * The default address of the service.
-     */
-    const SERVICE_ADDRESS = 'longrunning.googleapis.com';
-
-    /**
      * The default port of the service.
      */
     const DEFAULT_SERVICE_PORT = 443;
@@ -121,17 +117,16 @@ class OperationsClient
      * Constructor.
      *
      * @param array $options {
-     *                       Optional. Options for configuring the service API wrapper.
+     *                       Required. Options for configuring the service API wrapper. Those options
+     *                       that must be provided are marked as Required.
      *
-     *     @type string $serviceAddress The domain name of the API remote host.
-     *                                  Default 'longrunning.googleapis.com'.
+     *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
-     *     @type Grpc\ChannelCredentials $sslCreds
+     *     @type \Grpc\ChannelCredentials $sslCreds
      *           A `ChannelCredentials` for use with an SSL-enabled channel.
      *           Default: a credentials object returned from
-     *           Grpc\ChannelCredentials::createSsl()
-     *     @type array $scopes A string array of scopes to use when acquiring credentials.
-     *                         Default the scopes for the Google Long Running Operations API.
+     *           \Grpc\ChannelCredentials::createSsl()
+     *     @type array $scopes Required. A string array of scopes to use when acquiring credentials.
      *     @type array $retryingOverride
      *           An associative array of string => RetryOptions, where the keys
      *           are method names (e.g. 'createFoo'), that overrides default retrying
@@ -144,19 +139,21 @@ class OperationsClient
      *     @type string $appName The codename of the calling service. Default 'gax'.
      *     @type string $appVersion The version of the calling service.
      *                              Default: the current version of GAX.
-     *     @type Google\Auth\CredentialsLoader $credentialsLoader
+     *     @type \Google\Auth\CredentialsLoader $credentialsLoader
      *                              A CredentialsLoader object created using the
      *                              Google\Auth library.
      * }
      */
     public function __construct($options = [])
     {
-        $defaultScopes = [
-        ];
+        if (!array_key_exists('serviceAddress', $options)) {
+            throw new ValidationException("The 'serviceAddress' option must be provided.");
+        }
+        if (!array_key_exists('scopes', $options)) {
+            throw new ValidationException("The 'scopes' option must be provided.");
+        }
         $defaultOptions = [
-            'serviceAddress' => self::SERVICE_ADDRESS,
             'port' => self::DEFAULT_SERVICE_PORT,
-            'scopes' => $defaultScopes,
             'retryingOverride' => null,
             'timeoutMillis' => self::DEFAULT_TIMEOUT_MILLIS,
             'appName' => 'gax',
