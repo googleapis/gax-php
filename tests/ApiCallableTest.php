@@ -458,16 +458,6 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         return $op;
     }
 
-    public static function createOperationsClient($stub)
-    {
-        $client = new OperationsClient([
-            'createOperationsStubFunction' => function ($hostname, $opts) use ($stub) {
-                return $stub;
-            },
-        ]);
-        return $client;
-    }
-
     public function testLongrunningSuccess()
     {
         $opName = 'operation/someop';
@@ -484,7 +474,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
         $opStub = MockStub::createWithResponseSequence($responseSequence);
-        $opClient = self::createOperationsClient($opStub);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
             'operationReturnType' => '\google\rpc\Status',
@@ -546,7 +536,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
         $opStub = MockStub::createWithResponseSequence($responseSequence);
-        $opClient = self::createOperationsClient($opStub);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
             'operationReturnType' => '\google\rpc\Status',
@@ -594,7 +584,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
         $opStub = MockStub::createWithResponseSequence($responseSequence);
-        $opClient = self::createOperationsClient($opStub);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
             'operationReturnType' => '\google\rpc\Status',
@@ -656,7 +646,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
         $opStub = MockStub::createWithResponseSequence($responseSequence);
-        $opClient = self::createOperationsClient($opStub);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
             'operationReturnType' => '\google\rpc\Status',
@@ -707,7 +697,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
         $opStub = MockStub::createWithResponseSequence([[new EmptyC(), new MockStatus(Grpc\STATUS_OK, '')]]);
-        $opClient = self::createOperationsClient($opStub);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
             'operationReturnType' => '\google\rpc\Status',

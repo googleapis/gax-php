@@ -41,7 +41,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $opName = 'operations/opname';
-        $opClient = new OperationsClient();
+        $opClient = self::createOperationsClient();
         $op = new OperationResponse($opName, $opClient);
 
         $this->assertSame($opName, $op->getName());
@@ -51,7 +51,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public function testWithoutResponse()
     {
         $opName = 'operations/opname';
-        $opClient = new OperationsClient();
+        $opClient = self::createOperationsClient();
         $op = new OperationResponse($opName, $opClient);
 
         $this->assertNull($op->getLastProtoResponse());
@@ -64,7 +64,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public function testWithResponse()
     {
         $opName = 'operations/opname';
-        $opClient = new OperationsClient();
+        $opClient = self::createOperationsClient();
         $protoResponse = new Operation();
         $op = new OperationResponse($opName, $opClient, [
             'lastProtoResponse' => $protoResponse,
@@ -93,7 +93,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public function testWithOptions()
     {
         $opName = 'operations/opname';
-        $opClient = new OperationsClient();
+        $opClient = self::createOperationsClient();
         $protoResponse = new Operation();
         $op = new OperationResponse($opName, $opClient, [
             'operationReturnType' => '\google\rpc\Status',
@@ -124,5 +124,17 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public static function createStatus($code, $message) {
         $value = new Status();
         return $value->setCode($code)->setMessage($message);
+    }
+
+    public static function createOperationsClient($stub = null)
+    {
+        $client = new OperationsClient([
+            'createOperationsStubFunction' => function ($hostname, $opts) use ($stub) {
+                return $stub;
+            },
+            'serviceAddress' => '',
+            'scopes' => [],
+        ]);
+        return $client;
     }
 }
