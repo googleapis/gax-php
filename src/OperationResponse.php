@@ -83,15 +83,14 @@ class OperationResponse
      * Return true if the operation completed successfully, otherwise return
      * false.
      *
-     * The $pollSettings optional argument can be used to control the polling loop.
-     *
      * @param array $options {
      *                       Options for configuring the polling behaviour.
      *
      *     @type float $pollingIntervalSeconds The polling interval to use, in seconds.
      *                                          Default: 1.0
      * }
-     * @return boolean Indicates if the operation completed successfully.
+     * @return bool Indicates if the operation completed successfully.
+     * @throws ApiException If the API call fails.
      */
     public function pollUntilComplete($options = [])
     {
@@ -112,6 +111,9 @@ class OperationResponse
 
     /**
      * Reload the status of the operation with a request to the service.
+     *
+     * @throws ApiException If the API call fails.
+     * @throws ValidationException If called on a deleted operation.
      */
     public function reload()
     {
@@ -159,7 +161,7 @@ class OperationResponse
     }
 
     /**
-     * @return \google\longrunning\Operation The last Operation object received from the server.
+     * @return \google\longrunning\Operation|null The last Operation object received from the server.
      */
     public function getLastProtoResponse()
     {
@@ -185,6 +187,8 @@ class OperationResponse
      * On successful cancellation, the operation is not deleted; instead, it becomes
      * an operation with a getError() value with a \google\rpc\Status code of 1,
      * corresponding to \google\rpc\Code::CANCELLED.
+     *
+     * @throws ApiException If the API call fails.
      */
     public function cancel()
     {
@@ -196,6 +200,8 @@ class OperationResponse
      * no longer interested in the operation result. It does not cancel the operation.
      * If the server doesn't support this method, it will throw an ApiException with
      * code google\rpc\Code::UNIMPLEMENTED.
+     *
+     * @throws ApiException If the API call fails.
      */
     public function delete()
     {
