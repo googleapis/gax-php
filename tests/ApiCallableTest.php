@@ -520,7 +520,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([false, false, true], $isDoneResponses);
     }
 
-    public function testLongrunningPollingSettings()
+    public function testLongrunningPollingInterval()
     {
         $opName = 'operation/someop';
 
@@ -552,8 +552,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame(1, count($callStub->actualCalls));
         $this->assertSame(0, count($opStub->actualCalls));
 
-        $response->pollUntilComplete(['pollingIntervalSeconds' => 0.1]);
-
+        $complete = $response->pollUntilComplete(['pollingIntervalSeconds' => 0.1]);
+        $this->assertTrue($complete);
         $this->assertTrue($response->isDone());
 
         $this->assertSame(1, count($callStub->actualCalls));
@@ -564,6 +564,56 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame('GetOperation', $opStub->actualCalls[1]['funcName']);
 
         $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'someMessage'), $response->getResult());
+        $this->assertNull($response->getError());
+        $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'm3'), $response->getMetadata());
+    }
+
+    public function testLongrunningMaxPollingDuration()
+    {
+        $opName = 'operation/someop';
+
+        $request = null;
+        $result = OperationResponseTest::createStatus(Code::OK, 'someMessage');
+
+        $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
+        $responseA = self::createIncompleteOperationResponse($opName, 'm2');
+        $responseB = self::createIncompleteOperationResponse($opName, 'm3');
+        $responseSequence = [
+            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+        ];
+        $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
+        $opStub = MockStub::createWithResponseSequence($responseSequence);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
+        $descriptor = [
+            'operationsClient' => $opClient,
+            'operationReturnType' => '\google\rpc\Status',
+            'metadataReturnType' => '\google\rpc\Status',
+        ];
+        $callSettings = new CallSettings();
+        $apiCall = ApiCallable::createApiCall(
+            $callStub, 'takeAction', $callSettings, ['longRunningDescriptor' => $descriptor]);
+
+        /* @var $response \Google\GAX\OperationResponse */
+        $response = $apiCall($request, [], []);
+
+        $this->assertSame(1, count($callStub->actualCalls));
+        $this->assertSame(0, count($opStub->actualCalls));
+
+        $complete = $response->pollUntilComplete([
+            'pollingIntervalSeconds' => 0.1,
+            'maxPollingDurationSeconds' => 0.15,
+        ]);
+        $this->assertFalse($complete);
+        $this->assertFalse($response->isDone());
+
+        $this->assertSame(1, count($callStub->actualCalls));
+        $this->assertSame(2, count($opStub->actualCalls));
+
+        $this->assertSame('takeAction', $callStub->actualCalls[0]['funcName']);
+        $this->assertSame('GetOperation', $opStub->actualCalls[0]['funcName']);
+
+        $this->assertNull($response->getResult());
         $this->assertNull($response->getError());
         $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'm3'), $response->getMetadata());
     }

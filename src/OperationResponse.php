@@ -80,33 +80,41 @@ class OperationResponse
     /**
      * Poll the server in a loop until the operation is complete.
      *
-     * Return true if the operation completed successfully, otherwise return
-     * false.
+     * Return true if the operation completed, otherwise return false. If the
+     * $options['maxPollingDuration'] setting is not set (or set <= 0.0) then
+     * pollUntilComplete will continue polling until the operation completes,
+     * and therefore will always return true.
      *
      * @param array $options {
      *                       Options for configuring the polling behaviour.
      *
      *     @type float $pollingIntervalSeconds The polling interval to use, in seconds.
      *                                          Default: 1.0
+     *     @type float $maxPollingDurationSeconds The maximum amount of time to continue polling.
+     *                                            Default: 0.0 (no maximum)
      * }
-     * @return bool Indicates if the operation completed successfully.
-     * @throws ApiException If the API call fails.
+     * @return bool Indicates if the operation completed.
+     * @throws ApiException If an API call fails.
      */
     public function pollUntilComplete($options = [])
     {
         $defaultPollSettings = [
             'pollingIntervalSeconds' => $this::DEFAULT_POLLING_INTERVAL,
+            'maxPollingDurationSeconds' => 0.0,
         ];
         $pollSettings = array_merge($defaultPollSettings, $options);
 
         $pollingIntervalMicros = $pollSettings['pollingIntervalSeconds'] * 1000000;
+        $maxPollingDuration = $pollSettings['maxPollingDurationSeconds'];
 
-        while (!$this->isDone()) {
+        $hasMaxPollingDuration = $maxPollingDuration > 0.0;
+        $endTime = microtime(true) + $maxPollingDuration;
+        while (!$this->isDone() && (!$hasMaxPollingDuration || microtime(true) < $endTime)) {
             usleep($pollingIntervalMicros);
             $this->reload();
         }
 
-        return $this->lastProtoResponse->hasResponse();
+        return $this->isDone();
     }
 
     /**
