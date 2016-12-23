@@ -62,9 +62,31 @@ class OperationResponse
      */
     public function isDone()
     {
-         return (is_null($this->lastProtoResponse) || is_null($this->lastProtoResponse->getDone()))
-             ? false
-             : $this->lastProtoResponse->getDone();
+        return (is_null($this->lastProtoResponse) || is_null($this->lastProtoResponse->getDone()))
+            ? false
+            : $this->lastProtoResponse->getDone();
+    }
+
+    /**
+     * Check whether the operation completed successfully. If the operation is not complete, or if the operation
+     * failed, return false.
+     *
+     * @return bool
+     */
+    public function operationSucceeded()
+    {
+        return !is_null($this->getResult());
+    }
+
+    /**
+     * Check whether the operation failed. If the operation is not complete, or if the operation
+     * succeeded, return false.
+     *
+     * @return bool
+     */
+    public function operationFailed()
+    {
+        return !is_null($this->getError());
     }
 
     /**
@@ -133,9 +155,9 @@ class OperationResponse
     }
 
     /**
-     * Return the result of the operation. If the operation is not complete, or if the operation
-     * failed, return null.
-     * @return mixed The result of the operation, or null if the operation failed or is not complete
+     * Return the result of the operation. If operationSucceeded() is false, return null.
+     *
+     * @return mixed|null The result of the operation, or null if operationSucceeded() is false
      */
     public function getResult()
     {
@@ -154,11 +176,10 @@ class OperationResponse
     }
 
     /**
-     * If the operation failed, return the status. If the operation succeeded or is not complete,
-     * return null.
+     * If the operation failed, return the status. If operationFailed() is false, return null.
      *
-     * @return \google\rpc\Status|null The status of the operation in case of failure, otherwise
-     *                                 null.
+     * @return \google\rpc\Status|null The status of the operation in case of failure, or null if
+     *                                 operationFailed() is false.
      */
     public function getError()
     {

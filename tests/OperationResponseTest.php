@@ -59,6 +59,8 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertNull($op->getResult());
         $this->assertNull($op->getError());
         $this->assertNull($op->getMetadata());
+        $this->assertFalse($op->operationSucceeded());
+        $this->assertFalse($op->operationFailed());
     }
 
     public function testWithResponse()
@@ -75,6 +77,8 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertNull($op->getResult());
         $this->assertNull($op->getError());
         $this->assertNull($op->getMetadata());
+        $this->assertFalse($op->operationSucceeded());
+        $this->assertFalse($op->operationFailed());
 
         $response = self::createAny(self::createStatus(0, "response"));
         $error = self::createStatus(2, "error");
@@ -84,10 +88,14 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($op->isDone());
         $this->assertSame($response, $op->getResult());
         $this->assertSame($metadata, $op->getMetadata());
+        $this->assertTrue($op->operationSucceeded());
+        $this->assertFalse($op->operationFailed());
 
         $protoResponse->clearResponse()->setError($error);
         $this->assertNull($op->getResult());
         $this->assertSame($error, $op->getError());
+        $this->assertFalse($op->operationSucceeded());
+        $this->assertTrue($op->operationFailed());
     }
 
     public function testWithOptions()
