@@ -24,7 +24,7 @@
  * backwards compatibility.
  */
 
-namespace Google\Longrunning;
+namespace Google\GAX\Longrunning;
 
 use Google\GAX\AgentHeaderDescriptor;
 use Google\GAX\ApiCallable;
