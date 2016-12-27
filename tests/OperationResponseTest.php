@@ -32,7 +32,7 @@
 
 use Google\GAX\OperationResponse;
 use google\longrunning\Operation;
-use Google\GAX\Longrunning\OperationsClient;
+use Google\GAX\LongRunning\OperationsClient;
 use google\protobuf\Any;
 use google\rpc\Status;
 
