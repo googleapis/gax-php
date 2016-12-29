@@ -64,7 +64,9 @@ use google\longrunning\OperationsGrpcClient;
  * operation resource, or pass the operation resource to another API (such as
  * Google Cloud Pub/Sub API) to receive the response.  Any API service that
  * returns long-running operations should implement the `Operations` interface
- * so developers can have a consistent client experience.
+ * (see https://github.com/googleapis/googleapis/blob/master/google/longrunning/operations.proto#L40)
+ * so developers can have a consistent client experience. This class provides
+ * methods to make calls to the `Operations` interface of an API service.
  *
  * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
  * more frequently than those which have been declared beta or 1.0, including changes which break
