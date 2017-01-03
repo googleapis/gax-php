@@ -43,13 +43,13 @@ trait MockStubTrait
                                    $options = [])
     {
         $this->receivedFuncCalls[] = [$method, $argument::deserialize($argument->serialize())];
-        $response = array_shift($this->responses);
-        return new MockUnaryCall($response, $deserialize);
+        list($response, $status) = array_shift($this->responses);
+        return new MockUnaryCall($response, $deserialize, $status);
     }
 
-    public function addResponse($response)
+    public function addResponse($response, $status = null)
     {
-        $this->responses[] = $response->serialize();
+        $this->responses[] = [$response->serialize(), $status];
     }
 
     public function getReceivedCalls()

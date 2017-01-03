@@ -127,7 +127,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded')],
             [$responseB, new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded')],
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
-                             ];
+        ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $backoffSettings = new BackoffSettings([
             'initialRetryDelayMillis' => 100,
