@@ -31,11 +31,28 @@
  */
 namespace Google\GAX\Testing;
 
+/**
+ * The MockStubTrait is used by generated mock stub classes which extent \Grpc\BaseStub
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+ * It provides functionality to add responses, get received calls, and overrides the _simpleRequest
+ * method so that the elements of $responses are returned instead of making a call to the API.
+ */
 trait MockStubTrait
 {
     private $receivedFuncCalls = [];
     private $responses = [];
 
+    /**
+     * Overrides the _simpleRequest method in \Grpc\BaseStub
+     * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+     * Returns a MockUnaryCall object that will return the first item from $responses
+     * @param string $method The API method name to be called
+     * @param mixed $argument The request object to the API method
+     * @param callable $deserialize A function to deserialize the response object
+     * @param array $metadata
+     * @param array $options
+     * @return MockUnaryCall
+     */
     public function _simpleRequest($method,
                                    $argument,
                                    $deserialize,
@@ -47,18 +64,28 @@ trait MockStubTrait
         return new MockUnaryCall($response, $deserialize, $status);
     }
 
+    /**
+     * Add a response object, and an optional status, to the list of responses to be returned via
+     * _simpleRequest.
+     */
     public function addResponse($response, $status = null)
     {
         $this->responses[] = [$response->serialize(), $status];
     }
 
+    /**
+     * Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.
+     */
     public function getReceivedCalls()
     {
-        $x = $this->receivedFuncCalls;
+        $receivedFuncCallsTemp = $this->receivedFuncCalls;
         $this->receivedFuncCalls = [];
-        return $x;
+        return $receivedFuncCallsTemp;
     }
 
+    /**
+     * @return bool True if $receivedFuncCalls and $response are empty.
+     */
     public function isExhausted()
     {
         return count($this->receivedFuncCalls) === 0

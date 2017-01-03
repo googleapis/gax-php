@@ -32,16 +32,29 @@
 
 namespace Google\GAX\Testing;
 
-
 use google\rpc\Code;
 use google\rpc\Status;
 
+/**
+ * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
+ *
+ * The MockUnaryCall object is constructed with a response object, an optional deserialize
+ * method, and an optional status. The response object and status are returned immediately from the
+ * wait() method.
+ */
 class MockUnaryCall
 {
     private $response;
     private $deserialize;
     private $status;
 
+    /**
+     * MockUnaryCall constructor.
+     * @param $response The response object.
+     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param Status|null $status An optional status object. If set to null, a status of OK is used.
+     */
     public function __construct($response, $deserialize = null, $status = null)
     {
         $this->response = $response;
@@ -58,6 +71,10 @@ class MockUnaryCall
         $this->status = $status;
     }
 
+    /**
+     * Immediately return the preset response object and status.
+     * @return array The response object and status.
+     */
     public function wait()
     {
         return [call_user_func($this->deserialize, $this->response), $this->status];

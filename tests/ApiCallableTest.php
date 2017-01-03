@@ -167,7 +167,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockStub::createWithResponseSequence([
             [$response, $status],
             [$response, $status],
-            [$response, $status],
+            [$response, $status]
         ]);
         $backoffSettings = new BackoffSettings([
             'initialRetryDelayMillis' => 1000,
@@ -246,7 +246,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
-                             ];
+        ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = new PageStreamingDescriptor([
             'requestPageTokenField' => 'pageToken',
@@ -282,7 +282,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
-                             ];
+        ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = new PageStreamingDescriptor([
             'requestPageTokenField' => 'pageToken',
@@ -344,7 +344,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseA = MockResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
         $responseSequence = [
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-                             ];
+        ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = new PageStreamingDescriptor([
             'requestPageTokenField' => 'pageToken',
@@ -396,7 +396,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
-                             ];
+        ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = new PageStreamingDescriptor([
             'requestPageTokenField' => 'pageToken',
