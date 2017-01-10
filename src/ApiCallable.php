@@ -152,15 +152,15 @@ class ApiCallable
     {
         $inner = function () use ($callable, $grpcStreamingDescriptor) {
             switch ($grpcStreamingDescriptor['grpcStreamingType']) {
-                case 'grpcClientStreaming':
+                case 'ClientStreaming':
                     $response = ApiCallable::callAndWriteData($callable, func_get_args());
                     $wrappedResponse = new ClientStreamingResponse($response);
                     break;
-                case 'grpcServerStreaming':
+                case 'ServerStreaming':
                     $response = call_user_func_array($callable, func_get_args());
                     $wrappedResponse = new ServerStreamingResponse($response);
                     break;
-                case 'grpcBidiStreaming':
+                case 'BidiStreaming':
                     $response = ApiCallable::callAndWriteData($callable, func_get_args());
                     $wrappedResponse = new BidiStreamingResponse($response);
                     break;
