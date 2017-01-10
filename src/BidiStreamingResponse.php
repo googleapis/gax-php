@@ -32,6 +32,8 @@
 namespace Google\Gax;
 
 use Grpc;
+use Google\GAX\ApiException;
+use Google\GAX\ValidationException;
 
 /**
  * ClientStreamingResponse is the response object from a gRPC client streaming API call.
@@ -39,6 +41,7 @@ use Grpc;
 class BidiStreamingResponse
 {
     private $call;
+    private $isComplete = false;
 
     /**
      * BidiStreamingResponse constructor.
@@ -54,9 +57,13 @@ class BidiStreamingResponse
      * Write data to the server.
      *
      * @param mixed $data The data to write
+     * @throws ValidationException
      */
     public function write($data)
     {
+        if ($this->isComplete) {
+            throw new ValidationException("Cannot call write() after streaming call is complete.");
+        }
         $this->call->write($data);
     }
 
@@ -65,13 +72,14 @@ class BidiStreamingResponse
      *
      * @param mixed[] $dataArray An iterator of data objects to write to the server
      * @return \Generator|mixed[]
+     * @throws ValidationException
+     * @throws ApiException
      */
     public function writeAllAndReadAll($dataArray = [])
     {
         foreach ($dataArray as $data) {
             $this->write($data);
         }
-        $this->call->writesDone();
         return $this->readAll();
     }
 
@@ -79,14 +87,27 @@ class BidiStreamingResponse
      * Read the next response from the server. Returns null if no response is available.
      *
      * @return mixed
+     * @throws ValidationException
+     * @throws ApiException
      */
     public function read()
     {
-        return $this->call->read();
+        if ($this->isComplete) {
+            throw new ValidationException("Cannot call read() after streaming call is complete.");
+        }
+        $result = $this->call->read();
+        if (is_null($result)) {
+            $status = $this->call->getStatus();
+            $this->isComplete = true;
+            if (!($status->code == Grpc\STATUS_OK)) {
+                throw new ApiException($status->details, $status->code);
+            }
+        }
+        return $result;
     }
 
     /**
-     * Read all available responses from the server, and check the status once all response are
+     * Read all available responses from the server, and check the status once all responses are
      * exhausted.
      *
      * @return \Generator|mixed[]
@@ -94,14 +115,11 @@ class BidiStreamingResponse
      */
     public function readAll()
     {
+        $this->call->writesDone();
         $response = $this->read();
         while (!is_null($response)) {
             yield $response;
             $response = $this->read();
-        }
-        $status = $this->call->getStatus();
-        if (!($status->code == Grpc\STATUS_OK)) {
-            throw new ApiException($status->details, $status->code);
         }
     }
 

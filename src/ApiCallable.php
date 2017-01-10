@@ -148,9 +148,9 @@ class ApiCallable
         return $response;
     }
 
-    private static function setGrpcStreaming($callable, $grpcStreamingDescriptor)
+    private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
     {
-        $inner = function () use ($callable, $grpcStreamingDescriptor) {
+        $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
             switch ($grpcStreamingDescriptor['grpcStreamingType']) {
                 case 'ClientStreaming':
                     $response = ApiCallable::callAndWriteData($callable, func_get_args());
@@ -169,7 +169,7 @@ class ApiCallable
             }
             return $wrappedResponse;
         };
-        return $inner;
+        return $apiCall;
     }
 
     private static function setCustomHeader($callable, $headerDescriptor)
@@ -205,15 +205,19 @@ class ApiCallable
      */
     public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
     {
-        $apiCall = function () use ($stub, $methodName) {
-            list($response, $status) =
-                call_user_func_array(array($stub, $methodName), func_get_args())->wait();
-            if ($status->code == Grpc\STATUS_OK) {
-                return $response;
-            } else {
-                throw new ApiException($status->details, $status->code);
-            }
-        };
+        if (array_key_exists('grpcStreamingDescriptor', $options)) {
+            $apiCall = ApiCallable::createGrpcStreamingApiCall(array($stub, $methodName), $options['grpcStreamingDescriptor']);
+        } else {
+            $apiCall = function () use ($stub, $methodName) {
+                list($response, $status) =
+                    call_user_func_array(array($stub, $methodName), func_get_args())->wait();
+                if ($status->code == Grpc\STATUS_OK) {
+                    return $response;
+                } else {
+                    throw new ApiException($status->details, $status->code);
+                }
+            };
+        }
 
         $retrySettings = $settings->getRetrySettings();
         if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
@@ -232,10 +236,6 @@ class ApiCallable
 
         if (array_key_exists('longRunningDescriptor', $options)) {
             $apiCall = self::setLongRunnning($apiCall, $options['longRunningDescriptor']);
-        }
-
-        if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $apiCall = self::setGrpcStreaming($apiCall, $options['grpcStreamingDescriptor']);
         }
 
         if (array_key_exists('headerDescriptor', $options)) {
