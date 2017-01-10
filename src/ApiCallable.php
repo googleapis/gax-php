@@ -134,6 +134,44 @@ class ApiCallable
         return $inner;
     }
 
+    private static function callAndWriteData($callable, $params)
+    {
+        $initParams = [[], []];
+        if (array_key_exists(self::GRPC_CALLABLE_METADATA_INDEX, $params)) {
+            $initParams[0] = $params[self::GRPC_CALLABLE_METADATA_INDEX];
+        }
+        if (array_key_exists(self::GRPC_CALLABLE_OPTION_INDEX, $params)) {
+            $initParams[1] = $params[self::GRPC_CALLABLE_OPTION_INDEX];
+        }
+        $response = call_user_func_array($callable, $initParams);
+        $response->write($params[0]);
+        return $response;
+    }
+
+    private static function setGrpcStreaming($callable, $grpcStreamingDescriptor)
+    {
+        $inner = function () use ($callable, $grpcStreamingDescriptor) {
+            switch ($grpcStreamingDescriptor['grpcStreamingType']) {
+                case 'grpcClientStreaming':
+                    $response = ApiCallable::callAndWriteData($callable, func_get_args());
+                    $wrappedResponse = new ClientStreamingResponse($response);
+                    break;
+                case 'grpcServerStreaming':
+                    $response = call_user_func_array($callable, func_get_args());
+                    $wrappedResponse = new ServerStreamingResponse($response);
+                    break;
+                case 'grpcBidiStreaming':
+                    $response = ApiCallable::callAndWriteData($callable, func_get_args());
+                    $wrappedResponse = new BidiStreamingResponse($response);
+                    break;
+                default:
+                    throw new ValidationException('Unexpected gRPC streaming type: ' . $grpcStreamingDescriptor['grpcStreamingType']);
+            }
+            return $wrappedResponse;
+        };
+        return $inner;
+    }
+
     private static function setCustomHeader($callable, $headerDescriptor)
     {
         $inner = function () use ($callable, $headerDescriptor) {
@@ -194,6 +232,10 @@ class ApiCallable
 
         if (array_key_exists('longRunningDescriptor', $options)) {
             $apiCall = self::setLongRunnning($apiCall, $options['longRunningDescriptor']);
+        }
+
+        if (array_key_exists('grpcStreamingDescriptor', $options)) {
+            $apiCall = self::setGrpcStreaming($apiCall, $options['grpcStreamingDescriptor']);
         }
 
         if (array_key_exists('headerDescriptor', $options)) {
