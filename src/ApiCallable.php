@@ -134,26 +134,12 @@ class ApiCallable
         return $inner;
     }
 
-    private static function callAndWriteData($callable, $params)
-    {
-        $initParams = [[], []];
-        if (array_key_exists(self::GRPC_CALLABLE_METADATA_INDEX, $params)) {
-            $initParams[0] = $params[self::GRPC_CALLABLE_METADATA_INDEX];
-        }
-        if (array_key_exists(self::GRPC_CALLABLE_OPTION_INDEX, $params)) {
-            $initParams[1] = $params[self::GRPC_CALLABLE_OPTION_INDEX];
-        }
-        $response = call_user_func_array($callable, $initParams);
-        $response->write($params[0]);
-        return $response;
-    }
-
     private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
     {
         switch ($grpcStreamingDescriptor['grpcStreamingType']) {
             case 'ClientStreaming':
                 $apiCall = function () use ($callable) {
-                    $response = ApiCallable::callAndWriteData($callable, func_get_args());
+                    $response = call_user_func_array($callable, func_get_args());
                     return new ClientStreamingResponse($response);
                 };
                 break;
@@ -165,7 +151,7 @@ class ApiCallable
                 break;
             case 'BidiStreaming':
                 $apiCall = function () use ($callable) {
-                    $response = ApiCallable::callAndWriteData($callable, func_get_args());
+                    $response = call_user_func_array($callable, func_get_args());
                     return new BidiStreamingResponse($response);
                 };
                 break;

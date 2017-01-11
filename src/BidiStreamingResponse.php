@@ -134,7 +134,7 @@ class BidiStreamingResponse
      * @throws ValidationException
      * @throws ApiException
      */
-    public function readAll()
+    public function closeAndReadAll()
     {
         $this->writesDone();
         $response = $this->read();
