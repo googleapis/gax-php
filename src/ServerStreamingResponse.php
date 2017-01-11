@@ -31,13 +31,12 @@
  */
 namespace Google\Gax;
 
-use IteratorAggregate;
 use Grpc;
 
 /**
  * ServerStreamingResponse is the response object from a gRPC server streaming API call.
  */
-class ServerStreamingResponse implements IteratorAggregate
+class ServerStreamingResponse
 {
     private $call;
 
@@ -52,12 +51,13 @@ class ServerStreamingResponse implements IteratorAggregate
     }
 
     /**
-     * A generator which yields the response objects from the server
+     * A generator which yields the response objects from the server until the streaming call
+     * completes. Throws an ApiException is the streaming call failed.
      *
      * @return \Generator|mixed
      * @throws ApiException
      */
-    public function getIterator()
+    public function readAll()
     {
         foreach ($this->call->responses() as $response) {
             yield $response;
@@ -69,13 +69,15 @@ class ServerStreamingResponse implements IteratorAggregate
     }
 
     /**
-     * Return a single response object from the server, or null if there are no responses available
+     * Return a single response object from the server, or null if the streaming call is complete.
+     * Throws an ApiException is the streaming call failed.
      *
      * @return mixed|null
+     * @throws ApiException
      */
     public function read()
     {
-        foreach ($this->getIterator() as $response) {
+        foreach ($this->readAll() as $response) {
             return $response;
         }
         return null;
