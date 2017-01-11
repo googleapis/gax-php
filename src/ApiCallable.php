@@ -150,25 +150,29 @@ class ApiCallable
 
     private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
     {
-        $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
-            switch ($grpcStreamingDescriptor['grpcStreamingType']) {
-                case 'ClientStreaming':
+        switch ($grpcStreamingDescriptor['grpcStreamingType']) {
+            case 'ClientStreaming':
+                $apiCall = function () use ($callable) {
                     $response = ApiCallable::callAndWriteData($callable, func_get_args());
-                    $wrappedResponse = new ClientStreamingResponse($response);
-                    break;
-                case 'ServerStreaming':
+                    return new ClientStreamingResponse($response);
+                };
+                break;
+            case 'ServerStreaming':
+                $apiCall = function () use ($callable) {
                     $response = call_user_func_array($callable, func_get_args());
-                    $wrappedResponse = new ServerStreamingResponse($response);
-                    break;
-                case 'BidiStreaming':
+                    return new ServerStreamingResponse($response);
+                };
+                break;
+            case 'BidiStreaming':
+                $apiCall = function () use ($callable) {
                     $response = ApiCallable::callAndWriteData($callable, func_get_args());
-                    $wrappedResponse = new BidiStreamingResponse($response);
-                    break;
-                default:
-                    throw new ValidationException('Unexpected gRPC streaming type: ' . $grpcStreamingDescriptor['grpcStreamingType']);
-            }
-            return $wrappedResponse;
-        };
+                    return new BidiStreamingResponse($response);
+                };
+                break;
+            default:
+                throw new ValidationException('Unexpected gRPC streaming type: ' .
+                    $grpcStreamingDescriptor['grpcStreamingType']);
+        }
         return $apiCall;
     }
 
@@ -202,11 +206,15 @@ class ApiCallable
      * }
      *
      * @return callable
+     * @throws ValidationException
      */
     public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
     {
+        $isGrpcStreaming = false;
         if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $apiCall = ApiCallable::createGrpcStreamingApiCall(array($stub, $methodName), $options['grpcStreamingDescriptor']);
+            $isGrpcStreaming = true;
+            $apiCall = ApiCallable::createGrpcStreamingApiCall(
+                array($stub, $methodName), $options['grpcStreamingDescriptor']);
         } else {
             $apiCall = function () use ($stub, $methodName) {
                 list($response, $status) =
@@ -221,6 +229,10 @@ class ApiCallable
 
         $retrySettings = $settings->getRetrySettings();
         if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
+            if ($isGrpcStreaming) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with retry settings');
+            }
             $timeFuncMillis = null;
             if (array_key_exists('timeFuncMillis', $options)) {
                 $timeFuncMillis = $options['timeFuncMillis'];
@@ -231,10 +243,18 @@ class ApiCallable
         }
 
         if (array_key_exists('pageStreamingDescriptor', $options)) {
+            if ($isGrpcStreaming) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor');
+            }
             $apiCall = self::setPageStreaming($apiCall, $options['pageStreamingDescriptor']);
         }
 
         if (array_key_exists('longRunningDescriptor', $options)) {
+            if ($isGrpcStreaming) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with longRunningDescriptor');
+            }
             $apiCall = self::setLongRunnning($apiCall, $options['longRunningDescriptor']);
         }
 
