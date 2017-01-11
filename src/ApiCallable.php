@@ -134,12 +134,18 @@ class ApiCallable
         return $inner;
     }
 
+    private static function callWithoutRequest($callable, $params)
+    {
+        array_shift($params);
+        return call_user_func_array($callable, $params);
+    }
+
     private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
     {
         switch ($grpcStreamingDescriptor['grpcStreamingType']) {
             case 'ClientStreaming':
                 $apiCall = function () use ($callable) {
-                    $response = call_user_func_array($callable, func_get_args());
+                    $response = ApiCallable::callWithoutRequest($callable, func_get_args());
                     return new ClientStreamingResponse($response);
                 };
                 break;
@@ -151,7 +157,7 @@ class ApiCallable
                 break;
             case 'BidiStreaming':
                 $apiCall = function () use ($callable) {
-                    $response = call_user_func_array($callable, func_get_args());
+                    $response = ApiCallable::callWithoutRequest($callable, func_get_args());
                     return new BidiStreamingResponse($response);
                 };
                 break;
