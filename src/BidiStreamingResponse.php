@@ -42,6 +42,7 @@ class BidiStreamingResponse
 {
     private $call;
     private $isComplete = false;
+    private $sentWritesDone = false;
 
     /**
      * BidiStreamingResponse constructor.
@@ -61,6 +62,9 @@ class BidiStreamingResponse
      */
     public function write($data)
     {
+        if ($this->sentWritesDone) {
+            throw new ValidationException("Cannot call write() after calling writesDone().");
+        }
         if ($this->isComplete) {
             throw new ValidationException("Cannot call write() after streaming call is complete.");
         }
@@ -68,23 +72,39 @@ class BidiStreamingResponse
     }
 
     /**
-     * Write all data in $dataArray, and return an iterator of response objects.
+     * Write all data in $dataArray.
      *
      * @param mixed[] $dataArray An iterator of data objects to write to the server
-     * @return \Generator|mixed[]
+     *
      * @throws ValidationException
      * @throws ApiException
      */
-    public function writeAllAndReadAll($dataArray = [])
+    public function writeAll($dataArray = [])
     {
         foreach ($dataArray as $data) {
             $this->write($data);
         }
-        return $this->readAll();
     }
 
     /**
-     * Read the next response from the server. Returns null if no response is available.
+     * Inform the server that no more data will be written. The write() function cannot be called
+     * after writesDone() is called.
+     */
+    public function writesDone()
+    {
+        if ($this->isComplete) {
+            throw new ValidationException(
+                "Cannot call writesDone() after streaming call is complete.");
+        }
+        if (!$this->sentWritesDone) {
+            $this->call->writesDone();
+            $this->sentWritesDone = true;
+        }
+    }
+
+    /**
+     * Read the next response from the server. Returns null if the streaming call completed
+     * successfully. Throws an ApiException if the streaming call failed.
      *
      * @return mixed
      * @throws ValidationException
@@ -107,15 +127,16 @@ class BidiStreamingResponse
     }
 
     /**
-     * Read all available responses from the server, and check the status once all responses are
-     * exhausted.
+     * Call writesDone(), and read all responses from the server, until the streaming call is
+     * completed. Throws an ApiException if the streaming call failed.
      *
      * @return \Generator|mixed[]
+     * @throws ValidationException
      * @throws ApiException
      */
     public function readAll()
     {
-        $this->call->writesDone();
+        $this->writesDone();
         $response = $this->read();
         while (!is_null($response)) {
             yield $response;
