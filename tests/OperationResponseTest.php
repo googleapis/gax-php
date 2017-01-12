@@ -63,6 +63,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertNull($op->getMetadata());
         $this->assertFalse($op->operationSucceeded());
         $this->assertFalse($op->operationFailed());
+        $this->assertEquals([], $op->getReturnTypeOptions());
     }
 
     public function testWithResponse()
@@ -81,6 +82,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertNull($op->getMetadata());
         $this->assertFalse($op->operationSucceeded());
         $this->assertFalse($op->operationFailed());
+        $this->assertEquals([], $op->getReturnTypeOptions());
 
         $response = self::createAny(self::createStatus(0, "response"));
         $error = self::createStatus(2, "error");
@@ -116,6 +118,10 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertNull($op->getResult());
         $this->assertNull($op->getError());
         $this->assertNull($op->getMetadata());
+        $this->assertEquals([
+            'operationReturnType' => '\google\rpc\Status',
+            'metadataReturnType' => '\google\rpc\Status',
+        ], $op->getReturnTypeOptions());
 
         $response = self::createAny(self::createStatus(0, "response"));
         $metadata = self::createAny(self::createStatus(0, "metadata"));
