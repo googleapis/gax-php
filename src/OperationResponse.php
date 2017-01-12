@@ -220,6 +220,25 @@ class OperationResponse
     }
 
     /**
+     * Get an array containing the values of 'operationReturnType' and/or 'metadataReturnType' if
+     * they are set. The array can be passed as the $options argument to the constructor when
+     * creating another OperationResponse object.
+     *
+     * @return array
+     */
+    public function getReturnTypeOptions()
+    {
+        $options = [];
+        if (isset($this->operationReturnType)) {
+            $options['operationReturnType'] = $this->operationReturnType;
+        }
+        if (isset($this->metadataReturnType)) {
+            $options['metadataReturnType'] = $this->metadataReturnType;
+        }
+        return $options;
+    }
+
+    /**
      * @return \google\longrunning\Operation|null The last Operation object received from the server.
      */
     public function getLastProtoResponse()
