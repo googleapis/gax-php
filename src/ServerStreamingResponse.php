@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\Gax;
+namespace Google\GAX;
 
 use Grpc;
 
@@ -39,28 +39,40 @@ use Grpc;
 class ServerStreamingResponse
 {
     private $call;
+    private $resourcesField;
 
     /**
      * ServerStreamingResponse constructor.
      *
      * @param \Grpc\ServerStreamingCall $serverStreamingCall The gRPC server streaming call object
+     * @param array $grpcStreamingDescriptor
      */
-    public function __construct($serverStreamingCall)
+    public function __construct($serverStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $serverStreamingCall;
+        if (array_key_exists('resourcesField', $grpcStreamingDescriptor)) {
+            $this->resourcesField = $grpcStreamingDescriptor['resourcesField'];
+        }
     }
 
     /**
-     * A generator which yields the response objects from the server until the streaming call
-     * completes. Throws an ApiException is the streaming call failed.
+     * A generator which yields results from the server until the streaming call
+     * completes. Throws an ApiException if the streaming call failed.
      *
      * @return \Generator|mixed
      * @throws ApiException
      */
     public function readAll()
     {
+        $resourcesField = $this->resourcesField;
         foreach ($this->call->responses() as $response) {
-            yield $response;
+            if (!is_null($resourcesField)) {
+                foreach ($response->$resourcesField() as $resource) {
+                    yield $resource;
+                }
+            } else {
+                yield $response;
+            }
         }
         $status = $this->call->getStatus();
         if (!($status->code == Grpc\STATUS_OK)) {
@@ -69,24 +81,9 @@ class ServerStreamingResponse
     }
 
     /**
-     * Return a single response object from the server, or null if the streaming call is complete.
-     * Throws an ApiException is the streaming call failed.
-     *
-     * @return mixed|null
-     * @throws ApiException
-     */
-    public function read()
-    {
-        foreach ($this->readAll() as $response) {
-            return $response;
-        }
-        return null;
-    }
-
-    /**
      * Return the underlying gRPC call object
      *
-     * @return Grpc\ServerStreamingCall
+     * @return \Grpc\ServerStreamingCall
      */
     public function getServerStreamingCall()
     {

@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\Gax;
+namespace Google\GAX;
 
 use Grpc;
 use Google\GAX\ApiException;
@@ -42,63 +42,69 @@ class BidiStreamingResponse
 {
     private $call;
     private $isComplete = false;
-    private $sentWritesDone = false;
+    private $writesClosed = false;
+    private $resourcesField = null;
+    private $pendingResources = [];
 
     /**
      * BidiStreamingResponse constructor.
      *
      * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
+     * @param array $grpcStreamingDescriptor
      */
-    public function __construct($bidiStreamingCall)
+    public function __construct($bidiStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $bidiStreamingCall;
+        if (array_key_exists('resourcesField', $grpcStreamingDescriptor)) {
+            $this->resourcesField = $grpcStreamingDescriptor['resourcesField'];
+        }
     }
 
     /**
-     * Write data to the server.
+     * Write request to the server.
      *
-     * @param mixed $data The data to write
+     * @param mixed $request The request to write
      * @throws ValidationException
      */
-    public function write($data)
+    public function write($request)
     {
-        if ($this->sentWritesDone) {
-            throw new ValidationException("Cannot call write() after calling writesDone().");
+        if ($this->writesClosed) {
+            throw new ValidationException("Cannot call write() after calling closeWrite().");
         }
         if ($this->isComplete) {
             throw new ValidationException("Cannot call write() after streaming call is complete.");
         }
-        $this->call->write($data);
+        $this->call->write($request);
     }
 
     /**
-     * Write all data in $dataArray.
+     * Write all requests in $requests.
      *
-     * @param mixed[] $dataArray An iterator of data objects to write to the server
+     * @param mixed[] $requests An Iterable of request objects to write to the server
      *
      * @throws ValidationException
      * @throws ApiException
      */
-    public function writeAll($dataArray = [])
+    public function writeAll($requests = [])
     {
-        foreach ($dataArray as $data) {
-            $this->write($data);
+        foreach ($requests as $request) {
+            $this->write($request);
         }
     }
 
     /**
-     * Inform the server that no more data will be written. The write() function cannot be called
-     * after writesDone() is called.
+     * Inform the server that no more requests will be written. The write() function cannot be
+     * called after closeWrite() is called.
      */
-    public function writesDone()
+    public function closeWrite()
     {
         if ($this->isComplete) {
             throw new ValidationException(
-                "Cannot call writesDone() after streaming call is complete.");
+                "Cannot call closeWrite() after streaming call is complete.");
         }
-        if (!$this->sentWritesDone) {
+        if (!$this->writesClosed) {
             $this->call->writesDone();
-            $this->sentWritesDone = true;
+            $this->writesClosed = true;
         }
     }
 
@@ -115,7 +121,18 @@ class BidiStreamingResponse
         if ($this->isComplete) {
             throw new ValidationException("Cannot call read() after streaming call is complete.");
         }
-        $result = $this->call->read();
+        $resourcesField = $this->resourcesField;
+        if (!is_null($resourcesField)) {
+            if (count($this->pendingResources) === 0) {
+                $response = $this->call->read();
+                if (!is_null($response)) {
+                    $this->pendingResources = array_reverse($response->$resourcesField());
+                }
+            }
+            $result = array_pop($this->pendingResources);
+        } else {
+            $result = $this->call->read();
+        }
         if (is_null($result)) {
             $status = $this->call->getStatus();
             $this->isComplete = true;
@@ -127,7 +144,7 @@ class BidiStreamingResponse
     }
 
     /**
-     * Call writesDone(), and read all responses from the server, until the streaming call is
+     * Call closeWrite(), and read all responses from the server, until the streaming call is
      * completed. Throws an ApiException if the streaming call failed.
      *
      * @return \Generator|mixed[]
@@ -136,7 +153,7 @@ class BidiStreamingResponse
      */
     public function closeAndReadAll()
     {
-        $this->writesDone();
+        $this->closeWrite();
         $response = $this->read();
         while (!is_null($response)) {
             yield $response;

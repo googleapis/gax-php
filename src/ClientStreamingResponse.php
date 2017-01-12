@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\Gax;
+namespace Google\GAX;
 
 use Grpc;
 
@@ -44,20 +44,21 @@ class ClientStreamingResponse
      * ClientStreamingResponse constructor.
      *
      * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
+     * @param array $grpcStreamingDescriptor
      */
-    public function __construct($clientStreamingCall)
+    public function __construct($clientStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $clientStreamingCall;
     }
 
     /**
-     * Write data to the server.
+     * Write request to the server.
      *
-     * @param mixed $data The data to write
+     * @param mixed $request The request to write
      */
-    public function write($data)
+    public function write($request)
     {
-        $this->call->write($data);
+        $this->call->write($request);
     }
 
     /**
@@ -79,13 +80,13 @@ class ClientStreamingResponse
     /**
      * Write all data in $dataArray and wait for the server to return a response object.
      *
-     * @param mixed[] $dataArray An iterator of data objects to write to the server
+     * @param mixed[] $requests An iterator of request objects to write to the server
      * @return mixed The response object from the server
      */
-    public function writeAllAndWait($dataArray)
+    public function writeAllAndWait($requests)
     {
-        foreach ($dataArray as $data) {
-            $this->write($data);
+        foreach ($requests as $request) {
+            $this->write($request);
         }
         return $this->wait();
     }

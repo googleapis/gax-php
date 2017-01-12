@@ -144,21 +144,21 @@ class ApiCallable
     {
         switch ($grpcStreamingDescriptor['grpcStreamingType']) {
             case 'ClientStreaming':
-                $apiCall = function () use ($callable) {
+                $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
                     $response = ApiCallable::callWithoutRequest($callable, func_get_args());
-                    return new ClientStreamingResponse($response);
+                    return new ClientStreamingResponse($response, $grpcStreamingDescriptor);
                 };
                 break;
             case 'ServerStreaming':
-                $apiCall = function () use ($callable) {
+                $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
                     $response = call_user_func_array($callable, func_get_args());
-                    return new ServerStreamingResponse($response);
+                    return new ServerStreamingResponse($response, $grpcStreamingDescriptor);
                 };
                 break;
             case 'BidiStreaming':
-                $apiCall = function () use ($callable) {
+                $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
                     $response = ApiCallable::callWithoutRequest($callable, func_get_args());
-                    return new BidiStreamingResponse($response);
+                    return new BidiStreamingResponse($response, $grpcStreamingDescriptor);
                 };
                 break;
             default:
