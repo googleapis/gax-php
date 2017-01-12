@@ -206,7 +206,9 @@ class ApiCallable
         if (array_key_exists('grpcStreamingDescriptor', $options)) {
             $isGrpcStreaming = true;
             $apiCall = ApiCallable::createGrpcStreamingApiCall(
-                array($stub, $methodName), $options['grpcStreamingDescriptor']);
+                array($stub, $methodName),
+                $options['grpcStreamingDescriptor']
+            );
         } else {
             $apiCall = function () use ($stub, $methodName) {
                 list($response, $status) =
@@ -223,7 +225,8 @@ class ApiCallable
         if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
             if ($isGrpcStreaming) {
                 throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with retry settings');
+                    'grpcStreamingDescriptor not compatible with retry settings'
+                );
             }
             $timeFuncMillis = null;
             if (array_key_exists('timeFuncMillis', $options)) {
@@ -237,7 +240,8 @@ class ApiCallable
         if (array_key_exists('pageStreamingDescriptor', $options)) {
             if ($isGrpcStreaming) {
                 throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor');
+                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
+                );
             }
             $apiCall = self::setPageStreaming($apiCall, $options['pageStreamingDescriptor']);
         }
@@ -245,7 +249,8 @@ class ApiCallable
         if (array_key_exists('longRunningDescriptor', $options)) {
             if ($isGrpcStreaming) {
                 throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with longRunningDescriptor');
+                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
+                );
             }
             $apiCall = self::setLongRunnning($apiCall, $options['longRunningDescriptor']);
         }

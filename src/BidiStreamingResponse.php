@@ -100,7 +100,8 @@ class BidiStreamingResponse
     {
         if ($this->isComplete) {
             throw new ValidationException(
-                "Cannot call closeWrite() after streaming call is complete.");
+                "Cannot call closeWrite() after streaming call is complete."
+            );
         }
         if (!$this->writesClosed) {
             $this->call->writesDone();

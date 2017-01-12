@@ -96,7 +96,8 @@ class ClientStreamingResponse
      *
      * @return \Grpc\ClientStreamingCall
      */
-    public function getClientStreamingCall() {
+    public function getClientStreamingCall()
+    {
         return $this->call;
     }
 }
