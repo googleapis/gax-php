@@ -36,7 +36,7 @@ use Google\GAX\ApiException;
 use Google\GAX\ValidationException;
 
 /**
- * ClientStreamingResponse is the response object from a gRPC client streaming API call.
+ * BidiStreamingResponse is the response object from a gRPC bidirectional streaming API call.
  */
 class BidiStreamingResponse
 {

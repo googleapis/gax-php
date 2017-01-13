@@ -65,12 +65,14 @@ class ServerStreamingResponse
     public function readAll()
     {
         $resourcesField = $this->resourcesField;
-        foreach ($this->call->responses() as $response) {
-            if (!is_null($resourcesField)) {
+        if (!is_null($resourcesField)) {
+            foreach ($this->call->responses() as $response) {
                 foreach ($response->$resourcesField() as $resource) {
                     yield $resource;
                 }
-            } else {
+            }
+        } else {
+            foreach ($this->call->responses() as $response) {
                 yield $response;
             }
         }
