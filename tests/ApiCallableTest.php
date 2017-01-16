@@ -845,4 +845,68 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $response->reload();
     }
+
+    public function testClientStreamingSuccess()
+    {
+        $request = null;
+        $result = OperationResponseTest::createStatus(Code::OK, 'someMessage');
+
+        $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
+        $responseA = self::createIncompleteOperationResponse($opName, 'm2');
+        $responseB = self::createSuccessfulOperationResponse($opName, $result, 'm3');
+        $responseSequence = [
+            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+        ];
+        $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]]);
+        $opStub = MockStub::createWithResponseSequence($responseSequence);
+        $opClient = OperationResponseTest::createOperationsClient($opStub);
+        $descriptor = [
+            'operationsClient' => $opClient,
+            'operationReturnType' => '\google\rpc\Status',
+            'metadataReturnType' => '\google\rpc\Status',
+        ];
+        $callSettings = new CallSettings();
+        $apiCall = ApiCallable::createApiCall(
+            $callStub,
+            'takeAction',
+            $callSettings,
+            ['longRunningDescriptor' => $descriptor]
+        );
+
+        /* @var $response \Google\GAX\OperationResponse */
+        $response = $apiCall($request, [], []);
+
+        $results = [$response->getResult()];
+        $errors = [$response->getError()];
+        $metadataResponses = [$response->getMetadata()];
+        $isDoneResponses = [$response->isDone()];
+
+        $this->assertSame(1, count($callStub->actualCalls));
+        $this->assertSame(0, count($opStub->actualCalls));
+
+        while (!$response->isDone()) {
+            $response->reload();
+            $results[] = $response->getResult();
+            $errors[] = $response->getError();
+            $metadataResponses[] = $response->getMetadata();
+            $isDoneResponses[] = $response->isDone();
+        }
+
+        $this->assertSame(1, count($callStub->actualCalls));
+        $this->assertSame(2, count($opStub->actualCalls));
+
+        $this->assertSame('takeAction', $callStub->actualCalls[0]['funcName']);
+        $this->assertSame('GetOperation', $opStub->actualCalls[0]['funcName']);
+        $this->assertSame('GetOperation', $opStub->actualCalls[1]['funcName']);
+
+        $this->assertEquals([null, null, OperationResponseTest::createStatus(Code::OK, 'someMessage')], $results);
+        $this->assertEquals([null, null, null], $errors);
+        $this->assertEquals([
+            OperationResponseTest::createStatus(Code::OK, 'm1'),
+            OperationResponseTest::createStatus(Code::OK, 'm2'),
+            OperationResponseTest::createStatus(Code::OK, 'm3')
+        ], $metadataResponses);
+        $this->assertEquals([false, false, true], $isDoneResponses);
+    }
 }
