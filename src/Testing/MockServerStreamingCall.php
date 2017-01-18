@@ -75,8 +75,10 @@ class MockServerStreamingCall
     public function getStatus()
     {
         if (count($this->responses) > 0) {
-            throw new ApiException("Calls to getStatus() will block if all responses are not read",
-                Grpc\STATUS_INTERNAL);
+            throw new ApiException(
+                "Calls to getStatus() will block if all responses are not read",
+                Grpc\STATUS_INTERNAL
+            );
         }
         return $this->status;
     }

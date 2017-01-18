@@ -534,7 +534,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize');
+            '\google\longrunning\Operation::deserialize'
+        );
         $opStub = MockStub::createWithResponseSequence($responseSequence, '\google\longrunning\Operation::deserialize');
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
@@ -606,8 +607,14 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]], '\google\longrunning\Operation::deserialize');
-        $opStub = MockStub::createWithResponseSequence($responseSequence, '\google\longrunning\Operation::deserialize');
+        $callStub = MockStub::createWithResponseSequence(
+            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            '\google\longrunning\Operation::deserialize'
+        );
+        $opStub = MockStub::createWithResponseSequence(
+            $responseSequence,
+            '\google\longrunning\Operation::deserialize'
+        );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -645,9 +652,15 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame('GetOperation', $opReceivedCalls[0]->getFuncCall());
         $this->assertSame('GetOperation', $opReceivedCalls[1]->getFuncCall());
 
-        $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'someMessage'), $response->getResult());
+        $this->assertEquals(
+            OperationResponseTest::createStatus(Code::OK, 'someMessage'),
+            $response->getResult()
+        );
         $this->assertNull($response->getError());
-        $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'm3'), $response->getMetadata());
+        $this->assertEquals(
+            OperationResponseTest::createStatus(Code::OK, 'm3'),
+            $response->getMetadata()
+        );
     }
 
     public function testLongrunningMaxPollingDuration()
@@ -664,8 +677,14 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]], '\google\longrunning\Operation::deserialize');
-        $opStub = MockStub::createWithResponseSequence($responseSequence, '\google\longrunning\Operation::deserialize');
+        $callStub = MockStub::createWithResponseSequence(
+            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            '\google\longrunning\Operation::deserialize'
+        );
+        $opStub = MockStub::createWithResponseSequence(
+            $responseSequence,
+            '\google\longrunning\Operation::deserialize'
+        );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -707,7 +726,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($response->getResult());
         $this->assertNull($response->getError());
-        $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'm3'), $response->getMetadata());
+        $this->assertEquals(
+            OperationResponseTest::createStatus(Code::OK, 'm3'),
+            $response->getMetadata()
+        );
     }
 
     public function testLongrunningFailure()
@@ -727,7 +749,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
             '\google\longrunning\Operation::deserialize'
         );
-        $opStub = MockStub::createWithResponseSequence($responseSequence, '\google\longrunning\Operation::deserialize');
+        $opStub = MockStub::createWithResponseSequence(
+            $responseSequence,
+            '\google\longrunning\Operation::deserialize'
+        );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -775,7 +800,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame('GetOperation', $opReceivedCalls[1]->getFuncCall());
 
         $this->assertEquals([null, null, null], $results);
-        $this->assertEquals([null, null, OperationResponseTest::createStatus(Code::UNKNOWN, 'someError')], $errors);
+        $this->assertEquals(
+            [null, null, OperationResponseTest::createStatus(Code::UNKNOWN, 'someError')],
+            $errors
+        );
         $this->assertEquals([
             OperationResponseTest::createStatus(Code::OK, 'm1'),
             OperationResponseTest::createStatus(Code::OK, 'm2'),
@@ -792,14 +820,25 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
-        $responseB = self::createFailedOperationResponse($opName, Code::CANCELLED, 'someError', 'm3');
+        $responseB = self::createFailedOperationResponse(
+            $opName,
+            Code::CANCELLED,
+            'someError',
+            'm3'
+        );
         $responseSequence = [
             [new EmptyC(), new MockStatus(Grpc\STATUS_OK, '')],
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence([[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]], '\google\longrunning\Operation::deserialize');
-        $opStub = MockStub::createWithResponseSequence($responseSequence, '\google\longrunning\Operation::deserialize');
+        $callStub = MockStub::createWithResponseSequence(
+            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            '\google\longrunning\Operation::deserialize'
+        );
+        $opStub = MockStub::createWithResponseSequence(
+            $responseSequence,
+            '\google\longrunning\Operation::deserialize'
+        );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,

@@ -71,7 +71,7 @@ class MockBidiStreamingCall
             list($resp, $status) = array_shift($this->responses);
             // Ignore the status attached to the response
             return call_user_func($this->deserialize, $resp);
-        } else if ($this->writesDone) {
+        } elseif ($this->writesDone) {
             return null;
         } else {
             throw new ApiException("No more responses to read, but writesDone() not called - "
@@ -82,12 +82,16 @@ class MockBidiStreamingCall
     public function getStatus()
     {
         if (count($this->responses) > 0) {
-            throw new ApiException("Calls to getStatus() will block if all responses are not read",
-                Grpc\STATUS_INTERNAL);
+            throw new ApiException(
+                "Calls to getStatus() will block if all responses are not read",
+                Grpc\STATUS_INTERNAL
+            );
         }
         if (!$this->writesDone) {
-            throw new ApiException("Calls to getStatus() will block if writesDone() not called",
-                Grpc\STATUS_INTERNAL);
+            throw new ApiException(
+                "Calls to getStatus() will block if writesDone() not called",
+                Grpc\STATUS_INTERNAL
+            );
         }
         return $this->status;
     }

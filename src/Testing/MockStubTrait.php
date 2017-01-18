@@ -88,11 +88,13 @@ trait MockStubTrait
      *
      * @return MockClientStreamingCall The active call object
      */
-    public function _clientStreamRequest($method,
-                                         $deserialize,
-                                         array $metadata = [],
-                                         array $options = [])
-    {
+    public function _clientStreamRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+    
         $this->receivedFuncCalls[] = new ReceivedRequest($method, null, $deserialize, $metadata, $options);
         if (count($this->responses) < 1) {
             throw new UnderflowException("ran out of responses");
@@ -116,12 +118,14 @@ trait MockStubTrait
      *
      * @return MockServerStreamingCall The active call object
      */
-    public function _serverStreamRequest($method,
-                                         $argument,
-                                         $deserialize,
-                                         array $metadata = [],
-                                         array $options = [])
-    {
+    public function _serverStreamRequest(
+        $method,
+        $argument,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+    
         if (is_a($argument, 'DrSlump\Protobuf\Message')) {
             $argument = $argument::deserialize($argument->serialize());
         }
@@ -145,11 +149,13 @@ trait MockStubTrait
      *
      * @return MockBidiStreamingCall The active call object
      */
-    public function _bidiRequest($method,
-                                 $deserialize,
-                                 array $metadata = [],
-                                 array $options = [])
-    {
+    public function _bidiRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+    
         $this->receivedFuncCalls[] = new ReceivedRequest($method, null, $deserialize, $metadata, $options);
         $responses = $this->responses;
         $this->responses = [];
