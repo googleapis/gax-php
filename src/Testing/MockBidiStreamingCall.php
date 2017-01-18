@@ -33,43 +33,63 @@
 namespace Google\GAX\Testing;
 
 use Google\GAX\ApiException;
+use google\rpc\Code;
 use google\rpc\Status;
 use Grpc;
 
 /**
- * The MockClientStreamingCall class is used to mock out the \Grpc\ClientStreamingCall class
- * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/ClientStreamingCall.php)
- *
- * The MockClientStreamingCall object is constructed with a response object, an optional deserialize
- * method, and an optional status. The response object and status are returned immediately from the
- * wait() method. It also provides a write() method that accepts request objects, and a
- * getAllRequests() method that returns all request objects passed to write(), and clears them.
+ * The MockBidiStreamingCall class is used to mock out the \Grpc\BidiStreamingCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BidiStreamingCall.php)
  */
-class MockClientStreamingCall
+class MockBidiStreamingCall
 {
-    private $mockUnaryCall;
-    private $waitCalled = false;
+    private $responses;
+    private $deserialize;
+    private $status;
+    private $writesDone = false;
     private $receivedWrites = [];
 
-    /**
-     * MockClientStreamingCall constructor.
-     * @param $response The response object.
-     * @param callable|null $deserialize An optional deserialize method for the response object.
-     * @param Status|null $status An optional status object. If set to null, a status of OK is used.
-     */
-    public function __construct($response, $deserialize = null, $status = null)
+    public function __construct($responses, $deserialize = null, $status = null)
     {
-        $this->mockUnaryCall = new MockUnaryCall($response, $deserialize, $status);
+        $this->responses = $responses;
+        if (is_null($deserialize)) {
+            $deserialize = function ($resp) {
+                return $resp;
+            };
+        }
+        $this->deserialize = $deserialize;
+        if (is_null($status)) {
+            $status = new Status();
+            $status->setCode(Code::OK);
+        }
+        $this->status = $status;
     }
 
-    /**
-     * Immediately return the preset response object and status.
-     * @return array The response object and status.
-     */
-    public function wait()
+    public function read()
     {
-        $this->waitCalled = true;
-        return $this->mockUnaryCall->wait();
+        if (count($this->responses) > 0) {
+            list($resp, $status) = array_shift($this->responses);
+            // Ignore the status attached to the response
+            return call_user_func($this->deserialize, $resp);
+        } else if ($this->writesDone) {
+            return null;
+        } else {
+            throw new ApiException("No more responses to read, but writesDone() not called - "
+                . "this would be blocking", Grpc\Internal);
+        }
+    }
+
+    public function getStatus()
+    {
+        if (count($this->responses) > 0) {
+            throw new ApiException("Calls to getStatus() will block if all responses are not read",
+                Grpc\STATUS_INTERNAL);
+        }
+        if (!$this->writesDone) {
+            throw new ApiException("Calls to getStatus() will block if writesDone() not called",
+                Grpc\STATUS_INTERNAL);
+        }
+        return $this->status;
     }
 
     /**
@@ -79,13 +99,21 @@ class MockClientStreamingCall
      */
     public function write($request)
     {
-        if ($this->waitCalled) {
-            throw new ApiException("Cannot call write() after wait()", Grpc\STATUS_INTERNAL);
+        if ($this->writesDone) {
+            throw new ApiException("Cannot call write() after writesDone()", Grpc\STATUS_INTERNAL);
         }
         if (is_a($request, 'DrSlump\Protobuf\Message')) {
             $request = $request::deserialize($request->serialize());
         }
         $this->receivedWrites[] = $request;
+    }
+
+    /**
+     * Set writesDone to true
+     */
+    public function writesDone()
+    {
+        $this->writesDone = true;
     }
 
     /**
