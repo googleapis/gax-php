@@ -149,7 +149,11 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
         $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
-        $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize', new MockStatus(Grpc\STATUS_INTERNAL, 'write all failure'));
+        $call = new MockClientStreamingCall(
+            $response->serialize(),
+            '\google\rpc\Status::deserialize',
+            new MockStatus(Grpc\STATUS_INTERNAL, 'write all failure')
+        );
         $resp = new ClientStreamingResponse($call);
 
         try {
