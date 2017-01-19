@@ -33,7 +33,7 @@ namespace Google\GAX\UnitTests;
 
 use Google\GAX\ApiException;
 use Google\GAX\OperationResponse;
-use Google\GAX\ServerStreamingResponse;
+use Google\GAX\ServerStream;
 use Google\GAX\Testing\MockServerStreamingCall;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
 use Google\GAX\UnitTests\Mocks\MockStatus;
@@ -46,7 +46,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testEmptySuccess()
     {
         $call = new MockServerStreamingCall([]);
-        $stream = new ServerStreamingResponse($call);
+        $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $this->assertSame([], iterator_to_array($stream->readAll()));
@@ -59,7 +59,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testEmptyFailure()
     {
         $call = new MockServerStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure'));
-        $stream = new ServerStreamingResponse($call);
+        $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         iterator_to_array($stream->readAll());
@@ -69,7 +69,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
     {
         $responses = ['abc', 'def'];
         $call = new MockServerStreamingCall($responses);
-        $stream = new ServerStreamingResponse($call);
+        $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $this->assertSame($responses, iterator_to_array($stream->readAll()));
@@ -87,7 +87,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'strings failure')
         );
-        $stream = new ServerStreamingResponse($call);
+        $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $index = 0;
@@ -112,7 +112,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
             $serializedResponses[] = $response->serialize();
         }
         $call = new MockServerStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
-        $stream = new ServerStreamingResponse($call);
+        $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $this->assertEquals($responses, iterator_to_array($stream->readAll()));
@@ -137,7 +137,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
             '\google\rpc\Status::deserialize',
             new MockStatus(Grpc\STATUS_INTERNAL, 'objects failure')
         );
-        $stream = new ServerStreamingResponse($call);
+        $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $index = 0;
@@ -159,7 +159,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
             MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource2', 'resource3'])
         ];
         $call = new MockServerStreamingCall($responses);
-        $stream = new ServerStreamingResponse($call, [
+        $stream = new ServerStream($call, [
             'resourcesField' => 'getResourcesList'
         ]);
 
@@ -183,7 +183,7 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'resources failure')
         );
-        $stream = new ServerStreamingResponse($call, [
+        $stream = new ServerStream($call, [
             'resourcesField' => 'getResourcesList'
         ]);
 

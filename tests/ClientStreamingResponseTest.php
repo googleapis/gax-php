@@ -32,9 +32,9 @@
 namespace Google\GAX\UnitTests;
 
 use Google\GAX\ApiException;
-use Google\GAX\ClientStreamingResponse;
+use Google\GAX\ClientStream;
 use Google\GAX\OperationResponse;
-use Google\GAX\ServerStreamingResponse;
+use Google\GAX\ServerStream;
 use Google\GAX\Testing\MockClientStreamingCall;
 use Google\GAX\Testing\MockServerStreamingCall;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
@@ -49,7 +49,7 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = 'response';
         $call = new MockClientStreamingCall($response);
-        $stream = new ClientStreamingResponse($call);
+        $stream = new ClientStream($call);
 
         $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertSame($response, $stream->readResponse());
@@ -68,7 +68,7 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'no writes failure')
         );
-        $stream = new ClientStreamingResponse($call);
+        $stream = new ClientStream($call);
 
         $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertSame([], $call->getReceivedCalls());
@@ -83,7 +83,7 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
         ];
         $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
-        $stream = new ClientStreamingResponse($call);
+        $stream = new ClientStream($call);
 
         foreach ($requests as $request) {
             $stream->write($request);
@@ -110,7 +110,7 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             '\google\rpc\Status::deserialize',
             new MockStatus(Grpc\STATUS_INTERNAL, 'manual writes failure')
         );
-        $stream = new ClientStreamingResponse($call);
+        $stream = new ClientStream($call);
 
         foreach ($requests as $request) {
             $stream->write($request);
@@ -129,7 +129,7 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
         ];
         $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
-        $stream = new ClientStreamingResponse($call);
+        $stream = new ClientStream($call);
 
         $actualResponse = $stream->writeAllAndReadResponse($requests);
 
@@ -154,7 +154,7 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             '\google\rpc\Status::deserialize',
             new MockStatus(Grpc\STATUS_INTERNAL, 'write all failure')
         );
-        $stream = new ClientStreamingResponse($call);
+        $stream = new ClientStream($call);
 
         try {
             $stream->writeAllAndReadResponse($requests);

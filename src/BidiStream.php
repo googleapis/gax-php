@@ -36,9 +36,9 @@ use Google\GAX\ApiException;
 use Google\GAX\ValidationException;
 
 /**
- * BidiStreamingResponse is the response object from a gRPC bidirectional streaming API call.
+ * BidiStream is the response object from a gRPC bidirectional streaming API call.
  */
-class BidiStreamingResponse
+class BidiStream
 {
     private $call;
     private $isComplete = false;
@@ -47,7 +47,7 @@ class BidiStreamingResponse
     private $pendingResources = [];
 
     /**
-     * BidiStreamingResponse constructor.
+     * BidiStream constructor.
      *
      * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      * @param array $grpcStreamingDescriptor

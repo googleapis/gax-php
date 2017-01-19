@@ -34,70 +34,60 @@ namespace Google\GAX;
 use Grpc;
 
 /**
- * ClientStreamingResponse is the response object from a gRPC client streaming API call.
+ * ServerStream is the response object from a gRPC server streaming API call.
  */
-class ClientStreamingResponse
+class ServerStream
 {
     private $call;
+    private $resourcesField;
 
     /**
-     * ClientStreamingResponse constructor.
+     * ServerStream constructor.
      *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
+     * @param \Grpc\ServerStreamingCall $serverStreamingCall The gRPC server streaming call object
      * @param array $grpcStreamingDescriptor
      */
-    public function __construct($clientStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct($serverStreamingCall, $grpcStreamingDescriptor = [])
     {
-        $this->call = $clientStreamingCall;
+        $this->call = $serverStreamingCall;
+        if (array_key_exists('resourcesField', $grpcStreamingDescriptor)) {
+            $this->resourcesField = $grpcStreamingDescriptor['resourcesField'];
+        }
     }
 
     /**
-     * Write request to the server.
+     * A generator which yields results from the server until the streaming call
+     * completes. Throws an ApiException if the streaming call failed.
      *
-     * @param mixed $request The request to write
-     */
-    public function write($request)
-    {
-        $this->call->write($request);
-    }
-
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @return mixed The response object from the server
+     * @return \Generator|mixed
      * @throws ApiException
      */
-    public function readResponse()
+    public function readAll()
     {
-        list($response, $status) = $this->call->wait();
-        if ($status->code == Grpc\STATUS_OK) {
-            return $response;
+        $resourcesField = $this->resourcesField;
+        if (!is_null($resourcesField)) {
+            foreach ($this->call->responses() as $response) {
+                foreach ($response->$resourcesField() as $resource) {
+                    yield $resource;
+                }
+            }
         } else {
+            foreach ($this->call->responses() as $response) {
+                yield $response;
+            }
+        }
+        $status = $this->call->getStatus();
+        if (!($status->code == Grpc\STATUS_OK)) {
             throw new ApiException($status->details, $status->code);
         }
     }
 
     /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
-        }
-        return $this->readResponse();
-    }
-
-    /**
      * Return the underlying gRPC call object
      *
-     * @return \Grpc\ClientStreamingCall
+     * @return \Grpc\ServerStreamingCall
      */
-    public function getClientStreamingCall()
+    public function getServerStreamingCall()
     {
         return $this->call;
     }

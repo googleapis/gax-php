@@ -983,7 +983,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\ClientStreamingResponse */
+        /* @var $stream \Google\GAX\ClientStream */
         $stream = $apiCall(null, $metadata, $options);
         $actualResponse = $stream->writeAllAndReadResponse([$request]);
         $this->assertEquals($response, $actualResponse);
@@ -1027,7 +1027,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\ClientStreamingResponse */
+        /* @var $stream \Google\GAX\ClientStream */
         $stream = $apiCall(null, $metadata, $options);
         $stream->write($request);
 
@@ -1084,7 +1084,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\ServerStreamingResponse */
+        /* @var $stream \Google\GAX\ServerStream */
         $stream = $apiCall($request, $metadata, $options);
         $actualResponses = iterator_to_array($stream->readAll());
         $this->assertSame(1, count($actualResponses));
@@ -1124,7 +1124,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\ServerStreamingResponse */
+        /* @var $stream \Google\GAX\ServerStream */
         $stream = $apiCall($request, $metadata, $options);
         $actualResponses = iterator_to_array($stream->readAll());
         $this->assertSame(2, count($actualResponses));
@@ -1164,7 +1164,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\ServerStreamingResponse */
+        /* @var $stream \Google\GAX\ServerStream */
         $stream = $apiCall($request, $metadata, $options);
 
         foreach ($stream->readAll() as $actualResponse) {
@@ -1214,7 +1214,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\BidiStreamingResponse */
+        /* @var $stream \Google\GAX\BidiStream */
         $stream = $apiCall(null, $metadata, $options);
         $stream->write($request);
         $actualResponses = iterator_to_array($stream->closeWriteAndReadAll());
@@ -1260,7 +1260,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\BidiStreamingResponse */
+        /* @var $stream \Google\GAX\BidiStream */
         $stream = $apiCall(null, $metadata, $options);
         $stream->write($request);
         $actualResponses = iterator_to_array($stream->closeWriteAndReadAll());
@@ -1307,7 +1307,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\BidiStreamingResponse */
+        /* @var $stream \Google\GAX\BidiStream */
         $stream = $apiCall(null, $metadata, $options);
         $stream->write($request);
         $stream->closeWrite();
