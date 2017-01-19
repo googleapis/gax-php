@@ -45,10 +45,10 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testEmptySuccess()
     {
         $call = new MockBidiStreamingCall([]);
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $this->assertSame([], iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($stream->closeWriteAndReadAll()));
     }
 
     /**
@@ -58,11 +58,11 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testEmptyFailureRead()
     {
         $call = new MockBidiStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure read'));
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $resp->closeWrite();
-        $resp->read();
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $stream->closeWrite();
+        $stream->read();
     }
 
     /**
@@ -72,10 +72,10 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testEmptyFailureReadAll()
     {
         $call = new MockBidiStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure readall'));
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        iterator_to_array($resp->closeWriteAndReadAll());
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        iterator_to_array($stream->closeWriteAndReadAll());
     }
 
     /**
@@ -85,12 +85,12 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testReadAfterComplete()
     {
         $call = new MockBidiStreamingCall([]);
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $resp->closeWrite();
-        $this->assertNull($resp->read());
-        $resp->read();
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $stream->closeWrite();
+        $this->assertNull($stream->read());
+        $stream->read();
     }
 
     /**
@@ -100,12 +100,12 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testWriteAfterComplete()
     {
         $call = new MockBidiStreamingCall([]);
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $resp->closeWrite();
-        $this->assertNull($resp->read());
-        $resp->write('request');
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $stream->closeWrite();
+        $this->assertNull($stream->read());
+        $stream->write('request');
     }
 
     /**
@@ -115,21 +115,21 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testWriteAfterCloseWrite()
     {
         $call = new MockBidiStreamingCall([]);
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $resp->closeWrite();
-        $resp->write('request');
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $stream->closeWrite();
+        $stream->write('request');
     }
 
     public function testReadStringsSuccess()
     {
         $responses = ['abc', 'def'];
         $call = new MockBidiStreamingCall($responses);
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $this->assertSame($responses, iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertSame($responses, iterator_to_array($stream->closeWriteAndReadAll()));
     }
 
     public function testReadObjectsSuccess()
@@ -143,10 +143,10 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
             $serializedResponses[] = $response->serialize();
         }
         $call = new MockBidiStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $this->assertEquals($responses, iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertEquals($responses, iterator_to_array($stream->closeWriteAndReadAll()));
     }
 
     public function testReadCloseReadSuccess()
@@ -160,15 +160,15 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
             $serializedResponses[] = $response->serialize();
         }
         $call = new MockBidiStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $response = $resp->read();
-        $resp->closeWrite();
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $response = $stream->read();
+        $stream->closeWrite();
         $index = 0;
         while (!is_null($response)) {
             $this->assertEquals($response, $responses[$index]);
-            $response = $resp->read();
+            $response = $stream->read();
             $index++;
         }
     }
@@ -185,12 +185,12 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'read failure')
         );
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertSame($call, $stream->getBidiStreamingCall());
         $index = 0;
         try {
-            foreach ($resp->closeWriteAndReadAll() as $response) {
+            foreach ($stream->closeWriteAndReadAll() as $response) {
                 $this->assertSame($response, $responses[$index]);
                 $index++;
             }
@@ -204,12 +204,12 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
         $requests = ['request1', 'request2'];
         $responses = [];
         $call = new MockBidiStreamingCall($responses);
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $resp->writeAll($requests);
+        $stream->writeAll($requests);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $this->assertSame([], iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($stream->closeWriteAndReadAll()));
         $this->assertEquals($requests, $call->getReceivedCalls());
     }
 
@@ -221,12 +221,12 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
         ];
         $responses = [];
         $call = new MockBidiStreamingCall($responses, '\google\rpc\Status::deserialize');
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $resp->writeAll($requests);
+        $stream->writeAll($requests);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $this->assertSame([], iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($stream->closeWriteAndReadAll()));
         $this->assertEquals($requests, $call->getReceivedCalls());
     }
 
@@ -248,24 +248,24 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
             $serializedResponses[] = $response->serialize();
         }
         $call = new MockBidiStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
         $index = 0;
         foreach ($requests as $request) {
-            $resp->write($request);
-            $response = $resp->read();
+            $stream->write($request);
+            $response = $stream->read();
             $this->assertEquals($response, $responses[$index]);
             $index++;
         }
-        $resp->closeWrite();
-        $response = $resp->read();
+        $stream->closeWrite();
+        $response = $stream->read();
         while (!is_null($response)) {
             $this->assertEquals($response, $responses[$index]);
             $index++;
-            $response = $resp->read();
+            $response = $stream->read();
         }
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertSame($call, $stream->getBidiStreamingCall());
         $this->assertEquals($requests, $call->getReceivedCalls());
     }
 
@@ -282,13 +282,13 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'write failure without close')
         );
-        $resp = new BidiStreamingResponse($call);
+        $stream = new BidiStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $resp->write($request);
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $stream->write($request);
 
         try {
-            $resp->read();
+            $stream->read();
         } finally {
             $this->assertEquals([$request], $call->getReceivedCalls());
         }
@@ -302,12 +302,12 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
             MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource2', 'resource3'])
         ];
         $call = new MockBidiStreamingCall($responses);
-        $resp = new BidiStreamingResponse($call, [
+        $stream = new BidiStreamingResponse($call, [
             'resourcesField' => 'getResourcesList'
         ]);
 
-        $this->assertSame($call, $resp->getBidiStreamingCall());
-        $this->assertEquals($resources, iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertEquals($resources, iterator_to_array($stream->closeWriteAndReadAll()));
     }
 
     private static function createStatus($code, $message)

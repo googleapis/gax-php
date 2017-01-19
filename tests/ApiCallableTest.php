@@ -983,9 +983,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $clientStreamingResponse \Google\GAX\ClientStreamingResponse */
-        $clientStreamingResponse = $apiCall(null, $metadata, $options);
-        $actualResponse = $clientStreamingResponse->writeAllAndReadResponse([$request]);
+        /* @var $stream \Google\GAX\ClientStreamingResponse */
+        $stream = $apiCall(null, $metadata, $options);
+        $actualResponse = $stream->writeAllAndReadResponse([$request]);
         $this->assertEquals($response, $actualResponse);
 
         $actualCalls = $stub->getReceivedCalls();
@@ -995,7 +995,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($options, $actualCalls[0]->getOptions());
 
         /* @var $mockClientStreamingCall \Google\GAX\Testing\MockClientStreamingCall */
-        $mockClientStreamingCall = $clientStreamingResponse->getClientStreamingCall();
+        $mockClientStreamingCall = $stream->getClientStreamingCall();
         $actualStreamingCalls = $mockClientStreamingCall->getReceivedCalls();
         $this->assertSame(1, count($actualStreamingCalls));
         $this->assertEquals($request, $actualStreamingCalls[0]);
@@ -1027,9 +1027,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $clientStreamingResponse \Google\GAX\ClientStreamingResponse */
-        $clientStreamingResponse = $apiCall(null, $metadata, $options);
-        $clientStreamingResponse->write($request);
+        /* @var $stream \Google\GAX\ClientStreamingResponse */
+        $stream = $apiCall(null, $metadata, $options);
+        $stream->write($request);
 
         $actualCalls = $stub->getReceivedCalls();
         $this->assertSame(1, count($actualCalls));
@@ -1038,12 +1038,12 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($options, $actualCalls[0]->getOptions());
 
         /* @var $mockClientStreamingCall \Google\GAX\Testing\MockClientStreamingCall */
-        $mockClientStreamingCall = $clientStreamingResponse->getClientStreamingCall();
+        $mockClientStreamingCall = $stream->getClientStreamingCall();
         $actualStreamingCalls = $mockClientStreamingCall->getReceivedCalls();
         $this->assertSame(1, count($actualStreamingCalls));
         $this->assertEquals($request, $actualStreamingCalls[0]);
 
-        $clientStreamingResponse->readResponse();
+        $stream->readResponse();
     }
 
     public function testServerStreamingSuccessSimple()
@@ -1084,9 +1084,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $serverStreamingResponse \Google\GAX\ServerStreamingResponse */
-        $serverStreamingResponse = $apiCall($request, $metadata, $options);
-        $actualResponses = iterator_to_array($serverStreamingResponse->readAll());
+        /* @var $stream \Google\GAX\ServerStreamingResponse */
+        $stream = $apiCall($request, $metadata, $options);
+        $actualResponses = iterator_to_array($stream->readAll());
         $this->assertSame(1, count($actualResponses));
         $this->assertEquals($responses, $actualResponses);
 
@@ -1124,9 +1124,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $serverStreamingResponse \Google\GAX\ServerStreamingResponse */
-        $serverStreamingResponse = $apiCall($request, $metadata, $options);
-        $actualResponses = iterator_to_array($serverStreamingResponse->readAll());
+        /* @var $stream \Google\GAX\ServerStreamingResponse */
+        $stream = $apiCall($request, $metadata, $options);
+        $actualResponses = iterator_to_array($stream->readAll());
         $this->assertSame(2, count($actualResponses));
         $this->assertEquals($resources, $actualResponses);
 
@@ -1164,10 +1164,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $serverStreamingResponse \Google\GAX\ServerStreamingResponse */
-        $serverStreamingResponse = $apiCall($request, $metadata, $options);
+        /* @var $stream \Google\GAX\ServerStreamingResponse */
+        $stream = $apiCall($request, $metadata, $options);
 
-        foreach ($serverStreamingResponse->readAll() as $actualResponse) {
+        foreach ($stream->readAll() as $actualResponse) {
             $this->assertEquals($response, $actualResponse);
 
             $actualCalls = $stub->getReceivedCalls();
@@ -1214,10 +1214,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $bidiStreamingResponse \Google\GAX\BidiStreamingResponse */
-        $bidiStreamingResponse = $apiCall(null, $metadata, $options);
-        $bidiStreamingResponse->write($request);
-        $actualResponses = iterator_to_array($bidiStreamingResponse->closeWriteAndReadAll());
+        /* @var $stream \Google\GAX\BidiStreamingResponse */
+        $stream = $apiCall(null, $metadata, $options);
+        $stream->write($request);
+        $actualResponses = iterator_to_array($stream->closeWriteAndReadAll());
         $this->assertSame(1, count($actualResponses));
         $this->assertEquals($responses, $actualResponses);
 
@@ -1228,7 +1228,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($options, $actualCalls[0]->getOptions());
 
         /* @var $mockBidiStreamingCall \Google\GAX\Testing\MockBidiStreamingCall */
-        $mockBidiStreamingCall = $bidiStreamingResponse->getBidiStreamingCall();
+        $mockBidiStreamingCall = $stream->getBidiStreamingCall();
         $actualStreamingCalls = $mockBidiStreamingCall->getReceivedCalls();
         $this->assertSame(1, count($actualStreamingCalls));
         $this->assertEquals($request, $actualStreamingCalls[0]);
@@ -1260,10 +1260,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $bidiStreamingResponse \Google\GAX\BidiStreamingResponse */
-        $bidiStreamingResponse = $apiCall(null, $metadata, $options);
-        $bidiStreamingResponse->write($request);
-        $actualResponses = iterator_to_array($bidiStreamingResponse->closeWriteAndReadAll());
+        /* @var $stream \Google\GAX\BidiStreamingResponse */
+        $stream = $apiCall(null, $metadata, $options);
+        $stream->write($request);
+        $actualResponses = iterator_to_array($stream->closeWriteAndReadAll());
         $this->assertSame(2, count($actualResponses));
         $this->assertEquals($resources, $actualResponses);
 
@@ -1274,7 +1274,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($options, $actualCalls[0]->getOptions());
 
         /* @var $mockBidiStreamingCall \Google\GAX\Testing\MockBidiStreamingCall */
-        $mockBidiStreamingCall = $bidiStreamingResponse->getBidiStreamingCall();
+        $mockBidiStreamingCall = $stream->getBidiStreamingCall();
         $actualStreamingCalls = $mockBidiStreamingCall->getReceivedCalls();
         $this->assertSame(1, count($actualStreamingCalls));
         $this->assertEquals($request, $actualStreamingCalls[0]);
@@ -1307,11 +1307,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $bidiStreamingResponse \Google\GAX\BidiStreamingResponse */
-        $bidiStreamingResponse = $apiCall(null, $metadata, $options);
-        $bidiStreamingResponse->write($request);
-        $bidiStreamingResponse->closeWrite();
-        $actualResponse = $bidiStreamingResponse->read();
+        /* @var $stream \Google\GAX\BidiStreamingResponse */
+        $stream = $apiCall(null, $metadata, $options);
+        $stream->write($request);
+        $stream->closeWrite();
+        $actualResponse = $stream->read();
         $this->assertEquals($response, $actualResponse);
 
         $actualCalls = $stub->getReceivedCalls();
@@ -1321,11 +1321,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($options, $actualCalls[0]->getOptions());
 
         /* @var $mockBidiStreamingCall \Google\GAX\Testing\MockBidiStreamingCall */
-        $mockBidiStreamingCall = $bidiStreamingResponse->getBidiStreamingCall();
+        $mockBidiStreamingCall = $stream->getBidiStreamingCall();
         $actualStreamingCalls = $mockBidiStreamingCall->getReceivedCalls();
         $this->assertSame(1, count($actualStreamingCalls));
         $this->assertEquals($request, $actualStreamingCalls[0]);
 
-        $bidiStreamingResponse->read();
+        $stream->read();
     }
 }

@@ -49,10 +49,10 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = 'response';
         $call = new MockClientStreamingCall($response);
-        $resp = new ClientStreamingResponse($call);
+        $stream = new ClientStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getClientStreamingCall());
-        $this->assertSame($response, $resp->readResponse());
+        $this->assertSame($call, $stream->getClientStreamingCall());
+        $this->assertSame($response, $stream->readResponse());
         $this->assertSame([], $call->getReceivedCalls());
     }
 
@@ -68,11 +68,11 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'no writes failure')
         );
-        $resp = new ClientStreamingResponse($call);
+        $stream = new ClientStreamingResponse($call);
 
-        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertSame([], $call->getReceivedCalls());
-        $resp->readResponse();
+        $stream->readResponse();
     }
 
     public function testManualWritesSuccess()
@@ -83,14 +83,14 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
         ];
         $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
-        $resp = new ClientStreamingResponse($call);
+        $stream = new ClientStreamingResponse($call);
 
         foreach ($requests as $request) {
-            $resp->write($request);
+            $stream->write($request);
         }
 
-        $this->assertSame($call, $resp->getClientStreamingCall());
-        $this->assertEquals($response, $resp->readResponse());
+        $this->assertSame($call, $stream->getClientStreamingCall());
+        $this->assertEquals($response, $stream->readResponse());
         $this->assertEquals($requests, $call->getReceivedCalls());
     }
 
@@ -110,15 +110,15 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             '\google\rpc\Status::deserialize',
             new MockStatus(Grpc\STATUS_INTERNAL, 'manual writes failure')
         );
-        $resp = new ClientStreamingResponse($call);
+        $stream = new ClientStreamingResponse($call);
 
         foreach ($requests as $request) {
-            $resp->write($request);
+            $stream->write($request);
         }
 
-        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertEquals($requests, $call->getReceivedCalls());
-        $resp->readResponse();
+        $stream->readResponse();
     }
 
     public function testWriteAllSuccess()
@@ -129,11 +129,11 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
         ];
         $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
-        $resp = new ClientStreamingResponse($call);
+        $stream = new ClientStreamingResponse($call);
 
-        $actualResponse = $resp->writeAllAndReadResponse($requests);
+        $actualResponse = $stream->writeAllAndReadResponse($requests);
 
-        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertEquals($response, $actualResponse);
         $this->assertEquals($requests, $call->getReceivedCalls());
     }
@@ -154,12 +154,12 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
             '\google\rpc\Status::deserialize',
             new MockStatus(Grpc\STATUS_INTERNAL, 'write all failure')
         );
-        $resp = new ClientStreamingResponse($call);
+        $stream = new ClientStreamingResponse($call);
 
         try {
-            $resp->writeAllAndReadResponse($requests);
+            $stream->writeAllAndReadResponse($requests);
         } finally {
-            $this->assertSame($call, $resp->getClientStreamingCall());
+            $this->assertSame($call, $stream->getClientStreamingCall());
             $this->assertEquals($requests, $call->getReceivedCalls());
         }
     }
