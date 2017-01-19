@@ -66,8 +66,7 @@ class MockServerStreamingCall
     public function responses()
     {
         while (count($this->responses) > 0) {
-            list($resp, $status) = array_shift($this->responses);
-            // Ignore the status attached to the response
+            $resp = array_shift($this->responses);
             yield call_user_func($this->deserialize, $resp);
         }
     }

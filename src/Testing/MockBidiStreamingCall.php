@@ -68,14 +68,13 @@ class MockBidiStreamingCall
     public function read()
     {
         if (count($this->responses) > 0) {
-            list($resp, $status) = array_shift($this->responses);
-            // Ignore the status attached to the response
+            $resp = array_shift($this->responses);
             return call_user_func($this->deserialize, $resp);
         } elseif ($this->writesDone) {
             return null;
         } else {
             throw new ApiException("No more responses to read, but writesDone() not called - "
-                . "this would be blocking", Grpc\Internal);
+                . "this would be blocking", Grpc\STATUS_INTERNAL);
         }
     }
 

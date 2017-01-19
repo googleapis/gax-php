@@ -68,11 +68,11 @@ class BidiStreamingResponse
      */
     public function write($request)
     {
-        if ($this->writesClosed) {
-            throw new ValidationException("Cannot call write() after calling closeWrite().");
-        }
         if ($this->isComplete) {
             throw new ValidationException("Cannot call write() after streaming call is complete.");
+        }
+        if ($this->writesClosed) {
+            throw new ValidationException("Cannot call write() after calling closeWrite().");
         }
         $this->call->write($request);
     }

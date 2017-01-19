@@ -985,7 +985,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         /* @var $clientStreamingResponse \Google\GAX\ClientStreamingResponse */
         $clientStreamingResponse = $apiCall(null, $metadata, $options);
-        $actualResponse = $clientStreamingResponse->writeAllAndWait([$request]);
+        $actualResponse = $clientStreamingResponse->writeAllAndReadResponse([$request]);
         $this->assertEquals($response, $actualResponse);
 
         $actualCalls = $stub->getReceivedCalls();
@@ -1043,7 +1043,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame(1, count($actualStreamingCalls));
         $this->assertEquals($request, $actualStreamingCalls[0]);
 
-        $clientStreamingResponse->wait();
+        $clientStreamingResponse->readResponse();
     }
 
     public function testServerStreamingSuccessSimple()

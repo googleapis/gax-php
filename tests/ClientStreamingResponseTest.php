@@ -31,122 +31,139 @@
  */
 namespace Google\GAX\UnitTests;
 
+use Google\GAX\ApiException;
+use Google\GAX\ClientStreamingResponse;
 use Google\GAX\OperationResponse;
-use google\longrunning\Operation;
-use Google\GAX\LongRunning\OperationsClient;
-use google\protobuf\Any;
+use Google\GAX\ServerStreamingResponse;
+use Google\GAX\Testing\MockClientStreamingCall;
+use Google\GAX\Testing\MockServerStreamingCall;
+use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
+use Google\GAX\UnitTests\Mocks\MockStatus;
 use google\rpc\Status;
+use Grpc;
 use PHPUnit_Framework_TestCase;
 
 class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
 {
-    public function testBasic()
+    public function testNoWritesSuccess()
     {
-        $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
-        $op = new OperationResponse($opName, $opClient);
+        $response = 'response';
+        $call = new MockClientStreamingCall($response);
+        $resp = new ClientStreamingResponse($call);
 
-        $this->assertSame($opName, $op->getName());
-        $this->assertSame($opClient, $op->getOperationsClient());
+        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertSame($response, $resp->readResponse());
+        $this->assertSame([], $call->getReceivedCalls());
     }
 
-    public function testWithoutResponse()
+    /**
+     * @expectedException \Google\GAX\ApiException
+     * @expectedExceptionMessage no writes failure
+     */
+    public function testNoWritesFailure()
     {
-        $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
-        $op = new OperationResponse($opName, $opClient);
+        $response = 'response';
+        $call = new MockClientStreamingCall(
+            $response,
+            null,
+            new MockStatus(Grpc\STATUS_INTERNAL, 'no writes failure')
+        );
+        $resp = new ClientStreamingResponse($call);
 
-        $this->assertNull($op->getLastProtoResponse());
-        $this->assertFalse($op->isDone());
-        $this->assertNull($op->getResult());
-        $this->assertNull($op->getError());
-        $this->assertNull($op->getMetadata());
-        $this->assertFalse($op->operationSucceeded());
-        $this->assertFalse($op->operationFailed());
+        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertSame([], $call->getReceivedCalls());
+        $resp->readResponse();
     }
 
-    public function testWithResponse()
+    public function testManualWritesSuccess()
     {
-        $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
-        $protoResponse = new Operation();
-        $op = new OperationResponse($opName, $opClient, [
-            'lastProtoResponse' => $protoResponse,
-        ]);
+        $requests = [
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+        ];
+        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
+        $resp = new ClientStreamingResponse($call);
 
-        $this->assertSame($protoResponse, $op->getLastProtoResponse());
-        $this->assertFalse($op->isDone());
-        $this->assertNull($op->getResult());
-        $this->assertNull($op->getError());
-        $this->assertNull($op->getMetadata());
-        $this->assertFalse($op->operationSucceeded());
-        $this->assertFalse($op->operationFailed());
+        foreach ($requests as $request) {
+            $resp->write($request);
+        }
 
-        $response = self::createAny(self::createStatus(0, "response"));
-        $error = self::createStatus(2, "error");
-        $metadata = self::createAny(self::createStatus(0, "metadata"));
-
-        $protoResponse->setDone(true)->setResponse($response)->setMetadata($metadata);
-        $this->assertTrue($op->isDone());
-        $this->assertSame($response, $op->getResult());
-        $this->assertSame($metadata, $op->getMetadata());
-        $this->assertTrue($op->operationSucceeded());
-        $this->assertFalse($op->operationFailed());
-
-        $protoResponse->clearResponse()->setError($error);
-        $this->assertNull($op->getResult());
-        $this->assertSame($error, $op->getError());
-        $this->assertFalse($op->operationSucceeded());
-        $this->assertTrue($op->operationFailed());
+        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertEquals($response, $resp->readResponse());
+        $this->assertEquals($requests, $call->getReceivedCalls());
     }
 
-    public function testWithOptions()
+    /**
+     * @expectedException \Google\GAX\ApiException
+     * @expectedExceptionMessage manual writes failure
+     */
+    public function testManualWritesFailure()
     {
-        $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
-        $protoResponse = new Operation();
-        $op = new OperationResponse($opName, $opClient, [
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
-            'lastProtoResponse' => $protoResponse,
-        ]);
+        $requests = [
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+        ];
+        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $call = new MockClientStreamingCall(
+            $response->serialize(),
+            '\google\rpc\Status::deserialize',
+            new MockStatus(Grpc\STATUS_INTERNAL, 'manual writes failure')
+        );
+        $resp = new ClientStreamingResponse($call);
 
-        $this->assertSame($protoResponse, $op->getLastProtoResponse());
-        $this->assertFalse($op->isDone());
-        $this->assertNull($op->getResult());
-        $this->assertNull($op->getError());
-        $this->assertNull($op->getMetadata());
+        foreach ($requests as $request) {
+            $resp->write($request);
+        }
 
-        $response = self::createAny(self::createStatus(0, "response"));
-        $metadata = self::createAny(self::createStatus(0, "metadata"));
-
-        $protoResponse->setDone(true)->setResponse($response)->setMetadata($metadata);
-        $this->assertTrue($op->isDone());
-        $this->assertEquals(self::createStatus(0, "response"), $op->getResult());
-        $this->assertEquals(self::createStatus(0, "metadata"), $op->getMetadata());
+        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertEquals($requests, $call->getReceivedCalls());
+        $resp->readResponse();
     }
 
-    public static function createAny($value)
+    public function testWriteAllSuccess()
     {
-        $any = new Any();
-        return $any->setValue($value->serialize());
+        $requests = [
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+        ];
+        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
+        $resp = new ClientStreamingResponse($call);
+
+        $actualResponse = $resp->writeAllAndReadResponse($requests);
+
+        $this->assertSame($call, $resp->getClientStreamingCall());
+        $this->assertEquals($response, $actualResponse);
+        $this->assertEquals($requests, $call->getReceivedCalls());
     }
 
-    public static function createStatus($code, $message)
+    /**
+     * @expectedException \Google\GAX\ApiException
+     * @expectedExceptionMessage write all failure
+     */
+    public function testWriteAllFailure()
     {
-        $value = new Status();
-        return $value->setCode($code)->setMessage($message);
+        $requests = [
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+        ];
+        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize', new MockStatus(Grpc\STATUS_INTERNAL, 'write all failure'));
+        $resp = new ClientStreamingResponse($call);
+
+        try {
+            $resp->writeAllAndReadResponse($requests);
+        } finally {
+            $this->assertSame($call, $resp->getClientStreamingCall());
+            $this->assertEquals($requests, $call->getReceivedCalls());
+        }
     }
 
-    public static function createOperationsClient($stub = null)
+    private static function createStatus($code, $message)
     {
-        $client = new OperationsClient([
-            'createOperationsStubFunction' => function ($hostname, $opts) use ($stub) {
-                return $stub;
-            },
-            'serviceAddress' => '',
-            'scopes' => [],
-        ]);
-        return $client;
+        $status = new Status();
+        $status->setCode($code)->setMessage($message);
+        return $status;
     }
 }

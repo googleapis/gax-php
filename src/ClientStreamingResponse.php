@@ -62,12 +62,12 @@ class ClientStreamingResponse
     }
 
     /**
-     * Wait for the server to return a response object.
+     * Read the response from the server, completing the streaming call.
      *
      * @return mixed The response object from the server
      * @throws ApiException
      */
-    public function wait()
+    public function readResponse()
     {
         list($response, $status) = $this->call->wait();
         if ($status->code == Grpc\STATUS_OK) {
@@ -78,17 +78,18 @@ class ClientStreamingResponse
     }
 
     /**
-     * Write all data in $dataArray and wait for the server to return a response object.
+     * Write all data in $dataArray and read the response from the server, completing the streaming
+     * call.
      *
      * @param mixed[] $requests An iterator of request objects to write to the server
      * @return mixed The response object from the server
      */
-    public function writeAllAndWait($requests)
+    public function writeAllAndReadResponse($requests)
     {
         foreach ($requests as $request) {
             $this->write($request);
         }
-        return $this->wait();
+        return $this->readResponse();
     }
 
     /**

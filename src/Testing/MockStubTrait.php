@@ -130,7 +130,7 @@ trait MockStubTrait
             $argument = $argument::deserialize($argument->serialize());
         }
         $this->receivedFuncCalls[] = new ReceivedRequest($method, $argument, $deserialize, $metadata, $options);
-        $responses = $this->responses;
+        $responses = MockStubTrait::stripStatusFromResponses($this->responses);
         $this->responses = [];
         return new MockServerStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
     }
@@ -157,9 +157,19 @@ trait MockStubTrait
     ) {
     
         $this->receivedFuncCalls[] = new ReceivedRequest($method, null, $deserialize, $metadata, $options);
-        $responses = $this->responses;
+        $responses = MockStubTrait::stripStatusFromResponses($this->responses);
         $this->responses = [];
         return new MockBidiStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
+    }
+
+    public static function stripStatusFromResponses($responses)
+    {
+        $strippedResponses = [];
+        foreach ($responses as $response) {
+            list($resp, $status) = $response;
+            $strippedResponses[] = $resp;
+        }
+        return $strippedResponses;
     }
 
     /**
