@@ -69,11 +69,19 @@ class MockBidiStreamingCall
     {
         if (count($this->responses) > 0) {
             $resp = array_shift($this->responses);
+            if (is_null($resp)) {
+                // Null was added to the responses list to simulate a failed stream
+                // To ensure that getStatus can now be called, we clear the remaining
+                // responses and set writesDone to true
+                $this->responses = [];
+                $this->writesDone();
+                return null;
+            }
             return call_user_func($this->deserialize, $resp);
         } elseif ($this->writesDone) {
             return null;
         } else {
-            throw new ApiException("No more responses to read, but writesDone() not called - "
+            throw new ApiException("No more responses to read, but closeWrite() not called - "
                 . "this would be blocking", Grpc\STATUS_INTERNAL);
         }
     }
@@ -88,7 +96,7 @@ class MockBidiStreamingCall
         }
         if (!$this->writesDone) {
             throw new ApiException(
-                "Calls to getStatus() will block if writesDone() not called",
+                "Calls to getStatus() will block if closeWrite() not called",
                 Grpc\STATUS_INTERNAL
             );
         }

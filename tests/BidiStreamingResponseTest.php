@@ -34,6 +34,7 @@ namespace Google\GAX\UnitTests;
 use Google\GAX\ApiException;
 use Google\GAX\BidiStreamingResponse;
 use Google\GAX\Testing\MockBidiStreamingCall;
+use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
 use Google\GAX\UnitTests\Mocks\MockStatus;
 use google\rpc\Status;
 use Grpc;
@@ -119,6 +120,194 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
         $this->assertSame($call, $resp->getBidiStreamingCall());
         $resp->closeWrite();
         $resp->write('request');
+    }
+
+    public function testReadStringsSuccess()
+    {
+        $responses = ['abc', 'def'];
+        $call = new MockBidiStreamingCall($responses);
+        $resp = new BidiStreamingResponse($call);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertSame($responses, iterator_to_array($resp->closeWriteAndReadAll()));
+    }
+
+    public function testReadObjectsSuccess()
+    {
+        $responses = [
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2')
+        ];
+        $serializedResponses = [];
+        foreach ($responses as $response) {
+            $serializedResponses[] = $response->serialize();
+        }
+        $call = new MockBidiStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
+        $resp = new BidiStreamingResponse($call);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertEquals($responses, iterator_to_array($resp->closeWriteAndReadAll()));
+    }
+
+    public function testReadCloseReadSuccess()
+    {
+        $responses = [
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2')
+        ];
+        $serializedResponses = [];
+        foreach ($responses as $response) {
+            $serializedResponses[] = $response->serialize();
+        }
+        $call = new MockBidiStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
+        $resp = new BidiStreamingResponse($call);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $response = $resp->read();
+        $resp->closeWrite();
+        $index = 0;
+        while (!is_null($response)) {
+            $this->assertEquals($response, $responses[$index]);
+            $response = $resp->read();
+            $index++;
+        }
+    }
+
+    /**
+     * @expectedException \Google\GAX\ApiException
+     * @expectedExceptionMessage read failure
+     */
+    public function testReadFailure()
+    {
+        $responses = ['abc', 'def'];
+        $call = new MockBidiStreamingCall(
+            $responses,
+            null,
+            new MockStatus(Grpc\STATUS_INTERNAL, 'read failure')
+        );
+        $resp = new BidiStreamingResponse($call);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $index = 0;
+        try {
+            foreach ($resp->closeWriteAndReadAll() as $response) {
+                $this->assertSame($response, $responses[$index]);
+                $index++;
+            }
+        } finally {
+            $this->assertSame(2, $index);
+        }
+    }
+
+    public function testWriteStringsSuccess()
+    {
+        $requests = ['request1', 'request2'];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses);
+        $resp = new BidiStreamingResponse($call);
+
+        $resp->writeAll($requests);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertEquals($requests, $call->getReceivedCalls());
+    }
+
+    public function testWriteObjectsSuccess()
+    {
+        $requests = [
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+        ];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses, '\google\rpc\Status::deserialize');
+        $resp = new BidiStreamingResponse($call);
+
+        $resp->writeAll($requests);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($resp->closeWriteAndReadAll()));
+        $this->assertEquals($requests, $call->getReceivedCalls());
+    }
+
+    public function testAlternateReadWriteObjectsSuccess()
+    {
+        $requests = [
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request3')
+        ];
+        $responses = [
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response3'),
+            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response4')
+        ];
+        $serializedResponses = [];
+        foreach ($responses as $response) {
+            $serializedResponses[] = $response->serialize();
+        }
+        $call = new MockBidiStreamingCall($serializedResponses, '\google\rpc\Status::deserialize');
+        $resp = new BidiStreamingResponse($call);
+
+        $index = 0;
+        foreach ($requests as $request) {
+            $resp->write($request);
+            $response = $resp->read();
+            $this->assertEquals($response, $responses[$index]);
+            $index++;
+        }
+        $resp->closeWrite();
+        $response = $resp->read();
+        while (!is_null($response)) {
+            $this->assertEquals($response, $responses[$index]);
+            $index++;
+            $response = $resp->read();
+        }
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertEquals($requests, $call->getReceivedCalls());
+    }
+
+    /**
+     * @expectedException \Google\GAX\ApiException
+     * @expectedExceptionMessage write failure without close
+     */
+    public function testWriteFailureWithoutClose()
+    {
+        $request = 'request';
+        $responses = [null];
+        $call = new MockBidiStreamingCall(
+            $responses,
+            null,
+            new MockStatus(Grpc\STATUS_INTERNAL, 'write failure without close')
+        );
+        $resp = new BidiStreamingResponse($call);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $resp->write($request);
+
+        try {
+            $resp->read();
+        } finally {
+            $this->assertEquals([$request], $call->getReceivedCalls());
+        }
+    }
+
+    public function testResourcesSuccess()
+    {
+        $resources = ['resource1', 'resource2', 'resource3'];
+        $responses = [
+            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']),
+            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource2', 'resource3'])
+        ];
+        $call = new MockBidiStreamingCall($responses);
+        $resp = new BidiStreamingResponse($call, [
+            'resourcesField' => 'getResourcesList'
+        ]);
+
+        $this->assertSame($call, $resp->getBidiStreamingCall());
+        $this->assertEquals($resources, iterator_to_array($resp->closeWriteAndReadAll()));
     }
 
     private static function createStatus($code, $message)
