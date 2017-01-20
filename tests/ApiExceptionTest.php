@@ -29,43 +29,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\UnitTests;
 
-use Exception;
+use Google\GAX\ApiException;
+use PHPUnit_Framework_TestCase;
+use Grpc;
 
-class ApiException extends Exception
+class ApiExceptionTest extends PHPUnit_Framework_TestCase
 {
-    private $metadata;
-
-    public function __construct($message, $code, \Exception $previous = null)
+    public function testWithoutMetadata()
     {
-        parent::__construct($message, $code, $previous);
+        $status = new \stdClass();
+        $status->code = Grpc\STATUS_OK;
+        $status->details = 'testWithoutMetadata';
+
+        $apiException = ApiException::createFromStdClass($status);
+
+        $this->assertSame(Grpc\STATUS_OK, $apiException->getCode());
+        $this->assertSame('testWithoutMetadata', $apiException->getMessage());
+        $this->assertNull($apiException->getMetadata());
     }
 
-    /**
-     * @param \stdClass $status
-     * @return ApiException
-     */
-    public static function createFromStdClass($status)
+    public function testWithMetadata()
     {
-        $ex = new ApiException($status->details, $status->code);
-        if (property_exists($status, 'metadata')) {
-            $ex->metadata = $status->metadata;
-        }
-        return $ex;
-    }
+        $status = new \stdClass();
+        $status->code = Grpc\STATUS_OK;
+        $status->details = 'testWithMetadata';
+        $status->metadata = ['metadata'];
 
-    /**
-     * @return mixed[]
-     */
-    public function getMetadata()
-    {
-        return $this->metadata;
-    }
+        $apiException = ApiException::createFromStdClass($status);
 
-    // custom string representation of object
-    public function __toString()
-    {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+        $this->assertSame(Grpc\STATUS_OK, $apiException->getCode());
+        $this->assertSame('testWithMetadata', $apiException->getMessage());
+        $this->assertSame(['metadata'], $apiException->getMetadata());
     }
 }

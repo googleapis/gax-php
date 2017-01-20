@@ -78,7 +78,7 @@ class ServerStream
         }
         $status = $this->call->getStatus();
         if (!($status->code == Grpc\STATUS_OK)) {
-            throw new ApiException($status->details, $status->code);
+            throw ApiException::createFromStdClass($status);
         }
     }
 

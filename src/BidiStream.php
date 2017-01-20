@@ -138,7 +138,7 @@ class BidiStream
             $status = $this->call->getStatus();
             $this->isComplete = true;
             if (!($status->code == Grpc\STATUS_OK)) {
-                throw new ApiException($status->details, $status->code);
+                throw ApiException::createFromStdClass($status);
             }
         }
         return $result;

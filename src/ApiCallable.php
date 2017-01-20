@@ -216,7 +216,7 @@ class ApiCallable
                 if ($status->code == Grpc\STATUS_OK) {
                     return $response;
                 } else {
-                    throw new ApiException($status->details, $status->code);
+                    throw ApiException::createFromStdClass($status);
                 }
             };
         }
