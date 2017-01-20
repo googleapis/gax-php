@@ -41,7 +41,7 @@ use google\rpc\Status;
 use Grpc;
 use PHPUnit_Framework_TestCase;
 
-class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
+class ServerStreamTest extends PHPUnit_Framework_TestCase
 {
     public function testEmptySuccess()
     {
@@ -104,8 +104,8 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testObjectsSuccess()
     {
         $responses = [
-            ServerStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            ServerStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2')
+            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -125,8 +125,8 @@ class ServerStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testObjectsFailure()
     {
         $responses = [
-            ServerStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            ServerStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2')
+            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {

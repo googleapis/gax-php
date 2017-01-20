@@ -43,7 +43,7 @@ use google\rpc\Status;
 use Grpc;
 use PHPUnit_Framework_TestCase;
 
-class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
+class ClientStreamTest extends PHPUnit_Framework_TestCase
 {
     public function testNoWritesSuccess()
     {
@@ -78,10 +78,10 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testManualWritesSuccess()
     {
         $requests = [
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
         $stream = new ClientStream($call);
 
@@ -101,10 +101,10 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testManualWritesFailure()
     {
         $requests = [
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall(
             $response->serialize(),
             '\google\rpc\Status::deserialize',
@@ -124,10 +124,10 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testWriteAllSuccess()
     {
         $requests = [
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serialize(), '\google\rpc\Status::deserialize');
         $stream = new ClientStream($call);
 
@@ -145,10 +145,10 @@ class ClientStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testWriteAllFailure()
     {
         $requests = [
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall(
             $response->serialize(),
             '\google\rpc\Status::deserialize',

@@ -47,6 +47,12 @@ class MockServerStreamingCall
     private $deserialize;
     private $status;
 
+    /**
+     * MockServerStreamingCall constructor.
+     * @param mixed[] $responses A list of response objects.
+     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param Status|null $status An optional status object. If set to null, a status of OK is used.
+     */
     public function __construct($responses, $deserialize = null, $status = null)
     {
         $this->responses = $responses;

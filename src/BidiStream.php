@@ -61,6 +61,19 @@ class BidiStream
     }
 
     /**
+     * @param callable $callable
+     * @param mixed[] $grpcStreamingDescriptor
+     * @return callable ApiCall
+     */
+    public static function createApiCall($callable, $grpcStreamingDescriptor)
+    {
+        return function () use ($callable, $grpcStreamingDescriptor) {
+            $response = ApiCallable::callWithoutRequest($callable, func_get_args());
+            return new BidiStream($response, $grpcStreamingDescriptor);
+        };
+    }
+
+    /**
      * Write request to the server.
      *
      * @param mixed $request The request to write

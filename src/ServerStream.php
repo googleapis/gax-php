@@ -56,6 +56,19 @@ class ServerStream
     }
 
     /**
+     * @param callable $callable
+     * @param mixed[] $grpcStreamingDescriptor
+     * @return callable ApiCall
+     */
+    public static function createApiCall($callable, $grpcStreamingDescriptor)
+    {
+        return function () use ($callable, $grpcStreamingDescriptor) {
+            $response = call_user_func_array($callable, func_get_args());
+            return new ServerStream($response, $grpcStreamingDescriptor);
+        };
+    }
+
+    /**
      * A generator which yields results from the server until the streaming call
      * completes. Throws an ApiException if the streaming call failed.
      *

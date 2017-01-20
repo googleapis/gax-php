@@ -40,7 +40,7 @@ use google\rpc\Status;
 use Grpc;
 use PHPUnit_Framework_TestCase;
 
-class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
+class BidiStreamTest extends PHPUnit_Framework_TestCase
 {
     public function testEmptySuccess()
     {
@@ -135,8 +135,8 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testReadObjectsSuccess()
     {
         $responses = [
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2')
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -152,8 +152,8 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testReadCloseReadSuccess()
     {
         $responses = [
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2')
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -216,8 +216,8 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testWriteObjectsSuccess()
     {
         $requests = [
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2')
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
         $responses = [];
         $call = new MockBidiStreamingCall($responses, '\google\rpc\Status::deserialize');
@@ -233,15 +233,15 @@ class BidiStreamingResponseTest extends PHPUnit_Framework_TestCase
     public function testAlternateReadWriteObjectsSuccess()
     {
         $requests = [
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request2'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'request3')
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request3')
         ];
         $responses = [
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response2'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response3'),
-            BidiStreamingResponseTest::createStatus(Grpc\STATUS_OK, 'response4')
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response3'),
+            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response4')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {

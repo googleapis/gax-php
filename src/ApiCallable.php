@@ -134,38 +134,38 @@ class ApiCallable
         return $inner;
     }
 
-    private static function callWithoutRequest($callable, $params)
+    public static function callWithoutRequest($callable, $params)
     {
         array_shift($params);
         return call_user_func_array($callable, $params);
+    }
+
+    private static function createUnaryApiCall($callable)
+    {
+        return function () use ($callable) {
+            list($response, $status) =
+                call_user_func_array($callable, func_get_args())->wait();
+            if ($status->code == Grpc\STATUS_OK) {
+                return $response;
+            } else {
+                throw ApiException::createFromStdClass($status);
+            }
+        };
     }
 
     private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
     {
         switch ($grpcStreamingDescriptor['grpcStreamingType']) {
             case 'ClientStreaming':
-                $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
-                    $response = ApiCallable::callWithoutRequest($callable, func_get_args());
-                    return new ClientStream($response, $grpcStreamingDescriptor);
-                };
-                break;
+                return ClientStream::createApiCall($callable, $grpcStreamingDescriptor);
             case 'ServerStreaming':
-                $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
-                    $response = call_user_func_array($callable, func_get_args());
-                    return new ServerStream($response, $grpcStreamingDescriptor);
-                };
-                break;
+                return ServerStream::createApiCall($callable, $grpcStreamingDescriptor);
             case 'BidiStreaming':
-                $apiCall = function () use ($callable, $grpcStreamingDescriptor) {
-                    $response = ApiCallable::callWithoutRequest($callable, func_get_args());
-                    return new BidiStream($response, $grpcStreamingDescriptor);
-                };
-                break;
+                return BidiStream::createApiCall($callable, $grpcStreamingDescriptor);
             default:
                 throw new ValidationException('Unexpected gRPC streaming type: ' .
                     $grpcStreamingDescriptor['grpcStreamingType']);
         }
-        return $apiCall;
     }
 
     private static function setCustomHeader($callable, $headerDescriptor)
@@ -202,32 +202,20 @@ class ApiCallable
      */
     public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
     {
-        $isGrpcStreaming = false;
+        ApiCallable::validateApiCallSettings($settings, $options);
+
+        $callable = array($stub, $methodName);
         if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $isGrpcStreaming = true;
             $apiCall = ApiCallable::createGrpcStreamingApiCall(
-                array($stub, $methodName),
+                $callable,
                 $options['grpcStreamingDescriptor']
             );
         } else {
-            $apiCall = function () use ($stub, $methodName) {
-                list($response, $status) =
-                    call_user_func_array(array($stub, $methodName), func_get_args())->wait();
-                if ($status->code == Grpc\STATUS_OK) {
-                    return $response;
-                } else {
-                    throw ApiException::createFromStdClass($status);
-                }
-            };
+            $apiCall = ApiCallable::createUnaryApiCall($callable);
         }
 
         $retrySettings = $settings->getRetrySettings();
         if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
-            if ($isGrpcStreaming) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with retry settings'
-                );
-            }
             $timeFuncMillis = null;
             if (array_key_exists('timeFuncMillis', $options)) {
                 $timeFuncMillis = $options['timeFuncMillis'];
@@ -238,20 +226,10 @@ class ApiCallable
         }
 
         if (array_key_exists('pageStreamingDescriptor', $options)) {
-            if ($isGrpcStreaming) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
-                );
-            }
             $apiCall = self::setPageStreaming($apiCall, $options['pageStreamingDescriptor']);
         }
 
         if (array_key_exists('longRunningDescriptor', $options)) {
-            if ($isGrpcStreaming) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
-                );
-            }
             $apiCall = self::setLongRunnning($apiCall, $options['longRunningDescriptor']);
         }
 
@@ -259,5 +237,28 @@ class ApiCallable
             $apiCall = self::setCustomHeader($apiCall, $options['headerDescriptor']);
         }
         return $apiCall;
+    }
+
+    private static function validateApiCallSettings(CallSettings $settings, $options)
+    {
+        $retrySettings = $settings->getRetrySettings();
+        $isGrpcStreaming = array_key_exists('grpcStreamingDescriptor', $options);
+        if ($isGrpcStreaming) {
+            if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with retry settings'
+                );
+            }
+            if (array_key_exists('pageStreamingDescriptor', $options)) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
+                );
+            }
+            if (array_key_exists('longRunningDescriptor', $options)) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
+                );
+            }
+        }
     }
 }
