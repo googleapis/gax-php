@@ -36,14 +36,11 @@ use PHPUnit_Framework_TestCase;
 
 class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
 {
-    const EXPECTED_HEADER_KEY = 'x-goog-api-client';
-    const EXPECTED_GAX_VERSION = '0.7.0-dev';
-
     public function testWithoutInput()
     {
-        $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
+        $expectedHeader = [AgentHeaderDescriptor::AGENT_HEADER_KEY => [
             'gl-php/' . phpversion() .
-            ' gax/' . AgentHeaderDescriptorTest::EXPECTED_GAX_VERSION .
+            ' gax/' . AgentHeaderDescriptor::GAX_VERSION .
             ' grpc/' . phpversion('grpc')
         ]];
 
@@ -55,7 +52,7 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
 
     public function testWithInput()
     {
-        $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
+        $expectedHeader = [AgentHeaderDescriptor::AGENT_HEADER_KEY => [
             'gl-php/php-9.9.9 gccl/gccl-9.9.9 gapic/gapic-9.9.9 gax/gax-9.9.9 grpc/grpc-9.9.9' .
             ' additional/additional-9.9.9'
         ]];
@@ -79,9 +76,9 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
 
     public function testWithoutVersionInput()
     {
-        $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
+        $expectedHeader = [AgentHeaderDescriptor::AGENT_HEADER_KEY => [
             'gl-php/' . phpversion() .
-            ' gccl/ gapic/ gax/' . AgentHeaderDescriptorTest::EXPECTED_GAX_VERSION .
+            ' gccl/ gapic/ gax/' . AgentHeaderDescriptor::GAX_VERSION .
             ' grpc/' . phpversion('grpc') .
             ' additional/'
         ]];
@@ -100,9 +97,9 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
 
     public function testWithNullVersionInput()
     {
-        $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
+        $expectedHeader = [AgentHeaderDescriptor::AGENT_HEADER_KEY => [
             'gl-php/' . phpversion() .
-            ' gccl/ gapic/ gax/' . AgentHeaderDescriptorTest::EXPECTED_GAX_VERSION .
+            ' gccl/ gapic/ gax/' . AgentHeaderDescriptor::GAX_VERSION .
             ' grpc/' . phpversion('grpc') .
             ' additional/'
         ]];
