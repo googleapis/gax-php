@@ -98,7 +98,7 @@ class AgentHeaderDescriptor
 
         $grpcVersion = isset($headerInfo['grpcVersion'])
             ? $headerInfo['grpcVersion']
-            : AgentHeaderDescriptor::UNKNOWN_HEADER;
+            : phpversion('grpc');
         $metricsHeaders['grpc'] = $grpcVersion;
 
         if (isset($headerInfo['additionalMetrics'])) {

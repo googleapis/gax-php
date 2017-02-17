@@ -44,7 +44,7 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
         $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
             'gl-php/' . phpversion() .
             ' gax/' . AgentHeaderDescriptorTest::EXPECTED_GAX_VERSION .
-            ' grpc/'
+            ' grpc/' . phpversion('grpc')
         ]];
 
         $agentHeaderDescriptor = new AgentHeaderDescriptor([]);
@@ -82,7 +82,8 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
         $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
             'gl-php/' . phpversion() .
             ' gccl/ gapic/ gax/' . AgentHeaderDescriptorTest::EXPECTED_GAX_VERSION .
-            ' grpc/ additional/'
+            ' grpc/' . phpversion('grpc') .
+            ' additional/'
         ]];
 
         $agentHeaderDescriptor = new AgentHeaderDescriptor([
@@ -102,7 +103,8 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
         $expectedHeader = [AgentHeaderDescriptorTest::EXPECTED_HEADER_KEY => [
             'gl-php/' . phpversion() .
             ' gccl/ gapic/ gax/' . AgentHeaderDescriptorTest::EXPECTED_GAX_VERSION .
-            ' grpc/ additional/'
+            ' grpc/' . phpversion('grpc') .
+            ' additional/'
         ]];
 
         $agentHeaderDescriptor = new AgentHeaderDescriptor([
