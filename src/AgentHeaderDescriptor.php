@@ -50,8 +50,8 @@ class AgentHeaderDescriptor
      *     Optional.
      *
      *     @type string $phpVersion the PHP version.
-     *     @type string $clientName the name of the client application.
-     *     @type string $clientVersion the version of the client application.
+     *     @type string $libName the name of the client application.
+     *     @type string $libVersion the version of the client application.
      *     @type string $codeGenName the code generator name of the client library.
      *     @type string $codeGenVersion the code generator version of the client library.
      *     @type string $gaxVersion the GAX version.
@@ -77,11 +77,11 @@ class AgentHeaderDescriptor
             : phpversion();
         $metricsHeaders['gl-php'] = $phpVersion;
 
-        if (isset($headerInfo['clientName'])) {
-            $clientVersion = isset($headerInfo['clientVersion'])
-                ? $headerInfo['clientVersion']
+        if (isset($headerInfo['libName'])) {
+            $clientVersion = isset($headerInfo['libVersion'])
+                ? $headerInfo['libVersion']
                 : AgentHeaderDescriptor::UNKNOWN_HEADER;
-            $metricsHeaders[$headerInfo['clientName']] = $clientVersion;
+            $metricsHeaders[$headerInfo['libName']] = $clientVersion;
         }
 
         if (isset($headerInfo['codeGenName'])) {

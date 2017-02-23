@@ -58,8 +58,8 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
         ]];
 
         $agentHeaderDescriptor = new AgentHeaderDescriptor([
-            'clientName' => 'gccl',
-            'clientVersion' => 'gccl-9.9.9',
+            'libName' => 'gccl',
+            'libVersion' => 'gccl-9.9.9',
             'codeGenName' => 'gapic',
             'codeGenVersion' => 'gapic-9.9.9',
             'gaxVersion' => 'gax-9.9.9',
@@ -84,7 +84,7 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
         ]];
 
         $agentHeaderDescriptor = new AgentHeaderDescriptor([
-            'clientName' => 'gccl',
+            'libName' => 'gccl',
             'codeGenName' => 'gapic',
             'additionalMetrics' => [
                 'additional' => null
@@ -105,8 +105,8 @@ class AgentHeaderDescriptorTest extends PHPUnit_Framework_TestCase
         ]];
 
         $agentHeaderDescriptor = new AgentHeaderDescriptor([
-            'clientName' => 'gccl',
-            'clientVersion' => null,
+            'libName' => 'gccl',
+            'libVersion' => null,
             'codeGenName' => 'gapic',
             'codeGenVersion' => null,
             'gaxVersion' => null,

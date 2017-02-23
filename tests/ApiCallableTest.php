@@ -474,8 +474,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     {
         $stub = MockStub::create(new MockPageStreamingResponse());
         $headerDescriptor = new AgentHeaderDescriptor([
-            'clientName' => 'gccl',
-            'clientVersion' => '0.0.0',
+            'libName' => 'gccl',
+            'libVersion' => '0.0.0',
             'codeGenName' => 'gapic',
             'codeGenVersion' => '0.9.0',
             'gaxVersion' => '1.0.0',
