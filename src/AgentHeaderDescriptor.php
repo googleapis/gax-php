@@ -41,7 +41,7 @@ class AgentHeaderDescriptor
     // TODO(michaelbausor): include bumping this version in a streamlined
     // release process. Issue: https://github.com/googleapis/gax-php/issues/48
     const GAX_VERSION = '0.7.0';
-    const UNKNOWN_HEADER = '';
+    const UNKNOWN_VERSION = '';
 
     private $metricsHeaders;
 
@@ -52,7 +52,7 @@ class AgentHeaderDescriptor
      *     @type string $phpVersion the PHP version.
      *     @type string $libName the name of the client application.
      *     @type string $libVersion the version of the client application.
-     *     @type string $gapicVersion the code generator version of the client library.
+     *     @type string $gapicVersion the code generator version of the GAPIC library.
      *     @type string $gaxVersion the GAX version.
      *     @type string $grpcVersion the gRPC version.
      * }
@@ -77,13 +77,13 @@ class AgentHeaderDescriptor
         if (isset($headerInfo['libName'])) {
             $clientVersion = isset($headerInfo['libVersion'])
                 ? $headerInfo['libVersion']
-                : AgentHeaderDescriptor::UNKNOWN_HEADER;
+                : AgentHeaderDescriptor::UNKNOWN_VERSION;
             $metricsHeaders[$headerInfo['libName']] = $clientVersion;
         }
 
         $codeGenVersion = isset($headerInfo['gapicVersion'])
             ? $headerInfo['gapicVersion']
-            : AgentHeaderDescriptor::UNKNOWN_HEADER;
+            : AgentHeaderDescriptor::UNKNOWN_VERSION;
         $metricsHeaders['gapic'] = $codeGenVersion;
 
         $gaxVersion = isset($headerInfo['gaxVersion'])
