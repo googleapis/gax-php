@@ -52,11 +52,9 @@ class AgentHeaderDescriptor
      *     @type string $phpVersion the PHP version.
      *     @type string $libName the name of the client application.
      *     @type string $libVersion the version of the client application.
-     *     @type string $codeGenName the code generator name of the client library.
-     *     @type string $codeGenVersion the code generator version of the client library.
+     *     @type string $gapicVersion the code generator version of the client library.
      *     @type string $gaxVersion the GAX version.
      *     @type string $grpcVersion the gRPC version.
-     *     @type string $additionalMetrics a dictionary of additional metrics for the header.
      * }
      */
     public function __construct($headerInfo)
@@ -67,10 +65,9 @@ class AgentHeaderDescriptor
         // ordered dict. The desired ordering is:
         //      - phpVersion (gl-php/)
         //      - clientName (e.g. gccl/)
-        //      - codeGenName (e.g. gapic/)
+        //      - gapicVersion (gapic/)
         //      - gaxVersion (gax/)
         //      - grpcVersion (grpc/)
-        //      - any additional metrics
 
         $phpVersion = isset($headerInfo['phpVersion'])
             ? $headerInfo['phpVersion']
@@ -84,12 +81,10 @@ class AgentHeaderDescriptor
             $metricsHeaders[$headerInfo['libName']] = $clientVersion;
         }
 
-        if (isset($headerInfo['codeGenName'])) {
-            $codeGenVersion = isset($headerInfo['codeGenVersion'])
-                ? $headerInfo['codeGenVersion']
-                : AgentHeaderDescriptor::UNKNOWN_HEADER;
-            $metricsHeaders[$headerInfo['codeGenName']] = $codeGenVersion;
-        }
+        $codeGenVersion = isset($headerInfo['gapicVersion'])
+            ? $headerInfo['gapicVersion']
+            : AgentHeaderDescriptor::UNKNOWN_HEADER;
+        $metricsHeaders['gapic'] = $codeGenVersion;
 
         $gaxVersion = isset($headerInfo['gaxVersion'])
             ? $headerInfo['gaxVersion']
@@ -100,14 +95,6 @@ class AgentHeaderDescriptor
             ? $headerInfo['grpcVersion']
             : phpversion('grpc');
         $metricsHeaders['grpc'] = $grpcVersion;
-
-        if (isset($headerInfo['additionalMetrics'])) {
-            foreach ($headerInfo['additionalMetrics'] as $k => $v) {
-                if (!isset($metricsHeaders[$k])) {
-                    $metricsHeaders[$k] = $v;
-                }
-            }
-        }
 
         $this->metricsHeaders = $metricsHeaders;
     }

@@ -476,8 +476,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $headerDescriptor = new AgentHeaderDescriptor([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
-            'codeGenName' => 'gapic',
-            'codeGenVersion' => '0.9.0',
+            'gapicVersion' => '0.9.0',
             'gaxVersion' => '1.0.0',
             'phpVersion' => '5.5.0',
             'grpcVersion' => '1.0.1'
