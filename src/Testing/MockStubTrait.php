@@ -31,7 +31,6 @@
  */
 namespace Google\GAX\Testing;
 
-use google\rpc\Status;
 use UnderflowException;
 
 /**
@@ -72,7 +71,8 @@ trait MockStubTrait
             throw new UnderflowException("ran out of responses");
         }
         list($response, $status) = array_shift($this->responses);
-        return new MockUnaryCall($response, $deserialize, $status);
+        return new MockUnaryCall($response, null, $status);
+        //return new MockUnaryCall($response, $deserialize, $status);
     }
 
     /**
@@ -100,7 +100,8 @@ trait MockStubTrait
             throw new UnderflowException("ran out of responses");
         }
         list($response, $status) = array_shift($this->responses);
-        return new MockClientStreamingCall($response, $deserialize, $status);
+        //return new MockClientStreamingCall($response, $deserialize, $status);
+        return new MockClientStreamingCall($response, null, $status);
     }
 
     /**
@@ -132,7 +133,8 @@ trait MockStubTrait
         $this->receivedFuncCalls[] = new ReceivedRequest($method, $argument, $deserialize, $metadata, $options);
         $responses = MockStubTrait::stripStatusFromResponses($this->responses);
         $this->responses = [];
-        return new MockServerStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
+        return new MockServerStreamingCall($responses, null, $this->serverStreamingStatus);
+        //return new MockServerStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
     }
 
     /**
