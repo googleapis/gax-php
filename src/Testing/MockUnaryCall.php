@@ -32,8 +32,8 @@
 
 namespace Google\GAX\Testing;
 
-use google\rpc\Code;
-use google\rpc\Status;
+use Google\Rpc\Code;
+use Google\Rpc\Status;
 
 /**
  * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class

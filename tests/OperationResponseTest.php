@@ -34,8 +34,8 @@ namespace Google\GAX\UnitTests;
 use Google\GAX\OperationResponse;
 use google\longrunning\Operation;
 use Google\GAX\LongRunning\OperationsClient;
-use google\protobuf\Any;
-use google\rpc\Status;
+use Google\Protobuf\Any;
+use Google\Rpc\Status;
 use PHPUnit_Framework_TestCase;
 
 class OperationResponseTest extends PHPUnit_Framework_TestCase
@@ -150,7 +150,9 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public static function createStatus($code, $message)
     {
         $value = new Status();
-        return $value->setCode($code)->setMessage($message);
+        $value->setCode($code);
+        $value->setMessage($message);
+        return $value;
     }
 
     public static function createOperationsClient($stub = null)
