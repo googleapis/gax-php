@@ -55,6 +55,10 @@ use Grpc;
 
 class ApiCallableTest extends PHPUnit_Framework_TestCase
 {
+    public function testNothing() {
+
+    }
+
     public function testBaseCall()
     {
         $request = "request";
