@@ -59,7 +59,7 @@ class Page implements IteratorAggregate
         $this->pageStreamingDescriptor = $pageStreamingDescriptor;
 
         $requestPageTokenField = $this->pageStreamingDescriptor->getRequestPageTokenField();
-        $this->pageToken = $params[0]->$requestPageTokenField;
+        $this->pageToken = $params[0]->$requestPageTokenField();
 
         // Make gRPC call eagerly
         $this->response = call_user_func_array($this->callable, $this->parameters);
@@ -80,7 +80,7 @@ class Page implements IteratorAggregate
     public function getNextPageToken()
     {
         $responsePageTokenField = $this->pageStreamingDescriptor->getResponsePageTokenField();
-        return $this->getResponseObject()->$responsePageTokenField;
+        return $this->getResponseObject()->$responsePageTokenField();
     }
 
     /**
@@ -122,7 +122,7 @@ class Page implements IteratorAggregate
     public function getPageElementCount()
     {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
-        return count($this->getResponseObject()->$resourceField);
+        return count($this->getResponseObject()->$resourceField());
     }
 
     /**
@@ -131,7 +131,7 @@ class Page implements IteratorAggregate
     public function getIterator()
     {
         $resourceField = $this->pageStreamingDescriptor->getResourceField();
-        foreach ($this->getResponseObject()->$resourceField as $element) {
+        foreach ($this->getResponseObject()->$resourceField() as $element) {
             yield $element;
         }
     }

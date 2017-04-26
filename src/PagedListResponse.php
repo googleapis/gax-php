@@ -143,7 +143,8 @@ class PagedListResponse
         $page = $this->getPage();
         $request = $page->getRequestObject();
         $pageSizeField = $this->pageStreamingDescriptor->getRequestPageSizeField();
-        if (!isset($request->$pageSizeField)) {
+        $pageSize = $request->$pageSizeField();
+        if (!is_null($pageSize)) {
             throw new ValidationException(
                 "Error while expanding Page to FixedSizeCollection: No page size " .
                 "parameter found. The page size parameter must be set in the API " .
@@ -151,7 +152,6 @@ class PagedListResponse
                 "parameter, in order to create a FixedSizeCollection object."
             );
         }
-        $pageSize = $request->$pageSizeField;
         if ($pageSize > $collectionSize) {
             throw new ValidationException(
                 "Error while expanding Page to FixedSizeCollection: collectionSize " .

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../vendor/cilex/cilex" />
+          <root url="file://$MODULE_DIR$/../vendor/cilex/console-service-provider" />
+          <root url="file://$MODULE_DIR$/../vendor/composer" />
+          <root url="file://$MODULE_DIR$/../vendor/container-interop/container-interop" />
+          <root url="file://$MODULE_DIR$/../vendor/doctrine/annotations" />
+          <root url="file://$MODULE_DIR$/../vendor/doctrine/instantiator" />
+          <root url="file://$MODULE_DIR$/../vendor/doctrine/lexer" />
+          <root url="file://$MODULE_DIR$/../vendor/erusev/parsedown" />
+          <root url="file://$MODULE_DIR$/../vendor/firebase/php-jwt" />
+          <root url="file://$MODULE_DIR$/../vendor/google/auth" />
+          <root url="file://$MODULE_DIR$/../vendor/google/grpc-google-common-protos-v1" />
+          <root url="file://$MODULE_DIR$/../vendor/google/protobuf" />
+          <root url="file://$MODULE_DIR$/../vendor/grpc/grpc" />
+          <root url="file://$MODULE_DIR$/../vendor/guzzlehttp/guzzle" />
+          <root url="file://$MODULE_DIR$/../vendor/guzzlehttp/promises" />
+          <root url="file://$MODULE_DIR$/../vendor/guzzlehttp/psr7" />
+          <root url="file://$MODULE_DIR$/../vendor/herrera-io/json" />
+          <root url="file://$MODULE_DIR$/../vendor/herrera-io/phar-update" />
+          <root url="file://$MODULE_DIR$/../vendor/jms/metadata" />
+          <root url="file://$MODULE_DIR$/../vendor/jms/parser-lib" />
+          <root url="file://$MODULE_DIR$/../vendor/jms/serializer" />
+          <root url="file://$MODULE_DIR$/../vendor/justinrainbow/json-schema" />
+          <root url="file://$MODULE_DIR$/../vendor/kherge/version" />
+          <root url="file://$MODULE_DIR$/../vendor/monolog/monolog" />
+          <root url="file://$MODULE_DIR$/../vendor/nikic/php-parser" />
+          <root url="file://$MODULE_DIR$/../vendor/phpcollection/phpcollection" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/fileset" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/graphviz" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/phpdocumentor" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/reflection" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/reflection-docblock" />
+          <root url="file://$MODULE_DIR$/../vendor/phpoption/phpoption" />
+          <root url="file://$MODULE_DIR$/../vendor/phpspec/prophecy" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-code-coverage" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-file-iterator" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-text-template" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-timer" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-token-stream" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/phpunit" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/phpunit-mock-objects" />
+          <root url="file://$MODULE_DIR$/../vendor/pimple/pimple" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/cache" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/container" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/http-message" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/comparator" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/diff" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/environment" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/exporter" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/global-state" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/recursion-context" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/version" />
+          <root url="file://$MODULE_DIR$/../vendor/seld/jsonlint" />
+          <root url="file://$MODULE_DIR$/../vendor/squizlabs/php_codesniffer" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/config" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/console" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/debug" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/event-dispatcher" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/filesystem" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/finder" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/polyfill-mbstring" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/process" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/stopwatch" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/translation" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/validator" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/yaml" />
+          <root url="file://$MODULE_DIR$/../vendor/twig/twig" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-cache" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-config" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-eventmanager" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-filter" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-hydrator" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-i18n" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-json" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-serializer" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-servicemanager" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-stdlib" />
+          <root url="file://$MODULE_DIR$/../vendor/zetacomponents/base" />
+          <root url="file://$MODULE_DIR$/../vendor/zetacomponents/document" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../vendor/cilex/cilex" />
+          <root url="file://$MODULE_DIR$/../vendor/cilex/console-service-provider" />
+          <root url="file://$MODULE_DIR$/../vendor/composer" />
+          <root url="file://$MODULE_DIR$/../vendor/container-interop/container-interop" />
+          <root url="file://$MODULE_DIR$/../vendor/doctrine/annotations" />
+          <root url="file://$MODULE_DIR$/../vendor/doctrine/instantiator" />
+          <root url="file://$MODULE_DIR$/../vendor/doctrine/lexer" />
+          <root url="file://$MODULE_DIR$/../vendor/erusev/parsedown" />
+          <root url="file://$MODULE_DIR$/../vendor/firebase/php-jwt" />
+          <root url="file://$MODULE_DIR$/../vendor/google/auth" />
+          <root url="file://$MODULE_DIR$/../vendor/google/grpc-google-common-protos-v1" />
+          <root url="file://$MODULE_DIR$/../vendor/google/protobuf" />
+          <root url="file://$MODULE_DIR$/../vendor/grpc/grpc" />
+          <root url="file://$MODULE_DIR$/../vendor/guzzlehttp/guzzle" />
+          <root url="file://$MODULE_DIR$/../vendor/guzzlehttp/promises" />
+          <root url="file://$MODULE_DIR$/../vendor/guzzlehttp/psr7" />
+          <root url="file://$MODULE_DIR$/../vendor/herrera-io/json" />
+          <root url="file://$MODULE_DIR$/../vendor/herrera-io/phar-update" />
+          <root url="file://$MODULE_DIR$/../vendor/jms/metadata" />
+          <root url="file://$MODULE_DIR$/../vendor/jms/parser-lib" />
+          <root url="file://$MODULE_DIR$/../vendor/jms/serializer" />
+          <root url="file://$MODULE_DIR$/../vendor/justinrainbow/json-schema" />
+          <root url="file://$MODULE_DIR$/../vendor/kherge/version" />
+          <root url="file://$MODULE_DIR$/../vendor/monolog/monolog" />
+          <root url="file://$MODULE_DIR$/../vendor/nikic/php-parser" />
+          <root url="file://$MODULE_DIR$/../vendor/phpcollection/phpcollection" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/fileset" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/graphviz" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/phpdocumentor" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/reflection" />
+          <root url="file://$MODULE_DIR$/../vendor/phpdocumentor/reflection-docblock" />
+          <root url="file://$MODULE_DIR$/../vendor/phpoption/phpoption" />
+          <root url="file://$MODULE_DIR$/../vendor/phpspec/prophecy" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-code-coverage" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-file-iterator" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-text-template" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-timer" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/php-token-stream" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/phpunit" />
+          <root url="file://$MODULE_DIR$/../vendor/phpunit/phpunit-mock-objects" />
+          <root url="file://$MODULE_DIR$/../vendor/pimple/pimple" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/cache" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/container" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/http-message" />
+          <root url="file://$MODULE_DIR$/../vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/comparator" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/diff" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/environment" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/exporter" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/global-state" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/recursion-context" />
+          <root url="file://$MODULE_DIR$/../vendor/sebastian/version" />
+          <root url="file://$MODULE_DIR$/../vendor/seld/jsonlint" />
+          <root url="file://$MODULE_DIR$/../vendor/squizlabs/php_codesniffer" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/config" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/console" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/debug" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/event-dispatcher" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/filesystem" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/finder" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/polyfill-mbstring" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/process" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/stopwatch" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/translation" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/validator" />
+          <root url="file://$MODULE_DIR$/../vendor/symfony/yaml" />
+          <root url="file://$MODULE_DIR$/../vendor/twig/twig" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-cache" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-config" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-eventmanager" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-filter" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-hydrator" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-i18n" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-json" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-serializer" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-servicemanager" />
+          <root url="file://$MODULE_DIR$/../vendor/zendframework/zend-stdlib" />
+          <root url="file://$MODULE_DIR$/../vendor/zetacomponents/base" />
+          <root url="file://$MODULE_DIR$/../vendor/zetacomponents/document" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PHARS">
+        <CLASSES>
+          <root url="phar://$MODULE_DIR$/../vendor/phpdocumentor/fileset/tests/data/test.phar/" />
+          <root url="phar://$MODULE_DIR$/../vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="phar://$MODULE_DIR$/../vendor/phpdocumentor/fileset/tests/data/test.phar/" />
+          <root url="phar://$MODULE_DIR$/../vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
