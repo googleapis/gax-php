@@ -31,8 +31,6 @@
  */
 namespace Google\GAX;
 
-use Google\GAX\ValidationException;
-
 /**
  * Response object for paged results from a list API method
  *
