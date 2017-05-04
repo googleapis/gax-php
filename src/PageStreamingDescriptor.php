@@ -57,9 +57,7 @@ class PageStreamingDescriptor
             'requestPageTokenGetMethod' => PageStreamingDescriptor::getMethod($requestPageToken),
             'requestPageTokenSetMethod' => PageStreamingDescriptor::setMethod($requestPageToken),
             'responsePageTokenGetMethod' => PageStreamingDescriptor::getMethod($responsePageToken),
-            'responsePageTokenSetMethod' => PageStreamingDescriptor::setMethod($responsePageToken),
             'resourcesGetMethod' => PageStreamingDescriptor::getMethod($resources),
-            'resourcesSetMethod' => PageStreamingDescriptor::setMethod($resources),
         ];
 
         if (isset($fields['requestPageSizeField'])) {
@@ -116,25 +114,13 @@ class PageStreamingDescriptor
         return $this->descriptor['requestPageSizeSetMethod'];
     }
 
-    public function getResponsePageTokenSetMethod()
-    {
-        return $this->descriptor['responsePageTokenSetMethod'];
-    }
-
-    public function getResourcesSetMethod()
-    {
-        return $this->descriptor['resourcesSetMethod'];
-    }
-
     private static function validate($descriptor)
     {
         $requiredFields = [
             'requestPageTokenGetMethod',
             'requestPageTokenSetMethod',
             'responsePageTokenGetMethod',
-            'responsePageTokenSetMethod',
             'resourcesGetMethod',
-            'resourcesSetMethod',
         ];
         foreach ($requiredFields as $field) {
             if (empty($descriptor[$field])) {
