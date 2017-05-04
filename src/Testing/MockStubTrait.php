@@ -50,7 +50,7 @@ trait MockStubTrait
      * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
      * Returns a MockUnaryCall object that will return the first item from $responses
      * @param string $method The API method name to be called
-     * @param mixed $argument The request object to the API method
+     * @param \Google\Protobuf\Internal\Message $argument The request object to the API method
      * @param callable $deserialize A function to deserialize the response object
      * @param array $metadata
      * @param array $options
@@ -63,16 +63,17 @@ trait MockStubTrait
         $metadata = [],
         $options = []
     ) {
-        if (is_a($argument, 'DrSlump\Protobuf\Message')) {
-            $argument = $argument::deserialize($argument->serialize());
+        if (is_a($argument, '\Google\Protobuf\Internal\Message')) {
+            $newArgument = new $argument();
+            $newArgument->mergeFromString($argument->serializeToString());
+            $argument = $newArgument;
         }
         $this->receivedFuncCalls[] = new ReceivedRequest($method, $argument, $deserialize, $metadata, $options);
         if (count($this->responses) < 1) {
             throw new UnderflowException("ran out of responses");
         }
         list($response, $status) = array_shift($this->responses);
-        return new MockUnaryCall($response, null, $status);
-        //return new MockUnaryCall($response, $deserialize, $status);
+        return new MockUnaryCall($response, $deserialize, $status);
     }
 
     /**
@@ -100,8 +101,7 @@ trait MockStubTrait
             throw new UnderflowException("ran out of responses");
         }
         list($response, $status) = array_shift($this->responses);
-        //return new MockClientStreamingCall($response, $deserialize, $status);
-        return new MockClientStreamingCall($response, null, $status);
+        return new MockClientStreamingCall($response, $deserialize, $status);
     }
 
     /**
@@ -111,7 +111,7 @@ trait MockStubTrait
      * a final status of $serverStreamingStatus.
      *
      * @param string   $method      The name of the method to call
-     * @param mixed    $argument    The argument to the method
+     * @param \Google\Protobuf\Internal\Message    $argument    The argument to the method
      * @param callable $deserialize A function that deserializes the responses
      * @param array    $metadata    A metadata map to send to the server
      *                              (optional)
@@ -126,15 +126,16 @@ trait MockStubTrait
         array $metadata = [],
         array $options = []
     ) {
-    
-        if (is_a($argument, 'DrSlump\Protobuf\Message')) {
-            $argument = $argument::deserialize($argument->serialize());
+
+        if (is_a($argument, '\Google\Protobuf\Internal\Message')) {
+            $newArgument = new $argument();
+            $newArgument->mergeFromString($argument->serializeToString());
+            $argument = $newArgument;
         }
         $this->receivedFuncCalls[] = new ReceivedRequest($method, $argument, $deserialize, $metadata, $options);
         $responses = MockStubTrait::stripStatusFromResponses($this->responses);
         $this->responses = [];
-        return new MockServerStreamingCall($responses, null, $this->serverStreamingStatus);
-        //return new MockServerStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
+        return new MockServerStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
     }
 
     /**
@@ -177,13 +178,13 @@ trait MockStubTrait
     /**
      * Add a response object, and an optional status, to the list of responses to be returned via
      * _simpleRequest.
-     * @param mixed $response
+     * @param \Google\Protobuf\Internal\Message $response
      * @param Status $status
      */
     public function addResponse($response, $status = null)
     {
-        if (is_a($response, 'DrSlump\Protobuf\Message')) {
-            $response = $response->serialize();
+        if (is_a($response, '\Google\Protobuf\Internal\Message')) {
+            $response = $response->serializeToString();
         }
         $this->responses[] = [$response, $status];
     }

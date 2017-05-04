@@ -64,6 +64,12 @@ class PagedListResponse
 
     private $firstPage;
 
+    /**
+     * PagedListResponse constructor.
+     * @param array $params
+     * @param callable $callable
+     * @param PageStreamingDescriptor $pageStreamingDescriptor
+     */
     public function __construct($params, $callable, $pageStreamingDescriptor)
     {
         if (empty($params) || !is_object($params[0])) {
@@ -110,6 +116,7 @@ class PagedListResponse
     /**
      * Returns an iterator over pages of results. The pages are
      * retrieved lazily from the underlying API.
+     * @return Page[]
      */
     public function iteratePages()
     {
@@ -140,9 +147,9 @@ class PagedListResponse
         // update the page size parameter before calling getPage
         $page = $this->getPage();
         $request = $page->getRequestObject();
-        $pageSizeField = $this->pageStreamingDescriptor->getRequestPageSizeField();
-        $pageSize = $request->$pageSizeField();
-        if (!is_null($pageSize)) {
+        $pageSizeGetMethod = $this->pageStreamingDescriptor->getRequestPageSizeGetMethod();
+        $pageSize = $request->$pageSizeGetMethod();
+        if (is_null($pageSize)) {
             throw new ValidationException(
                 "Error while expanding Page to FixedSizeCollection: No page size " .
                 "parameter found. The page size parameter must be set in the API " .

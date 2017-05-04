@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,29 +29,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\UnitTests;
 
-namespace Google\GAX\UnitTests\Mocks;
+use Google\Protobuf\Any;
+use Google\Rpc\Status;
 
-class MockPageStreamingResponse
+trait TestTrait
 {
-    private $nextPageToken;
-    private $resource;
-
-    public static function createPageStreamingResponse($nextPageToken, $resource)
+    /**
+     * @param \Google\Rpc\Code $code
+     * @param String $message
+     * @return Status
+     */
+    public static function createStatus($code, $message)
     {
-        $response = new MockPageStreamingResponse();
-        $response->nextPageToken = $nextPageToken;
-        $response->resource = $resource;
-        return $response;
+        $status = new Status();
+        $status->setCode($code);
+        $status->setMessage($message);
+        return $status;
     }
 
-    public function getResourcesList()
+    /**
+     * @param $value \Google\Protobuf\Internal\Message;
+     * @return Any
+     */
+    public static function createAny($value)
     {
-        return $this->resource;
-    }
-
-    public function getNextPageToken()
-    {
-        return $this->nextPageToken;
+        $any = new Any();
+        $any->setValue($value->serializeToString());
+        return $any;
     }
 }

@@ -36,20 +36,21 @@ use Google\GAX\ApiException;
 use Google\GAX\AgentHeaderDescriptor;
 use Google\GAX\BackoffSettings;
 use Google\GAX\CallSettings;
+use Google\GAX\PagedListResponse;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\RetrySettings;
 use Google\GAX\Testing\MockClientStreamingCall;
+use Google\GAX\Testing\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockBidiStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockClientStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockServerStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockStub;
-use Google\GAX\UnitTests\Mocks\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingRequest;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
-use google\longrunning\Operation;
-use google\protobuf\EmptyC;
-use google\rpc\Code;
-use google\rpc\Status;
+use Google\Longrunning\Operation;
+use Google\Protobuf\GPBEmpty;
+use Google\Rpc\Code;
+use Google\Rpc\Status;
 use PHPUnit_Framework_TestCase;
 use Grpc;
 
@@ -234,10 +235,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource'
+            'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -270,10 +271,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource'
+            'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -282,13 +283,14 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
         );
+        /** @var PagedListResponse $response */
         $response = $apiCall($request, [], []);
         $actualCalls = $stub->getReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $actualResources = [];
         $actualTokens = [];
         foreach ($response->iteratePages() as $page) {
-            array_push($actualTokens, $page->getRequestObject()->pageToken);
+            array_push($actualTokens, $page->getRequestObject()->getPageToken());
             foreach ($page as $element) {
                 array_push($actualResources, $element);
             }
@@ -314,11 +316,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource'
+            'resourceField' => 'resourcesList'
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
@@ -357,10 +359,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
                              ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource'
+            'resourceField' => 'resourcesList'
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
@@ -386,11 +388,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource',
+            'resourceField' => 'resourcesList'
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
@@ -417,11 +419,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource'
+            'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -446,10 +448,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $descriptor = new PageStreamingDescriptor([
+        $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resource'
+            'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings(['timeout' => 1000]);
         $apiCall = ApiCallable::createApiCall(
@@ -500,14 +502,18 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     {
         $metadata = OperationResponseTest::createAny(OperationResponseTest::createStatus(Code::OK, $metadataString));
         $op = new Operation();
-        $op->setName($name)->setMetadata($metadata)->setDone(false);
+        $op->setName($name);
+        $op->setMetadata($metadata);
+        $op->setDone(false);
         return $op;
     }
 
     public static function createSuccessfulOperationResponse($name, $response, $metadataString = '')
     {
         $op = self::createIncompleteOperationResponse($name, $metadataString);
-        $op->setDone(true)->setResponse(OperationResponseTest::createAny($response));
+        $op->setDone(true);
+        $any = OperationResponseTest::createAny($response);
+        $op->setResponse($any);
         return $op;
     }
 
@@ -515,7 +521,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     {
         $error = OperationResponseTest::createStatus($code, $message);
         $op = self::createIncompleteOperationResponse($name, $metadataString);
-        $op->setDone(true)->setError($error);
+        $op->setDone(true);
+        $op->setError($error);
         return $op;
     }
 
@@ -534,14 +541,14 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence($responseSequence, '\google\longrunning\Operation::deserialize');
+        $opStub = MockStub::createWithResponseSequence($responseSequence, ['\Google\Longrunning\Operation', 'mergeFromString']);
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
+            'operationReturnType' => '\Google\Rpc\Status',
+            'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -609,17 +616,17 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
             $responseSequence,
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
+            'operationReturnType' => '\Google\Rpc\Status',
+            'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -679,17 +686,17 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
             $responseSequence,
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
+            'operationReturnType' => '\Google\Rpc\Status',
+            'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -747,17 +754,17 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
             $responseSequence,
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
+            'operationReturnType' => '\Google\Rpc\Status',
+            'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -827,23 +834,23 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'm3'
         );
         $responseSequence = [
-            [new EmptyC(), new MockStatus(Grpc\STATUS_OK, '')],
+            [new GPBEmpty(), new MockStatus(Grpc\STATUS_OK, '')],
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
         ];
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
             $responseSequence,
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
+            'operationReturnType' => '\Google\Rpc\Status',
+            'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -903,17 +910,17 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $callStub = MockStub::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
-            [[new EmptyC(), new MockStatus(Grpc\STATUS_OK, '')]],
-            '\google\longrunning\Operation::deserialize'
+            [[new GPBEmpty(), new MockStatus(Grpc\STATUS_OK, '')]],
+            ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
-            'operationReturnType' => '\google\rpc\Status',
-            'metadataReturnType' => '\google\rpc\Status',
+            'operationReturnType' => '\Google\Rpc\Status',
+            'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
         $apiCall = ApiCallable::createApiCall(
@@ -959,13 +966,15 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testClientStreamingSuccessObject()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK)->setMessage('request');
+        $request->setCode(Grpc\STATUS_OK);
+        $request->setMessage('request');
         $response = new Status();
-        $response->setCode(Grpc\STATUS_OK)->setMessage('response');
+        $response->setCode(Grpc\STATUS_OK);
+        $response->setMessage('response');
         $descriptor = [
             'grpcStreamingType' => 'ClientStreaming',
         ];
-        $this->clientStreamingTestImpl($request, $response, $descriptor, '\google\rpc\Status::deserialize');
+        $this->clientStreamingTestImpl($request, $response, $descriptor, ['\Google\Rpc\Status', 'mergeFromString']);
     }
 
     private function clientStreamingTestImpl($request, $response, $descriptor, $deserialize)
@@ -1060,14 +1069,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testServerStreamingSuccessObject()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK)->setMessage('request');
+        $request->setCode(Grpc\STATUS_OK);
+        $request->setMessage('request');
         $response = new Status();
-        $response->setCode(Grpc\STATUS_OK)->setMessage('response');
+        $response->setCode(Grpc\STATUS_OK);
+        $response->setMessage('response');
         $responses = [$response];
         $descriptor = [
             'grpcStreamingType' => 'ServerStreaming',
         ];
-        $this->serverStreamingTestImpl($request, $responses, $descriptor, '\google\rpc\Status::deserialize');
+        $this->serverStreamingTestImpl($request, $responses, $descriptor, ['\Google\Rpc\Status', 'mergeFromString']);
     }
 
     private function serverStreamingTestImpl($request, $responses, $descriptor, $deserialize)
@@ -1100,7 +1111,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testServerStreamingSuccessResources()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK)->setMessage('request');
+        $request->setCode(Grpc\STATUS_OK);
+        $request->setMessage('request');
         $resources = ['resource1', 'resource2'];
         $response = MockPageStreamingResponse::createPageStreamingResponse(
             'nextPageToken',
@@ -1109,7 +1121,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responses = [$response];
         $descriptor = [
             'grpcStreamingType' => 'ServerStreaming',
-            'resourcesField' => 'getResourcesList',
+            'resourcesGetMethod' => 'getResourcesList',
         ];
 
         $metadata = [];
@@ -1191,13 +1203,15 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testBidiStreamingSuccessObject()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK)->setMessage('request');
+        $request->setCode(Grpc\STATUS_OK);
+        $request->setMessage('request');
         $response = new Status();
-        $response->setCode(Grpc\STATUS_OK)->setMessage('response');
+        $response->setCode(Grpc\STATUS_OK);
+        $response->setMessage('response');
         $descriptor = [
             'grpcStreamingType' => 'BidiStreaming',
         ];
-        $this->bidiStreamingTestImpl($request, [$response], $descriptor, '\google\rpc\Status::deserialize');
+        $this->bidiStreamingTestImpl($request, [$response], $descriptor, ['\Google\Rpc\Status', 'mergeFromString']);
     }
 
     private function bidiStreamingTestImpl($request, $responses, $descriptor, $deserialize)
@@ -1237,7 +1251,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testBidiStreamingSuccessResources()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK)->setMessage('request');
+        $request->setCode(Grpc\STATUS_OK);
+        $request->setMessage('request');
         $resources = ['resource1', 'resource2'];
         $response = MockPageStreamingResponse::createPageStreamingResponse(
             'nextPageToken',
@@ -1245,7 +1260,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         );
         $descriptor = [
             'grpcStreamingType' => 'BidiStreaming',
-            'resourcesField' => 'getResourcesList',
+            'resourcesGetMethod' => 'getResourcesList',
         ];
 
         $metadata = [];

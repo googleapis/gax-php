@@ -145,7 +145,7 @@ class ApiCallable
         return function () use ($callable) {
             list($response, $status) =
                 call_user_func_array($callable, func_get_args())->wait();
-            if ($status->getCode == Grpc\STATUS_OK) {
+            if ($status->code == Grpc\STATUS_OK) {
                 return $response;
             } else {
                 throw ApiException::createFromStdClass($status);
