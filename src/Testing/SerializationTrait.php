@@ -29,50 +29,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 namespace Google\GAX\Testing;
 
-use Google\Rpc\Code;
-
-/**
- * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
- * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
- *
- * The MockUnaryCall object is constructed with a response object, an optional deserialize
- * method, and an optional status. The response object and status are returned immediately from the
- * wait() method.
- */
-class MockUnaryCall
+trait SerializationTrait
 {
-    use SerializationTrait;
-
-    private $response;
-    private $deserialize;
-    private $status;
-
-    /**
-     * MockUnaryCall constructor.
-     * @param \Google\Protobuf\Internal\Message $response The response object.
-     * @param callable|null $deserialize An optional deserialize method for the response object.
-     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
-     */
-    public function __construct($response, $deserialize = null, $status = null)
+    protected function deserializeResponse($value, $deserialize)
     {
-        $this->response = $response;
-        $this->deserialize = $deserialize;
-        if (is_null($status)) {
-            $status = new MockStatus(Code::OK);
+        if ($value === null) {
+            return null;
         }
-        $this->status = $status;
-    }
 
-    /**
-     * Immediately return the preset response object and status.
-     * @return array The response object and status.
-     */
-    public function wait()
-    {
-        $obj = $this->deserializeResponse($this->response, $this->deserialize);
-        return [$obj, $this->status];
+        if ($deserialize === null) {
+            return $value;
+        }
+
+        // Proto3 implementation
+        if (is_array($deserialize)) {
+            list($className, $deserializeFunc) = $deserialize;
+            $obj = new $className();
+            if (method_exists($obj, $deserializeFunc)) {
+                $obj->$deserializeFunc($value);
+            } else {
+                $obj->mergeFromString($value);
+            }
+
+            return $obj;
+        }
+
+        // Protobuf-PHP implementation
+        return call_user_func($deserialize, $value);
     }
 }

@@ -42,6 +42,8 @@ use Grpc;
  */
 class MockBidiStreamingCall
 {
+    use SerializationTrait;
+
     private $responses;
     private $deserialize;
     private $status;
@@ -76,13 +78,7 @@ class MockBidiStreamingCall
                 $this->writesDone();
                 return null;
             }
-            if (is_null($this->deserialize)) {
-                $obj = $resp;
-            } else {
-                list($className, $deserializeFunc) = $this->deserialize;
-                $obj = new $className();
-                $obj->$deserializeFunc($resp);
-            }
+            $obj = $this->deserializeResponse($resp, $this->deserialize);
             return $obj;
 
         } elseif ($this->writesDone) {

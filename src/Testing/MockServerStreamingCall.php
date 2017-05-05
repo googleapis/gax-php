@@ -42,6 +42,8 @@ use Grpc;
  */
 class MockServerStreamingCall
 {
+    use SerializationTrait;
+
     private $responses;
     private $deserialize;
     private $status;
@@ -66,13 +68,7 @@ class MockServerStreamingCall
     {
         while (count($this->responses) > 0) {
             $resp = array_shift($this->responses);
-            if (is_null($this->deserialize)) {
-                $obj = $resp;
-            } else {
-                list($className, $deserializeFunc) = $this->deserialize;
-                $obj = new $className();
-                $obj->$deserializeFunc($resp);
-            }
+            $obj = $this->deserializeResponse($resp, $this->deserialize);
             yield $obj;
         }
     }
