@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc. All rights reserved.
+ * Copyright 2017, Google Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -64,9 +64,7 @@ use Google\Longrunning\OperationsGrpcClient;
  * operation resource, or pass the operation resource to another API (such as
  * Google Cloud Pub/Sub API) to receive the response.  Any API service that
  * returns long-running operations should implement the `Operations` interface
- * (see https://github.com/googleapis/googleapis/blob/master/google/longrunning/operations.proto#L40)
- * so developers can have a consistent client experience. This class provides
- * methods to make calls to the `Operations` interface of an API service.
+ * so developers can have a consistent client experience.
  *
  * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
  * more frequently than those which have been declared beta or 1.0, including changes which break
@@ -77,7 +75,11 @@ use Google\Longrunning\OperationsGrpcClient;
  *
  * ```
  * try {
- *     $operationsClient = new OperationsClient();
+ *     $options = [
+ *         'serviceAddress' => 'my-service-address',
+ *         'scopes' => ['my-service-scope'],
+ *     ];
+ *     $operationsClient = new OperationsClient($options);
  *     $name = "";
  *     $response = $operationsClient->getOperation($name);
  * } finally {
@@ -104,8 +106,15 @@ class OperationsClient
      */
     const DEFAULT_TIMEOUT_MILLIS = 30000;
 
-    const _CODEGEN_NAME = 'gapic';
-    const _CODEGEN_VERSION = '0.1.0';
+    /**
+     * The name of the code generator, to be included in the agent header.
+     */
+    const CODEGEN_NAME = 'gapic';
+
+    /**
+     * The code generator version, to be included in the agent header.
+     */
+    const CODEGEN_VERSION = '0.0.5';
 
     private $grpcCredentialsHelper;
     private $operationsStub;
@@ -122,7 +131,7 @@ class OperationsClient
                     'requestPageSizeGetMethod' => 'getPageSize',
                     'requestPageSizeSetMethod' => 'setPageSize',
                     'responsePageTokenGetMethod' => 'getNextPageToken',
-                    'resourcesGetMethod' => 'getOperationsList',
+                    'resourcesGetMethod' => 'getOperations',
                 ]);
 
         $pageStreamingDescriptors = [
@@ -130,6 +139,17 @@ class OperationsClient
         ];
 
         return $pageStreamingDescriptors;
+    }
+
+    private static function getGapicVersion()
+    {
+        if (file_exists(__DIR__.'/../VERSION')) {
+            return trim(file_get_contents(__DIR__.'/../VERSION'));
+        } elseif (class_exists('\Google\Cloud\ServiceBuilder')) {
+            return \Google\Cloud\ServiceBuilder::VERSION;
+        } else {
+            return;
+        }
     }
 
     // TODO(garrettjones): add channel (when supported in gRPC)
@@ -156,13 +176,13 @@ class OperationsClient
      *                              that don't use retries. For calls that use retries,
      *                              set the timeout in RetryOptions.
      *                              Default: 30000 (30 seconds)
-     *     @type string $appName The codename of the calling service. Default 'gax'.
-     *     @type string $appVersion The version of the calling service.
-     *                              Default: the current version of GAX.
      *     @type \Google\Auth\CredentialsLoader $credentialsLoader
      *                              A CredentialsLoader object created using the
      *                              Google\Auth library.
      * }
+     *
+     * @throws ValidationException Throws a ValidationException if required arguments are missing
+     *                             from the $options array.
      */
     public function __construct($options = [])
     {
@@ -176,18 +196,17 @@ class OperationsClient
             'port' => self::DEFAULT_SERVICE_PORT,
             'retryingOverride' => null,
             'timeoutMillis' => self::DEFAULT_TIMEOUT_MILLIS,
-            'appName' => 'gax',
-            'appVersion' => AgentHeaderDescriptor::getGaxVersion(),
+            'libName' => null,
+            'libVersion' => null,
         ];
         $options = array_merge($defaultOptions, $options);
 
+        $gapicVersion = $options['libVersion'] ?: self::getGapicVersion();
+
         $headerDescriptor = new AgentHeaderDescriptor([
-            'clientName' => $options['appName'],
-            'clientVersion' => $options['appVersion'],
-            'codeGenName' => self::_CODEGEN_NAME,
-            'codeGenVersion' => self::_CODEGEN_VERSION,
-            'gaxVersion' => AgentHeaderDescriptor::getGaxVersion(),
-            'phpVersion' => phpversion(),
+            'libName' => $options['libName'],
+            'libVersion' => $options['libVersion'],
+            'gapicVersion' => $gapicVersion,
         ]);
 
         $defaultDescriptors = ['headerDescriptor' => $headerDescriptor];
@@ -244,7 +263,11 @@ class OperationsClient
      * Sample code:
      * ```
      * try {
-     *     $operationsClient = new OperationsClient();
+     *     $options = [
+     *         'serviceAddress' => 'my-service-address',
+     *         'scopes' => ['my-service-scope'],
+     *     ];
+     *     $operationsClient = new OperationsClient($options);
      *     $name = "";
      *     $response = $operationsClient->getOperation($name);
      * } finally {
@@ -266,7 +289,7 @@ class OperationsClient
      *          is not set.
      * }
      *
-     * @return \Google\Longrunning\Operation
+     * @return \google\longrunning\Operation
      *
      * @throws \Google\GAX\ApiException if the remote call fails
      */
@@ -301,11 +324,25 @@ class OperationsClient
      * Sample code:
      * ```
      * try {
-     *     $operationsClient = new OperationsClient();
+     *     $options = [
+     *         'serviceAddress' => 'my-service-address',
+     *         'scopes' => ['my-service-scope'],
+     *     ];
+     *     $operationsClient = new OperationsClient($options);
      *     $name = "";
      *     $filter = "";
-     *     foreach ($operationsClient->listOperations($name, $filter) as $element) {
-     *         // doThingsWith(element);
+     *     // Iterate through all elements
+     *     $pagedResponse = $operationsClient->listOperations($name, $filter);
+     *     foreach ($pagedResponse->iterateAllElements() as $element) {
+     *         // doSomethingWith($element);
+     *     }
+     *
+     *     // OR iterate over pages of elements, with the maximum page size set to 5
+     *     $pagedResponse = $operationsClient->listOperations($name, $filter, ['pageSize' => 5]);
+     *     foreach ($pagedResponse->iteratePages() as $page) {
+     *         foreach ($page as $element) {
+     *             // doSomethingWith($element);
+     *         }
      *     }
      * } finally {
      *     if (isset($operationsClient)) {
@@ -383,7 +420,11 @@ class OperationsClient
      * Sample code:
      * ```
      * try {
-     *     $operationsClient = new OperationsClient();
+     *     $options = [
+     *         'serviceAddress' => 'my-service-address',
+     *         'scopes' => ['my-service-scope'],
+     *     ];
+     *     $operationsClient = new OperationsClient($options);
      *     $name = "";
      *     $operationsClient->cancelOperation($name);
      * } finally {
@@ -437,7 +478,11 @@ class OperationsClient
      * Sample code:
      * ```
      * try {
-     *     $operationsClient = new OperationsClient();
+     *     $options = [
+     *         'serviceAddress' => 'my-service-address',
+     *         'scopes' => ['my-service-scope'],
+     *     ];
+     *     $operationsClient = new OperationsClient($options);
      *     $name = "";
      *     $operationsClient->deleteOperation($name);
      * } finally {
