@@ -80,7 +80,6 @@ class MockBidiStreamingCall
             }
             $obj = $this->deserializeResponse($resp, $this->deserialize);
             return $obj;
-
         } elseif ($this->writesDone) {
             return null;
         } else {

@@ -44,7 +44,6 @@ class PageStreamingDescriptor
     {
         self::validate($descriptor);
         $this->descriptor = $descriptor;
-
     }
 
     public static function createFromFields($fields)

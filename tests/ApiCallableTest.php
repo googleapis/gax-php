@@ -543,7 +543,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence($responseSequence, ['\Google\Longrunning\Operation', 'mergeFromString']);
+        $opStub = MockStub::createWithResponseSequence(
+            $responseSequence,
+            ['\Google\Longrunning\Operation', 'mergeFromString']
+        );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
         $descriptor = [
             'operationsClient' => $opClient,
