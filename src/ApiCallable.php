@@ -179,6 +179,9 @@ class ApiCallable
             } else {
                 $metadata = $params[self::GRPC_CALLABLE_METADATA_INDEX];
                 $headers = [];
+                // Check $userHeaders first, and then merge $headerDescriptor headers, to ensure
+                // that $headerDescriptor headers such as x-goog-api-client cannot be overwritten
+                // by the $userHeaders.
                 if (!is_null($userHeaders)) {
                     $headers = $userHeaders;
                 }
