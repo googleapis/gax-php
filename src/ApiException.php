@@ -66,6 +66,15 @@ class ApiException extends Exception
     // custom string representation of object
     public function __toString()
     {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+        $str = __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+        if (isset($this->metadata) && count($this->metadata) > 0) {
+            $str .= "Metadata:\n" . json_encode($this->metadata);
+            /*
+            foreach ($this->metadata as $key => $value) {
+                $str .= "\t$key: $value\n";
+            }
+            */
+        }
+        return $str;
     }
 }
