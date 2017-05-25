@@ -63,18 +63,27 @@ class ApiException extends Exception
         return $this->metadata;
     }
 
-    // custom string representation of object
+    /**
+     * @return string
+     */
+    public function getMetadataAsString()
+    {
+        $decodedMetadata = Serializer::decodeMetadata($this->metadata);
+        return json_encode($decodedMetadata);
+    }
+
+    /**
+     * String representation of ApiException
+     * @return string
+     */
     public function __toString()
     {
         $str = __CLASS__ . ": [{$this->code}]: {$this->message}\n";
         if (isset($this->metadata) && count($this->metadata) > 0) {
-            $str .= "Metadata:\n" . json_encode($this->metadata);
-            /*
-            foreach ($this->metadata as $key => $value) {
-                $str .= "\t$key: $value\n";
-            }
-            */
+            $str .= "Metadata: " . $this->getMetadataAsString();
         }
         return $str;
     }
+
+
 }
