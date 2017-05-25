@@ -84,6 +84,4 @@ class ApiException extends Exception
         }
         return $str;
     }
-
-
 }
