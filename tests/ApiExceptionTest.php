@@ -55,8 +55,15 @@ class ApiExceptionTest extends PHPUnit_Framework_TestCase
 
         $apiException = ApiException::createFromStdClass($status);
 
+        $expectedMessage = json_encode([
+            'message' => 'testWithoutMetadata',
+            'code' => Grpc\STATUS_OK,
+            'status' => 'OK',
+            'details' => []
+        ], JSON_PRETTY_PRINT);
+
         $this->assertSame(Grpc\STATUS_OK, $apiException->getCode());
-        $this->assertSame('testWithoutMetadata', $apiException->getMessage());
+        $this->assertSame($expectedMessage, $apiException->getMessage());
         $this->assertNull($apiException->getMetadata());
     }
 
