@@ -88,10 +88,6 @@ class ApiException extends Exception
      */
     public function __toString()
     {
-        $str = __CLASS__ . ": [{$this->code}]: {$this->message}\n";
-        if (isset($this->metadata) && count($this->metadata) > 0) {
-            $str .= "Metadata: " . $this->getMetadataAsString();
-        }
-        return $str;
+        return __CLASS__ . ": $this->message\n";
     }
 }
