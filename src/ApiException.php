@@ -36,6 +36,7 @@ use Exception;
 class ApiException extends Exception
 {
     private $metadata;
+    private $basicMessage;
 
     public function __construct($message, $code, \Exception $previous = null)
     {
@@ -48,11 +49,29 @@ class ApiException extends Exception
      */
     public static function createFromStdClass($status)
     {
-        $ex = new ApiException($status->details, $status->code);
-        if (property_exists($status, 'metadata')) {
-            $ex->metadata = $status->metadata;
-        }
+        $basicMessage = $status->details;
+        $code = $status->code;
+        $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
+
+        $messageData = [
+            'message' => $basicMessage,
+            'code' => $code,
+            'status' => GrpcConstants::getStatusNameFromCode($status->code),
+            'details' => Serializer::decodeMetadata($metadata)
+        ];
+
+        $message = json_encode($messageData, JSON_PRETTY_PRINT);
+
+        $ex = new ApiException($message, $code);
+        $ex->basicMessage = $basicMessage;
+        $ex->metadata = $metadata;
+
         return $ex;
+    }
+
+    public function getBasicMessage()
+    {
+        return $this->basicMessage;
     }
 
     /**
@@ -61,15 +80,6 @@ class ApiException extends Exception
     public function getMetadata()
     {
         return $this->metadata;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetadataAsString()
-    {
-        $decodedMetadata = Serializer::decodeMetadata($this->metadata);
-        return json_encode($decodedMetadata);
     }
 
     /**

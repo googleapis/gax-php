@@ -32,6 +32,7 @@
 namespace Google\GAX\UnitTests;
 
 use Google\GAX\ApiException;
+use Google\GAX\Serializer;
 use google\protobuf\Duration;
 use google\rpc\BadRequest;
 use google\rpc\DebugInfo;
@@ -71,10 +72,16 @@ class ApiExceptionTest extends PHPUnit_Framework_TestCase
 
         $apiException = ApiException::createFromStdClass($status);
 
+        $expectedMessage = json_encode([
+            'message' => 'testWithMetadata',
+            'code' => Grpc\STATUS_OK,
+            'status' => 'OK',
+            'details' => $metadataArray
+        ], JSON_PRETTY_PRINT);
+
         $this->assertSame(Grpc\STATUS_OK, $apiException->getCode());
-        $this->assertSame('testWithMetadata', $apiException->getMessage());
+        $this->assertSame($expectedMessage, $apiException->getMessage());
         $this->assertSame($metadata, $apiException->getMetadata());
-        $this->assertSame(json_encode($metadataArray), $apiException->getMetadataAsString());
     }
 
     public function getMetadata()
