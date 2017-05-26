@@ -102,7 +102,8 @@ class GrpcConstants
      * @param string $name
      * @return int
      */
-    public static function getCodeFromStatusName($name) {
+    public static function getCodeFromStatusName($name)
+    {
         $codeNames = self::getStatusNamesToCodesMap();
         if (!isset($codeNames[$name])) {
             return -1;
@@ -114,7 +115,8 @@ class GrpcConstants
      * @param int $code
      * @return string
      */
-    public static function getStatusNameFromCode($code) {
+    public static function getStatusNameFromCode($code)
+    {
         $codeNames = self::getStatusCodesToNamesMap();
         if (!isset($codeNames[$code])) {
             return "UNEXPECTED_CODE";
