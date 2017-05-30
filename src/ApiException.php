@@ -38,9 +38,11 @@ class ApiException extends Exception
     private $metadata;
     private $basicMessage;
 
-    public function __construct($message, $code, \Exception $previous = null)
+    public function __construct($message, $code, \Exception $previous = null, $metadata = null, $basicMessage = null)
     {
         parent::__construct($message, $code, $previous);
+        $this->metadata = $metadata;
+        $this->basicMessage = isset($basicMessage) ? $basicMessage : $message;
     }
 
     /**
@@ -62,11 +64,7 @@ class ApiException extends Exception
 
         $message = json_encode($messageData, JSON_PRETTY_PRINT);
 
-        $ex = new ApiException($message, $code);
-        $ex->basicMessage = $basicMessage;
-        $ex->metadata = $metadata;
-
-        return $ex;
+        return new ApiException($message, $code, null, $metadata, $basicMessage);
     }
 
     public function getBasicMessage()

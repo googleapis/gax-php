@@ -42,7 +42,7 @@ use InvalidArgumentException;
 class GrpcConstants
 {
     private static $statusCodeNames;
-    private static $statusCodeNamesInverted;
+    private static $statusCodesToNames;
 
     /**
      * This should not be called outside of the implementation file.
@@ -71,7 +71,7 @@ class GrpcConstants
             'UNIMPLEMENTED' => Grpc\STATUS_UNIMPLEMENTED,
             'UNKNOWN' => Grpc\STATUS_UNKNOWN
         ];
-        self::$statusCodeNamesInverted = array_flip(self::$statusCodeNames);
+        self::$statusCodesToNames = array_flip(self::$statusCodeNames);
     }
 
     /**
@@ -92,10 +92,10 @@ class GrpcConstants
      */
     public static function getStatusCodesToNamesMap()
     {
-        if (!self::$statusCodeNamesInverted) {
+        if (!self::$statusCodesToNames) {
             self::initStatusCodeNames();
         }
-        return self::$statusCodeNamesInverted;
+        return self::$statusCodesToNames;
     }
 
     /**
@@ -104,7 +104,7 @@ class GrpcConstants
      */
     public static function getCodeFromStatusName($name)
     {
-        $codeNames = self::getStatusNamesToCodesMap();
+        $codeNames = self::getStatusCodeNames();
         if (!isset($codeNames[$name])) {
             return -1;
         }
