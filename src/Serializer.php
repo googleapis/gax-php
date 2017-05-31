@@ -46,14 +46,14 @@ class Serializer
     private static $phpArraySerializer;
 
     private static $metadataKnownTypes = [
-        'google.rpc.retryinfo-bin' => '\google\rpc\RetryInfo',
-        'google.rpc.debuginfo-bin' => '\google\rpc\DebugInfo',
-        'google.rpc.quotafailure-bin' => '\google\rpc\QuotaFailure',
-        'google.rpc.badrequest-bin' => '\google\rpc\BadRequest',
-        'google.rpc.requestinfo-bin' => '\google\rpc\RequestInfo',
-        'google.rpc.resourceinfo-bin' => '\google\rpc\ResourceInfo',
-        'google.rpc.help-bin' => '\google\rpc\Help',
-        'google.rpc.localizedmessage-bin' => '\google\rpc\LocalizedMessage',
+        'google.rpc.retryinfo-bin' => '\Google\Rpc\RetryInfo',
+        'google.rpc.debuginfo-bin' => '\Google\Rpc\DebugInfo',
+        'google.rpc.quotafailure-bin' => '\Google\Rpc\QuotaFailure',
+        'google.rpc.badrequest-bin' => '\Google\Rpc\BadRequest',
+        'google.rpc.requestinfo-bin' => '\Google\Rpc\RequestInfo',
+        'google.rpc.resourceinfo-bin' => '\Google\Rpc\ResourceInfo',
+        'google.rpc.help-bin' => '\Google\Rpc\Help',
+        'google.rpc.localizedmessage-bin' => '\Google\Rpc\LocalizedMessage',
     ];
 
     private $fieldTransformers;
