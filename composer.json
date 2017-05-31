@@ -8,8 +8,7 @@
     "require": {
         "php": ">=5.5",
         "google/auth": "^0.11",
-        "grpc/grpc": "^1.3.2",
-        "google/proto-client-php": "dev-proto3"
+        "grpc/grpc": "^1.3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
@@ -19,7 +18,9 @@
     "autoload": {
         "psr-4": {
           "Google\\GAX\\":"src/",
-          "Google\\GAX\\UnitTests\\":"tests/"
+          "Google\\GAX\\UnitTests\\":"tests/",
+          "Google\\":"src/generated/Google/",
+          "GPBMetadata\\":"src/generated/GPBMetadata/"
         }
     }
 }
