@@ -210,7 +210,7 @@ trait MockStubTrait
      *
      * @return ReceivedRequest[] An array of received requests
      */
-    public function getReceivedCalls()
+    public function popReceivedCalls()
     {
         $receivedFuncCallsTemp = $this->receivedFuncCalls;
         $this->receivedFuncCalls = [];
@@ -228,7 +228,7 @@ trait MockStubTrait
     /**
      * @return mixed[] The call objects created by calls to the stub
      */
-    public function getCallObjects()
+    public function popCallObjects()
     {
         $callObjectsTemp = $this->callObjects;
         $this->callObjects = [];
