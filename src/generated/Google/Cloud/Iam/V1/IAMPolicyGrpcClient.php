@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-namespace Google\Iam\V1 {
+namespace Google\Cloud\Iam\V1 {
 
   // ## API Overview
   //
@@ -57,15 +57,15 @@ namespace Google\Iam\V1 {
     /**
      * Sets the access control policy on the specified resource. Replaces any
      * existing policy.
-     * @param \Google\Iam\V1\SetIamPolicyRequest $argument input argument
+     * @param \Google\Cloud\Iam\V1\SetIamPolicyRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function SetIamPolicy(\Google\Iam\V1\SetIamPolicyRequest $argument,
+    public function SetIamPolicy(\Google\Cloud\Iam\V1\SetIamPolicyRequest $argument,
       $metadata = [], $options = []) {
       return $this->_simpleRequest('/google.iam.v1.IAMPolicy/SetIamPolicy',
       $argument,
-      ['\Google\Iam\V1\Policy', 'decode'],
+      ['\Google\Cloud\Iam\V1\Policy', 'decode'],
       $metadata, $options);
     }
 
@@ -73,15 +73,15 @@ namespace Google\Iam\V1 {
      * Gets the access control policy for a resource.
      * Returns an empty policy if the resource exists and does not have a policy
      * set.
-     * @param \Google\Iam\V1\GetIamPolicyRequest $argument input argument
+     * @param \Google\Cloud\Iam\V1\GetIamPolicyRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function GetIamPolicy(\Google\Iam\V1\GetIamPolicyRequest $argument,
+    public function GetIamPolicy(\Google\Cloud\Iam\V1\GetIamPolicyRequest $argument,
       $metadata = [], $options = []) {
       return $this->_simpleRequest('/google.iam.v1.IAMPolicy/GetIamPolicy',
       $argument,
-      ['\Google\Iam\V1\Policy', 'decode'],
+      ['\Google\Cloud\Iam\V1\Policy', 'decode'],
       $metadata, $options);
     }
 
@@ -89,15 +89,15 @@ namespace Google\Iam\V1 {
      * Returns permissions that a caller has on the specified resource.
      * If the resource does not exist, this will return an empty set of
      * permissions, not a NOT_FOUND error.
-     * @param \Google\Iam\V1\TestIamPermissionsRequest $argument input argument
+     * @param \Google\Cloud\Iam\V1\TestIamPermissionsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function TestIamPermissions(\Google\Iam\V1\TestIamPermissionsRequest $argument,
+    public function TestIamPermissions(\Google\Cloud\Iam\V1\TestIamPermissionsRequest $argument,
       $metadata = [], $options = []) {
       return $this->_simpleRequest('/google.iam.v1.IAMPolicy/TestIamPermissions',
       $argument,
-      ['\Google\Iam\V1\TestIamPermissionsResponse', 'decode'],
+      ['\Google\Cloud\Iam\V1\TestIamPermissionsResponse', 'decode'],
       $metadata, $options);
     }
 
