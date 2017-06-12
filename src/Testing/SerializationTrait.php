@@ -29,29 +29,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\Testing;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-class MockPageStreamingResponse
+trait SerializationTrait
 {
-    private $nextPageToken;
-    private $resource;
-
-    public static function createPageStreamingResponse($nextPageToken, $resource)
+    protected function deserializeResponse($value, $deserialize)
     {
-        $response = new MockPageStreamingResponse();
-        $response->nextPageToken = $nextPageToken;
-        $response->resource = $resource;
-        return $response;
-    }
+        if ($value === null) {
+            return null;
+        }
 
-    public function getResourcesList()
-    {
-        return $this->resource;
-    }
+        if ($deserialize === null) {
+            return $value;
+        }
 
-    public function getNextPageToken()
-    {
-        return $this->nextPageToken;
+        // Proto3 implementation
+        if (is_array($deserialize)) {
+            list($className, $deserializeFunc) = $deserialize;
+            $obj = new $className();
+            if (method_exists($obj, $deserializeFunc)) {
+                $obj->$deserializeFunc($value);
+            } else {
+                $obj->mergeFromString($value);
+            }
+
+            return $obj;
+        }
+
+        // Protobuf-PHP implementation
+        return call_user_func($deserialize, $value);
     }
 }

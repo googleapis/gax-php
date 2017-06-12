@@ -49,11 +49,11 @@ use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\ValidationException;
-use google\longrunning\CancelOperationRequest;
-use google\longrunning\DeleteOperationRequest;
-use google\longrunning\GetOperationRequest;
-use google\longrunning\ListOperationsRequest;
-use google\longrunning\OperationsGrpcClient;
+use Google\Longrunning\CancelOperationRequest;
+use Google\Longrunning\DeleteOperationRequest;
+use Google\Longrunning\GetOperationRequest;
+use Google\Longrunning\ListOperationsRequest;
+use Google\Longrunning\OperationsGrpcClient;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -126,10 +126,12 @@ class OperationsClient
     {
         $listOperationsPageStreamingDescriptor =
                 new PageStreamingDescriptor([
-                    'requestPageTokenField' => 'page_token',
-                    'requestPageSizeField' => 'page_size',
-                    'responsePageTokenField' => 'next_page_token',
-                    'resourceField' => 'operations',
+                    'requestPageTokenGetMethod' => 'getPageToken',
+                    'requestPageTokenSetMethod' => 'setPageToken',
+                    'requestPageSizeGetMethod' => 'getPageSize',
+                    'requestPageSizeSetMethod' => 'setPageSize',
+                    'responsePageTokenGetMethod' => 'getNextPageToken',
+                    'resourcesGetMethod' => 'getOperations',
                 ]);
 
         $pageStreamingDescriptors = [

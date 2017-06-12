@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,29 +29,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\Testing;
 
-namespace Google\GAX\UnitTests\Mocks;
+use PHPUnit_Framework_TestCase;
 
-class MockPageStreamingResponse
+class GeneratedTest extends PHPUnit_Framework_TestCase
 {
-    private $nextPageToken;
-    private $resource;
-
-    public static function createPageStreamingResponse($nextPageToken, $resource)
+    public function assertRepeatedFieldEquals(&$expected, &$actual)
     {
-        $response = new MockPageStreamingResponse();
-        $response->nextPageToken = $nextPageToken;
-        $response->resource = $resource;
-        return $response;
-    }
-
-    public function getResourcesList()
-    {
-        return $this->resource;
-    }
-
-    public function getNextPageToken()
-    {
-        return $this->nextPageToken;
+        if (is_array($expected) === is_array($actual)) {
+            $this->assertEquals($expected, $actual);
+        } else {
+            $this->assertSame(count($expected), count($actual));
+            for ($i = 0; $i < count($expected); $i++) {
+                $this->assertEquals($expected[$i], $actual[$i]);
+            }
+        }
     }
 }

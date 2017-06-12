@@ -30,14 +30,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\GAX\Testing;
+
+use Google\Rpc\Code;
 
 class MockStatus
 {
+    /** @var Code $code */
     public $code;
     public $details;
     public $metadata;
-    public function __construct($code, $details, $metadata = null)
+    public function __construct($code, $details = null, $metadata = null)
     {
         $this->code = $code;
         $this->details = $details;
