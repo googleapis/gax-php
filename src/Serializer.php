@@ -30,6 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 namespace Google\GAX;
+
 use Google\Protobuf\Internal\Descriptor;
 use Google\Protobuf\Internal\DescriptorPool;
 use Google\Protobuf\Internal\FieldDescriptor;
@@ -293,6 +294,4 @@ class Serializer
         }
         return self::$phpArraySerializer;
     }
-
-
 }
