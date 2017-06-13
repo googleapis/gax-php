@@ -34,7 +34,6 @@ namespace Google\GAX\UnitTests;
 use Google\Api\HttpRule;
 use Google\GAX\Serializer;
 use Google\Protobuf\Any;
-use Google\Protobuf\Field;
 use Google\Protobuf\FieldMask;
 use Google\Protobuf\ListValue;
 use Google\Protobuf\Struct;
@@ -46,19 +45,29 @@ use Google\Rpc\Status;
  */
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @param \Google\Protobuf\Internal\Message $message A protobuf message
+     * @param array $arrayStructure An array structure corresponding the expected encoding of $message
+     */
     private function verifySerializeAndDeserialize($message, $arrayStructure)
     {
         $serializer = new Serializer();
         $klass = get_class($message);
 
+        // Check that $message when encoded is equal to $arrayStructure
         $serializedMessage = $serializer->encodeMessage($message);
-        $deserializedMessage = $serializer->decodeMessage(new $klass(), $serializedMessage);
         $this->assertEquals($arrayStructure, $serializedMessage);
+
+        // Check that $message when encoded and decoded is unchanged
+        $deserializedMessage = $serializer->decodeMessage(new $klass(), $serializedMessage);
         $this->assertEquals($message, $deserializedMessage);
 
+        // Check that $arrayStructure when decoded is equal to $message
         $deserializedStructure = $serializer->decodeMessage(new $klass(), $arrayStructure);
-        $reserializedStructure = $serializer->encodeMessage($deserializedStructure);
         $this->assertEquals($message, $deserializedStructure);
+
+        // Check that $arrayStructure when decoded and encoded is unchanged
+        $reserializedStructure = $serializer->encodeMessage($deserializedStructure);
         $this->assertEquals($arrayStructure, $reserializedStructure);
     }
 
@@ -69,7 +78,8 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $message->setMessage("message");
         $message->setCode(0);
         $message->setDetails($details);
-        $this->verifySerializeAndDeserialize($message, [
+
+        $encodedMessage = [
             'message' => 'message',
             'code' => 0,
             'details' => [
@@ -78,49 +88,63 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
                     'value' => '',
                 ],
             ]
-        ]);
+        ];
+
+        $this->verifySerializeAndDeserialize($message, $encodedMessage);
     }
 
     public function testHttpRule()
     {
         $message = new HttpRule();
-        $this->verifySerializeAndDeserialize($message, [
+
+        $encodedMessage = [
             'selector' => '',
             'body' => '',
             'additionalBindings' => [],
-        ]);
+        ];
+
+        $this->verifySerializeAndDeserialize($message, $encodedMessage);
     }
 
     public function testHttpRuleSetOneof()
     {
         $message = new HttpRule();
         $message->setPatch('');
-        $this->verifySerializeAndDeserialize($message, [
+
+        $encodedMessage = [
             'selector' => '',
             'patch' => '',
             'body' => '',
             'additionalBindings' => [],
-        ]);
+        ];
+
+        $this->verifySerializeAndDeserialize($message, $encodedMessage);
     }
 
     public function testHttpRuleSetOneofToValue()
     {
         $message = new HttpRule();
         $message->setPatch('test');
-        $this->verifySerializeAndDeserialize($message, [
+
+        $encodedMessage = [
             'selector' => '',
             'patch' => 'test',
             'body' => '',
             'additionalBindings' => [],
-        ]);
+        ];
+
+        $this->verifySerializeAndDeserialize($message, $encodedMessage);
     }
 
     public function testFieldMask()
     {
         $message = new FieldMask();
-        $this->verifySerializeAndDeserialize($message, [
+
+        $encodedMessage = [
             'paths' => []
-        ]);
+        ];
+
+        $this->verifySerializeAndDeserialize($message, $encodedMessage);
     }
 
     public function testProperlyHandlesMessage()
@@ -160,7 +184,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         ];
         $message->setFields($fields);
 
-        $this->verifySerializeAndDeserialize($message, [
+        $encodedMessage = [
             'fields' => [
                 'listField' => [
                     'listValue' => [
@@ -187,6 +211,8 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
                     ]
                 ]
             ],
-        ]);
+        ];
+
+        $this->verifySerializeAndDeserialize($message, $encodedMessage);
     }
 }
