@@ -54,6 +54,8 @@ class AuthenticationInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->principal_email = $var;
+
+        return $this;
     }
 
 }

@@ -73,6 +73,8 @@ class SystemParameterRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -106,6 +108,8 @@ class SystemParameterRule extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\SystemParameter::class);
         $this->parameters = $arr;
+
+        return $this;
     }
 
 }

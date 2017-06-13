@@ -59,6 +59,8 @@ class Http extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\HttpRule::class);
         $this->rules = $arr;
+
+        return $this;
     }
 
 }

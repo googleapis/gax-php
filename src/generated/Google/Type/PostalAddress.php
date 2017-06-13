@@ -200,6 +200,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->revision = $var;
+
+        return $this;
     }
 
     /**
@@ -233,6 +235,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->region_code = $var;
+
+        return $this;
     }
 
     /**
@@ -276,6 +280,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->language_code = $var;
+
+        return $this;
     }
 
     /**
@@ -307,6 +313,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->postal_code = $var;
+
+        return $this;
     }
 
     /**
@@ -340,6 +348,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->sorting_code = $var;
+
+        return $this;
     }
 
     /**
@@ -377,6 +387,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->administrative_area = $var;
+
+        return $this;
     }
 
     /**
@@ -408,6 +420,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->locality = $var;
+
+        return $this;
     }
 
     /**
@@ -435,6 +449,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->sublocality = $var;
+
+        return $this;
     }
 
     /**
@@ -496,6 +512,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->address_lines = $arr;
+
+        return $this;
     }
 
     /**
@@ -525,6 +543,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->recipients = $arr;
+
+        return $this;
     }
 
     /**
@@ -550,6 +570,8 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->organization = $var;
+
+        return $this;
     }
 
 }

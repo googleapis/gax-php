@@ -83,6 +83,8 @@ class Usage extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->requirements = $arr;
+
+        return $this;
     }
 
     /**
@@ -110,6 +112,8 @@ class Usage extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\UsageRule::class);
         $this->rules = $arr;
+
+        return $this;
     }
 
     /**
@@ -147,6 +151,8 @@ class Usage extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->producer_notification_channel = $var;
+
+        return $this;
     }
 
 }

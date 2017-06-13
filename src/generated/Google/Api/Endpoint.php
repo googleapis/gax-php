@@ -118,6 +118,8 @@ class Endpoint extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -149,6 +151,8 @@ class Endpoint extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->aliases = $arr;
+
+        return $this;
     }
 
     /**
@@ -174,6 +178,8 @@ class Endpoint extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->apis = $arr;
+
+        return $this;
     }
 
     /**
@@ -199,6 +205,8 @@ class Endpoint extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->features = $arr;
+
+        return $this;
     }
 
     /**
@@ -230,6 +238,8 @@ class Endpoint extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->target = $var;
+
+        return $this;
     }
 
     /**
@@ -265,6 +275,8 @@ class Endpoint extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->allow_cors = $var;
+
+        return $this;
     }
 
 }

@@ -248,6 +248,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -277,6 +279,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
     /**
@@ -316,6 +320,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt64($var);
         $this->default_limit = $var;
+
+        return $this;
     }
 
     /**
@@ -353,6 +359,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt64($var);
         $this->max_limit = $var;
+
+        return $this;
     }
 
     /**
@@ -390,6 +398,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt64($var);
         $this->free_tier = $var;
+
+        return $this;
     }
 
     /**
@@ -423,6 +433,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->duration = $var;
+
+        return $this;
     }
 
     /**
@@ -454,6 +466,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->metric = $var;
+
+        return $this;
     }
 
     /**
@@ -531,6 +545,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->unit = $var;
+
+        return $this;
     }
 
     /**
@@ -604,6 +620,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::STRING, \Google\Protobuf\Internal\GPBType::INT64);
         $this->values = $arr;
+
+        return $this;
     }
 
     /**
@@ -635,6 +653,8 @@ class QuotaLimit extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->display_name = $var;
+
+        return $this;
     }
 
 }

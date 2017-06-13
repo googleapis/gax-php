@@ -74,6 +74,8 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -99,6 +101,8 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->address = $var;
+
+        return $this;
     }
 
     /**
@@ -126,6 +130,8 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->deadline = $var;
+
+        return $this;
     }
 
 }

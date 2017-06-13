@@ -69,6 +69,8 @@ class LocalizedMessage extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->locale = $var;
+
+        return $this;
     }
 
     /**
@@ -94,6 +96,8 @@ class LocalizedMessage extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->message = $var;
+
+        return $this;
     }
 
 }

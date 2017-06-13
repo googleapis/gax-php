@@ -112,6 +112,8 @@ class Page extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -139,6 +141,8 @@ class Page extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->content = $var;
+
+        return $this;
     }
 
     /**
@@ -166,6 +170,8 @@ class Page extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Page::class);
         $this->subpages = $arr;
+
+        return $this;
     }
 
 }

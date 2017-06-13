@@ -62,6 +62,8 @@ class Distribution_Range extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->min = $var;
+
+        return $this;
     }
 
     /**
@@ -87,6 +89,8 @@ class Distribution_Range extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->max = $var;
+
+        return $this;
     }
 
 }

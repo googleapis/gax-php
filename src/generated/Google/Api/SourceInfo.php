@@ -54,6 +54,8 @@ class SourceInfo extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Any::class);
         $this->source_files = $arr;
+
+        return $this;
     }
 
 }

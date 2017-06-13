@@ -69,6 +69,8 @@ class Context extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\ContextRule::class);
         $this->rules = $arr;
+
+        return $this;
     }
 
 }

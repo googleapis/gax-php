@@ -111,6 +111,8 @@ class Status extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->code = $var;
+
+        return $this;
     }
 
     /**
@@ -140,6 +142,8 @@ class Status extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->message = $var;
+
+        return $this;
     }
 
     /**
@@ -167,6 +171,8 @@ class Status extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Any::class);
         $this->details = $arr;
+
+        return $this;
     }
 
 }

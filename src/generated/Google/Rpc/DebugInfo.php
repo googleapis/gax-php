@@ -62,6 +62,8 @@ class DebugInfo extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->stack_entries = $arr;
+
+        return $this;
     }
 
     /**
@@ -87,6 +89,8 @@ class DebugInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->detail = $var;
+
+        return $this;
     }
 
 }

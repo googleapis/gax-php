@@ -90,6 +90,8 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->resource_type = $var;
+
+        return $this;
     }
 
     /**
@@ -119,6 +121,8 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->resource_name = $var;
+
+        return $this;
     }
 
     /**
@@ -148,6 +152,8 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->owner = $var;
+
+        return $this;
     }
 
     /**
@@ -177,6 +183,8 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
 }

@@ -81,6 +81,8 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->provider_id = $var;
+
+        return $this;
     }
 
     /**
@@ -130,6 +132,8 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->audiences = $var;
+
+        return $this;
     }
 
 }

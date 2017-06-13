@@ -121,6 +121,8 @@ class SystemParameters extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\SystemParameterRule::class);
         $this->rules = $arr;
+
+        return $this;
     }
 
 }

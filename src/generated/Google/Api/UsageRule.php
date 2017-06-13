@@ -85,6 +85,8 @@ class UsageRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -110,6 +112,8 @@ class UsageRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->allow_unregistered_calls = $var;
+
+        return $this;
     }
 
 }

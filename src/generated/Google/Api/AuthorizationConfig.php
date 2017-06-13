@@ -63,6 +63,8 @@ class AuthorizationConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->provider = $var;
+
+        return $this;
     }
 
 }

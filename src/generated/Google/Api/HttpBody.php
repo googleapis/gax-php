@@ -89,6 +89,8 @@ class HttpBody extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->content_type = $var;
+
+        return $this;
     }
 
     /**
@@ -114,6 +116,8 @@ class HttpBody extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, False);
         $this->data = $var;
+
+        return $this;
     }
 
 }

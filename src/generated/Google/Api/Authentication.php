@@ -76,6 +76,8 @@ class Authentication extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\AuthenticationRule::class);
         $this->rules = $arr;
+
+        return $this;
     }
 
     /**
@@ -101,6 +103,8 @@ class Authentication extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\AuthProvider::class);
         $this->providers = $arr;
+
+        return $this;
     }
 
 }

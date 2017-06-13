@@ -96,6 +96,8 @@ class LatLng extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->latitude = $var;
+
+        return $this;
     }
 
     /**
@@ -121,6 +123,8 @@ class LatLng extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->longitude = $var;
+
+        return $this;
     }
 
 }

@@ -65,6 +65,8 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions_Linear::class);
         $this->writeOneof(1, $var);
+
+        return $this;
     }
 
     /**
@@ -90,6 +92,8 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions_Exponential::class);
         $this->writeOneof(2, $var);
+
+        return $this;
     }
 
     /**
@@ -115,6 +119,8 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions_Explicit::class);
         $this->writeOneof(3, $var);
+
+        return $this;
     }
 
     public function getOptions()

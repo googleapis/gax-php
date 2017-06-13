@@ -70,6 +70,8 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->caller_ip = $var;
+
+        return $this;
     }
 
     /**
@@ -111,6 +113,8 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->caller_supplied_user_agent = $var;
+
+        return $this;
     }
 
 }

@@ -62,6 +62,8 @@ class Help_Link extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
     /**
@@ -87,6 +89,8 @@ class Help_Link extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->url = $var;
+
+        return $this;
     }
 
 }

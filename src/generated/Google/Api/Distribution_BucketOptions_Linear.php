@@ -76,6 +76,8 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     {
         GPBUtil::checkInt32($var);
         $this->num_finite_buckets = $var;
+
+        return $this;
     }
 
     /**
@@ -101,6 +103,8 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     {
         GPBUtil::checkDouble($var);
         $this->width = $var;
+
+        return $this;
     }
 
     /**
@@ -126,6 +130,8 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     {
         GPBUtil::checkDouble($var);
         $this->offset = $var;
+
+        return $this;
     }
 
 }

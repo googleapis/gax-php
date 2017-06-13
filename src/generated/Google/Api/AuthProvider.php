@@ -106,6 +106,8 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->id = $var;
+
+        return $this;
     }
 
     /**
@@ -139,6 +141,8 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->issuer = $var;
+
+        return $this;
     }
 
     /**
@@ -178,6 +182,8 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->jwks_uri = $var;
+
+        return $this;
     }
 
     /**
@@ -223,6 +229,8 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->audiences = $var;
+
+        return $this;
     }
 
 }

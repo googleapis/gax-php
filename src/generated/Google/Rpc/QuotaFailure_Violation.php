@@ -74,6 +74,8 @@ class QuotaFailure_Violation extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->subject = $var;
+
+        return $this;
     }
 
     /**
@@ -109,6 +111,8 @@ class QuotaFailure_Violation extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
 }

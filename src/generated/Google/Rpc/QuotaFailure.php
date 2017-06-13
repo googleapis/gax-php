@@ -62,6 +62,8 @@ class QuotaFailure extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Rpc\QuotaFailure_Violation::class);
         $this->violations = $arr;
+
+        return $this;
     }
 
 }

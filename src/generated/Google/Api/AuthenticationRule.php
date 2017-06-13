@@ -92,6 +92,8 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -117,6 +119,8 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\OAuthRequirements::class);
         $this->oauth = $var;
+
+        return $this;
     }
 
     /**
@@ -152,6 +156,8 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->allow_without_credential = $var;
+
+        return $this;
     }
 
     /**
@@ -177,6 +183,8 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\AuthRequirement::class);
         $this->requirements = $arr;
+
+        return $this;
     }
 
 }

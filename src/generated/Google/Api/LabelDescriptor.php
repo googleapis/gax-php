@@ -70,6 +70,8 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->key = $var;
+
+        return $this;
     }
 
     /**
@@ -95,6 +97,8 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Google\Api\LabelDescriptor_ValueType::class);
         $this->value_type = $var;
+
+        return $this;
     }
 
     /**
@@ -120,6 +124,8 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
 }

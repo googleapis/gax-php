@@ -79,6 +79,8 @@ class OAuthRequirements extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->canonical_scopes = $var;
+
+        return $this;
     }
 
 }

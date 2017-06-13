@@ -74,6 +74,8 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->resource = $var;
+
+        return $this;
     }
 
     /**
@@ -99,6 +101,8 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->permission = $var;
+
+        return $this;
     }
 
     /**
@@ -126,6 +130,8 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->granted = $var;
+
+        return $this;
     }
 
 }

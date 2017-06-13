@@ -154,6 +154,8 @@ class Documentation extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->summary = $var;
+
+        return $this;
     }
 
     /**
@@ -179,6 +181,8 @@ class Documentation extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Page::class);
         $this->pages = $arr;
+
+        return $this;
     }
 
     /**
@@ -206,6 +210,8 @@ class Documentation extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\DocumentationRule::class);
         $this->rules = $arr;
+
+        return $this;
     }
 
     /**
@@ -231,6 +237,8 @@ class Documentation extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->documentation_root_url = $var;
+
+        return $this;
     }
 
     /**
@@ -280,6 +288,8 @@ class Documentation extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->overview = $var;
+
+        return $this;
     }
 
 }

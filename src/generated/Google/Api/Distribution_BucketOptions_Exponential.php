@@ -76,6 +76,8 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     {
         GPBUtil::checkInt32($var);
         $this->num_finite_buckets = $var;
+
+        return $this;
     }
 
     /**
@@ -101,6 +103,8 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     {
         GPBUtil::checkDouble($var);
         $this->growth_factor = $var;
+
+        return $this;
     }
 
     /**
@@ -126,6 +130,8 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     {
         GPBUtil::checkDouble($var);
         $this->scale = $var;
+
+        return $this;
     }
 
 }

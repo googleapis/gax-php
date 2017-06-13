@@ -67,6 +67,8 @@ class Monitoring_MonitoringDestination extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->monitored_resource = $var;
+
+        return $this;
     }
 
     /**
@@ -94,6 +96,8 @@ class Monitoring_MonitoringDestination extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->metrics = $arr;
+
+        return $this;
     }
 
 }

@@ -80,6 +80,8 @@ class Date extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->year = $var;
+
+        return $this;
     }
 
     /**
@@ -105,6 +107,8 @@ class Date extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->month = $var;
+
+        return $this;
     }
 
     /**
@@ -132,6 +136,8 @@ class Date extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->day = $var;
+
+        return $this;
     }
 
 }

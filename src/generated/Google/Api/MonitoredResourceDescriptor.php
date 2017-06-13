@@ -116,6 +116,8 @@ class MonitoredResourceDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -145,6 +147,8 @@ class MonitoredResourceDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->type = $var;
+
+        return $this;
     }
 
     /**
@@ -176,6 +180,8 @@ class MonitoredResourceDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->display_name = $var;
+
+        return $this;
     }
 
     /**
@@ -203,6 +209,8 @@ class MonitoredResourceDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
     /**
@@ -232,6 +240,8 @@ class MonitoredResourceDescriptor extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\LabelDescriptor::class);
         $this->labels = $arr;
+
+        return $this;
     }
 
 }

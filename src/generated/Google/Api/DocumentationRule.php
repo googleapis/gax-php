@@ -86,6 +86,8 @@ class DocumentationRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -111,6 +113,8 @@ class DocumentationRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
     /**
@@ -138,6 +142,8 @@ class DocumentationRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->deprecation_description = $var;
+
+        return $this;
     }
 
 }

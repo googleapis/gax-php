@@ -192,6 +192,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -227,6 +229,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->type = $var;
+
+        return $this;
     }
 
     /**
@@ -262,6 +266,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\LabelDescriptor::class);
         $this->labels = $arr;
+
+        return $this;
     }
 
     /**
@@ -289,6 +295,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Google\Api\MetricDescriptor_MetricKind::class);
         $this->metric_kind = $var;
+
+        return $this;
     }
 
     /**
@@ -316,6 +324,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Google\Api\MetricDescriptor_ValueType::class);
         $this->value_type = $var;
+
+        return $this;
     }
 
     /**
@@ -439,6 +449,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->unit = $var;
+
+        return $this;
     }
 
     /**
@@ -464,6 +476,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
     /**
@@ -491,6 +505,8 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->display_name = $var;
+
+        return $this;
     }
 
 }

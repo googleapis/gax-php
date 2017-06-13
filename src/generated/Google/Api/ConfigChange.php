@@ -117,6 +117,8 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->element = $var;
+
+        return $this;
     }
 
     /**
@@ -144,6 +146,8 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->old_value = $var;
+
+        return $this;
     }
 
     /**
@@ -171,6 +175,8 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->new_value = $var;
+
+        return $this;
     }
 
     /**
@@ -196,6 +202,8 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Google\Api\ChangeType::class);
         $this->change_type = $var;
+
+        return $this;
     }
 
     /**
@@ -223,6 +231,8 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Advice::class);
         $this->advices = $arr;
+
+        return $this;
     }
 
 }

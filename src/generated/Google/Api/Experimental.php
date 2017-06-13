@@ -55,6 +55,8 @@ class Experimental extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\AuthorizationConfig::class);
         $this->authorization = $var;
+
+        return $this;
     }
 
 }

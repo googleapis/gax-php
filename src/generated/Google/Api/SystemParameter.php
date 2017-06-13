@@ -74,6 +74,8 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -101,6 +103,8 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->http_header = $var;
+
+        return $this;
     }
 
     /**
@@ -128,6 +132,8 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->url_query_parameter = $var;
+
+        return $this;
     }
 
 }

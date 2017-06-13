@@ -62,6 +62,8 @@ class CustomHttpPattern extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->kind = $var;
+
+        return $this;
     }
 
     /**
@@ -87,6 +89,8 @@ class CustomHttpPattern extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->path = $var;
+
+        return $this;
     }
 
 }

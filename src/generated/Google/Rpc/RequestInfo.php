@@ -67,6 +67,8 @@ class RequestInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->request_id = $var;
+
+        return $this;
     }
 
     /**
@@ -94,6 +96,8 @@ class RequestInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->serving_data = $var;
+
+        return $this;
     }
 
 }

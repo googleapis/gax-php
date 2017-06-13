@@ -64,6 +64,8 @@ class RetryInfo extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Duration::class);
         $this->retry_delay = $var;
+
+        return $this;
     }
 
 }

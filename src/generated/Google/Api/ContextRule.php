@@ -74,6 +74,8 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -99,6 +101,8 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->requested = $arr;
+
+        return $this;
     }
 
     /**
@@ -124,6 +128,8 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->provided = $arr;
+
+        return $this;
     }
 
 }

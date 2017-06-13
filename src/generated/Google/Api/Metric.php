@@ -67,6 +67,8 @@ class Metric extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->type = $var;
+
+        return $this;
     }
 
     /**
@@ -94,6 +96,8 @@ class Metric extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::STRING, \Google\Protobuf\Internal\GPBType::STRING);
         $this->labels = $arr;
+
+        return $this;
     }
 
 }

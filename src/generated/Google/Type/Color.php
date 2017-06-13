@@ -184,6 +184,8 @@ class Color extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkFloat($var);
         $this->red = $var;
+
+        return $this;
     }
 
     /**
@@ -209,6 +211,8 @@ class Color extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkFloat($var);
         $this->green = $var;
+
+        return $this;
     }
 
     /**
@@ -234,6 +238,8 @@ class Color extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkFloat($var);
         $this->blue = $var;
+
+        return $this;
     }
 
     /**
@@ -275,6 +281,8 @@ class Color extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\FloatValue::class);
         $this->alpha = $var;
+
+        return $this;
     }
 
 }

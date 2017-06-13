@@ -72,6 +72,8 @@ class MetricRule extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
+
+        return $this;
     }
 
     /**
@@ -105,6 +107,8 @@ class MetricRule extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::STRING, \Google\Protobuf\Internal\GPBType::INT64);
         $this->metric_costs = $arr;
+
+        return $this;
     }
 
 }

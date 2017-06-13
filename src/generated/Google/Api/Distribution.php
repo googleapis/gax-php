@@ -120,6 +120,8 @@ class Distribution extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt64($var);
         $this->count = $var;
+
+        return $this;
     }
 
     /**
@@ -147,6 +149,8 @@ class Distribution extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->mean = $var;
+
+        return $this;
     }
 
     /**
@@ -182,6 +186,8 @@ class Distribution extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkDouble($var);
         $this->sum_of_squared_deviation = $var;
+
+        return $this;
     }
 
     /**
@@ -209,6 +215,8 @@ class Distribution extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_Range::class);
         $this->range = $var;
+
+        return $this;
     }
 
     /**
@@ -234,6 +242,8 @@ class Distribution extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions::class);
         $this->bucket_options = $var;
+
+        return $this;
     }
 
     /**
@@ -275,6 +285,8 @@ class Distribution extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT64);
         $this->bucket_counts = $arr;
+
+        return $this;
     }
 
 }

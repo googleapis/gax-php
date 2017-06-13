@@ -59,6 +59,8 @@ class Control extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->environment = $var;
+
+        return $this;
     }
 
 }

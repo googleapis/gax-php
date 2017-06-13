@@ -100,6 +100,8 @@ class Logging extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Logging_LoggingDestination::class);
         $this->producer_destinations = $arr;
+
+        return $this;
     }
 
     /**
@@ -131,6 +133,8 @@ class Logging extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Logging_LoggingDestination::class);
         $this->consumer_destinations = $arr;
+
+        return $this;
     }
 
 }

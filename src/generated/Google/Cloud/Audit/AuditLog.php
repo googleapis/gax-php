@@ -159,6 +159,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->service_name = $var;
+
+        return $this;
     }
 
     /**
@@ -192,6 +194,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->method_name = $var;
+
+        return $this;
     }
 
     /**
@@ -225,6 +229,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->resource_name = $var;
+
+        return $this;
     }
 
     /**
@@ -252,6 +258,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt64($var);
         $this->num_response_items = $var;
+
+        return $this;
     }
 
     /**
@@ -277,6 +285,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Rpc\Status::class);
         $this->status = $var;
+
+        return $this;
     }
 
     /**
@@ -302,6 +312,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Cloud\Audit\AuthenticationInfo::class);
         $this->authentication_info = $var;
+
+        return $this;
     }
 
     /**
@@ -331,6 +343,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Cloud\Audit\AuthorizationInfo::class);
         $this->authorization_info = $arr;
+
+        return $this;
     }
 
     /**
@@ -356,6 +370,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Cloud\Audit\RequestMetadata::class);
         $this->request_metadata = $var;
+
+        return $this;
     }
 
     /**
@@ -391,6 +407,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Struct::class);
         $this->request = $var;
+
+        return $this;
     }
 
     /**
@@ -426,6 +444,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Struct::class);
         $this->response = $var;
+
+        return $this;
     }
 
     /**
@@ -453,6 +473,8 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Any::class);
         $this->service_data = $var;
+
+        return $this;
     }
 
 }

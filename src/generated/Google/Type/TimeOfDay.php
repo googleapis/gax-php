@@ -84,6 +84,8 @@ class TimeOfDay extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->hours = $var;
+
+        return $this;
     }
 
     /**
@@ -109,6 +111,8 @@ class TimeOfDay extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->minutes = $var;
+
+        return $this;
     }
 
     /**
@@ -136,6 +140,8 @@ class TimeOfDay extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->seconds = $var;
+
+        return $this;
     }
 
     /**
@@ -161,6 +167,8 @@ class TimeOfDay extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->nanos = $var;
+
+        return $this;
     }
 
 }

@@ -76,6 +76,8 @@ class Money extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->currency_code = $var;
+
+        return $this;
     }
 
     /**
@@ -103,6 +105,8 @@ class Money extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt64($var);
         $this->units = $var;
+
+        return $this;
     }
 
     /**
@@ -138,6 +142,8 @@ class Money extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->nanos = $var;
+
+        return $this;
     }
 
 }

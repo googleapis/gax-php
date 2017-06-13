@@ -77,6 +77,8 @@ class Property extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
+
+        return $this;
     }
 
     /**
@@ -102,6 +104,8 @@ class Property extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Google\Api\Property_PropertyType::class);
         $this->type = $var;
+
+        return $this;
     }
 
     /**
@@ -127,6 +131,8 @@ class Property extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
     }
 
 }
