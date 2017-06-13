@@ -40,12 +40,37 @@ class PageStreamingDescriptor
 {
     private $descriptor;
 
+    /**
+     * @param array $descriptor {
+     *     Required.
+     *     @type string $requestPageTokenGetMethod the get method for the page token in the request object.
+     *     @type string $requestPageTokenSetMethod the set method for the page token in the request object.
+     *     @type string $responsePageTokenGetMethod the get method for the page token in the response object.
+     *     @type string resourcesGetMethod the get method for the resources in the response object.
+     *
+     *     Optional.
+     *     @type string $requestPageSizeGetMethod the get method for the page size in the request object.
+     * }
+     */
     public function __construct($descriptor)
     {
         self::validate($descriptor);
         $this->descriptor = $descriptor;
     }
 
+    /**
+     * @param array $fields {
+     *     Required.
+     *
+     *     @type string $requestPageTokenField the page token field in the request object.
+     *     @type string $responsePageTokenField the page token field in the response object.
+     *     @type string $resourceField the resource field in the response object.
+     *
+     *     Optional.
+     *     @type string $requestPageSizeField the page size field in the request object.
+     * }
+     * @return PageStreamingDescriptor
+     */
     public static function createFromFields($fields)
     {
         $requestPageToken = $fields['requestPageTokenField'];
