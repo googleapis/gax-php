@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,14 +33,14 @@ namespace Google\GAX\Testing;
 
 trait SerializationTrait
 {
-    protected function deserializeResponse($value, $deserialize)
+    protected function deserializeMessage($message, $deserialize)
     {
-        if ($value === null) {
+        if ($message === null) {
             return null;
         }
 
         if ($deserialize === null) {
-            return $value;
+            return $message;
         }
 
         // Proto3 implementation
@@ -48,15 +48,15 @@ trait SerializationTrait
             list($className, $deserializeFunc) = $deserialize;
             $obj = new $className();
             if (method_exists($obj, $deserializeFunc)) {
-                $obj->$deserializeFunc($value);
+                $obj->$deserializeFunc($message);
             } else {
-                $obj->mergeFromString($value);
+                $obj->mergeFromString($message);
             }
 
             return $obj;
         }
 
         // Protobuf-PHP implementation
-        return call_user_func($deserialize, $value);
+        return call_user_func($deserialize, $message);
     }
 }

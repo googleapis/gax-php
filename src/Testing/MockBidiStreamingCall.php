@@ -78,7 +78,7 @@ class MockBidiStreamingCall
                 $this->writesDone();
                 return null;
             }
-            $obj = $this->deserializeResponse($resp, $this->deserialize);
+            $obj = $this->deserializeMessage($resp, $this->deserialize);
             return $obj;
         } elseif ($this->writesDone) {
             return null;
@@ -107,7 +107,7 @@ class MockBidiStreamingCall
 
     /**
      * Save the request object, to be retrieved via getReceivedCalls()
-     * @param \Google\Protobuf\Internal\Message $request The request object
+     * @param \Google\Protobuf\Internal\Message|mixed $request The request object
      * @throws ApiException
      */
     public function write($request)

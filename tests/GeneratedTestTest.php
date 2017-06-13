@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ use PHPUnit_Framework_ExpectationFailedException;
 class GeneratedTestTest extends GeneratedTest
 {
     /**
-     * @dataProvider successCases
+     * @dataProvider getSuccessCases
      */
     public function testSuccess($expected, $actual)
     {
@@ -46,7 +46,7 @@ class GeneratedTestTest extends GeneratedTest
     }
 
     /**
-     * @dataProvider failureCases
+     * @dataProvider getFailureCases
      */
     public function testFailure($expected, $actual)
     {
@@ -60,7 +60,7 @@ class GeneratedTestTest extends GeneratedTest
         $this->fail('This test did not fail as expected');
     }
 
-    public function successCases()
+    public function getSuccessCases()
     {
         $monitoringA = new Monitoring_MonitoringDestination();
         $monitoringA->setMonitoredResource("type");
@@ -89,7 +89,7 @@ class GeneratedTestTest extends GeneratedTest
         ];
     }
 
-    public function failureCases()
+    public function getFailureCases()
     {
         $monitoringA = new Monitoring_MonitoringDestination();
         $monitoringA->setMonitoredResource("typeA");

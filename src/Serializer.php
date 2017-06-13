@@ -46,14 +46,14 @@ class Serializer
     private static $phpArraySerializer;
 
     private static $metadataKnownTypes = [
-        'google.rpc.retryinfo-bin' => '\Google\Rpc\RetryInfo',
-        'google.rpc.debuginfo-bin' => '\Google\Rpc\DebugInfo',
-        'google.rpc.quotafailure-bin' => '\Google\Rpc\QuotaFailure',
-        'google.rpc.badrequest-bin' => '\Google\Rpc\BadRequest',
-        'google.rpc.requestinfo-bin' => '\Google\Rpc\RequestInfo',
-        'google.rpc.resourceinfo-bin' => '\Google\Rpc\ResourceInfo',
-        'google.rpc.help-bin' => '\Google\Rpc\Help',
-        'google.rpc.localizedmessage-bin' => '\Google\Rpc\LocalizedMessage',
+        'google.rpc.retryinfo-bin' => \Google\Rpc\RetryInfo::class,
+        'google.rpc.debuginfo-bin' => \Google\Rpc\DebugInfo::class,
+        'google.rpc.quotafailure-bin' => \Google\Rpc\QuotaFailure::class,
+        'google.rpc.badrequest-bin' => \Google\Rpc\BadRequest::class,
+        'google.rpc.requestinfo-bin' => \Google\Rpc\RequestInfo::class,
+        'google.rpc.resourceinfo-bin' => \Google\Rpc\ResourceInfo::class,
+        'google.rpc.help-bin' => \Google\Rpc\Help::class,
+        'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
     ];
 
     private $fieldTransformers;
@@ -185,7 +185,6 @@ class Serializer
             }
 
             if ($field->isMap()) {
-                //throw new RuntimeException("Map field not supported: $key");
                 $keyField = $field->getMessageType()->getFieldByNumber(1);
                 $valueField = $field->getMessageType()->getFieldByNumber(2);
                 $arr = [];
@@ -252,16 +251,11 @@ class Serializer
                     ? $valueField->getMessageType()->getClass()
                     : null;
                 $arr = new MapField($keyField->getType(), $valueField->getType(), $klass);
-                //$arr = [];
-                //$field->getMessageType()->
                 foreach ($v as $k => $vv) {
                     $arr[$this->decodeElement($keyField, $k)] = $this->decodeElement($valueField, $vv);
                 }
                 $v = $arr;
             } elseif ($field->isRepeated()) {
-                // Make sure the value is an array of values
-                //$v = is_array($v) && is_int(key($v)) ? $v : array($v);
-
                 $arr = [];
                 foreach ($v as $k => $vv) {
                     $arr[$k] = $this->decodeElement($field, $vv);

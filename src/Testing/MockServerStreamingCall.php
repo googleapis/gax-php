@@ -68,7 +68,7 @@ class MockServerStreamingCall
     {
         while (count($this->responses) > 0) {
             $resp = array_shift($this->responses);
-            $obj = $this->deserializeResponse($resp, $this->deserialize);
+            $obj = $this->deserializeMessage($resp, $this->deserialize);
             yield $obj;
         }
     }

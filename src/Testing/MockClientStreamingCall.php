@@ -73,7 +73,7 @@ class MockClientStreamingCall
 
     /**
      * Save the request object, to be retrieved via getReceivedCalls()
-     * @param \Google\Protobuf\Internal\Message $request The request object
+     * @param \Google\Protobuf\Internal\Message|mixed $request The request object
      * @throws ApiException
      */
     public function write($request)

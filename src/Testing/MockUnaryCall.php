@@ -72,7 +72,7 @@ class MockUnaryCall
      */
     public function wait()
     {
-        $obj = $this->deserializeResponse($this->response, $this->deserialize);
+        $obj = $this->deserializeMessage($this->response, $this->deserialize);
         return [$obj, $this->status];
     }
 }
