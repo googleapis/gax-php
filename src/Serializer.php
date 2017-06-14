@@ -272,12 +272,12 @@ class Serializer
         return $message;
     }
 
-    private static function toSnakeCase($key)
+    public static function toSnakeCase($key)
     {
         return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $key));
     }
 
-    private static function toCamelCase($key)
+    public static function toCamelCase($key)
     {
         return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
     }
