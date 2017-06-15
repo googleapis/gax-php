@@ -49,11 +49,11 @@ use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\ValidationException;
-use Google\Longrunning\CancelOperationRequest;
-use Google\Longrunning\DeleteOperationRequest;
-use Google\Longrunning\GetOperationRequest;
-use Google\Longrunning\ListOperationsRequest;
-use Google\Longrunning\OperationsGrpcClient;
+use Google\LongRunning\CancelOperationRequest;
+use Google\LongRunning\DeleteOperationRequest;
+use Google\LongRunning\GetOperationRequest;
+use Google\LongRunning\ListOperationsRequest;
+use Google\LongRunning\OperationsGrpcClient;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -289,7 +289,7 @@ class OperationsClient
      *          is not set.
      * }
      *
-     * @return \google\longrunning\Operation
+     * @return \Google\LongRunning\Operation
      *
      * @throws \Google\GAX\ApiException if the remote call fails
      */

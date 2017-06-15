@@ -47,7 +47,7 @@ use Google\GAX\UnitTests\Mocks\MockServerStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockStub;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingRequest;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
-use Google\Longrunning\Operation;
+use Google\LongRunning\Operation;
 use Google\Protobuf\GPBEmpty;
 use Google\Rpc\Code;
 use Google\Rpc\Status;
