@@ -94,7 +94,7 @@ class MockClientStreamingCall
      *
      * @return mixed[] An array of received requests
      */
-    public function getReceivedCalls()
+    public function popReceivedCalls()
     {
         $receivedFuncCallsTemp = $this->receivedWrites;
         $this->receivedWrites = [];
