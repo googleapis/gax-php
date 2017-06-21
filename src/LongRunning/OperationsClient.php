@@ -38,6 +38,8 @@
  * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
  * more frequently than those which have been declared beta or 1.0, including changes which break
  * backwards compatibility.
+ *
+ * @experimental
  */
 
 namespace Google\GAX\LongRunning;
@@ -49,11 +51,11 @@ use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\ValidationException;
-use Google\LongRunning\CancelOperationRequest;
-use Google\LongRunning\DeleteOperationRequest;
-use Google\LongRunning\GetOperationRequest;
-use Google\LongRunning\ListOperationsRequest;
-use Google\LongRunning\OperationsGrpcClient;
+use Google\Longrunning\CancelOperationRequest;
+use Google\Longrunning\DeleteOperationRequest;
+use Google\Longrunning\GetOperationRequest;
+use Google\Longrunning\ListOperationsRequest;
+use Google\Longrunning\OperationsGrpcClient;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -89,10 +91,7 @@ use Google\LongRunning\OperationsGrpcClient;
  * }
  * ```
  *
- * Many parameters require resource names to be formatted in a particular way. To assist
- * with these names, this class includes a format method for each type of name, and additionally
- * a parse method to extract the individual identifiers contained within names that are
- * returned.
+ * @experimental
  */
 class OperationsClient
 {
@@ -183,6 +182,7 @@ class OperationsClient
      *
      * @throws ValidationException Throws a ValidationException if required arguments are missing
      *                             from the $options array.
+     * @experimental
      */
     public function __construct($options = [])
     {
@@ -289,9 +289,10 @@ class OperationsClient
      *          is not set.
      * }
      *
-     * @return \Google\LongRunning\Operation
+     * @return \Google\Longrunning\Operation
      *
      * @throws \Google\GAX\ApiException if the remote call fails
+     * @experimental
      */
     public function getOperation($name, $optionalArgs = [])
     {
@@ -376,6 +377,7 @@ class OperationsClient
      * @return \Google\GAX\PagedListResponse
      *
      * @throws \Google\GAX\ApiException if the remote call fails
+     * @experimental
      */
     public function listOperations($name, $filter, $optionalArgs = [])
     {
@@ -447,6 +449,7 @@ class OperationsClient
      * }
      *
      * @throws \Google\GAX\ApiException if the remote call fails
+     * @experimental
      */
     public function cancelOperation($name, $optionalArgs = [])
     {
@@ -505,6 +508,7 @@ class OperationsClient
      * }
      *
      * @throws \Google\GAX\ApiException if the remote call fails
+     * @experimental
      */
     public function deleteOperation($name, $optionalArgs = [])
     {
@@ -530,6 +534,8 @@ class OperationsClient
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
      * calls are immediately cancelled.
+     *
+     * @experimental
      */
     public function close()
     {
