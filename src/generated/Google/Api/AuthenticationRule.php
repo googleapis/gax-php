@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Authentication rules for the service.
  * By default, if a method has any authentication requirements, every request
  * must include a valid credential matching one of the requirements.
@@ -17,48 +16,39 @@ use Google\Protobuf\Internal\GPBUtil;
  * request.
  * If a method doesn't have any auth requirements, request credentials will be
  * ignored.
- * </pre>
  *
- * Protobuf type <code>google.api.AuthenticationRule</code>
+ * Protobuf type <code>Google\Api\AuthenticationRule</code>
  */
 class AuthenticationRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * The requirements for OAuth credentials.
-     * </pre>
      *
-     * <code>.google.api.OAuthRequirements oauth = 2;</code>
+     * Generated from protobuf field <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
     private $oauth = null;
     /**
-     * <pre>
      * Whether to allow requests without a credential. The credential can be
      * an OAuth token, Google cookies (first-party auth) or EndUserCreds.
      * For requests without credentials, if the service control environment is
      * specified, each incoming request **must** be associated with a service
      * consumer. This can be done by passing an API key that belongs to a consumer
      * project.
-     * </pre>
      *
-     * <code>bool allow_without_credential = 5;</code>
+     * Generated from protobuf field <code>bool allow_without_credential = 5;</code>
      */
     private $allow_without_credential = false;
     /**
-     * <pre>
      * Requirements for additional authentication providers.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     private $requirements;
 
@@ -68,12 +58,11 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -81,27 +70,23 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The requirements for OAuth credentials.
-     * </pre>
      *
-     * <code>.google.api.OAuthRequirements oauth = 2;</code>
+     * Generated from protobuf field <code>.google.api.OAuthRequirements oauth = 2;</code>
+     * @return \Google\Api\OAuthRequirements
      */
     public function getOauth()
     {
@@ -109,31 +94,27 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The requirements for OAuth credentials.
-     * </pre>
      *
-     * <code>.google.api.OAuthRequirements oauth = 2;</code>
+     * Generated from protobuf field <code>.google.api.OAuthRequirements oauth = 2;</code>
+     * @param \Google\Api\OAuthRequirements $var
      */
     public function setOauth(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\OAuthRequirements::class);
         $this->oauth = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Whether to allow requests without a credential. The credential can be
      * an OAuth token, Google cookies (first-party auth) or EndUserCreds.
      * For requests without credentials, if the service control environment is
      * specified, each incoming request **must** be associated with a service
      * consumer. This can be done by passing an API key that belongs to a consumer
      * project.
-     * </pre>
      *
-     * <code>bool allow_without_credential = 5;</code>
+     * Generated from protobuf field <code>bool allow_without_credential = 5;</code>
+     * @return bool
      */
     public function getAllowWithoutCredential()
     {
@@ -141,31 +122,27 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Whether to allow requests without a credential. The credential can be
      * an OAuth token, Google cookies (first-party auth) or EndUserCreds.
      * For requests without credentials, if the service control environment is
      * specified, each incoming request **must** be associated with a service
      * consumer. This can be done by passing an API key that belongs to a consumer
      * project.
-     * </pre>
      *
-     * <code>bool allow_without_credential = 5;</code>
+     * Generated from protobuf field <code>bool allow_without_credential = 5;</code>
+     * @param bool $var
      */
     public function setAllowWithoutCredential($var)
     {
         GPBUtil::checkBool($var);
         $this->allow_without_credential = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Requirements for additional authentication providers.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthRequirement requirements = 7;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRequirements()
     {
@@ -173,18 +150,15 @@ class AuthenticationRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Requirements for additional authentication providers.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthRequirement requirements = 7;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRequirements(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\AuthRequirement::class);
         $this->requirements = $arr;
-
-        return $this;
     }
 
 }

@@ -5,52 +5,40 @@
 namespace Google\Api;
 
 /**
- * <pre>
  * Supported data type of the property values
- * </pre>
  *
- * Protobuf enum <code>google.api.Property.PropertyType</code>
+ * Protobuf enum <code>Google\Api\Property\PropertyType</code>
  */
 class Property_PropertyType
 {
     /**
-     * <pre>
      * The type is unspecified, and will result in an error.
-     * </pre>
      *
-     * <code>UNSPECIFIED = 0;</code>
+     * Generated from protobuf enum <code>UNSPECIFIED = 0;</code>
      */
     const UNSPECIFIED = 0;
     /**
-     * <pre>
      * The type is `int64`.
-     * </pre>
      *
-     * <code>INT64 = 1;</code>
+     * Generated from protobuf enum <code>INT64 = 1;</code>
      */
     const INT64 = 1;
     /**
-     * <pre>
      * The type is `bool`.
-     * </pre>
      *
-     * <code>BOOL = 2;</code>
+     * Generated from protobuf enum <code>BOOL = 2;</code>
      */
     const BOOL = 2;
     /**
-     * <pre>
      * The type is `string`.
-     * </pre>
      *
-     * <code>STRING = 3;</code>
+     * Generated from protobuf enum <code>STRING = 3;</code>
      */
     const STRING = 3;
     /**
-     * <pre>
      * The type is 'double'.
-     * </pre>
      *
-     * <code>DOUBLE = 4;</code>
+     * Generated from protobuf enum <code>DOUBLE = 4;</code>
      */
     const DOUBLE = 4;
 }

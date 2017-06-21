@@ -9,36 +9,30 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A message type used to describe a single quota violation.  For example, a
  * daily quota or a custom quota that was exceeded.
- * </pre>
  *
- * Protobuf type <code>google.rpc.QuotaFailure.Violation</code>
+ * Protobuf type <code>Google\Rpc\QuotaFailure\Violation</code>
  */
 class QuotaFailure_Violation extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The subject on which the quota check failed.
-     * For example, "clientip:&lt;ip address of client&gt;" or "project:&lt;Google
-     * developer project id&gt;".
-     * </pre>
+     * For example, "clientip:<ip address of client>" or "project:<Google
+     * developer project id>".
      *
-     * <code>string subject = 1;</code>
+     * Generated from protobuf field <code>string subject = 1;</code>
      */
     private $subject = '';
     /**
-     * <pre>
      * A description of how the quota check failed. Clients can use this
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
      */
     private $description = '';
 
@@ -48,13 +42,12 @@ class QuotaFailure_Violation extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The subject on which the quota check failed.
-     * For example, "clientip:&lt;ip address of client&gt;" or "project:&lt;Google
-     * developer project id&gt;".
-     * </pre>
+     * For example, "clientip:<ip address of client>" or "project:<Google
+     * developer project id>".
      *
-     * <code>string subject = 1;</code>
+     * Generated from protobuf field <code>string subject = 1;</code>
+     * @return string
      */
     public function getSubject()
     {
@@ -62,33 +55,29 @@ class QuotaFailure_Violation extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The subject on which the quota check failed.
-     * For example, "clientip:&lt;ip address of client&gt;" or "project:&lt;Google
-     * developer project id&gt;".
-     * </pre>
+     * For example, "clientip:<ip address of client>" or "project:<Google
+     * developer project id>".
      *
-     * <code>string subject = 1;</code>
+     * Generated from protobuf field <code>string subject = 1;</code>
+     * @param string $var
      */
     public function setSubject($var)
     {
         GPBUtil::checkString($var, True);
         $this->subject = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A description of how the quota check failed. Clients can use this
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -96,23 +85,20 @@ class QuotaFailure_Violation extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A description of how the quota check failed. Clients can use this
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
 }

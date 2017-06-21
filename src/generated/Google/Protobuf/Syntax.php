@@ -5,28 +5,22 @@
 namespace Google\Protobuf;
 
 /**
- * <pre>
  * The syntax in which a protocol buffer element is defined.
- * </pre>
  *
- * Protobuf enum <code>google.protobuf.Syntax</code>
+ * Protobuf enum <code>Google\Protobuf\Syntax</code>
  */
 class Syntax
 {
     /**
-     * <pre>
      * Syntax `proto2`.
-     * </pre>
      *
-     * <code>SYNTAX_PROTO2 = 0;</code>
+     * Generated from protobuf enum <code>SYNTAX_PROTO2 = 0;</code>
      */
     const SYNTAX_PROTO2 = 0;
     /**
-     * <pre>
      * Syntax `proto3`.
-     * </pre>
      *
-     * <code>SYNTAX_PROTO3 = 1;</code>
+     * Generated from protobuf enum <code>SYNTAX_PROTO3 = 1;</code>
      */
     const SYNTAX_PROTO3 = 1;
 }

@@ -9,123 +9,99 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Common audit log format for Google Cloud Platform API operations.
- * </pre>
  *
- * Protobuf type <code>google.cloud.audit.AuditLog</code>
+ * Protobuf type <code>Google\Cloud\Audit\AuditLog</code>
  */
 class AuditLog extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The name of the API service performing the operation. For example,
      * `"datastore.googleapis.com"`.
-     * </pre>
      *
-     * <code>string service_name = 7;</code>
+     * Generated from protobuf field <code>string service_name = 7;</code>
      */
     private $service_name = '';
     /**
-     * <pre>
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
      *     "google.datastore.v1.Datastore.RunQuery"
      *     "google.logging.v1.LoggingService.DeleteLog"
-     * </pre>
      *
-     * <code>string method_name = 8;</code>
+     * Generated from protobuf field <code>string method_name = 8;</code>
      */
     private $method_name = '';
     /**
-     * <pre>
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
      *     "shelves/SHELF_ID/books"
      *     "shelves/SHELF_ID/books/BOOK_ID"
-     * </pre>
      *
-     * <code>string resource_name = 11;</code>
+     * Generated from protobuf field <code>string resource_name = 11;</code>
      */
     private $resource_name = '';
     /**
-     * <pre>
      * The number of items returned from a List or Query API method,
      * if applicable.
-     * </pre>
      *
-     * <code>int64 num_response_items = 12;</code>
+     * Generated from protobuf field <code>int64 num_response_items = 12;</code>
      */
     private $num_response_items = 0;
     /**
-     * <pre>
      * The status of the overall operation.
-     * </pre>
      *
-     * <code>.google.rpc.Status status = 2;</code>
+     * Generated from protobuf field <code>.google.rpc.Status status = 2;</code>
      */
     private $status = null;
     /**
-     * <pre>
      * Authentication information.
-     * </pre>
      *
-     * <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
+     * Generated from protobuf field <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
      */
     private $authentication_info = null;
     /**
-     * <pre>
      * Authorization information. If there are multiple
      * resources or permissions involved, then there is
      * one AuthorizationInfo element for each {resource, permission} tuple.
-     * </pre>
      *
-     * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
+     * Generated from protobuf field <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
      */
     private $authorization_info;
     /**
-     * <pre>
      * Metadata about the operation.
-     * </pre>
      *
-     * <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
+     * Generated from protobuf field <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
      */
     private $request_metadata = null;
     /**
-     * <pre>
      * The operation request. This may not include all request parameters,
      * such as those that are too large, privacy-sensitive, or duplicated
      * elsewhere in the log record.
      * It should never include user-generated data, such as file contents.
      * When the JSON object represented here has a proto equivalent, the proto
      * name will be indicated in the `&#64;type` property.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct request = 16;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct request = 16;</code>
      */
     private $request = null;
     /**
-     * <pre>
      * The operation response. This may not include all response elements,
      * such as those that are too large, privacy-sensitive, or duplicated
      * elsewhere in the log record.
      * It should never include user-generated data, such as file contents.
      * When the JSON object represented here has a proto equivalent, the proto
      * name will be indicated in the `&#64;type` property.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct response = 17;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct response = 17;</code>
      */
     private $response = null;
     /**
-     * <pre>
      * Other service-specific data about the request, response, and other
      * activities.
-     * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * Generated from protobuf field <code>.google.protobuf.Any service_data = 15;</code>
      */
     private $service_data = null;
 
@@ -135,12 +111,11 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the API service performing the operation. For example,
      * `"datastore.googleapis.com"`.
-     * </pre>
      *
-     * <code>string service_name = 7;</code>
+     * Generated from protobuf field <code>string service_name = 7;</code>
+     * @return string
      */
     public function getServiceName()
     {
@@ -148,31 +123,27 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the API service performing the operation. For example,
      * `"datastore.googleapis.com"`.
-     * </pre>
      *
-     * <code>string service_name = 7;</code>
+     * Generated from protobuf field <code>string service_name = 7;</code>
+     * @param string $var
      */
     public function setServiceName($var)
     {
         GPBUtil::checkString($var, True);
         $this->service_name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
      *     "google.datastore.v1.Datastore.RunQuery"
      *     "google.logging.v1.LoggingService.DeleteLog"
-     * </pre>
      *
-     * <code>string method_name = 8;</code>
+     * Generated from protobuf field <code>string method_name = 8;</code>
+     * @return string
      */
     public function getMethodName()
     {
@@ -180,34 +151,30 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
      *     "google.datastore.v1.Datastore.RunQuery"
      *     "google.logging.v1.LoggingService.DeleteLog"
-     * </pre>
      *
-     * <code>string method_name = 8;</code>
+     * Generated from protobuf field <code>string method_name = 8;</code>
+     * @param string $var
      */
     public function setMethodName($var)
     {
         GPBUtil::checkString($var, True);
         $this->method_name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
      *     "shelves/SHELF_ID/books"
      *     "shelves/SHELF_ID/books/BOOK_ID"
-     * </pre>
      *
-     * <code>string resource_name = 11;</code>
+     * Generated from protobuf field <code>string resource_name = 11;</code>
+     * @return string
      */
     public function getResourceName()
     {
@@ -215,31 +182,27 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
      *     "shelves/SHELF_ID/books"
      *     "shelves/SHELF_ID/books/BOOK_ID"
-     * </pre>
      *
-     * <code>string resource_name = 11;</code>
+     * Generated from protobuf field <code>string resource_name = 11;</code>
+     * @param string $var
      */
     public function setResourceName($var)
     {
         GPBUtil::checkString($var, True);
         $this->resource_name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The number of items returned from a List or Query API method,
      * if applicable.
-     * </pre>
      *
-     * <code>int64 num_response_items = 12;</code>
+     * Generated from protobuf field <code>int64 num_response_items = 12;</code>
+     * @return int|string
      */
     public function getNumResponseItems()
     {
@@ -247,27 +210,23 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The number of items returned from a List or Query API method,
      * if applicable.
-     * </pre>
      *
-     * <code>int64 num_response_items = 12;</code>
+     * Generated from protobuf field <code>int64 num_response_items = 12;</code>
+     * @param int|string $var
      */
     public function setNumResponseItems($var)
     {
         GPBUtil::checkInt64($var);
         $this->num_response_items = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The status of the overall operation.
-     * </pre>
      *
-     * <code>.google.rpc.Status status = 2;</code>
+     * Generated from protobuf field <code>.google.rpc.Status status = 2;</code>
+     * @return \Google\Rpc\Status
      */
     public function getStatus()
     {
@@ -275,26 +234,22 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The status of the overall operation.
-     * </pre>
      *
-     * <code>.google.rpc.Status status = 2;</code>
+     * Generated from protobuf field <code>.google.rpc.Status status = 2;</code>
+     * @param \Google\Rpc\Status $var
      */
     public function setStatus(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Rpc\Status::class);
         $this->status = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Authentication information.
-     * </pre>
      *
-     * <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
+     * Generated from protobuf field <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
+     * @return \Google\Cloud\Audit\AuthenticationInfo
      */
     public function getAuthenticationInfo()
     {
@@ -302,28 +257,24 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Authentication information.
-     * </pre>
      *
-     * <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
+     * Generated from protobuf field <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
+     * @param \Google\Cloud\Audit\AuthenticationInfo $var
      */
     public function setAuthenticationInfo(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Cloud\Audit\AuthenticationInfo::class);
         $this->authentication_info = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Authorization information. If there are multiple
      * resources or permissions involved, then there is
      * one AuthorizationInfo element for each {resource, permission} tuple.
-     * </pre>
      *
-     * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
+     * Generated from protobuf field <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getAuthorizationInfo()
     {
@@ -331,28 +282,24 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Authorization information. If there are multiple
      * resources or permissions involved, then there is
      * one AuthorizationInfo element for each {resource, permission} tuple.
-     * </pre>
      *
-     * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
+     * Generated from protobuf field <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setAuthorizationInfo(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Cloud\Audit\AuthorizationInfo::class);
         $this->authorization_info = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Metadata about the operation.
-     * </pre>
      *
-     * <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
+     * Generated from protobuf field <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
+     * @return \Google\Cloud\Audit\RequestMetadata
      */
     public function getRequestMetadata()
     {
@@ -360,31 +307,27 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Metadata about the operation.
-     * </pre>
      *
-     * <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
+     * Generated from protobuf field <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
+     * @param \Google\Cloud\Audit\RequestMetadata $var
      */
     public function setRequestMetadata(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Cloud\Audit\RequestMetadata::class);
         $this->request_metadata = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The operation request. This may not include all request parameters,
      * such as those that are too large, privacy-sensitive, or duplicated
      * elsewhere in the log record.
      * It should never include user-generated data, such as file contents.
      * When the JSON object represented here has a proto equivalent, the proto
      * name will be indicated in the `&#64;type` property.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct request = 16;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct request = 16;</code>
+     * @return \Google\Protobuf\Struct
      */
     public function getRequest()
     {
@@ -392,36 +335,32 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The operation request. This may not include all request parameters,
      * such as those that are too large, privacy-sensitive, or duplicated
      * elsewhere in the log record.
      * It should never include user-generated data, such as file contents.
      * When the JSON object represented here has a proto equivalent, the proto
      * name will be indicated in the `&#64;type` property.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct request = 16;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct request = 16;</code>
+     * @param \Google\Protobuf\Struct $var
      */
     public function setRequest(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Struct::class);
         $this->request = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The operation response. This may not include all response elements,
      * such as those that are too large, privacy-sensitive, or duplicated
      * elsewhere in the log record.
      * It should never include user-generated data, such as file contents.
      * When the JSON object represented here has a proto equivalent, the proto
      * name will be indicated in the `&#64;type` property.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct response = 17;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct response = 17;</code>
+     * @return \Google\Protobuf\Struct
      */
     public function getResponse()
     {
@@ -429,32 +368,28 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The operation response. This may not include all response elements,
      * such as those that are too large, privacy-sensitive, or duplicated
      * elsewhere in the log record.
      * It should never include user-generated data, such as file contents.
      * When the JSON object represented here has a proto equivalent, the proto
      * name will be indicated in the `&#64;type` property.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct response = 17;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct response = 17;</code>
+     * @param \Google\Protobuf\Struct $var
      */
     public function setResponse(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Struct::class);
         $this->response = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Other service-specific data about the request, response, and other
      * activities.
-     * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * Generated from protobuf field <code>.google.protobuf.Any service_data = 15;</code>
+     * @return \Google\Protobuf\Any
      */
     public function getServiceData()
     {
@@ -462,19 +397,16 @@ class AuditLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Other service-specific data about the request, response, and other
      * activities.
-     * </pre>
      *
-     * <code>.google.protobuf.Any service_data = 15;</code>
+     * Generated from protobuf field <code>.google.protobuf.Any service_data = 15;</code>
+     * @param \Google\Protobuf\Any $var
      */
     public function setServiceData(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Any::class);
         $this->service_data = $var;
-
-        return $this;
     }
 
 }

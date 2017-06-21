@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `double`.
  * The JSON representation for `DoubleValue` is JSON number.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.DoubleValue</code>
+ * Protobuf type <code>Google\Protobuf\DoubleValue</code>
  */
 class DoubleValue extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The double value.
-     * </pre>
      *
-     * <code>double value = 1;</code>
+     * Generated from protobuf field <code>double value = 1;</code>
      */
     private $value = 0.0;
 
@@ -33,11 +29,10 @@ class DoubleValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The double value.
-     * </pre>
      *
-     * <code>double value = 1;</code>
+     * Generated from protobuf field <code>double value = 1;</code>
+     * @return float
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class DoubleValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The double value.
-     * </pre>
      *
-     * <code>double value = 1;</code>
+     * Generated from protobuf field <code>double value = 1;</code>
+     * @param float $var
      */
     public function setValue($var)
     {

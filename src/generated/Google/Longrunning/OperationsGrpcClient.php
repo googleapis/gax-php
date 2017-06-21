@@ -16,18 +16,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-namespace Google\LongRunning {
+namespace Google\Longrunning;
 
-  // Manages long-running operations with an API service.
-  //
-  // When an API method normally takes long time to complete, it can be designed
-  // to return [Operation][google.longrunning.Operation] to the client, and the client can use this
-  // interface to receive the real response asynchronously by polling the
-  // operation resource, or pass the operation resource to another API (such as
-  // Google Cloud Pub/Sub API) to receive the response.  Any API service that
-  // returns long-running operations should implement the `Operations` interface
-  // so developers can have a consistent client experience.
-  class OperationsGrpcClient extends \Grpc\BaseStub {
+/**
+ * Manages long-running operations with an API service.
+ *
+ * When an API method normally takes long time to complete, it can be designed
+ * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
+ * interface to receive the real response asynchronously by polling the
+ * operation resource, or pass the operation resource to another API (such as
+ * Google Cloud Pub/Sub API) to receive the response.  Any API service that
+ * returns long-running operations should implement the `Operations` interface
+ * so developers can have a consistent client experience.
+ */
+class OperationsGrpcClient extends \Grpc\BaseStub {
 
     /**
      * @param string $hostname hostname
@@ -35,7 +37,7 @@ namespace Google\LongRunning {
      * @param \Grpc\Channel $channel (optional) re-use channel object
      */
     public function __construct($hostname, $opts, $channel = null) {
-      parent::__construct($hostname, $opts, $channel);
+        parent::__construct($hostname, $opts, $channel);
     }
 
     /**
@@ -44,32 +46,32 @@ namespace Google\LongRunning {
      *
      * NOTE: the `name` binding below allows API services to override the binding
      * to use different resource name schemes, such as `users/&#42;/operations`.
-     * @param \Google\LongRunning\ListOperationsRequest $argument input argument
+     * @param \Google\Longrunning\ListOperationsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function ListOperations(\Google\LongRunning\ListOperationsRequest $argument,
+    public function ListOperations(\Google\Longrunning\ListOperationsRequest $argument,
       $metadata = [], $options = []) {
-      return $this->_simpleRequest('/google.longrunning.Operations/ListOperations',
-      $argument,
-      ['\Google\LongRunning\ListOperationsResponse', 'decode'],
-      $metadata, $options);
+        return $this->_simpleRequest('/google.longrunning.Operations/ListOperations',
+        $argument,
+        ['\Google\Longrunning\ListOperationsResponse', 'decode'],
+        $metadata, $options);
     }
 
     /**
      * Gets the latest state of a long-running operation.  Clients can use this
      * method to poll the operation result at intervals as recommended by the API
      * service.
-     * @param \Google\LongRunning\GetOperationRequest $argument input argument
+     * @param \Google\Longrunning\GetOperationRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function GetOperation(\Google\LongRunning\GetOperationRequest $argument,
+    public function GetOperation(\Google\Longrunning\GetOperationRequest $argument,
       $metadata = [], $options = []) {
-      return $this->_simpleRequest('/google.longrunning.Operations/GetOperation',
-      $argument,
-      ['\Google\LongRunning\Operation', 'decode'],
-      $metadata, $options);
+        return $this->_simpleRequest('/google.longrunning.Operations/GetOperation',
+        $argument,
+        ['\Google\Longrunning\Operation', 'decode'],
+        $metadata, $options);
     }
 
     /**
@@ -77,16 +79,16 @@ namespace Google\LongRunning {
      * no longer interested in the operation result. It does not cancel the
      * operation. If the server doesn't support this method, it returns
      * `google.rpc.Code.UNIMPLEMENTED`.
-     * @param \Google\LongRunning\DeleteOperationRequest $argument input argument
+     * @param \Google\Longrunning\DeleteOperationRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function DeleteOperation(\Google\LongRunning\DeleteOperationRequest $argument,
+    public function DeleteOperation(\Google\Longrunning\DeleteOperationRequest $argument,
       $metadata = [], $options = []) {
-      return $this->_simpleRequest('/google.longrunning.Operations/DeleteOperation',
-      $argument,
-      ['\Google\Protobuf\GPBEmpty', 'decode'],
-      $metadata, $options);
+        return $this->_simpleRequest('/google.longrunning.Operations/DeleteOperation',
+        $argument,
+        ['\Google\Protobuf\Empty', 'decode'],
+        $metadata, $options);
     }
 
     /**
@@ -100,18 +102,16 @@ namespace Google\LongRunning {
      * the operation is not deleted; instead, it becomes an operation with
      * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
      * corresponding to `Code.CANCELLED`.
-     * @param \Google\LongRunning\CancelOperationRequest $argument input argument
+     * @param \Google\Longrunning\CancelOperationRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
      */
-    public function CancelOperation(\Google\LongRunning\CancelOperationRequest $argument,
+    public function CancelOperation(\Google\Longrunning\CancelOperationRequest $argument,
       $metadata = [], $options = []) {
-      return $this->_simpleRequest('/google.longrunning.Operations/CancelOperation',
-      $argument,
-      ['\Google\Protobuf\GPBEmpty', 'decode'],
-      $metadata, $options);
+        return $this->_simpleRequest('/google.longrunning.Operations/CancelOperation',
+        $argument,
+        ['\Google\Protobuf\Empty', 'decode'],
+        $metadata, $options);
     }
-
-  }
 
 }

@@ -9,42 +9,34 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Specify a sequence of buckets that all have the same width (except
  * overflow and underflow).  Each bucket represents a constant absolute
  * uncertainty on the specific value in the bucket.
  * Defines `num_finite_buckets + 2` (= N) buckets with these boundaries for
  * bucket `i`:
- *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
- *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
- * </pre>
+ *    Upper bound (0 <= i < N-1):     offset + (width * i).
+ *    Lower bound (1 <= i < N):       offset + (width * (i - 1)).
  *
- * Protobuf type <code>google.api.Distribution.BucketOptions.Linear</code>
+ * Protobuf type <code>Google\Api\Distribution\BucketOptions\Linear</code>
  */
 class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>int32 num_finite_buckets = 1;</code>
+     * Generated from protobuf field <code>int32 num_finite_buckets = 1;</code>
      */
     private $num_finite_buckets = 0;
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>double width = 2;</code>
+     * Generated from protobuf field <code>double width = 2;</code>
      */
     private $width = 0.0;
     /**
-     * <pre>
      * Lower bound of the first bucket.
-     * </pre>
      *
-     * <code>double offset = 3;</code>
+     * Generated from protobuf field <code>double offset = 3;</code>
      */
     private $offset = 0.0;
 
@@ -54,11 +46,10 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>int32 num_finite_buckets = 1;</code>
+     * Generated from protobuf field <code>int32 num_finite_buckets = 1;</code>
+     * @return int
      */
     public function getNumFiniteBuckets()
     {
@@ -66,26 +57,22 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>int32 num_finite_buckets = 1;</code>
+     * Generated from protobuf field <code>int32 num_finite_buckets = 1;</code>
+     * @param int $var
      */
     public function setNumFiniteBuckets($var)
     {
         GPBUtil::checkInt32($var);
         $this->num_finite_buckets = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>double width = 2;</code>
+     * Generated from protobuf field <code>double width = 2;</code>
+     * @return float
      */
     public function getWidth()
     {
@@ -93,26 +80,22 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>double width = 2;</code>
+     * Generated from protobuf field <code>double width = 2;</code>
+     * @param float $var
      */
     public function setWidth($var)
     {
         GPBUtil::checkDouble($var);
         $this->width = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Lower bound of the first bucket.
-     * </pre>
      *
-     * <code>double offset = 3;</code>
+     * Generated from protobuf field <code>double offset = 3;</code>
+     * @return float
      */
     public function getOffset()
     {
@@ -120,18 +103,15 @@ class Distribution_BucketOptions_Linear extends \Google\Protobuf\Internal\Messag
     }
 
     /**
-     * <pre>
      * Lower bound of the first bucket.
-     * </pre>
      *
-     * <code>double offset = 3;</code>
+     * Generated from protobuf field <code>double offset = 3;</code>
+     * @param float $var
      */
     public function setOffset($var)
     {
         GPBUtil::checkDouble($var);
         $this->offset = $var;
-
-        return $this;
     }
 
 }

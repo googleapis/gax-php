@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * An object representing a resource that can be used for monitoring, logging,
  * billing, or other purposes. Examples include virtual machine instances,
  * databases, and storage devices such as disks. The `type` field identifies a
@@ -22,30 +21,25 @@ use Google\Protobuf\Internal\GPBUtil;
  *     { "type": "gce_instance",
  *       "labels": { "instance_id": "12345678901234",
  *                   "zone": "us-central1-a" }}
- * </pre>
  *
- * Protobuf type <code>google.api.MonitoredResource</code>
+ * Protobuf type <code>Google\Api\MonitoredResource</code>
  */
 class MonitoredResource extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
-     * </pre>
      *
-     * <code>string type = 1;</code>
+     * Generated from protobuf field <code>string type = 1;</code>
      */
     private $type = '';
     /**
-     * <pre>
      * Required. Values for all of the labels listed in the associated monitored
      * resource descriptor. For example, Cloud SQL databases use the labels
      * `"database_id"` and `"zone"`.
-     * </pre>
      *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
+     * Generated from protobuf field <code>map<string, string> labels = 2;</code>
      */
     private $labels;
 
@@ -55,13 +49,12 @@ class MonitoredResource extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
-     * </pre>
      *
-     * <code>string type = 1;</code>
+     * Generated from protobuf field <code>string type = 1;</code>
+     * @return string
      */
     public function getType()
     {
@@ -69,30 +62,26 @@ class MonitoredResource extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
-     * </pre>
      *
-     * <code>string type = 1;</code>
+     * Generated from protobuf field <code>string type = 1;</code>
+     * @param string $var
      */
     public function setType($var)
     {
         GPBUtil::checkString($var, True);
         $this->type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Required. Values for all of the labels listed in the associated monitored
      * resource descriptor. For example, Cloud SQL databases use the labels
      * `"database_id"` and `"zone"`.
-     * </pre>
      *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
+     * Generated from protobuf field <code>map<string, string> labels = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLabels()
     {
@@ -100,20 +89,17 @@ class MonitoredResource extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Required. Values for all of the labels listed in the associated monitored
      * resource descriptor. For example, Cloud SQL databases use the labels
      * `"database_id"` and `"zone"`.
-     * </pre>
      *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
+     * Generated from protobuf field <code>map<string, string> labels = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLabels(&$var)
     {
         $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::STRING, \Google\Protobuf\Internal\GPBType::STRING);
         $this->labels = $arr;
-
-        return $this;
     }
 
 }

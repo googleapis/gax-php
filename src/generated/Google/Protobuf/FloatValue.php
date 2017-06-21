@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `float`.
  * The JSON representation for `FloatValue` is JSON number.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.FloatValue</code>
+ * Protobuf type <code>Google\Protobuf\FloatValue</code>
  */
 class FloatValue extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The float value.
-     * </pre>
      *
-     * <code>float value = 1;</code>
+     * Generated from protobuf field <code>float value = 1;</code>
      */
     private $value = 0.0;
 
@@ -33,11 +29,10 @@ class FloatValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The float value.
-     * </pre>
      *
-     * <code>float value = 1;</code>
+     * Generated from protobuf field <code>float value = 1;</code>
+     * @return float
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class FloatValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The float value.
-     * </pre>
      *
-     * <code>float value = 1;</code>
+     * Generated from protobuf field <code>float value = 1;</code>
+     * @param float $var
      */
     public function setValue($var)
     {

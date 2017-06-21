@@ -9,52 +9,42 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Describes the resource that is being accessed.
- * </pre>
  *
- * Protobuf type <code>google.rpc.ResourceInfo</code>
+ * Protobuf type <code>Google\Rpc\ResourceInfo</code>
  */
 class ResourceInfo extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A name for the type of resource being accessed, e.g. "sql table",
      * "cloud storage bucket", "file", "Google calendar"; or the type URL
      * of the resource: e.g. "type.googleapis.com/google.pubsub.v1.Topic".
-     * </pre>
      *
-     * <code>string resource_type = 1;</code>
+     * Generated from protobuf field <code>string resource_type = 1;</code>
      */
     private $resource_type = '';
     /**
-     * <pre>
      * The name of the resource being accessed.  For example, a shared calendar
      * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
      * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
-     * </pre>
      *
-     * <code>string resource_name = 2;</code>
+     * Generated from protobuf field <code>string resource_name = 2;</code>
      */
     private $resource_name = '';
     /**
-     * <pre>
      * The owner of the resource (optional).
-     * For example, "user:&lt;owner email&gt;" or "project:&lt;Google developer project
-     * id&gt;".
-     * </pre>
+     * For example, "user:<owner email>" or "project:<Google developer project
+     * id>".
      *
-     * <code>string owner = 3;</code>
+     * Generated from protobuf field <code>string owner = 3;</code>
      */
     private $owner = '';
     /**
-     * <pre>
      * Describes what error is encountered when accessing this resource.
      * For example, updating a cloud project may require the `writer` permission
      * on the developer console project.
-     * </pre>
      *
-     * <code>string description = 4;</code>
+     * Generated from protobuf field <code>string description = 4;</code>
      */
     private $description = '';
 
@@ -64,13 +54,12 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A name for the type of resource being accessed, e.g. "sql table",
      * "cloud storage bucket", "file", "Google calendar"; or the type URL
      * of the resource: e.g. "type.googleapis.com/google.pubsub.v1.Topic".
-     * </pre>
      *
-     * <code>string resource_type = 1;</code>
+     * Generated from protobuf field <code>string resource_type = 1;</code>
+     * @return string
      */
     public function getResourceType()
     {
@@ -78,30 +67,26 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A name for the type of resource being accessed, e.g. "sql table",
      * "cloud storage bucket", "file", "Google calendar"; or the type URL
      * of the resource: e.g. "type.googleapis.com/google.pubsub.v1.Topic".
-     * </pre>
      *
-     * <code>string resource_type = 1;</code>
+     * Generated from protobuf field <code>string resource_type = 1;</code>
+     * @param string $var
      */
     public function setResourceType($var)
     {
         GPBUtil::checkString($var, True);
         $this->resource_type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The name of the resource being accessed.  For example, a shared calendar
      * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
      * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
-     * </pre>
      *
-     * <code>string resource_name = 2;</code>
+     * Generated from protobuf field <code>string resource_name = 2;</code>
+     * @return string
      */
     public function getResourceName()
     {
@@ -109,30 +94,26 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the resource being accessed.  For example, a shared calendar
      * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
      * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
-     * </pre>
      *
-     * <code>string resource_name = 2;</code>
+     * Generated from protobuf field <code>string resource_name = 2;</code>
+     * @param string $var
      */
     public function setResourceName($var)
     {
         GPBUtil::checkString($var, True);
         $this->resource_name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The owner of the resource (optional).
-     * For example, "user:&lt;owner email&gt;" or "project:&lt;Google developer project
-     * id&gt;".
-     * </pre>
+     * For example, "user:<owner email>" or "project:<Google developer project
+     * id>".
      *
-     * <code>string owner = 3;</code>
+     * Generated from protobuf field <code>string owner = 3;</code>
+     * @return string
      */
     public function getOwner()
     {
@@ -140,30 +121,26 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The owner of the resource (optional).
-     * For example, "user:&lt;owner email&gt;" or "project:&lt;Google developer project
-     * id&gt;".
-     * </pre>
+     * For example, "user:<owner email>" or "project:<Google developer project
+     * id>".
      *
-     * <code>string owner = 3;</code>
+     * Generated from protobuf field <code>string owner = 3;</code>
+     * @param string $var
      */
     public function setOwner($var)
     {
         GPBUtil::checkString($var, True);
         $this->owner = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Describes what error is encountered when accessing this resource.
      * For example, updating a cloud project may require the `writer` permission
      * on the developer console project.
-     * </pre>
      *
-     * <code>string description = 4;</code>
+     * Generated from protobuf field <code>string description = 4;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -171,20 +148,17 @@ class ResourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes what error is encountered when accessing this resource.
      * For example, updating a cloud project may require the `writer` permission
      * on the developer console project.
-     * </pre>
      *
-     * <code>string description = 4;</code>
+     * Generated from protobuf field <code>string description = 4;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
 }

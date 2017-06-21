@@ -9,40 +9,32 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Define a parameter's name and location. The parameter may be passed as either
  * an HTTP header or a URL query parameter, and if both are passed the behavior
  * is implementation-dependent.
- * </pre>
  *
- * Protobuf type <code>google.api.SystemParameter</code>
+ * Protobuf type <code>Google\Api\SystemParameter</code>
  */
 class SystemParameter extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Define the name of the parameter, such as "api_key" . It is case sensitive.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * Define the HTTP header name to use for the parameter. It is case
      * insensitive.
-     * </pre>
      *
-     * <code>string http_header = 2;</code>
+     * Generated from protobuf field <code>string http_header = 2;</code>
      */
     private $http_header = '';
     /**
-     * <pre>
      * Define the URL query parameter name to use for the parameter. It is case
      * sensitive.
-     * </pre>
      *
-     * <code>string url_query_parameter = 3;</code>
+     * Generated from protobuf field <code>string url_query_parameter = 3;</code>
      */
     private $url_query_parameter = '';
 
@@ -52,11 +44,10 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define the name of the parameter, such as "api_key" . It is case sensitive.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -64,27 +55,23 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define the name of the parameter, such as "api_key" . It is case sensitive.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Define the HTTP header name to use for the parameter. It is case
      * insensitive.
-     * </pre>
      *
-     * <code>string http_header = 2;</code>
+     * Generated from protobuf field <code>string http_header = 2;</code>
+     * @return string
      */
     public function getHttpHeader()
     {
@@ -92,28 +79,24 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define the HTTP header name to use for the parameter. It is case
      * insensitive.
-     * </pre>
      *
-     * <code>string http_header = 2;</code>
+     * Generated from protobuf field <code>string http_header = 2;</code>
+     * @param string $var
      */
     public function setHttpHeader($var)
     {
         GPBUtil::checkString($var, True);
         $this->http_header = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Define the URL query parameter name to use for the parameter. It is case
      * sensitive.
-     * </pre>
      *
-     * <code>string url_query_parameter = 3;</code>
+     * Generated from protobuf field <code>string url_query_parameter = 3;</code>
+     * @return string
      */
     public function getUrlQueryParameter()
     {
@@ -121,19 +104,16 @@ class SystemParameter extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define the URL query parameter name to use for the parameter. It is case
      * sensitive.
-     * </pre>
      *
-     * <code>string url_query_parameter = 3;</code>
+     * Generated from protobuf field <code>string url_query_parameter = 3;</code>
+     * @param string $var
      */
     public function setUrlQueryParameter($var)
     {
         GPBUtil::checkString($var, True);
         $this->url_query_parameter = $var;
-
-        return $this;
     }
 
 }

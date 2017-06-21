@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Context` defines which contexts an API requests.
  * Example:
  *     context:
@@ -23,19 +22,16 @@ use Google\Protobuf\Internal\GPBUtil;
  * `google.rpc.context.OriginContext`.
  * Available context types are defined in package
  * `google.rpc.context`.
- * </pre>
  *
- * Protobuf type <code>google.api.Context</code>
+ * Protobuf type <code>Google\Api\Context</code>
  */
 class Context extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A list of RPC context rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.ContextRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.ContextRule rules = 1;</code>
      */
     private $rules;
 
@@ -45,12 +41,11 @@ class Context extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of RPC context rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.ContextRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.ContextRule rules = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -58,19 +53,16 @@ class Context extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of RPC context rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.ContextRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.ContextRule rules = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\ContextRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
 }

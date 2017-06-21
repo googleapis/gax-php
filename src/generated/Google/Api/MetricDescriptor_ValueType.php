@@ -5,70 +5,54 @@
 namespace Google\Api;
 
 /**
- * <pre>
  * The value type of a metric.
- * </pre>
  *
- * Protobuf enum <code>google.api.MetricDescriptor.ValueType</code>
+ * Protobuf enum <code>Google\Api\MetricDescriptor\ValueType</code>
  */
 class MetricDescriptor_ValueType
 {
     /**
-     * <pre>
      * Do not use this default value.
-     * </pre>
      *
-     * <code>VALUE_TYPE_UNSPECIFIED = 0;</code>
+     * Generated from protobuf enum <code>VALUE_TYPE_UNSPECIFIED = 0;</code>
      */
     const VALUE_TYPE_UNSPECIFIED = 0;
     /**
-     * <pre>
      * The value is a boolean.
      * This value type can be used only if the metric kind is `GAUGE`.
-     * </pre>
      *
-     * <code>BOOL = 1;</code>
+     * Generated from protobuf enum <code>BOOL = 1;</code>
      */
     const BOOL = 1;
     /**
-     * <pre>
      * The value is a signed 64-bit integer.
-     * </pre>
      *
-     * <code>INT64 = 2;</code>
+     * Generated from protobuf enum <code>INT64 = 2;</code>
      */
     const INT64 = 2;
     /**
-     * <pre>
      * The value is a double precision floating point number.
-     * </pre>
      *
-     * <code>DOUBLE = 3;</code>
+     * Generated from protobuf enum <code>DOUBLE = 3;</code>
      */
     const DOUBLE = 3;
     /**
-     * <pre>
      * The value is a text string.
      * This value type can be used only if the metric kind is `GAUGE`.
-     * </pre>
      *
-     * <code>STRING = 4;</code>
+     * Generated from protobuf enum <code>STRING = 4;</code>
      */
     const STRING = 4;
     /**
-     * <pre>
      * The value is a [`Distribution`][google.api.Distribution].
-     * </pre>
      *
-     * <code>DISTRIBUTION = 5;</code>
+     * Generated from protobuf enum <code>DISTRIBUTION = 5;</code>
      */
     const DISTRIBUTION = 5;
     /**
-     * <pre>
      * The value is money.
-     * </pre>
      *
-     * <code>MONEY = 6;</code>
+     * Generated from protobuf enum <code>MONEY = 6;</code>
      */
     const MONEY = 6;
 }

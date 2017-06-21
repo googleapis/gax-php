@@ -9,60 +9,46 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A protocol buffer message type.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Type</code>
+ * Protobuf type <code>Google\Protobuf\Type</code>
  */
 class Type extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The fully qualified message name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * The list of fields.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Field fields = 2;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Field fields = 2;</code>
      */
     private $fields;
     /**
-     * <pre>
      * The list of types appearing in `oneof` definitions in this type.
-     * </pre>
      *
-     * <code>repeated string oneofs = 3;</code>
+     * Generated from protobuf field <code>repeated string oneofs = 3;</code>
      */
     private $oneofs;
     /**
-     * <pre>
      * The protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 4;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 4;</code>
      */
     private $options;
     /**
-     * <pre>
      * The source context.
-     * </pre>
      *
-     * <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.SourceContext source_context = 5;</code>
      */
     private $source_context = null;
     /**
-     * <pre>
      * The source syntax.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 6;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 6;</code>
      */
     private $syntax = 0;
 
@@ -72,11 +58,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fully qualified message name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -84,11 +69,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fully qualified message name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
@@ -97,11 +81,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of fields.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Field fields = 2;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Field fields = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getFields()
     {
@@ -109,11 +92,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of fields.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Field fields = 2;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Field fields = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setFields(&$var)
     {
@@ -122,11 +104,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of types appearing in `oneof` definitions in this type.
-     * </pre>
      *
-     * <code>repeated string oneofs = 3;</code>
+     * Generated from protobuf field <code>repeated string oneofs = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getOneofs()
     {
@@ -134,11 +115,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of types appearing in `oneof` definitions in this type.
-     * </pre>
      *
-     * <code>repeated string oneofs = 3;</code>
+     * Generated from protobuf field <code>repeated string oneofs = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setOneofs(&$var)
     {
@@ -147,11 +127,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 4;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 4;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getOptions()
     {
@@ -159,11 +138,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 4;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 4;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setOptions(&$var)
     {
@@ -172,11 +150,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source context.
-     * </pre>
      *
-     * <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * @return \Google\Protobuf\SourceContext
      */
     public function getSourceContext()
     {
@@ -184,11 +161,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source context.
-     * </pre>
      *
-     * <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * @param \Google\Protobuf\SourceContext $var
      */
     public function setSourceContext(&$var)
     {
@@ -197,11 +173,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source syntax.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 6;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 6;</code>
+     * @return int
      */
     public function getSyntax()
     {
@@ -209,11 +184,10 @@ class Type extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source syntax.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 6;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 6;</code>
+     * @param int $var
      */
     public function setSyntax($var)
     {

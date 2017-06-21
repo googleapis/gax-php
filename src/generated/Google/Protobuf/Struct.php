@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Struct` represents a structured data value, consisting of fields
  * which map to dynamically typed values. In some languages, `Struct`
  * might be supported by a native representation. For example, in
@@ -17,18 +16,15 @@ use Google\Protobuf\Internal\GPBUtil;
  * object. The details of that representation are described together
  * with the proto support for the language.
  * The JSON representation for `Struct` is JSON object.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Struct</code>
+ * Protobuf type <code>Google\Protobuf\Struct</code>
  */
 class Struct extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Unordered map of dynamically typed values.
-     * </pre>
      *
-     * <code>map&lt;string, .google.protobuf.Value&gt; fields = 1;</code>
+     * Generated from protobuf field <code>map<string, .google.protobuf.Value> fields = 1;</code>
      */
     private $fields;
 
@@ -38,11 +34,10 @@ class Struct extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Unordered map of dynamically typed values.
-     * </pre>
      *
-     * <code>map&lt;string, .google.protobuf.Value&gt; fields = 1;</code>
+     * Generated from protobuf field <code>map<string, .google.protobuf.Value> fields = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getFields()
     {
@@ -50,11 +45,10 @@ class Struct extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Unordered map of dynamically typed values.
-     * </pre>
      *
-     * <code>map&lt;string, .google.protobuf.Value&gt; fields = 1;</code>
+     * Generated from protobuf field <code>map<string, .google.protobuf.Value> fields = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setFields(&$var)
     {

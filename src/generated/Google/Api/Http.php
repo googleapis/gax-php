@@ -9,23 +9,19 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Defines the HTTP configuration for a service. It contains a list of
  * [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
  * to one or more HTTP REST API methods.
- * </pre>
  *
- * Protobuf type <code>google.api.Http</code>
+ * Protobuf type <code>Google\Api\Http</code>
  */
 class Http extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.HttpRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.HttpRule rules = 1;</code>
      */
     private $rules;
 
@@ -35,12 +31,11 @@ class Http extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.HttpRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.HttpRule rules = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -48,19 +43,16 @@ class Http extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.HttpRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.HttpRule rules = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\HttpRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
 }

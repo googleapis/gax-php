@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Backend` defines the backend configuration for a service.
- * </pre>
  *
- * Protobuf type <code>google.api.Backend</code>
+ * Protobuf type <code>Google\Api\Backend</code>
  */
 class Backend extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A list of API backend rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.BackendRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.BackendRule rules = 1;</code>
      */
     private $rules;
 
@@ -33,12 +29,11 @@ class Backend extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of API backend rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.BackendRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.BackendRule rules = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -46,19 +41,16 @@ class Backend extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of API backend rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.BackendRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.BackendRule rules = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\BackendRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
 }

@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Quota configuration helps to achieve fairness and budgeting in service
  * usage.
  * The quota configuration works this way:
@@ -50,29 +49,24 @@ use Google\Protobuf\Internal\GPBUtil;
  *        display_name: Write requests
  *        metric_kind: DELTA
  *        value_type: INT64
- * </pre>
  *
- * Protobuf type <code>google.api.Quota</code>
+ * Protobuf type <code>Google\Api\Quota</code>
  */
 class Quota extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * List of `QuotaLimit` definitions for the service.
      * Used by metric-based quotas only.
-     * </pre>
      *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+     * Generated from protobuf field <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     private $limits;
     /**
-     * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
      * Used by metric-based quotas only.
-     * </pre>
      *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+     * Generated from protobuf field <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     private $metric_rules;
 
@@ -82,12 +76,11 @@ class Quota extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * List of `QuotaLimit` definitions for the service.
      * Used by metric-based quotas only.
-     * </pre>
      *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+     * Generated from protobuf field <code>repeated .google.api.QuotaLimit limits = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLimits()
     {
@@ -95,29 +88,25 @@ class Quota extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * List of `QuotaLimit` definitions for the service.
      * Used by metric-based quotas only.
-     * </pre>
      *
-     * <code>repeated .google.api.QuotaLimit limits = 3;</code>
+     * Generated from protobuf field <code>repeated .google.api.QuotaLimit limits = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLimits(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\QuotaLimit::class);
         $this->limits = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
      * Used by metric-based quotas only.
-     * </pre>
      *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+     * Generated from protobuf field <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMetricRules()
     {
@@ -125,20 +114,17 @@ class Quota extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
      * Used by metric-based quotas only.
-     * </pre>
      *
-     * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+     * Generated from protobuf field <code>repeated .google.api.MetricRule metric_rules = 4;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMetricRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\MetricRule::class);
         $this->metric_rules = $arr;
-
-        return $this;
     }
 
 }

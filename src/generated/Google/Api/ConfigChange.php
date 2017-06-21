@@ -9,20 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Output generated from semantically comparing two versions of a service
  * configuration.
  * Includes detailed information about a field that have changed with
  * applicable advice about potential consequences for the change, such as
  * backwards-incompatibility.
- * </pre>
  *
- * Protobuf type <code>google.api.ConfigChange</code>
+ * Protobuf type <code>Google\Api\ConfigChange</code>
  */
 class ConfigChange extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Object hierarchy path to the change, with levels separated by a '.'
      * character. For repeated fields, an applicable unique identifier field is
      * used for the index (usually selector, name, or id). For maps, the term
@@ -32,44 +29,35 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
      * - visibility.rules[selector=="google.LibraryService.CreateBook"].restriction
      * - quota.metric_rules[selector=="google"].metric_costs[key=="reads"].value
      * - logging.producer_destinations[0]
-     * </pre>
      *
-     * <code>string element = 1;</code>
+     * Generated from protobuf field <code>string element = 1;</code>
      */
     private $element = '';
     /**
-     * <pre>
      * Value of the changed object in the old Service configuration,
      * in JSON format. This field will not be populated if ChangeType == ADDED.
-     * </pre>
      *
-     * <code>string old_value = 2;</code>
+     * Generated from protobuf field <code>string old_value = 2;</code>
      */
     private $old_value = '';
     /**
-     * <pre>
      * Value of the changed object in the new Service configuration,
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
-     * </pre>
      *
-     * <code>string new_value = 3;</code>
+     * Generated from protobuf field <code>string new_value = 3;</code>
      */
     private $new_value = '';
     /**
-     * <pre>
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
-     * </pre>
      *
-     * <code>.google.api.ChangeType change_type = 4;</code>
+     * Generated from protobuf field <code>.google.api.ChangeType change_type = 4;</code>
      */
     private $change_type = 0;
     /**
-     * <pre>
      * Collection of advice provided for this change, useful for determining the
      * possible impact of this change.
-     * </pre>
      *
-     * <code>repeated .google.api.Advice advices = 5;</code>
+     * Generated from protobuf field <code>repeated .google.api.Advice advices = 5;</code>
      */
     private $advices;
 
@@ -79,7 +67,6 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Object hierarchy path to the change, with levels separated by a '.'
      * character. For repeated fields, an applicable unique identifier field is
      * used for the index (usually selector, name, or id). For maps, the term
@@ -89,9 +76,9 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
      * - visibility.rules[selector=="google.LibraryService.CreateBook"].restriction
      * - quota.metric_rules[selector=="google"].metric_costs[key=="reads"].value
      * - logging.producer_destinations[0]
-     * </pre>
      *
-     * <code>string element = 1;</code>
+     * Generated from protobuf field <code>string element = 1;</code>
+     * @return string
      */
     public function getElement()
     {
@@ -99,7 +86,6 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Object hierarchy path to the change, with levels separated by a '.'
      * character. For repeated fields, an applicable unique identifier field is
      * used for the index (usually selector, name, or id). For maps, the term
@@ -109,25 +95,22 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
      * - visibility.rules[selector=="google.LibraryService.CreateBook"].restriction
      * - quota.metric_rules[selector=="google"].metric_costs[key=="reads"].value
      * - logging.producer_destinations[0]
-     * </pre>
      *
-     * <code>string element = 1;</code>
+     * Generated from protobuf field <code>string element = 1;</code>
+     * @param string $var
      */
     public function setElement($var)
     {
         GPBUtil::checkString($var, True);
         $this->element = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Value of the changed object in the old Service configuration,
      * in JSON format. This field will not be populated if ChangeType == ADDED.
-     * </pre>
      *
-     * <code>string old_value = 2;</code>
+     * Generated from protobuf field <code>string old_value = 2;</code>
+     * @return string
      */
     public function getOldValue()
     {
@@ -135,28 +118,24 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Value of the changed object in the old Service configuration,
      * in JSON format. This field will not be populated if ChangeType == ADDED.
-     * </pre>
      *
-     * <code>string old_value = 2;</code>
+     * Generated from protobuf field <code>string old_value = 2;</code>
+     * @param string $var
      */
     public function setOldValue($var)
     {
         GPBUtil::checkString($var, True);
         $this->old_value = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Value of the changed object in the new Service configuration,
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
-     * </pre>
      *
-     * <code>string new_value = 3;</code>
+     * Generated from protobuf field <code>string new_value = 3;</code>
+     * @return string
      */
     public function getNewValue()
     {
@@ -164,27 +143,23 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Value of the changed object in the new Service configuration,
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
-     * </pre>
      *
-     * <code>string new_value = 3;</code>
+     * Generated from protobuf field <code>string new_value = 3;</code>
+     * @param string $var
      */
     public function setNewValue($var)
     {
         GPBUtil::checkString($var, True);
         $this->new_value = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
-     * </pre>
      *
-     * <code>.google.api.ChangeType change_type = 4;</code>
+     * Generated from protobuf field <code>.google.api.ChangeType change_type = 4;</code>
+     * @return int
      */
     public function getChangeType()
     {
@@ -192,27 +167,23 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
-     * </pre>
      *
-     * <code>.google.api.ChangeType change_type = 4;</code>
+     * Generated from protobuf field <code>.google.api.ChangeType change_type = 4;</code>
+     * @param int $var
      */
     public function setChangeType($var)
     {
         GPBUtil::checkEnum($var, \Google\Api\ChangeType::class);
         $this->change_type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Collection of advice provided for this change, useful for determining the
      * possible impact of this change.
-     * </pre>
      *
-     * <code>repeated .google.api.Advice advices = 5;</code>
+     * Generated from protobuf field <code>repeated .google.api.Advice advices = 5;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getAdvices()
     {
@@ -220,19 +191,16 @@ class ConfigChange extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Collection of advice provided for this change, useful for determining the
      * possible impact of this change.
-     * </pre>
      *
-     * <code>repeated .google.api.Advice advices = 5;</code>
+     * Generated from protobuf field <code>repeated .google.api.Advice advices = 5;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setAdvices(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Advice::class);
         $this->advices = $arr;
-
-        return $this;
     }
 
 }

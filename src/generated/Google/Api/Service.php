@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Service` is the root object of Google service configuration schema. It
  * describes basic information about a service, such as the name and the
  * title, and delegates other aspects to sub-sections. Each sub-section is
@@ -31,74 +30,60 @@ use Google\Protobuf\Internal\GPBUtil;
  *       - selector: "*"
  *         requirements:
  *           provider_id: google_calendar_auth
- * </pre>
  *
- * Protobuf type <code>google.api.Service</code>
+ * Protobuf type <code>Google\Api\Service</code>
  */
 class Service extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The version of the service configuration. The config version may
      * influence interpretation of the configuration, for example, to
      * determine defaults. This is documented together with applicable
      * options. The current default for the config version itself is `3`.
-     * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * Generated from protobuf field <code>.google.protobuf.UInt32Value config_version = 20;</code>
      */
     private $config_version = null;
     /**
-     * <pre>
      * The DNS address at which this service is available,
      * e.g. `calendar.googleapis.com`.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
      * generate one instead.
-     * </pre>
      *
-     * <code>string id = 33;</code>
+     * Generated from protobuf field <code>string id = 33;</code>
      */
     private $id = '';
     /**
-     * <pre>
      * The product title associated with this service.
-     * </pre>
      *
-     * <code>string title = 2;</code>
+     * Generated from protobuf field <code>string title = 2;</code>
      */
     private $title = '';
     /**
-     * <pre>
      * The id of the Google developer project that owns the service.
      * Members of this project can manage the service configuration,
      * manage consumption of the service, etc.
-     * </pre>
      *
-     * <code>string producer_project_id = 22;</code>
+     * Generated from protobuf field <code>string producer_project_id = 22;</code>
      */
     private $producer_project_id = '';
     /**
-     * <pre>
      * A list of API interfaces exported by this service. Only the `name` field
      * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
      * author, as the remaining fields will be derived from the IDL during the
      * normalization process. It is an error to specify an API interface here
      * which cannot be resolved against the associated IDL files.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Api apis = 3;</code>
      */
     private $apis;
     /**
-     * <pre>
      * A list of all proto message types included in this API service.
      * Types referenced directly or indirectly by the `apis` are
      * automatically included.  Messages which are not referenced but
@@ -106,161 +91,124 @@ class Service extends \Google\Protobuf\Internal\Message
      * should be listed here by name. Example:
      *     types:
      *     - name: google.protobuf.Int32
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Type types = 4;</code>
      */
     private $types;
     /**
-     * <pre>
      * A list of all enum types included in this API service.  Enums
      * referenced directly or indirectly by the `apis` are automatically
      * included.  Enums which are not referenced but shall be included
      * should be listed here by name. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Enum enums = 5;</code>
      */
     private $enums;
     /**
-     * <pre>
      * Additional API documentation.
-     * </pre>
      *
-     * <code>.google.api.Documentation documentation = 6;</code>
+     * Generated from protobuf field <code>.google.api.Documentation documentation = 6;</code>
      */
     private $documentation = null;
     /**
-     * <pre>
      * API backend configuration.
-     * </pre>
      *
-     * <code>.google.api.Backend backend = 8;</code>
+     * Generated from protobuf field <code>.google.api.Backend backend = 8;</code>
      */
     private $backend = null;
     /**
-     * <pre>
      * HTTP configuration.
-     * </pre>
      *
-     * <code>.google.api.Http http = 9;</code>
+     * Generated from protobuf field <code>.google.api.Http http = 9;</code>
      */
     private $http = null;
     /**
-     * <pre>
      * Quota configuration.
-     * </pre>
      *
-     * <code>.google.api.Quota quota = 10;</code>
+     * Generated from protobuf field <code>.google.api.Quota quota = 10;</code>
      */
     private $quota = null;
     /**
-     * <pre>
      * Auth configuration.
-     * </pre>
      *
-     * <code>.google.api.Authentication authentication = 11;</code>
+     * Generated from protobuf field <code>.google.api.Authentication authentication = 11;</code>
      */
     private $authentication = null;
     /**
-     * <pre>
      * Context configuration.
-     * </pre>
      *
-     * <code>.google.api.Context context = 12;</code>
+     * Generated from protobuf field <code>.google.api.Context context = 12;</code>
      */
     private $context = null;
     /**
-     * <pre>
      * Configuration controlling usage of this service.
-     * </pre>
      *
-     * <code>.google.api.Usage usage = 15;</code>
+     * Generated from protobuf field <code>.google.api.Usage usage = 15;</code>
      */
     private $usage = null;
     /**
-     * <pre>
      * Configuration for network endpoints.  If this is empty, then an endpoint
      * with the same name as the service is automatically generated to service all
      * defined APIs.
-     * </pre>
      *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+     * Generated from protobuf field <code>repeated .google.api.Endpoint endpoints = 18;</code>
      */
     private $endpoints;
     /**
-     * <pre>
      * Configuration for the service control plane.
-     * </pre>
      *
-     * <code>.google.api.Control control = 21;</code>
+     * Generated from protobuf field <code>.google.api.Control control = 21;</code>
      */
     private $control = null;
     /**
-     * <pre>
      * Defines the logs used by this service.
-     * </pre>
      *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+     * Generated from protobuf field <code>repeated .google.api.LogDescriptor logs = 23;</code>
      */
     private $logs;
     /**
-     * <pre>
      * Defines the metrics used by this service.
-     * </pre>
      *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+     * Generated from protobuf field <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
      */
     private $metrics;
     /**
-     * <pre>
      * Defines the monitored resources used by this service. This is required
      * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
      *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+     * Generated from protobuf field <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
      */
     private $monitored_resources;
     /**
-     * <pre>
      * Logging configuration.
-     * </pre>
      *
-     * <code>.google.api.Logging logging = 27;</code>
+     * Generated from protobuf field <code>.google.api.Logging logging = 27;</code>
      */
     private $logging = null;
     /**
-     * <pre>
      * Monitoring configuration.
-     * </pre>
      *
-     * <code>.google.api.Monitoring monitoring = 28;</code>
+     * Generated from protobuf field <code>.google.api.Monitoring monitoring = 28;</code>
      */
     private $monitoring = null;
     /**
-     * <pre>
      * System parameter configuration.
-     * </pre>
      *
-     * <code>.google.api.SystemParameters system_parameters = 29;</code>
+     * Generated from protobuf field <code>.google.api.SystemParameters system_parameters = 29;</code>
      */
     private $system_parameters = null;
     /**
-     * <pre>
      * Output only. The source information for this configuration if available.
-     * </pre>
      *
-     * <code>.google.api.SourceInfo source_info = 37;</code>
+     * Generated from protobuf field <code>.google.api.SourceInfo source_info = 37;</code>
      */
     private $source_info = null;
     /**
-     * <pre>
      * Experimental configuration.
-     * </pre>
      *
-     * <code>.google.api.Experimental experimental = 101;</code>
+     * Generated from protobuf field <code>.google.api.Experimental experimental = 101;</code>
      */
     private $experimental = null;
 
@@ -270,14 +218,13 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The version of the service configuration. The config version may
      * influence interpretation of the configuration, for example, to
      * determine defaults. This is documented together with applicable
      * options. The current default for the config version itself is `3`.
-     * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * Generated from protobuf field <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * @return \Google\Protobuf\UInt32Value
      */
     public function getConfigVersion()
     {
@@ -285,30 +232,26 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The version of the service configuration. The config version may
      * influence interpretation of the configuration, for example, to
      * determine defaults. This is documented together with applicable
      * options. The current default for the config version itself is `3`.
-     * </pre>
      *
-     * <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * Generated from protobuf field <code>.google.protobuf.UInt32Value config_version = 20;</code>
+     * @param \Google\Protobuf\UInt32Value $var
      */
     public function setConfigVersion(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\UInt32Value::class);
         $this->config_version = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The DNS address at which this service is available,
      * e.g. `calendar.googleapis.com`.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -316,29 +259,25 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The DNS address at which this service is available,
      * e.g. `calendar.googleapis.com`.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
      * generate one instead.
-     * </pre>
      *
-     * <code>string id = 33;</code>
+     * Generated from protobuf field <code>string id = 33;</code>
+     * @return string
      */
     public function getId()
     {
@@ -346,28 +285,24 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
      * generate one instead.
-     * </pre>
      *
-     * <code>string id = 33;</code>
+     * Generated from protobuf field <code>string id = 33;</code>
+     * @param string $var
      */
     public function setId($var)
     {
         GPBUtil::checkString($var, True);
         $this->id = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The product title associated with this service.
-     * </pre>
      *
-     * <code>string title = 2;</code>
+     * Generated from protobuf field <code>string title = 2;</code>
+     * @return string
      */
     public function getTitle()
     {
@@ -375,28 +310,24 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The product title associated with this service.
-     * </pre>
      *
-     * <code>string title = 2;</code>
+     * Generated from protobuf field <code>string title = 2;</code>
+     * @param string $var
      */
     public function setTitle($var)
     {
         GPBUtil::checkString($var, True);
         $this->title = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The id of the Google developer project that owns the service.
      * Members of this project can manage the service configuration,
      * manage consumption of the service, etc.
-     * </pre>
      *
-     * <code>string producer_project_id = 22;</code>
+     * Generated from protobuf field <code>string producer_project_id = 22;</code>
+     * @return string
      */
     public function getProducerProjectId()
     {
@@ -404,32 +335,28 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The id of the Google developer project that owns the service.
      * Members of this project can manage the service configuration,
      * manage consumption of the service, etc.
-     * </pre>
      *
-     * <code>string producer_project_id = 22;</code>
+     * Generated from protobuf field <code>string producer_project_id = 22;</code>
+     * @param string $var
      */
     public function setProducerProjectId($var)
     {
         GPBUtil::checkString($var, True);
         $this->producer_project_id = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of API interfaces exported by this service. Only the `name` field
      * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
      * author, as the remaining fields will be derived from the IDL during the
      * normalization process. It is an error to specify an API interface here
      * which cannot be resolved against the associated IDL files.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Api apis = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getApis()
     {
@@ -437,26 +364,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of API interfaces exported by this service. Only the `name` field
      * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
      * author, as the remaining fields will be derived from the IDL during the
      * normalization process. It is an error to specify an API interface here
      * which cannot be resolved against the associated IDL files.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Api apis = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Api apis = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setApis(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Api::class);
         $this->apis = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of all proto message types included in this API service.
      * Types referenced directly or indirectly by the `apis` are
      * automatically included.  Messages which are not referenced but
@@ -464,9 +387,9 @@ class Service extends \Google\Protobuf\Internal\Message
      * should be listed here by name. Example:
      *     types:
      *     - name: google.protobuf.Int32
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Type types = 4;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getTypes()
     {
@@ -474,7 +397,6 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of all proto message types included in this API service.
      * Types referenced directly or indirectly by the `apis` are
      * automatically included.  Messages which are not referenced but
@@ -482,29 +404,26 @@ class Service extends \Google\Protobuf\Internal\Message
      * should be listed here by name. Example:
      *     types:
      *     - name: google.protobuf.Int32
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Type types = 4;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Type types = 4;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setTypes(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Type::class);
         $this->types = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of all enum types included in this API service.  Enums
      * referenced directly or indirectly by the `apis` are automatically
      * included.  Enums which are not referenced but shall be included
      * should be listed here by name. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Enum enums = 5;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getEnums()
     {
@@ -512,31 +431,27 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of all enum types included in this API service.  Enums
      * referenced directly or indirectly by the `apis` are automatically
      * included.  Enums which are not referenced but shall be included
      * should be listed here by name. Example:
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Enum enums = 5;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Enum enums = 5;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setEnums(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Enum::class);
         $this->enums = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Additional API documentation.
-     * </pre>
      *
-     * <code>.google.api.Documentation documentation = 6;</code>
+     * Generated from protobuf field <code>.google.api.Documentation documentation = 6;</code>
+     * @return \Google\Api\Documentation
      */
     public function getDocumentation()
     {
@@ -544,26 +459,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Additional API documentation.
-     * </pre>
      *
-     * <code>.google.api.Documentation documentation = 6;</code>
+     * Generated from protobuf field <code>.google.api.Documentation documentation = 6;</code>
+     * @param \Google\Api\Documentation $var
      */
     public function setDocumentation(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Documentation::class);
         $this->documentation = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * API backend configuration.
-     * </pre>
      *
-     * <code>.google.api.Backend backend = 8;</code>
+     * Generated from protobuf field <code>.google.api.Backend backend = 8;</code>
+     * @return \Google\Api\Backend
      */
     public function getBackend()
     {
@@ -571,26 +482,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * API backend configuration.
-     * </pre>
      *
-     * <code>.google.api.Backend backend = 8;</code>
+     * Generated from protobuf field <code>.google.api.Backend backend = 8;</code>
+     * @param \Google\Api\Backend $var
      */
     public function setBackend(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Backend::class);
         $this->backend = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * HTTP configuration.
-     * </pre>
      *
-     * <code>.google.api.Http http = 9;</code>
+     * Generated from protobuf field <code>.google.api.Http http = 9;</code>
+     * @return \Google\Api\Http
      */
     public function getHttp()
     {
@@ -598,26 +505,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * HTTP configuration.
-     * </pre>
      *
-     * <code>.google.api.Http http = 9;</code>
+     * Generated from protobuf field <code>.google.api.Http http = 9;</code>
+     * @param \Google\Api\Http $var
      */
     public function setHttp(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Http::class);
         $this->http = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Quota configuration.
-     * </pre>
      *
-     * <code>.google.api.Quota quota = 10;</code>
+     * Generated from protobuf field <code>.google.api.Quota quota = 10;</code>
+     * @return \Google\Api\Quota
      */
     public function getQuota()
     {
@@ -625,26 +528,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Quota configuration.
-     * </pre>
      *
-     * <code>.google.api.Quota quota = 10;</code>
+     * Generated from protobuf field <code>.google.api.Quota quota = 10;</code>
+     * @param \Google\Api\Quota $var
      */
     public function setQuota(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Quota::class);
         $this->quota = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Auth configuration.
-     * </pre>
      *
-     * <code>.google.api.Authentication authentication = 11;</code>
+     * Generated from protobuf field <code>.google.api.Authentication authentication = 11;</code>
+     * @return \Google\Api\Authentication
      */
     public function getAuthentication()
     {
@@ -652,26 +551,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Auth configuration.
-     * </pre>
      *
-     * <code>.google.api.Authentication authentication = 11;</code>
+     * Generated from protobuf field <code>.google.api.Authentication authentication = 11;</code>
+     * @param \Google\Api\Authentication $var
      */
     public function setAuthentication(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Authentication::class);
         $this->authentication = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Context configuration.
-     * </pre>
      *
-     * <code>.google.api.Context context = 12;</code>
+     * Generated from protobuf field <code>.google.api.Context context = 12;</code>
+     * @return \Google\Api\Context
      */
     public function getContext()
     {
@@ -679,26 +574,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Context configuration.
-     * </pre>
      *
-     * <code>.google.api.Context context = 12;</code>
+     * Generated from protobuf field <code>.google.api.Context context = 12;</code>
+     * @param \Google\Api\Context $var
      */
     public function setContext(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Context::class);
         $this->context = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Configuration controlling usage of this service.
-     * </pre>
      *
-     * <code>.google.api.Usage usage = 15;</code>
+     * Generated from protobuf field <code>.google.api.Usage usage = 15;</code>
+     * @return \Google\Api\Usage
      */
     public function getUsage()
     {
@@ -706,28 +597,24 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Configuration controlling usage of this service.
-     * </pre>
      *
-     * <code>.google.api.Usage usage = 15;</code>
+     * Generated from protobuf field <code>.google.api.Usage usage = 15;</code>
+     * @param \Google\Api\Usage $var
      */
     public function setUsage(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Usage::class);
         $this->usage = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Configuration for network endpoints.  If this is empty, then an endpoint
      * with the same name as the service is automatically generated to service all
      * defined APIs.
-     * </pre>
      *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+     * Generated from protobuf field <code>repeated .google.api.Endpoint endpoints = 18;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getEndpoints()
     {
@@ -735,28 +622,24 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Configuration for network endpoints.  If this is empty, then an endpoint
      * with the same name as the service is automatically generated to service all
      * defined APIs.
-     * </pre>
      *
-     * <code>repeated .google.api.Endpoint endpoints = 18;</code>
+     * Generated from protobuf field <code>repeated .google.api.Endpoint endpoints = 18;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setEndpoints(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Endpoint::class);
         $this->endpoints = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Configuration for the service control plane.
-     * </pre>
      *
-     * <code>.google.api.Control control = 21;</code>
+     * Generated from protobuf field <code>.google.api.Control control = 21;</code>
+     * @return \Google\Api\Control
      */
     public function getControl()
     {
@@ -764,26 +647,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Configuration for the service control plane.
-     * </pre>
      *
-     * <code>.google.api.Control control = 21;</code>
+     * Generated from protobuf field <code>.google.api.Control control = 21;</code>
+     * @param \Google\Api\Control $var
      */
     public function setControl(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Control::class);
         $this->control = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Defines the logs used by this service.
-     * </pre>
      *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+     * Generated from protobuf field <code>repeated .google.api.LogDescriptor logs = 23;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLogs()
     {
@@ -791,26 +670,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Defines the logs used by this service.
-     * </pre>
      *
-     * <code>repeated .google.api.LogDescriptor logs = 23;</code>
+     * Generated from protobuf field <code>repeated .google.api.LogDescriptor logs = 23;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLogs(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\LogDescriptor::class);
         $this->logs = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Defines the metrics used by this service.
-     * </pre>
      *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+     * Generated from protobuf field <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMetrics()
     {
@@ -818,27 +693,23 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Defines the metrics used by this service.
-     * </pre>
      *
-     * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+     * Generated from protobuf field <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMetrics(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\MetricDescriptor::class);
         $this->metrics = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Defines the monitored resources used by this service. This is required
      * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
      *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+     * Generated from protobuf field <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMonitoredResources()
     {
@@ -846,27 +717,23 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Defines the monitored resources used by this service. This is required
      * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
-     * </pre>
      *
-     * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+     * Generated from protobuf field <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMonitoredResources(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\MonitoredResourceDescriptor::class);
         $this->monitored_resources = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Logging configuration.
-     * </pre>
      *
-     * <code>.google.api.Logging logging = 27;</code>
+     * Generated from protobuf field <code>.google.api.Logging logging = 27;</code>
+     * @return \Google\Api\Logging
      */
     public function getLogging()
     {
@@ -874,26 +741,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Logging configuration.
-     * </pre>
      *
-     * <code>.google.api.Logging logging = 27;</code>
+     * Generated from protobuf field <code>.google.api.Logging logging = 27;</code>
+     * @param \Google\Api\Logging $var
      */
     public function setLogging(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Logging::class);
         $this->logging = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Monitoring configuration.
-     * </pre>
      *
-     * <code>.google.api.Monitoring monitoring = 28;</code>
+     * Generated from protobuf field <code>.google.api.Monitoring monitoring = 28;</code>
+     * @return \Google\Api\Monitoring
      */
     public function getMonitoring()
     {
@@ -901,26 +764,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Monitoring configuration.
-     * </pre>
      *
-     * <code>.google.api.Monitoring monitoring = 28;</code>
+     * Generated from protobuf field <code>.google.api.Monitoring monitoring = 28;</code>
+     * @param \Google\Api\Monitoring $var
      */
     public function setMonitoring(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Monitoring::class);
         $this->monitoring = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * System parameter configuration.
-     * </pre>
      *
-     * <code>.google.api.SystemParameters system_parameters = 29;</code>
+     * Generated from protobuf field <code>.google.api.SystemParameters system_parameters = 29;</code>
+     * @return \Google\Api\SystemParameters
      */
     public function getSystemParameters()
     {
@@ -928,26 +787,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * System parameter configuration.
-     * </pre>
      *
-     * <code>.google.api.SystemParameters system_parameters = 29;</code>
+     * Generated from protobuf field <code>.google.api.SystemParameters system_parameters = 29;</code>
+     * @param \Google\Api\SystemParameters $var
      */
     public function setSystemParameters(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\SystemParameters::class);
         $this->system_parameters = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Output only. The source information for this configuration if available.
-     * </pre>
      *
-     * <code>.google.api.SourceInfo source_info = 37;</code>
+     * Generated from protobuf field <code>.google.api.SourceInfo source_info = 37;</code>
+     * @return \Google\Api\SourceInfo
      */
     public function getSourceInfo()
     {
@@ -955,26 +810,22 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Output only. The source information for this configuration if available.
-     * </pre>
      *
-     * <code>.google.api.SourceInfo source_info = 37;</code>
+     * Generated from protobuf field <code>.google.api.SourceInfo source_info = 37;</code>
+     * @param \Google\Api\SourceInfo $var
      */
     public function setSourceInfo(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\SourceInfo::class);
         $this->source_info = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Experimental configuration.
-     * </pre>
      *
-     * <code>.google.api.Experimental experimental = 101;</code>
+     * Generated from protobuf field <code>.google.api.Experimental experimental = 101;</code>
+     * @return \Google\Api\Experimental
      */
     public function getExperimental()
     {
@@ -982,18 +833,15 @@ class Service extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Experimental configuration.
-     * </pre>
      *
-     * <code>.google.api.Experimental experimental = 101;</code>
+     * Generated from protobuf field <code>.google.api.Experimental experimental = 101;</code>
+     * @param \Google\Api\Experimental $var
      */
     public function setExperimental(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Experimental::class);
         $this->experimental = $var;
-
-        return $this;
     }
 
 }

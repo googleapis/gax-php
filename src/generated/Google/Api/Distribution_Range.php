@@ -9,28 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * The range of the population values.
- * </pre>
  *
- * Protobuf type <code>google.api.Distribution.Range</code>
+ * Protobuf type <code>Google\Api\Distribution\Range</code>
  */
 class Distribution_Range extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The minimum of the population values.
-     * </pre>
      *
-     * <code>double min = 1;</code>
+     * Generated from protobuf field <code>double min = 1;</code>
      */
     private $min = 0.0;
     /**
-     * <pre>
      * The maximum of the population values.
-     * </pre>
      *
-     * <code>double max = 2;</code>
+     * Generated from protobuf field <code>double max = 2;</code>
      */
     private $max = 0.0;
 
@@ -40,11 +34,10 @@ class Distribution_Range extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The minimum of the population values.
-     * </pre>
      *
-     * <code>double min = 1;</code>
+     * Generated from protobuf field <code>double min = 1;</code>
+     * @return float
      */
     public function getMin()
     {
@@ -52,26 +45,22 @@ class Distribution_Range extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The minimum of the population values.
-     * </pre>
      *
-     * <code>double min = 1;</code>
+     * Generated from protobuf field <code>double min = 1;</code>
+     * @param float $var
      */
     public function setMin($var)
     {
         GPBUtil::checkDouble($var);
         $this->min = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The maximum of the population values.
-     * </pre>
      *
-     * <code>double max = 2;</code>
+     * Generated from protobuf field <code>double max = 2;</code>
+     * @return float
      */
     public function getMax()
     {
@@ -79,18 +68,15 @@ class Distribution_Range extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The maximum of the population values.
-     * </pre>
      *
-     * <code>double max = 2;</code>
+     * Generated from protobuf field <code>double max = 2;</code>
+     * @param float $var
      */
     public function setMax($var)
     {
         GPBUtil::checkDouble($var);
         $this->max = $var;
-
-        return $this;
     }
 
 }

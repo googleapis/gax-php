@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `HttpRule` defines the mapping of an RPC method to one or more HTTP
  * REST APIs.  The mapping determines what portions of the request
  * message are populated from the path, query parameters, or body of
@@ -39,7 +38,7 @@ use Google\Protobuf\Internal\GPBUtil;
  * `GRPC API Configuration` YAML file.
  *     http:
  *       rules:
- *         - selector: &lt;proto_package_name&gt;.Messaging.GetMessage
+ *         - selector: <proto_package_name>.Messaging.GetMessage
  *           get: /v1/messages/{message_id}/{sub.subfield}
  * This definition enables an automatic, bidrectional mapping of HTTP
  * JSON to RPC. Example:
@@ -63,11 +62,11 @@ use Google\Protobuf\Internal\GPBUtil;
  * This enables a HTTP JSON to RPC mapping as below:
  * HTTP | RPC
  * -----|-----
- * `GET /v1/messages/123456?revision=2&amp;sub.subfield=foo` | `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield: "foo"))`
+ * `GET /v1/messages/123456?revision=2&sub.subfield=foo` | `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield: "foo"))`
  * Note that fields which are mapped to HTTP parameters must have a
  * primitive type or a repeated primitive type. Message types are not
  * allowed. In the case of a repeated type, the parameter can be
- * repeated in the URL, as in `...?param=A&amp;param=B`.
+ * repeated in the URL, as in `...?param=A&param=B`.
  * For HTTP method kinds which allow a request body, the `body` field
  * specifies the mapping. Consider a REST update method on the
  * message resource collection:
@@ -173,40 +172,33 @@ use Google\Protobuf\Internal\GPBUtil;
  * `pattern` field, such as HEAD, or "*" to leave the HTTP method unspecified for
  * a given URL path rule. The wild-card rule is useful for services that provide
  * content to Web (HTML) clients.
- * </pre>
  *
- * Protobuf type <code>google.api.HttpRule</code>
+ * Protobuf type <code>Google\Api\HttpRule</code>
  */
 class HttpRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * The name of the request field whose value is mapped to the HTTP body, or
      * `*` for mapping all fields not captured by the path pattern to the HTTP
      * body. NOTE: the referred field must not be a repeated field and must be
      * present at the top-level of request message type.
-     * </pre>
      *
-     * <code>string body = 7;</code>
+     * Generated from protobuf field <code>string body = 7;</code>
      */
     private $body = '';
     /**
-     * <pre>
      * Additional HTTP bindings for the selector. Nested bindings must
      * not contain an `additional_bindings` field themselves (that is,
      * the nesting may only be one level deep).
-     * </pre>
      *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+     * Generated from protobuf field <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
      */
     private $additional_bindings;
     protected $pattern;
@@ -217,12 +209,11 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -230,27 +221,23 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Used for listing and getting information about resources.
-     * </pre>
      *
-     * <code>string get = 2;</code>
+     * Generated from protobuf field <code>string get = 2;</code>
+     * @return string
      */
     public function getGet()
     {
@@ -258,26 +245,22 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Used for listing and getting information about resources.
-     * </pre>
      *
-     * <code>string get = 2;</code>
+     * Generated from protobuf field <code>string get = 2;</code>
+     * @param string $var
      */
     public function setGet($var)
     {
         GPBUtil::checkString($var, True);
         $this->writeOneof(2, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Used for updating a resource.
-     * </pre>
      *
-     * <code>string put = 3;</code>
+     * Generated from protobuf field <code>string put = 3;</code>
+     * @return string
      */
     public function getPut()
     {
@@ -285,26 +268,22 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Used for updating a resource.
-     * </pre>
      *
-     * <code>string put = 3;</code>
+     * Generated from protobuf field <code>string put = 3;</code>
+     * @param string $var
      */
     public function setPut($var)
     {
         GPBUtil::checkString($var, True);
         $this->writeOneof(3, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Used for creating a resource.
-     * </pre>
      *
-     * <code>string post = 4;</code>
+     * Generated from protobuf field <code>string post = 4;</code>
+     * @return string
      */
     public function getPost()
     {
@@ -312,26 +291,22 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Used for creating a resource.
-     * </pre>
      *
-     * <code>string post = 4;</code>
+     * Generated from protobuf field <code>string post = 4;</code>
+     * @param string $var
      */
     public function setPost($var)
     {
         GPBUtil::checkString($var, True);
         $this->writeOneof(4, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Used for deleting a resource.
-     * </pre>
      *
-     * <code>string delete = 5;</code>
+     * Generated from protobuf field <code>string delete = 5;</code>
+     * @return string
      */
     public function getDelete()
     {
@@ -339,26 +314,22 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Used for deleting a resource.
-     * </pre>
      *
-     * <code>string delete = 5;</code>
+     * Generated from protobuf field <code>string delete = 5;</code>
+     * @param string $var
      */
     public function setDelete($var)
     {
         GPBUtil::checkString($var, True);
         $this->writeOneof(5, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Used for updating a resource.
-     * </pre>
      *
-     * <code>string patch = 6;</code>
+     * Generated from protobuf field <code>string patch = 6;</code>
+     * @return string
      */
     public function getPatch()
     {
@@ -366,26 +337,22 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Used for updating a resource.
-     * </pre>
      *
-     * <code>string patch = 6;</code>
+     * Generated from protobuf field <code>string patch = 6;</code>
+     * @param string $var
      */
     public function setPatch($var)
     {
         GPBUtil::checkString($var, True);
         $this->writeOneof(6, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Custom pattern is used for defining custom verbs.
-     * </pre>
      *
-     * <code>.google.api.CustomHttpPattern custom = 8;</code>
+     * Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code>
+     * @return \Google\Api\CustomHttpPattern
      */
     public function getCustom()
     {
@@ -393,29 +360,25 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Custom pattern is used for defining custom verbs.
-     * </pre>
      *
-     * <code>.google.api.CustomHttpPattern custom = 8;</code>
+     * Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code>
+     * @param \Google\Api\CustomHttpPattern $var
      */
     public function setCustom(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\CustomHttpPattern::class);
         $this->writeOneof(8, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The name of the request field whose value is mapped to the HTTP body, or
      * `*` for mapping all fields not captured by the path pattern to the HTTP
      * body. NOTE: the referred field must not be a repeated field and must be
      * present at the top-level of request message type.
-     * </pre>
      *
-     * <code>string body = 7;</code>
+     * Generated from protobuf field <code>string body = 7;</code>
+     * @return string
      */
     public function getBody()
     {
@@ -423,31 +386,27 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the request field whose value is mapped to the HTTP body, or
      * `*` for mapping all fields not captured by the path pattern to the HTTP
      * body. NOTE: the referred field must not be a repeated field and must be
      * present at the top-level of request message type.
-     * </pre>
      *
-     * <code>string body = 7;</code>
+     * Generated from protobuf field <code>string body = 7;</code>
+     * @param string $var
      */
     public function setBody($var)
     {
         GPBUtil::checkString($var, True);
         $this->body = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Additional HTTP bindings for the selector. Nested bindings must
      * not contain an `additional_bindings` field themselves (that is,
      * the nesting may only be one level deep).
-     * </pre>
      *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+     * Generated from protobuf field <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getAdditionalBindings()
     {
@@ -455,22 +414,22 @@ class HttpRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Additional HTTP bindings for the selector. Nested bindings must
      * not contain an `additional_bindings` field themselves (that is,
      * the nesting may only be one level deep).
-     * </pre>
      *
-     * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+     * Generated from protobuf field <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setAdditionalBindings(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\HttpRule::class);
         $this->additional_bindings = $arr;
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getPattern()
     {
         return $this->whichOneof("pattern");

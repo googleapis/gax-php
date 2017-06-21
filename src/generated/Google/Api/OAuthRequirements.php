@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * OAuth scopes are a way to define data and permissions on data. For example,
  * there are scopes defined for "Read-only access to Google Calendar" and
  * "Access to Cloud Platform". Users can consent to a scope for an application,
@@ -24,22 +23,19 @@ use Google\Protobuf\Internal\GPBUtil;
  * Please note that even though each of the canonical scopes is enough for a
  * request to be accepted and passed to the backend, a request can still fail
  * due to the backend requiring additional scopes or permissions.
- * </pre>
  *
- * Protobuf type <code>google.api.OAuthRequirements</code>
+ * Protobuf type <code>Google\Api\OAuthRequirements</code>
  */
 class OAuthRequirements extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
      * Example:
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
-     * </pre>
      *
-     * <code>string canonical_scopes = 1;</code>
+     * Generated from protobuf field <code>string canonical_scopes = 1;</code>
      */
     private $canonical_scopes = '';
 
@@ -49,15 +45,14 @@ class OAuthRequirements extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
      * Example:
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
-     * </pre>
      *
-     * <code>string canonical_scopes = 1;</code>
+     * Generated from protobuf field <code>string canonical_scopes = 1;</code>
+     * @return string
      */
     public function getCanonicalScopes()
     {
@@ -65,22 +60,19 @@ class OAuthRequirements extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
      * Example:
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
-     * </pre>
      *
-     * <code>string canonical_scopes = 1;</code>
+     * Generated from protobuf field <code>string canonical_scopes = 1;</code>
+     * @param string $var
      */
     public function setCanonicalScopes($var)
     {
         GPBUtil::checkString($var, True);
         $this->canonical_scopes = $var;
-
-        return $this;
     }
 
 }

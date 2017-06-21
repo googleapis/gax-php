@@ -9,41 +9,32 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Api is a light-weight descriptor for a protocol buffer service.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Api</code>
+ * Protobuf type <code>Google\Protobuf\Api</code>
  */
 class Api extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The fully qualified name of this api, including package name
      * followed by the api's simple name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * The methods of this api, in unspecified order.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Method methods = 2;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Method methods = 2;</code>
      */
     private $methods;
     /**
-     * <pre>
      * Any metadata attached to the API.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 3;</code>
      */
     private $options;
     /**
-     * <pre>
      * A version string for this api. If specified, must have the form
      * `major-version.minor-version`, as in `1.10`. If the minor version
      * is omitted, it defaults to zero. If the entire version field is
@@ -58,38 +49,31 @@ class Api extends \Google\Protobuf\Internal\Message
      * what to expect from different versions, and should be carefully
      * chosen based on the product plan.
      * The major version is also reflected in the package name of the
-     * API, which must end in `v&lt;major-version&gt;`, as in
+     * API, which must end in `v<major-version>`, as in
      * `google.feature.v1`. For major versions 0 and 1, the suffix can
      * be omitted. Zero major versions must only be used for
      * experimental, none-GA apis.
-     * </pre>
      *
-     * <code>string version = 4;</code>
+     * Generated from protobuf field <code>string version = 4;</code>
      */
     private $version = '';
     /**
-     * <pre>
      * Source context for the protocol buffer service represented by this
      * message.
-     * </pre>
      *
-     * <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.SourceContext source_context = 5;</code>
      */
     private $source_context = null;
     /**
-     * <pre>
      * Included APIs. See [Mixin][].
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Mixin mixins = 6;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Mixin mixins = 6;</code>
      */
     private $mixins;
     /**
-     * <pre>
      * The source syntax of the service.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 7;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 7;</code>
      */
     private $syntax = 0;
 
@@ -99,12 +83,11 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fully qualified name of this api, including package name
      * followed by the api's simple name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -112,12 +95,11 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fully qualified name of this api, including package name
      * followed by the api's simple name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
@@ -126,11 +108,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The methods of this api, in unspecified order.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Method methods = 2;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Method methods = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMethods()
     {
@@ -138,11 +119,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The methods of this api, in unspecified order.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Method methods = 2;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Method methods = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMethods(&$var)
     {
@@ -151,11 +131,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Any metadata attached to the API.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getOptions()
     {
@@ -163,11 +142,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Any metadata attached to the API.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setOptions(&$var)
     {
@@ -176,7 +154,6 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A version string for this api. If specified, must have the form
      * `major-version.minor-version`, as in `1.10`. If the minor version
      * is omitted, it defaults to zero. If the entire version field is
@@ -191,13 +168,13 @@ class Api extends \Google\Protobuf\Internal\Message
      * what to expect from different versions, and should be carefully
      * chosen based on the product plan.
      * The major version is also reflected in the package name of the
-     * API, which must end in `v&lt;major-version&gt;`, as in
+     * API, which must end in `v<major-version>`, as in
      * `google.feature.v1`. For major versions 0 and 1, the suffix can
      * be omitted. Zero major versions must only be used for
      * experimental, none-GA apis.
-     * </pre>
      *
-     * <code>string version = 4;</code>
+     * Generated from protobuf field <code>string version = 4;</code>
+     * @return string
      */
     public function getVersion()
     {
@@ -205,7 +182,6 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A version string for this api. If specified, must have the form
      * `major-version.minor-version`, as in `1.10`. If the minor version
      * is omitted, it defaults to zero. If the entire version field is
@@ -220,13 +196,13 @@ class Api extends \Google\Protobuf\Internal\Message
      * what to expect from different versions, and should be carefully
      * chosen based on the product plan.
      * The major version is also reflected in the package name of the
-     * API, which must end in `v&lt;major-version&gt;`, as in
+     * API, which must end in `v<major-version>`, as in
      * `google.feature.v1`. For major versions 0 and 1, the suffix can
      * be omitted. Zero major versions must only be used for
      * experimental, none-GA apis.
-     * </pre>
      *
-     * <code>string version = 4;</code>
+     * Generated from protobuf field <code>string version = 4;</code>
+     * @param string $var
      */
     public function setVersion($var)
     {
@@ -235,12 +211,11 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Source context for the protocol buffer service represented by this
      * message.
-     * </pre>
      *
-     * <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * @return \Google\Protobuf\SourceContext
      */
     public function getSourceContext()
     {
@@ -248,12 +223,11 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Source context for the protocol buffer service represented by this
      * message.
-     * </pre>
      *
-     * <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.SourceContext source_context = 5;</code>
+     * @param \Google\Protobuf\SourceContext $var
      */
     public function setSourceContext(&$var)
     {
@@ -262,11 +236,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Included APIs. See [Mixin][].
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Mixin mixins = 6;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Mixin mixins = 6;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMixins()
     {
@@ -274,11 +247,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Included APIs. See [Mixin][].
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Mixin mixins = 6;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Mixin mixins = 6;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMixins(&$var)
     {
@@ -287,11 +259,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source syntax of the service.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 7;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 7;</code>
+     * @return int
      */
     public function getSyntax()
     {
@@ -299,11 +270,10 @@ class Api extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source syntax of the service.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 7;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 7;</code>
+     * @param int $var
      */
     public function setSyntax($var)
     {

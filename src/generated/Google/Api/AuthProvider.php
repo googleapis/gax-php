@@ -9,39 +9,32 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Configuration for an anthentication provider, including support for
  * [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
- * </pre>
  *
- * Protobuf type <code>google.api.AuthProvider</code>
+ * Protobuf type <code>Google\Api\AuthProvider</code>
  */
 class AuthProvider extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
      * Example: "bookstore_auth".
-     * </pre>
      *
-     * <code>string id = 1;</code>
+     * Generated from protobuf field <code>string id = 1;</code>
      */
     private $id = '';
     /**
-     * <pre>
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
-     * </pre>
      *
-     * <code>string issuer = 2;</code>
+     * Generated from protobuf field <code>string issuer = 2;</code>
      */
     private $issuer = '';
     /**
-     * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
      * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
@@ -50,13 +43,11 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
-     * </pre>
      *
-     * <code>string jwks_uri = 3;</code>
+     * Generated from protobuf field <code>string jwks_uri = 3;</code>
      */
     private $jwks_uri = '';
     /**
-     * <pre>
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -68,9 +59,8 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
-     * </pre>
      *
-     * <code>string audiences = 4;</code>
+     * Generated from protobuf field <code>string audiences = 4;</code>
      */
     private $audiences = '';
 
@@ -80,13 +70,12 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
      * Example: "bookstore_auth".
-     * </pre>
      *
-     * <code>string id = 1;</code>
+     * Generated from protobuf field <code>string id = 1;</code>
+     * @return string
      */
     public function getId()
     {
@@ -94,32 +83,28 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
      * Example: "bookstore_auth".
-     * </pre>
      *
-     * <code>string id = 1;</code>
+     * Generated from protobuf field <code>string id = 1;</code>
+     * @param string $var
      */
     public function setId($var)
     {
         GPBUtil::checkString($var, True);
         $this->id = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
-     * </pre>
      *
-     * <code>string issuer = 2;</code>
+     * Generated from protobuf field <code>string issuer = 2;</code>
+     * @return string
      */
     public function getIssuer()
     {
@@ -127,26 +112,22 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
-     * </pre>
      *
-     * <code>string issuer = 2;</code>
+     * Generated from protobuf field <code>string issuer = 2;</code>
+     * @param string $var
      */
     public function setIssuer($var)
     {
         GPBUtil::checkString($var, True);
         $this->issuer = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
      * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
@@ -155,9 +136,9 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
-     * </pre>
      *
-     * <code>string jwks_uri = 3;</code>
+     * Generated from protobuf field <code>string jwks_uri = 3;</code>
+     * @return string
      */
     public function getJwksUri()
     {
@@ -165,7 +146,6 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
      * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
@@ -174,20 +154,17 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
-     * </pre>
      *
-     * <code>string jwks_uri = 3;</code>
+     * Generated from protobuf field <code>string jwks_uri = 3;</code>
+     * @param string $var
      */
     public function setJwksUri($var)
     {
         GPBUtil::checkString($var, True);
         $this->jwks_uri = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -199,9 +176,9 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
-     * </pre>
      *
-     * <code>string audiences = 4;</code>
+     * Generated from protobuf field <code>string audiences = 4;</code>
+     * @return string
      */
     public function getAudiences()
     {
@@ -209,7 +186,6 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -221,16 +197,14 @@ class AuthProvider extends \Google\Protobuf\Internal\Message
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
-     * </pre>
      *
-     * <code>string audiences = 4;</code>
+     * Generated from protobuf field <code>string audiences = 4;</code>
+     * @param string $var
      */
     public function setAudiences($var)
     {
         GPBUtil::checkString($var, True);
         $this->audiences = $var;
-
-        return $this;
     }
 
 }

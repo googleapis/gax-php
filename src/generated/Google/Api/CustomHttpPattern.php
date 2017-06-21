@@ -9,28 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A custom pattern is used for defining custom HTTP verb.
- * </pre>
  *
- * Protobuf type <code>google.api.CustomHttpPattern</code>
+ * Protobuf type <code>Google\Api\CustomHttpPattern</code>
  */
 class CustomHttpPattern extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The name of this custom HTTP verb.
-     * </pre>
      *
-     * <code>string kind = 1;</code>
+     * Generated from protobuf field <code>string kind = 1;</code>
      */
     private $kind = '';
     /**
-     * <pre>
      * The path matched by this custom verb.
-     * </pre>
      *
-     * <code>string path = 2;</code>
+     * Generated from protobuf field <code>string path = 2;</code>
      */
     private $path = '';
 
@@ -40,11 +34,10 @@ class CustomHttpPattern extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of this custom HTTP verb.
-     * </pre>
      *
-     * <code>string kind = 1;</code>
+     * Generated from protobuf field <code>string kind = 1;</code>
+     * @return string
      */
     public function getKind()
     {
@@ -52,26 +45,22 @@ class CustomHttpPattern extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of this custom HTTP verb.
-     * </pre>
      *
-     * <code>string kind = 1;</code>
+     * Generated from protobuf field <code>string kind = 1;</code>
+     * @param string $var
      */
     public function setKind($var)
     {
         GPBUtil::checkString($var, True);
         $this->kind = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The path matched by this custom verb.
-     * </pre>
      *
-     * <code>string path = 2;</code>
+     * Generated from protobuf field <code>string path = 2;</code>
+     * @return string
      */
     public function getPath()
     {
@@ -79,18 +68,15 @@ class CustomHttpPattern extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The path matched by this custom verb.
-     * </pre>
      *
-     * <code>string path = 2;</code>
+     * Generated from protobuf field <code>string path = 2;</code>
+     * @param string $var
      */
     public function setPath($var)
     {
         GPBUtil::checkString($var, True);
         $this->path = $var;
-
-        return $this;
     }
 
 }

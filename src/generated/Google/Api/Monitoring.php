@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Monitoring configuration of the service.
  * The example below shows how to configure monitored resources and metrics
  * for monitoring. In the example, a monitored resource and two metrics are
@@ -45,32 +44,27 @@ use Google\Protobuf\Internal\GPBUtil;
  *         metrics:
  *         - library.googleapis.com/book/returned_count
  *         - library.googleapis.com/book/overdue_count
- * </pre>
  *
- * Protobuf type <code>google.api.Monitoring</code>
+ * Protobuf type <code>Google\Api\Monitoring</code>
  */
 class Monitoring extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Monitoring configurations for sending metrics to the producer project.
      * There can be multiple producer destinations, each one must have a
      * different monitored resource type. A metric can be used in at most
      * one producer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
      */
     private $producer_destinations;
     /**
-     * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
      * There can be multiple consumer destinations, each one must have a
      * different monitored resource type. A metric can be used in at most
      * one consumer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
      */
     private $consumer_destinations;
 
@@ -80,14 +74,13 @@ class Monitoring extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Monitoring configurations for sending metrics to the producer project.
      * There can be multiple producer destinations, each one must have a
      * different monitored resource type. A metric can be used in at most
      * one producer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getProducerDestinations()
     {
@@ -95,32 +88,28 @@ class Monitoring extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Monitoring configurations for sending metrics to the producer project.
      * There can be multiple producer destinations, each one must have a
      * different monitored resource type. A metric can be used in at most
      * one producer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setProducerDestinations(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Monitoring_MonitoringDestination::class);
         $this->producer_destinations = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
      * There can be multiple consumer destinations, each one must have a
      * different monitored resource type. A metric can be used in at most
      * one consumer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getConsumerDestinations()
     {
@@ -128,21 +117,18 @@ class Monitoring extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
      * There can be multiple consumer destinations, each one must have a
      * different monitored resource type. A metric can be used in at most
      * one consumer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setConsumerDestinations(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Monitoring_MonitoringDestination::class);
         $this->consumer_destinations = $arr;
-
-        return $this;
     }
 
 }

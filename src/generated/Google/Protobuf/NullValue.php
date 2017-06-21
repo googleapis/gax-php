@@ -5,22 +5,18 @@
 namespace Google\Protobuf;
 
 /**
- * <pre>
  * `NullValue` is a singleton enumeration to represent the null value for the
  * `Value` type union.
  *  The JSON representation for `NullValue` is JSON `null`.
- * </pre>
  *
- * Protobuf enum <code>google.protobuf.NullValue</code>
+ * Protobuf enum <code>Google\Protobuf\NullValue</code>
  */
 class NullValue
 {
     /**
-     * <pre>
      * Null value.
-     * </pre>
      *
-     * <code>NULL_VALUE = 0;</code>
+     * Generated from protobuf enum <code>NULL_VALUE = 0;</code>
      */
     const NULL_VALUE = 0;
 }

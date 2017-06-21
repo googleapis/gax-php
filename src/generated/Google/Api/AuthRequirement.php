@@ -9,27 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * User-defined authentication requirements, including support for
  * [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
- * </pre>
  *
- * Protobuf type <code>google.api.AuthRequirement</code>
+ * Protobuf type <code>Google\Api\AuthRequirement</code>
  */
 class AuthRequirement extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
      * Example:
      *     provider_id: bookstore_auth
-     * </pre>
      *
-     * <code>string provider_id = 1;</code>
+     * Generated from protobuf field <code>string provider_id = 1;</code>
      */
     private $provider_id = '';
     /**
-     * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
      * The list of JWT
@@ -43,9 +38,8 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
-     * </pre>
      *
-     * <code>string audiences = 2;</code>
+     * Generated from protobuf field <code>string audiences = 2;</code>
      */
     private $audiences = '';
 
@@ -55,13 +49,12 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
      * Example:
      *     provider_id: bookstore_auth
-     * </pre>
      *
-     * <code>string provider_id = 1;</code>
+     * Generated from protobuf field <code>string provider_id = 1;</code>
+     * @return string
      */
     public function getProviderId()
     {
@@ -69,24 +62,20 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
      * Example:
      *     provider_id: bookstore_auth
-     * </pre>
      *
-     * <code>string provider_id = 1;</code>
+     * Generated from protobuf field <code>string provider_id = 1;</code>
+     * @param string $var
      */
     public function setProviderId($var)
     {
         GPBUtil::checkString($var, True);
         $this->provider_id = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
      * The list of JWT
@@ -100,9 +89,9 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
-     * </pre>
      *
-     * <code>string audiences = 2;</code>
+     * Generated from protobuf field <code>string audiences = 2;</code>
+     * @return string
      */
     public function getAudiences()
     {
@@ -110,7 +99,6 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
      * The list of JWT
@@ -124,16 +112,14 @@ class AuthRequirement extends \Google\Protobuf\Internal\Message
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
-     * </pre>
      *
-     * <code>string audiences = 2;</code>
+     * Generated from protobuf field <code>string audiences = 2;</code>
+     * @param string $var
      */
     public function setAudiences($var)
     {
         GPBUtil::checkString($var, True);
         $this->audiences = $var;
-
-        return $this;
     }
 
 }

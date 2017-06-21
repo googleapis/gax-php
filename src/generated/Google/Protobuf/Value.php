@@ -9,15 +9,13 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Value` represents a dynamically typed value which can be either
  * null, a number, a string, a boolean, a recursive struct value, or a
  * list of values. A producer of value is expected to set one of that
  * variants, absence of any variant indicates an error.
  * The JSON representation for `Value` is JSON value.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Value</code>
+ * Protobuf type <code>Google\Protobuf\Value</code>
  */
 class Value extends \Google\Protobuf\Internal\Message
 {
@@ -29,11 +27,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a null value.
-     * </pre>
      *
-     * <code>.google.protobuf.NullValue null_value = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.NullValue null_value = 1;</code>
+     * @return int
      */
     public function getNullValue()
     {
@@ -41,11 +38,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a null value.
-     * </pre>
      *
-     * <code>.google.protobuf.NullValue null_value = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.NullValue null_value = 1;</code>
+     * @param int $var
      */
     public function setNullValue($var)
     {
@@ -54,11 +50,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a double value.
-     * </pre>
      *
-     * <code>double number_value = 2;</code>
+     * Generated from protobuf field <code>double number_value = 2;</code>
+     * @return float
      */
     public function getNumberValue()
     {
@@ -66,11 +61,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a double value.
-     * </pre>
      *
-     * <code>double number_value = 2;</code>
+     * Generated from protobuf field <code>double number_value = 2;</code>
+     * @param float $var
      */
     public function setNumberValue($var)
     {
@@ -79,11 +73,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a string value.
-     * </pre>
      *
-     * <code>string string_value = 3;</code>
+     * Generated from protobuf field <code>string string_value = 3;</code>
+     * @return string
      */
     public function getStringValue()
     {
@@ -91,11 +84,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a string value.
-     * </pre>
      *
-     * <code>string string_value = 3;</code>
+     * Generated from protobuf field <code>string string_value = 3;</code>
+     * @param string $var
      */
     public function setStringValue($var)
     {
@@ -104,11 +96,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a boolean value.
-     * </pre>
      *
-     * <code>bool bool_value = 4;</code>
+     * Generated from protobuf field <code>bool bool_value = 4;</code>
+     * @return bool
      */
     public function getBoolValue()
     {
@@ -116,11 +107,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a boolean value.
-     * </pre>
      *
-     * <code>bool bool_value = 4;</code>
+     * Generated from protobuf field <code>bool bool_value = 4;</code>
+     * @param bool $var
      */
     public function setBoolValue($var)
     {
@@ -129,11 +119,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a structured value.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct struct_value = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct struct_value = 5;</code>
+     * @return \Google\Protobuf\Struct
      */
     public function getStructValue()
     {
@@ -141,11 +130,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a structured value.
-     * </pre>
      *
-     * <code>.google.protobuf.Struct struct_value = 5;</code>
+     * Generated from protobuf field <code>.google.protobuf.Struct struct_value = 5;</code>
+     * @param \Google\Protobuf\Struct $var
      */
     public function setStructValue(&$var)
     {
@@ -154,11 +142,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a repeated `Value`.
-     * </pre>
      *
-     * <code>.google.protobuf.ListValue list_value = 6;</code>
+     * Generated from protobuf field <code>.google.protobuf.ListValue list_value = 6;</code>
+     * @return \Google\Protobuf\ListValue
      */
     public function getListValue()
     {
@@ -166,11 +153,10 @@ class Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Represents a repeated `Value`.
-     * </pre>
      *
-     * <code>.google.protobuf.ListValue list_value = 6;</code>
+     * Generated from protobuf field <code>.google.protobuf.ListValue list_value = 6;</code>
+     * @param \Google\Protobuf\ListValue $var
      */
     public function setListValue(&$var)
     {
@@ -178,6 +164,9 @@ class Value extends \Google\Protobuf\Internal\Message
         $this->writeOneof(6, $var);
     }
 
+    /**
+     * @return string
+     */
     public function getKind()
     {
         return $this->whichOneof("kind");

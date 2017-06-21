@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Authentication` defines the authentication configuration for an API.
  * Example for an API targeted for external use:
  *     name: calendar.googleapis.com
@@ -22,27 +21,22 @@ use Google\Protobuf\Internal\GPBUtil;
  *       - selector: "*"
  *         requirements:
  *           provider_id: google_calendar_auth
- * </pre>
  *
- * Protobuf type <code>google.api.Authentication</code>
+ * Protobuf type <code>Google\Api\Authentication</code>
  */
 class Authentication extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A list of authentication rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthenticationRule rules = 3;</code>
      */
     private $rules;
     /**
-     * <pre>
      * Defines a set of authentication providers that a service supports.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthProvider providers = 4;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthProvider providers = 4;</code>
      */
     private $providers;
 
@@ -52,12 +46,11 @@ class Authentication extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of authentication rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthenticationRule rules = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -65,27 +58,23 @@ class Authentication extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of authentication rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthenticationRule rules = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\AuthenticationRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Defines a set of authentication providers that a service supports.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthProvider providers = 4;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthProvider providers = 4;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getProviders()
     {
@@ -93,18 +82,15 @@ class Authentication extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Defines a set of authentication providers that a service supports.
-     * </pre>
      *
-     * <code>repeated .google.api.AuthProvider providers = 4;</code>
+     * Generated from protobuf field <code>repeated .google.api.AuthProvider providers = 4;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setProviders(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\AuthProvider::class);
         $this->providers = $arr;
-
-        return $this;
     }
 
 }

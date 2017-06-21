@@ -9,20 +9,16 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Authentication information for the operation.
- * </pre>
  *
- * Protobuf type <code>google.cloud.audit.AuthenticationInfo</code>
+ * Protobuf type <code>Google\Cloud\Audit\AuthenticationInfo</code>
  */
 class AuthenticationInfo extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The email address of the authenticated user making the request.
-     * </pre>
      *
-     * <code>string principal_email = 1;</code>
+     * Generated from protobuf field <code>string principal_email = 1;</code>
      */
     private $principal_email = '';
 
@@ -32,11 +28,10 @@ class AuthenticationInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The email address of the authenticated user making the request.
-     * </pre>
      *
-     * <code>string principal_email = 1;</code>
+     * Generated from protobuf field <code>string principal_email = 1;</code>
+     * @return string
      */
     public function getPrincipalEmail()
     {
@@ -44,18 +39,15 @@ class AuthenticationInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The email address of the authenticated user making the request.
-     * </pre>
      *
-     * <code>string principal_email = 1;</code>
+     * Generated from protobuf field <code>string principal_email = 1;</code>
+     * @param string $var
      */
     public function setPrincipalEmail($var)
     {
         GPBUtil::checkString($var, True);
         $this->principal_email = $var;
-
-        return $this;
     }
 
 }

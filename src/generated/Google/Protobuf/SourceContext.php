@@ -9,22 +9,18 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `SourceContext` represents information about the source of a
  * protobuf element, like the file in which it is defined.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.SourceContext</code>
+ * Protobuf type <code>Google\Protobuf\SourceContext</code>
  */
 class SourceContext extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The path-qualified name of the .proto file that contained the associated
      * protobuf element.  For example: `"google/protobuf/source_context.proto"`.
-     * </pre>
      *
-     * <code>string file_name = 1;</code>
+     * Generated from protobuf field <code>string file_name = 1;</code>
      */
     private $file_name = '';
 
@@ -34,12 +30,11 @@ class SourceContext extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The path-qualified name of the .proto file that contained the associated
      * protobuf element.  For example: `"google/protobuf/source_context.proto"`.
-     * </pre>
      *
-     * <code>string file_name = 1;</code>
+     * Generated from protobuf field <code>string file_name = 1;</code>
+     * @return string
      */
     public function getFileName()
     {
@@ -47,12 +42,11 @@ class SourceContext extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The path-qualified name of the .proto file that contained the associated
      * protobuf element.  For example: `"google/protobuf/source_context.proto"`.
-     * </pre>
      *
-     * <code>string file_name = 1;</code>
+     * Generated from protobuf field <code>string file_name = 1;</code>
+     * @param string $var
      */
     public function setFileName($var)
     {

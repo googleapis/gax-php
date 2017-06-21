@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A Distribution may optionally contain a histogram of the values in the
  * population.  The histogram is given in `bucket_counts` as counts of values
  * that fall into one of a sequence of non-overlapping buckets.  The sequence
@@ -20,7 +19,7 @@ use Google\Protobuf\Internal\GPBUtil;
  * The sequence of N buckets for a Distribution consists of an underflow
  * bucket (number 0), zero or more finite buckets (number 1 through N - 2) and
  * an overflow bucket (number N - 1).  The buckets are contiguous:  the lower
- * bound of bucket i (i &gt; 0) is the same as the upper bound of bucket i - 1.
+ * bound of bucket i (i > 0) is the same as the upper bound of bucket i - 1.
  * The buckets span the whole range of finite values: lower bound of the
  * underflow bucket is -infinity and the upper bound of the overflow bucket is
  * +infinity.  The finite buckets are so-called because both bounds are
@@ -29,9 +28,8 @@ use Google\Protobuf\Internal\GPBUtil;
  * describe the boundaries by giving parameters for a formula to generate
  * boundaries and one gives the bucket boundaries explicitly.
  * If `bucket_boundaries` is not given, then no `bucket_counts` may be given.
- * </pre>
  *
- * Protobuf type <code>google.api.Distribution.BucketOptions</code>
+ * Protobuf type <code>Google\Api\Distribution\BucketOptions</code>
  */
 class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
 {
@@ -43,11 +41,10 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The linear bucket.
-     * </pre>
      *
-     * <code>.google.api.Distribution.BucketOptions.Linear linear_buckets = 1;</code>
+     * Generated from protobuf field <code>.google.api.Distribution.BucketOptions.Linear linear_buckets = 1;</code>
+     * @return \Google\Api\Distribution_BucketOptions_Linear
      */
     public function getLinearBuckets()
     {
@@ -55,26 +52,22 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The linear bucket.
-     * </pre>
      *
-     * <code>.google.api.Distribution.BucketOptions.Linear linear_buckets = 1;</code>
+     * Generated from protobuf field <code>.google.api.Distribution.BucketOptions.Linear linear_buckets = 1;</code>
+     * @param \Google\Api\Distribution_BucketOptions_Linear $var
      */
     public function setLinearBuckets(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions_Linear::class);
         $this->writeOneof(1, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The exponential buckets.
-     * </pre>
      *
-     * <code>.google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;</code>
+     * Generated from protobuf field <code>.google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;</code>
+     * @return \Google\Api\Distribution_BucketOptions_Exponential
      */
     public function getExponentialBuckets()
     {
@@ -82,26 +75,22 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The exponential buckets.
-     * </pre>
      *
-     * <code>.google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;</code>
+     * Generated from protobuf field <code>.google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;</code>
+     * @param \Google\Api\Distribution_BucketOptions_Exponential $var
      */
     public function setExponentialBuckets(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions_Exponential::class);
         $this->writeOneof(2, $var);
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The explicit buckets.
-     * </pre>
      *
-     * <code>.google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;</code>
+     * Generated from protobuf field <code>.google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;</code>
+     * @return \Google\Api\Distribution_BucketOptions_Explicit
      */
     public function getExplicitBuckets()
     {
@@ -109,20 +98,20 @@ class Distribution_BucketOptions extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The explicit buckets.
-     * </pre>
      *
-     * <code>.google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;</code>
+     * Generated from protobuf field <code>.google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;</code>
+     * @param \Google\Api\Distribution_BucketOptions_Explicit $var
      */
     public function setExplicitBuckets(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\Distribution_BucketOptions_Explicit::class);
         $this->writeOneof(3, $var);
-
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getOptions()
     {
         return $this->whichOneof("options");

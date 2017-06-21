@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Represents a color in the RGBA color space. This representation is designed
  * for simplicity of conversion to/from color representations in various
  * languages over compactness; for example, the fields of this representation
@@ -67,14 +66,14 @@ use Google\Protobuf\Internal\GPBUtil;
  *      }
  *      static Color* toProto(UIColor* color) {
  *          CGFloat red, green, blue, alpha;
- *          if (![color getRed:&amp;red green:&amp;green blue:&amp;blue alpha:&amp;alpha]) {
+ *          if (![color getRed:&red green:&green blue:&blue alpha:&alpha]) {
  *            return nil;
  *          }
  *          Color* result = [Color alloc] init];
  *          [result setRed:red];
  *          [result setGreen:green];
  *          [result setBlue:blue];
- *          if (alpha &lt;= 0.9999) {
+ *          if (alpha <= 0.9999) {
  *            [result setAlpha:floatWrapperWithValue(alpha)];
  *          }
  *          [result autorelease];
@@ -98,49 +97,41 @@ use Google\Protobuf\Internal\GPBUtil;
  *        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
  *     };
  *     var rgbToCssColor_ = function(red, green, blue) {
- *       var rgbNumber = new Number((red &lt;&lt; 16) | (green &lt;&lt; 8) | blue);
+ *       var rgbNumber = new Number((red << 16) | (green << 8) | blue);
  *       var hexString = rgbNumber.toString(16);
  *       var missingZeros = 6 - hexString.length;
  *       var resultBuilder = ['#'];
- *       for (var i = 0; i &lt; missingZeros; i++) {
+ *       for (var i = 0; i < missingZeros; i++) {
  *          resultBuilder.push('0');
  *       }
  *       resultBuilder.push(hexString);
  *       return resultBuilder.join('');
  *     };
  *     // ...
- * </pre>
  *
- * Protobuf type <code>google.type.Color</code>
+ * Protobuf type <code>Google\Type\Color</code>
  */
 class Color extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The amount of red in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float red = 1;</code>
+     * Generated from protobuf field <code>float red = 1;</code>
      */
     private $red = 0.0;
     /**
-     * <pre>
      * The amount of green in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float green = 2;</code>
+     * Generated from protobuf field <code>float green = 2;</code>
      */
     private $green = 0.0;
     /**
-     * <pre>
      * The amount of blue in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float blue = 3;</code>
+     * Generated from protobuf field <code>float blue = 3;</code>
      */
     private $blue = 0.0;
     /**
-     * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
      *   pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
@@ -150,9 +141,8 @@ class Color extends \Google\Protobuf\Internal\Message
      * possible to distinguish between a default value and the value being unset.
      * If omitted, this color object is to be rendered as a solid color
      * (as if the alpha value had been explicitly given with a value of 1.0).
-     * </pre>
      *
-     * <code>.google.protobuf.FloatValue alpha = 4;</code>
+     * Generated from protobuf field <code>.google.protobuf.FloatValue alpha = 4;</code>
      */
     private $alpha = null;
 
@@ -162,11 +152,10 @@ class Color extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The amount of red in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float red = 1;</code>
+     * Generated from protobuf field <code>float red = 1;</code>
+     * @return float
      */
     public function getRed()
     {
@@ -174,26 +163,22 @@ class Color extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The amount of red in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float red = 1;</code>
+     * Generated from protobuf field <code>float red = 1;</code>
+     * @param float $var
      */
     public function setRed($var)
     {
         GPBUtil::checkFloat($var);
         $this->red = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The amount of green in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float green = 2;</code>
+     * Generated from protobuf field <code>float green = 2;</code>
+     * @return float
      */
     public function getGreen()
     {
@@ -201,26 +186,22 @@ class Color extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The amount of green in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float green = 2;</code>
+     * Generated from protobuf field <code>float green = 2;</code>
+     * @param float $var
      */
     public function setGreen($var)
     {
         GPBUtil::checkFloat($var);
         $this->green = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The amount of blue in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float blue = 3;</code>
+     * Generated from protobuf field <code>float blue = 3;</code>
+     * @return float
      */
     public function getBlue()
     {
@@ -228,22 +209,18 @@ class Color extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The amount of blue in the color as a value in the interval [0, 1].
-     * </pre>
      *
-     * <code>float blue = 3;</code>
+     * Generated from protobuf field <code>float blue = 3;</code>
+     * @param float $var
      */
     public function setBlue($var)
     {
         GPBUtil::checkFloat($var);
         $this->blue = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
      *   pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
@@ -253,9 +230,9 @@ class Color extends \Google\Protobuf\Internal\Message
      * possible to distinguish between a default value and the value being unset.
      * If omitted, this color object is to be rendered as a solid color
      * (as if the alpha value had been explicitly given with a value of 1.0).
-     * </pre>
      *
-     * <code>.google.protobuf.FloatValue alpha = 4;</code>
+     * Generated from protobuf field <code>.google.protobuf.FloatValue alpha = 4;</code>
+     * @return \Google\Protobuf\FloatValue
      */
     public function getAlpha()
     {
@@ -263,7 +240,6 @@ class Color extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
      *   pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
@@ -273,16 +249,14 @@ class Color extends \Google\Protobuf\Internal\Message
      * possible to distinguish between a default value and the value being unset.
      * If omitted, this color object is to be rendered as a solid color
      * (as if the alpha value had been explicitly given with a value of 1.0).
-     * </pre>
      *
-     * <code>.google.protobuf.FloatValue alpha = 4;</code>
+     * Generated from protobuf field <code>.google.protobuf.FloatValue alpha = 4;</code>
+     * @param \Google\Protobuf\FloatValue $var
      */
     public function setAlpha(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\FloatValue::class);
         $this->alpha = $var;
-
-        return $this;
     }
 
 }

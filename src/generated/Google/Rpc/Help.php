@@ -9,23 +9,19 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Provides links to documentation or for performing an out of band action.
  * For example, if a quota check failed with an error indicating the calling
  * project hasn't enabled the accessed service, this can contain a URL pointing
  * directly to the right place in the developer console to flip the bit.
- * </pre>
  *
- * Protobuf type <code>google.rpc.Help</code>
+ * Protobuf type <code>Google\Rpc\Help</code>
  */
 class Help extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * URL(s) pointing to additional information on handling the current error.
-     * </pre>
      *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.Help.Link links = 1;</code>
      */
     private $links;
 
@@ -35,11 +31,10 @@ class Help extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * URL(s) pointing to additional information on handling the current error.
-     * </pre>
      *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.Help.Link links = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLinks()
     {
@@ -47,18 +42,15 @@ class Help extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * URL(s) pointing to additional information on handling the current error.
-     * </pre>
      *
-     * <code>repeated .google.rpc.Help.Link links = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.Help.Link links = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLinks(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Rpc\Help_Link::class);
         $this->links = $arr;
-
-        return $this;
     }
 
 }

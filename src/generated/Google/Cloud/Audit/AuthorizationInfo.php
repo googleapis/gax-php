@@ -9,38 +9,30 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Authorization information for the operation.
- * </pre>
  *
- * Protobuf type <code>google.cloud.audit.AuthorizationInfo</code>
+ * Protobuf type <code>Google\Cloud\Audit\AuthorizationInfo</code>
  */
 class AuthorizationInfo extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The resource being accessed, as a REST-style string. For example:
      *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
-     * </pre>
      *
-     * <code>string resource = 1;</code>
+     * Generated from protobuf field <code>string resource = 1;</code>
      */
     private $resource = '';
     /**
-     * <pre>
      * The required IAM permission.
-     * </pre>
      *
-     * <code>string permission = 2;</code>
+     * Generated from protobuf field <code>string permission = 2;</code>
      */
     private $permission = '';
     /**
-     * <pre>
      * Whether or not authorization for `resource` and `permission`
      * was granted.
-     * </pre>
      *
-     * <code>bool granted = 3;</code>
+     * Generated from protobuf field <code>bool granted = 3;</code>
      */
     private $granted = false;
 
@@ -50,12 +42,11 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The resource being accessed, as a REST-style string. For example:
      *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
-     * </pre>
      *
-     * <code>string resource = 1;</code>
+     * Generated from protobuf field <code>string resource = 1;</code>
+     * @return string
      */
     public function getResource()
     {
@@ -63,27 +54,23 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The resource being accessed, as a REST-style string. For example:
      *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
-     * </pre>
      *
-     * <code>string resource = 1;</code>
+     * Generated from protobuf field <code>string resource = 1;</code>
+     * @param string $var
      */
     public function setResource($var)
     {
         GPBUtil::checkString($var, True);
         $this->resource = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The required IAM permission.
-     * </pre>
      *
-     * <code>string permission = 2;</code>
+     * Generated from protobuf field <code>string permission = 2;</code>
+     * @return string
      */
     public function getPermission()
     {
@@ -91,27 +78,23 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The required IAM permission.
-     * </pre>
      *
-     * <code>string permission = 2;</code>
+     * Generated from protobuf field <code>string permission = 2;</code>
+     * @param string $var
      */
     public function setPermission($var)
     {
         GPBUtil::checkString($var, True);
         $this->permission = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Whether or not authorization for `resource` and `permission`
      * was granted.
-     * </pre>
      *
-     * <code>bool granted = 3;</code>
+     * Generated from protobuf field <code>bool granted = 3;</code>
+     * @return bool
      */
     public function getGranted()
     {
@@ -119,19 +102,16 @@ class AuthorizationInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Whether or not authorization for `resource` and `permission`
      * was granted.
-     * </pre>
      *
-     * <code>bool granted = 3;</code>
+     * Generated from protobuf field <code>bool granted = 3;</code>
+     * @param bool $var
      */
     public function setGranted($var)
     {
         GPBUtil::checkBool($var);
         $this->granted = $var;
-
-        return $this;
     }
 
 }

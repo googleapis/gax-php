@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Logging configuration of the service.
  * The following example shows how to configure logs to be sent to the
  * producer and consumer projects. In the example, the `activity_history`
@@ -37,32 +36,27 @@ use Google\Protobuf\Internal\GPBUtil;
  *       - monitored_resource: library.googleapis.com/branch
  *         logs:
  *         - activity_history
- * </pre>
  *
- * Protobuf type <code>google.api.Logging</code>
+ * Protobuf type <code>Google\Api\Logging</code>
  */
 class Logging extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Logging configurations for sending logs to the producer project.
      * There can be multiple producer destinations, each one must have a
      * different monitored resource type. A log can be used in at most
      * one producer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     private $producer_destinations;
     /**
-     * <pre>
      * Logging configurations for sending logs to the consumer project.
      * There can be multiple consumer destinations, each one must have a
      * different monitored resource type. A log can be used in at most
      * one consumer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     private $consumer_destinations;
 
@@ -72,14 +66,13 @@ class Logging extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Logging configurations for sending logs to the producer project.
      * There can be multiple producer destinations, each one must have a
      * different monitored resource type. A log can be used in at most
      * one producer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getProducerDestinations()
     {
@@ -87,32 +80,28 @@ class Logging extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Logging configurations for sending logs to the producer project.
      * There can be multiple producer destinations, each one must have a
      * different monitored resource type. A log can be used in at most
      * one producer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setProducerDestinations(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Logging_LoggingDestination::class);
         $this->producer_destinations = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Logging configurations for sending logs to the consumer project.
      * There can be multiple consumer destinations, each one must have a
      * different monitored resource type. A log can be used in at most
      * one consumer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getConsumerDestinations()
     {
@@ -120,21 +109,18 @@ class Logging extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Logging configurations for sending logs to the consumer project.
      * There can be multiple consumer destinations, each one must have a
      * different monitored resource type. A log can be used in at most
      * one consumer destination.
-     * </pre>
      *
-     * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setConsumerDestinations(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Logging_LoggingDestination::class);
         $this->consumer_destinations = $arr;
-
-        return $this;
     }
 
 }

@@ -9,31 +9,25 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Provides a localized error message that is safe to return to the user
  * which can be attached to an RPC error.
- * </pre>
  *
- * Protobuf type <code>google.rpc.LocalizedMessage</code>
+ * Protobuf type <code>Google\Rpc\LocalizedMessage</code>
  */
 class LocalizedMessage extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The locale used following the specification defined at
      * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
-     * </pre>
      *
-     * <code>string locale = 1;</code>
+     * Generated from protobuf field <code>string locale = 1;</code>
      */
     private $locale = '';
     /**
-     * <pre>
      * The localized error message in the above locale.
-     * </pre>
      *
-     * <code>string message = 2;</code>
+     * Generated from protobuf field <code>string message = 2;</code>
      */
     private $message = '';
 
@@ -43,13 +37,12 @@ class LocalizedMessage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The locale used following the specification defined at
      * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
-     * </pre>
      *
-     * <code>string locale = 1;</code>
+     * Generated from protobuf field <code>string locale = 1;</code>
+     * @return string
      */
     public function getLocale()
     {
@@ -57,28 +50,24 @@ class LocalizedMessage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The locale used following the specification defined at
      * http://www.rfc-editor.org/rfc/bcp/bcp47.txt.
      * Examples are: "en-US", "fr-CH", "es-MX"
-     * </pre>
      *
-     * <code>string locale = 1;</code>
+     * Generated from protobuf field <code>string locale = 1;</code>
+     * @param string $var
      */
     public function setLocale($var)
     {
         GPBUtil::checkString($var, True);
         $this->locale = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The localized error message in the above locale.
-     * </pre>
      *
-     * <code>string message = 2;</code>
+     * Generated from protobuf field <code>string message = 2;</code>
+     * @return string
      */
     public function getMessage()
     {
@@ -86,18 +75,15 @@ class LocalizedMessage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The localized error message in the above locale.
-     * </pre>
      *
-     * <code>string message = 2;</code>
+     * Generated from protobuf field <code>string message = 2;</code>
+     * @param string $var
      */
     public function setMessage($var)
     {
         GPBUtil::checkString($var, True);
         $this->message = $var;
-
-        return $this;
     }
 
 }

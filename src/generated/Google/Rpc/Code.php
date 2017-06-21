@@ -5,98 +5,81 @@
 namespace Google\Rpc;
 
 /**
- * <pre>
  * The canonical error codes for Google APIs.
  * Sometimes multiple error codes may apply.  Services should return
  * the most specific error code that applies.  For example, prefer
  * `OUT_OF_RANGE` over `FAILED_PRECONDITION` if both codes apply.
  * Similarly prefer `NOT_FOUND` or `ALREADY_EXISTS` over `FAILED_PRECONDITION`.
- * </pre>
  *
- * Protobuf enum <code>google.rpc.Code</code>
+ * Protobuf enum <code>Google\Rpc\Code</code>
  */
 class Code
 {
     /**
-     * <pre>
      * Not an error; returned on success
      * HTTP Mapping: 200 OK
-     * </pre>
      *
-     * <code>OK = 0;</code>
+     * Generated from protobuf enum <code>OK = 0;</code>
      */
     const OK = 0;
     /**
-     * <pre>
      * The operation was cancelled, typically by the caller.
      * HTTP Mapping: 499 Client Closed Request
-     * </pre>
      *
-     * <code>CANCELLED = 1;</code>
+     * Generated from protobuf enum <code>CANCELLED = 1;</code>
      */
     const CANCELLED = 1;
     /**
-     * <pre>
      * Unknown error.  For example, this error may be returned when
      * a `Status` value received from another address space belongs to
      * an error space that is not known in this address space.  Also
      * errors raised by APIs that do not return enough error information
      * may be converted to this error.
      * HTTP Mapping: 500 Internal Server Error
-     * </pre>
      *
-     * <code>UNKNOWN = 2;</code>
+     * Generated from protobuf enum <code>UNKNOWN = 2;</code>
      */
     const UNKNOWN = 2;
     /**
-     * <pre>
      * The client specified an invalid argument.  Note that this differs
      * from `FAILED_PRECONDITION`.  `INVALID_ARGUMENT` indicates arguments
      * that are problematic regardless of the state of the system
      * (e.g., a malformed file name).
      * HTTP Mapping: 400 Bad Request
-     * </pre>
      *
-     * <code>INVALID_ARGUMENT = 3;</code>
+     * Generated from protobuf enum <code>INVALID_ARGUMENT = 3;</code>
      */
     const INVALID_ARGUMENT = 3;
     /**
-     * <pre>
      * The deadline expired before the operation could complete. For operations
      * that change the state of the system, this error may be returned
      * even if the operation has completed successfully.  For example, a
      * successful response from a server could have been delayed long
      * enough for the deadline to expire.
      * HTTP Mapping: 504 Gateway Timeout
-     * </pre>
      *
-     * <code>DEADLINE_EXCEEDED = 4;</code>
+     * Generated from protobuf enum <code>DEADLINE_EXCEEDED = 4;</code>
      */
     const DEADLINE_EXCEEDED = 4;
     /**
-     * <pre>
      * Some requested entity (e.g., file or directory) was not found.
      * For privacy reasons, this code *may* be returned when the client
      * does not have the access rights to the entity, though such usage is
      * discouraged.
      * HTTP Mapping: 404 Not Found
-     * </pre>
      *
-     * <code>NOT_FOUND = 5;</code>
+     * Generated from protobuf enum <code>NOT_FOUND = 5;</code>
      */
     const NOT_FOUND = 5;
     /**
-     * <pre>
      * The entity that a client attempted to create (e.g., file or directory)
      * already exists.
      * HTTP Mapping: 409 Conflict
-     * </pre>
      *
-     * <code>ALREADY_EXISTS = 6;</code>
+     * Generated from protobuf enum <code>ALREADY_EXISTS = 6;</code>
      */
     const ALREADY_EXISTS = 6;
     /**
-     * <pre>
      * The caller does not have permission to execute the specified
      * operation. `PERMISSION_DENIED` must not be used for rejections
      * caused by exhausting some resource (use `RESOURCE_EXHAUSTED`
@@ -104,33 +87,27 @@ class Code
      * used if the caller can not be identified (use `UNAUTHENTICATED`
      * instead for those errors).
      * HTTP Mapping: 403 Forbidden
-     * </pre>
      *
-     * <code>PERMISSION_DENIED = 7;</code>
+     * Generated from protobuf enum <code>PERMISSION_DENIED = 7;</code>
      */
     const PERMISSION_DENIED = 7;
     /**
-     * <pre>
      * The request does not have valid authentication credentials for the
      * operation.
      * HTTP Mapping: 401 Unauthorized
-     * </pre>
      *
-     * <code>UNAUTHENTICATED = 16;</code>
+     * Generated from protobuf enum <code>UNAUTHENTICATED = 16;</code>
      */
     const UNAUTHENTICATED = 16;
     /**
-     * <pre>
      * Some resource has been exhausted, perhaps a per-user quota, or
      * perhaps the entire file system is out of space.
      * HTTP Mapping: 429 Too Many Requests
-     * </pre>
      *
-     * <code>RESOURCE_EXHAUSTED = 8;</code>
+     * Generated from protobuf enum <code>RESOURCE_EXHAUSTED = 8;</code>
      */
     const RESOURCE_EXHAUSTED = 8;
     /**
-     * <pre>
      * The operation was rejected because the system is not in a state
      * required for the operation's execution.  For example, the directory
      * to be deleted is non-empty, an rmdir operation is applied to
@@ -146,25 +123,21 @@ class Code
      *      should be returned since the client should not retry unless
      *      the files are deleted from the directory.
      * HTTP Mapping: 400 Bad Request
-     * </pre>
      *
-     * <code>FAILED_PRECONDITION = 9;</code>
+     * Generated from protobuf enum <code>FAILED_PRECONDITION = 9;</code>
      */
     const FAILED_PRECONDITION = 9;
     /**
-     * <pre>
      * The operation was aborted, typically due to a concurrency issue such as
      * a sequencer check failure or transaction abort.
      * See the guidelines above for deciding between `FAILED_PRECONDITION`,
      * `ABORTED`, and `UNAVAILABLE`.
      * HTTP Mapping: 409 Conflict
-     * </pre>
      *
-     * <code>ABORTED = 10;</code>
+     * Generated from protobuf enum <code>ABORTED = 10;</code>
      */
     const ABORTED = 10;
     /**
-     * <pre>
      * The operation was attempted past the valid range.  E.g., seeking or
      * reading past end-of-file.
      * Unlike `INVALID_ARGUMENT`, this error indicates a problem that may
@@ -179,52 +152,43 @@ class Code
      * a space can easily look for an `OUT_OF_RANGE` error to detect when
      * they are done.
      * HTTP Mapping: 400 Bad Request
-     * </pre>
      *
-     * <code>OUT_OF_RANGE = 11;</code>
+     * Generated from protobuf enum <code>OUT_OF_RANGE = 11;</code>
      */
     const OUT_OF_RANGE = 11;
     /**
-     * <pre>
      * The operation is not implemented or is not supported/enabled in this
      * service.
      * HTTP Mapping: 501 Not Implemented
-     * </pre>
      *
-     * <code>UNIMPLEMENTED = 12;</code>
+     * Generated from protobuf enum <code>UNIMPLEMENTED = 12;</code>
      */
     const UNIMPLEMENTED = 12;
     /**
-     * <pre>
      * Internal errors.  This means that some invariants expected by the
      * underlying system have been broken.  This error code is reserved
      * for serious errors.
      * HTTP Mapping: 500 Internal Server Error
-     * </pre>
      *
-     * <code>INTERNAL = 13;</code>
+     * Generated from protobuf enum <code>INTERNAL = 13;</code>
      */
     const INTERNAL = 13;
     /**
-     * <pre>
      * The service is currently unavailable.  This is most likely a
      * transient condition, which can be corrected by retrying with
      * a backoff.
      * See the guidelines above for deciding between `FAILED_PRECONDITION`,
      * `ABORTED`, and `UNAVAILABLE`.
      * HTTP Mapping: 503 Service Unavailable
-     * </pre>
      *
-     * <code>UNAVAILABLE = 14;</code>
+     * Generated from protobuf enum <code>UNAVAILABLE = 14;</code>
      */
     const UNAVAILABLE = 14;
     /**
-     * <pre>
      * Unrecoverable data loss or corruption.
      * HTTP Mapping: 500 Internal Server Error
-     * </pre>
      *
-     * <code>DATA_LOSS = 15;</code>
+     * Generated from protobuf enum <code>DATA_LOSS = 15;</code>
      */
     const DATA_LOSS = 15;
 }

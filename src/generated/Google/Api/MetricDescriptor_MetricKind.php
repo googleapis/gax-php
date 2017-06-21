@@ -5,48 +5,38 @@
 namespace Google\Api;
 
 /**
- * <pre>
  * The kind of measurement. It describes how the data is reported.
- * </pre>
  *
- * Protobuf enum <code>google.api.MetricDescriptor.MetricKind</code>
+ * Protobuf enum <code>Google\Api\MetricDescriptor\MetricKind</code>
  */
 class MetricDescriptor_MetricKind
 {
     /**
-     * <pre>
      * Do not use this default value.
-     * </pre>
      *
-     * <code>METRIC_KIND_UNSPECIFIED = 0;</code>
+     * Generated from protobuf enum <code>METRIC_KIND_UNSPECIFIED = 0;</code>
      */
     const METRIC_KIND_UNSPECIFIED = 0;
     /**
-     * <pre>
      * An instantaneous measurement of a value.
-     * </pre>
      *
-     * <code>GAUGE = 1;</code>
+     * Generated from protobuf enum <code>GAUGE = 1;</code>
      */
     const GAUGE = 1;
     /**
-     * <pre>
      * The change in a value during a time interval.
-     * </pre>
      *
-     * <code>DELTA = 2;</code>
+     * Generated from protobuf enum <code>DELTA = 2;</code>
      */
     const DELTA = 2;
     /**
-     * <pre>
      * A value accumulated over a time interval.  Cumulative
      * measurements in a time series should have the same start time
      * and increasing end times, until an event resets the cumulative
      * value to zero and sets a new start time for the following
      * points.
-     * </pre>
      *
-     * <code>CUMULATIVE = 3;</code>
+     * Generated from protobuf enum <code>CUMULATIVE = 3;</code>
      */
     const CUMULATIVE = 3;
 }

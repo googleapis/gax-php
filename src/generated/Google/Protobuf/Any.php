@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `Any` contains an arbitrary serialized protocol buffer message along with a
  * URL that describes the type of the serialized message.
  * Protobuf library provides support to pack/unpack Any values in the form
@@ -19,7 +18,7 @@ use Google\Protobuf\Internal\GPBUtil;
  *     Any any;
  *     any.PackFrom(foo);
  *     ...
- *     if (any.UnpackTo(&amp;foo)) {
+ *     if (any.UnpackTo(&foo)) {
  *       ...
  *     }
  * Example 2: Pack and unpack a message in Java.
@@ -54,8 +53,8 @@ use Google\Protobuf\Internal\GPBUtil;
  *     }
  *     {
  *       "&#64;type": "type.googleapis.com/google.profile.Person",
- *       "firstName": &lt;string&gt;,
- *       "lastName": &lt;string&gt;
+ *       "firstName": <string>,
+ *       "lastName": <string>
  *     }
  * If the embedded message type is well-known and has a custom JSON
  * representation, that representation will be embedded adding a field
@@ -65,14 +64,12 @@ use Google\Protobuf\Internal\GPBUtil;
  *       "&#64;type": "type.googleapis.com/google.protobuf.Duration",
  *       "value": "1.212s"
  *     }
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Any</code>
+ * Protobuf type <code>Google\Protobuf\Any</code>
  */
 class Any extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A URL/resource name whose content describes the type of the
      * serialized protocol buffer message.
      * For URLs which use the scheme `http`, `https`, or no scheme, the
@@ -91,17 +88,14 @@ class Any extends \Google\Protobuf\Internal\Message
      *   breaking changes.)
      * Schemes other than `http`, `https` (or the empty scheme) might be
      * used with implementation specific semantics.
-     * </pre>
      *
-     * <code>string type_url = 1;</code>
+     * Generated from protobuf field <code>string type_url = 1;</code>
      */
     private $type_url = '';
     /**
-     * <pre>
      * Must be a valid serialized protocol buffer of the above specified type.
-     * </pre>
      *
-     * <code>bytes value = 2;</code>
+     * Generated from protobuf field <code>bytes value = 2;</code>
      */
     private $value = '';
 
@@ -111,7 +105,6 @@ class Any extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A URL/resource name whose content describes the type of the
      * serialized protocol buffer message.
      * For URLs which use the scheme `http`, `https`, or no scheme, the
@@ -130,9 +123,9 @@ class Any extends \Google\Protobuf\Internal\Message
      *   breaking changes.)
      * Schemes other than `http`, `https` (or the empty scheme) might be
      * used with implementation specific semantics.
-     * </pre>
      *
-     * <code>string type_url = 1;</code>
+     * Generated from protobuf field <code>string type_url = 1;</code>
+     * @return string
      */
     public function getTypeUrl()
     {
@@ -140,7 +133,6 @@ class Any extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A URL/resource name whose content describes the type of the
      * serialized protocol buffer message.
      * For URLs which use the scheme `http`, `https`, or no scheme, the
@@ -159,9 +151,9 @@ class Any extends \Google\Protobuf\Internal\Message
      *   breaking changes.)
      * Schemes other than `http`, `https` (or the empty scheme) might be
      * used with implementation specific semantics.
-     * </pre>
      *
-     * <code>string type_url = 1;</code>
+     * Generated from protobuf field <code>string type_url = 1;</code>
+     * @param string $var
      */
     public function setTypeUrl($var)
     {
@@ -170,11 +162,10 @@ class Any extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Must be a valid serialized protocol buffer of the above specified type.
-     * </pre>
      *
-     * <code>bytes value = 2;</code>
+     * Generated from protobuf field <code>bytes value = 2;</code>
+     * @return string
      */
     public function getValue()
     {
@@ -182,11 +173,10 @@ class Any extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Must be a valid serialized protocol buffer of the above specified type.
-     * </pre>
      *
-     * <code>bytes value = 2;</code>
+     * Generated from protobuf field <code>bytes value = 2;</code>
+     * @param string $var
      */
     public function setValue($var)
     {

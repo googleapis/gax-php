@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Experimental service configuration. These configuration options can
  * only be used by whitelisted users.
- * </pre>
  *
- * Protobuf type <code>google.api.Experimental</code>
+ * Protobuf type <code>Google\Api\Experimental</code>
  */
 class Experimental extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Authorization configuration.
-     * </pre>
      *
-     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
+     * Generated from protobuf field <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     private $authorization = null;
 
@@ -33,11 +29,10 @@ class Experimental extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Authorization configuration.
-     * </pre>
      *
-     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
+     * Generated from protobuf field <code>.google.api.AuthorizationConfig authorization = 8;</code>
+     * @return \Google\Api\AuthorizationConfig
      */
     public function getAuthorization()
     {
@@ -45,18 +40,15 @@ class Experimental extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Authorization configuration.
-     * </pre>
      *
-     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
+     * Generated from protobuf field <code>.google.api.AuthorizationConfig authorization = 8;</code>
+     * @param \Google\Api\AuthorizationConfig $var
      */
     public function setAuthorization(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Api\AuthorizationConfig::class);
         $this->authorization = $var;
-
-        return $this;
     }
 
 }

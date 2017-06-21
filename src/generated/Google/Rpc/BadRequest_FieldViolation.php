@@ -9,30 +9,24 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A message type used to describe a single bad request field.
- * </pre>
  *
- * Protobuf type <code>google.rpc.BadRequest.FieldViolation</code>
+ * Protobuf type <code>Google\Rpc\BadRequest\FieldViolation</code>
  */
 class BadRequest_FieldViolation extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * A path leading to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field. E.g., "field_violations.field" would identify this field.
-     * </pre>
      *
-     * <code>string field = 1;</code>
+     * Generated from protobuf field <code>string field = 1;</code>
      */
     private $field = '';
     /**
-     * <pre>
      * A description of why the request element is bad.
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
      */
     private $description = '';
 
@@ -42,13 +36,12 @@ class BadRequest_FieldViolation extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A path leading to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field. E.g., "field_violations.field" would identify this field.
-     * </pre>
      *
-     * <code>string field = 1;</code>
+     * Generated from protobuf field <code>string field = 1;</code>
+     * @return string
      */
     public function getField()
     {
@@ -56,28 +49,24 @@ class BadRequest_FieldViolation extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A path leading to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field. E.g., "field_violations.field" would identify this field.
-     * </pre>
      *
-     * <code>string field = 1;</code>
+     * Generated from protobuf field <code>string field = 1;</code>
+     * @param string $var
      */
     public function setField($var)
     {
         GPBUtil::checkString($var, True);
         $this->field = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A description of why the request element is bad.
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -85,18 +74,15 @@ class BadRequest_FieldViolation extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A description of why the request element is bad.
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
 }

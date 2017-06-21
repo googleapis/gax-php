@@ -9,23 +9,19 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Selects and configures the service controller used by the service.  The
  * service controller handles features like abuse, quota, billing, logging,
  * monitoring, etc.
- * </pre>
  *
- * Protobuf type <code>google.api.Control</code>
+ * Protobuf type <code>Google\Api\Control</code>
  */
 class Control extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The service control environment to use. If empty, no control plane
      * feature (like quota and billing) will be enabled.
-     * </pre>
      *
-     * <code>string environment = 1;</code>
+     * Generated from protobuf field <code>string environment = 1;</code>
      */
     private $environment = '';
 
@@ -35,12 +31,11 @@ class Control extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The service control environment to use. If empty, no control plane
      * feature (like quota and billing) will be enabled.
-     * </pre>
      *
-     * <code>string environment = 1;</code>
+     * Generated from protobuf field <code>string environment = 1;</code>
+     * @return string
      */
     public function getEnvironment()
     {
@@ -48,19 +43,16 @@ class Control extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The service control environment to use. If empty, no control plane
      * feature (like quota and billing) will be enabled.
-     * </pre>
      *
-     * <code>string environment = 1;</code>
+     * Generated from protobuf field <code>string environment = 1;</code>
+     * @param string $var
      */
     public function setEnvironment($var)
     {
         GPBUtil::checkString($var, True);
         $this->environment = $var;
-
-        return $this;
     }
 
 }

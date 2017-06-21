@@ -5,36 +5,28 @@
 namespace Google\Api;
 
 /**
- * <pre>
  * Value types that can be used as label values.
- * </pre>
  *
- * Protobuf enum <code>google.api.LabelDescriptor.ValueType</code>
+ * Protobuf enum <code>Google\Api\LabelDescriptor\ValueType</code>
  */
 class LabelDescriptor_ValueType
 {
     /**
-     * <pre>
      * A variable-length string. This is the default.
-     * </pre>
      *
-     * <code>STRING = 0;</code>
+     * Generated from protobuf enum <code>STRING = 0;</code>
      */
     const STRING = 0;
     /**
-     * <pre>
      * Boolean; true or false.
-     * </pre>
      *
-     * <code>BOOL = 1;</code>
+     * Generated from protobuf enum <code>BOOL = 1;</code>
      */
     const BOOL = 1;
     /**
-     * <pre>
      * A 64-bit signed integer.
-     * </pre>
      *
-     * <code>INT64 = 2;</code>
+     * Generated from protobuf enum <code>INT64 = 2;</code>
      */
     const INT64 = 2;
 }

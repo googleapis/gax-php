@@ -5,44 +5,34 @@
 namespace Google\Protobuf;
 
 /**
- * <pre>
  * Whether a field is optional, required, or repeated.
- * </pre>
  *
- * Protobuf enum <code>google.protobuf.Field.Cardinality</code>
+ * Protobuf enum <code>Google\Protobuf\Field\Cardinality</code>
  */
 class Field_Cardinality
 {
     /**
-     * <pre>
      * For fields with unknown cardinality.
-     * </pre>
      *
-     * <code>CARDINALITY_UNKNOWN = 0;</code>
+     * Generated from protobuf enum <code>CARDINALITY_UNKNOWN = 0;</code>
      */
     const CARDINALITY_UNKNOWN = 0;
     /**
-     * <pre>
      * For optional fields.
-     * </pre>
      *
-     * <code>CARDINALITY_OPTIONAL = 1;</code>
+     * Generated from protobuf enum <code>CARDINALITY_OPTIONAL = 1;</code>
      */
     const CARDINALITY_OPTIONAL = 1;
     /**
-     * <pre>
      * For required fields. Proto2 syntax only.
-     * </pre>
      *
-     * <code>CARDINALITY_REQUIRED = 2;</code>
+     * Generated from protobuf enum <code>CARDINALITY_REQUIRED = 2;</code>
      */
     const CARDINALITY_REQUIRED = 2;
     /**
-     * <pre>
      * For repeated fields.
-     * </pre>
      *
-     * <code>CARDINALITY_REPEATED = 3;</code>
+     * Generated from protobuf enum <code>CARDINALITY_REPEATED = 3;</code>
      */
     const CARDINALITY_REPEATED = 3;
 }

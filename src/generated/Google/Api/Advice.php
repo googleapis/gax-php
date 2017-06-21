@@ -9,22 +9,18 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Generated advice about this change, used for providing more
  * information about how a change will affect the existing service.
- * </pre>
  *
- * Protobuf type <code>google.api.Advice</code>
+ * Protobuf type <code>Google\Api\Advice</code>
  */
 class Advice extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Useful description for why this advice was applied and what actions should
      * be taken to mitigate any implied risks.
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
      */
     private $description = '';
 
@@ -34,12 +30,11 @@ class Advice extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Useful description for why this advice was applied and what actions should
      * be taken to mitigate any implied risks.
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -47,19 +42,16 @@ class Advice extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Useful description for why this advice was applied and what actions should
      * be taken to mitigate any implied risks.
-     * </pre>
      *
-     * <code>string description = 2;</code>
+     * Generated from protobuf field <code>string description = 2;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
 }

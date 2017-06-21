@@ -9,18 +9,15 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Defines a metric type and its schema. Once a metric descriptor is created,
  * deleting or altering it stops data collection and makes the metric type's
  * existing data unusable.
- * </pre>
  *
- * Protobuf type <code>google.api.MetricDescriptor</code>
+ * Protobuf type <code>Google\Api\MetricDescriptor</code>
  */
 class MetricDescriptor extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The resource name of the metric descriptor. Depending on the
      * implementation, the name typically includes: (1) the parent resource name
      * that defines the scope of the metric type or of its data; and (2) the
@@ -28,57 +25,47 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
      * descriptor. For example, following is the resource name of a custom
      * metric within the GCP project `my-project-id`:
      *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * The metric type, including its DNS name prefix. The type is not
      * URL-encoded.  All user-defined custom metric types have the DNS name
      * `custom.googleapis.com`.  Metric types should use a natural hierarchical
      * grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "appengine.googleapis.com/http/server/response_latencies"
-     * </pre>
      *
-     * <code>string type = 8;</code>
+     * Generated from protobuf field <code>string type = 8;</code>
      */
     private $type = '';
     /**
-     * <pre>
      * The set of labels that can be used to describe a specific
      * instance of this metric type. For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
      * for responses that failed.
-     * </pre>
      *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     private $labels;
     /**
-     * <pre>
      * Whether the metric records instantaneous values, changes to a value, etc.
      * Some combinations of `metric_kind` and `value_type` might not be supported.
-     * </pre>
      *
-     * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+     * Generated from protobuf field <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
      */
     private $metric_kind = 0;
     /**
-     * <pre>
      * Whether the measurement is an integer, a floating-point number, etc.
      * Some combinations of `metric_kind` and `value_type` might not be supported.
-     * </pre>
      *
-     * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
+     * Generated from protobuf field <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
      */
     private $value_type = 0;
     /**
-     * <pre>
      * The unit in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The
      * supported units are a subset of [The Unified Code for Units of
@@ -129,26 +116,21 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
-     * </pre>
      *
-     * <code>string unit = 5;</code>
+     * Generated from protobuf field <code>string unit = 5;</code>
      */
     private $unit = '';
     /**
-     * <pre>
      * A detailed description of the metric, which can be used in documentation.
-     * </pre>
      *
-     * <code>string description = 6;</code>
+     * Generated from protobuf field <code>string description = 6;</code>
      */
     private $description = '';
     /**
-     * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
-     * </pre>
      *
-     * <code>string display_name = 7;</code>
+     * Generated from protobuf field <code>string display_name = 7;</code>
      */
     private $display_name = '';
 
@@ -158,7 +140,6 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The resource name of the metric descriptor. Depending on the
      * implementation, the name typically includes: (1) the parent resource name
      * that defines the scope of the metric type or of its data; and (2) the
@@ -166,9 +147,9 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
      * descriptor. For example, following is the resource name of a custom
      * metric within the GCP project `my-project-id`:
      *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -176,7 +157,6 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The resource name of the metric descriptor. Depending on the
      * implementation, the name typically includes: (1) the parent resource name
      * that defines the scope of the metric type or of its data; and (2) the
@@ -184,29 +164,26 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
      * descriptor. For example, following is the resource name of a custom
      * metric within the GCP project `my-project-id`:
      *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The metric type, including its DNS name prefix. The type is not
      * URL-encoded.  All user-defined custom metric types have the DNS name
      * `custom.googleapis.com`.  Metric types should use a natural hierarchical
      * grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "appengine.googleapis.com/http/server/response_latencies"
-     * </pre>
      *
-     * <code>string type = 8;</code>
+     * Generated from protobuf field <code>string type = 8;</code>
+     * @return string
      */
     public function getType()
     {
@@ -214,36 +191,32 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The metric type, including its DNS name prefix. The type is not
      * URL-encoded.  All user-defined custom metric types have the DNS name
      * `custom.googleapis.com`.  Metric types should use a natural hierarchical
      * grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "appengine.googleapis.com/http/server/response_latencies"
-     * </pre>
      *
-     * <code>string type = 8;</code>
+     * Generated from protobuf field <code>string type = 8;</code>
+     * @param string $var
      */
     public function setType($var)
     {
         GPBUtil::checkString($var, True);
         $this->type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The set of labels that can be used to describe a specific
      * instance of this metric type. For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
      * for responses that failed.
-     * </pre>
      *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLabels()
     {
@@ -251,32 +224,28 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The set of labels that can be used to describe a specific
      * instance of this metric type. For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
      * for responses that failed.
-     * </pre>
      *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLabels(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\LabelDescriptor::class);
         $this->labels = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Whether the metric records instantaneous values, changes to a value, etc.
      * Some combinations of `metric_kind` and `value_type` might not be supported.
-     * </pre>
      *
-     * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+     * Generated from protobuf field <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+     * @return int
      */
     public function getMetricKind()
     {
@@ -284,28 +253,24 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Whether the metric records instantaneous values, changes to a value, etc.
      * Some combinations of `metric_kind` and `value_type` might not be supported.
-     * </pre>
      *
-     * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+     * Generated from protobuf field <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+     * @param int $var
      */
     public function setMetricKind($var)
     {
         GPBUtil::checkEnum($var, \Google\Api\MetricDescriptor_MetricKind::class);
         $this->metric_kind = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Whether the measurement is an integer, a floating-point number, etc.
      * Some combinations of `metric_kind` and `value_type` might not be supported.
-     * </pre>
      *
-     * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
+     * Generated from protobuf field <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
+     * @return int
      */
     public function getValueType()
     {
@@ -313,23 +278,19 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Whether the measurement is an integer, a floating-point number, etc.
      * Some combinations of `metric_kind` and `value_type` might not be supported.
-     * </pre>
      *
-     * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
+     * Generated from protobuf field <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
+     * @param int $var
      */
     public function setValueType($var)
     {
         GPBUtil::checkEnum($var, \Google\Api\MetricDescriptor_ValueType::class);
         $this->value_type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The unit in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The
      * supported units are a subset of [The Unified Code for Units of
@@ -380,9 +341,9 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
-     * </pre>
      *
-     * <code>string unit = 5;</code>
+     * Generated from protobuf field <code>string unit = 5;</code>
+     * @return string
      */
     public function getUnit()
     {
@@ -390,7 +351,6 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The unit in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The
      * supported units are a subset of [The Unified Code for Units of
@@ -441,24 +401,21 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
-     * </pre>
      *
-     * <code>string unit = 5;</code>
+     * Generated from protobuf field <code>string unit = 5;</code>
+     * @param string $var
      */
     public function setUnit($var)
     {
         GPBUtil::checkString($var, True);
         $this->unit = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A detailed description of the metric, which can be used in documentation.
-     * </pre>
      *
-     * <code>string description = 6;</code>
+     * Generated from protobuf field <code>string description = 6;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -466,27 +423,23 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A detailed description of the metric, which can be used in documentation.
-     * </pre>
      *
-     * <code>string description = 6;</code>
+     * Generated from protobuf field <code>string description = 6;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
-     * </pre>
      *
-     * <code>string display_name = 7;</code>
+     * Generated from protobuf field <code>string display_name = 7;</code>
+     * @return string
      */
     public function getDisplayName()
     {
@@ -494,19 +447,16 @@ class MetricDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
-     * </pre>
      *
-     * <code>string display_name = 7;</code>
+     * Generated from protobuf field <code>string display_name = 7;</code>
+     * @param string $var
      */
     public function setDisplayName($var)
     {
         GPBUtil::checkString($var, True);
         $this->display_name = $var;
-
-        return $this;
     }
 
 }

@@ -9,20 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * ### System parameter configuration
  * A system parameter is a special kind of parameter defined by the API
  * system, not by an individual API. It is typically mapped to an HTTP header
  * and/or a URL query parameter. This configuration specifies which methods
  * change the names of the system parameters.
- * </pre>
  *
- * Protobuf type <code>google.api.SystemParameters</code>
+ * Protobuf type <code>Google\Api\SystemParameters</code>
  */
 class SystemParameters extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Define system parameters.
      * The parameters defined here will override the default parameters
      * implemented by the system. If this field is missing from the service
@@ -45,9 +42,8 @@ class SystemParameters extends \Google\Protobuf\Internal\Message
      *             - name: api_key
      *               http_header: Api-Key2
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.SystemParameterRule rules = 1;</code>
      */
     private $rules;
 
@@ -57,7 +53,6 @@ class SystemParameters extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define system parameters.
      * The parameters defined here will override the default parameters
      * implemented by the system. If this field is missing from the service
@@ -80,9 +75,9 @@ class SystemParameters extends \Google\Protobuf\Internal\Message
      *             - name: api_key
      *               http_header: Api-Key2
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -90,7 +85,6 @@ class SystemParameters extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define system parameters.
      * The parameters defined here will override the default parameters
      * implemented by the system. If this field is missing from the service
@@ -113,16 +107,14 @@ class SystemParameters extends \Google\Protobuf\Internal\Message
      *             - name: api_key
      *               http_header: Api-Key2
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.SystemParameterRule rules = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\SystemParameterRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
 }

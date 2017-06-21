@@ -9,31 +9,25 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A specific metric, identified by specifying values for all of the
  * labels of a [`MetricDescriptor`][google.api.MetricDescriptor].
- * </pre>
  *
- * Protobuf type <code>google.api.Metric</code>
+ * Protobuf type <code>Google\Api\Metric</code>
  */
 class Metric extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
      * For example, `custom.googleapis.com/invoice/paid/amount`.
-     * </pre>
      *
-     * <code>string type = 3;</code>
+     * Generated from protobuf field <code>string type = 3;</code>
      */
     private $type = '';
     /**
-     * <pre>
      * The set of label values that uniquely identify this metric. All
      * labels listed in the `MetricDescriptor` must be assigned values.
-     * </pre>
      *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
+     * Generated from protobuf field <code>map<string, string> labels = 2;</code>
      */
     private $labels;
 
@@ -43,12 +37,11 @@ class Metric extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
      * For example, `custom.googleapis.com/invoice/paid/amount`.
-     * </pre>
      *
-     * <code>string type = 3;</code>
+     * Generated from protobuf field <code>string type = 3;</code>
+     * @return string
      */
     public function getType()
     {
@@ -56,28 +49,24 @@ class Metric extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
      * For example, `custom.googleapis.com/invoice/paid/amount`.
-     * </pre>
      *
-     * <code>string type = 3;</code>
+     * Generated from protobuf field <code>string type = 3;</code>
+     * @param string $var
      */
     public function setType($var)
     {
         GPBUtil::checkString($var, True);
         $this->type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The set of label values that uniquely identify this metric. All
      * labels listed in the `MetricDescriptor` must be assigned values.
-     * </pre>
      *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
+     * Generated from protobuf field <code>map<string, string> labels = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLabels()
     {
@@ -85,19 +74,16 @@ class Metric extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The set of label values that uniquely identify this metric. All
      * labels listed in the `MetricDescriptor` must be assigned values.
-     * </pre>
      *
-     * <code>map&lt;string, string&gt; labels = 2;</code>
+     * Generated from protobuf field <code>map<string, string> labels = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLabels(&$var)
     {
         $arr = GPBUtil::checkMapField($var, \Google\Protobuf\Internal\GPBType::STRING, \Google\Protobuf\Internal\GPBType::STRING);
         $this->labels = $arr;
-
-        return $this;
     }
 
 }

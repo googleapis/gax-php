@@ -9,36 +9,28 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Enum value definition.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.EnumValue</code>
+ * Protobuf type <code>Google\Protobuf\EnumValue</code>
  */
 class EnumValue extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Enum value name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * Enum value number.
-     * </pre>
      *
-     * <code>int32 number = 2;</code>
+     * Generated from protobuf field <code>int32 number = 2;</code>
      */
     private $number = 0;
     /**
-     * <pre>
      * Protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 3;</code>
      */
     private $options;
 
@@ -48,11 +40,10 @@ class EnumValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Enum value name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -60,11 +51,10 @@ class EnumValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Enum value name.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
@@ -73,11 +63,10 @@ class EnumValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Enum value number.
-     * </pre>
      *
-     * <code>int32 number = 2;</code>
+     * Generated from protobuf field <code>int32 number = 2;</code>
+     * @return int
      */
     public function getNumber()
     {
@@ -85,11 +74,10 @@ class EnumValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Enum value number.
-     * </pre>
      *
-     * <code>int32 number = 2;</code>
+     * Generated from protobuf field <code>int32 number = 2;</code>
+     * @param int $var
      */
     public function setNumber($var)
     {
@@ -98,11 +86,10 @@ class EnumValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getOptions()
     {
@@ -110,11 +97,10 @@ class EnumValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setOptions(&$var)
     {

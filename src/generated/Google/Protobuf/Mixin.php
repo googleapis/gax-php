@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Declares an API to be included in this API. The including API must
  * redeclare all the methods from the included API, but documentation
  * and options are inherited as follows:
@@ -71,27 +70,22 @@ use Google\Protobuf\Internal\GPBUtil;
  *       }
  *       ...
  *     }
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Mixin</code>
+ * Protobuf type <code>Google\Protobuf\Mixin</code>
  */
 class Mixin extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The fully qualified name of the API which is included.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * If non-empty specifies a path under which inherited HTTP paths
      * are rooted.
-     * </pre>
      *
-     * <code>string root = 2;</code>
+     * Generated from protobuf field <code>string root = 2;</code>
      */
     private $root = '';
 
@@ -101,11 +95,10 @@ class Mixin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fully qualified name of the API which is included.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -113,11 +106,10 @@ class Mixin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The fully qualified name of the API which is included.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
@@ -126,12 +118,11 @@ class Mixin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * If non-empty specifies a path under which inherited HTTP paths
      * are rooted.
-     * </pre>
      *
-     * <code>string root = 2;</code>
+     * Generated from protobuf field <code>string root = 2;</code>
+     * @return string
      */
     public function getRoot()
     {
@@ -139,12 +130,11 @@ class Mixin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * If non-empty specifies a path under which inherited HTTP paths
      * are rooted.
-     * </pre>
      *
-     * <code>string root = 2;</code>
+     * Generated from protobuf field <code>string root = 2;</code>
+     * @param string $var
      */
     public function setRoot($var)
     {

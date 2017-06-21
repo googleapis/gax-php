@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A description of a log type. Example in YAML format:
  *     - name: library.googleapis.com/activity_history
  *       description: The history of borrowing and returning library items.
@@ -17,49 +16,40 @@ use Google\Protobuf\Internal\GPBUtil;
  *       labels:
  *       - key: /customer_id
  *         description: Identifier of a library customer
- * </pre>
  *
- * Protobuf type <code>google.api.LogDescriptor</code>
+ * Protobuf type <code>Google\Api\LogDescriptor</code>
  */
 class LogDescriptor extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The name of the log. It must be less than 512 characters long and can
      * include the following characters: upper- and lower-case alphanumeric
      * characters [A-Za-z0-9], and punctuation characters including
      * slash, underscore, hyphen, period [/_-.].
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * The set of labels that are available to describe a specific log entry.
      * Runtime requests that contain labels not specified here are
      * considered invalid.
-     * </pre>
      *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     private $labels;
     /**
-     * <pre>
      * A human-readable description of this log. This information appears in
      * the documentation and can contain details.
-     * </pre>
      *
-     * <code>string description = 3;</code>
+     * Generated from protobuf field <code>string description = 3;</code>
      */
     private $description = '';
     /**
-     * <pre>
      * The human-readable name for this log. This information appears on
      * the user interface and should be concise.
-     * </pre>
      *
-     * <code>string display_name = 4;</code>
+     * Generated from protobuf field <code>string display_name = 4;</code>
      */
     private $display_name = '';
 
@@ -69,14 +59,13 @@ class LogDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the log. It must be less than 512 characters long and can
      * include the following characters: upper- and lower-case alphanumeric
      * characters [A-Za-z0-9], and punctuation characters including
      * slash, underscore, hyphen, period [/_-.].
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -84,31 +73,27 @@ class LogDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the log. It must be less than 512 characters long and can
      * include the following characters: upper- and lower-case alphanumeric
      * characters [A-Za-z0-9], and punctuation characters including
      * slash, underscore, hyphen, period [/_-.].
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
         GPBUtil::checkString($var, True);
         $this->name = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The set of labels that are available to describe a specific log entry.
      * Runtime requests that contain labels not specified here are
      * considered invalid.
-     * </pre>
      *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLabels()
     {
@@ -116,29 +101,25 @@ class LogDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The set of labels that are available to describe a specific log entry.
      * Runtime requests that contain labels not specified here are
      * considered invalid.
-     * </pre>
      *
-     * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.LabelDescriptor labels = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLabels(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\LabelDescriptor::class);
         $this->labels = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A human-readable description of this log. This information appears in
      * the documentation and can contain details.
-     * </pre>
      *
-     * <code>string description = 3;</code>
+     * Generated from protobuf field <code>string description = 3;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -146,28 +127,24 @@ class LogDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A human-readable description of this log. This information appears in
      * the documentation and can contain details.
-     * </pre>
      *
-     * <code>string description = 3;</code>
+     * Generated from protobuf field <code>string description = 3;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The human-readable name for this log. This information appears on
      * the user interface and should be concise.
-     * </pre>
      *
-     * <code>string display_name = 4;</code>
+     * Generated from protobuf field <code>string display_name = 4;</code>
+     * @return string
      */
     public function getDisplayName()
     {
@@ -175,19 +152,16 @@ class LogDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The human-readable name for this log. This information appears on
      * the user interface and should be concise.
-     * </pre>
      *
-     * <code>string display_name = 4;</code>
+     * Generated from protobuf field <code>string display_name = 4;</code>
+     * @param string $var
      */
     public function setDisplayName($var)
     {
         GPBUtil::checkString($var, True);
         $this->display_name = $var;
-
-        return $this;
     }
 
 }

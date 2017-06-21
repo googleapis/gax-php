@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Represents a postal address, e.g. for postal delivery or payments addresses.
  * Given a postal address, a postal service can deliver items to a premise, P.O.
  * Box or similar.
@@ -24,35 +23,29 @@ use Google\Protobuf\Internal\GPBUtil;
  *   fields outside countries where that field is used.
  * For more guidance on how to use this schema, please see:
  * https://support.google.com/business/answer/6397478
- * </pre>
  *
- * Protobuf type <code>google.type.PostalAddress</code>
+ * Protobuf type <code>Google\Type\PostalAddress</code>
  */
 class PostalAddress extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The schema revision of the `PostalAddress`.
      * All new revisions **must** be backward compatible with old revisions.
-     * </pre>
      *
-     * <code>int32 revision = 1;</code>
+     * Generated from protobuf field <code>int32 revision = 1;</code>
      */
     private $revision = 0;
     /**
-     * <pre>
      * Required. CLDR region code of the country/region of the address. This
      * is never inferred and it is up to the user to ensure the value is
      * correct. See http://cldr.unicode.org/ and
      * http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
      * for details. Example: "CH" for Switzerland.
-     * </pre>
      *
-     * <code>string region_code = 2;</code>
+     * Generated from protobuf field <code>string region_code = 2;</code>
      */
     private $region_code = '';
     /**
-     * <pre>
      * Optional. BCP-47 language code of the contents of this address (if
      * known). This is often the UI language of the input form or is expected
      * to match one of the languages used in the address' country/region, or their
@@ -63,36 +56,30 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
-     * </pre>
      *
-     * <code>string language_code = 3;</code>
+     * Generated from protobuf field <code>string language_code = 3;</code>
      */
     private $language_code = '';
     /**
-     * <pre>
      * Optional. Postal code of the address. Not all countries use or require
      * postal codes to be present, but where they are used, they may trigger
      * additional validation with other parts of the address (e.g. state/zip
      * validation in the U.S.A.).
-     * </pre>
      *
-     * <code>string postal_code = 4;</code>
+     * Generated from protobuf field <code>string postal_code = 4;</code>
      */
     private $postal_code = '';
     /**
-     * <pre>
      * Optional. Additional, country-specific, sorting code. This is not used
      * in most regions. Where it is used, the value is either a string like
      * "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
      * alone, representing the "sector code" (Jamaica), "delivery area indicator"
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
-     * </pre>
      *
-     * <code>string sorting_code = 5;</code>
+     * Generated from protobuf field <code>string sorting_code = 5;</code>
      */
     private $sorting_code = '';
     /**
-     * <pre>
      * Optional. Highest administrative subdivision which is used for postal
      * addresses of a country or region.
      * For example, this can be a state, a province, an oblast, or a prefecture.
@@ -100,33 +87,27 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * community (e.g. "Barcelona" and not "Catalonia").
      * Many countries don't use an administrative area in postal addresses. E.g.
      * in Switzerland this should be left unpopulated.
-     * </pre>
      *
-     * <code>string administrative_area = 6;</code>
+     * Generated from protobuf field <code>string administrative_area = 6;</code>
      */
     private $administrative_area = '';
     /**
-     * <pre>
      * Optional. Generally refers to the city/town portion of the address.
      * Examples: US city, IT comune, UK post town.
      * In regions of the world where localities are not well defined or do not fit
      * into this structure well, leave locality empty and use address_lines.
-     * </pre>
      *
-     * <code>string locality = 7;</code>
+     * Generated from protobuf field <code>string locality = 7;</code>
      */
     private $locality = '';
     /**
-     * <pre>
      * Optional. Sublocality of the address.
      * For example, this can be neighborhoods, boroughs, districts.
-     * </pre>
      *
-     * <code>string sublocality = 8;</code>
+     * Generated from protobuf field <code>string sublocality = 8;</code>
      */
     private $sublocality = '';
     /**
-     * <pre>
      * Unstructured address lines describing the lower levels of an address.
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
@@ -146,27 +127,22 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
      * localities or administrative areas).
-     * </pre>
      *
-     * <code>repeated string address_lines = 9;</code>
+     * Generated from protobuf field <code>repeated string address_lines = 9;</code>
      */
     private $address_lines;
     /**
-     * <pre>
      * Optional. The recipient at the address.
      * This field may, under certain circumstances, contain multiline information.
      * For example, it might contain "care of" information.
-     * </pre>
      *
-     * <code>repeated string recipients = 10;</code>
+     * Generated from protobuf field <code>repeated string recipients = 10;</code>
      */
     private $recipients;
     /**
-     * <pre>
      * Optional. The name of the organization at the address.
-     * </pre>
      *
-     * <code>string organization = 11;</code>
+     * Generated from protobuf field <code>string organization = 11;</code>
      */
     private $organization = '';
 
@@ -176,12 +152,11 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The schema revision of the `PostalAddress`.
      * All new revisions **must** be backward compatible with old revisions.
-     * </pre>
      *
-     * <code>int32 revision = 1;</code>
+     * Generated from protobuf field <code>int32 revision = 1;</code>
+     * @return int
      */
     public function getRevision()
     {
@@ -189,31 +164,27 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The schema revision of the `PostalAddress`.
      * All new revisions **must** be backward compatible with old revisions.
-     * </pre>
      *
-     * <code>int32 revision = 1;</code>
+     * Generated from protobuf field <code>int32 revision = 1;</code>
+     * @param int $var
      */
     public function setRevision($var)
     {
         GPBUtil::checkInt32($var);
         $this->revision = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Required. CLDR region code of the country/region of the address. This
      * is never inferred and it is up to the user to ensure the value is
      * correct. See http://cldr.unicode.org/ and
      * http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
      * for details. Example: "CH" for Switzerland.
-     * </pre>
      *
-     * <code>string region_code = 2;</code>
+     * Generated from protobuf field <code>string region_code = 2;</code>
+     * @return string
      */
     public function getRegionCode()
     {
@@ -221,26 +192,22 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Required. CLDR region code of the country/region of the address. This
      * is never inferred and it is up to the user to ensure the value is
      * correct. See http://cldr.unicode.org/ and
      * http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
      * for details. Example: "CH" for Switzerland.
-     * </pre>
      *
-     * <code>string region_code = 2;</code>
+     * Generated from protobuf field <code>string region_code = 2;</code>
+     * @param string $var
      */
     public function setRegionCode($var)
     {
         GPBUtil::checkString($var, True);
         $this->region_code = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. BCP-47 language code of the contents of this address (if
      * known). This is often the UI language of the input form or is expected
      * to match one of the languages used in the address' country/region, or their
@@ -251,9 +218,9 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
-     * </pre>
      *
-     * <code>string language_code = 3;</code>
+     * Generated from protobuf field <code>string language_code = 3;</code>
+     * @return string
      */
     public function getLanguageCode()
     {
@@ -261,7 +228,6 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. BCP-47 language code of the contents of this address (if
      * known). This is often the UI language of the input form or is expected
      * to match one of the languages used in the address' country/region, or their
@@ -272,27 +238,24 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
-     * </pre>
      *
-     * <code>string language_code = 3;</code>
+     * Generated from protobuf field <code>string language_code = 3;</code>
+     * @param string $var
      */
     public function setLanguageCode($var)
     {
         GPBUtil::checkString($var, True);
         $this->language_code = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. Postal code of the address. Not all countries use or require
      * postal codes to be present, but where they are used, they may trigger
      * additional validation with other parts of the address (e.g. state/zip
      * validation in the U.S.A.).
-     * </pre>
      *
-     * <code>string postal_code = 4;</code>
+     * Generated from protobuf field <code>string postal_code = 4;</code>
+     * @return string
      */
     public function getPostalCode()
     {
@@ -300,33 +263,29 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. Postal code of the address. Not all countries use or require
      * postal codes to be present, but where they are used, they may trigger
      * additional validation with other parts of the address (e.g. state/zip
      * validation in the U.S.A.).
-     * </pre>
      *
-     * <code>string postal_code = 4;</code>
+     * Generated from protobuf field <code>string postal_code = 4;</code>
+     * @param string $var
      */
     public function setPostalCode($var)
     {
         GPBUtil::checkString($var, True);
         $this->postal_code = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. Additional, country-specific, sorting code. This is not used
      * in most regions. Where it is used, the value is either a string like
      * "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
      * alone, representing the "sector code" (Jamaica), "delivery area indicator"
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
-     * </pre>
      *
-     * <code>string sorting_code = 5;</code>
+     * Generated from protobuf field <code>string sorting_code = 5;</code>
+     * @return string
      */
     public function getSortingCode()
     {
@@ -334,26 +293,22 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. Additional, country-specific, sorting code. This is not used
      * in most regions. Where it is used, the value is either a string like
      * "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
      * alone, representing the "sector code" (Jamaica), "delivery area indicator"
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
-     * </pre>
      *
-     * <code>string sorting_code = 5;</code>
+     * Generated from protobuf field <code>string sorting_code = 5;</code>
+     * @param string $var
      */
     public function setSortingCode($var)
     {
         GPBUtil::checkString($var, True);
         $this->sorting_code = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. Highest administrative subdivision which is used for postal
      * addresses of a country or region.
      * For example, this can be a state, a province, an oblast, or a prefecture.
@@ -361,9 +316,9 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * community (e.g. "Barcelona" and not "Catalonia").
      * Many countries don't use an administrative area in postal addresses. E.g.
      * in Switzerland this should be left unpopulated.
-     * </pre>
      *
-     * <code>string administrative_area = 6;</code>
+     * Generated from protobuf field <code>string administrative_area = 6;</code>
+     * @return string
      */
     public function getAdministrativeArea()
     {
@@ -371,7 +326,6 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. Highest administrative subdivision which is used for postal
      * addresses of a country or region.
      * For example, this can be a state, a province, an oblast, or a prefecture.
@@ -379,27 +333,24 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * community (e.g. "Barcelona" and not "Catalonia").
      * Many countries don't use an administrative area in postal addresses. E.g.
      * in Switzerland this should be left unpopulated.
-     * </pre>
      *
-     * <code>string administrative_area = 6;</code>
+     * Generated from protobuf field <code>string administrative_area = 6;</code>
+     * @param string $var
      */
     public function setAdministrativeArea($var)
     {
         GPBUtil::checkString($var, True);
         $this->administrative_area = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. Generally refers to the city/town portion of the address.
      * Examples: US city, IT comune, UK post town.
      * In regions of the world where localities are not well defined or do not fit
      * into this structure well, leave locality empty and use address_lines.
-     * </pre>
      *
-     * <code>string locality = 7;</code>
+     * Generated from protobuf field <code>string locality = 7;</code>
+     * @return string
      */
     public function getLocality()
     {
@@ -407,30 +358,26 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. Generally refers to the city/town portion of the address.
      * Examples: US city, IT comune, UK post town.
      * In regions of the world where localities are not well defined or do not fit
      * into this structure well, leave locality empty and use address_lines.
-     * </pre>
      *
-     * <code>string locality = 7;</code>
+     * Generated from protobuf field <code>string locality = 7;</code>
+     * @param string $var
      */
     public function setLocality($var)
     {
         GPBUtil::checkString($var, True);
         $this->locality = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. Sublocality of the address.
      * For example, this can be neighborhoods, boroughs, districts.
-     * </pre>
      *
-     * <code>string sublocality = 8;</code>
+     * Generated from protobuf field <code>string sublocality = 8;</code>
+     * @return string
      */
     public function getSublocality()
     {
@@ -438,23 +385,19 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. Sublocality of the address.
      * For example, this can be neighborhoods, boroughs, districts.
-     * </pre>
      *
-     * <code>string sublocality = 8;</code>
+     * Generated from protobuf field <code>string sublocality = 8;</code>
+     * @param string $var
      */
     public function setSublocality($var)
     {
         GPBUtil::checkString($var, True);
         $this->sublocality = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Unstructured address lines describing the lower levels of an address.
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
@@ -474,9 +417,9 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
      * localities or administrative areas).
-     * </pre>
      *
-     * <code>repeated string address_lines = 9;</code>
+     * Generated from protobuf field <code>repeated string address_lines = 9;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getAddressLines()
     {
@@ -484,7 +427,6 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Unstructured address lines describing the lower levels of an address.
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
@@ -504,26 +446,23 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
      * localities or administrative areas).
-     * </pre>
      *
-     * <code>repeated string address_lines = 9;</code>
+     * Generated from protobuf field <code>repeated string address_lines = 9;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setAddressLines(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->address_lines = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. The recipient at the address.
      * This field may, under certain circumstances, contain multiline information.
      * For example, it might contain "care of" information.
-     * </pre>
      *
-     * <code>repeated string recipients = 10;</code>
+     * Generated from protobuf field <code>repeated string recipients = 10;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRecipients()
     {
@@ -531,28 +470,24 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. The recipient at the address.
      * This field may, under certain circumstances, contain multiline information.
      * For example, it might contain "care of" information.
-     * </pre>
      *
-     * <code>repeated string recipients = 10;</code>
+     * Generated from protobuf field <code>repeated string recipients = 10;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRecipients(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->recipients = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Optional. The name of the organization at the address.
-     * </pre>
      *
-     * <code>string organization = 11;</code>
+     * Generated from protobuf field <code>string organization = 11;</code>
+     * @return string
      */
     public function getOrganization()
     {
@@ -560,18 +495,15 @@ class PostalAddress extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Optional. The name of the organization at the address.
-     * </pre>
      *
-     * <code>string organization = 11;</code>
+     * Generated from protobuf field <code>string organization = 11;</code>
+     * @param string $var
      */
     public function setOrganization($var)
     {
         GPBUtil::checkString($var, True);
         $this->organization = $var;
-
-        return $this;
     }
 
 }

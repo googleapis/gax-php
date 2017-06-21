@@ -9,24 +9,19 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Metadata about the request.
- * </pre>
  *
- * Protobuf type <code>google.cloud.audit.RequestMetadata</code>
+ * Protobuf type <code>Google\Cloud\Audit\RequestMetadata</code>
  */
 class RequestMetadata extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The IP address of the caller.
-     * </pre>
      *
-     * <code>string caller_ip = 1;</code>
+     * Generated from protobuf field <code>string caller_ip = 1;</code>
      */
     private $caller_ip = '';
     /**
-     * <pre>
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
@@ -36,9 +31,8 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
      *     The request was made by the Google Cloud SDK CLI (gcloud).
      * +   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:
      *     The request was made from the `my-project` App Engine app.
-     * </pre>
      *
-     * <code>string caller_supplied_user_agent = 2;</code>
+     * Generated from protobuf field <code>string caller_supplied_user_agent = 2;</code>
      */
     private $caller_supplied_user_agent = '';
 
@@ -48,11 +42,10 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The IP address of the caller.
-     * </pre>
      *
-     * <code>string caller_ip = 1;</code>
+     * Generated from protobuf field <code>string caller_ip = 1;</code>
+     * @return string
      */
     public function getCallerIp()
     {
@@ -60,22 +53,18 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The IP address of the caller.
-     * </pre>
      *
-     * <code>string caller_ip = 1;</code>
+     * Generated from protobuf field <code>string caller_ip = 1;</code>
+     * @param string $var
      */
     public function setCallerIp($var)
     {
         GPBUtil::checkString($var, True);
         $this->caller_ip = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
@@ -85,9 +74,9 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
      *     The request was made by the Google Cloud SDK CLI (gcloud).
      * +   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:
      *     The request was made from the `my-project` App Engine app.
-     * </pre>
      *
-     * <code>string caller_supplied_user_agent = 2;</code>
+     * Generated from protobuf field <code>string caller_supplied_user_agent = 2;</code>
+     * @return string
      */
     public function getCallerSuppliedUserAgent()
     {
@@ -95,7 +84,6 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
@@ -105,16 +93,14 @@ class RequestMetadata extends \Google\Protobuf\Internal\Message
      *     The request was made by the Google Cloud SDK CLI (gcloud).
      * +   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:
      *     The request was made from the `my-project` App Engine app.
-     * </pre>
      *
-     * <code>string caller_supplied_user_agent = 2;</code>
+     * Generated from protobuf field <code>string caller_supplied_user_agent = 2;</code>
+     * @param string $var
      */
     public function setCallerSuppliedUserAgent($var)
     {
         GPBUtil::checkString($var, True);
         $this->caller_supplied_user_agent = $var;
-
-        return $this;
     }
 
 }

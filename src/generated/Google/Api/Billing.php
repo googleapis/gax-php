@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Billing related configuration of the service.
  * The following example shows how to configure metrics for billing:
  *     metrics:
@@ -41,27 +40,22 @@ use Google\Protobuf\Internal\GPBUtil;
  * In addition, services can choose to allow both `current` and `delinquent`
  * statuses when serving read-only requests to resources. If there's no
  * matching selector for operation, no billing status check will be performed.
- * </pre>
  *
- * Protobuf type <code>google.api.Billing</code>
+ * Protobuf type <code>Google\Api\Billing</code>
  */
 class Billing extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Names of the metrics to report to billing. Each name must
      * be defined in [Service.metrics][google.api.Service.metrics] section.
-     * </pre>
      *
-     * <code>repeated string metrics = 1;</code>
+     * Generated from protobuf field <code>repeated string metrics = 1;</code>
      */
     private $metrics;
     /**
-     * <pre>
      * A list of billing status rules for configuring billing status check.
-     * </pre>
      *
-     * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
+     * Generated from protobuf field <code>repeated .google.api.BillingStatusRule rules = 5;</code>
      */
     private $rules;
 
@@ -71,12 +65,11 @@ class Billing extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Names of the metrics to report to billing. Each name must
      * be defined in [Service.metrics][google.api.Service.metrics] section.
-     * </pre>
      *
-     * <code>repeated string metrics = 1;</code>
+     * Generated from protobuf field <code>repeated string metrics = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMetrics()
     {
@@ -84,27 +77,23 @@ class Billing extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Names of the metrics to report to billing. Each name must
      * be defined in [Service.metrics][google.api.Service.metrics] section.
-     * </pre>
      *
-     * <code>repeated string metrics = 1;</code>
+     * Generated from protobuf field <code>repeated string metrics = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMetrics(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->metrics = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of billing status rules for configuring billing status check.
-     * </pre>
      *
-     * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
+     * Generated from protobuf field <code>repeated .google.api.BillingStatusRule rules = 5;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -112,18 +101,15 @@ class Billing extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of billing status rules for configuring billing status check.
-     * </pre>
      *
-     * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
+     * Generated from protobuf field <code>repeated .google.api.BillingStatusRule rules = 5;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\BillingStatusRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
 }

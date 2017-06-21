@@ -9,27 +9,23 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A set of buckets with arbitrary widths.
  * Defines `size(bounds) + 1` (= N) buckets with these boundaries for
  * bucket i:
- *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
- *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
+ *    Upper bound (0 <= i < N-1):     bounds[i]
+ *    Lower bound (1 <= i < N);       bounds[i - 1]
  * There must be at least one element in `bounds`.  If `bounds` has only one
  * element, there are no finite buckets, and that single element is the
  * common boundary of the overflow and underflow buckets.
- * </pre>
  *
- * Protobuf type <code>google.api.Distribution.BucketOptions.Explicit</code>
+ * Protobuf type <code>Google\Api\Distribution\BucketOptions\Explicit</code>
  */
 class Distribution_BucketOptions_Explicit extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The values must be monotonically increasing.
-     * </pre>
      *
-     * <code>repeated double bounds = 1;</code>
+     * Generated from protobuf field <code>repeated double bounds = 1;</code>
      */
     private $bounds;
 
@@ -39,11 +35,10 @@ class Distribution_BucketOptions_Explicit extends \Google\Protobuf\Internal\Mess
     }
 
     /**
-     * <pre>
      * The values must be monotonically increasing.
-     * </pre>
      *
-     * <code>repeated double bounds = 1;</code>
+     * Generated from protobuf field <code>repeated double bounds = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getBounds()
     {
@@ -51,18 +46,15 @@ class Distribution_BucketOptions_Explicit extends \Google\Protobuf\Internal\Mess
     }
 
     /**
-     * <pre>
      * The values must be monotonically increasing.
-     * </pre>
      *
-     * <code>repeated double bounds = 1;</code>
+     * Generated from protobuf field <code>repeated double bounds = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setBounds(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::DOUBLE);
         $this->bounds = $arr;
-
-        return $this;
     }
 
 }

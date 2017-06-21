@@ -9,38 +9,30 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A context rule provides information about the context for an individual API
  * element.
- * </pre>
  *
- * Protobuf type <code>google.api.ContextRule</code>
+ * Protobuf type <code>Google\Api\ContextRule</code>
  */
 class ContextRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * A list of full type names of requested contexts.
-     * </pre>
      *
-     * <code>repeated string requested = 2;</code>
+     * Generated from protobuf field <code>repeated string requested = 2;</code>
      */
     private $requested;
     /**
-     * <pre>
      * A list of full type names of provided contexts.
-     * </pre>
      *
-     * <code>repeated string provided = 3;</code>
+     * Generated from protobuf field <code>repeated string provided = 3;</code>
      */
     private $provided;
 
@@ -50,12 +42,11 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -63,27 +54,23 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of full type names of requested contexts.
-     * </pre>
      *
-     * <code>repeated string requested = 2;</code>
+     * Generated from protobuf field <code>repeated string requested = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRequested()
     {
@@ -91,26 +78,22 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of full type names of requested contexts.
-     * </pre>
      *
-     * <code>repeated string requested = 2;</code>
+     * Generated from protobuf field <code>repeated string requested = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRequested(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->requested = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of full type names of provided contexts.
-     * </pre>
      *
-     * <code>repeated string provided = 3;</code>
+     * Generated from protobuf field <code>repeated string provided = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getProvided()
     {
@@ -118,18 +101,15 @@ class ContextRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of full type names of provided contexts.
-     * </pre>
      *
-     * <code>repeated string provided = 3;</code>
+     * Generated from protobuf field <code>repeated string provided = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setProvided(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->provided = $arr;
-
-        return $this;
     }
 
 }

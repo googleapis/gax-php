@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `bytes`.
  * The JSON representation for `BytesValue` is JSON string.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.BytesValue</code>
+ * Protobuf type <code>Google\Protobuf\BytesValue</code>
  */
 class BytesValue extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The bytes value.
-     * </pre>
      *
-     * <code>bytes value = 1;</code>
+     * Generated from protobuf field <code>bytes value = 1;</code>
      */
     private $value = '';
 
@@ -33,11 +29,10 @@ class BytesValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The bytes value.
-     * </pre>
      *
-     * <code>bytes value = 1;</code>
+     * Generated from protobuf field <code>bytes value = 1;</code>
+     * @return string
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class BytesValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The bytes value.
-     * </pre>
      *
-     * <code>bytes value = 1;</code>
+     * Generated from protobuf field <code>bytes value = 1;</code>
+     * @param string $var
      */
     public function setValue($var)
     {

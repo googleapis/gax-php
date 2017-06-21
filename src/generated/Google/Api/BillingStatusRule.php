@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Defines the billing status requirements for operations.
  * When used with
  * [Service Control API](https://cloud.google.com/service-control/), the
@@ -22,28 +21,23 @@ use Google\Protobuf\Internal\GPBUtil;
  * In addition, services can choose to allow both `current` and `delinquent`
  * statuses when serving read-only requests to resources. If the list of
  * allowed_statuses is empty, it means no billing requirement.
- * </pre>
  *
- * Protobuf type <code>google.api.BillingStatusRule</code>
+ * Protobuf type <code>Google\Api\BillingStatusRule</code>
  */
 class BillingStatusRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects the operation names to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * Allowed billing statuses. The billing status check passes if the actual
      * billing status matches any of the provided values here.
-     * </pre>
      *
-     * <code>repeated string allowed_statuses = 2;</code>
+     * Generated from protobuf field <code>repeated string allowed_statuses = 2;</code>
      */
     private $allowed_statuses;
 
@@ -53,12 +47,11 @@ class BillingStatusRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the operation names to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -66,28 +59,24 @@ class BillingStatusRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the operation names to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Allowed billing statuses. The billing status check passes if the actual
      * billing status matches any of the provided values here.
-     * </pre>
      *
-     * <code>repeated string allowed_statuses = 2;</code>
+     * Generated from protobuf field <code>repeated string allowed_statuses = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getAllowedStatuses()
     {
@@ -95,19 +84,16 @@ class BillingStatusRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Allowed billing statuses. The billing status check passes if the actual
      * billing status matches any of the provided values here.
-     * </pre>
      *
-     * <code>repeated string allowed_statuses = 2;</code>
+     * Generated from protobuf field <code>repeated string allowed_statuses = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setAllowedStatuses(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->allowed_statuses = $arr;
-
-        return $this;
     }
 
 }

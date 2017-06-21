@@ -9,33 +9,27 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Configuration of a specific logging destination (the producer project
  * or the consumer project).
- * </pre>
  *
- * Protobuf type <code>google.api.Logging.LoggingDestination</code>
+ * Protobuf type <code>Google\Api\Logging\LoggingDestination</code>
  */
 class Logging_LoggingDestination extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The monitored resource type. The type must be defined in the
      * [Service.monitored_resources][google.api.Service.monitored_resources] section.
-     * </pre>
      *
-     * <code>string monitored_resource = 3;</code>
+     * Generated from protobuf field <code>string monitored_resource = 3;</code>
      */
     private $monitored_resource = '';
     /**
-     * <pre>
      * Names of the logs to be sent to this destination. Each name must
      * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
      * not a domain scoped name, it will be automatically prefixed with
      * the service name followed by "/".
-     * </pre>
      *
-     * <code>repeated string logs = 1;</code>
+     * Generated from protobuf field <code>repeated string logs = 1;</code>
      */
     private $logs;
 
@@ -45,12 +39,11 @@ class Logging_LoggingDestination extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The monitored resource type. The type must be defined in the
      * [Service.monitored_resources][google.api.Service.monitored_resources] section.
-     * </pre>
      *
-     * <code>string monitored_resource = 3;</code>
+     * Generated from protobuf field <code>string monitored_resource = 3;</code>
+     * @return string
      */
     public function getMonitoredResource()
     {
@@ -58,30 +51,26 @@ class Logging_LoggingDestination extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The monitored resource type. The type must be defined in the
      * [Service.monitored_resources][google.api.Service.monitored_resources] section.
-     * </pre>
      *
-     * <code>string monitored_resource = 3;</code>
+     * Generated from protobuf field <code>string monitored_resource = 3;</code>
+     * @param string $var
      */
     public function setMonitoredResource($var)
     {
         GPBUtil::checkString($var, True);
         $this->monitored_resource = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Names of the logs to be sent to this destination. Each name must
      * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
      * not a domain scoped name, it will be automatically prefixed with
      * the service name followed by "/".
-     * </pre>
      *
-     * <code>repeated string logs = 1;</code>
+     * Generated from protobuf field <code>repeated string logs = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getLogs()
     {
@@ -89,21 +78,18 @@ class Logging_LoggingDestination extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Names of the logs to be sent to this destination. Each name must
      * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
      * not a domain scoped name, it will be automatically prefixed with
      * the service name followed by "/".
-     * </pre>
      *
-     * <code>repeated string logs = 1;</code>
+     * Generated from protobuf field <code>repeated string logs = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setLogs(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->logs = $arr;
-
-        return $this;
     }
 
 }

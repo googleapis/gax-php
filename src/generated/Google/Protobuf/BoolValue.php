@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `bool`.
  * The JSON representation for `BoolValue` is JSON `true` and `false`.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.BoolValue</code>
+ * Protobuf type <code>Google\Protobuf\BoolValue</code>
  */
 class BoolValue extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The bool value.
-     * </pre>
      *
-     * <code>bool value = 1;</code>
+     * Generated from protobuf field <code>bool value = 1;</code>
      */
     private $value = false;
 
@@ -33,11 +29,10 @@ class BoolValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The bool value.
-     * </pre>
      *
-     * <code>bool value = 1;</code>
+     * Generated from protobuf field <code>bool value = 1;</code>
+     * @return bool
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class BoolValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The bool value.
-     * </pre>
      *
-     * <code>bool value = 1;</code>
+     * Generated from protobuf field <code>bool value = 1;</code>
+     * @param bool $var
      */
     public function setValue($var)
     {

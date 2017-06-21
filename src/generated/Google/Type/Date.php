@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Represents a whole calendar date, e.g. date of birth. The time of day and
  * time zone are either specified elsewhere or are not significant. The date
  * is relative to the Proleptic Gregorian Calendar. The day may be 0 to
@@ -17,36 +16,29 @@ use Google\Protobuf\Internal\GPBUtil;
  * expiration date. The year may be 0 to represent a month and day independent
  * of year, e.g. anniversary date. Related types are [google.type.TimeOfDay][google.type.TimeOfDay]
  * and `google.protobuf.Timestamp`.
- * </pre>
  *
- * Protobuf type <code>google.type.Date</code>
+ * Protobuf type <code>Google\Type\Date</code>
  */
 class Date extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Year of date. Must be from 1 to 9999, or 0 if specifying a date without
      * a year.
-     * </pre>
      *
-     * <code>int32 year = 1;</code>
+     * Generated from protobuf field <code>int32 year = 1;</code>
      */
     private $year = 0;
     /**
-     * <pre>
      * Month of year. Must be from 1 to 12.
-     * </pre>
      *
-     * <code>int32 month = 2;</code>
+     * Generated from protobuf field <code>int32 month = 2;</code>
      */
     private $month = 0;
     /**
-     * <pre>
      * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
      * if specifying a year/month where the day is not significant.
-     * </pre>
      *
-     * <code>int32 day = 3;</code>
+     * Generated from protobuf field <code>int32 day = 3;</code>
      */
     private $day = 0;
 
@@ -56,12 +48,11 @@ class Date extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Year of date. Must be from 1 to 9999, or 0 if specifying a date without
      * a year.
-     * </pre>
      *
-     * <code>int32 year = 1;</code>
+     * Generated from protobuf field <code>int32 year = 1;</code>
+     * @return int
      */
     public function getYear()
     {
@@ -69,27 +60,23 @@ class Date extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Year of date. Must be from 1 to 9999, or 0 if specifying a date without
      * a year.
-     * </pre>
      *
-     * <code>int32 year = 1;</code>
+     * Generated from protobuf field <code>int32 year = 1;</code>
+     * @param int $var
      */
     public function setYear($var)
     {
         GPBUtil::checkInt32($var);
         $this->year = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Month of year. Must be from 1 to 12.
-     * </pre>
      *
-     * <code>int32 month = 2;</code>
+     * Generated from protobuf field <code>int32 month = 2;</code>
+     * @return int
      */
     public function getMonth()
     {
@@ -97,27 +84,23 @@ class Date extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Month of year. Must be from 1 to 12.
-     * </pre>
      *
-     * <code>int32 month = 2;</code>
+     * Generated from protobuf field <code>int32 month = 2;</code>
+     * @param int $var
      */
     public function setMonth($var)
     {
         GPBUtil::checkInt32($var);
         $this->month = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
      * if specifying a year/month where the day is not significant.
-     * </pre>
      *
-     * <code>int32 day = 3;</code>
+     * Generated from protobuf field <code>int32 day = 3;</code>
+     * @return int
      */
     public function getDay()
     {
@@ -125,19 +108,16 @@ class Date extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
      * if specifying a year/month where the day is not significant.
-     * </pre>
      *
-     * <code>int32 day = 3;</code>
+     * Generated from protobuf field <code>int32 day = 3;</code>
+     * @param int $var
      */
     public function setDay($var)
     {
         GPBUtil::checkInt32($var);
         $this->day = $var;
-
-        return $this;
     }
 
 }

@@ -9,42 +9,34 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Represents an amount of money with its currency type.
- * </pre>
  *
- * Protobuf type <code>google.type.Money</code>
+ * Protobuf type <code>Google\Type\Money</code>
  */
 class Money extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The 3-letter currency code defined in ISO 4217.
-     * </pre>
      *
-     * <code>string currency_code = 1;</code>
+     * Generated from protobuf field <code>string currency_code = 1;</code>
      */
     private $currency_code = '';
     /**
-     * <pre>
      * The whole units of the amount.
      * For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
-     * </pre>
      *
-     * <code>int64 units = 2;</code>
+     * Generated from protobuf field <code>int64 units = 2;</code>
      */
     private $units = 0;
     /**
-     * <pre>
      * Number of nano (10^-9) units of the amount.
      * The value must be between -999,999,999 and +999,999,999 inclusive.
      * If `units` is positive, `nanos` must be positive or zero.
      * If `units` is zero, `nanos` can be positive, zero, or negative.
      * If `units` is negative, `nanos` must be negative or zero.
      * For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
-     * </pre>
      *
-     * <code>int32 nanos = 3;</code>
+     * Generated from protobuf field <code>int32 nanos = 3;</code>
      */
     private $nanos = 0;
 
@@ -54,11 +46,10 @@ class Money extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The 3-letter currency code defined in ISO 4217.
-     * </pre>
      *
-     * <code>string currency_code = 1;</code>
+     * Generated from protobuf field <code>string currency_code = 1;</code>
+     * @return string
      */
     public function getCurrencyCode()
     {
@@ -66,27 +57,23 @@ class Money extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The 3-letter currency code defined in ISO 4217.
-     * </pre>
      *
-     * <code>string currency_code = 1;</code>
+     * Generated from protobuf field <code>string currency_code = 1;</code>
+     * @param string $var
      */
     public function setCurrencyCode($var)
     {
         GPBUtil::checkString($var, True);
         $this->currency_code = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The whole units of the amount.
      * For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
-     * </pre>
      *
-     * <code>int64 units = 2;</code>
+     * Generated from protobuf field <code>int64 units = 2;</code>
+     * @return int|string
      */
     public function getUnits()
     {
@@ -94,32 +81,28 @@ class Money extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The whole units of the amount.
      * For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
-     * </pre>
      *
-     * <code>int64 units = 2;</code>
+     * Generated from protobuf field <code>int64 units = 2;</code>
+     * @param int|string $var
      */
     public function setUnits($var)
     {
         GPBUtil::checkInt64($var);
         $this->units = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Number of nano (10^-9) units of the amount.
      * The value must be between -999,999,999 and +999,999,999 inclusive.
      * If `units` is positive, `nanos` must be positive or zero.
      * If `units` is zero, `nanos` can be positive, zero, or negative.
      * If `units` is negative, `nanos` must be negative or zero.
      * For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
-     * </pre>
      *
-     * <code>int32 nanos = 3;</code>
+     * Generated from protobuf field <code>int32 nanos = 3;</code>
+     * @return int
      */
     public function getNanos()
     {
@@ -127,23 +110,20 @@ class Money extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Number of nano (10^-9) units of the amount.
      * The value must be between -999,999,999 and +999,999,999 inclusive.
      * If `units` is positive, `nanos` must be positive or zero.
      * If `units` is zero, `nanos` can be positive, zero, or negative.
      * If `units` is negative, `nanos` must be negative or zero.
      * For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
-     * </pre>
      *
-     * <code>int32 nanos = 3;</code>
+     * Generated from protobuf field <code>int32 nanos = 3;</code>
+     * @param int $var
      */
     public function setNanos($var)
     {
         GPBUtil::checkInt32($var);
         $this->nanos = $var;
-
-        return $this;
     }
 
 }

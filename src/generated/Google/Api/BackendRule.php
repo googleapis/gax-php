@@ -9,38 +9,30 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A backend rule provides configuration for an individual API element.
- * </pre>
  *
- * Protobuf type <code>google.api.BackendRule</code>
+ * Protobuf type <code>Google\Api\BackendRule</code>
  */
 class BackendRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * The address of the API backend.
-     * </pre>
      *
-     * <code>string address = 2;</code>
+     * Generated from protobuf field <code>string address = 2;</code>
      */
     private $address = '';
     /**
-     * <pre>
      * The number of seconds to wait for a response from a request.  The
      * default depends on the deployment context.
-     * </pre>
      *
-     * <code>double deadline = 3;</code>
+     * Generated from protobuf field <code>double deadline = 3;</code>
      */
     private $deadline = 0.0;
 
@@ -50,12 +42,11 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -63,27 +54,23 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The address of the API backend.
-     * </pre>
      *
-     * <code>string address = 2;</code>
+     * Generated from protobuf field <code>string address = 2;</code>
+     * @return string
      */
     public function getAddress()
     {
@@ -91,27 +78,23 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The address of the API backend.
-     * </pre>
      *
-     * <code>string address = 2;</code>
+     * Generated from protobuf field <code>string address = 2;</code>
+     * @param string $var
      */
     public function setAddress($var)
     {
         GPBUtil::checkString($var, True);
         $this->address = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The number of seconds to wait for a response from a request.  The
      * default depends on the deployment context.
-     * </pre>
      *
-     * <code>double deadline = 3;</code>
+     * Generated from protobuf field <code>double deadline = 3;</code>
+     * @return float
      */
     public function getDeadline()
     {
@@ -119,19 +102,16 @@ class BackendRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The number of seconds to wait for a response from a request.  The
      * default depends on the deployment context.
-     * </pre>
      *
-     * <code>double deadline = 3;</code>
+     * Generated from protobuf field <code>double deadline = 3;</code>
+     * @param float $var
      */
     public function setDeadline($var)
     {
         GPBUtil::checkDouble($var);
         $this->deadline = $var;
-
-        return $this;
     }
 
 }

@@ -9,35 +9,28 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Configuration controlling usage of a service.
- * </pre>
  *
- * Protobuf type <code>google.api.Usage</code>
+ * Protobuf type <code>Google\Api\Usage</code>
  */
 class Usage extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Requirements that must be satisfied before a consumer project can use the
-     * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
+     * service. Each requirement is of the form <service.name>/<requirement-id>;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
-     * </pre>
      *
-     * <code>repeated string requirements = 1;</code>
+     * Generated from protobuf field <code>repeated string requirements = 1;</code>
      */
     private $requirements;
     /**
-     * <pre>
      * A list of usage rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.UsageRule rules = 6;</code>
+     * Generated from protobuf field <code>repeated .google.api.UsageRule rules = 6;</code>
      */
     private $rules;
     /**
-     * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
      * Google Service Management currently only supports
@@ -45,9 +38,8 @@ class Usage extends \Google\Protobuf\Internal\Message
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
      * of a Cloud Pub/Sub topic that uses the Cloud Pub/Sub topic name format
      * documented in https://cloud.google.com/pubsub/docs/overview.
-     * </pre>
      *
-     * <code>string producer_notification_channel = 7;</code>
+     * Generated from protobuf field <code>string producer_notification_channel = 7;</code>
      */
     private $producer_notification_channel = '';
 
@@ -57,13 +49,12 @@ class Usage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Requirements that must be satisfied before a consumer project can use the
-     * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
+     * service. Each requirement is of the form <service.name>/<requirement-id>;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
-     * </pre>
      *
-     * <code>repeated string requirements = 1;</code>
+     * Generated from protobuf field <code>repeated string requirements = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRequirements()
     {
@@ -71,29 +62,25 @@ class Usage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Requirements that must be satisfied before a consumer project can use the
-     * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
+     * service. Each requirement is of the form <service.name>/<requirement-id>;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
-     * </pre>
      *
-     * <code>repeated string requirements = 1;</code>
+     * Generated from protobuf field <code>repeated string requirements = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRequirements(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->requirements = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of usage rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.UsageRule rules = 6;</code>
+     * Generated from protobuf field <code>repeated .google.api.UsageRule rules = 6;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRules()
     {
@@ -101,23 +88,19 @@ class Usage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of usage rules that apply to individual API methods.
      * **NOTE:** All service configuration rules follow "last one wins" order.
-     * </pre>
      *
-     * <code>repeated .google.api.UsageRule rules = 6;</code>
+     * Generated from protobuf field <code>repeated .google.api.UsageRule rules = 6;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setRules(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\UsageRule::class);
         $this->rules = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
      * Google Service Management currently only supports
@@ -125,9 +108,9 @@ class Usage extends \Google\Protobuf\Internal\Message
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
      * of a Cloud Pub/Sub topic that uses the Cloud Pub/Sub topic name format
      * documented in https://cloud.google.com/pubsub/docs/overview.
-     * </pre>
      *
-     * <code>string producer_notification_channel = 7;</code>
+     * Generated from protobuf field <code>string producer_notification_channel = 7;</code>
+     * @return string
      */
     public function getProducerNotificationChannel()
     {
@@ -135,7 +118,6 @@ class Usage extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
      * Google Service Management currently only supports
@@ -143,16 +125,14 @@ class Usage extends \Google\Protobuf\Internal\Message
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
      * of a Cloud Pub/Sub topic that uses the Cloud Pub/Sub topic name format
      * documented in https://cloud.google.com/pubsub/docs/overview.
-     * </pre>
      *
-     * <code>string producer_notification_channel = 7;</code>
+     * Generated from protobuf field <code>string producer_notification_channel = 7;</code>
+     * @param string $var
      */
     public function setProducerNotificationChannel($var)
     {
         GPBUtil::checkString($var, True);
         $this->producer_notification_channel = $var;
-
-        return $this;
     }
 
 }

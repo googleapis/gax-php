@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Message that represents an arbitrary HTTP body. It should only be used for
  * payload formats that can't be represented as JSON, such as raw binary or
  * an HTML page.
@@ -38,26 +37,21 @@ use Google\Protobuf\Internal\GPBUtil;
  *     }
  * Use of this type only changes how the request and response bodies are
  * handled, all other features will continue to work unchanged.
- * </pre>
  *
- * Protobuf type <code>google.api.HttpBody</code>
+ * Protobuf type <code>Google\Api\HttpBody</code>
  */
 class HttpBody extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The HTTP Content-Type string representing the content type of the body.
-     * </pre>
      *
-     * <code>string content_type = 1;</code>
+     * Generated from protobuf field <code>string content_type = 1;</code>
      */
     private $content_type = '';
     /**
-     * <pre>
      * HTTP body binary data.
-     * </pre>
      *
-     * <code>bytes data = 2;</code>
+     * Generated from protobuf field <code>bytes data = 2;</code>
      */
     private $data = '';
 
@@ -67,11 +61,10 @@ class HttpBody extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The HTTP Content-Type string representing the content type of the body.
-     * </pre>
      *
-     * <code>string content_type = 1;</code>
+     * Generated from protobuf field <code>string content_type = 1;</code>
+     * @return string
      */
     public function getContentType()
     {
@@ -79,26 +72,22 @@ class HttpBody extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The HTTP Content-Type string representing the content type of the body.
-     * </pre>
      *
-     * <code>string content_type = 1;</code>
+     * Generated from protobuf field <code>string content_type = 1;</code>
+     * @param string $var
      */
     public function setContentType($var)
     {
         GPBUtil::checkString($var, True);
         $this->content_type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * HTTP body binary data.
-     * </pre>
      *
-     * <code>bytes data = 2;</code>
+     * Generated from protobuf field <code>bytes data = 2;</code>
+     * @return string
      */
     public function getData()
     {
@@ -106,18 +95,15 @@ class HttpBody extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * HTTP body binary data.
-     * </pre>
      *
-     * <code>bytes data = 2;</code>
+     * Generated from protobuf field <code>bytes data = 2;</code>
+     * @param string $var
      */
     public function setData($var)
     {
         GPBUtil::checkString($var, False);
         $this->data = $var;
-
-        return $this;
     }
 
 }

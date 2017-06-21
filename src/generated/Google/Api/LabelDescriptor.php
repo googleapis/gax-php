@@ -9,36 +9,28 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A description of a label.
- * </pre>
  *
- * Protobuf type <code>google.api.LabelDescriptor</code>
+ * Protobuf type <code>Google\Api\LabelDescriptor</code>
  */
 class LabelDescriptor extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The label key.
-     * </pre>
      *
-     * <code>string key = 1;</code>
+     * Generated from protobuf field <code>string key = 1;</code>
      */
     private $key = '';
     /**
-     * <pre>
      * The type of data that can be assigned to the label.
-     * </pre>
      *
-     * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
+     * Generated from protobuf field <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
      */
     private $value_type = 0;
     /**
-     * <pre>
      * A human-readable description for the label.
-     * </pre>
      *
-     * <code>string description = 3;</code>
+     * Generated from protobuf field <code>string description = 3;</code>
      */
     private $description = '';
 
@@ -48,11 +40,10 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The label key.
-     * </pre>
      *
-     * <code>string key = 1;</code>
+     * Generated from protobuf field <code>string key = 1;</code>
+     * @return string
      */
     public function getKey()
     {
@@ -60,26 +51,22 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The label key.
-     * </pre>
      *
-     * <code>string key = 1;</code>
+     * Generated from protobuf field <code>string key = 1;</code>
+     * @param string $var
      */
     public function setKey($var)
     {
         GPBUtil::checkString($var, True);
         $this->key = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The type of data that can be assigned to the label.
-     * </pre>
      *
-     * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
+     * Generated from protobuf field <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
+     * @return int
      */
     public function getValueType()
     {
@@ -87,26 +74,22 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The type of data that can be assigned to the label.
-     * </pre>
      *
-     * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
+     * Generated from protobuf field <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
+     * @param int $var
      */
     public function setValueType($var)
     {
         GPBUtil::checkEnum($var, \Google\Api\LabelDescriptor_ValueType::class);
         $this->value_type = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A human-readable description for the label.
-     * </pre>
      *
-     * <code>string description = 3;</code>
+     * Generated from protobuf field <code>string description = 3;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -114,18 +97,15 @@ class LabelDescriptor extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A human-readable description for the label.
-     * </pre>
      *
-     * <code>string description = 3;</code>
+     * Generated from protobuf field <code>string description = 3;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
 }

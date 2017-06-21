@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A descriptor for defining project properties for a service. One service may
  * have many consumer projects, and the service may want to behave differently
  * depending on some properties on the project. For example, a project may be
@@ -24,18 +23,15 @@ use Google\Protobuf\Internal\GPBUtil;
  *        description: Allows usage of the API without watermarks.
  *      - name: EXTENDED_TILE_CACHE_PERIOD
  *        type: INT64
- * </pre>
  *
- * Protobuf type <code>google.api.ProjectProperties</code>
+ * Protobuf type <code>Google\Api\ProjectProperties</code>
  */
 class ProjectProperties extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * List of per consumer project-specific properties.
-     * </pre>
      *
-     * <code>repeated .google.api.Property properties = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Property properties = 1;</code>
      */
     private $properties;
 
@@ -45,11 +41,10 @@ class ProjectProperties extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * List of per consumer project-specific properties.
-     * </pre>
      *
-     * <code>repeated .google.api.Property properties = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Property properties = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getProperties()
     {
@@ -57,18 +52,15 @@ class ProjectProperties extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * List of per consumer project-specific properties.
-     * </pre>
      *
-     * <code>repeated .google.api.Property properties = 1;</code>
+     * Generated from protobuf field <code>repeated .google.api.Property properties = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setProperties(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\Property::class);
         $this->properties = $arr;
-
-        return $this;
     }
 
 }

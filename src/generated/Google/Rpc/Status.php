@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * The `Status` type defines a logical error model that is suitable for different
  * programming environments, including REST APIs and RPC APIs. It is used by
  * [gRPC](https://github.com/grpc). The error model is designed to be:
@@ -49,37 +48,30 @@ use Google\Protobuf\Internal\GPBUtil;
  *     represented directly using the `Status` message.
  * - Logging. If some API errors are stored in logs, the message `Status` could
  *     be used directly after any stripping needed for security/privacy reasons.
- * </pre>
  *
- * Protobuf type <code>google.rpc.Status</code>
+ * Protobuf type <code>Google\Rpc\Status</code>
  */
 class Status extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-     * </pre>
      *
-     * <code>int32 code = 1;</code>
+     * Generated from protobuf field <code>int32 code = 1;</code>
      */
     private $code = 0;
     /**
-     * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-     * </pre>
      *
-     * <code>string message = 2;</code>
+     * Generated from protobuf field <code>string message = 2;</code>
      */
     private $message = '';
     /**
-     * <pre>
      * A list of messages that carry the error details.  There will be a
      * common set of message types for APIs to use.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Any details = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Any details = 3;</code>
      */
     private $details;
 
@@ -89,11 +81,10 @@ class Status extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-     * </pre>
      *
-     * <code>int32 code = 1;</code>
+     * Generated from protobuf field <code>int32 code = 1;</code>
+     * @return int
      */
     public function getCode()
     {
@@ -101,28 +92,24 @@ class Status extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-     * </pre>
      *
-     * <code>int32 code = 1;</code>
+     * Generated from protobuf field <code>int32 code = 1;</code>
+     * @param int $var
      */
     public function setCode($var)
     {
         GPBUtil::checkInt32($var);
         $this->code = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-     * </pre>
      *
-     * <code>string message = 2;</code>
+     * Generated from protobuf field <code>string message = 2;</code>
+     * @return string
      */
     public function getMessage()
     {
@@ -130,29 +117,25 @@ class Status extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-     * </pre>
      *
-     * <code>string message = 2;</code>
+     * Generated from protobuf field <code>string message = 2;</code>
+     * @param string $var
      */
     public function setMessage($var)
     {
         GPBUtil::checkString($var, True);
         $this->message = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * A list of messages that carry the error details.  There will be a
      * common set of message types for APIs to use.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Any details = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Any details = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getDetails()
     {
@@ -160,19 +143,16 @@ class Status extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A list of messages that carry the error details.  There will be a
      * common set of message types for APIs to use.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Any details = 3;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Any details = 3;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setDetails(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Any::class);
         $this->details = $arr;
-
-        return $this;
     }
 
 }

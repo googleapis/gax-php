@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Describes when the clients can retry a failed request. Clients could ignore
  * the recommendation here or retry when this information is missing from error
  * responses.
@@ -21,18 +20,15 @@ use Google\Protobuf\Internal\GPBUtil;
  * the delay between retries based on `retry_delay`, until either a maximum
  * number of retires have been reached or a maximum retry delay cap has been
  * reached.
- * </pre>
  *
- * Protobuf type <code>google.rpc.RetryInfo</code>
+ * Protobuf type <code>Google\Rpc\RetryInfo</code>
  */
 class RetryInfo extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Clients should wait at least this long between retrying the same request.
-     * </pre>
      *
-     * <code>.google.protobuf.Duration retry_delay = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.Duration retry_delay = 1;</code>
      */
     private $retry_delay = null;
 
@@ -42,11 +38,10 @@ class RetryInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Clients should wait at least this long between retrying the same request.
-     * </pre>
      *
-     * <code>.google.protobuf.Duration retry_delay = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.Duration retry_delay = 1;</code>
+     * @return \Google\Protobuf\Duration
      */
     public function getRetryDelay()
     {
@@ -54,18 +49,15 @@ class RetryInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Clients should wait at least this long between retrying the same request.
-     * </pre>
      *
-     * <code>.google.protobuf.Duration retry_delay = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.Duration retry_delay = 1;</code>
+     * @param \Google\Protobuf\Duration $var
      */
     public function setRetryDelay(&$var)
     {
         GPBUtil::checkMessage($var, \Google\Protobuf\Duration::class);
         $this->retry_delay = $var;
-
-        return $this;
     }
 
 }

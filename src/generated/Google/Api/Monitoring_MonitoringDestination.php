@@ -9,31 +9,25 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Configuration of a specific monitoring destination (the producer project
  * or the consumer project).
- * </pre>
  *
- * Protobuf type <code>google.api.Monitoring.MonitoringDestination</code>
+ * Protobuf type <code>Google\Api\Monitoring\MonitoringDestination</code>
  */
 class Monitoring_MonitoringDestination extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The monitored resource type. The type must be defined in
      * [Service.monitored_resources][google.api.Service.monitored_resources] section.
-     * </pre>
      *
-     * <code>string monitored_resource = 1;</code>
+     * Generated from protobuf field <code>string monitored_resource = 1;</code>
      */
     private $monitored_resource = '';
     /**
-     * <pre>
      * Names of the metrics to report to this monitoring destination.
      * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
-     * </pre>
      *
-     * <code>repeated string metrics = 2;</code>
+     * Generated from protobuf field <code>repeated string metrics = 2;</code>
      */
     private $metrics;
 
@@ -43,12 +37,11 @@ class Monitoring_MonitoringDestination extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The monitored resource type. The type must be defined in
      * [Service.monitored_resources][google.api.Service.monitored_resources] section.
-     * </pre>
      *
-     * <code>string monitored_resource = 1;</code>
+     * Generated from protobuf field <code>string monitored_resource = 1;</code>
+     * @return string
      */
     public function getMonitoredResource()
     {
@@ -56,28 +49,24 @@ class Monitoring_MonitoringDestination extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The monitored resource type. The type must be defined in
      * [Service.monitored_resources][google.api.Service.monitored_resources] section.
-     * </pre>
      *
-     * <code>string monitored_resource = 1;</code>
+     * Generated from protobuf field <code>string monitored_resource = 1;</code>
+     * @param string $var
      */
     public function setMonitoredResource($var)
     {
         GPBUtil::checkString($var, True);
         $this->monitored_resource = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Names of the metrics to report to this monitoring destination.
      * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
-     * </pre>
      *
-     * <code>repeated string metrics = 2;</code>
+     * Generated from protobuf field <code>repeated string metrics = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getMetrics()
     {
@@ -85,19 +74,16 @@ class Monitoring_MonitoringDestination extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Names of the metrics to report to this monitoring destination.
      * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
-     * </pre>
      *
-     * <code>repeated string metrics = 2;</code>
+     * Generated from protobuf field <code>repeated string metrics = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setMetrics(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->metrics = $arr;
-
-        return $this;
     }
 
 }

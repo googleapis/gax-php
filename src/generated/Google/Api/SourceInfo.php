@@ -9,20 +9,16 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Source information used to create a Service Config
- * </pre>
  *
- * Protobuf type <code>google.api.SourceInfo</code>
+ * Protobuf type <code>Google\Api\SourceInfo</code>
  */
 class SourceInfo extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * All files used during config generation.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Any source_files = 1;</code>
      */
     private $source_files;
 
@@ -32,11 +28,10 @@ class SourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * All files used during config generation.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Any source_files = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getSourceFiles()
     {
@@ -44,18 +39,15 @@ class SourceInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * All files used during config generation.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Any source_files = 1;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Any source_files = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setSourceFiles(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Protobuf\Any::class);
         $this->source_files = $arr;
-
-        return $this;
     }
 
 }

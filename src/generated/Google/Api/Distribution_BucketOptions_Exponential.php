@@ -9,42 +9,34 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Specify a sequence of buckets that have a width that is proportional to
  * the value of the lower bound.  Each bucket represents a constant relative
  * uncertainty on a specific value in the bucket.
  * Defines `num_finite_buckets + 2` (= N) buckets with these boundaries for
  * bucket i:
- *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
- *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
- * </pre>
+ *    Upper bound (0 <= i < N-1):     scale * (growth_factor ^ i).
+ *    Lower bound (1 <= i < N):       scale * (growth_factor ^ (i - 1)).
  *
- * Protobuf type <code>google.api.Distribution.BucketOptions.Exponential</code>
+ * Protobuf type <code>Google\Api\Distribution\BucketOptions\Exponential</code>
  */
 class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>int32 num_finite_buckets = 1;</code>
+     * Generated from protobuf field <code>int32 num_finite_buckets = 1;</code>
      */
     private $num_finite_buckets = 0;
     /**
-     * <pre>
      * Must be greater than 1.
-     * </pre>
      *
-     * <code>double growth_factor = 2;</code>
+     * Generated from protobuf field <code>double growth_factor = 2;</code>
      */
     private $growth_factor = 0.0;
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>double scale = 3;</code>
+     * Generated from protobuf field <code>double scale = 3;</code>
      */
     private $scale = 0.0;
 
@@ -54,11 +46,10 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>int32 num_finite_buckets = 1;</code>
+     * Generated from protobuf field <code>int32 num_finite_buckets = 1;</code>
+     * @return int
      */
     public function getNumFiniteBuckets()
     {
@@ -66,26 +57,22 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>int32 num_finite_buckets = 1;</code>
+     * Generated from protobuf field <code>int32 num_finite_buckets = 1;</code>
+     * @param int $var
      */
     public function setNumFiniteBuckets($var)
     {
         GPBUtil::checkInt32($var);
         $this->num_finite_buckets = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Must be greater than 1.
-     * </pre>
      *
-     * <code>double growth_factor = 2;</code>
+     * Generated from protobuf field <code>double growth_factor = 2;</code>
+     * @return float
      */
     public function getGrowthFactor()
     {
@@ -93,26 +80,22 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     }
 
     /**
-     * <pre>
      * Must be greater than 1.
-     * </pre>
      *
-     * <code>double growth_factor = 2;</code>
+     * Generated from protobuf field <code>double growth_factor = 2;</code>
+     * @param float $var
      */
     public function setGrowthFactor($var)
     {
         GPBUtil::checkDouble($var);
         $this->growth_factor = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>double scale = 3;</code>
+     * Generated from protobuf field <code>double scale = 3;</code>
+     * @return float
      */
     public function getScale()
     {
@@ -120,18 +103,15 @@ class Distribution_BucketOptions_Exponential extends \Google\Protobuf\Internal\M
     }
 
     /**
-     * <pre>
      * Must be greater than 0.
-     * </pre>
      *
-     * <code>double scale = 3;</code>
+     * Generated from protobuf field <code>double scale = 3;</code>
+     * @param float $var
      */
     public function setScale($var)
     {
         GPBUtil::checkDouble($var);
         $this->scale = $var;
-
-        return $this;
     }
 
 }

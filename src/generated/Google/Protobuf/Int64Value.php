@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `int64`.
  * The JSON representation for `Int64Value` is JSON string.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Int64Value</code>
+ * Protobuf type <code>Google\Protobuf\Int64Value</code>
  */
 class Int64Value extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The int64 value.
-     * </pre>
      *
-     * <code>int64 value = 1;</code>
+     * Generated from protobuf field <code>int64 value = 1;</code>
      */
     private $value = 0;
 
@@ -33,11 +29,10 @@ class Int64Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The int64 value.
-     * </pre>
      *
-     * <code>int64 value = 1;</code>
+     * Generated from protobuf field <code>int64 value = 1;</code>
+     * @return int|string
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class Int64Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The int64 value.
-     * </pre>
      *
-     * <code>int64 value = 1;</code>
+     * Generated from protobuf field <code>int64 value = 1;</code>
+     * @param int|string $var
      */
     public function setValue($var)
     {

@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Configuration of authorization.
  * This section determines the authorization provider, if unspecified, then no
  * authorization check will be done.
@@ -17,19 +16,16 @@ use Google\Protobuf\Internal\GPBUtil;
  *     experimental:
  *       authorization:
  *         provider: firebaserules.googleapis.com
- * </pre>
  *
- * Protobuf type <code>google.api.AuthorizationConfig</code>
+ * Protobuf type <code>Google\Api\AuthorizationConfig</code>
  */
 class AuthorizationConfig extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The name of the authorization provider, such as
      * firebaserules.googleapis.com.
-     * </pre>
      *
-     * <code>string provider = 1;</code>
+     * Generated from protobuf field <code>string provider = 1;</code>
      */
     private $provider = '';
 
@@ -39,12 +35,11 @@ class AuthorizationConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the authorization provider, such as
      * firebaserules.googleapis.com.
-     * </pre>
      *
-     * <code>string provider = 1;</code>
+     * Generated from protobuf field <code>string provider = 1;</code>
+     * @return string
      */
     public function getProvider()
     {
@@ -52,19 +47,16 @@ class AuthorizationConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The name of the authorization provider, such as
      * firebaserules.googleapis.com.
-     * </pre>
      *
-     * <code>string provider = 1;</code>
+     * Generated from protobuf field <code>string provider = 1;</code>
+     * @param string $var
      */
     public function setProvider($var)
     {
         GPBUtil::checkString($var, True);
         $this->provider = $var;
-
-        return $this;
     }
 
 }

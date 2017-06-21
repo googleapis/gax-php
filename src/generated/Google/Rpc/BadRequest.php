@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Describes violations in a client request. This error type focuses on the
  * syntactic aspects of the request.
- * </pre>
  *
- * Protobuf type <code>google.rpc.BadRequest</code>
+ * Protobuf type <code>Google\Rpc\BadRequest</code>
  */
 class BadRequest extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Describes all violations in a client request.
-     * </pre>
      *
-     * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     private $field_violations;
 
@@ -33,11 +29,10 @@ class BadRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes all violations in a client request.
-     * </pre>
      *
-     * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getFieldViolations()
     {
@@ -45,18 +40,15 @@ class BadRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes all violations in a client request.
-     * </pre>
      *
-     * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setFieldViolations(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Rpc\BadRequest_FieldViolation::class);
         $this->field_violations = $arr;
-
-        return $this;
     }
 
 }

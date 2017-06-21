@@ -9,35 +9,29 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Define a system parameter rule mapping system parameter definitions to
  * methods.
- * </pre>
  *
- * Protobuf type <code>google.api.SystemParameterRule</code>
+ * Protobuf type <code>Google\Api\SystemParameterRule</code>
  */
 class SystemParameterRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * Define parameters. Multiple names may be defined for a parameter.
      * For a given method call, only one of them should be used. If multiple
      * names are used the behavior is implementation-dependent.
      * If none of the specified names are present the behavior is
      * parameter-dependent.
-     * </pre>
      *
-     * <code>repeated .google.api.SystemParameter parameters = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.SystemParameter parameters = 2;</code>
      */
     private $parameters;
 
@@ -47,13 +41,12 @@ class SystemParameterRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -61,32 +54,28 @@ class SystemParameterRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Define parameters. Multiple names may be defined for a parameter.
      * For a given method call, only one of them should be used. If multiple
      * names are used the behavior is implementation-dependent.
      * If none of the specified names are present the behavior is
      * parameter-dependent.
-     * </pre>
      *
-     * <code>repeated .google.api.SystemParameter parameters = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.SystemParameter parameters = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getParameters()
     {
@@ -94,22 +83,19 @@ class SystemParameterRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Define parameters. Multiple names may be defined for a parameter.
      * For a given method call, only one of them should be used. If multiple
      * names are used the behavior is implementation-dependent.
      * If none of the specified names are present the behavior is
      * parameter-dependent.
-     * </pre>
      *
-     * <code>repeated .google.api.SystemParameter parameters = 2;</code>
+     * Generated from protobuf field <code>repeated .google.api.SystemParameter parameters = 2;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setParameters(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Api\SystemParameter::class);
         $this->parameters = $arr;
-
-        return $this;
     }
 
 }

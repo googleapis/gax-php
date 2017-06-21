@@ -9,28 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Describes additional debugging info.
- * </pre>
  *
- * Protobuf type <code>google.rpc.DebugInfo</code>
+ * Protobuf type <code>Google\Rpc\DebugInfo</code>
  */
 class DebugInfo extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The stack trace entries indicating where the error occurred.
-     * </pre>
      *
-     * <code>repeated string stack_entries = 1;</code>
+     * Generated from protobuf field <code>repeated string stack_entries = 1;</code>
      */
     private $stack_entries;
     /**
-     * <pre>
      * Additional debugging information provided by the server.
-     * </pre>
      *
-     * <code>string detail = 2;</code>
+     * Generated from protobuf field <code>string detail = 2;</code>
      */
     private $detail = '';
 
@@ -40,11 +34,10 @@ class DebugInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The stack trace entries indicating where the error occurred.
-     * </pre>
      *
-     * <code>repeated string stack_entries = 1;</code>
+     * Generated from protobuf field <code>repeated string stack_entries = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getStackEntries()
     {
@@ -52,26 +45,22 @@ class DebugInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The stack trace entries indicating where the error occurred.
-     * </pre>
      *
-     * <code>repeated string stack_entries = 1;</code>
+     * Generated from protobuf field <code>repeated string stack_entries = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setStackEntries(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->stack_entries = $arr;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * Additional debugging information provided by the server.
-     * </pre>
      *
-     * <code>string detail = 2;</code>
+     * Generated from protobuf field <code>string detail = 2;</code>
+     * @return string
      */
     public function getDetail()
     {
@@ -79,18 +68,15 @@ class DebugInfo extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Additional debugging information provided by the server.
-     * </pre>
      *
-     * <code>string detail = 2;</code>
+     * Generated from protobuf field <code>string detail = 2;</code>
+     * @param string $var
      */
     public function setDetail($var)
     {
         GPBUtil::checkString($var, True);
         $this->detail = $var;
-
-        return $this;
     }
 
 }

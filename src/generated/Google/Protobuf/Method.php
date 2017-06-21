@@ -9,68 +9,52 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Method represents a method of an api.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Method</code>
+ * Protobuf type <code>Google\Protobuf\Method</code>
  */
 class Method extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The simple name of this method.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * A URL of the input message type.
-     * </pre>
      *
-     * <code>string request_type_url = 2;</code>
+     * Generated from protobuf field <code>string request_type_url = 2;</code>
      */
     private $request_type_url = '';
     /**
-     * <pre>
      * If true, the request is streamed.
-     * </pre>
      *
-     * <code>bool request_streaming = 3;</code>
+     * Generated from protobuf field <code>bool request_streaming = 3;</code>
      */
     private $request_streaming = false;
     /**
-     * <pre>
      * The URL of the output message type.
-     * </pre>
      *
-     * <code>string response_type_url = 4;</code>
+     * Generated from protobuf field <code>string response_type_url = 4;</code>
      */
     private $response_type_url = '';
     /**
-     * <pre>
      * If true, the response is streamed.
-     * </pre>
      *
-     * <code>bool response_streaming = 5;</code>
+     * Generated from protobuf field <code>bool response_streaming = 5;</code>
      */
     private $response_streaming = false;
     /**
-     * <pre>
      * Any metadata attached to the method.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 6;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 6;</code>
      */
     private $options;
     /**
-     * <pre>
      * The source syntax of this method.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 7;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 7;</code>
      */
     private $syntax = 0;
 
@@ -80,11 +64,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The simple name of this method.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @return string
      */
     public function getName()
     {
@@ -92,11 +75,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The simple name of this method.
-     * </pre>
      *
-     * <code>string name = 1;</code>
+     * Generated from protobuf field <code>string name = 1;</code>
+     * @param string $var
      */
     public function setName($var)
     {
@@ -105,11 +87,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A URL of the input message type.
-     * </pre>
      *
-     * <code>string request_type_url = 2;</code>
+     * Generated from protobuf field <code>string request_type_url = 2;</code>
+     * @return string
      */
     public function getRequestTypeUrl()
     {
@@ -117,11 +98,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * A URL of the input message type.
-     * </pre>
      *
-     * <code>string request_type_url = 2;</code>
+     * Generated from protobuf field <code>string request_type_url = 2;</code>
+     * @param string $var
      */
     public function setRequestTypeUrl($var)
     {
@@ -130,11 +110,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * If true, the request is streamed.
-     * </pre>
      *
-     * <code>bool request_streaming = 3;</code>
+     * Generated from protobuf field <code>bool request_streaming = 3;</code>
+     * @return bool
      */
     public function getRequestStreaming()
     {
@@ -142,11 +121,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * If true, the request is streamed.
-     * </pre>
      *
-     * <code>bool request_streaming = 3;</code>
+     * Generated from protobuf field <code>bool request_streaming = 3;</code>
+     * @param bool $var
      */
     public function setRequestStreaming($var)
     {
@@ -155,11 +133,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The URL of the output message type.
-     * </pre>
      *
-     * <code>string response_type_url = 4;</code>
+     * Generated from protobuf field <code>string response_type_url = 4;</code>
+     * @return string
      */
     public function getResponseTypeUrl()
     {
@@ -167,11 +144,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The URL of the output message type.
-     * </pre>
      *
-     * <code>string response_type_url = 4;</code>
+     * Generated from protobuf field <code>string response_type_url = 4;</code>
+     * @param string $var
      */
     public function setResponseTypeUrl($var)
     {
@@ -180,11 +156,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * If true, the response is streamed.
-     * </pre>
      *
-     * <code>bool response_streaming = 5;</code>
+     * Generated from protobuf field <code>bool response_streaming = 5;</code>
+     * @return bool
      */
     public function getResponseStreaming()
     {
@@ -192,11 +167,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * If true, the response is streamed.
-     * </pre>
      *
-     * <code>bool response_streaming = 5;</code>
+     * Generated from protobuf field <code>bool response_streaming = 5;</code>
+     * @param bool $var
      */
     public function setResponseStreaming($var)
     {
@@ -205,11 +179,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Any metadata attached to the method.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 6;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 6;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getOptions()
     {
@@ -217,11 +190,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Any metadata attached to the method.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 6;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 6;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setOptions(&$var)
     {
@@ -230,11 +202,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source syntax of this method.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 7;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 7;</code>
+     * @return int
      */
     public function getSyntax()
     {
@@ -242,11 +213,10 @@ class Method extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The source syntax of this method.
-     * </pre>
      *
-     * <code>.google.protobuf.Syntax syntax = 7;</code>
+     * Generated from protobuf field <code>.google.protobuf.Syntax syntax = 7;</code>
+     * @param int $var
      */
     public function setSyntax($var)
     {

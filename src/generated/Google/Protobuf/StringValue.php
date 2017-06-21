@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `string`.
  * The JSON representation for `StringValue` is JSON string.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.StringValue</code>
+ * Protobuf type <code>Google\Protobuf\StringValue</code>
  */
 class StringValue extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The string value.
-     * </pre>
      *
-     * <code>string value = 1;</code>
+     * Generated from protobuf field <code>string value = 1;</code>
      */
     private $value = '';
 
@@ -33,11 +29,10 @@ class StringValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The string value.
-     * </pre>
      *
-     * <code>string value = 1;</code>
+     * Generated from protobuf field <code>string value = 1;</code>
+     * @return string
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class StringValue extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The string value.
-     * </pre>
      *
-     * <code>string value = 1;</code>
+     * Generated from protobuf field <code>string value = 1;</code>
+     * @param string $var
      */
     public function setValue($var)
     {

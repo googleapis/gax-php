@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Usage configuration rules for the service.
  * NOTE: Under development.
  * Use this rule to configure unregistered calls for the service. Unregistered
@@ -28,30 +27,32 @@ use Google\Protobuf\Internal\GPBUtil;
  *       rules:
  *       - selector: "google.example.library.v1.LibraryService.CreateBook"
  *         allow_unregistered_calls: true
- * </pre>
  *
- * Protobuf type <code>google.api.UsageRule</code>
+ * Protobuf type <code>Google\Api\UsageRule</code>
  */
 class UsageRule extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
      */
     private $selector = '';
     /**
-     * <pre>
      * True, if the method allows unregistered calls; false otherwise.
-     * </pre>
      *
-     * <code>bool allow_unregistered_calls = 2;</code>
+     * Generated from protobuf field <code>bool allow_unregistered_calls = 2;</code>
      */
     private $allow_unregistered_calls = false;
+    /**
+     * True, if the method should skip service control. If so, no control plane
+     * feature (like quota and billing) will be enabled.
+     *
+     * Generated from protobuf field <code>bool skip_service_control = 3;</code>
+     */
+    private $skip_service_control = false;
 
     public function __construct() {
         \GPBMetadata\Google\Api\Usage::initOnce();
@@ -59,13 +60,12 @@ class UsageRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @return string
      */
     public function getSelector()
     {
@@ -73,28 +73,24 @@ class UsageRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
-     * </pre>
      *
-     * <code>string selector = 1;</code>
+     * Generated from protobuf field <code>string selector = 1;</code>
+     * @param string $var
      */
     public function setSelector($var)
     {
         GPBUtil::checkString($var, True);
         $this->selector = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * True, if the method allows unregistered calls; false otherwise.
-     * </pre>
      *
-     * <code>bool allow_unregistered_calls = 2;</code>
+     * Generated from protobuf field <code>bool allow_unregistered_calls = 2;</code>
+     * @return bool
      */
     public function getAllowUnregisteredCalls()
     {
@@ -102,18 +98,40 @@ class UsageRule extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * True, if the method allows unregistered calls; false otherwise.
-     * </pre>
      *
-     * <code>bool allow_unregistered_calls = 2;</code>
+     * Generated from protobuf field <code>bool allow_unregistered_calls = 2;</code>
+     * @param bool $var
      */
     public function setAllowUnregisteredCalls($var)
     {
         GPBUtil::checkBool($var);
         $this->allow_unregistered_calls = $var;
+    }
 
-        return $this;
+    /**
+     * True, if the method should skip service control. If so, no control plane
+     * feature (like quota and billing) will be enabled.
+     *
+     * Generated from protobuf field <code>bool skip_service_control = 3;</code>
+     * @return bool
+     */
+    public function getSkipServiceControl()
+    {
+        return $this->skip_service_control;
+    }
+
+    /**
+     * True, if the method should skip service control. If so, no control plane
+     * feature (like quota and billing) will be enabled.
+     *
+     * Generated from protobuf field <code>bool skip_service_control = 3;</code>
+     * @param bool $var
+     */
+    public function setSkipServiceControl($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->skip_service_control = $var;
     }
 
 }

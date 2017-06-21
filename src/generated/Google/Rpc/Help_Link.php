@@ -9,28 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Describes a URL link.
- * </pre>
  *
- * Protobuf type <code>google.rpc.Help.Link</code>
+ * Protobuf type <code>Google\Rpc\Help\Link</code>
  */
 class Help_Link extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Describes what the link offers.
-     * </pre>
      *
-     * <code>string description = 1;</code>
+     * Generated from protobuf field <code>string description = 1;</code>
      */
     private $description = '';
     /**
-     * <pre>
      * The URL of the link.
-     * </pre>
      *
-     * <code>string url = 2;</code>
+     * Generated from protobuf field <code>string url = 2;</code>
      */
     private $url = '';
 
@@ -40,11 +34,10 @@ class Help_Link extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes what the link offers.
-     * </pre>
      *
-     * <code>string description = 1;</code>
+     * Generated from protobuf field <code>string description = 1;</code>
+     * @return string
      */
     public function getDescription()
     {
@@ -52,26 +45,22 @@ class Help_Link extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes what the link offers.
-     * </pre>
      *
-     * <code>string description = 1;</code>
+     * Generated from protobuf field <code>string description = 1;</code>
+     * @param string $var
      */
     public function setDescription($var)
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
-
-        return $this;
     }
 
     /**
-     * <pre>
      * The URL of the link.
-     * </pre>
      *
-     * <code>string url = 2;</code>
+     * Generated from protobuf field <code>string url = 2;</code>
+     * @return string
      */
     public function getUrl()
     {
@@ -79,18 +68,15 @@ class Help_Link extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The URL of the link.
-     * </pre>
      *
-     * <code>string url = 2;</code>
+     * Generated from protobuf field <code>string url = 2;</code>
+     * @param string $var
      */
     public function setUrl($var)
     {
         GPBUtil::checkString($var, True);
         $this->url = $var;
-
-        return $this;
     }
 
 }

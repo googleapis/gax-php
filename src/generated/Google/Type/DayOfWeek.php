@@ -5,76 +5,58 @@
 namespace Google\Type;
 
 /**
- * <pre>
  * Represents a day of week.
- * </pre>
  *
- * Protobuf enum <code>google.type.DayOfWeek</code>
+ * Protobuf enum <code>Google\Type\DayOfWeek</code>
  */
 class DayOfWeek
 {
     /**
-     * <pre>
      * The unspecified day-of-week.
-     * </pre>
      *
-     * <code>DAY_OF_WEEK_UNSPECIFIED = 0;</code>
+     * Generated from protobuf enum <code>DAY_OF_WEEK_UNSPECIFIED = 0;</code>
      */
     const DAY_OF_WEEK_UNSPECIFIED = 0;
     /**
-     * <pre>
      * The day-of-week of Monday.
-     * </pre>
      *
-     * <code>MONDAY = 1;</code>
+     * Generated from protobuf enum <code>MONDAY = 1;</code>
      */
     const MONDAY = 1;
     /**
-     * <pre>
      * The day-of-week of Tuesday.
-     * </pre>
      *
-     * <code>TUESDAY = 2;</code>
+     * Generated from protobuf enum <code>TUESDAY = 2;</code>
      */
     const TUESDAY = 2;
     /**
-     * <pre>
      * The day-of-week of Wednesday.
-     * </pre>
      *
-     * <code>WEDNESDAY = 3;</code>
+     * Generated from protobuf enum <code>WEDNESDAY = 3;</code>
      */
     const WEDNESDAY = 3;
     /**
-     * <pre>
      * The day-of-week of Thursday.
-     * </pre>
      *
-     * <code>THURSDAY = 4;</code>
+     * Generated from protobuf enum <code>THURSDAY = 4;</code>
      */
     const THURSDAY = 4;
     /**
-     * <pre>
      * The day-of-week of Friday.
-     * </pre>
      *
-     * <code>FRIDAY = 5;</code>
+     * Generated from protobuf enum <code>FRIDAY = 5;</code>
      */
     const FRIDAY = 5;
     /**
-     * <pre>
      * The day-of-week of Saturday.
-     * </pre>
      *
-     * <code>SATURDAY = 6;</code>
+     * Generated from protobuf enum <code>SATURDAY = 6;</code>
      */
     const SATURDAY = 6;
     /**
-     * <pre>
      * The day-of-week of Sunday.
-     * </pre>
      *
-     * <code>SUNDAY = 7;</code>
+     * Generated from protobuf enum <code>SUNDAY = 7;</code>
      */
     const SUNDAY = 7;
 }

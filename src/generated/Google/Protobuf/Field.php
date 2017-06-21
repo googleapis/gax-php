@@ -9,94 +9,72 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * A single field of a message type.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Field</code>
+ * Protobuf type <code>Google\Protobuf\Field</code>
  */
 class Field extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The field type.
-     * </pre>
      *
-     * <code>.google.protobuf.Field.Kind kind = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.Field.Kind kind = 1;</code>
      */
     private $kind = 0;
     /**
-     * <pre>
      * The field cardinality.
-     * </pre>
      *
-     * <code>.google.protobuf.Field.Cardinality cardinality = 2;</code>
+     * Generated from protobuf field <code>.google.protobuf.Field.Cardinality cardinality = 2;</code>
      */
     private $cardinality = 0;
     /**
-     * <pre>
      * The field number.
-     * </pre>
      *
-     * <code>int32 number = 3;</code>
+     * Generated from protobuf field <code>int32 number = 3;</code>
      */
     private $number = 0;
     /**
-     * <pre>
      * The field name.
-     * </pre>
      *
-     * <code>string name = 4;</code>
+     * Generated from protobuf field <code>string name = 4;</code>
      */
     private $name = '';
     /**
-     * <pre>
      * The field type URL, without the scheme, for message or enumeration
      * types. Example: `"type.googleapis.com/google.protobuf.Timestamp"`.
-     * </pre>
      *
-     * <code>string type_url = 6;</code>
+     * Generated from protobuf field <code>string type_url = 6;</code>
      */
     private $type_url = '';
     /**
-     * <pre>
      * The index of the field type in `Type.oneofs`, for message or enumeration
      * types. The first type has index 1; zero means the type is not in the list.
-     * </pre>
      *
-     * <code>int32 oneof_index = 7;</code>
+     * Generated from protobuf field <code>int32 oneof_index = 7;</code>
      */
     private $oneof_index = 0;
     /**
-     * <pre>
      * Whether to use alternative packed wire representation.
-     * </pre>
      *
-     * <code>bool packed = 8;</code>
+     * Generated from protobuf field <code>bool packed = 8;</code>
      */
     private $packed = false;
     /**
-     * <pre>
      * The protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 9;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 9;</code>
      */
     private $options;
     /**
-     * <pre>
      * The field JSON name.
-     * </pre>
      *
-     * <code>string json_name = 10;</code>
+     * Generated from protobuf field <code>string json_name = 10;</code>
      */
     private $json_name = '';
     /**
-     * <pre>
      * The string value of the default value of this field. Proto2 syntax only.
-     * </pre>
      *
-     * <code>string default_value = 11;</code>
+     * Generated from protobuf field <code>string default_value = 11;</code>
      */
     private $default_value = '';
 
@@ -106,11 +84,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field type.
-     * </pre>
      *
-     * <code>.google.protobuf.Field.Kind kind = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.Field.Kind kind = 1;</code>
+     * @return int
      */
     public function getKind()
     {
@@ -118,11 +95,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field type.
-     * </pre>
      *
-     * <code>.google.protobuf.Field.Kind kind = 1;</code>
+     * Generated from protobuf field <code>.google.protobuf.Field.Kind kind = 1;</code>
+     * @param int $var
      */
     public function setKind($var)
     {
@@ -131,11 +107,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field cardinality.
-     * </pre>
      *
-     * <code>.google.protobuf.Field.Cardinality cardinality = 2;</code>
+     * Generated from protobuf field <code>.google.protobuf.Field.Cardinality cardinality = 2;</code>
+     * @return int
      */
     public function getCardinality()
     {
@@ -143,11 +118,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field cardinality.
-     * </pre>
      *
-     * <code>.google.protobuf.Field.Cardinality cardinality = 2;</code>
+     * Generated from protobuf field <code>.google.protobuf.Field.Cardinality cardinality = 2;</code>
+     * @param int $var
      */
     public function setCardinality($var)
     {
@@ -156,11 +130,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field number.
-     * </pre>
      *
-     * <code>int32 number = 3;</code>
+     * Generated from protobuf field <code>int32 number = 3;</code>
+     * @return int
      */
     public function getNumber()
     {
@@ -168,11 +141,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field number.
-     * </pre>
      *
-     * <code>int32 number = 3;</code>
+     * Generated from protobuf field <code>int32 number = 3;</code>
+     * @param int $var
      */
     public function setNumber($var)
     {
@@ -181,11 +153,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field name.
-     * </pre>
      *
-     * <code>string name = 4;</code>
+     * Generated from protobuf field <code>string name = 4;</code>
+     * @return string
      */
     public function getName()
     {
@@ -193,11 +164,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field name.
-     * </pre>
      *
-     * <code>string name = 4;</code>
+     * Generated from protobuf field <code>string name = 4;</code>
+     * @param string $var
      */
     public function setName($var)
     {
@@ -206,12 +176,11 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field type URL, without the scheme, for message or enumeration
      * types. Example: `"type.googleapis.com/google.protobuf.Timestamp"`.
-     * </pre>
      *
-     * <code>string type_url = 6;</code>
+     * Generated from protobuf field <code>string type_url = 6;</code>
+     * @return string
      */
     public function getTypeUrl()
     {
@@ -219,12 +188,11 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field type URL, without the scheme, for message or enumeration
      * types. Example: `"type.googleapis.com/google.protobuf.Timestamp"`.
-     * </pre>
      *
-     * <code>string type_url = 6;</code>
+     * Generated from protobuf field <code>string type_url = 6;</code>
+     * @param string $var
      */
     public function setTypeUrl($var)
     {
@@ -233,12 +201,11 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The index of the field type in `Type.oneofs`, for message or enumeration
      * types. The first type has index 1; zero means the type is not in the list.
-     * </pre>
      *
-     * <code>int32 oneof_index = 7;</code>
+     * Generated from protobuf field <code>int32 oneof_index = 7;</code>
+     * @return int
      */
     public function getOneofIndex()
     {
@@ -246,12 +213,11 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The index of the field type in `Type.oneofs`, for message or enumeration
      * types. The first type has index 1; zero means the type is not in the list.
-     * </pre>
      *
-     * <code>int32 oneof_index = 7;</code>
+     * Generated from protobuf field <code>int32 oneof_index = 7;</code>
+     * @param int $var
      */
     public function setOneofIndex($var)
     {
@@ -260,11 +226,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Whether to use alternative packed wire representation.
-     * </pre>
      *
-     * <code>bool packed = 8;</code>
+     * Generated from protobuf field <code>bool packed = 8;</code>
+     * @return bool
      */
     public function getPacked()
     {
@@ -272,11 +237,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Whether to use alternative packed wire representation.
-     * </pre>
      *
-     * <code>bool packed = 8;</code>
+     * Generated from protobuf field <code>bool packed = 8;</code>
+     * @param bool $var
      */
     public function setPacked($var)
     {
@@ -285,11 +249,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 9;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 9;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getOptions()
     {
@@ -297,11 +260,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The protocol buffer options.
-     * </pre>
      *
-     * <code>repeated .google.protobuf.Option options = 9;</code>
+     * Generated from protobuf field <code>repeated .google.protobuf.Option options = 9;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setOptions(&$var)
     {
@@ -310,11 +272,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field JSON name.
-     * </pre>
      *
-     * <code>string json_name = 10;</code>
+     * Generated from protobuf field <code>string json_name = 10;</code>
+     * @return string
      */
     public function getJsonName()
     {
@@ -322,11 +283,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The field JSON name.
-     * </pre>
      *
-     * <code>string json_name = 10;</code>
+     * Generated from protobuf field <code>string json_name = 10;</code>
+     * @param string $var
      */
     public function setJsonName($var)
     {
@@ -335,11 +295,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The string value of the default value of this field. Proto2 syntax only.
-     * </pre>
      *
-     * <code>string default_value = 11;</code>
+     * Generated from protobuf field <code>string default_value = 11;</code>
+     * @return string
      */
     public function getDefaultValue()
     {
@@ -347,11 +306,10 @@ class Field extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The string value of the default value of this field. Proto2 syntax only.
-     * </pre>
      *
-     * <code>string default_value = 11;</code>
+     * Generated from protobuf field <code>string default_value = 11;</code>
+     * @param string $var
      */
     public function setDefaultValue($var)
     {

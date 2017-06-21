@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Describes how a quota check failed.
  * For example if a daily limit was exceeded for the calling project,
  * a service could respond with a QuotaFailure detail containing the project
@@ -19,18 +18,15 @@ use Google\Protobuf\Internal\GPBUtil;
  * to true.
  * Also see RetryDetail and Help types for other details about handling a
  * quota failure.
- * </pre>
  *
- * Protobuf type <code>google.rpc.QuotaFailure</code>
+ * Protobuf type <code>Google\Rpc\QuotaFailure</code>
  */
 class QuotaFailure extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * Describes all quota violations.
-     * </pre>
      *
-     * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     private $violations;
 
@@ -40,11 +36,10 @@ class QuotaFailure extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes all quota violations.
-     * </pre>
      *
-     * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getViolations()
     {
@@ -52,18 +47,15 @@ class QuotaFailure extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * Describes all quota violations.
-     * </pre>
      *
-     * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
+     * Generated from protobuf field <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setViolations(&$var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Google\Rpc\QuotaFailure_Violation::class);
         $this->violations = $arr;
-
-        return $this;
     }
 
 }

@@ -9,21 +9,17 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * Wrapper message for `int32`.
  * The JSON representation for `Int32Value` is JSON number.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.Int32Value</code>
+ * Protobuf type <code>Google\Protobuf\Int32Value</code>
  */
 class Int32Value extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The int32 value.
-     * </pre>
      *
-     * <code>int32 value = 1;</code>
+     * Generated from protobuf field <code>int32 value = 1;</code>
      */
     private $value = 0;
 
@@ -33,11 +29,10 @@ class Int32Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The int32 value.
-     * </pre>
      *
-     * <code>int32 value = 1;</code>
+     * Generated from protobuf field <code>int32 value = 1;</code>
+     * @return int
      */
     public function getValue()
     {
@@ -45,11 +40,10 @@ class Int32Value extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The int32 value.
-     * </pre>
      *
-     * <code>int32 value = 1;</code>
+     * Generated from protobuf field <code>int32 value = 1;</code>
+     * @param int $var
      */
     public function setValue($var)
     {

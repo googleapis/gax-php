@@ -9,7 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * <pre>
  * `FieldMask` represents a set of symbolic field paths, for example:
  *     paths: "f.a"
  *     paths: "f.b.d"
@@ -163,18 +162,15 @@ use Google\Protobuf\Internal\GPBUtil;
  *     }
  * Note that oneof type names ("test_oneof" in this case) cannot be used in
  * paths.
- * </pre>
  *
- * Protobuf type <code>google.protobuf.FieldMask</code>
+ * Protobuf type <code>Google\Protobuf\FieldMask</code>
  */
 class FieldMask extends \Google\Protobuf\Internal\Message
 {
     /**
-     * <pre>
      * The set of field mask paths.
-     * </pre>
      *
-     * <code>repeated string paths = 1;</code>
+     * Generated from protobuf field <code>repeated string paths = 1;</code>
      */
     private $paths;
 
@@ -184,11 +180,10 @@ class FieldMask extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The set of field mask paths.
-     * </pre>
      *
-     * <code>repeated string paths = 1;</code>
+     * Generated from protobuf field <code>repeated string paths = 1;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getPaths()
     {
@@ -196,11 +191,10 @@ class FieldMask extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * <pre>
      * The set of field mask paths.
-     * </pre>
      *
-     * <code>repeated string paths = 1;</code>
+     * Generated from protobuf field <code>repeated string paths = 1;</code>
+     * @param array|\Google\Protobuf\Internal\RepeatedField $var
      */
     public function setPaths(&$var)
     {
