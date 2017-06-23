@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Api\Quota | Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Api_Quota" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Api.html">Api</a></li><li class="backslash">\</li><li>Quota</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Quota
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Quota</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>        (<a href="https://github.com/googleapis/proto-client-php/blob/master/src/generated/Google/Api/Quota.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Quota configuration helps to achieve fairness and budgeting in service
+usage.</p>            <p>The quota configuration works this way:
+- The service configuration defines a set of metrics.
+- For API calls, the quota.metric_rules maps methods to metrics with
+  corresponding costs.
+- The quota.limits defines limits on the metrics, which will be used for
+  quota checks at runtime.
+An example quota configuration in yaml format:
+   quota:
+     limits:
+     - name: apiWriteQpsPerProject
+       metric: library.googleapis.com/write_calls
+       unit: "1/min/{project}"  # rate limit for consumer projects
+       values:
+         STANDARD: 10000
+     # The metric rules bind all methods to the read_calls metric,
+     # except for the UpdateBook and DeleteBook methods. These two methods
+     # are mapped to the write_calls metric, with the UpdateBook method
+     # consuming at twice rate as the DeleteBook method.
+     metric_rules:
+     - selector: "*"
+       metric_costs:
+         library.googleapis.com/read_calls: 1
+     - selector: google.example.library.v1.LibraryService.UpdateBook
+       metric_costs:
+         library.googleapis.com/write_calls: 2
+     - selector: google.example.library.v1.LibraryService.DeleteBook
+       metric_costs:
+         library.googleapis.com/write_calls: 1
+ Corresponding Metric definition:
+     metrics:
+     - name: library.googleapis.com/read_calls
+       display_name: Read requests
+       metric_kind: DELTA
+       value_type: INT64
+     - name: library.googleapis.com/write_calls
+       display_name: Write requests
+       metric_kind: DELTA
+       value_type: INT64</p>
+
+<p>Protobuf type <code>Google\Api\Quota</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLimits">getLimits</a>()
+        
+                                            <p>List of <code>QuotaLimit</code> definitions for the service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLimits">setLimits</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>List of <code>QuotaLimit</code> definitions for the service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMetricRules">getMetricRules</a>()
+        
+                                            <p>List of <code>MetricRule</code> definitions, each one mapping a selected method to one
+or more metrics.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMetricRules">setMetricRules</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>List of <code>MetricRule</code> definitions, each one mapping a selected method to one
+or more metrics.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/googleapis/proto-client-php/blob/master/src/generated/Google/Api/Quota.php#L73">line 73</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLimits">
+        <div class="location">at         <a href="https://github.com/googleapis/proto-client-php/blob/master/src/generated/Google/Api/Quota.php#L85">line 85</a></div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getLimits</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of <code>QuotaLimit</code> definitions for the service.</p>                    <p>Used by metric-based quotas only.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.QuotaLimit limits = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLimits">
+        <div class="location">at         <a href="https://github.com/googleapis/proto-client-php/blob/master/src/generated/Google/Api/Quota.php#L97">line 97</a></div>
+        <code>                    
+    <strong>setLimits</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of <code>QuotaLimit</code> definitions for the service.</p>                    <p>Used by metric-based quotas only.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.QuotaLimit limits = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMetricRules">
+        <div class="location">at         <a href="https://github.com/googleapis/proto-client-php/blob/master/src/generated/Google/Api/Quota.php#L111">line 111</a></div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getMetricRules</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of <code>MetricRule</code> definitions, each one mapping a selected method to one
+or more metrics.</p>                    <p>Used by metric-based quotas only.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.MetricRule metric_rules = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMetricRules">
+        <div class="location">at         <a href="https://github.com/googleapis/proto-client-php/blob/master/src/generated/Google/Api/Quota.php#L124">line 124</a></div>
+        <code>                    
+    <strong>setMetricRules</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of <code>MetricRule</code> definitions, each one mapping a selected method to one
+or more metrics.</p>                    <p>Used by metric-based quotas only.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.MetricRule metric_rules = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
