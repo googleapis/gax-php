@@ -1185,9 +1185,13 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $request->setCode(Grpc\STATUS_OK);
         $request->setMessage('request');
         $resources = ['resource1', 'resource2'];
+        $repeatedField = new RepeatedField(GPBType::STRING);
+        foreach ($resources as $resource) {
+            $repeatedField[] = $resource;
+        }
         $response = MockPageStreamingResponse::createPageStreamingResponse(
             'nextPageToken',
-            $resources
+            $repeatedField
         );
         $responses = [$response];
         $descriptor = [
