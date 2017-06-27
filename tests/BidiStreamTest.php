@@ -306,7 +306,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
         $repeatedField2[] = 'resource3';
         $responses = [
             MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField1),
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1',  $repeatedField2)
+            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField2)
         ];
         $call = new MockBidiStreamingCall($responses);
         $stream = new BidiStream($call, [
