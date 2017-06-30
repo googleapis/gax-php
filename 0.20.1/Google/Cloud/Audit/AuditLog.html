@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Audit\AuditLog | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Audit_AuditLog" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
+                                            <option value="../../../../master/index.html" data-version="master">master branch</option>
+                                    </select>
+            </form>
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../Google/Cloud/Audit.html">Audit</a></li><li class="backslash">\</li><li>AuditLog</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AuditLog
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AuditLog</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Common audit log format for Google Cloud Platform API operations.</p>            <p>Protobuf type <code>Google\Cloud\Audit\AuditLog</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getServiceName">getServiceName</a>()
+        
+                                            <p>The name of the API service performing the operation. For example,
+<code>"datastore.googleapis.com"</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setServiceName">setServiceName</a>(string $var)
+        
+                                            <p>The name of the API service performing the operation. For example,
+<code>"datastore.googleapis.com"</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMethodName">getMethodName</a>()
+        
+                                            <p>The name of the service method or operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMethodName">setMethodName</a>(string $var)
+        
+                                            <p>The name of the service method or operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResourceName">getResourceName</a>()
+        
+                                            <p>The resource or collection that is the target of the operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setResourceName">setResourceName</a>(string $var)
+        
+                                            <p>The resource or collection that is the target of the operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int|string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNumResponseItems">getNumResponseItems</a>()
+        
+                                            <p>The number of items returned from a List or Query API method,
+if applicable.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setNumResponseItems">setNumResponseItems</a>(int|string $var)
+        
+                                            <p>The number of items returned from a List or Query API method,
+if applicable.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatus">getStatus</a>()
+        
+                                            <p>The status of the overall operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatus">setStatus</a>(<a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
+        
+                                            <p>The status of the overall operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Cloud/Audit/AuthenticationInfo.html"><abbr title="Google\Cloud\Audit\AuthenticationInfo">AuthenticationInfo</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAuthenticationInfo">getAuthenticationInfo</a>()
+        
+                                            <p>Authentication information.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAuthenticationInfo">setAuthenticationInfo</a>(<a href="../../../Google/Cloud/Audit/AuthenticationInfo.html"><abbr title="Google\Cloud\Audit\AuthenticationInfo">AuthenticationInfo</abbr></a> $var)
+        
+                                            <p>Authentication information.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAuthorizationInfo">getAuthorizationInfo</a>()
+        
+                                            <p>Authorization information. If there are multiple
+resources or permissions involved, then there is
+one AuthorizationInfo element for each {resource, permission} tuple.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAuthorizationInfo">setAuthorizationInfo</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Authorization information. If there are multiple
+resources or permissions involved, then there is
+one AuthorizationInfo element for each {resource, permission} tuple.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Cloud/Audit/RequestMetadata.html"><abbr title="Google\Cloud\Audit\RequestMetadata">RequestMetadata</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRequestMetadata">getRequestMetadata</a>()
+        
+                                            <p>Metadata about the operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRequestMetadata">setRequestMetadata</a>(<a href="../../../Google/Cloud/Audit/RequestMetadata.html"><abbr title="Google\Cloud\Audit\RequestMetadata">RequestMetadata</abbr></a> $var)
+        
+                                            <p>Metadata about the operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRequest">getRequest</a>()
+        
+                                            <p>The operation request. This may not include all request parameters,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRequest">setRequest</a>(<a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a> $var)
+        
+                                            <p>The operation request. This may not include all request parameters,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResponse">getResponse</a>()
+        
+                                            <p>The operation response. This may not include all response elements,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setResponse">setResponse</a>(<a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a> $var)
+        
+                                            <p>The operation response. This may not include all response elements,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/Any.html"><abbr title="Google\Protobuf\Any">Any</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getServiceData">getServiceData</a>()
+        
+                                            <p>Other service-specific data about the request, response, and other
+activities.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setServiceData">setServiceData</a>(<a href="../../../Google/Protobuf/Any.html"><abbr title="Google\Protobuf\Any">Any</abbr></a> $var)
+        
+                                            <p>Other service-specific data about the request, response, and other
+activities.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 108</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getServiceName">
+        <div class="location">at         line 120</div>
+        <code>                    string
+    <strong>getServiceName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the API service performing the operation. For example,
+<code>"datastore.googleapis.com"</code>.</p>                    <p>Generated from protobuf field <code>string service_name = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setServiceName">
+        <div class="location">at         line 132</div>
+        <code>                    
+    <strong>setServiceName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the API service performing the operation. For example,
+<code>"datastore.googleapis.com"</code>.</p>                    <p>Generated from protobuf field <code>string service_name = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMethodName">
+        <div class="location">at         line 148</div>
+        <code>                    string
+    <strong>getMethodName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the service method or operation.</p>                    <p>For API calls, this should be the name of the API method.
+For example,
+    "google.datastore.v1.Datastore.RunQuery"
+    "google.logging.v1.LoggingService.DeleteLog"</p>
+
+<p>Generated from protobuf field <code>string method_name = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMethodName">
+        <div class="location">at         line 163</div>
+        <code>                    
+    <strong>setMethodName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the service method or operation.</p>                    <p>For API calls, this should be the name of the API method.
+For example,
+    "google.datastore.v1.Datastore.RunQuery"
+    "google.logging.v1.LoggingService.DeleteLog"</p>
+
+<p>Generated from protobuf field <code>string method_name = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResourceName">
+        <div class="location">at         line 179</div>
+        <code>                    string
+    <strong>getResourceName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The resource or collection that is the target of the operation.</p>                    <p>The name is a scheme-less URI, not including the API service name.
+For example:
+    "shelves/SHELF_ID/books"
+    "shelves/SHELF_ID/books/BOOK_ID"</p>
+
+<p>Generated from protobuf field <code>string resource_name = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setResourceName">
+        <div class="location">at         line 194</div>
+        <code>                    
+    <strong>setResourceName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The resource or collection that is the target of the operation.</p>                    <p>The name is a scheme-less URI, not including the API service name.
+For example:
+    "shelves/SHELF_ID/books"
+    "shelves/SHELF_ID/books/BOOK_ID"</p>
+
+<p>Generated from protobuf field <code>string resource_name = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNumResponseItems">
+        <div class="location">at         line 207</div>
+        <code>                    int|string
+    <strong>getNumResponseItems</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number of items returned from a List or Query API method,
+if applicable.</p>                    <p>Generated from protobuf field <code>int64 num_response_items = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setNumResponseItems">
+        <div class="location">at         line 219</div>
+        <code>                    
+    <strong>setNumResponseItems</strong>(int|string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number of items returned from a List or Query API method,
+if applicable.</p>                    <p>Generated from protobuf field <code>int64 num_response_items = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int|string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatus">
+        <div class="location">at         line 231</div>
+        <code>                    <a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a>
+    <strong>getStatus</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The status of the overall operation.</p>                    <p>Generated from protobuf field <code>.google.rpc.Status status = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatus">
+        <div class="location">at         line 242</div>
+        <code>                    
+    <strong>setStatus</strong>(<a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The status of the overall operation.</p>                    <p>Generated from protobuf field <code>.google.rpc.Status status = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAuthenticationInfo">
+        <div class="location">at         line 254</div>
+        <code>                    <a href="../../../Google/Cloud/Audit/AuthenticationInfo.html"><abbr title="Google\Cloud\Audit\AuthenticationInfo">AuthenticationInfo</abbr></a>
+    <strong>getAuthenticationInfo</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Authentication information.</p>                    <p>Generated from protobuf field <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Cloud/Audit/AuthenticationInfo.html"><abbr title="Google\Cloud\Audit\AuthenticationInfo">AuthenticationInfo</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAuthenticationInfo">
+        <div class="location">at         line 265</div>
+        <code>                    
+    <strong>setAuthenticationInfo</strong>(<a href="../../../Google/Cloud/Audit/AuthenticationInfo.html"><abbr title="Google\Cloud\Audit\AuthenticationInfo">AuthenticationInfo</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Authentication information.</p>                    <p>Generated from protobuf field <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Cloud/Audit/AuthenticationInfo.html"><abbr title="Google\Cloud\Audit\AuthenticationInfo">AuthenticationInfo</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAuthorizationInfo">
+        <div class="location">at         line 279</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAuthorizationInfo</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Authorization information. If there are multiple
+resources or permissions involved, then there is
+one AuthorizationInfo element for each {resource, permission} tuple.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAuthorizationInfo">
+        <div class="location">at         line 292</div>
+        <code>                    
+    <strong>setAuthorizationInfo</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Authorization information. If there are multiple
+resources or permissions involved, then there is
+one AuthorizationInfo element for each {resource, permission} tuple.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRequestMetadata">
+        <div class="location">at         line 304</div>
+        <code>                    <a href="../../../Google/Cloud/Audit/RequestMetadata.html"><abbr title="Google\Cloud\Audit\RequestMetadata">RequestMetadata</abbr></a>
+    <strong>getRequestMetadata</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Metadata about the operation.</p>                    <p>Generated from protobuf field <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Cloud/Audit/RequestMetadata.html"><abbr title="Google\Cloud\Audit\RequestMetadata">RequestMetadata</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRequestMetadata">
+        <div class="location">at         line 315</div>
+        <code>                    
+    <strong>setRequestMetadata</strong>(<a href="../../../Google/Cloud/Audit/RequestMetadata.html"><abbr title="Google\Cloud\Audit\RequestMetadata">RequestMetadata</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Metadata about the operation.</p>                    <p>Generated from protobuf field <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Cloud/Audit/RequestMetadata.html"><abbr title="Google\Cloud\Audit\RequestMetadata">RequestMetadata</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRequest">
+        <div class="location">at         line 332</div>
+        <code>                    <a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a>
+    <strong>getRequest</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The operation request. This may not include all request parameters,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                    <p>It should never include user-generated data, such as file contents.
+When the JSON object represented here has a proto equivalent, the proto
+name will be indicated in the <code>&amp;#64;type</code> property.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Struct request = 16;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRequest">
+        <div class="location">at         line 348</div>
+        <code>                    
+    <strong>setRequest</strong>(<a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The operation request. This may not include all request parameters,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                    <p>It should never include user-generated data, such as file contents.
+When the JSON object represented here has a proto equivalent, the proto
+name will be indicated in the <code>&amp;#64;type</code> property.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Struct request = 16;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResponse">
+        <div class="location">at         line 365</div>
+        <code>                    <a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a>
+    <strong>getResponse</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The operation response. This may not include all response elements,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                    <p>It should never include user-generated data, such as file contents.
+When the JSON object represented here has a proto equivalent, the proto
+name will be indicated in the <code>&amp;#64;type</code> property.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Struct response = 17;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setResponse">
+        <div class="location">at         line 381</div>
+        <code>                    
+    <strong>setResponse</strong>(<a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The operation response. This may not include all response elements,
+such as those that are too large, privacy-sensitive, or duplicated
+elsewhere in the log record.</p>                    <p>It should never include user-generated data, such as file contents.
+When the JSON object represented here has a proto equivalent, the proto
+name will be indicated in the <code>&amp;#64;type</code> property.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Struct response = 17;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/Struct.html"><abbr title="Google\Protobuf\Struct">Struct</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getServiceData">
+        <div class="location">at         line 394</div>
+        <code>                    <a href="../../../Google/Protobuf/Any.html"><abbr title="Google\Protobuf\Any">Any</abbr></a>
+    <strong>getServiceData</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Other service-specific data about the request, response, and other
+activities.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Any service_data = 15;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/Any.html"><abbr title="Google\Protobuf\Any">Any</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setServiceData">
+        <div class="location">at         line 406</div>
+        <code>                    
+    <strong>setServiceData</strong>(<a href="../../../Google/Protobuf/Any.html"><abbr title="Google\Protobuf\Any">Any</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Other service-specific data about the request, response, and other
+activities.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Any service_data = 15;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/Any.html"><abbr title="Google\Protobuf\Any">Any</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

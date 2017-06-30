@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\GAX\BackoffSettings | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_GAX_BackoffSettings" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
+                                            <option value="../../../master/index.html" data-version="master">master branch</option>
+                                    </select>
+            </form>
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/GAX.html">GAX</a></li><li class="backslash">\</li><li>BackoffSettings</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            BackoffSettings
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>BackoffSettings</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Holds the parameters used for exponential backoff logic.</p>            <p>The "total timeout" parameter has ultimate control over how long the logic should
+keep trying the remote call until it gives up completely. The higher the total
+timeout, the more retries can be attempted. The other settings are considered
+more advanced.</p>
+
+<p>Retry delay and timeout start at specific values, and are tracked separately from
+each other. The very first call (before any retries) will use the initial timeout.</p>
+
+<p>If the last remote call is a failure, then the retrier will wait for the current
+retry delay before attempting another call, and then the retry delay will be
+multiplied by the retry delay multiplier for the next failure. The timeout will
+not be affected, except in the case where the timeout would result in a deadline
+past the total timeout; in that circumstance, a new timeout value is computed
+which will terminate the call when the total time is up.</p>
+
+<p>If the last remote call is a timeout, then the retrier will compute a new timeout
+and make another call. The new timeout is computed by multiplying the current
+timeout by the timeout multiplier, but if that results in a deadline after the
+total timeout, then a new timeout value is computed which will terminate the call
+when the total time is up.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_fromSnakeCase">fromSnakeCase</a>(array $settings)
+        
+                                            <p>Constructs an instance from snake-case parameters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(array $settings)
+        
+                                            <p>Constructs an instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInitialRetryDelayMillis">getInitialRetryDelayMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRetryDelayMultiplier">getRetryDelayMultiplier</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaxRetryDelayMillis">getMaxRetryDelayMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInitialRpcTimeoutMillis">getInitialRpcTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRpcTimeoutMultiplier">getRpcTimeoutMultiplier</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaxRpcTimeoutMillis">getMaxRpcTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTotalTimeoutMillis">getTotalTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_fromSnakeCase">
+        <div class="location">at         line 85</div>
+        <code>        static            
+    <strong>fromSnakeCase</strong>(array $settings)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs an instance from snake-case parameters.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$settings</td>
+                <td>{
+    Required. Settings for configuring the backoff settings</p>
+
+<pre><code>@type integer $initial_retry_delay_millis The initial delay of retry in milliseconds.
+@type integer $retry_delay_multiplier The exponential multiplier of retry delay.
+@type integer $max_retry_delay_millis The max delay of retry in milliseconds.
+@type integer $initial_rpc_timeout_millis The initial timeout of rpc call in milliseconds.
+@type integer $rpc_timeout_multiplier The exponential multiplier of rpc timeout.
+@type integer $max_rpc_timeout_millis The max timout of rpc call in milliseconds.
+@type integer $total_timeout_millis The max accumulative timeout in total.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 111</div>
+        <code>                    
+    <strong>__construct</strong>(array $settings)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs an instance.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$settings</td>
+                <td>{
+    Required. Settings for configuring the backoff settings</p>
+
+<pre><code>@type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
+@type integer $retryDelayMultiplier The exponential multiplier of retry delay.
+@type integer $maxRetryDelayMillis The max delay of retry in milliseconds.
+@type integer $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
+@type integer $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
+@type integer $maxRpcTimeoutMillis The max timout of rpc call in milliseconds.
+@type integer $totalTimeoutMillis The max accumulative timeout in total.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInitialRetryDelayMillis">
+        <div class="location">at         line 123</div>
+        <code>                    
+    <strong>getInitialRetryDelayMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRetryDelayMultiplier">
+        <div class="location">at         line 128</div>
+        <code>                    
+    <strong>getRetryDelayMultiplier</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaxRetryDelayMillis">
+        <div class="location">at         line 133</div>
+        <code>                    
+    <strong>getMaxRetryDelayMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInitialRpcTimeoutMillis">
+        <div class="location">at         line 138</div>
+        <code>                    
+    <strong>getInitialRpcTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRpcTimeoutMultiplier">
+        <div class="location">at         line 143</div>
+        <code>                    
+    <strong>getRpcTimeoutMultiplier</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaxRpcTimeoutMillis">
+        <div class="location">at         line 148</div>
+        <code>                    
+    <strong>getMaxRpcTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTotalTimeoutMillis">
+        <div class="location">at         line 153</div>
+        <code>                    
+    <strong>getTotalTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
