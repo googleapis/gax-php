@@ -201,8 +201,8 @@ class ApiCallable
      *           the descriptor used for creating GAPIC header.
      * }
      *
-     * @return callable
      * @throws ValidationException
+     * @return callable
      */
     public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
     {

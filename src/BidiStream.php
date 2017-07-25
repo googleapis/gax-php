@@ -128,9 +128,9 @@ class BidiStream
      * Read the next response from the server. Returns null if the streaming call completed
      * successfully. Throws an ApiException if the streaming call failed.
      *
-     * @return mixed
      * @throws ValidationException
      * @throws ApiException
+     * @return mixed
      */
     public function read()
     {
@@ -167,9 +167,9 @@ class BidiStream
      * Call closeWrite(), and read all responses from the server, until the streaming call is
      * completed. Throws an ApiException if the streaming call failed.
      *
-     * @return \Generator|mixed[]
      * @throws ValidationException
      * @throws ApiException
+     * @return \Generator|mixed[]
      */
     public function closeWriteAndReadAll()
     {

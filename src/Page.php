@@ -99,9 +99,9 @@ class Page implements IteratorAggregate
      * Retrieves the next Page object using the next page token.
      *
      * @param int|null $pageSize
-     * @return Page
      * @throws ValidationException if there are no pages remaining, or if pageSize is supplied but
      * is not supported by the API
+     * @return Page
      */
     public function getNextPage($pageSize = null)
     {

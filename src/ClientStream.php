@@ -79,8 +79,8 @@ class ClientStream
     /**
      * Read the response from the server, completing the streaming call.
      *
-     * @return mixed The response object from the server
      * @throws ApiException
+     * @return mixed The response object from the server
      */
     public function readResponse()
     {

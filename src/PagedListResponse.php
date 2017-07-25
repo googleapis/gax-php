@@ -30,6 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 namespace Google\GAX;
+
 use Generator;
 use InvalidArgumentException;
 
@@ -138,8 +139,8 @@ class PagedListResponse
      * is less than the page size that has been set.
      *
      * @param $collectionSize int
-     * @return FixedSizeCollection
      * @throws ValidationException if a FixedSizeCollection of the specified size cannot be constructed
+     * @return FixedSizeCollection
      */
     public function expandToFixedSizeCollection($collectionSize)
     {
@@ -188,8 +189,8 @@ class PagedListResponse
      * is less than the page size that has been set.
      *
      * @param $collectionSize int
-     * @return Generator|FixedSizeCollection[]
      * @throws ValidationException if a FixedSizeCollection of the specified size cannot be constructed
+     * @return Generator|FixedSizeCollection[]
      */
     public function iterateFixedSizeCollections($collectionSize)
     {
