@@ -157,7 +157,8 @@ class FixedSizeCollection implements IteratorAggregate
     {
         $pageList = $this->pageList;
         // Get last element in array...
-        $lastPage = array_pop((array_slice($pageList, -1)));
+        $lastPage = end($pageList);
+        reset($pageList);
         return $lastPage;
     }
 
