@@ -40,6 +40,8 @@ use Google\GAX\ValidationException;
  */
 class BidiStream
 {
+    use CallHelperTrait;
+
     private $call;
     private $isComplete = false;
     private $writesClosed = false;
@@ -68,7 +70,7 @@ class BidiStream
     public static function createApiCall($callable, $grpcStreamingDescriptor)
     {
         return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = ApiCallable::callWithoutRequest($callable, func_get_args());
+            $response = self::callWithoutRequest($callable, func_get_args());
             return new BidiStream($response, $grpcStreamingDescriptor);
         };
     }
