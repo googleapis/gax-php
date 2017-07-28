@@ -87,7 +87,7 @@ class Serializer
     }
 
     /**
-     * Decode protobut array into the specified protobuf message
+     * Decode protobuf array into the specified protobuf message
      *
      * @param Message $message
      * @param array $data
