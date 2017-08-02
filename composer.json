@@ -9,7 +9,7 @@
         "php": ">=5.5",
         "google/auth": "~0.9|^1.0",
         "grpc/grpc": "^1.4",
-        "google/protobuf": "^3.3.2"
+        "google/protobuf": "dev-teboring-php-bug"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
@@ -22,5 +22,9 @@
           "Google\\":"src/generated/Google/",
           "GPBMetadata\\":"src/generated/GPBMetadata/"
         }
-    }
+    },
+    "repositories": [{
+        "type": "vcs",
+        "url": "/usr/local/google/home/michaelbausor/dev/protobuf/protobuf"
+    }]
 }
