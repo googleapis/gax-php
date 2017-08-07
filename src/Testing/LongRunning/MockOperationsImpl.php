@@ -36,15 +36,21 @@
 
 namespace Google\GAX\Testing\LongRunning;
 
-use \Google\GAX\GrpcCredentialsHelper;
-use \Google\GAX\LongRunning\OperationsClient;
-use \Google\GAX\Testing\LongRunning\MockOperationsImpl;
-use \Google\GAX\Testing\MockStubTrait;
-use \PHPUnit_Framework_TestCase;
-use \google\longrunning\GetOperationRequest;
-use \google\longrunning\OperationsGrpcClient;
-use \google\protobuf\Any;
-use \google\protobuf\EmptyC;
+use Google\GAX\ApiException;
+use Google\GAX\BidiStream;
+use Google\GAX\GrpcCredentialsHelper;
+use Google\GAX\LongRunning\OperationsClient;
+use Google\GAX\ServerStream;
+use Google\GAX\Testing\GeneratedTest;
+use Google\GAX\Testing\LongRunning\MockOperationsImpl;
+use Google\GAX\Testing\MockStubTrait;
+use Google\Longrunning\GetOperationRequest;
+use Google\Longrunning\OperationsGrpcClient;
+use Google\Protobuf\Any;
+use Google\Protobuf\GPBEmpty;
+use Grpc;
+use PHPUnit_Framework_TestCase;
+use stdClass;
 
 class MockOperationsImpl extends OperationsGrpcClient
 {
