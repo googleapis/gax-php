@@ -170,10 +170,9 @@ class GrpcCredentialsHelper
             $channel = null;
         }
 
-        if (isset($args['forceNewChannel'])) {
+        if (isset($args['forceNewChannel']) && $args['forceNewChannel']) {
             $stubOpts['force_new'] = true;
         }
-
         return $generatedCreateStub($fullAddress, $stubOpts, $channel);
     }
 
