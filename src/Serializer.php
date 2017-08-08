@@ -304,19 +304,23 @@ class Serializer
                 foreach ($v as $k => $vv) {
                     $arr[$this->decodeElement($keyField, $k)] = $this->decodeElement($valueField, $vv);
                 }
-                $v = $arr;
+                $value = $arr;
             } elseif ($field->getLabel() === GPBLabel::REPEATED) {
                 $arr = [];
                 foreach ($v as $k => $vv) {
                     $arr[$k] = $this->decodeElement($field, $vv);
                 }
-                $v = $arr;
+                $value = $arr;
             } else {
-                $v = $this->decodeElement($field, $v);
+                $value = $this->decodeElement($field, $v);
             }
 
             $setter = $this->getSetter($field->getName());
-            $message->$setter($v);
+            $message->$setter($value);
+
+            // We must unset $value here, otherwise the protobuf c extension will mix up the references
+            // and setting one value will change all others
+            unset($value);
         }
         return $message;
     }
