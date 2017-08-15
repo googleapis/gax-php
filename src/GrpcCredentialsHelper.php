@@ -140,7 +140,7 @@ class GrpcCredentialsHelper
      * Creates a gRPC client stub.
      *
      * @param callable $generatedCreateStub
-     *        Function callback which must accept two arguments ($hostname, $opts, $channel)
+     *        Function callback which must accept three arguments ($hostname, $opts, $channel)
      *        and return an instance of the stub of the specific API to call.
      *        Generally, this should just call the stub's constructor and return
      *        the instance.
