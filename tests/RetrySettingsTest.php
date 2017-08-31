@@ -31,18 +31,18 @@
  */
 namespace Google\GAX\UnitTests;
 
-use Google\GAX\BackoffSettings;
+use Google\GAX\RetrySettings;
 use Google\GAX\ValidationException;
 use PHPUnit_Framework_TestCase;
 
-class BackoffSettingsTest extends PHPUnit_Framework_TestCase
+class RetrySettingsTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \Google\GAX\ValidationException
      */
-    public function testBackoffSettingsMissingFields()
+    public function testRetrySettingsMissingFields()
     {
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             // Missing field:
@@ -50,6 +50,7 @@ class BackoffSettingsTest extends PHPUnit_Framework_TestCase
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 2000]);
+            'totalTimeoutMillis' => 2000
+        ]);
     }
 }

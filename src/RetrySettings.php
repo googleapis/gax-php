@@ -32,6 +32,8 @@
 namespace Google\GAX;
 
 /**
+ * TODO: thorough documentation
+ *
  * Holds the parameters for retry and timeout logic with exponential backoff. Actual
  * implementation of the logic is elsewhere.
  *
@@ -42,34 +44,128 @@ namespace Google\GAX;
  */
 class RetrySettings
 {
-    private $backoffSettings;
+    use ValidationTrait;
+
+    private $retriesEnabled;
+
     private $retryableCodes;
-    private $inherit;
+
+    private $initialRetryDelayMillis;
+    private $retryDelayMultiplier;
+    private $maxRetryDelayMillis;
+    private $initialRpcTimeoutMillis;
+    private $rpcTimeoutMultiplier;
+    private $maxRpcTimeoutMillis;
+    private $totalTimeoutMillis;
+
+    private $noRetriesRpcTimeoutMillis;
 
     /**
-     * Create a special instance that indicates that the retry settings should
-     * be inherited from defaults.
+     * Constructs an instance.
      *
-     * @return RetrySettings
+     * @param array $settings {
+     *     Required. Settings for configuring the retry behavior. All parameters are required except
+     *     $retriesEnabled and $noRetriesRpcTimeoutMillis, which are optional and have defaults
+     *     determined based on the other settings provided.
+     *
+     *     @type bool    $retriesEnabled Optional. Enables retries. If not specified, the value is
+     *                   determined using the $retryableCodes setting. If $retryableCodes is empty,
+     *                   then $retriesEnabled is set to false; otherwise, it is set to true.
+     *     @type integer $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
+     *                   if $retriesEnabled is false, in milliseconds. It not specified, the value
+     *                   of $initialRpcTimeoutMillis is used.
+     *     @type array   $retryableCodes The Status codes that are retryable.
+     *     @type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
+     *     @type integer $retryDelayMultiplier The exponential multiplier of retry delay.
+     *     @type integer $maxRetryDelayMillis The max delay of retry in milliseconds.
+     *     @type integer $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
+     *     @type integer $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
+     *     @type integer $maxRpcTimeoutMillis The max timout of rpc call in milliseconds.
+     *     @type integer $totalTimeoutMillis The max accumulative timeout in total.
+     * }
      */
-    public static function inherit()
+    public function __construct($settings)
     {
-        $retrySettings = new RetrySettings(null, null);
-        $retrySettings->inherit = true;
-        return $retrySettings;
+        $this->validateNotNull($settings, [
+            'initialRetryDelayMillis',
+            'retryDelayMultiplier',
+            'maxRetryDelayMillis',
+            'initialRpcTimeoutMillis',
+            'rpcTimeoutMultiplier',
+            'maxRpcTimeoutMillis',
+            'totalTimeoutMillis',
+            'retryableCodes'
+        ]);
+        $this->initialRetryDelayMillis = $settings['initialRetryDelayMillis'];
+        $this->retryDelayMultiplier = $settings['retryDelayMultiplier'];
+        $this->maxRetryDelayMillis = $settings['maxRetryDelayMillis'];
+        $this->initialRpcTimeoutMillis = $settings['initialRpcTimeoutMillis'];
+        $this->rpcTimeoutMultiplier = $settings['rpcTimeoutMultiplier'];
+        $this->maxRpcTimeoutMillis = $settings['maxRpcTimeoutMillis'];
+        $this->totalTimeoutMillis = $settings['totalTimeoutMillis'];
+        $this->retryableCodes = $settings['retryableCodes'];
+        $this->retriesEnabled = array_key_exists('retriesEnabled', $settings)
+            ? $settings['retriesEnabled']
+            : (count($this->retryableCodes) > 0);
+        $this->noRetriesRpcTimeoutMillis = array_key_exists('noRetriesRpcTimeoutMillis', $settings)
+            ? $settings['noRetriesRpcTimeoutMillis']
+            : $this->initialRpcTimeoutMillis;
     }
 
     /**
-     * Construct an instance.
+     * Creates a new instance of RetrySettings that updates the settings in the existing instance
+     * with the settings specified in the $settings parameter.
      *
-     * @param int[] $retryableCodes Status codes to retry
-     * @param BackoffSettings $backoffSettings Backoff settings
+     * @param array $settings {
+     *     Settings for configuring the retry behavior. All parameters are optional - all unset
+     *     parameters will default to the value in the existing instance.
+     *
+     *     @type bool    $retriesEnabled Enables retries.
+     *     @type integer $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
+     *                   if $retriesEnabled is false, in milliseconds.
+     *     @type array   $retryableCodes The Status codes that are retryable.
+     *     @type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
+     *     @type integer $retryDelayMultiplier The exponential multiplier of retry delay.
+     *     @type integer $maxRetryDelayMillis The max delay of retry in milliseconds.
+     *     @type integer $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
+     *     @type integer $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
+     *     @type integer $maxRpcTimeoutMillis The max timout of rpc call in milliseconds.
+     *     @type integer $totalTimeoutMillis The max accumulative timeout in total.
+     * }
+     * @return RetrySettings
      */
-    public function __construct($retryableCodes, $backoffSettings)
+    public function with($settings)
     {
-        $this->retryableCodes = $retryableCodes;
-        $this->backoffSettings = $backoffSettings;
-        $this->inherit = false;
+        $existingSettings = [
+            'initialRetryDelayMillis' => $this->getInitialRetryDelayMillis(),
+            'retryDelayMultiplier' => $this->getRetryDelayMultiplier(),
+            'maxRetryDelayMillis' => $this->getMaxRetryDelayMillis(),
+            'initialRpcTimeoutMillis' => $this->getInitialRpcTimeoutMillis(),
+            'rpcTimeoutMultiplier' => $this->getRpcTimeoutMultiplier(),
+            'maxRpcTimeoutMillis' => $this->getMaxRpcTimeoutMillis(),
+            'totalTimeoutMillis' => $this->getTotalTimeoutMillis(),
+            'retryableCodes' => $this->getRetryableCodes(),
+            'retriesEnabled' => $this->retriesEnabled(),
+            'noRetriesRpcTimeoutMillis' => $this->getNoRetriesRpcTimeoutMillis(),
+        ];
+        return new RetrySettings($settings + $existingSettings);
+    }
+
+    /**
+     * @return bool Returns true if retries are enabled, otherwise returns false.
+     */
+    public function retriesEnabled()
+    {
+        return $this->retriesEnabled;
+    }
+
+    /**
+     * @return int The timeout of the rpc call to be used if $retriesEnabled is false, in
+     *             milliseconds.
+     */
+    public function getNoRetriesRpcTimeoutMillis()
+    {
+        return $this->noRetriesRpcTimeoutMillis;
     }
 
     /**
@@ -81,18 +177,68 @@ class RetrySettings
     }
 
     /**
-     * @return BackoffSettings Backoff settings
+     * @return int The initial retry delay in milliseconds. If $this->retriesEnabled()
+     *             is false, this setting is unused.
      */
-    public function getBackoffSettings()
+    public function getInitialRetryDelayMillis()
     {
-        return $this->backoffSettings;
+        return $this->initialRetryDelayMillis;
     }
 
     /**
-     * @return bool Should inherit settings when merging
+     * @return float The retry delay multiplier. If $this->retriesEnabled()
+     *               is false, this setting is unused.
      */
-    public function shouldInherit()
+    public function getRetryDelayMultiplier()
     {
-        return $this->inherit;
+        return $this->retryDelayMultiplier;
+    }
+
+    /**
+     * @return int The maximum retry delay in milliseconds. If $this->retriesEnabled()
+     *             is false, this setting is unused.
+     */
+    public function getMaxRetryDelayMillis()
+    {
+        return $this->maxRetryDelayMillis;
+    }
+
+    /**
+     * @return int The initial rpc timeout in milliseconds. If $this->retriesEnabled()
+     *             is false, this setting is used to set the timeout of the rpc.
+     */
+    public function getInitialRpcTimeoutMillis()
+    {
+        return $this->initialRpcTimeoutMillis;
+    }
+
+    /**
+     * @return float The rpc timeout multiplier. If $this->retriesEnabled()
+     *               is false, this setting is unused.
+     */
+    public function getRpcTimeoutMultiplier()
+    {
+        return $this->rpcTimeoutMultiplier;
+    }
+
+    /**
+     * @return int The maximum rpc timeout in milliseconds. If $this->retriesEnabled()
+     *             is false, this setting is unused - use totalTimeoutMillis to set the
+     *             timeout in that case.
+     */
+    public function getMaxRpcTimeoutMillis()
+    {
+        return $this->maxRpcTimeoutMillis;
+    }
+
+    /**
+     * @return int The total time in milliseconds to spend on the call, including all
+     *             retry attempts and delays between attempts .If $this->retriesEnabled()
+     *             is false, this setting is unused - use initialRpcTimeoutMillis to set
+     *             the timeout for the rpc.
+     */
+    public function getTotalTimeoutMillis()
+    {
+        return $this->totalTimeoutMillis;
     }
 }

@@ -70,17 +70,16 @@ class ApiCallable
         }
 
         $inner = function () use ($apiCall, $retrySettings, $timeFuncMillis) {
-            $backoffSettings = $retrySettings->getBackoffSettings();
 
             // Initialize retry parameters
-            $delayMult = $backoffSettings->getRetryDelayMultiplier();
-            $maxDelayMillis = $backoffSettings->getMaxRetryDelayMillis();
-            $timeoutMult = $backoffSettings->getRpcTimeoutMultiplier();
-            $maxTimeoutMillis = $backoffSettings->getMaxRpcTimeoutMillis();
-            $totalTimeoutMillis = $backoffSettings->getTotalTimeoutMillis();
+            $delayMult = $retrySettings->getRetryDelayMultiplier();
+            $maxDelayMillis = $retrySettings->getMaxRetryDelayMillis();
+            $timeoutMult = $retrySettings->getRpcTimeoutMultiplier();
+            $maxTimeoutMillis = $retrySettings->getMaxRpcTimeoutMillis();
+            $totalTimeoutMillis = $retrySettings->getTotalTimeoutMillis();
 
-            $delayMillis = $backoffSettings->getInitialRetryDelayMillis();
-            $timeoutMillis = $backoffSettings->getInitialRpcTimeoutMillis();
+            $delayMillis = $retrySettings->getInitialRetryDelayMillis();
+            $timeoutMillis = $retrySettings->getInitialRpcTimeoutMillis();
             $currentTimeMillis = $timeFuncMillis();
             $deadlineMillis = $currentTimeMillis + $totalTimeoutMillis;
 
@@ -219,14 +218,14 @@ class ApiCallable
         }
 
         $retrySettings = $settings->getRetrySettings();
-        if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
+        if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
             $timeFuncMillis = null;
             if (array_key_exists('timeFuncMillis', $options)) {
                 $timeFuncMillis = $options['timeFuncMillis'];
             }
             $apiCall = self::setRetry($apiCall, $settings->getRetrySettings(), $timeFuncMillis);
-        } elseif ($settings->getTimeoutMillis() > 0) {
-            $apiCall = self::setTimeout($apiCall, $settings->getTimeoutMillis());
+        } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+            $apiCall = self::setTimeout($apiCall, $retrySettings->getNoRetriesRpcTimeoutMillis());
         }
 
         if (array_key_exists('pageStreamingDescriptor', $options)) {
