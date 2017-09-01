@@ -53,4 +53,127 @@ class RetrySettingsTest extends PHPUnit_Framework_TestCase
             'totalTimeoutMillis' => 2000
         ]);
     }
+
+    /**
+     * @dataProvider retrySettingsProvider
+     * @param $settings
+     * @param $expectedValues
+     */
+    public function testRetrySettings($settings, $expectedValues)
+    {
+        $retrySettings = new RetrySettings($settings);
+        $this->compare($retrySettings, $expectedValues);
+    }
+
+    /**
+     * @dataProvider withRetrySettingsProvider
+     * @param $settings
+     * @param $withSettings
+     * @param $expectedValues
+     */
+    public function testWith($settings, $withSettings, $expectedValues)
+    {
+        $retrySettings = new RetrySettings($settings);
+        $withRetrySettings = $retrySettings->with($withSettings);
+        $this->compare($withRetrySettings, $expectedValues);
+    }
+
+    private function compare(RetrySettings $retrySettings, $expectedValues)
+    {
+        $this->assertSame($expectedValues['initialRetryDelayMillis'],
+            $retrySettings->getInitialRetryDelayMillis());
+        $this->assertSame($expectedValues['retryDelayMultiplier'],
+            $retrySettings->getRetryDelayMultiplier());
+        $this->assertSame($expectedValues['maxRetryDelayMillis'],
+            $retrySettings->getMaxRetryDelayMillis());
+        $this->assertSame($expectedValues['rpcTimeoutMultiplier'],
+            $retrySettings->getRpcTimeoutMultiplier());
+        $this->assertSame($expectedValues['maxRpcTimeoutMillis'],
+            $retrySettings->getMaxRpcTimeoutMillis());
+        $this->assertSame($expectedValues['totalTimeoutMillis'],
+            $retrySettings->getTotalTimeoutMillis());
+        $this->assertSame($expectedValues['retryableCodes'],
+            $retrySettings->getRetryableCodes());
+        $this->assertSame($expectedValues['retriesEnabled'],
+            $retrySettings->retriesEnabled());
+        $this->assertSame($expectedValues['noRetriesRpcTimeoutMillis'],
+            $retrySettings->getNoRetriesRpcTimeoutMillis());
+    }
+
+    public function retrySettingsProvider()
+    {
+        $defaultSettings = [
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 600,
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [1],
+        ];
+        $defaultExpectedValues = [
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 600,
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [1],
+            'noRetriesRpcTimeoutMillis' => 150,
+            'retriesEnabled' => true
+        ];
+        return [
+            [
+                // Test with retryableCodes, without retriesEnabled or noRetriesRpcTimeoutMillis
+                $defaultSettings,
+                $defaultExpectedValues
+            ],
+            [
+                // Test with empty retryableCodes, without retriesEnabled or noRetriesRpcTimeoutMillis
+                [
+                    'retryableCodes' => [],
+                ] + $defaultSettings,
+                [
+                    'retryableCodes' => [],
+                    'retriesEnabled' => false
+                ] + $defaultExpectedValues
+            ],
+            [
+                // Test with retryableCodes, with retriesEnabled=false
+                [
+                    'retriesEnabled' => false
+                ] + $defaultSettings,
+                [
+                    'retriesEnabled' => false
+                ] + $defaultExpectedValues
+            ],
+            [
+                // Test with empty retryableCodes, with retriesEnabled=true
+                [
+                    'retryableCodes' => [],
+                    'retriesEnabled' => true
+                ] + $defaultSettings,
+                [
+                    'retryableCodes' => [],
+                    'retriesEnabled' => true
+                ] + $defaultExpectedValues
+            ],
+            [
+                // Test with noRetriesRpcTimeoutMillis
+                [
+                    'noRetriesRpcTimeoutMillis' => 151,
+                ] + $defaultSettings,
+                [
+                    'noRetriesRpcTimeoutMillis' => 151,
+                ] + $defaultExpectedValues
+            ]
+        ];
+    }
+
+    public function withRetrySettingsProvider()
+    {
+        
+    }
 }
