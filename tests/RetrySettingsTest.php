@@ -174,6 +174,75 @@ class RetrySettingsTest extends PHPUnit_Framework_TestCase
 
     public function withRetrySettingsProvider()
     {
-        
+        $defaultSettings = [
+            'initialRetryDelayMillis' => 1,
+            'retryDelayMultiplier' => 1,
+            'maxRetryDelayMillis' => 1,
+            'initialRpcTimeoutMillis' => 1,
+            'rpcTimeoutMultiplier' => 1,
+            'maxRpcTimeoutMillis' => 1,
+            'totalTimeoutMillis' => 1,
+            'retryableCodes' => [1],
+            'noRetriesRpcTimeoutMillis' => 1,
+            'retriesEnabled' => true,
+        ];
+        $defaultExpectedValues = [
+            'initialRetryDelayMillis' => 1,
+            'retryDelayMultiplier' => 1,
+            'maxRetryDelayMillis' => 1,
+            'initialRpcTimeoutMillis' => 1,
+            'rpcTimeoutMultiplier' => 1,
+            'maxRpcTimeoutMillis' => 1,
+            'totalTimeoutMillis' => 1,
+            'retryableCodes' => [1],
+            'noRetriesRpcTimeoutMillis' => 1,
+            'retriesEnabled' => true,
+        ];
+        return [
+            [
+                // Test with no changes
+                $defaultSettings,
+                [],
+                $defaultExpectedValues
+            ],
+            [
+                // Test disable retries
+                $defaultSettings,
+                [
+                    'retriesEnabled' => false,
+                ],
+                [
+                    'retriesEnabled' => false,
+                ] + $defaultExpectedValues
+            ],
+            [
+                // Test change all settings
+                $defaultSettings,
+                [
+                    'initialRetryDelayMillis' => 2,
+                    'retryDelayMultiplier' => 3,
+                    'maxRetryDelayMillis' => 4,
+                    'initialRpcTimeoutMillis' => 5,
+                    'rpcTimeoutMultiplier' => 6,
+                    'maxRpcTimeoutMillis' => 7,
+                    'totalTimeoutMillis' => 8,
+                    'retryableCodes' => [9],
+                    'noRetriesRpcTimeoutMillis' => 10,
+                    'retriesEnabled' => false,
+                ],
+                [
+                    'initialRetryDelayMillis' => 2,
+                    'retryDelayMultiplier' => 3,
+                    'maxRetryDelayMillis' => 4,
+                    'initialRpcTimeoutMillis' => 5,
+                    'rpcTimeoutMultiplier' => 6,
+                    'maxRpcTimeoutMillis' => 7,
+                    'totalTimeoutMillis' => 8,
+                    'retryableCodes' => [9],
+                    'noRetriesRpcTimeoutMillis' => 10,
+                    'retriesEnabled' => false,
+                ]
+            ]
+        ];
     }
 }
