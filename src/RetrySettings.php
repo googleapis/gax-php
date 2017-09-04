@@ -34,6 +34,55 @@ namespace Google\GAX;
 /**
  * TODO: thorough documentation
  *
+ * The RetrySettings class holds parameters for retrying and timeout for RPCs.
+ * This class can be passed as an optional parameter to RPC methods, or as part
+ * of an optional array in the constructor of a client object.
+ *
+ * Constructing a RetrySettings object
+ *
+ * Example using custom settings:
+ * ```
+ * $retrySettings = new RetrySettings([
+ *
+ * ]);
+ * ```
+ *
+ * Example modifying an existing RetrySettings object
+ * ```
+ * $retrySettings = $existingRetrySettings->with([
+ *
+ * ]);
+ * ```
+ *
+ * Example modifying the default settings
+ * ```
+ * $retrySettings = RetrySettings::createDefault()->with([
+ *     'retriesEnabled' => false,
+ *     'noRetriesRpcTimeoutMillis' => 20000,
+ * ]);
+ * ```
+ *
+ * Example constructing a GAPIC client with retries disabled for a particular method:
+ * ```
+ * $client = new Client([
+ *     'retrySettingsArray' => [
+ *         'noRetriesMethod' => ['retriesEnabled' => false],
+ *         'anotherMethod' => [
+ *             'initialRpcTimeoutMillis' => 10000,
+ *             'maxRpcTimeoutMillis' => 30000,
+ *             'totalTimeoutMillis' => 60000,
+ *         ],
+ *     ],
+ * ]);
+ * ```
+ *
+ * Example of disabling retries for a single call:
+ * ```
+ * $result = $client->anotherMethod($arg, [
+ *     'retrySettings' => ['retriesEnabled' => false]
+ * ]);
+ * ```
+ *
  * Holds the parameters for retry and timeout logic with exponential backoff. Actual
  * implementation of the logic is elsewhere.
  *
