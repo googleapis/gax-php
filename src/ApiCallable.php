@@ -218,14 +218,16 @@ class ApiCallable
         }
 
         $retrySettings = $settings->getRetrySettings();
-        if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
-            $timeFuncMillis = null;
-            if (array_key_exists('timeFuncMillis', $options)) {
-                $timeFuncMillis = $options['timeFuncMillis'];
+        if (!is_null($retrySettings)) {
+            if ($retrySettings->retriesEnabled()) {
+                $timeFuncMillis = null;
+                if (array_key_exists('timeFuncMillis', $options)) {
+                    $timeFuncMillis = $options['timeFuncMillis'];
+                }
+                $apiCall = self::setRetry($apiCall, $settings->getRetrySettings(), $timeFuncMillis);
+            } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+                $apiCall = self::setTimeout($apiCall, $retrySettings->getNoRetriesRpcTimeoutMillis());
             }
-            $apiCall = self::setRetry($apiCall, $settings->getRetrySettings(), $timeFuncMillis);
-        } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-            $apiCall = self::setTimeout($apiCall, $retrySettings->getNoRetriesRpcTimeoutMillis());
         }
 
         if (array_key_exists('pageStreamingDescriptor', $options)) {

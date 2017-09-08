@@ -83,7 +83,20 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $response = "response";
         $stub = MockStub::create($response);
 
-        $callSettings = new CallSettings(['timeoutMillis' => 1500]);
+        $retrySettings = new RetrySettings([
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 600,
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [],
+            'noRetriesRpcTimeoutMillis' => 1500
+        ]);
+        $callSettings = new CallSettings([
+            'retrySettings' => $retrySettings
+        ]);
         $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings);
         $actualResponse = $apiCall($request, [], []);
 
@@ -102,15 +115,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $response = "response";
         $status = new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded');
         $stub = MockStub::createWithResponseSequence([[$response, $status]]);
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 400,
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 2000]);
-        $retrySettings = new RetrySettings([], $backoffSettings);
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [],
+        ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
 
         $isExceptionRaised = false;
@@ -140,18 +154,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 400,
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 500,
-            'totalTimeoutMillis' => 2000]);
-        $retrySettings = new RetrySettings(
-            [Grpc\STATUS_DEADLINE_EXCEEDED],
-            $backoffSettings
-        );
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [Grpc\STATUS_DEADLINE_EXCEEDED],
+        ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
         $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings);
         $actualResponse = $apiCall($request, [], []);
@@ -181,18 +193,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$response, $status],
             [$response, $status]
         ]);
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 1000,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 4000,
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 3000]);
-        $retrySettings = new RetrySettings(
-            [Grpc\STATUS_DEADLINE_EXCEEDED],
-            $backoffSettings
-        );
+            'totalTimeoutMillis' => 3000,
+            'retryableCodes' => [Grpc\STATUS_DEADLINE_EXCEEDED],
+        ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
 
         // Use time function that simulates 1100ms elapsing with each call to the stub

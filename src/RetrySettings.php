@@ -284,8 +284,8 @@ class RetrySettings
     }
 
     /**
-     * @return int The timeout of the rpc call to be used if $retriesEnabled is false, in
-     *             milliseconds.
+     * @return int The timeout of the rpc call to be used if $retriesEnabled is false,
+     *             in milliseconds.
      */
     public function getNoRetriesRpcTimeoutMillis()
     {
@@ -329,8 +329,8 @@ class RetrySettings
 
     /**
      * @return int The initial rpc timeout in milliseconds. If $this->retriesEnabled()
-     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to set the
-     *             timeout in that case.
+     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+     *             set the timeout in that case.
      */
     public function getInitialRpcTimeoutMillis()
     {
@@ -348,8 +348,8 @@ class RetrySettings
 
     /**
      * @return int The maximum rpc timeout in milliseconds. If $this->retriesEnabled()
-     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to set the
-     *             timeout in that case.
+     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+     *             set the timeout in that case.
      */
     public function getMaxRpcTimeoutMillis()
     {
@@ -359,8 +359,8 @@ class RetrySettings
     /**
      * @return int The total time in milliseconds to spend on the call, including all
      *             retry attempts and delays between attempts. If $this->retriesEnabled()
-     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to set
-     *             the timeout for the rpc.
+     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+     *             set the timeout in that case.
      */
     public function getTotalTimeoutMillis()
     {

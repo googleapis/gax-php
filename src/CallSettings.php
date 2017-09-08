@@ -68,15 +68,21 @@ class CallSettings
         $serviceConfig = $clientConfig['interfaces'][$serviceName];
         foreach ($serviceConfig['methods'] as $methodName => $methodConfig) {
             $phpMethodKey = lcfirst($methodName);
-            if (isset($retryingOverrides['$phpMethodKey'])) {
-                $retrySettings = $retryingOverrides[$phpMethodKey];
-            } else {
-                $retrySettings = self::constructRetry(
-                    $methodConfig,
-                    $statusCodes,
-                    $serviceConfig['retry_codes'],
-                    $serviceConfig['retry_params']
-                );
+            $retrySettings = self::constructRetry(
+                $methodConfig,
+                $statusCodes,
+                $serviceConfig['retry_codes'],
+                $serviceConfig['retry_params']
+            );
+            if (isset($retryingOverrides[$phpMethodKey])) {
+                $retrySettingsOverride = $retryingOverrides[$phpMethodKey];
+                if (is_array($retrySettingsOverride)) {
+                    $retrySettings = $retrySettings->with($retrySettingsOverride);
+                } elseif ($retrySettingsOverride instanceof RetrySettings) {
+                    $retrySettings = $retrySettingsOverride;
+                } else {
+                    throw new ValidationException("Unexpected value in retryingOverrides for method $phpMethodKey: $retrySettingsOverride");
+                }
             }
 
             $callSettings[$phpMethodKey] = new CallSettings(['retrySettings' => $retrySettings]);
@@ -96,6 +102,7 @@ class CallSettings
 
         $retryCodesName = $methodConfig['retry_codes_name'];
         $retryParamsName = $methodConfig['retry_params_name'];
+        $timeoutMillis = $methodConfig['timeout_millis'];
 
         if (!array_key_exists($retryCodesName, $retryCodes)) {
             throw new ValidationException("Invalid retry_codes_name setting: '$retryCodesName'");
@@ -116,6 +123,7 @@ class CallSettings
 
         $retrySettings = $retryParameters + [
             'retryableCodes' => $codes,
+            'noRetriesRpcTimeoutMillis' => $timeoutMillis,
         ];
 
         return new RetrySettings($retrySettings);
@@ -198,10 +206,14 @@ class CallSettings
      */
     private function toArray()
     {
-        return [
-            'retrySettings' => $this->getRetrySettings(),
-            'userHeaders' => $this->getUserHeaders(),
-        ];
+        $arr = [];
+        if (!is_null($this->getRetrySettings())) {
+            $arr['retrySettings'] = $this->getRetrySettings();
+        }
+        if (!is_null($this->getUserHeaders())) {
+            $arr['userHeaders'] = $this->getUserHeaders();
+        }
+        return $arr;
     }
 
     private static function convertArrayFromSnakeCase($settings)
