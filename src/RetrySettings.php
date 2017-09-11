@@ -48,13 +48,13 @@ namespace Google\GAX;
  * Example of creating a RetrySettings object using the constructor:
  * ```
  * $retrySettings = new RetrySettings([
- *     'initial_retry_delay_millis' => 100,
- *     'retry_delay_multiplier' => 1.3,
- *     'max_retry_delay_millis' => 60000,
- *     'initial_rpc_timeout_millis' => 20000,
- *     'rpc_timeout_multiplier' => 1.0,
- *     'max_rpc_timeout_millis' => 20000,
- *     'total_timeout_millis' => 600000,
+ *     'initialRetryDelayMillis' => 100,
+ *     'retryDelayMultiplier' => 1.3,
+ *     'maxRetryDelayMillis' => 60000,
+ *     'initialRpcTimeoutMillis' => 20000,
+ *     'rpcTimeoutMultiplier' => 1.0,
+ *     'maxRpcTimeoutMillis' => 20000,
+ *     'totalTimeoutMillis' => 600000,
  * ]);
  * ```
  *
@@ -64,7 +64,7 @@ namespace Google\GAX;
  * Example modifying an existing RetrySettings object using `with()`:
  * ```
  * $newRetrySettings = $retrySettings->with([
- *     'total_timeout_millis' => 700000,
+ *     'totalTimeoutMillis' => 700000,
  * ]);
  * ```
  *
@@ -102,13 +102,13 @@ namespace Google\GAX;
  * method:
  * ```
  * $customRetrySettings = new RetrySettings([
- *     'initial_retry_delay_millis' => 100,
- *     'retry_delay_multiplier' => 1.3,
- *     'max_retry_delay_millis' => 60000,
- *     'initial_rpc_timeout_millis' => 20000,
- *     'rpc_timeout_multiplier' => 1.0,
- *     'max_rpc_timeout_millis' => 20000,
- *     'total_timeout_millis' => 600000,
+ *     'initialRetryDelayMillis' => 100,
+ *     'retryDelayMultiplier' => 1.3,
+ *     'maxRetryDelayMillis' => 60000,
+ *     'initialRpcTimeoutMillis' => 20000,
+ *     'rpcTimeoutMultiplier' => 1.0,
+ *     'maxRpcTimeoutMillis' => 20000,
+ *     'totalTimeoutMillis' => 600000,
  * ]);
  *
  * $result = $client->listGroups($name, [
@@ -139,17 +139,17 @@ namespace Google\GAX;
  * use Google\Cloud\Monitoring\V3\GroupServiceClient;
  *
  * $customRetrySettings = new RetrySettings([
- *     'initial_retry_delay_millis' => 100,
- *     'retry_delay_multiplier' => 1.3,
- *     'max_retry_delay_millis' => 60000,
- *     'initial_rpc_timeout_millis' => 20000,
- *     'rpc_timeout_multiplier' => 1.0,
- *     'max_rpc_timeout_millis' => 20000,
- *     'total_timeout_millis' => 600000,
+ *     'initialRetryDelayMillis' => 100,
+ *     'retryDelayMultiplier' => 1.3,
+ *     'maxRetryDelayMillis' => 60000,
+ *     'initialRpcTimeoutMillis' => 20000,
+ *     'rpcTimeoutMultiplier' => 1.0,
+ *     'maxRpcTimeoutMillis' => 20000,
+ *     'totalTimeoutMillis' => 600000,
  * ]);
  *
  * $updatedCustomRetrySettings = $customRetrySettings->with([
- *     'total_timeout_millis' => 700000
+ *     'totalTimeoutMillis' => 700000
  * ]);
  *
  * $client = new GroupServiceClient([

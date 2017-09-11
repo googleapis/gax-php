@@ -55,6 +55,7 @@ class CallSettings
      *     An array which maps the strings referring to response status
      *     codes to the PHP objects representing those codes.
      *
+     * @throws ValidationException
      * @return CallSettings[] $callSettings
      */
     public static function load(
