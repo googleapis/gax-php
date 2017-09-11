@@ -157,7 +157,7 @@ class CallSettings
      * @param array $settings {
      *    Optional.
      * @type \Google\GAX\RetrySettings $retrySettings
-     *          Retry settings to use for this method.
+     *          Retry settings to use for CallSettings object.
      * @type array $userHeaders
      *          An array of headers to be included in the request.
      * }
