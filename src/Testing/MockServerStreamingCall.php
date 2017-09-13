@@ -33,6 +33,7 @@
 namespace Google\GAX\Testing;
 
 use Google\GAX\ApiException;
+use Google\GAX\Grpc\GrpcApiException;
 use Google\Rpc\Code;
 use Grpc;
 
@@ -76,9 +77,9 @@ class MockServerStreamingCall
     public function getStatus()
     {
         if (count($this->responses) > 0) {
-            throw new ApiException(
+            throw new GrpcApiException(
                 "Calls to getStatus() will block if all responses are not read",
-                Grpc\STATUS_INTERNAL
+                Code::INTERNAL
             );
         }
         return $this->status;

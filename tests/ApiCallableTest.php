@@ -39,6 +39,7 @@ use Google\GAX\CallSettings;
 use Google\GAX\PagedListResponse;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\RetrySettings;
+use Google\GAX\RpcStatus;
 use Google\GAX\Testing\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockBidiStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockClientStreamingStub;
@@ -113,7 +114,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     {
         $request = "request";
         $response = "response";
-        $status = new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded');
+        $status = new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded');
         $stub = MockStub::createWithResponseSequence([[$response, $status]]);
         $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
@@ -149,9 +150,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseB = "requestB";
         $responseC = "requestC";
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded')],
-            [$responseB, new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded')],
-            [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
+            [$responseA, new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded')],
+            [$responseB, new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded')],
+            [$responseC, new MockStatus(Code::OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $retrySettings = new RetrySettings([
@@ -162,7 +163,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 500,
             'totalTimeoutMillis' => 2000,
-            'retryableCodes' => [Grpc\STATUS_DEADLINE_EXCEEDED],
+            'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED],
         ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
         $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings);
@@ -187,7 +188,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     {
         $request = "request";
         $response = "response";
-        $status = new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded');
+        $status = new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded');
         $stub = MockStub::createWithResponseSequence([
             [$response, $status],
             [$response, $status],
@@ -201,7 +202,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
             'totalTimeoutMillis' => 3000,
-            'retryableCodes' => [Grpc\STATUS_DEADLINE_EXCEEDED],
+            'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED],
         ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
 
@@ -231,7 +232,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
 
         $this->assertTrue(!empty($raisedException));
-        $this->assertEquals(Grpc\STATUS_DEADLINE_EXCEEDED, $raisedException->getCode());
+        $this->assertEquals(Code::DEADLINE_EXCEEDED, $raisedException->getCode());
     }
 
     public function testPageStreamingDirectIterationNoTimeout()
@@ -241,9 +242,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseB = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken2', ['resource2']);
         $responseC = MockPageStreamingResponse::createPageStreamingResponse(null, ['resource3', 'resource4']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+            [$responseC, new MockStatus(Code::OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -277,9 +278,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseB = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken2', ['resource2']);
         $responseC = MockPageStreamingResponse::createPageStreamingResponse(null, ['resource3', 'resource4']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+            [$responseC, new MockStatus(Code::OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -322,9 +323,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseB = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken2', ['resource2']);
         $responseC = MockPageStreamingResponse::createPageStreamingResponse(null, ['resource3', 'resource4']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+            [$responseC, new MockStatus(Code::OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -367,7 +368,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $request = MockPageStreamingRequest::createPageStreamingRequest('token');
         $responseA = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
                              ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -396,7 +397,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $request = MockPageStreamingRequest::createPageStreamingRequest('token');
         $responseA = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -427,7 +428,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $request = MockPageStreamingRequest::createPageStreamingRequest('token', $collectionSize + 1);
         $responseA = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')]
+            [$responseA, new MockStatus(Code::OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -454,9 +455,9 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseB = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken2', ['resource2']);
         $responseC = MockPageStreamingResponse::createPageStreamingResponse(null, ['resource3', 'resource4']);
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+            [$responseC, new MockStatus(Code::OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
@@ -614,11 +615,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
         $responseB = self::createSuccessfulOperationResponse($opName, $result, 'm3');
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ];
         $callStub = MockStub::createWithResponseSequence(
-            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
@@ -692,11 +693,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
         $responseB = self::createSuccessfulOperationResponse($opName, $result, 'm3');
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ];
         $callStub = MockStub::createWithResponseSequence(
-            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
@@ -762,11 +763,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
         $responseB = self::createIncompleteOperationResponse($opName, 'm3');
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ];
         $callStub = MockStub::createWithResponseSequence(
-            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
@@ -830,11 +831,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
         $responseB = self::createFailedOperationResponse($opName, Code::UNKNOWN, 'someError', 'm3');
         $responseSequence = [
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ];
         $callStub = MockStub::createWithResponseSequence(
-            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
@@ -915,12 +916,12 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'm3'
         );
         $responseSequence = [
-            [new GPBEmpty(), new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [new GPBEmpty(), new MockStatus(Code::OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ];
         $callStub = MockStub::createWithResponseSequence(
-            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
@@ -990,11 +991,11 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $callStub = MockStub::createWithResponseSequence(
-            [[$initialResponse, new MockStatus(Grpc\STATUS_OK, '')]],
+            [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opStub = MockStub::createWithResponseSequence(
-            [[new GPBEmpty(), new MockStatus(Grpc\STATUS_OK, '')]],
+            [[new GPBEmpty(), new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
         $opClient = OperationResponseTest::createOperationsClient($opStub);
@@ -1047,10 +1048,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testClientStreamingSuccessObject()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK);
+        $request->setCode(Code::OK);
         $request->setMessage('request');
         $response = new Status();
-        $response->setCode(Grpc\STATUS_OK);
+        $response->setCode(Code::OK);
         $response->setMessage('response');
         $descriptor = [
             'grpcStreamingType' => 'ClientStreaming',
@@ -1103,7 +1104,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'grpcStreamingType' => 'ClientStreaming',
         ];
 
-        $finalStatus = new MockStatus(Grpc\STATUS_INTERNAL, 'client streaming failure');
+        $finalStatus = new MockStatus(Code::INTERNAL, 'client streaming failure');
 
         $metadata = [];
         $options = ['call_credentials_callback' => 'fake_callback'];
@@ -1150,10 +1151,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testServerStreamingSuccessObject()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK);
+        $request->setCode(Code::OK);
         $request->setMessage('request');
         $response = new Status();
-        $response->setCode(Grpc\STATUS_OK);
+        $response->setCode(Code::OK);
         $response->setMessage('response');
         $responses = [$response];
         $descriptor = [
@@ -1192,7 +1193,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testServerStreamingSuccessResources()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK);
+        $request->setCode(Code::OK);
         $request->setMessage('request');
         $resources = ['resource1', 'resource2'];
         $repeatedField = new RepeatedField(GPBType::STRING);
@@ -1247,7 +1248,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'grpcStreamingType' => 'ServerStreaming',
         ];
 
-        $finalStatus = new MockStatus(Grpc\STATUS_INTERNAL, 'server streaming failure');
+        $finalStatus = new MockStatus(Code::INTERNAL, 'server streaming failure');
 
         $metadata = [];
         $options = ['call_credentials_callback' => 'fake_callback'];
@@ -1288,10 +1289,10 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testBidiStreamingSuccessObject()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK);
+        $request->setCode(Code::OK);
         $request->setMessage('request');
         $response = new Status();
-        $response->setCode(Grpc\STATUS_OK);
+        $response->setCode(Code::OK);
         $response->setMessage('response');
         $descriptor = [
             'grpcStreamingType' => 'BidiStreaming',
@@ -1336,7 +1337,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
     public function testBidiStreamingSuccessResources()
     {
         $request = new Status();
-        $request->setCode(Grpc\STATUS_OK);
+        $request->setCode(Code::OK);
         $request->setMessage('request');
         $resources = ['resource1', 'resource2'];
         $repeatedField = new RepeatedField(GPBType::STRING);
@@ -1397,7 +1398,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ];
         $responses = [$response];
 
-        $finalStatus = new MockStatus(Grpc\STATUS_INTERNAL, 'bidi failure');
+        $finalStatus = new MockStatus(Code::INTERNAL, 'bidi failure');
 
         $metadata = [];
         $options = ['call_credentials_callback' => 'fake_callback'];

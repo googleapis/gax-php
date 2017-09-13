@@ -55,6 +55,7 @@ namespace Google\GAX;
  *     'rpcTimeoutMultiplier' => 1.0,
  *     'maxRpcTimeoutMillis' => 20000,
  *     'totalTimeoutMillis' => 600000,
+ *     'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED, RpcStatus::UNAVAILABLE],
  * ]);
  * ```
  *
@@ -109,6 +110,7 @@ namespace Google\GAX;
  *     'rpcTimeoutMultiplier' => 1.0,
  *     'maxRpcTimeoutMillis' => 20000,
  *     'totalTimeoutMillis' => 600000,
+ *     'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED, RpcStatus::UNAVAILABLE],
  * ]);
  *
  * $result = $client->listGroups($name, [
@@ -146,6 +148,7 @@ namespace Google\GAX;
  *     'rpcTimeoutMultiplier' => 1.0,
  *     'maxRpcTimeoutMillis' => 20000,
  *     'totalTimeoutMillis' => 600000,
+ *     'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED, RpcStatus::UNAVAILABLE],
  * ]);
  *
  * $updatedCustomRetrySettings = $customRetrySettings->with([

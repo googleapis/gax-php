@@ -31,8 +31,9 @@
  */
 namespace Google\GAX;
 
-use Grpc;
 use Exception;
+use Google\GAX\Grpc\GrpcApiException;
+use Google\GAX\Grpc\GrpcStatusCode;
 use InvalidArgumentException;
 
 /**
@@ -88,14 +89,14 @@ class ApiCallable
                 try {
                     return call_user_func_array($nextApiCall, func_get_args());
                 } catch (ApiException $e) {
-                    if (!in_array($e->getCode(), $retrySettings->getRetryableCodes())) {
+                    if (!in_array($e->getStatus(), $retrySettings->getRetryableCodes())) {
                         throw $e;
                     }
                 } catch (Exception $e) {
                     throw $e;
                 }
                 // Don't sleep if the failure was a timeout
-                if ($e->getCode() != Grpc\STATUS_DEADLINE_EXCEEDED) {
+                if ($e->getStatus() != RpcStatus::DEADLINE_EXCEEDED) {
                     usleep($delayMillis * 1000);
                 }
                 $currentTimeMillis = $timeFuncMillis();
@@ -106,7 +107,11 @@ class ApiCallable
                     $deadlineMillis - $currentTimeMillis
                 );
             }
-            throw new ApiException("Retry total timeout exceeded.", Grpc\STATUS_DEADLINE_EXCEEDED);
+            throw new ApiException(
+                "Retry total timeout exceeded.",
+                \Google\Rpc\Code::DEADLINE_EXCEEDED,
+                RpcStatus::DEADLINE_EXCEEDED
+            );
         };
         return $inner;
     }
@@ -133,15 +138,15 @@ class ApiCallable
         return $inner;
     }
 
-    private static function createUnaryApiCall($callable)
+    private static function createGrpcUnaryApiCall($callable)
     {
         return function () use ($callable) {
             list($response, $status) =
                 call_user_func_array($callable, func_get_args())->wait();
-            if ($status->code == Grpc\STATUS_OK) {
+            if ($status->code == \Google\Rpc\Code::OK) {
                 return $response;
             } else {
-                throw ApiException::createFromStdClass($status);
+                throw GrpcApiException::createFromStdClass($status);
             }
         };
     }
@@ -214,7 +219,7 @@ class ApiCallable
                 $options['grpcStreamingDescriptor']
             );
         } else {
-            $apiCall = ApiCallable::createUnaryApiCall($callable);
+            $apiCall = ApiCallable::createGrpcUnaryApiCall($callable);
         }
 
         $retrySettings = $settings->getRetrySettings();

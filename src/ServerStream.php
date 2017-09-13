@@ -31,6 +31,7 @@
  */
 namespace Google\GAX;
 
+use Google\GAX\Grpc\GrpcApiException;
 use Grpc;
 
 /**
@@ -91,7 +92,7 @@ class ServerStream
         }
         $status = $this->call->getStatus();
         if (!($status->code == Grpc\STATUS_OK)) {
-            throw ApiException::createFromStdClass($status);
+            throw GrpcApiException::createFromStdClass($status);
         }
     }
 

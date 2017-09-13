@@ -48,8 +48,8 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
             'interfaces' => [
                 CallSettingsTest::SERVICE_NAME => [
                     'retry_codes' => [
-                        'foo_retry' => ['code_a', 'code_b'],
-                        'bar_retry' => ['code_c']
+                        'foo_retry' => ['DEADLINE_EXCEEDED', 'UNAVAILABLE'],
+                        'bar_retry' => ['INTERNAL']
                     ],
                     'retry_params' => [
                         'default' => [
@@ -81,38 +81,27 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
 
     public function testConstructSettings()
     {
-        $statusCodes = [
-            'code_a' => 'code_val_a',
-            'code_b' => 'code_val_b',
-            'code_c' => 'code_val_c'
-        ];
         $inputConfig = CallSettingsTest::buildInputConfig();
 
         $defaultCallSettings =
                 CallSettings::load(
                     CallSettingsTest::SERVICE_NAME,
                     $inputConfig,
-                    [],
-                    $statusCodes
+                    []
                 );
         $simpleMethod = $defaultCallSettings['simpleMethod'];
         $this->assertTrue($simpleMethod->getRetrySettings()->retriesEnabled());
         $this->assertEquals(40000, $simpleMethod->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
         $simpleMethodRetry = $simpleMethod->getRetrySettings();
-        $this->assertEquals(['code_val_a', 'code_val_b'], $simpleMethodRetry->getRetryableCodes());
+        $this->assertEquals(['DEADLINE_EXCEEDED', 'UNAVAILABLE'], $simpleMethodRetry->getRetryableCodes());
         $this->assertEquals(100, $simpleMethodRetry->getInitialRetryDelayMillis());
         $pageStreamingMethod = $defaultCallSettings['pageStreamingMethod'];
         $pageStreamingMethodRetry = $pageStreamingMethod->getRetrySettings();
-        $this->assertEquals(['code_val_c'], $pageStreamingMethodRetry->getRetryableCodes());
+        $this->assertEquals(['INTERNAL'], $pageStreamingMethodRetry->getRetryableCodes());
     }
 
     public function testConstructSettingsOverride()
     {
-        $statusCodes = [
-            'code_a' => 'code_val_a',
-            'code_b' => 'code_val_b',
-            'code_c' => 'code_val_c'
-        ];
         $inputConfig = CallSettingsTest::buildInputConfig();
 
         // Turn off retries for simpleMethod
@@ -123,15 +112,14 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
                 CallSettings::load(
                     CallSettingsTest::SERVICE_NAME,
                     $inputConfig,
-                    $retryingOverride,
-                    $statusCodes
+                    $retryingOverride
                 );
         $simpleMethod = $defaultCallSettings['simpleMethod'];
         $this->assertFalse($simpleMethod->getRetrySettings()->retriesEnabled());
         $this->assertEquals(40000, $simpleMethod->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
         $pageStreamingMethod = $defaultCallSettings['pageStreamingMethod'];
         $pageStreamingMethodRetry = $pageStreamingMethod->getRetrySettings();
-        $this->assertEquals(['code_val_c'], $pageStreamingMethodRetry->getRetryableCodes());
+        $this->assertEquals(['INTERNAL'], $pageStreamingMethodRetry->getRetryableCodes());
     }
 
     public function testMergeEmpty()

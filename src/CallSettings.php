@@ -51,18 +51,13 @@ class CallSettings
      * @param array $retryingOverrides
      *     A dictionary of method names to RetrySettings that
      *     override those specified in $clientConfig.
-     * @param array $statusCodes
-     *     An array which maps the strings referring to response status
-     *     codes to the PHP objects representing those codes.
-     *
      * @throws ValidationException
      * @return CallSettings[] $callSettings
      */
     public static function load(
         $serviceName,
         $clientConfig,
-        $retryingOverrides,
-        $statusCodes
+        $retryingOverrides
     ) {
         $callSettings = [];
 
@@ -71,7 +66,6 @@ class CallSettings
             $phpMethodKey = lcfirst($methodName);
             $retrySettings = self::constructRetry(
                 $methodConfig,
-                $statusCodes,
                 $serviceConfig['retry_codes'],
                 $serviceConfig['retry_params']
             );
@@ -93,7 +87,6 @@ class CallSettings
 
     private static function constructRetry(
         $methodConfig,
-        $statusCodes,
         $retryCodes,
         $retryParams
     ) {
@@ -112,18 +105,16 @@ class CallSettings
             throw new ValidationException("Invalid retry_params_name setting: '$retryParamsName'");
         }
 
-        $codes = [];
-        foreach ($retryCodes[$retryCodesName] as $retryCodeName) {
-            if (!array_key_exists($retryCodeName, $statusCodes)) {
-                throw new ValidationException("Invalid status code: '$retryCodeName'");
+        foreach ($retryCodes[$retryCodesName] as $status) {
+            if (!RpcStatus::validateStatus($status)) {
+                throw new ValidationException("Invalid status code: '$status'");
             }
-            array_push($codes, $statusCodes[$retryCodeName]);
         }
 
         $retryParameters = self::convertArrayFromSnakeCase($retryParams[$retryParamsName]);
 
         $retrySettings = $retryParameters + [
-            'retryableCodes' => $codes,
+            'retryableCodes' => $retryCodes[$retryCodesName],
             'noRetriesRpcTimeoutMillis' => $timeoutMillis,
         ];
 

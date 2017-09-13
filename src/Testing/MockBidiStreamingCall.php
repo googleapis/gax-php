@@ -33,8 +33,9 @@
 namespace Google\GAX\Testing;
 
 use Google\GAX\ApiException;
+use Google\GAX\Grpc\GrpcApiException;
+use Google\GAX\Grpc\GrpcStatusCode;
 use Google\Rpc\Code;
-use Grpc;
 
 /**
  * The MockBidiStreamingCall class is used to mock out the \Grpc\BidiStreamingCall class
@@ -83,23 +84,25 @@ class MockBidiStreamingCall
         } elseif ($this->writesDone) {
             return null;
         } else {
-            throw new ApiException("No more responses to read, but closeWrite() not called - "
-                . "this would be blocking", Grpc\STATUS_INTERNAL);
+            throw new GrpcApiException("No more responses to read, but closeWrite() not called - "
+                . "this would be blocking",
+                Code::INTERNAL
+            );
         }
     }
 
     public function getStatus()
     {
         if (count($this->responses) > 0) {
-            throw new ApiException(
+            throw new GrpcApiException(
                 "Calls to getStatus() will block if all responses are not read",
-                Grpc\STATUS_INTERNAL
+                Code::INTERNAL
             );
         }
         if (!$this->writesDone) {
-            throw new ApiException(
+            throw new GrpcApiException(
                 "Calls to getStatus() will block if closeWrite() not called",
-                Grpc\STATUS_INTERNAL
+                Code::INTERNAL
             );
         }
         return $this->status;
@@ -113,7 +116,10 @@ class MockBidiStreamingCall
     public function write($request)
     {
         if ($this->writesDone) {
-            throw new ApiException("Cannot call write() after writesDone()", Grpc\STATUS_INTERNAL);
+            throw new GrpcApiException(
+                "Cannot call write() after writesDone()",
+                Code::INTERNAL
+            );
         }
         if (is_a($request, '\Google\Protobuf\Internal\Message')) {
             $newRequest = new $request();
