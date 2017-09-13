@@ -31,6 +31,7 @@
  */
 namespace Google\GAX;
 
+use Google\GAX\Grpc\GrpcApiException;
 use Grpc;
 use Google\GAX\ApiException;
 use Google\GAX\ValidationException;
@@ -157,7 +158,7 @@ class BidiStream
             $status = $this->call->getStatus();
             $this->isComplete = true;
             if (!($status->code == Grpc\STATUS_OK)) {
-                throw ApiException::createFromStdClass($status);
+                throw GrpcApiException::createFromStdClass($status);
             }
         }
         return $result;

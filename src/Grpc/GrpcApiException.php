@@ -29,49 +29,83 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\Grpc;
 
 use Exception;
+use Google\GAX\ApiException;
+use Google\GAX\RpcStatus;
+use Google\GAX\Serializer;
 
 /**
- * Represents an exception thrown during an RPC.
+ * Represents an exception thrown during an RPC using gRPC transport.
  */
-class ApiException extends Exception
+class GrpcApiException extends ApiException
 {
-    private $status;
+    private $metadata;
+    private $basicMessage;
 
     /**
-     * ApiException constructor.
+     * GrpcApiException constructor.
      * @param string $message
      * @param int $code
-     * @param string $status
      * @param array $optionalArgs {
      *     @type Exception|null $previous
+     *     @type array|null $metadata
+     *     @type string|null $basicMessage
      * }
      */
     public function __construct($message,
                                 $code,
-                                $status,
                                 $optionalArgs = [])
     {
+        $status = RpcStatus::statusFromRpcCode($code);
+        parent::__construct($message, $code, $status, $optionalArgs);
         $optionalArgs = $optionalArgs + [
-            'previous' => null,
+            'metadata' => null,
+            'basicMessage' => $message,
         ];
-        parent::__construct($message, $code, $optionalArgs['previous']);
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
+        $this->metadata = $optionalArgs['metadata'];
+        $this->basicMessage = $optionalArgs['basicMessage'];
     }
 
     /**
-     * String representation of ApiException
-     * @return string
+     * @param \stdClass $status
+     * @return GrpcApiException
      */
-    public function __toString()
+    public static function createFromStdClass($status)
     {
-        return __CLASS__ . ": $this->message\n";
+        $basicMessage = $status->details;
+        $code = $status->code;
+        $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
+
+        $messageData = [
+            'message' => $basicMessage,
+            'code' => $code,
+            'status' => RpcStatus::statusFromRpcCode($status->code),
+            'details' => Serializer::decodeMetadata($metadata)
+        ];
+
+        $message = json_encode($messageData, JSON_PRETTY_PRINT);
+
+        return new GrpcApiException($message, $code, [
+            'metadata' => $metadata,
+            'basicMessage' => $basicMessage,
+        ]);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getBasicMessage()
+    {
+        return $this->basicMessage;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 }

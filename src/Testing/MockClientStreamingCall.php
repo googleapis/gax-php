@@ -33,6 +33,8 @@
 namespace Google\GAX\Testing;
 
 use Google\GAX\ApiException;
+use Google\GAX\Grpc\GrpcApiException;
+use Google\Rpc\Code;
 use Grpc;
 
 /**
@@ -52,7 +54,7 @@ class MockClientStreamingCall
 
     /**
      * MockClientStreamingCall constructor.
-     * @param $response The response object.
+     * @param mixed $response The response object.
      * @param callable|null $deserialize An optional deserialize method for the response object.
      * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
      */
@@ -79,7 +81,10 @@ class MockClientStreamingCall
     public function write($request)
     {
         if ($this->waitCalled) {
-            throw new ApiException("Cannot call write() after wait()", Grpc\STATUS_INTERNAL);
+            throw new GrpcApiException(
+                "Cannot call write() after wait()",
+                Code::INTERNAL
+            );
         }
         if (is_a($request, '\Google\Protobuf\Internal\Message')) {
             $newRequest = new $request();

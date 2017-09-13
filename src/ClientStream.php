@@ -31,6 +31,7 @@
  */
 namespace Google\GAX;
 
+use Google\GAX\Grpc\GrpcApiException;
 use Grpc;
 
 /**
@@ -88,7 +89,7 @@ class ClientStream
         if ($status->code == Grpc\STATUS_OK) {
             return $response;
         } else {
-            throw ApiException::createFromStdClass($status);
+            throw GrpcApiException::createFromStdClass($status);
         }
     }
 
