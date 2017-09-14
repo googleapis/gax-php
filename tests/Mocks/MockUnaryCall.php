@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,68 +29,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
 
-class ClientStream
+namespace Google\GAX\UnitTests\Mocks;
+
+use Google\GAX\Testing\MockStatus;
+use Google\GAX\UnaryCallInterface;
+use Google\Rpc\Code;
+
+/**
+ * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
+ *
+ * The MockUnaryCall object is constructed with a response object, an optional deserialize
+ * method, and an optional status. The response object and status are returned immediately from the
+ * wait() method.
+ */
+class MockUnaryCall extends \Grpc\UnaryCall
 {
-    use CallHelperTrait;
+    use SerializationTrait;
 
-    private $call;
-
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct(\Grpc\ClientStreamingCall $clientStreamingCall, $grpcStreamingDescriptor = [])
-    {
-        $this->call = $clientStreamingCall;
-    }
+    private $response;
+    private $status;
 
     /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
+     * MockUnaryCall constructor.
+     * @param \Google\Protobuf\Internal\Message $response The response object.
+     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
      */
-    public function write($request)
+    public function __construct($response, $deserialize = null, $status = null)
     {
-        $this->call->write($request);
-    }
-
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @throws ApiException
-     * @return mixed The response object from the server
-     */
-    public function readResponse()
-    {
-        return $this->call->wait();
-    }
-
-    /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
+        $this->response = $response;
+        $this->deserialize = $deserialize;
+        if (is_null($status)) {
+            $status = new MockStatus(Code::OK);
         }
-        return $this->readResponse();
+        $this->status = $status;
     }
 
     /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall|mixed
+     * Immediately return the preset response object and status.
+     * @return array The response object and status.
      */
-    public function getClientStreamingCall()
+    public function wait()
     {
-        return $this->call;
+        return [
+            $this->deserializeMessage($this->response, $this->deserialize),
+            $this->status,
+        ];
     }
 }
