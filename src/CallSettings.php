@@ -76,7 +76,10 @@ class CallSettings
                 } elseif ($retrySettingsOverride instanceof RetrySettings) {
                     $retrySettings = $retrySettingsOverride;
                 } else {
-                    throw new ValidationException("Unexpected value in retryingOverrides for method $phpMethodKey: $retrySettingsOverride");
+                    throw new ValidationException(
+                        "Unexpected value in retryingOverrides for method " .
+                        "$phpMethodKey: $retrySettingsOverride"
+                    );
                 }
             }
 
