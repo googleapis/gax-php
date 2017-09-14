@@ -216,8 +216,7 @@ class OperationsGapicClient
             $this->descriptors[$method]['pageStreamingDescriptor'] = $pageStreamingDescriptor;
         }
 
-        $transportName = $this->determineTransport($options);
-        list($this->transport, $options['transport']) = $this->determineTransport($options);
+        $this->transport = $this->determineTransport($options);
 
         $clientConfigJsonString = file_get_contents(__DIR__.'/../resources/operations_client_config.json');
         $clientConfig = json_decode($clientConfigJsonString, true);
@@ -232,7 +231,7 @@ class OperationsGapicClient
 
         $this->scopes = $options['scopes'];
 
-        $stubClassName = sprintf('Google\LongRunning\Operations%sClient', ucfirst($options['transport']));
+        $stubClassName = sprintf('Google\LongRunning\Operations%sClient', ucfirst($this->transport->getName()));
         $this->operationsStub = $this->transport->createStub($stubClassName, $options);
     }
 

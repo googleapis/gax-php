@@ -25,7 +25,7 @@ use InvalidArgumentException;
 /**
  *
  */
-class GrpcTransport implements TransportInterface;
+class GrpcTransport implements TransportInterface
 {
     public function __construct($options = [])
     {
@@ -84,5 +84,10 @@ class GrpcTransport implements TransportInterface;
     public function createCredentialsCallback()
     {
         return $this->credentialsHelper->createCredentialsCallback();
+    }
+
+    public function getName()
+    {
+        return 'grpc';
     }
 }

@@ -22,9 +22,11 @@ namespace Google\GAX;
  */
 interface TransportInterface
 {
-	public function getStatusCodeNames();
+    public function getStatusCodeNames();
 
     public function createStub($stubClassName, array $options);
 
     public function createCredentialsCallback();
+
+    public function getName();
 }

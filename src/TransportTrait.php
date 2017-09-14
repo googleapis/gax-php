@@ -18,6 +18,7 @@
 namespace Google\GAX;
 
 use Google\GAX\Transport\GrpcTransport;
+use Exception;
 
 /**
  * Common functions used to work with various transports.
@@ -29,22 +30,30 @@ trait TransportTrait
     private function determineTransport($options)
     {
         if (isset($options['transport'])) {
-            switch ($options['transport']) {
-                case 'grpc':
-                    return [new GrpcTransport($options), 'grpc'];
+            if (is_string($options['transport'])) {
+                switch ($options['transport']) {
+                    case 'grpc':
+                        return new GrpcTransport($options);
 
-                case 'json':
-                    throw new Exception('This transport is not yet supported by GAPIC');
+                    case 'json':
+                        throw new Exception('This transport is not yet supported by GAPIC');
 
-                default:
-                    throw new Exception(sprintf(
-                        'Invalid transport provided: ',
-                        $options['transport']
-                    );
+                    default:
+                        throw new Exception(sprintf(
+                            'Invalid transport provided: ',
+                            $options['transport']
+                        ));
+                }
             }
+
+            if ($options['transport'] instanceof TransportInterface) {
+                return $options['transport'];
+            }
+
+            throw new Exception('Invalid argument provided to transport option');
         }
 
         // default to Grpc Transport (for now)
-        return [new GrpcTransport($options), 'grpc'];
+        return new GrpcTransport($options);
     }
 }
