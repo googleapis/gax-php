@@ -80,24 +80,42 @@ class RetrySettingsTest extends PHPUnit_Framework_TestCase
 
     private function compare(RetrySettings $retrySettings, $expectedValues)
     {
-        $this->assertSame($expectedValues['initialRetryDelayMillis'],
-            $retrySettings->getInitialRetryDelayMillis());
-        $this->assertSame($expectedValues['retryDelayMultiplier'],
-            $retrySettings->getRetryDelayMultiplier());
-        $this->assertSame($expectedValues['maxRetryDelayMillis'],
-            $retrySettings->getMaxRetryDelayMillis());
-        $this->assertSame($expectedValues['rpcTimeoutMultiplier'],
-            $retrySettings->getRpcTimeoutMultiplier());
-        $this->assertSame($expectedValues['maxRpcTimeoutMillis'],
-            $retrySettings->getMaxRpcTimeoutMillis());
-        $this->assertSame($expectedValues['totalTimeoutMillis'],
-            $retrySettings->getTotalTimeoutMillis());
-        $this->assertSame($expectedValues['retryableCodes'],
-            $retrySettings->getRetryableCodes());
-        $this->assertSame($expectedValues['retriesEnabled'],
-            $retrySettings->retriesEnabled());
-        $this->assertSame($expectedValues['noRetriesRpcTimeoutMillis'],
-            $retrySettings->getNoRetriesRpcTimeoutMillis());
+        $this->assertSame(
+            $expectedValues['initialRetryDelayMillis'],
+            $retrySettings->getInitialRetryDelayMillis()
+        );
+        $this->assertSame(
+            $expectedValues['retryDelayMultiplier'],
+            $retrySettings->getRetryDelayMultiplier()
+        );
+        $this->assertSame(
+            $expectedValues['maxRetryDelayMillis'],
+            $retrySettings->getMaxRetryDelayMillis()
+        );
+        $this->assertSame(
+            $expectedValues['rpcTimeoutMultiplier'],
+            $retrySettings->getRpcTimeoutMultiplier()
+        );
+        $this->assertSame(
+            $expectedValues['maxRpcTimeoutMillis'],
+            $retrySettings->getMaxRpcTimeoutMillis()
+        );
+        $this->assertSame(
+            $expectedValues['totalTimeoutMillis'],
+            $retrySettings->getTotalTimeoutMillis()
+        );
+        $this->assertSame(
+            $expectedValues['retryableCodes'],
+            $retrySettings->getRetryableCodes()
+        );
+        $this->assertSame(
+            $expectedValues['retriesEnabled'],
+            $retrySettings->retriesEnabled()
+        );
+        $this->assertSame(
+            $expectedValues['noRetriesRpcTimeoutMillis'],
+            $retrySettings->getNoRetriesRpcTimeoutMillis()
+        );
     }
 
     public function retrySettingsProvider()

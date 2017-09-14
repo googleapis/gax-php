@@ -53,11 +53,13 @@ class ApiException extends Exception
      *     @type string|null $basicMessage
      * }
      */
-    public function __construct($message,
-                                $code,
-                                $status,
-                                $optionalArgs = [])
-    {
+    public function __construct(
+        $message,
+        $code,
+        $status,
+        $optionalArgs = []
+    ) {
+    
         $optionalArgs = $optionalArgs + [
             'previous' => null,
             'metadata' => null,
