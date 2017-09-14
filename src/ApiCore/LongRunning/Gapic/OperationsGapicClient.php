@@ -47,6 +47,7 @@ namespace Google\ApiCore\LongRunning\Gapic;
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\ApiCallable;
 use Google\ApiCore\CallSettings;
+use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\GrpcCredentialsHelper;
 use Google\ApiCore\PageStreamingDescriptor;
 use Google\ApiCore\ValidationException;
@@ -55,7 +56,7 @@ use Google\LongRunning\CancelOperationRequest;
 use Google\LongRunning\DeleteOperationRequest;
 use Google\LongRunning\GetOperationRequest;
 use Google\LongRunning\ListOperationsRequest;
-use Google\LongRunning\OperationsGrpcClient;
+use InvalidArgumentException;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -82,7 +83,7 @@ use Google\LongRunning\OperationsGrpcClient;
  *         'scopes' => ['my-service-scope'],
  *     ];
  *     $operationsClient = new OperationsClient($options);
- *     $name = '';
+ *     $name = "";
  *     $response = $operationsClient->getOperation($name);
  * } finally {
  *     if (isset($operationsClient)) {
@@ -95,6 +96,8 @@ use Google\LongRunning\OperationsGrpcClient;
  */
 class OperationsGapicClient
 {
+    use GapicClientTrait;
+
     /**
      * The default port of the service.
      */
@@ -113,8 +116,7 @@ class OperationsGapicClient
     private static $gapicVersion;
     private static $gapicVersionLoaded = false;
 
-    protected $grpcCredentialsHelper;
-    protected $operationsStub;
+    protected $operationsTransport;
     private $scopes;
     private $defaultCallSettings;
     private $descriptors;
@@ -162,16 +164,18 @@ class OperationsGapicClient
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
      *     @type \Grpc\Channel $channel
-     *           A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
+     *           Optional. A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
      *     @type \Grpc\ChannelCredentials $sslCreds
-     *           A `ChannelCredentials` object for use with an SSL-enabled channel.
+     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
      *           Default: a credentials object returned from
      *           \Grpc\ChannelCredentials::createSsl()
-     *           NOTE: if the $channel optional argument is specified, then this argument is unused.
+     *           NOTE: if the $channel optional argument is specified, then this option is unused.
      *     @type bool $forceNewChannel
-     *           If true, this forces gRPC to create a new channel instead of using a persistent channel.
+     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
      *           Defaults to false.
      *           NOTE: if the $channel optional argument is specified, then this option is unused.
+     *     @type mixed $transport Optional, the string "grpc". Determines the backend transport used
+     *           to make the API call.
      *     @type \Google\Auth\CredentialsLoader $credentialsLoader
      *           A CredentialsLoader object created using the Google\Auth library.
      *     @type array $scopes Required. A string array of scopes to use when acquiring credentials.
@@ -243,19 +247,24 @@ class OperationsGapicClient
 
         $this->scopes = $options['scopes'];
 
-        $createStubOptions = [];
-        if (array_key_exists('sslCreds', $options)) {
-            $createStubOptions['sslCreds'] = $options['sslCreds'];
+        if (empty($options['createTransportFunction'])) {
+            $options['createTransportFunction'] = function ($options, $transport = null) {
+                switch ($transport) {
+                    case 'grpc':
+                        if (empty($options['createGrpcStubFunction'])) {
+                            $options['createGrpcStubFunction'] = function ($fullAddress, $stubOpts, $channel) {
+                                return new OperationsGrpcClient($fullAddress, $stubOpts, $channel);
+                            };
+                        }
+                        return new \Google\GAX\GrpcTransport($options);
+                }
+                throw new InvalidArgumentException('Invalid transport provided: ' . $transport);
+            };
         }
-        $this->grpcCredentialsHelper = new GrpcCredentialsHelper($options);
-
-        $createOperationsStubFunction = function ($hostname, $opts, $channel) {
-            return new OperationsGrpcClient($hostname, $opts, $channel);
-        };
-        if (array_key_exists('createOperationsStubFunction', $options)) {
-            $createOperationsStubFunction = $options['createOperationsStubFunction'];
-        }
-        $this->operationsStub = $this->grpcCredentialsHelper->createStub($createOperationsStubFunction);
+        $this->operationsTransport = call_user_func_array(
+            $options['createTransportFunction'],
+            [$options, $this->getTransport($options)]
+        );
     }
 
     /**
@@ -271,7 +280,7 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = '';
+     *     $name = "";
      *     $response = $operationsClient->getOperation($name);
      * } finally {
      *     if (isset($operationsClient)) {
@@ -308,17 +317,14 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+
+        $callable = $this->operationsTransport->createApiCall(
             'GetOperation',
             $mergedSettings,
             $this->descriptors['getOperation']
         );
 
-        return $callable(
-            $request,
-            [],
-            ['call_credentials_callback' => $this->createCredentialsCallback()]);
+        return $callable($request, []);
     }
 
     /**
@@ -336,16 +342,16 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = '';
-     *     $filter = '';
+     *     $name = "";
+     *     $filter = "";
      *     // Iterate through all elements
      *     $pagedResponse = $operationsClient->listOperations($name, $filter);
      *     foreach ($pagedResponse->iterateAllElements() as $element) {
      *         // doSomethingWith($element);
      *     }
      *
-     *     // OR iterate over pages of elements
-     *     $pagedResponse = $operationsClient->listOperations($name, $filter);
+     *     // OR iterate over pages of elements, with the maximum page size set to 5
+     *     $pagedResponse = $operationsClient->listOperations($name, $filter, ['pageSize' => 5]);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
@@ -403,17 +409,13 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+        $callable = $this->operationsTransport->createApiCall(
             'ListOperations',
             $mergedSettings,
             $this->descriptors['listOperations']
         );
 
-        return $callable(
-            $request,
-            [],
-            ['call_credentials_callback' => $this->createCredentialsCallback()]);
+        return $callable($request, []);
     }
 
     /**
@@ -425,7 +427,8 @@ class OperationsGapicClient
      * other methods to check whether the cancellation succeeded or whether the
      * operation completed despite cancellation. On successful cancellation,
      * the operation is not deleted; instead, it becomes an operation with
-     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
+     * an [Operation.error][google.longrunning.Operation.error] value with a
+     * [google.rpc.Status.code][google.rpc.Status.code] of 1,
      * corresponding to `Code.CANCELLED`.
      *
      * Sample code:
@@ -436,7 +439,7 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = '';
+     *     $name = "";
      *     $operationsClient->cancelOperation($name);
      * } finally {
      *     if (isset($operationsClient)) {
@@ -471,17 +474,13 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+        $callable = $this->operationsTransport->createApiCall(
             'CancelOperation',
             $mergedSettings,
             $this->descriptors['cancelOperation']
         );
 
-        return $callable(
-            $request,
-            [],
-            ['call_credentials_callback' => $this->createCredentialsCallback()]);
+        return $callable($request, []);
     }
 
     /**
@@ -498,7 +497,7 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = '';
+     *     $name = "";
      *     $operationsClient->deleteOperation($name);
      * } finally {
      *     if (isset($operationsClient)) {
@@ -533,17 +532,13 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+        $callable = $this->operationsTransport->createApiCall(
             'DeleteOperation',
             $mergedSettings,
             $this->descriptors['deleteOperation']
         );
 
-        return $callable(
-            $request,
-            [],
-            ['call_credentials_callback' => $this->createCredentialsCallback()]);
+        return $callable($request, []);
     }
 
     /**
@@ -554,11 +549,6 @@ class OperationsGapicClient
      */
     public function close()
     {
-        $this->operationsStub->close();
-    }
-
-    private function createCredentialsCallback()
-    {
-        return $this->grpcCredentialsHelper->createCallCredentialsCallback();
+        $this->operationsTransport->close();
     }
 }

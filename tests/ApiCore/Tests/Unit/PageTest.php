@@ -31,39 +31,56 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+<<<<<<< HEAD:tests/ApiCore/Tests/Unit/PageTest.php
 use Google\ApiCore\Page;
 use Google\ApiCore\PageStreamingDescriptor;
 use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\Tests\Unit\Mocks\MockStub;
 use Google\ApiCore\Tests\Unit\Mocks\MockPageStreamingRequest;
 use Google\ApiCore\Tests\Unit\Mocks\MockPageStreamingResponse;
+=======
+use Google\GAX\Page;
+use Google\GAX\PageStreamingDescriptor;
+use Google\GAX\Testing\MockStatus;
+use Google\GAX\UnitTests\Mocks\MockCall;
+use Google\GAX\UnitTests\Mocks\MockRequest;
+use Google\GAX\UnitTests\Mocks\MockResponse;
+>>>>>>> Refactorings for Multi Transport:tests/PageTest.php
 use PHPUnit\Framework\TestCase;
 use Grpc;
 
 class PageTest extends TestCase
 {
-    private static function createPage($responseSequence)
+    use TestTrait;
+
+    private function createPage($responseSequence)
     {
-        $mockRequest = MockPageStreamingRequest::createPageStreamingRequest('token');
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $mockRequest = $this->createMockRequest('token');
+
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resourcesList'
         ]);
-        $mockApiCall = function () use ($stub) {
-            list($response, $status) =
-                call_user_func_array(array($stub, 'takeAction'), func_get_args())->wait();
+
+        $call = $this->createCallWithResponseSequence($responseSequence);
+        $mockApiCall = function () use ($call) {
+            list($response, $status) = call_user_func_array(
+                array($call, 'takeAction'),
+                func_get_args()
+            );
             return $response;
         };
+
         return new Page([$mockRequest, [], []], $mockApiCall, $descriptor);
     }
 
     public function testNextPageMethods()
     {
-        $responseA = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
-        $responseB = MockPageStreamingResponse::createPageStreamingResponse('', ['resource2']);
-        $page = PageTest::createPage([
+        $responseA = $this->createMockResponse('nextPageToken1', ['resource1']);
+        $responseB = $this->createMockResponse('', ['resource2']);
+
+        $page = $this->createPage([
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
         ]);
@@ -83,8 +100,8 @@ class PageTest extends TestCase
      */
     public function testNextPageMethodsFailWithNoNextPage()
     {
-        $responseA = MockPageStreamingResponse::createPageStreamingResponse('', ['resource1']);
-        $page = PageTest::createPage([
+        $responseA = $this->createMockResponse('', ['resource1']);
+        $page = $this->createPage([
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
         ]);
 
@@ -98,9 +115,9 @@ class PageTest extends TestCase
      */
     public function testNextPageMethodsFailWithPageSizeUnsupported()
     {
-        $responseA = MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']);
-        $responseB = MockPageStreamingResponse::createPageStreamingResponse('', ['resource2']);
-        $page = PageTest::createPage([
+        $responseA = $this->createMockResponse('nextPageToken1', ['resource1']);
+        $responseB = $this->createMockResponse('', ['resource2']);
+        $page = $this->createPage([
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
         ]);
@@ -110,11 +127,11 @@ class PageTest extends TestCase
 
     public function testPageElementMethods()
     {
-        $response = MockPageStreamingResponse::createPageStreamingResponse(
+        $response = $this->createMockResponse(
             'nextPageToken1',
             ['resource1', 'resource2', 'resource3']
         );
-        $page = PageTest::createPage([
+        $page = $this->createPage([
             [$response, new MockStatus(Grpc\STATUS_OK, '')],
         ]);
 

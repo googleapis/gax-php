@@ -29,68 +29,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
+namespace Google\GAX\Middleware;
 
-class ClientStream
+use InvalidArgumentException;
+
+/**
+* Middleware for adding timeouts
+*/
+class TimeoutMiddleware
 {
-    use CallHelperTrait;
+    const TRANSPORT_METHOD_PARAM_COUNT = 2;
+    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
 
-    private $call;
+    /** @var callable */
+    private $nextHandler;
 
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct(\Grpc\ClientStreamingCall $clientStreamingCall, $grpcStreamingDescriptor = [])
+    /** @var int */
+    private $timeoutMillis;
+
+    public function __construct(callable $nextHandler, $timeoutMillis)
     {
-        $this->call = $clientStreamingCall;
+        $this->nextHandler = $nextHandler;
+        $this->timeoutMillis = $timeoutMillis;
     }
 
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     */
-    public function write($request)
+    public function __invoke()
     {
-        $this->call->write($request);
-    }
-
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @throws ApiException
-     * @return mixed The response object from the server
-     */
-    public function readResponse()
-    {
-        return $this->call->wait();
-    }
-
-    /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
+        $params = func_get_args();
+        if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
+            !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
+        ) {
+            throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
+        } else {
+            $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
         }
-        return $this->readResponse();
-    }
-
-    /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall|mixed
-     */
-    public function getClientStreamingCall()
-    {
-        return $this->call;
+        return call_user_func_array($this->nextHandler, $params);
     }
 }

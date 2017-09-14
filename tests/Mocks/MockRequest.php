@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,68 +29,37 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
 
-class ClientStream
+namespace Google\GAX\UnitTests\Mocks;
+
+class MockRequest
 {
-    use CallHelperTrait;
+    private $pageToken;
+    private $pageSize;
 
-    private $call;
-
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct(\Grpc\ClientStreamingCall $clientStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct($pageToken, $pageSize = null)
     {
-        $this->call = $clientStreamingCall;
+        $this->pageToken = $pageToken;
+        $this->pageSize = $pageSize;
     }
 
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     */
-    public function write($request)
+    public function getPageToken()
     {
-        $this->call->write($request);
+        return $this->pageToken;
     }
 
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @throws ApiException
-     * @return mixed The response object from the server
-     */
-    public function readResponse()
+    public function getPageSize()
     {
-        return $this->call->wait();
+        return $this->pageSize;
     }
 
-    /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
+    public function setPageSize($pageSize)
     {
-        foreach ($requests as $request) {
-            $this->write($request);
-        }
-        return $this->readResponse();
+        $this->pageSize = $pageSize;
     }
 
-    /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall|mixed
-     */
-    public function getClientStreamingCall()
+    public function setPageToken($pageToken)
     {
-        return $this->call;
+        $this->pageToken = $pageToken;
     }
 }
