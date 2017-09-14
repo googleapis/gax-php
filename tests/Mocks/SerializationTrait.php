@@ -29,68 +29,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
+namespace Google\GAX\UnitTests\Mocks;
 
-class ClientStream
+trait SerializationTrait
 {
-    use CallHelperTrait;
-
-    private $call;
-
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct(\Grpc\ClientStreamingCall $clientStreamingCall, $grpcStreamingDescriptor = [])
+    protected function deserializeMessage($message, $deserialize)
     {
-        $this->call = $clientStreamingCall;
-    }
-
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     */
-    public function write($request)
-    {
-        $this->call->write($request);
-    }
-
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @throws ApiException
-     * @return mixed The response object from the server
-     */
-    public function readResponse()
-    {
-        return $this->call->wait();
-    }
-
-    /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
+        if ($message === null) {
+            return null;
         }
-        return $this->readResponse();
-    }
 
-    /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall|mixed
-     */
-    public function getClientStreamingCall()
-    {
-        return $this->call;
+        if ($deserialize === null) {
+            return $message;
+        }
+
+        // Proto3 implementation
+        if (is_array($deserialize)) {
+            list($className, $deserializeFunc) = $deserialize;
+            $obj = new $className();
+            if (method_exists($obj, $deserializeFunc)) {
+                $obj->$deserializeFunc($message);
+            } else {
+                $obj->mergeFromString($message);
+            }
+
+            return $obj;
+        }
+
+        // Protobuf-PHP implementation
+        return call_user_func($deserialize, $message);
     }
 }

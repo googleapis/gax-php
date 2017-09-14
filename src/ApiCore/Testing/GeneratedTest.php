@@ -39,7 +39,6 @@ use PHPUnit\Framework\TestCase;
 
 class GeneratedTest extends TestCase
 {
-
     public function assertProtobufEquals(&$expected, &$actual)
     {
         if ($expected === $actual) {

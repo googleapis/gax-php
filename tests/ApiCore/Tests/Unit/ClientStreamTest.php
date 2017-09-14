@@ -31,9 +31,15 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+<<<<<<< HEAD:tests/ApiCore/Tests/Unit/ClientStreamTest.php
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\Testing\MockClientStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
+=======
+use Google\GAX\ClientStream;
+use Google\GAX\UnitTests\Mocks\MockClientStreamingCall;
+use Google\GAX\Testing\MockStatus;
+>>>>>>> Refactorings for Multi Transport:tests/ClientStreamTest.php
 use Grpc;
 use PHPUnit\Framework\TestCase;
 
@@ -74,10 +80,10 @@ class ClientStreamTest extends TestCase
     public function testManualWritesSuccess()
     {
         $requests = [
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
+            $this->createStatus(Grpc\STATUS_OK, 'request1'),
+            $this->createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = $this->createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serializeToString(), ['\Google\Rpc\Status', 'mergeFromString']);
         $stream = new ClientStream($call);
 
@@ -97,10 +103,10 @@ class ClientStreamTest extends TestCase
     public function testManualWritesFailure()
     {
         $requests = [
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
+            $this->createStatus(Grpc\STATUS_OK, 'request1'),
+            $this->createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = $this->createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall(
             $response->serializeToString(),
             ['\Google\Rpc\Status', 'mergeFromString'],
@@ -120,10 +126,10 @@ class ClientStreamTest extends TestCase
     public function testWriteAllSuccess()
     {
         $requests = [
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
+            $this->createStatus(Grpc\STATUS_OK, 'request1'),
+            $this->createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = $this->createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall($response->serializeToString(), ['\Google\Rpc\Status', 'mergeFromString']);
         $stream = new ClientStream($call);
 
@@ -141,10 +147,10 @@ class ClientStreamTest extends TestCase
     public function testWriteAllFailure()
     {
         $requests = [
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            ClientStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
+            $this->createStatus(Grpc\STATUS_OK, 'request1'),
+            $this->createStatus(Grpc\STATUS_OK, 'request2')
         ];
-        $response = ClientStreamTest::createStatus(Grpc\STATUS_OK, 'response');
+        $response = $this->createStatus(Grpc\STATUS_OK, 'response');
         $call = new MockClientStreamingCall(
             $response->serializeToString(),
             ['\Google\Rpc\Status', 'mergeFromString'],

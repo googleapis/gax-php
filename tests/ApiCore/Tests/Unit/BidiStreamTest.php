@@ -31,10 +31,16 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+<<<<<<< HEAD:tests/ApiCore/Tests/Unit/BidiStreamTest.php
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Testing\MockBidiStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\Tests\Unit\Mocks\MockPageStreamingResponse;
+=======
+use Google\GAX\BidiStream;
+use Google\GAX\Testing\MockStatus;
+use Google\GAX\UnitTests\Mocks\MockBidiStreamingCall;
+>>>>>>> Refactorings for Multi Transport:tests/BidiStreamTest.php
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
 use Grpc;
@@ -137,8 +143,8 @@ class BidiStreamTest extends TestCase
     public function testReadObjectsSuccess()
     {
         $responses = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            $this->createStatus(Grpc\STATUS_OK, 'response1'),
+            $this->createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -154,8 +160,8 @@ class BidiStreamTest extends TestCase
     public function testReadCloseReadSuccess()
     {
         $responses = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            $this->createStatus(Grpc\STATUS_OK, 'response1'),
+            $this->createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -218,8 +224,8 @@ class BidiStreamTest extends TestCase
     public function testWriteObjectsSuccess()
     {
         $requests = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
+            $this->createStatus(Grpc\STATUS_OK, 'request1'),
+            $this->createStatus(Grpc\STATUS_OK, 'request2')
         ];
         $responses = [];
         $call = new MockBidiStreamingCall($responses, ['\Google\Rpc\Status', 'mergeFromString']);
@@ -235,15 +241,15 @@ class BidiStreamTest extends TestCase
     public function testAlternateReadWriteObjectsSuccess()
     {
         $requests = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request3')
+            $this->createStatus(Grpc\STATUS_OK, 'request1'),
+            $this->createStatus(Grpc\STATUS_OK, 'request2'),
+            $this->createStatus(Grpc\STATUS_OK, 'request3')
         ];
         $responses = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response3'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response4')
+            $this->createStatus(Grpc\STATUS_OK, 'response1'),
+            $this->createStatus(Grpc\STATUS_OK, 'response2'),
+            $this->createStatus(Grpc\STATUS_OK, 'response3'),
+            $this->createStatus(Grpc\STATUS_OK, 'response4')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -305,8 +311,8 @@ class BidiStreamTest extends TestCase
         $repeatedField2[] = 'resource2';
         $repeatedField2[] = 'resource3';
         $responses = [
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField1),
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField2)
+            $this->createMockResponse('nextPageToken1', $repeatedField1),
+            $this->createMockResponse('nextPageToken1', $repeatedField2)
         ];
         $call = new MockBidiStreamingCall($responses);
         $stream = new BidiStream($call, [

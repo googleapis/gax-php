@@ -34,6 +34,7 @@
  * This file was automatically generated - do not edit!
  */
 
+<<<<<<< HEAD:tests/ApiCore/LongRunning/Tests/Unit/OperationsClientTest.php
 namespace Google\ApiCore\LongRunning\Tests\Unit;
 
 use Google\ApiCore\ApiException;
@@ -42,6 +43,20 @@ use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Testing\GeneratedTest;
 use Google\LongRunning\ListOperationsResponse;
 use Google\LongRunning\Operation;
+=======
+namespace Google\GAX\UnitTests;
+
+use Google\GAX\ApiTransportInterface;
+use Google\GAX\LongRunning\OperationsClient;
+use Google\GAX\GrpcTransportTrait;
+use Google\GAX\UnitTests\GrpcTestTrait;
+use Google\GAX\UnitTests\Mocks\MockOperationsImpl;
+use Google\GAX\UnitTests\Mocks\MockStubTrait;
+use Google\GAX\ApiException;
+use Google\GAX\Testing\GeneratedTest;
+use Google\Longrunning\ListOperationsResponse;
+use Google\Longrunning\Operation;
+>>>>>>> Refactorings for Multi Transport:tests/OperationsClientTest.php
 use Google\Protobuf\Any;
 use Google\Protobuf\GPBEmpty;
 use Grpc;
@@ -53,30 +68,21 @@ use stdClass;
  */
 class OperationsClientTest extends GeneratedTest
 {
-    public function createMockOperationsImpl($hostname, $opts)
-    {
-        return new MockOperationsImpl($hostname, $opts);
-    }
+    use TestTrait;
 
-    private function createStub($createGrpcStub)
+    public function setUp()
     {
-        $grpcCredentialsHelper = new GrpcCredentialsHelper([
-            'serviceAddress' => 'unknown-service-address',
-            'port' => OperationsClient::DEFAULT_SERVICE_PORT,
-            'scopes' => ['unknown-service-scopes'],
-        ]);
-
-        return $grpcCredentialsHelper->createStub($createGrpcStub);
+        $this->checkAndSkipGrpcTests();
     }
 
     /**
      * @return OperationsClient
      */
-    private function createClient($createStubFuncName, $grpcStub, $options = [])
+    private function createClient($options = [])
     {
         return new OperationsClient($options + [
-            $createStubFuncName => function ($hostname, $opts) use ($grpcStub) {
-                return $grpcStub;
+            'createGrpcStubFunction' => function ($hostname, $opts) {
+                return new MockOperationsImpl($hostname, $opts);
             },
             'serviceAddress' => 'unknown-service-address',
             'scopes' => ['unknown-service-scopes'],
@@ -88,8 +94,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function getOperationTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -122,8 +128,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function getOperationExceptionTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -161,8 +167,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function listOperationsTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -201,8 +207,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function listOperationsExceptionTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -241,8 +247,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function cancelOperationTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -270,8 +276,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function cancelOperationExceptionTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -309,8 +315,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function deleteOperationTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -338,8 +344,8 @@ class OperationsClientTest extends GeneratedTest
      */
     public function deleteOperationExceptionTest()
     {
-        $grpcStub = $this->createStub([$this, 'createMockOperationsImpl']);
-        $client = $this->createClient('createOperationsStubFunction', $grpcStub);
+        $client = $this->createClient();
+        $grpcStub = $this->getGrpcStub($client);
 
         $this->assertTrue($grpcStub->isExhausted());
 
@@ -370,5 +376,18 @@ class OperationsClientTest extends GeneratedTest
         // Call popReceivedCalls to ensure the stub is exhausted
         $grpcStub->popReceivedCalls();
         $this->assertTrue($grpcStub->isExhausted());
+    }
+
+    private function getGrpcStub(OperationsClient $client)
+    {
+        $class = new \ReflectionClass($client);
+        $property = $class->getProperty('operationsTransport');
+        $property->setAccessible(true);
+        $transport = $property->getValue($client);
+
+        $class = new \ReflectionClass($transport);
+        $property = $class->getProperty('grpcStub');
+        $property->setAccessible(true);
+        return $property->getValue($transport);
     }
 }

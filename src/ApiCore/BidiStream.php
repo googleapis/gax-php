@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,8 @@
  */
 namespace Google\ApiCore;
 
-use Grpc;
-use Google\ApiCore\ApiException;
-use Google\ApiCore\ValidationException;
+use Google\Rpc\Code;
 
-/**
- * BidiStream is the response object from a gRPC bidirectional streaming API call.
- */
 class BidiStream
 {
     use CallHelperTrait;
@@ -54,25 +49,12 @@ class BidiStream
      * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      * @param array $grpcStreamingDescriptor
      */
-    public function __construct($bidiStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct(\Grpc\BidiStreamingCall $bidiStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $bidiStreamingCall;
         if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
             $this->resourcesGetMethod = $grpcStreamingDescriptor['resourcesGetMethod'];
         }
-    }
-
-    /**
-     * @param callable $callable
-     * @param mixed[] $grpcStreamingDescriptor
-     * @return callable ApiCall
-     */
-    public static function createApiCall($callable, $grpcStreamingDescriptor)
-    {
-        return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = self::callWithoutRequest($callable, func_get_args());
-            return new BidiStream($response, $grpcStreamingDescriptor);
-        };
     }
 
     /**
@@ -156,7 +138,7 @@ class BidiStream
         if (is_null($result)) {
             $status = $this->call->getStatus();
             $this->isComplete = true;
-            if (!($status->code == Grpc\STATUS_OK)) {
+            if (!($status->code == Code::OK)) {
                 throw ApiException::createFromStdClass($status);
             }
         }
