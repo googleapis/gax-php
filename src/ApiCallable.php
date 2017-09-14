@@ -40,22 +40,22 @@ use InvalidArgumentException;
  */
 class ApiCallable
 {
-    const GRPC_CALLABLE_PARAM_COUNT = 3;
-    const GRPC_CALLABLE_METADATA_INDEX = 1;
-    const GRPC_CALLABLE_OPTION_INDEX = 2;
-    const GRPC_RESPONSE_STATUS_INDEX = 1;
+
+    const TRANSPORT_METHOD_PARAM_COUNT = 2;
+    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
 
     private static function setTimeout($apiCall, $timeoutMillis)
     {
         $inner = function () use ($apiCall, $timeoutMillis) {
             $params = func_get_args();
-            if (count($params) != self::GRPC_CALLABLE_PARAM_COUNT ||
-                !is_array($params[self::GRPC_CALLABLE_OPTION_INDEX])) {
+            if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
+                !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
+            ) {
                 throw new InvalidArgumentException('Options argument is not found.');
             } else {
-                $timeoutMicros = $timeoutMillis * 1000;
-                $params[self::GRPC_CALLABLE_OPTION_INDEX]['timeout'] = $timeoutMicros;
-            }
+                    $timeoutMicros = $timeoutMillis * 1000;
+                    $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeout'] = $timeoutMicros;
+                }
             return call_user_func_array($apiCall, $params);
         };
         return $inner;
@@ -134,55 +134,31 @@ class ApiCallable
         return $inner;
     }
 
-    private static function createUnaryApiCall($callable)
-    {
-        return function () use ($callable) {
-            list($response, $status) =
-                call_user_func_array($callable, func_get_args())->wait();
-            if ($status->code == Grpc\STATUS_OK) {
-                return $response;
-            } else {
-                throw ApiException::createFromStdClass($status);
-            }
-        };
-    }
-
-    private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
-    {
-        switch ($grpcStreamingDescriptor['grpcStreamingType']) {
-            case 'ClientStreaming':
-                return ClientStream::createApiCall($callable, $grpcStreamingDescriptor);
-            case 'ServerStreaming':
-                return ServerStream::createApiCall($callable, $grpcStreamingDescriptor);
-            case 'BidiStreaming':
-                return BidiStream::createApiCall($callable, $grpcStreamingDescriptor);
-            default:
-                throw new ValidationException('Unexpected gRPC streaming type: ' .
-                    $grpcStreamingDescriptor['grpcStreamingType']);
-        }
-    }
-
-    private static function setCustomHeader($callable, $headerDescriptor, $userHeaders = null)
+    private static function setCustomHeader($callable, $headerDescriptor, $userHeaders)
     {
         $inner = function () use ($callable, $headerDescriptor, $userHeaders) {
             $params = func_get_args();
-            if (count($params) != self::GRPC_CALLABLE_PARAM_COUNT ||
-                !is_array($params[self::GRPC_CALLABLE_METADATA_INDEX])
+
+            if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
+                !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
             ) {
-                throw new InvalidArgumentException('Metadata argument is not found.');
+                throw new InvalidArgumentException('Options argument is not found.');
             } else {
-                $metadata = $params[self::GRPC_CALLABLE_METADATA_INDEX];
                 $headers = [];
-                // Check $userHeaders first, and then merge $headerDescriptor headers, to ensure
+                // Check user-specified $headers first, and then merge $headerDescriptor headers, to ensure
                 // that $headerDescriptor headers such as x-goog-api-client cannot be overwritten
                 // by the $userHeaders.
+                $options = $params[self::TRANSPORT_METHOD_OPTIONS_INDEX];
+                if (array_key_exists('headers', $options)) {
+                    $headers = $options['headers'];
+                }
                 if (!is_null($userHeaders)) {
-                    $headers = $userHeaders;
+                    $headers = array_merge($headers, $userHeaders);
                 }
                 if (!is_null($headerDescriptor)) {
                     $headers = array_merge($headers, $headerDescriptor->getHeader());
                 }
-                $params[self::GRPC_CALLABLE_METADATA_INDEX] = array_merge($headers, $metadata);
+                $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['headers'] = $headers;
                 return call_user_func_array($callable, $params);
             }
         };
@@ -190,7 +166,7 @@ class ApiCallable
     }
 
     /**
-     * @param \Grpc\BaseStub $stub the gRPC stub to make calls through.
+     * @param mixed $stub the transport stub to make calls through.
      * @param string $methodName the method name on the stub to call.
      * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
      * @param array $options {
@@ -208,15 +184,7 @@ class ApiCallable
     {
         ApiCallable::validateApiCallSettings($settings, $options);
 
-        $callable = array($stub, $methodName);
-        if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $apiCall = ApiCallable::createGrpcStreamingApiCall(
-                $callable,
-                $options['grpcStreamingDescriptor']
-            );
-        } else {
-            $apiCall = ApiCallable::createUnaryApiCall($callable);
-        }
+        $apiCall = array($stub, $methodName);
 
         $retrySettings = $settings->getRetrySettings();
         if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
@@ -240,6 +208,7 @@ class ApiCallable
         if (array_key_exists('headerDescriptor', $options) || !is_null($settings->getUserHeaders())) {
             $apiCall = self::setCustomHeader($apiCall, $options['headerDescriptor'], $settings->getUserHeaders());
         }
+
         return $apiCall;
     }
 
