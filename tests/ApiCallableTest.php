@@ -39,6 +39,7 @@ use Google\GAX\CallSettings;
 use Google\GAX\PagedListResponse;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\RetrySettings;
+use Google\GAX\RpcStatus;
 use Google\GAX\Testing\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockBidiStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockClientStreamingStub;
@@ -83,7 +84,20 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $response = "response";
         $stub = MockStub::create($response);
 
-        $callSettings = new CallSettings(['timeoutMillis' => 1500]);
+        $retrySettings = new RetrySettings([
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 600,
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [],
+            'noRetriesRpcTimeoutMillis' => 1500
+        ]);
+        $callSettings = new CallSettings([
+            'retrySettings' => $retrySettings
+        ]);
         $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings);
         $actualResponse = $apiCall($request, [], []);
 
@@ -102,15 +116,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $response = "response";
         $status = new MockStatus(Grpc\STATUS_DEADLINE_EXCEEDED, 'Deadline Exceeded');
         $stub = MockStub::createWithResponseSequence([[$response, $status]]);
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 400,
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 2000]);
-        $retrySettings = new RetrySettings([], $backoffSettings);
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [],
+        ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
 
         $isExceptionRaised = false;
@@ -140,18 +155,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')]
         ];
         $stub = MockStub::createWithResponseSequence($responseSequence);
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 400,
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 500,
-            'totalTimeoutMillis' => 2000]);
-        $retrySettings = new RetrySettings(
-            [Grpc\STATUS_DEADLINE_EXCEEDED],
-            $backoffSettings
-        );
+            'totalTimeoutMillis' => 2000,
+            'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED],
+        ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
         $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings);
         $actualResponse = $apiCall($request, [], []);
@@ -181,18 +194,16 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             [$response, $status],
             [$response, $status]
         ]);
-        $backoffSettings = new BackoffSettings([
+        $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 1000,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 4000,
             'initialRpcTimeoutMillis' => 150,
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 3000]);
-        $retrySettings = new RetrySettings(
-            [Grpc\STATUS_DEADLINE_EXCEEDED],
-            $backoffSettings
-        );
+            'totalTimeoutMillis' => 3000,
+            'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED],
+        ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
 
         // Use time function that simulates 1100ms elapsing with each call to the stub
@@ -568,7 +579,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
     public static function createIncompleteOperationResponse($name, $metadataString = '')
     {
-        $metadata = OperationResponseTest::createAny(OperationResponseTest::createStatus(Code::OK, $metadataString));
+        $metadata = OperationResponseTest::createAny(OperationResponseTest::createStatus(Grpc\STATUS_OK, $metadataString));
         $op = new Operation();
         $op->setName($name);
         $op->setMetadata($metadata);
@@ -599,7 +610,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $opName = 'operation/someop';
 
         $request = null;
-        $result = OperationResponseTest::createStatus(Code::OK, 'someMessage');
+        $result = OperationResponseTest::createStatus(Grpc\STATUS_OK, 'someMessage');
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
         $responseB = self::createSuccessfulOperationResponse($opName, $result, 'm3');
@@ -661,12 +672,12 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame('GetOperation', $opReceivedCalls[0]->getFuncCall());
         $this->assertSame('GetOperation', $opReceivedCalls[1]->getFuncCall());
 
-        $this->assertEquals([null, null, OperationResponseTest::createStatus(Code::OK, 'someMessage')], $results);
+        $this->assertEquals([null, null, OperationResponseTest::createStatus(Grpc\STATUS_OK, 'someMessage')], $results);
         $this->assertEquals([null, null, null], $errors);
         $this->assertEquals([
-            OperationResponseTest::createStatus(Code::OK, 'm1'),
-            OperationResponseTest::createStatus(Code::OK, 'm2'),
-            OperationResponseTest::createStatus(Code::OK, 'm3')
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm1'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm2'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm3')
         ], $metadataResponses);
         $this->assertEquals([false, false, true], $isDoneResponses);
     }
@@ -676,7 +687,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $opName = 'operation/someop';
 
         $request = null;
-        $result = OperationResponseTest::createStatus(Code::OK, 'someMessage');
+        $result = OperationResponseTest::createStatus(Grpc\STATUS_OK, 'someMessage');
 
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
@@ -731,12 +742,12 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame('GetOperation', $opReceivedCalls[1]->getFuncCall());
 
         $this->assertEquals(
-            OperationResponseTest::createStatus(Code::OK, 'someMessage'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'someMessage'),
             $response->getResult()
         );
         $this->assertNull($response->getError());
         $this->assertEquals(
-            OperationResponseTest::createStatus(Code::OK, 'm3'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm3'),
             $response->getMetadata()
         );
     }
@@ -746,7 +757,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $opName = 'operation/someop';
 
         $request = null;
-        $result = OperationResponseTest::createStatus(Code::OK, 'someMessage');
+        $result = OperationResponseTest::createStatus(Grpc\STATUS_OK, 'someMessage');
 
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
@@ -805,7 +816,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertNull($response->getResult());
         $this->assertNull($response->getError());
         $this->assertEquals(
-            OperationResponseTest::createStatus(Code::OK, 'm3'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm3'),
             $response->getMetadata()
         );
     }
@@ -818,7 +829,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
-        $responseB = self::createFailedOperationResponse($opName, Code::UNKNOWN, 'someError', 'm3');
+        $responseB = self::createFailedOperationResponse($opName, Grpc\STATUS_UNKNOWN, 'someError', 'm3');
         $responseSequence = [
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
@@ -879,13 +890,13 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals([null, null, null], $results);
         $this->assertEquals(
-            [null, null, OperationResponseTest::createStatus(Code::UNKNOWN, 'someError')],
+            [null, null, OperationResponseTest::createStatus(Grpc\STATUS_UNKNOWN, 'someError')],
             $errors
         );
         $this->assertEquals([
-            OperationResponseTest::createStatus(Code::OK, 'm1'),
-            OperationResponseTest::createStatus(Code::OK, 'm2'),
-            OperationResponseTest::createStatus(Code::OK, 'm3')
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm1'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm2'),
+            OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm3')
         ], $metadataResponses);
         $this->assertEquals([false, false, true], $isDoneResponses);
     }
@@ -900,7 +911,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $responseA = self::createIncompleteOperationResponse($opName, 'm2');
         $responseB = self::createFailedOperationResponse(
             $opName,
-            Code::CANCELLED,
+            Grpc\STATUS_CANCELLED,
             'someError',
             'm3'
         );
@@ -964,8 +975,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $this->assertSame('GetOperation', $opReceivedCalls[2]->getFuncCall());
 
         $this->assertNull($response->getResult());
-        $this->assertEquals(OperationResponseTest::createStatus(Code::CANCELLED, 'someError'), $response->getError());
-        $this->assertEquals(OperationResponseTest::createStatus(Code::OK, 'm3'), $response->getMetadata());
+        $this->assertEquals(OperationResponseTest::createStatus(Grpc\STATUS_CANCELLED, 'someError'), $response->getError());
+        $this->assertEquals(OperationResponseTest::createStatus(Grpc\STATUS_OK, 'm3'), $response->getMetadata());
     }
 
     /**
