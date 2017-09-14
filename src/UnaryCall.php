@@ -29,68 +29,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
+namespace Google\GAX;
 
-class ClientStream
+use Google\Rpc\Code;
+
+class UnaryCall
 {
-    use CallHelperTrait;
+    private $innerUnaryCall;
 
-    private $call;
-
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct(\Grpc\ClientStreamingCall $clientStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct(\Grpc\UnaryCall $innerUnaryCall)
     {
-        $this->call = $clientStreamingCall;
+        $this->innerUnaryCall = $innerUnaryCall;
     }
 
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     */
-    public function write($request)
+    public function wait()
     {
-        $this->call->write($request);
-    }
-
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @throws ApiException
-     * @return mixed The response object from the server
-     */
-    public function readResponse()
-    {
-        return $this->call->wait();
-    }
-
-    /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
+        list($response, $status) = $this->innerUnaryCall->wait();
+        if ($status->code == Code::OK) {
+            return $response;
+        } else {
+            throw ApiException::createFromStdClass($status);
         }
-        return $this->readResponse();
-    }
-
-    /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall|mixed
-     */
-    public function getClientStreamingCall()
-    {
-        return $this->call;
     }
 }

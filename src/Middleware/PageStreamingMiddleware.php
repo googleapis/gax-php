@@ -29,68 +29,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
+namespace Google\GAX\Middleware;
 
-class ClientStream
+use Google\GAX\PagedListResponse;
+
+/**
+* Middleware that adds page streaming functionality
+*/
+class PageStreamingMiddleware
 {
-    use CallHelperTrait;
+    /** @var callable */
+    private $nextHandler;
 
-    private $call;
+    /** @var array */
+    private $pageStreamingDescriptor;
 
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct(\Grpc\ClientStreamingCall $clientStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct(callable $nextHandler, $pageStreamingDescriptor)
     {
-        $this->call = $clientStreamingCall;
+        $this->nextHandler = $nextHandler;
+        $this->pageStreamingDescriptor = $pageStreamingDescriptor;
     }
 
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     */
-    public function write($request)
+    public function __invoke()
     {
-        $this->call->write($request);
-    }
-
-    /**
-     * Read the response from the server, completing the streaming call.
-     *
-     * @throws ApiException
-     * @return mixed The response object from the server
-     */
-    public function readResponse()
-    {
-        return $this->call->wait();
-    }
-
-    /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
-     * call.
-     *
-     * @param mixed[] $requests An iterator of request objects to write to the server
-     * @return mixed The response object from the server
-     */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
-        }
-        return $this->readResponse();
-    }
-
-    /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall|mixed
-     */
-    public function getClientStreamingCall()
-    {
-        return $this->call;
+        return new PagedListResponse(
+            func_get_args(),
+            $this->nextHandler,
+            $this->pageStreamingDescriptor
+        );
     }
 }

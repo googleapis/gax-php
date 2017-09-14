@@ -29,20 +29,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+<<<<<<< HEAD:tests/ApiCore/Tests/Unit/ServerStreamTest.php
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockServerStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\Tests\Unit\Mocks\MockPageStreamingResponse;
+=======
+
+namespace Google\GAX\UnitTests;
+
+use Google\GAX\ServerStream;
+use Google\GAX\UnitTests\TestTrait;
+use Google\GAX\UnitTests\Mocks\MockServerStreamingCall;
+use Google\GAX\Testing\MockStatus;
+>>>>>>> Refactorings for Multi Transport:tests/ServerStreamTest.php
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
 use Grpc;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 
-class ServerStreamTest extends TestCase
+class ServerStreamTest extends PHPUnit_Framework_TestCase
 {
     use TestTrait;
+
+    public function setUp()
+    {
+        $this->checkAndSkipGrpcTests();
+    }
 
     public function testEmptySuccess()
     {
@@ -105,8 +120,8 @@ class ServerStreamTest extends TestCase
     public function testObjectsSuccess()
     {
         $responses = [
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            $this->createStatus(Grpc\STATUS_OK, 'response1'),
+            $this->createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -126,8 +141,8 @@ class ServerStreamTest extends TestCase
     public function testObjectsFailure()
     {
         $responses = [
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            $this->createStatus(Grpc\STATUS_OK, 'response1'),
+            $this->createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -161,8 +176,8 @@ class ServerStreamTest extends TestCase
         $repeatedField2[] = 'resource2';
         $repeatedField2[] = 'resource3';
         $responses = [
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField1),
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField2)
+            $this->createMockResponse('nextPageToken1', $repeatedField1),
+            $this->createMockResponse('nextPageToken1', $repeatedField2)
         ];
         $call = new MockServerStreamingCall($responses);
         $stream = new ServerStream($call, [
@@ -181,8 +196,8 @@ class ServerStreamTest extends TestCase
     {
         $resources = ['resource1', 'resource2', 'resource3'];
         $responses = [
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource1']),
-            MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', ['resource2', 'resource3'])
+            $this->createMockResponse('nextPageToken1', ['resource1']),
+            $this->createMockResponse('nextPageToken1', ['resource2', 'resource3'])
         ];
         $call = new MockServerStreamingCall(
             $responses,

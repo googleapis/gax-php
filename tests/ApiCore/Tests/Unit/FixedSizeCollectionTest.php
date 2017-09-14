@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+<<<<<<< HEAD:tests/ApiCore/Tests/Unit/FixedSizeCollectionTest.php
 use Google\ApiCore\Page;
 use Google\ApiCore\FixedSizeCollection;
 use Google\ApiCore\PageStreamingDescriptor;
@@ -38,24 +39,38 @@ use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\Tests\Unit\Mocks\MockStub;
 use Google\ApiCore\Tests\Unit\Mocks\MockPageStreamingRequest;
 use Google\ApiCore\Tests\Unit\Mocks\MockPageStreamingResponse;
+=======
+use Google\GAX\Page;
+use Google\GAX\FixedSizeCollection;
+use Google\GAX\PageStreamingDescriptor;
+use Google\GAX\Testing\MockStatus;
+use Google\GAX\UnitTests\Mocks\MockCall;
+use Google\GAX\UnitTests\Mocks\MockRequest;
+use Google\GAX\UnitTests\Mocks\MockResponse;
+>>>>>>> Refactorings for Multi Transport:tests/FixedSizeCollectionTest.php
 use PHPUnit\Framework\TestCase;
 use Grpc;
 
 class FixedSizeCollectionTest extends TestCase
 {
-    private static function createPage($responseSequence)
+    use TestTrait;
+
+    private function createPage($responseSequence)
     {
-        $mockRequest = MockPageStreamingRequest::createPageStreamingRequest('token', 3);
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $mockRequest = $this->createMockRequest('token', 3);
+
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resourcesList'
         ]);
-        $mockApiCall = function () use ($stub) {
-            list($response, $status) =
-                call_user_func_array(array($stub, 'takeAction'), func_get_args())->wait();
+        $call = $this->createCallWithResponseSequence($responseSequence);
+        $mockApiCall = function () use ($call) {
+            list($response, $status) = call_user_func_array(
+                array($call, 'takeAction'),
+                func_get_args()
+            );
             return $response;
         };
         return new Page([$mockRequest, [], []], $mockApiCall, $descriptor);
@@ -63,23 +78,23 @@ class FixedSizeCollectionTest extends TestCase
 
     public function testFixedCollectionMethods()
     {
-        $responseA = MockPageStreamingResponse::createPageStreamingResponse(
+        $responseA = $this->createMockResponse(
             'nextPageToken1',
             ['resource1', 'resource2']
         );
-        $responseB = MockPageStreamingResponse::createPageStreamingResponse(
+        $responseB = $this->createMockResponse(
             'nextPageToken2',
             ['resource3', 'resource4', 'resource5']
         );
-        $responseC = MockPageStreamingResponse::createPageStreamingResponse(
+        $responseC = $this->createMockResponse(
             'nextPageToken3',
             ['resource6', 'resource7']
         );
-        $responseD = MockPageStreamingResponse::createPageStreamingResponse(
+        $responseD = $this->createMockResponse(
             '',
             ['resource8', 'resource9']
         );
-        $page = FixedSizeCollectionTest::createPage([
+        $page = $this->createPage([
             [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
             [$responseC, new MockStatus(Grpc\STATUS_OK, '')],

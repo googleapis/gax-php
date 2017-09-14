@@ -31,17 +31,68 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+use Google\GAX\UnitTests\Mocks\MockRequest;
+use Google\GAX\LongRunning\OperationsClient;
 use Google\Protobuf\Any;
 use Google\Rpc\Status;
 
 trait TestTrait
 {
+    public function createMockRequest($token = null, $pageSize = null)
+    {
+        return new MockRequest($token, $pageSize);
+    }
+
+    public function createMockResponse($pageToken = null, $resourcesList = [])
+    {
+        $mockResponse = $this->getMockBuilder(MockResponse::class)
+            ->setMethods(['getResourcesList', 'getNextPageToken'])
+            ->getMock();
+        $mockResponse->method('getNextPageToken')
+            ->willReturn($pageToken);
+        $mockResponse->method('getResourcesList')
+            ->willReturn($resourcesList);
+
+        return $mockResponse;
+    }
+
+    public function createCallWithResponseSequence($sequence)
+    {
+        foreach ($sequence as $key => $value) {
+            if (!is_array($value)) {
+                $sequence[$key] = [$value, null];
+            }
+        }
+        $mockCall = $this->getMockBuilder(MockCall::class)
+            ->setMethods(['takeAction'])
+            ->getMock();
+        $mockCall->method('takeAction')
+            ->will(call_user_func_array([$this, 'onConsecutiveCalls'], $sequence));
+
+        return $mockCall;
+    }
+
+    public function createOperationsClient($transport = null)
+    {
+        $this->checkAndSkipGrpcTests();
+
+        $client = new OperationsClient([
+            'createTransportFunction' => function ($hostname, $opts) use ($transport) {
+                return $transport;
+            },
+            'serviceAddress' => '',
+            'scopes' => [],
+        ]);
+
+        return $client;
+    }
+
     /**
      * @param \Google\Rpc\Code $code
      * @param String $message
      * @return Status
      */
-    public static function createStatus($code, $message)
+    public function createStatus($code, $message)
     {
         $status = new Status();
         $status->setCode($code);
@@ -53,10 +104,20 @@ trait TestTrait
      * @param $value \Google\Protobuf\Internal\Message;
      * @return Any
      */
-    public static function createAny($value)
+    public function createAny($value)
     {
         $any = new Any();
         $any->setValue($value->serializeToString());
         return $any;
+    }
+
+    public static function checkAndSkipGrpcTests()
+    {
+        if (!extension_loaded('grpc')) {
+            self::markTestSkipped('Must have the grpc extension installed to run this test.');
+        }
+        if (defined('HHVM_VERSION')) {
+            self::markTestSkipped('gRPC is not supported on HHVM.');
+        }
     }
 }

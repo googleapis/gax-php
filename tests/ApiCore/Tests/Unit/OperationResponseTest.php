@@ -29,11 +29,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+<<<<<<< HEAD:tests/ApiCore/Tests/Unit/OperationResponseTest.php
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\OperationResponse;
 use Google\LongRunning\Operation;
 use Google\ApiCore\LongRunning\OperationsClient;
+=======
+
+namespace Google\GAX\UnitTests;
+
+use Google\GAX\OperationResponse;
+use Google\GAX\LongRunning\OperationsClient;
+use Google\Longrunning\Operation;
+>>>>>>> Refactorings for Multi Transport:tests/OperationResponseTest.php
 use Google\Protobuf\Any;
 use Google\Rpc\Status;
 use PHPUnit\Framework\TestCase;
@@ -45,7 +54,7 @@ class OperationResponseTest extends TestCase
     public function testBasic()
     {
         $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
+        $opClient = $this->createOperationsClient();
         $op = new OperationResponse($opName, $opClient);
 
         $this->assertSame($opName, $op->getName());
@@ -55,7 +64,7 @@ class OperationResponseTest extends TestCase
     public function testWithoutResponse()
     {
         $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
+        $opClient = $this->createOperationsClient();
         $op = new OperationResponse($opName, $opClient);
 
         $this->assertNull($op->getLastProtoResponse());
@@ -74,7 +83,7 @@ class OperationResponseTest extends TestCase
     public function testWithResponse()
     {
         $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
+        $opClient = $this->createOperationsClient();
         $protoResponse = new Operation();
         $op = new OperationResponse($opName, $opClient, [
             'lastProtoResponse' => $protoResponse,
@@ -92,9 +101,9 @@ class OperationResponseTest extends TestCase
             'metadataReturnType' => null,
         ], $op->getReturnTypeOptions());
 
-        $response = self::createAny(self::createStatus(0, "response"));
-        $error = self::createStatus(2, "error");
-        $metadata = self::createAny(self::createStatus(0, "metadata"));
+        $response = $this->createAny($this->createStatus(0, "response"));
+        $error = $this->createStatus(2, "error");
+        $metadata = $this->createAny($this->createStatus(0, "metadata"));
 
         $protoResponse->setDone(true);
         $protoResponse->setResponse($response);
@@ -115,7 +124,7 @@ class OperationResponseTest extends TestCase
     public function testWithOptions()
     {
         $opName = 'operations/opname';
-        $opClient = self::createOperationsClient();
+        $opClient = $this->createOperationsClient();
         $protoResponse = new Operation();
         $op = new OperationResponse($opName, $opClient, [
             'operationReturnType' => '\Google\Rpc\Status',
@@ -133,12 +142,12 @@ class OperationResponseTest extends TestCase
             'metadataReturnType' => '\Google\Protobuf\Any',
         ], $op->getReturnTypeOptions());
 
-        $innerResponse = self::createStatus(0, "response");
+        $innerResponse = $this->createStatus(0, "response");
         $innerMetadata = new Any();
         $innerMetadata->setValue("metadata");
 
-        $response = self::createAny($innerResponse);
-        $metadata = self::createAny($innerMetadata);
+        $response = $this->createAny($innerResponse);
+        $metadata = $this->createAny($innerMetadata);
 
         $protoResponse->setDone(true);
         $protoResponse->setResponse($response);
@@ -146,17 +155,5 @@ class OperationResponseTest extends TestCase
         $this->assertTrue($op->isDone());
         $this->assertEquals($innerResponse, $op->getResult());
         $this->assertEquals($innerMetadata, $op->getMetadata());
-    }
-
-    public static function createOperationsClient($stub = null)
-    {
-        $client = new OperationsClient([
-            'createOperationsStubFunction' => function ($hostname, $opts) use ($stub) {
-                return $stub;
-            },
-            'serviceAddress' => '',
-            'scopes' => [],
-        ]);
-        return $client;
     }
 }
