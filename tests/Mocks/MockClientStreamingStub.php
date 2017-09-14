@@ -61,7 +61,7 @@ class MockClientStreamingStub
 
     public function __call($name, $arguments)
     {
-        list($metadata, $options) = $arguments;
+        list($response, $metadata, $options) = $arguments;
         $newArgs = [$name, $this->deserialize, $metadata, $options];
         return call_user_func_array(array($this, '_clientStreamRequest'), $newArgs);
     }

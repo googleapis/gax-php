@@ -52,9 +52,10 @@ class PageTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $mockApiCall = function () use ($stub) {
-            list($response, $status) =
-                call_user_func_array(array($stub, 'takeAction'), func_get_args())->wait();
-            return $response;
+            return call_user_func_array(
+                array($stub, 'takeAction'),
+                func_get_args()
+            )->wait();
         };
         return new Page([$mockRequest, [], []], $mockApiCall, $descriptor);
     }

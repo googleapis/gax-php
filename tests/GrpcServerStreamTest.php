@@ -31,7 +31,7 @@
  */
 namespace Google\GAX\UnitTests;
 
-use Google\GAX\ServerStream;
+use Google\GAX\Grpc\GrpcServerStream;
 use Google\GAX\Testing\MockServerStreamingCall;
 use Google\GAX\Testing\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
@@ -40,14 +40,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Grpc;
 use PHPUnit_Framework_TestCase;
 
-class ServerStreamTest extends PHPUnit_Framework_TestCase
+class GrpcServerStreamTest extends PHPUnit_Framework_TestCase
 {
     use TestTrait;
 
     public function testEmptySuccess()
     {
         $call = new MockServerStreamingCall([]);
-        $stream = new ServerStream($call);
+        $stream = new GrpcServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $this->assertSame([], iterator_to_array($stream->readAll()));
@@ -60,7 +60,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
     public function testEmptyFailure()
     {
         $call = new MockServerStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure'));
-        $stream = new ServerStream($call);
+        $stream = new GrpcServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         iterator_to_array($stream->readAll());
@@ -70,7 +70,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
     {
         $responses = ['abc', 'def'];
         $call = new MockServerStreamingCall($responses);
-        $stream = new ServerStream($call);
+        $stream = new GrpcServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $this->assertSame($responses, iterator_to_array($stream->readAll()));
@@ -88,7 +88,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'strings failure')
         );
-        $stream = new ServerStream($call);
+        $stream = new GrpcServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $index = 0;
@@ -105,15 +105,15 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
     public function testObjectsSuccess()
     {
         $responses = [
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            GrpcServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            GrpcServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
             $serializedResponses[] = $response->serializeToString();
         }
         $call = new MockServerStreamingCall($serializedResponses, ['\Google\Rpc\Status', 'mergeFromString']);
-        $stream = new ServerStream($call);
+        $stream = new GrpcServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $this->assertEquals($responses, iterator_to_array($stream->readAll()));
@@ -126,8 +126,8 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
     public function testObjectsFailure()
     {
         $responses = [
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            ServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            GrpcServerStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            GrpcServerStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -138,7 +138,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
             ['\Google\Rpc\Status', 'mergeFromString'],
             new MockStatus(Grpc\STATUS_INTERNAL, 'objects failure')
         );
-        $stream = new ServerStream($call);
+        $stream = new GrpcServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
         $index = 0;
@@ -165,7 +165,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
             MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField2)
         ];
         $call = new MockServerStreamingCall($responses);
-        $stream = new ServerStream($call, [
+        $stream = new GrpcServerStream($call, [
             'resourcesGetMethod' => 'getResourcesList'
         ]);
 
@@ -189,7 +189,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'resources failure')
         );
-        $stream = new ServerStream($call, [
+        $stream = new GrpcServerStream($call, [
             'resourcesGetMethod' => 'getResourcesList'
         ]);
 

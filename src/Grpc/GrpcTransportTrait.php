@@ -29,22 +29,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\Grpc;
 
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\GAX\ValidationTrait;
 use Grpc\ChannelCredentials;
+use InvalidArgumentException;
 
-/**
- * A class that manages credentials for an API object using the Google Auth library
- */
-class GrpcCredentialsHelper
+trait GrpcTransportTrait
 {
     use ValidationTrait;
 
-    private $args;
+    private $grpcStub;
+    private $credentialsCallback;
 
     /**
      * Accepts an optional credentialsLoader argument, to be used instead of using
@@ -117,39 +117,11 @@ class GrpcCredentialsHelper
             );
         }
 
-        $this->args = $args;
-    }
-
-    /**
-     * Creates the callback function to be passed to gRPC for providing the credentials
-     * for a call.
-     *
-     * @return callable
-     */
-    public function createCallCredentialsCallback()
-    {
-        $credentialsLoader = $this->args['credentialsLoader'];
-        $callback = function () use ($credentialsLoader) {
+        $credentialsLoader = $args['credentialsLoader'];
+        $this->credentialsCallback = function () use ($credentialsLoader) {
             $token = $credentialsLoader->fetchAuthToken();
             return ['authorization' => array('Bearer ' . $token['access_token'])];
         };
-        return $callback;
-    }
-
-    /**
-     * Creates a gRPC client stub.
-     *
-     * @param callable $generatedCreateStub
-     *        Function callback which must accept three arguments ($hostname, $opts, $channel)
-     *        and return an instance of the stub of the specific API to call.
-     *        Generally, this should just call the stub's constructor and return
-     *        the instance.
-     * @param array $args Optional parameters that override those set in the GrpcCredentialsHelper constructor
-     * @return \Grpc\BaseStub
-     */
-    public function createStub($generatedCreateStub, $args = [])
-    {
-        $args = array_merge($this->args, $args);
 
         $stubOpts = [];
         // We need to use array_key_exists here because null is a valid value
@@ -173,7 +145,46 @@ class GrpcCredentialsHelper
         if (isset($args['forceNewChannel']) && $args['forceNewChannel']) {
             $stubOpts['force_new'] = true;
         }
-        return $generatedCreateStub($fullAddress, $stubOpts, $channel);
+
+        if (empty($args['createGrpcStubFunction'])) {
+            $grpcStubClassName = self::$grpcStubClassName;
+            $args['createGrpcStubFunction'] = function(
+                $fullAddress,
+                $stubOpts,
+                $channel
+            ) use ($grpcStubClassName) {
+                return new $grpcStubClassName($fullAddress, $stubOpts, $channel);
+            };
+        }
+
+        $this->grpcStub = call_user_func_array(
+            $args['createGrpcStubFunction'],
+            [$fullAddress, $stubOpts, $channel]
+        );
+    }
+
+    private function constructGrpcArgs($optionalArgs = [])
+    {
+        $metadata = [];
+        $options = [];
+        if (array_key_exists('timeoutMillis', $optionalArgs)) {
+            $options['timeout'] = $optionalArgs['timeoutMillis'] * 1000;
+        }
+        if (array_key_exists('headers', $optionalArgs)) {
+            $metadata = $optionalArgs['headers'];
+        }
+        if (array_key_exists('credentialsLoader', $optionalArgs)) {
+            $credentialsLoader = $optionalArgs['credentialsLoader'];
+            $callback = function () use ($credentialsLoader) {
+                $token = $credentialsLoader->fetchAuthToken();
+                return ['authorization' => array('Bearer ' . $token['access_token'])];
+            };
+            $options['call_credentials_callback'] = $callback;
+        }
+        if (empty($options['call_credentials_callback'])) {
+            $options['call_credentials_callback'] = $this->credentialsCallback;
+        }
+        return [$metadata, $options];
     }
 
     /**
