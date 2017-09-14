@@ -47,15 +47,12 @@ namespace Google\GAX\LongRunning\Gapic;
 use Google\GAX\AgentHeaderDescriptor;
 use Google\GAX\ApiCallable;
 use Google\GAX\CallSettings;
-use Google\GAX\GrpcConstants;
-use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\ValidationException;
 use Google\Longrunning\CancelOperationRequest;
 use Google\Longrunning\DeleteOperationRequest;
 use Google\Longrunning\GetOperationRequest;
 use Google\Longrunning\ListOperationsRequest;
-use Google\Longrunning\OperationsGrpcClient;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -95,6 +92,8 @@ use Google\Longrunning\OperationsGrpcClient;
  */
 class OperationsGapicClient
 {
+    use TransportTrait;
+
     /**
      * The default port of the service.
      */
@@ -115,9 +114,9 @@ class OperationsGapicClient
      */
     const CODEGEN_VERSION = '0.0.5';
 
-    protected $grpcCredentialsHelper;
     protected $operationsStub;
     private $scopes;
+    private $transport;
     private $defaultCallSettings;
     private $descriptors;
 
@@ -160,17 +159,8 @@ class OperationsGapicClient
      *
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
-     *     @type \Grpc\Channel $channel
-     *           A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
-     *     @type \Grpc\ChannelCredentials $sslCreds
-     *           A `ChannelCredentials` object for use with an SSL-enabled channel.
-     *           Default: a credentials object returned from
-     *           \Grpc\ChannelCredentials::createSsl()
-     *           NOTE: if the $channel optional argument is specified, then this argument is unused.
-     *     @type bool $forceNewChannel
-     *           If true, this forces gRPC to create a new channel instead of using a persistent channel.
-     *           Defaults to false.
-     *           NOTE: if the $channel optional argument is specified, then this option is unused.
+     *     @type mixed $transport Optional, An instance of Google\Gax\TransportInterface or the string
+     *           "json" or "grpc". Determines the backend transport used to make the API call.
      *     @type \Google\Auth\CredentialsLoader $credentialsLoader
      *           A CredentialsLoader object created using the Google\Auth library.
      *     @type array $scopes Required. A string array of scopes to use when acquiring credentials.
@@ -226,6 +216,9 @@ class OperationsGapicClient
             $this->descriptors[$method]['pageStreamingDescriptor'] = $pageStreamingDescriptor;
         }
 
+        $transportName = $this->determineTransport($options);
+        list($this->transport, $options['transport']) = $this->determineTransport($options);
+
         $clientConfigJsonString = file_get_contents(__DIR__.'/../resources/operations_client_config.json');
         $clientConfig = json_decode($clientConfigJsonString, true);
         $this->defaultCallSettings =
@@ -233,25 +226,14 @@ class OperationsGapicClient
                     'google.longrunning.Operations',
                     $clientConfig,
                     $options['retryingOverride'],
-                    GrpcConstants::getStatusCodeNames(),
+                    $this->transport->getStatusCodeNames(),
                     $options['timeoutMillis']
                 );
 
         $this->scopes = $options['scopes'];
 
-        $createStubOptions = [];
-        if (array_key_exists('sslCreds', $options)) {
-            $createStubOptions['sslCreds'] = $options['sslCreds'];
-        }
-        $this->grpcCredentialsHelper = new GrpcCredentialsHelper($options);
-
-        $createOperationsStubFunction = function ($hostname, $opts, $channel) {
-            return new OperationsGrpcClient($hostname, $opts, $channel);
-        };
-        if (array_key_exists('createOperationsStubFunction', $options)) {
-            $createOperationsStubFunction = $options['createOperationsStubFunction'];
-        }
-        $this->operationsStub = $this->grpcCredentialsHelper->createStub($createOperationsStubFunction);
+        $stubClassName = sprintf('Google\LongRunning\Operations%sClient', ucfirst($options['transport']));
+        $this->operationsStub = $this->transport->createStub($stubClassName, $options);
     }
 
     /**
@@ -543,6 +525,6 @@ class OperationsGapicClient
 
     private function createCredentialsCallback()
     {
-        return $this->grpcCredentialsHelper->createCallCredentialsCallback();
+        return $this->transport->createCallCredentialsCallback();
     }
 }
