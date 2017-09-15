@@ -109,7 +109,7 @@ class CallSettings
         }
 
         foreach ($retryCodes[$retryCodesName] as $status) {
-            if (!RpcStatus::validateStatus($status)) {
+            if (!ApiStatus::validateStatus($status)) {
                 throw new ValidationException("Invalid status code: '$status'");
             }
         }

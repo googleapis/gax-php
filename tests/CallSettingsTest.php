@@ -31,12 +31,10 @@
  */
 namespace Google\GAX\UnitTests;
 
-use Google\GAX\BackoffSettings;
 use Google\GAX\CallSettings;
-use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\RetrySettings;
+use Google\GAX\ValidationException;
 use PHPUnit_Framework_TestCase;
-use Grpc;
 
 class CallSettingsTest extends PHPUnit_Framework_TestCase
 {
@@ -44,40 +42,16 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
 
     private static function buildInputConfig()
     {
-        return [
-            'interfaces' => [
-                CallSettingsTest::SERVICE_NAME => [
-                    'retry_codes' => [
-                        'foo_retry' => ['DEADLINE_EXCEEDED', 'UNAVAILABLE'],
-                        'bar_retry' => ['INTERNAL']
-                    ],
-                    'retry_params' => [
-                        'default' => [
-                            'initial_retry_delay_millis' => 100,
-                            'retry_delay_multiplier' => 1.2,
-                            'max_retry_delay_millis' => 1000,
-                            'initial_rpc_timeout_millis' => 300,
-                            'rpc_timeout_multiplier' => 1.3,
-                            'max_rpc_timeout_millis' => 3000,
-                            'total_timeout_millis' => 30000
-                        ]
-                    ],
-                    'methods' => [
-                        'SimpleMethod' => [
-                            'retry_codes_name' => 'foo_retry',
-                            'retry_params_name' => 'default',
-                            'timeout_millis' => 40000
-                        ],
-                        'PageStreamingMethod' => [
-                            'retry_codes_name' => 'bar_retry',
-                            'retry_params_name' => 'default',
-                            'timeout_millis' => 40000
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        $contents = file_get_contents(__DIR__ . '/testdata/test_service_client_config.json');
+        return json_decode($contents, true);
     }
+
+    private static function buildInvalidInputConfig()
+    {
+        $contents = file_get_contents(__DIR__ . '/testdata/test_service_invalid_client_config.json');
+        return json_decode($contents, true);
+    }
+
 
     public function testConstructSettings()
     {
@@ -98,6 +72,19 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $pageStreamingMethod = $defaultCallSettings['pageStreamingMethod'];
         $pageStreamingMethodRetry = $pageStreamingMethod->getRetrySettings();
         $this->assertEquals(['INTERNAL'], $pageStreamingMethodRetry->getRetryableCodes());
+    }
+
+    /**
+     * @expectedException \Google\GAX\ValidationException
+     */
+    public function testLoadInvalid()
+    {
+        $inputConfig = CallSettingsTest::buildInvalidInputConfig();
+        CallSettings::load(
+            CallSettingsTest::SERVICE_NAME,
+            $inputConfig,
+            []
+        );
     }
 
     public function testConstructSettingsOverride()
@@ -133,7 +120,7 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
             'maxRpcTimeoutMillis' => 500,
             'totalTimeoutMillis' => 2000,
             'noRetriesRpcTimeoutMillis' => 10,
-            'retryableCodes' => ['a', 'b']
+            'retryableCodes' => ['DEADLINE_EXCEEDED', 'UNAVAILABLE']
         ];
 
         $retrySettings = new RetrySettings($settings);
@@ -141,7 +128,7 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $emptySettings = new CallSettings([]);
         $mergedSettings = $callSettings->merge($emptySettings);
         $this->assertEquals(10, $mergedSettings->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
-        $this->assertEquals(['a', 'b'], $mergedSettings->getRetrySettings()->getRetryableCodes());
+        $this->assertEquals(['DEADLINE_EXCEEDED', 'UNAVAILABLE'], $mergedSettings->getRetrySettings()->getRetryableCodes());
     }
 
     public function testMerge()
@@ -155,7 +142,7 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
             'maxRpcTimeoutMillis' => 500,
             'totalTimeoutMillis' => 2000,
             'noRetriesRpcTimeoutMillis' => 10,
-            'retryableCodes' => ['a', 'b']
+            'retryableCodes' => ['DEADLINE_EXCEEDED', 'UNAVAILABLE']
         ];
 
         $otherSettings = [
@@ -167,7 +154,7 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
             'maxRpcTimeoutMillis' => 500,
             'totalTimeoutMillis' => 2000,
             'noRetriesRpcTimeoutMillis' => 20,
-            'retryableCodes' => ['c']
+            'retryableCodes' => ['INTERNAL']
         ];
 
         $retrySettings = new RetrySettings($settings);
@@ -176,6 +163,6 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $otherSettings = new CallSettings(['retrySettings' => $otherRetrySettings]);
         $mergedSettings = $settings->merge($otherSettings);
         $this->assertEquals(20, $mergedSettings->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
-        $this->assertEquals(['c'], $mergedSettings->getRetrySettings()->getRetryableCodes());
+        $this->assertEquals(['INTERNAL'], $mergedSettings->getRetrySettings()->getRetryableCodes());
     }
 }

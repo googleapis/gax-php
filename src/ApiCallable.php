@@ -94,7 +94,7 @@ class ApiCallable
                     throw $e;
                 }
                 // Don't sleep if the failure was a timeout
-                if ($e->getStatus() != RpcStatus::DEADLINE_EXCEEDED) {
+                if ($e->getStatus() != ApiStatus::DEADLINE_EXCEEDED) {
                     usleep($delayMillis * 1000);
                 }
                 $currentTimeMillis = $timeFuncMillis();
@@ -108,7 +108,7 @@ class ApiCallable
             throw new ApiException(
                 "Retry total timeout exceeded.",
                 \Google\Rpc\Code::DEADLINE_EXCEEDED,
-                RpcStatus::DEADLINE_EXCEEDED
+                ApiStatus::DEADLINE_EXCEEDED
             );
         };
         return $inner;

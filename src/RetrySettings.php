@@ -55,7 +55,7 @@ namespace Google\GAX;
  *     'rpcTimeoutMultiplier' => 1.0,
  *     'maxRpcTimeoutMillis' => 20000,
  *     'totalTimeoutMillis' => 600000,
- *     'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED, RpcStatus::UNAVAILABLE],
+ *     'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED, ApiStatus::UNAVAILABLE],
  * ]);
  * ```
  *
@@ -110,7 +110,7 @@ namespace Google\GAX;
  *     'rpcTimeoutMultiplier' => 1.0,
  *     'maxRpcTimeoutMillis' => 20000,
  *     'totalTimeoutMillis' => 600000,
- *     'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED, RpcStatus::UNAVAILABLE],
+ *     'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED, ApiStatus::UNAVAILABLE],
  * ]);
  *
  * $result = $client->listGroups($name, [
@@ -148,7 +148,7 @@ namespace Google\GAX;
  *     'rpcTimeoutMultiplier' => 1.0,
  *     'maxRpcTimeoutMillis' => 20000,
  *     'totalTimeoutMillis' => 600000,
- *     'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED, RpcStatus::UNAVAILABLE],
+ *     'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED, ApiStatus::UNAVAILABLE],
  * ]);
  *
  * $updatedCustomRetrySettings = $customRetrySettings->with([
@@ -202,7 +202,7 @@ class RetrySettings
      *                   if $retriesEnabled is false, in milliseconds. It not specified, the value
      *                   of $initialRpcTimeoutMillis is used.
      *     @type array   $retryableCodes The Status codes that are retryable. Each status should be
-     *                   either one of the string constants defined on {@see \Google\GAX\RpcStatus}
+     *                   either one of the string constants defined on {@see \Google\GAX\ApiStatus}
      *                   or an integer constant defined on {@see \Google\Rpc\Code}.
      *     @type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
      *     @type integer $retryDelayMultiplier The exponential multiplier of retry delay.
@@ -253,7 +253,7 @@ class RetrySettings
      *     @type integer $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
      *                   if $retriesEnabled is false, in milliseconds.
      *     @type array   $retryableCodes The Status codes that are retryable. Each status should be
-     *                   either one of the string constants defined on {@see \Google\GAX\RpcStatus}
+     *                   either one of the string constants defined on {@see \Google\GAX\ApiStatus}
      *                   or an integer constant defined on {@see \Google\Rpc\Code}.
      *     @type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
      *     @type integer $retryDelayMultiplier The exponential multiplier of retry delay.

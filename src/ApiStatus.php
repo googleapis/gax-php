@@ -33,7 +33,7 @@ namespace Google\GAX;
 
 use Google\Rpc\Code;
 
-class RpcStatus
+class ApiStatus
 {
     const OK = 'OK';
     const CANCELLED = 'CANCELLED';
@@ -55,43 +55,43 @@ class RpcStatus
 
     const UNRECOGNIZED_STATUS = 'UNRECOGNIZED_STATUS';
 
-    private static $knownStatusMap = [
-        RpcStatus::OK => Code::OK,
-        RpcStatus::CANCELLED => Code::CANCELLED,
-        RpcStatus::UNKNOWN => Code::UNKNOWN,
-        RpcStatus::INVALID_ARGUMENT => Code::INVALID_ARGUMENT,
-        RpcStatus::DEADLINE_EXCEEDED => Code::DEADLINE_EXCEEDED,
-        RpcStatus::NOT_FOUND => Code::NOT_FOUND,
-        RpcStatus::ALREADY_EXISTS => Code::ALREADY_EXISTS,
-        RpcStatus::PERMISSION_DENIED => Code::PERMISSION_DENIED,
-        RpcStatus::RESOURCE_EXHAUSTED => Code::RESOURCE_EXHAUSTED,
-        RpcStatus::FAILED_PRECONDITION => Code::FAILED_PRECONDITION,
-        RpcStatus::ABORTED => Code::ABORTED,
-        RpcStatus::OUT_OF_RANGE => Code::OUT_OF_RANGE,
-        RpcStatus::UNIMPLEMENTED => Code::UNIMPLEMENTED,
-        RpcStatus::INTERNAL => Code::INTERNAL,
-        RpcStatus::UNAVAILABLE => Code::UNAVAILABLE,
-        RpcStatus::DATA_LOSS => Code::DATA_LOSS,
-        RpcStatus::UNAUTHENTICATED => Code::UNAUTHENTICATED,
+    private static $apiStatusToCodeMap = [
+        ApiStatus::OK => Code::OK,
+        ApiStatus::CANCELLED => Code::CANCELLED,
+        ApiStatus::UNKNOWN => Code::UNKNOWN,
+        ApiStatus::INVALID_ARGUMENT => Code::INVALID_ARGUMENT,
+        ApiStatus::DEADLINE_EXCEEDED => Code::DEADLINE_EXCEEDED,
+        ApiStatus::NOT_FOUND => Code::NOT_FOUND,
+        ApiStatus::ALREADY_EXISTS => Code::ALREADY_EXISTS,
+        ApiStatus::PERMISSION_DENIED => Code::PERMISSION_DENIED,
+        ApiStatus::RESOURCE_EXHAUSTED => Code::RESOURCE_EXHAUSTED,
+        ApiStatus::FAILED_PRECONDITION => Code::FAILED_PRECONDITION,
+        ApiStatus::ABORTED => Code::ABORTED,
+        ApiStatus::OUT_OF_RANGE => Code::OUT_OF_RANGE,
+        ApiStatus::UNIMPLEMENTED => Code::UNIMPLEMENTED,
+        ApiStatus::INTERNAL => Code::INTERNAL,
+        ApiStatus::UNAVAILABLE => Code::UNAVAILABLE,
+        ApiStatus::DATA_LOSS => Code::DATA_LOSS,
+        ApiStatus::UNAUTHENTICATED => Code::UNAUTHENTICATED,
     ];
-    private static $rpcCodeToStatusMap = [
-        Code::OK => RpcStatus::OK,
-        Code::CANCELLED => RpcStatus::CANCELLED,
-        Code::UNKNOWN => RpcStatus::UNKNOWN,
-        Code::INVALID_ARGUMENT => RpcStatus::INVALID_ARGUMENT,
-        Code::DEADLINE_EXCEEDED => RpcStatus::DEADLINE_EXCEEDED,
-        Code::NOT_FOUND => RpcStatus::NOT_FOUND,
-        Code::ALREADY_EXISTS => RpcStatus::ALREADY_EXISTS,
-        Code::PERMISSION_DENIED => RpcStatus::PERMISSION_DENIED,
-        Code::RESOURCE_EXHAUSTED => RpcStatus::RESOURCE_EXHAUSTED,
-        Code::FAILED_PRECONDITION => RpcStatus::FAILED_PRECONDITION,
-        Code::ABORTED => RpcStatus::ABORTED,
-        Code::OUT_OF_RANGE => RpcStatus::OUT_OF_RANGE,
-        Code::UNIMPLEMENTED => RpcStatus::UNIMPLEMENTED,
-        Code::INTERNAL => RpcStatus::INTERNAL,
-        Code::UNAVAILABLE => RpcStatus::UNAVAILABLE,
-        Code::DATA_LOSS => RpcStatus::DATA_LOSS,
-        Code::UNAUTHENTICATED => RpcStatus::UNAUTHENTICATED,
+    private static $codeToApiStatusMap = [
+        Code::OK => ApiStatus::OK,
+        Code::CANCELLED => ApiStatus::CANCELLED,
+        Code::UNKNOWN => ApiStatus::UNKNOWN,
+        Code::INVALID_ARGUMENT => ApiStatus::INVALID_ARGUMENT,
+        Code::DEADLINE_EXCEEDED => ApiStatus::DEADLINE_EXCEEDED,
+        Code::NOT_FOUND => ApiStatus::NOT_FOUND,
+        Code::ALREADY_EXISTS => ApiStatus::ALREADY_EXISTS,
+        Code::PERMISSION_DENIED => ApiStatus::PERMISSION_DENIED,
+        Code::RESOURCE_EXHAUSTED => ApiStatus::RESOURCE_EXHAUSTED,
+        Code::FAILED_PRECONDITION => ApiStatus::FAILED_PRECONDITION,
+        Code::ABORTED => ApiStatus::ABORTED,
+        Code::OUT_OF_RANGE => ApiStatus::OUT_OF_RANGE,
+        Code::UNIMPLEMENTED => ApiStatus::UNIMPLEMENTED,
+        Code::INTERNAL => ApiStatus::INTERNAL,
+        Code::UNAVAILABLE => ApiStatus::UNAVAILABLE,
+        Code::DATA_LOSS => ApiStatus::DATA_LOSS,
+        Code::UNAUTHENTICATED => ApiStatus::UNAUTHENTICATED,
     ];
 
     /**
@@ -100,7 +100,7 @@ class RpcStatus
      */
     public static function validateStatus($status)
     {
-        return array_key_exists($status, self::$knownStatusMap);
+        return array_key_exists($status, self::$apiStatusToCodeMap);
     }
 
     /**
@@ -109,10 +109,10 @@ class RpcStatus
      */
     public static function statusFromRpcCode($code)
     {
-        if (array_key_exists($code, self::$rpcCodeToStatusMap)) {
-            return self::$rpcCodeToStatusMap[$code];
+        if (array_key_exists($code, self::$codeToApiStatusMap)) {
+            return self::$codeToApiStatusMap[$code];
         }
-        return RpcStatus::UNRECOGNIZED_STATUS;
+        return ApiStatus::UNRECOGNIZED_STATUS;
     }
 
     private function __construct()

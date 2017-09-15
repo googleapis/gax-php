@@ -39,7 +39,7 @@ use Google\GAX\CallSettings;
 use Google\GAX\PagedListResponse;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\RetrySettings;
-use Google\GAX\RpcStatus;
+use Google\GAX\ApiStatus;
 use Google\GAX\Testing\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockBidiStreamingStub;
 use Google\GAX\UnitTests\Mocks\MockClientStreamingStub;
@@ -163,7 +163,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 500,
             'totalTimeoutMillis' => 2000,
-            'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED],
+            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
         ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
         $apiCall = ApiCallable::createApiCall($stub, 'takeAction', $callSettings);
@@ -202,7 +202,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'rpcTimeoutMultiplier' => 2,
             'maxRpcTimeoutMillis' => 600,
             'totalTimeoutMillis' => 3000,
-            'retryableCodes' => [RpcStatus::DEADLINE_EXCEEDED],
+            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
         ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
 

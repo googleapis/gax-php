@@ -84,7 +84,7 @@ class ApiException extends Exception
     {
         $basicMessage = $status->details;
         $code = $status->code;
-        $rpcStatus = RpcStatus::statusFromRpcCode($code);
+        $rpcStatus = ApiStatus::statusFromRpcCode($code);
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
 
         $messageData = [

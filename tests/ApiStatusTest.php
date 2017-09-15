@@ -33,19 +33,19 @@ namespace Google\GAX\UnitTests;
 
 use Exception;
 use Google\GAX\GrpcConstants;
-use Google\GAX\RpcStatus;
+use Google\GAX\ApiStatus;
 use Google\Rpc\Code;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
-class RpcStatusTest extends PHPUnit_Framework_TestCase
+class ApiStatusTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider getValidStatus
      */
     public function testValidate($status)
     {
-        $this->assertTrue(RpcStatus::validateStatus($status));
+        $this->assertTrue(ApiStatus::validateStatus($status));
     }
 
     /**
@@ -53,7 +53,7 @@ class RpcStatusTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateInvalid($status)
     {
-        $this->assertFalse(RpcStatus::validateStatus($status));
+        $this->assertFalse(ApiStatus::validateStatus($status));
     }
 
     public function getValidStatus()
@@ -93,30 +93,30 @@ class RpcStatusTest extends PHPUnit_Framework_TestCase
      */
     public function testStatusFromRpcCode($code, $status)
     {
-        $this->assertSame($status, RpcStatus::statusFromRpcCode($code));
+        $this->assertSame($status, ApiStatus::statusFromRpcCode($code));
     }
 
     public function getCodeAndStatus()
     {
         return [
-            [Code::OK, RpcStatus::OK],
-            [Code::CANCELLED, RpcStatus::CANCELLED],
-            [Code::UNKNOWN, RpcStatus::UNKNOWN],
-            [Code::INVALID_ARGUMENT, RpcStatus::INVALID_ARGUMENT],
-            [Code::DEADLINE_EXCEEDED, RpcStatus::DEADLINE_EXCEEDED],
-            [Code::NOT_FOUND, RpcStatus::NOT_FOUND],
-            [Code::ALREADY_EXISTS, RpcStatus::ALREADY_EXISTS],
-            [Code::PERMISSION_DENIED, RpcStatus::PERMISSION_DENIED],
-            [Code::RESOURCE_EXHAUSTED, RpcStatus::RESOURCE_EXHAUSTED],
-            [Code::FAILED_PRECONDITION, RpcStatus::FAILED_PRECONDITION],
-            [Code::ABORTED, RpcStatus::ABORTED],
-            [Code::OUT_OF_RANGE, RpcStatus::OUT_OF_RANGE],
-            [Code::UNIMPLEMENTED, RpcStatus::UNIMPLEMENTED],
-            [Code::INTERNAL, RpcStatus::INTERNAL],
-            [Code::UNAVAILABLE, RpcStatus::UNAVAILABLE],
-            [Code::DATA_LOSS, RpcStatus::DATA_LOSS],
-            [Code::UNAUTHENTICATED, RpcStatus::UNAUTHENTICATED],
-            [-1, RpcStatus::UNRECOGNIZED_STATUS]
+            [Code::OK, ApiStatus::OK],
+            [Code::CANCELLED, ApiStatus::CANCELLED],
+            [Code::UNKNOWN, ApiStatus::UNKNOWN],
+            [Code::INVALID_ARGUMENT, ApiStatus::INVALID_ARGUMENT],
+            [Code::DEADLINE_EXCEEDED, ApiStatus::DEADLINE_EXCEEDED],
+            [Code::NOT_FOUND, ApiStatus::NOT_FOUND],
+            [Code::ALREADY_EXISTS, ApiStatus::ALREADY_EXISTS],
+            [Code::PERMISSION_DENIED, ApiStatus::PERMISSION_DENIED],
+            [Code::RESOURCE_EXHAUSTED, ApiStatus::RESOURCE_EXHAUSTED],
+            [Code::FAILED_PRECONDITION, ApiStatus::FAILED_PRECONDITION],
+            [Code::ABORTED, ApiStatus::ABORTED],
+            [Code::OUT_OF_RANGE, ApiStatus::OUT_OF_RANGE],
+            [Code::UNIMPLEMENTED, ApiStatus::UNIMPLEMENTED],
+            [Code::INTERNAL, ApiStatus::INTERNAL],
+            [Code::UNAVAILABLE, ApiStatus::UNAVAILABLE],
+            [Code::DATA_LOSS, ApiStatus::DATA_LOSS],
+            [Code::UNAUTHENTICATED, ApiStatus::UNAUTHENTICATED],
+            [-1, ApiStatus::UNRECOGNIZED_STATUS]
         ];
     }
 }
