@@ -128,7 +128,10 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $emptySettings = new CallSettings([]);
         $mergedSettings = $callSettings->merge($emptySettings);
         $this->assertEquals(10, $mergedSettings->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
-        $this->assertEquals(['DEADLINE_EXCEEDED', 'UNAVAILABLE'], $mergedSettings->getRetrySettings()->getRetryableCodes());
+        $this->assertEquals(
+            ['DEADLINE_EXCEEDED', 'UNAVAILABLE'],
+            $mergedSettings->getRetrySettings()->getRetryableCodes()
+        );
     }
 
     public function testMerge()
