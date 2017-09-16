@@ -98,7 +98,7 @@ class ApiStatus
      * @param string $status
      * @return bool
      */
-    public static function validateStatus($status)
+    public static function isValidStatus($status)
     {
         return array_key_exists($status, self::$apiStatusToCodeMap);
     }
@@ -113,9 +113,5 @@ class ApiStatus
             return self::$codeToApiStatusMap[$code];
         }
         return ApiStatus::UNRECOGNIZED_STATUS;
-    }
-
-    private function __construct()
-    {
     }
 }

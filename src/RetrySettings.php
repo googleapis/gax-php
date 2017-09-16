@@ -198,22 +198,22 @@ class RetrySettings
      *     @type bool    $retriesEnabled Optional. Enables retries. If not specified, the value is
      *                   determined using the $retryableCodes setting. If $retryableCodes is empty,
      *                   then $retriesEnabled is set to false; otherwise, it is set to true.
-     *     @type integer $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
+     *     @type int     $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
      *                   if $retriesEnabled is false, in milliseconds. It not specified, the value
      *                   of $initialRpcTimeoutMillis is used.
      *     @type array   $retryableCodes The Status codes that are retryable. Each status should be
      *                   either one of the string constants defined on {@see \Google\GAX\ApiStatus}
      *                   or an integer constant defined on {@see \Google\Rpc\Code}.
-     *     @type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
-     *     @type integer $retryDelayMultiplier The exponential multiplier of retry delay.
-     *     @type integer $maxRetryDelayMillis The max delay of retry in milliseconds.
-     *     @type integer $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
-     *     @type integer $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
-     *     @type integer $maxRpcTimeoutMillis The max timout of rpc call in milliseconds.
-     *     @type integer $totalTimeoutMillis The max accumulative timeout in total.
+     *     @type int     $initialRetryDelayMillis The initial delay of retry in milliseconds.
+     *     @type int     $retryDelayMultiplier The exponential multiplier of retry delay.
+     *     @type int     $maxRetryDelayMillis The max delay of retry in milliseconds.
+     *     @type int     $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
+     *     @type int     $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
+     *     @type int     $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
+     *     @type int     $totalTimeoutMillis The max accumulative timeout in total.
      * }
      */
-    public function __construct($settings)
+    public function __construct(array $settings)
     {
         $this->validateNotNull($settings, [
             'initialRetryDelayMillis',
@@ -246,26 +246,13 @@ class RetrySettings
      * with the settings specified in the $settings parameter.
      *
      * @param array $settings {
-     *     Settings for configuring the retry behavior. All parameters are optional - all unset
-     *     parameters will default to the value in the existing instance.
-     *
-     *     @type bool    $retriesEnabled Enables retries.
-     *     @type integer $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
-     *                   if $retriesEnabled is false, in milliseconds.
-     *     @type array   $retryableCodes The Status codes that are retryable. Each status should be
-     *                   either one of the string constants defined on {@see \Google\GAX\ApiStatus}
-     *                   or an integer constant defined on {@see \Google\Rpc\Code}.
-     *     @type integer $initialRetryDelayMillis The initial delay of retry in milliseconds.
-     *     @type integer $retryDelayMultiplier The exponential multiplier of retry delay.
-     *     @type integer $maxRetryDelayMillis The max delay of retry in milliseconds.
-     *     @type integer $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
-     *     @type integer $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
-     *     @type integer $maxRpcTimeoutMillis The max timout of rpc call in milliseconds.
-     *     @type integer $totalTimeoutMillis The max accumulative timeout in total.
+     *     Settings for configuring the retry behavior. Supports all of the options supported by
+     *     the constructor; see {@see \Google\GAX\RetrySettings::__construct()}. All parameters
+     *     are optional - all unset parameters will default to the value in the existing instance.
      * }
      * @return RetrySettings
      */
-    public function with($settings)
+    public function with(array $settings)
     {
         $existingSettings = [
             'initialRetryDelayMillis' => $this->getInitialRetryDelayMillis(),

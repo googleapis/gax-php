@@ -109,7 +109,7 @@ class CallSettings
         }
 
         foreach ($retryCodes[$retryCodesName] as $status) {
-            if (!ApiStatus::validateStatus($status)) {
+            if (!ApiStatus::isValidStatus($status)) {
                 throw new ValidationException("Invalid status code: '$status'");
             }
         }
@@ -135,7 +135,7 @@ class CallSettings
      *          An array of headers to be included in the request.
      * }
      */
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         if (array_key_exists('retrySettings', $settings)) {
             $this->retrySettings = $settings['retrySettings'];
@@ -158,7 +158,7 @@ class CallSettings
      * }
      * @return CallSettings
      */
-    public function with($settings)
+    public function with(array $settings)
     {
         $existingSettings = $this->toArray();
         return new CallSettings($settings + $existingSettings);

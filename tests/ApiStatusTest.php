@@ -45,7 +45,7 @@ class ApiStatusTest extends PHPUnit_Framework_TestCase
      */
     public function testValidate($status)
     {
-        $this->assertTrue(ApiStatus::validateStatus($status));
+        $this->assertTrue(ApiStatus::isValidStatus($status));
     }
 
     /**
@@ -53,7 +53,7 @@ class ApiStatusTest extends PHPUnit_Framework_TestCase
      */
     public function testValidateInvalid($status)
     {
-        $this->assertFalse(ApiStatus::validateStatus($status));
+        $this->assertFalse(ApiStatus::isValidStatus($status));
     }
 
     public function getValidStatus()

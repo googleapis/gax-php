@@ -57,10 +57,9 @@ class ApiException extends Exception
         $message,
         $code,
         $status,
-        $optionalArgs = []
+        array $optionalArgs = []
     ) {
-    
-        $optionalArgs = $optionalArgs + [
+        $optionalArgs += [
             'previous' => null,
             'metadata' => null,
             'basicMessage' => $message,
