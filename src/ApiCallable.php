@@ -31,7 +31,6 @@
  */
 namespace Google\GAX;
 
-use Grpc;
 use Exception;
 use InvalidArgumentException;
 
@@ -40,22 +39,43 @@ use InvalidArgumentException;
  */
 class ApiCallable
 {
-    const GRPC_CALLABLE_PARAM_COUNT = 3;
-    const GRPC_CALLABLE_METADATA_INDEX = 1;
-    const GRPC_CALLABLE_OPTION_INDEX = 2;
-    const GRPC_RESPONSE_STATUS_INDEX = 1;
+    // One Platform API codes
+    const STATUS_OK = 0;
+    const STATUS_CANCELLED = 1;
+    const STATUS_UNKNOWN = 2;
+    const STATUS_INVALID_ARGUMENT = 3;
+    const STATUS_DEADLINE_EXCEEDED = 4;
+    const STATUS_NOT_FOUND = 5;
+    const STATUS_ALREADY_EXISTS = 6;
+    const STATUS_PERMISSION_DENIED = 7;
+    const STATUS_RESOURCE_EXHAUSTED = 8;
+    const STATUS_FAILED_PRECONDITION = 9;
+    const STATUS_ABORTED = 10;
+    const STATUS_OUT_OF_RANGE = 11;
+    const STATUS_UNIMPLEMENTED = 12;
+    const STATUS_INTERNAL = 13;
+    const STATUS_UNAVAILABLE = 14;
+    const STATUS_DATA_LOSS = 15;
+    const STATUS_UNAUTHENTICATED = 16;
+
+    // Retry config
+    const CALLABLE_PARAM_COUNT = 3;
+    const CALLABLE_METADATA_INDEX = 1;
+    const CALLABLE_OPTION_INDEX = 2;
+
+    /** @deprecated */
+    const RESPONSE_STATUS_INDEX = 1;
 
     private static function setTimeout($apiCall, $timeoutMillis)
     {
         $inner = function () use ($apiCall, $timeoutMillis) {
             $params = func_get_args();
-            if (count($params) != self::GRPC_CALLABLE_PARAM_COUNT ||
-                !is_array($params[self::GRPC_CALLABLE_OPTION_INDEX])) {
+            if (count($params) != self::CALLABLE_PARAM_COUNT ||
+                !is_array($params[self::CALLABLE_OPTION_INDEX])) {
                 throw new InvalidArgumentException('Options argument is not found.');
-            } else {
-                $timeoutMicros = $timeoutMillis * 1000;
-                $params[self::GRPC_CALLABLE_OPTION_INDEX]['timeout'] = $timeoutMicros;
             }
+            $timeoutMicros = $timeoutMillis * 1000;
+            $params[self::CALLABLE_OPTION_INDEX]['timeout'] = $timeoutMicros;
             return call_user_func_array($apiCall, $params);
         };
         return $inner;
@@ -96,7 +116,7 @@ class ApiCallable
                     throw $e;
                 }
                 // Don't sleep if the failure was a timeout
-                if ($e->getCode() != Grpc\STATUS_DEADLINE_EXCEEDED) {
+                if ($e->getCode() != self::STATUS_DEADLINE_EXCEEDED) {
                     usleep($delayMillis * 1000);
                 }
                 $currentTimeMillis = $timeFuncMillis();
@@ -107,7 +127,7 @@ class ApiCallable
                     $deadlineMillis - $currentTimeMillis
                 );
             }
-            throw new ApiException("Retry total timeout exceeded.", Grpc\STATUS_DEADLINE_EXCEEDED);
+            throw new ApiException("Retry total timeout exceeded.", self::STATUS_DEADLINE_EXCEEDED);
         };
         return $inner;
     }
@@ -139,7 +159,7 @@ class ApiCallable
         return function () use ($callable) {
             list($response, $status) =
                 call_user_func_array($callable, func_get_args())->wait();
-            if ($status->code == Grpc\STATUS_OK) {
+            if ($status->code == self::STATUS_OK) {
                 return $response;
             } else {
                 throw ApiException::createFromStdClass($status);
@@ -147,18 +167,18 @@ class ApiCallable
         };
     }
 
-    private static function createGrpcStreamingApiCall($callable, $grpcStreamingDescriptor)
+    private static function createStreamingApiCall($callable, $streamingDescriptor)
     {
-        switch ($grpcStreamingDescriptor['grpcStreamingType']) {
+        switch ($streamingDescriptor['streamingType']) {
             case 'ClientStreaming':
-                return ClientStream::createApiCall($callable, $grpcStreamingDescriptor);
+                return ClientStream::createApiCall($callable, $streamingDescriptor);
             case 'ServerStreaming':
-                return ServerStream::createApiCall($callable, $grpcStreamingDescriptor);
+                return ServerStream::createApiCall($callable, $streamingDescriptor);
             case 'BidiStreaming':
-                return BidiStream::createApiCall($callable, $grpcStreamingDescriptor);
+                return BidiStream::createApiCall($callable, $streamingDescriptor);
             default:
-                throw new ValidationException('Unexpected gRPC streaming type: ' .
-                    $grpcStreamingDescriptor['grpcStreamingType']);
+                throw new ValidationException('Unexpected streaming type: ' .
+                    $streamingDescriptor['streamingType']);
         }
     }
 
@@ -166,12 +186,12 @@ class ApiCallable
     {
         $inner = function () use ($callable, $headerDescriptor, $userHeaders) {
             $params = func_get_args();
-            if (count($params) != self::GRPC_CALLABLE_PARAM_COUNT ||
-                !is_array($params[self::GRPC_CALLABLE_METADATA_INDEX])
+            if (count($params) != self::CALLABLE_PARAM_COUNT ||
+                !is_array($params[self::CALLABLE_METADATA_INDEX])
             ) {
                 throw new InvalidArgumentException('Metadata argument is not found.');
             } else {
-                $metadata = $params[self::GRPC_CALLABLE_METADATA_INDEX];
+                $metadata = $params[self::CALLABLE_METADATA_INDEX];
                 $headers = [];
                 // Check $userHeaders first, and then merge $headerDescriptor headers, to ensure
                 // that $headerDescriptor headers such as x-goog-api-client cannot be overwritten
@@ -182,7 +202,7 @@ class ApiCallable
                 if (!is_null($headerDescriptor)) {
                     $headers = array_merge($headers, $headerDescriptor->getHeader());
                 }
-                $params[self::GRPC_CALLABLE_METADATA_INDEX] = array_merge($headers, $metadata);
+                $params[self::CALLABLE_METADATA_INDEX] = array_merge($headers, $metadata);
                 return call_user_func_array($callable, $params);
             }
         };
@@ -190,7 +210,7 @@ class ApiCallable
     }
 
     /**
-     * @param \Grpc\BaseStub $stub the gRPC stub to make calls through.
+     * @param $transportStub the stub to make calls through.
      * @param string $methodName the method name on the stub to call.
      * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
      * @param array $options {
@@ -204,15 +224,15 @@ class ApiCallable
      * @throws ValidationException
      * @return callable
      */
-    public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
+    public static function createApiCall($transportStub, $methodName, CallSettings $settings, $options = [])
     {
         ApiCallable::validateApiCallSettings($settings, $options);
 
-        $callable = array($stub, $methodName);
-        if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $apiCall = ApiCallable::createGrpcStreamingApiCall(
+        $callable = array($transportStub, $methodName);
+        if (array_key_exists('streamingDescriptor', $options)) {
+            $apiCall = ApiCallable::createStreamingApiCall(
                 $callable,
-                $options['grpcStreamingDescriptor']
+                $options['streamingDescriptor']
             );
         } else {
             $apiCall = ApiCallable::createUnaryApiCall($callable);
@@ -246,21 +266,21 @@ class ApiCallable
     private static function validateApiCallSettings(CallSettings $settings, $options)
     {
         $retrySettings = $settings->getRetrySettings();
-        $isGrpcStreaming = array_key_exists('grpcStreamingDescriptor', $options);
-        if ($isGrpcStreaming) {
+        $isStreaming = array_key_exists('streamingDescriptor', $options);
+        if ($isStreaming) {
             if (!is_null($retrySettings) && !is_null($retrySettings->getRetryableCodes())) {
                 throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with retry settings'
+                    'streamingDescriptor not compatible with retry settings'
                 );
             }
             if (array_key_exists('pageStreamingDescriptor', $options)) {
                 throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
+                    'streamingDescriptor not compatible with pageStreamingDescriptor'
                 );
             }
             if (array_key_exists('longRunningDescriptor', $options)) {
                 throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
+                    'streamingDescriptor not compatible with longRunningDescriptor'
                 );
             }
         }
