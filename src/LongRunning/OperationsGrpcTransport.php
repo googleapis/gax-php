@@ -50,7 +50,6 @@ use Google\GAX\CallSettings;
 use Google\GAX\Grpc\GrpcTransportTrait;
 use Google\GAX\Grpc\GrpcUnaryCall;
 use Google\GAX\GrpcConstants;
-use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\ValidationException;
 use Google\Longrunning\CancelOperationRequest;
