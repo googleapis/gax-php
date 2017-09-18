@@ -46,7 +46,7 @@ trait GrpcTransportTrait
     private $grpcStub;
     private $credentialsCallback;
 
-    // This value is expected to be used on implementing classes
+    // This value must be filled in by implementing classes
     private $grpcStubClassName;
 
     /**
@@ -148,6 +148,7 @@ trait GrpcTransportTrait
         if (isset($args['forceNewChannel']) && $args['forceNewChannel']) {
             $stubOpts['force_new'] = true;
         }
+
         $this->grpcStub = new self::$grpcStubClassName($fullAddress, $stubOpts, $channel);
     }
 
@@ -193,5 +194,4 @@ trait GrpcTransportTrait
     {
         return ChannelCredentials::createSsl();
     }
-
 }

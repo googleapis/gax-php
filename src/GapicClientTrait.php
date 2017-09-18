@@ -27,19 +27,18 @@ trait GapicClientTrait
     public function determineTransport($options)
     {
         if (isset($options['transport'])) {
-            switch ($options['transport']) {
-                case 'grpc':
-                    return 'grpc';
-
-                default:
-                    throw new Exception(sprintf(
-                        'Invalid transport provided: ',
-                        $options['transport']
-                    ));
+            $validTransports = ['grpc'];
+            if (!in_array($options['transport'], $validTransports)) {
+                throw new Exception(sprintf(
+                    'Invalid transport provided: %s',
+                    $options['transport']
+                ));
             }
+            return $options['transport'];
         }
 
-        // @TODO Logic to determine the default transport will go here
-        return 'grpc'
+        /** @TODO Logic to determine the default transport will go here */
+
+        return 'grpc';
     }
 }
