@@ -55,6 +55,7 @@ use Google\Longrunning\CancelOperationRequest;
 use Google\Longrunning\DeleteOperationRequest;
 use Google\Longrunning\GetOperationRequest;
 use Google\Longrunning\ListOperationsRequest;
+use InvalidArgumentException;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -200,7 +201,6 @@ class OperationsGapicClient
             'libName' => null,
             'libVersion' => null,
             'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
-            'createOperationsStubFunction' => [$this, 'createStub'],
         ];
         $options = array_merge($defaultOptions, $options);
 
@@ -234,7 +234,18 @@ class OperationsGapicClient
                 );
 
         $this->scopes = $options['scopes'];
-        $this->operationsStub = call_user_func($options['createOperationsStubFunction'], $options);
+
+        if (empty($options['createOperationsStubFunction'])) {
+            $options['createOperationsStubFunction'] = function ($transport, $options) {
+                switch ($transport) {
+                    case 'grpc':
+                        return new \Google\GAX\LongRunning\OperationsGrpcTransport($options);
+                }
+                throw new InvalidArgumentException('Invalid transport provided');
+            };
+        }
+        $transport = $this->determineTransport($options);
+        $this->operationsStub = call_user_func($options['createOperationsStubFunction'], $transport, $options);
     }
 
     /**
@@ -294,7 +305,7 @@ class OperationsGapicClient
             $this->descriptors['getOperation']
         );
 
-        return $callable($request);
+        return $callable($request)->wait();
     }
 
     /**
@@ -386,7 +397,7 @@ class OperationsGapicClient
             $this->descriptors['listOperations']
         );
 
-        return $callable($request);
+        return $callable($request)->wait();
     }
 
     /**
@@ -451,7 +462,7 @@ class OperationsGapicClient
             $this->descriptors['cancelOperation']
         );
 
-        return $callable($request);
+        return $callable($request)->wait();
     }
 
     /**
@@ -510,7 +521,7 @@ class OperationsGapicClient
             $this->descriptors['deleteOperation']
         );
 
-        return $callable($request);
+        return $callable($request)->wait();
     }
 
     /**

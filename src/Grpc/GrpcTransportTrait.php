@@ -148,8 +148,7 @@ trait GrpcTransportTrait
         if (isset($args['forceNewChannel']) && $args['forceNewChannel']) {
             $stubOpts['force_new'] = true;
         }
-        $grpcStubClassName = $this->grpcStubClassName;
-        $this->grpcStub = new $grpcStubClassName($fullAddress, $stubOpts, $channel);
+        $this->grpcStub = new self::$grpcStubClassName($fullAddress, $stubOpts, $channel);
     }
 
     private function constructGrpcArgs($optionalArgs = [])

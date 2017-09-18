@@ -24,16 +24,12 @@ use Exception;
  */
 trait GapicClientTrait
 {
-    public static function createStub($apiName, $namespace, $options)
+    public function determineTransport($options)
     {
-        $transport = 'grpc';
         if (isset($options['transport'])) {
             switch ($options['transport']) {
                 case 'grpc':
-                    $transport = 'grpc';
-
-                case 'json':
-                    throw new Exception('This transport is not yet supported by GAPIC');
+                    return 'grpc';
 
                 default:
                     throw new Exception(sprintf(
@@ -42,12 +38,8 @@ trait GapicClientTrait
                     ));
             }
         }
-        $className = sprintf('%s\%s%sTransport',
-            $namespace,
-            ucfirst($apiName),
-            ucfirst($transport)
-        );
 
-        return new $className($options);
+        // @TODO Logic to determine the default transport will go here
+        return 'grpc'
     }
 }

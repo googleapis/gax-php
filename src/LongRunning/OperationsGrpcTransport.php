@@ -64,6 +64,8 @@ class OperationsGrpcTransport implements \Google\GAX\LongRunning\OperationsTrans
 {
     use GrpcTransportTrait;
 
+    private static $grpcStubClassName = 'Google\GAX\LongRunning\OperationsGrpcClient';
+
     /**
      * @param GetOperationRequest $request
      * @param array  $optionalArgs {
