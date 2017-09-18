@@ -114,6 +114,9 @@ class OperationsGapicClient
      */
     const CODEGEN_VERSION = '0.0.5';
 
+    private static $gapicVersion = null;
+    private static $gapicVersionLoaded = false;
+
     protected $grpcCredentialsHelper;
     protected $operationsStub;
     private $scopes;
@@ -141,13 +144,16 @@ class OperationsGapicClient
 
     private static function getGapicVersion()
     {
-        if (file_exists(__DIR__.'/../VERSION')) {
-            return trim(file_get_contents(__DIR__.'/../VERSION'));
-        } elseif (class_exists('\Google\Cloud\ServiceBuilder')) {
-            return \Google\Cloud\ServiceBuilder::VERSION;
-        } else {
-            return;
+        if (!self::$gapicVersionLoaded) {
+            if (file_exists(__DIR__.'/../VERSION')) {
+                self::$gapicVersion = trim(file_get_contents(__DIR__.'/../VERSION'));
+            } elseif (class_exists('\Google\Cloud\ServiceBuilder')) {
+                self::$gapicVersion = \Google\Cloud\ServiceBuilder::VERSION;
+            }
+            self::$gapicVersionLoaded = true;
         }
+
+        return self::$gapicVersion;
     }
 
     /**
