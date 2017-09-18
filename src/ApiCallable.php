@@ -227,7 +227,7 @@ class ApiCallable
                 if (array_key_exists('timeFuncMillis', $options)) {
                     $timeFuncMillis = $options['timeFuncMillis'];
                 }
-                $apiCall = self::setRetry($apiCall, $settings->getRetrySettings(), $timeFuncMillis);
+                $apiCall = self::setRetry($apiCall, $retrySettings, $timeFuncMillis);
             } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
                 $apiCall = self::setTimeout($apiCall, $retrySettings->getNoRetriesRpcTimeoutMillis());
             }

@@ -215,8 +215,7 @@ class CallSettings
     {
         $camelCaseSettings = [];
         foreach ($settings as $key => $value) {
-            $wordsKey = str_replace('_', ' ', $key);
-            $camelCaseKey = str_replace(' ', '', ucwords($wordsKey));
+            $camelCaseKey = str_replace('_', '', ucwords($key, '_'));
             $camelCaseSettings[lcfirst($camelCaseKey)] = $value;
         }
         return $camelCaseSettings;
