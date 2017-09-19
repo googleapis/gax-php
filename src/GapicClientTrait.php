@@ -24,28 +24,43 @@ use Exception;
  */
 trait GapicClientTrait
 {
-    public function determineTransport($options)
+    /**
+     * Get either a gRPC or REST connection based on the provided config
+     * and the system dependencies available.
+     *
+     * @param array $config
+     * @return string
+     * @throws GoogleException
+     */
+    private function getTransport(array $config)
     {
-        $transport = 'grpc';
-        if (isset($options['transport'])) {
-            $validTransports = ['grpc'];
-            if (!in_array($options['transport'], $validTransports)) {
-                throw new Exception(sprintf(
-                    'Invalid transport provided: %s',
-                    $options['transport']
-                ));
-            }
-            $transport = $options['transport'];
-        }
+        $isGrpcExtensionLoaded = $this->getGrpcDependencyStatus();
+        $defaultTransport = $isGrpcExtensionLoaded ? 'grpc' : 'rest';
+        $transport = isset($config['transport'])
+            ? strtolower($config['transport'])
+            : $defaultTransport;
 
-        if ('grpc' === $transport) {
-            if (!extension_loaded('grpc')) {
-                throw new \Exception('test');
+        if ($transport === 'grpc') {
+            if (!$isGrpcExtensionLoaded) {
+                throw new GoogleException(
+                    'gRPC support has been requested but required dependencies ' .
+                    'have not been found. Please make sure to run the following ' .
+                    'from the command line: pecl install grpc'
+                );
             }
         }
-
-        /** @TODO Logic to determine the default transport will go here */
 
         return $transport;
+    }
+
+    /**
+     * Abstract the checking of the grpc extension for unit testing.
+     *
+     * @codeCoverageIgnore
+     * @return bool
+     */
+    protected function getGrpcDependencyStatus()
+    {
+        return extension_loaded('grpc');
     }
 }
