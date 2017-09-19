@@ -168,4 +168,71 @@ class CallSettingsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(20, $mergedSettings->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
         $this->assertEquals(['INTERNAL'], $mergedSettings->getRetrySettings()->getRetryableCodes());
     }
+
+    public function testWith()
+    {
+        $settings = [
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 500,
+            'totalTimeoutMillis' => 2000,
+            'noRetriesRpcTimeoutMillis' => 10,
+            'retryableCodes' => ['DEADLINE_EXCEEDED', 'UNAVAILABLE']
+        ];
+
+        $otherSettings = [
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 500,
+            'totalTimeoutMillis' => 2000,
+            'noRetriesRpcTimeoutMillis' => 20,
+            'retryableCodes' => ['INTERNAL']
+        ];
+
+        $retrySettings = new RetrySettings($settings);
+        $settings = new CallSettings(['retrySettings' => $retrySettings]);
+        $otherRetrySettings = new RetrySettings($otherSettings);
+        $mergedSettings = $settings->with(['retrySettings' => $otherRetrySettings]);
+        $this->assertEquals(20, $mergedSettings->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
+        $this->assertEquals(['INTERNAL'], $mergedSettings->getRetrySettings()->getRetryableCodes());
+    }
+
+    public function testWithRetrySettingsArray()
+    {
+        $settings = [
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 500,
+            'totalTimeoutMillis' => 2000,
+            'noRetriesRpcTimeoutMillis' => 10,
+            'retryableCodes' => ['DEADLINE_EXCEEDED', 'UNAVAILABLE']
+        ];
+
+        $otherSettings = [
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 400,
+            'initialRpcTimeoutMillis' => 150,
+            'rpcTimeoutMultiplier' => 2,
+            'maxRpcTimeoutMillis' => 500,
+            'totalTimeoutMillis' => 2000,
+            'noRetriesRpcTimeoutMillis' => 20,
+            'retryableCodes' => ['INTERNAL']
+        ];
+
+        $retrySettings = new RetrySettings($settings);
+        $settings = new CallSettings(['retrySettings' => $retrySettings]);
+        $mergedSettings = $settings->with(['retrySettings' => $otherSettings]);
+        $this->assertEquals(20, $mergedSettings->getRetrySettings()->getNoRetriesRpcTimeoutMillis());
+        $this->assertEquals(['INTERNAL'], $mergedSettings->getRetrySettings()->getRetryableCodes());
+    }
 }
