@@ -115,7 +115,7 @@ class OperationsGapicClient
     private static $gapicVersion;
     private static $gapicVersionLoaded = false;
 
-    protected $operationsStub;
+    protected $operationsTransport;
     private $scopes;
     private $defaultCallSettings;
     private $descriptors;
@@ -162,8 +162,8 @@ class OperationsGapicClient
      *
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
-     *     @type mixed $transport Optional, An instance of Google\Gax\TransportInterface or the
-     *           string "json" or "grpc". Determines the backend transport used to make the API call.
+     *     @type mixed $transport Optional, the string "grpc". Determines the backend transport used
+     *           to make the API call.
      *     @type \Google\Auth\CredentialsLoader $credentialsLoader
      *           A CredentialsLoader object created using the Google\Auth library.
      *     @type array $scopes Required. A string array of scopes to use when acquiring credentials.
@@ -235,8 +235,8 @@ class OperationsGapicClient
 
         $this->scopes = $options['scopes'];
 
-        if (empty($options['createOperationsStubFunction'])) {
-            $options['createOperationsStubFunction'] = function ($transport, $options) {
+        if (empty($options['createOperationsTransportFunction'])) {
+            $options['createOperationsTransportFunction'] = function ($transport, $options) {
                 switch ($transport) {
                     case 'grpc':
                         return new \Google\GAX\LongRunning\OperationsGrpcTransport($options);
@@ -245,7 +245,7 @@ class OperationsGapicClient
             };
         }
         $transport = $this->determineTransport($options);
-        $this->operationsStub = call_user_func($options['createOperationsStubFunction'], $transport, $options);
+        $this->operationsTransport = call_user_func($options['createOperationsTransportFunction'], $transport, $options);
     }
 
     /**
@@ -299,13 +299,13 @@ class OperationsGapicClient
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
         $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+            $this->operationsTransport,
             'GetOperation',
             $mergedSettings,
             $this->descriptors['getOperation']
         );
 
-        return $callable($request)->wait();
+        return $callable($request, [])->wait();
     }
 
     /**
@@ -391,13 +391,13 @@ class OperationsGapicClient
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
         $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+            $this->operationsTransport,
             'ListOperations',
             $mergedSettings,
             $this->descriptors['listOperations']
         );
 
-        return $callable($request)->wait();
+        return $callable($request, [])->wait();
     }
 
     /**
@@ -456,13 +456,13 @@ class OperationsGapicClient
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
         $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+            $this->operationsTransport,
             'CancelOperation',
             $mergedSettings,
             $this->descriptors['cancelOperation']
         );
 
-        return $callable($request)->wait();
+        return $callable($request, [])->wait();
     }
 
     /**
@@ -515,13 +515,13 @@ class OperationsGapicClient
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
         $callable = ApiCallable::createApiCall(
-            $this->operationsStub,
+            $this->operationsTransport,
             'DeleteOperation',
             $mergedSettings,
             $this->descriptors['deleteOperation']
         );
 
-        return $callable($request)->wait();
+        return $callable($request, [])->wait();
     }
 
     /**
@@ -532,6 +532,6 @@ class OperationsGapicClient
      */
     public function close()
     {
-        $this->operationsStub->close();
+        $this->operationsTransport->close();
     }
 }

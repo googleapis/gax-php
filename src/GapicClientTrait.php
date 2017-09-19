@@ -26,6 +26,7 @@ trait GapicClientTrait
 {
     public function determineTransport($options)
     {
+        $transport = 'grpc';
         if (isset($options['transport'])) {
             $validTransports = ['grpc'];
             if (!in_array($options['transport'], $validTransports)) {
@@ -34,11 +35,17 @@ trait GapicClientTrait
                     $options['transport']
                 ));
             }
-            return $options['transport'];
+            $transport = $options['transport'];
+        }
+
+        if ('grpc' === $transport) {
+            if (!extension_loaded('grpc')) {
+                throw new \Exception('test');
+            }
         }
 
         /** @TODO Logic to determine the default transport will go here */
 
-        return 'grpc';
+        return $transport;
     }
 }
