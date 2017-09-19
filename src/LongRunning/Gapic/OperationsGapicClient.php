@@ -44,6 +44,7 @@
 
 namespace Google\GAX\LongRunning\Gapic;
 
+use Google\Cloud\Version;
 use Google\GAX\AgentHeaderDescriptor;
 use Google\GAX\ApiCallable;
 use Google\GAX\CallSettings;
@@ -100,11 +101,6 @@ class OperationsGapicClient
     const DEFAULT_SERVICE_PORT = 443;
 
     /**
-     * The default timeout for non-retrying methods.
-     */
-    const DEFAULT_TIMEOUT_MILLIS = 30000;
-
-    /**
      * The name of the code generator, to be included in the agent header.
      */
     const CODEGEN_NAME = 'gapic';
@@ -114,7 +110,7 @@ class OperationsGapicClient
      */
     const CODEGEN_VERSION = '0.0.5';
 
-    private static $gapicVersion = null;
+    private static $gapicVersion;
     private static $gapicVersionLoaded = false;
 
     protected $grpcCredentialsHelper;
@@ -147,8 +143,8 @@ class OperationsGapicClient
         if (!self::$gapicVersionLoaded) {
             if (file_exists(__DIR__.'/../VERSION')) {
                 self::$gapicVersion = trim(file_get_contents(__DIR__.'/../VERSION'));
-            } elseif (class_exists('\Google\Cloud\Version')) {
-                self::$gapicVersion = \Google\Cloud\Version::VERSION;
+            } elseif (class_exists(Version::class)) {
+                self::$gapicVersion = Version::VERSION;
             }
             self::$gapicVersionLoaded = true;
         }
@@ -183,14 +179,16 @@ class OperationsGapicClient
      *           Path to a JSON file containing client method configuration, including retry settings.
      *           Specify this setting to specify the retry behavior of all methods on the client.
      *           By default this settings points to the default client config file, which is provided
-     *           in the resources folder.
+     *           in the resources folder. The retry settings provided in this option can be overridden
+     *           by settings in $retryingOverride
      *     @type array $retryingOverride
      *           An associative array in which the keys are method names (e.g. 'createFoo'), and
      *           the values are retry settings to use for that method. The retry settings for each
      *           method can be a {@see Google\GAX\RetrySettings} object, or an associative array
      *           of retry settings parameters. See the documentation on {@see Google\GAX\RetrySettings}
      *           for example usage. Passing a value of null is equivalent to a value of
-     *           ['retriesEnabled' => false].
+     *           ['retriesEnabled' => false]. Retry settings provided in this setting override the
+     *           settings in $clientConfigPath.
      * }
      *
      * @throws ValidationException Throws a ValidationException if required arguments are missing
@@ -208,7 +206,6 @@ class OperationsGapicClient
         $defaultOptions = [
             'port' => self::DEFAULT_SERVICE_PORT,
             'retryingOverride' => null,
-            'timeoutMillis' => self::DEFAULT_TIMEOUT_MILLIS,
             'libName' => null,
             'libVersion' => null,
             'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
