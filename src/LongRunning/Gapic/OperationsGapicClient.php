@@ -162,6 +162,17 @@ class OperationsGapicClient
      *
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
+     *     @type \Grpc\Channel $channel
+     *           Optional. A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
+     *     @type \Grpc\ChannelCredentials $sslCreds
+     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
+     *           Default: a credentials object returned from
+     *           \Grpc\ChannelCredentials::createSsl()
+     *           NOTE: if the $channel optional argument is specified, then this option is unused.
+     *     @type bool $forceNewChannel
+     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
+     *           Defaults to false.
+     *           NOTE: if the $channel optional argument is specified, then this option is unused.
      *     @type mixed $transport Optional, the string "grpc". Determines the backend transport used
      *           to make the API call.
      *     @type \Google\Auth\CredentialsLoader $credentialsLoader

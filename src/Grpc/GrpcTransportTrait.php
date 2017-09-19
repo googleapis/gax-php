@@ -46,9 +46,6 @@ trait GrpcTransportTrait
     private $grpcStub;
     private $credentialsCallback;
 
-    // This value must be filled in by implementing classes
-    private $grpcStubClassName;
-
     /**
      * Accepts an optional credentialsLoader argument, to be used instead of using
      * the ApplicationDefaultCredentials

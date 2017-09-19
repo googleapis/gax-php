@@ -52,9 +52,8 @@ class ApiCallable
             ) {
                 throw new InvalidArgumentException('Options argument is not found.');
             } else {
-                    $timeoutMicros = $timeoutMillis * 1000;
-                    $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeout'] = $timeoutMicros;
-                }
+                $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $timeoutMillis;
+            }
             return call_user_func_array($apiCall, $params);
         };
         return $inner;
