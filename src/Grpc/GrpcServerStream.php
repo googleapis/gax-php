@@ -32,6 +32,7 @@
 namespace Google\GAX\Grpc;
 
 use Google\GAX\ApiException;
+use Google\GAX\CallHelperTrait;
 use Google\GAX\ServerStreamInterface;
 
 class GrpcServerStream implements ServerStreamInterface
@@ -51,19 +52,6 @@ class GrpcServerStream implements ServerStreamInterface
         if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
             $this->resourcesGetMethod = $grpcStreamingDescriptor['resourcesGetMethod'];
         }
-    }
-
-    /**
-     * @param callable $callable
-     * @param mixed[] $grpcStreamingDescriptor
-     * @return callable ApiCall
-     */
-    public static function createApiCall($callable, $grpcStreamingDescriptor)
-    {
-        return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = call_user_func_array($callable, func_get_args());
-            return new ServerStream($response, $grpcStreamingDescriptor);
-        };
     }
 
     /**

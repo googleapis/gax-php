@@ -31,7 +31,7 @@
  */
 namespace Google\GAX\UnitTests;
 
-use Google\GAX\BidiStream;
+use Google\GAX\Grpc\GrpcBidiStream;
 use Google\GAX\Testing\MockBidiStreamingCall;
 use Google\GAX\Testing\MockStatus;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
@@ -40,14 +40,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Grpc;
 use PHPUnit_Framework_TestCase;
 
-class BidiStreamTest extends PHPUnit_Framework_TestCase
+class GrpcBidiStreamTest extends PHPUnit_Framework_TestCase
 {
     use TestTrait;
 
     public function testEmptySuccess()
     {
         $call = new MockBidiStreamingCall([]);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $this->assertSame([], iterator_to_array($stream->closeWriteAndReadAll()));
@@ -60,7 +60,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testEmptyFailureRead()
     {
         $call = new MockBidiStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure read'));
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $stream->closeWrite();
@@ -74,7 +74,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testEmptyFailureReadAll()
     {
         $call = new MockBidiStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure readall'));
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         iterator_to_array($stream->closeWriteAndReadAll());
@@ -87,7 +87,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testReadAfterComplete()
     {
         $call = new MockBidiStreamingCall([]);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $stream->closeWrite();
@@ -102,7 +102,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testWriteAfterComplete()
     {
         $call = new MockBidiStreamingCall([]);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $stream->closeWrite();
@@ -117,7 +117,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testWriteAfterCloseWrite()
     {
         $call = new MockBidiStreamingCall([]);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $stream->closeWrite();
@@ -128,7 +128,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     {
         $responses = ['abc', 'def'];
         $call = new MockBidiStreamingCall($responses);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $this->assertSame($responses, iterator_to_array($stream->closeWriteAndReadAll()));
@@ -137,15 +137,15 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testReadObjectsSuccess()
     {
         $responses = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
             $serializedResponses[] = $response->serializeToString();
         }
         $call = new MockBidiStreamingCall($serializedResponses, ['\Google\Rpc\Status', 'mergeFromString']);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $this->assertEquals($responses, iterator_to_array($stream->closeWriteAndReadAll()));
@@ -154,15 +154,15 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testReadCloseReadSuccess()
     {
         $responses = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
             $serializedResponses[] = $response->serializeToString();
         }
         $call = new MockBidiStreamingCall($serializedResponses, ['\Google\Rpc\Status', 'mergeFromString']);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $response = $stream->read();
@@ -187,7 +187,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'read failure')
         );
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $index = 0;
@@ -206,7 +206,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
         $requests = ['request1', 'request2'];
         $responses = [];
         $call = new MockBidiStreamingCall($responses);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $stream->writeAll($requests);
 
@@ -218,12 +218,12 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testWriteObjectsSuccess()
     {
         $requests = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2')
         ];
         $responses = [];
         $call = new MockBidiStreamingCall($responses, ['\Google\Rpc\Status', 'mergeFromString']);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $stream->writeAll($requests);
 
@@ -235,22 +235,22 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
     public function testAlternateReadWriteObjectsSuccess()
     {
         $requests = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'request3')
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'request1'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'request2'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'request3')
         ];
         $responses = [
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response3'),
-            BidiStreamTest::createStatus(Grpc\STATUS_OK, 'response4')
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response1'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response2'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response3'),
+            GrpcBidiStreamTest::createStatus(Grpc\STATUS_OK, 'response4')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
             $serializedResponses[] = $response->serializeToString();
         }
         $call = new MockBidiStreamingCall($serializedResponses, ['\Google\Rpc\Status', 'mergeFromString']);
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $index = 0;
         foreach ($requests as $request) {
@@ -284,7 +284,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
             null,
             new MockStatus(Grpc\STATUS_INTERNAL, 'write failure without close')
         );
-        $stream = new BidiStream($call);
+        $stream = new GrpcBidiStream($call);
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $stream->write($request);
@@ -309,7 +309,7 @@ class BidiStreamTest extends PHPUnit_Framework_TestCase
             MockPageStreamingResponse::createPageStreamingResponse('nextPageToken1', $repeatedField2)
         ];
         $call = new MockBidiStreamingCall($responses);
-        $stream = new BidiStream($call, [
+        $stream = new GrpcBidiStream($call, [
             'resourcesGetMethod' => 'getResourcesList'
         ]);
 

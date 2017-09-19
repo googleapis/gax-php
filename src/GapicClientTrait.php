@@ -30,19 +30,21 @@ trait GapicClientTrait
      *
      * @param array $config
      * @return string
-     * @throws GoogleException
+     * @throws Exception
      */
     private function getTransport(array $config)
     {
         $isGrpcExtensionLoaded = $this->getGrpcDependencyStatus();
-        $defaultTransport = $isGrpcExtensionLoaded ? 'grpc' : 'rest';
+        // @todo add rest support
+        // $defaultTransport = $isGrpcExtensionLoaded ? 'grpc' : 'rest';
+        $defaultTransport = 'grpc';
         $transport = isset($config['transport'])
             ? strtolower($config['transport'])
             : $defaultTransport;
 
         if ($transport === 'grpc') {
             if (!$isGrpcExtensionLoaded) {
-                throw new GoogleException(
+                throw new Exception(
                     'gRPC support has been requested but required dependencies ' .
                     'have not been found. Please make sure to run the following ' .
                     'from the command line: pecl install grpc'

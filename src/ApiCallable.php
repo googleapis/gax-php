@@ -39,7 +39,6 @@ use InvalidArgumentException;
  */
 class ApiCallable
 {
-
     const TRANSPORT_METHOD_PARAM_COUNT = 2;
     const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
 
@@ -50,7 +49,7 @@ class ApiCallable
             if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
                 !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
             ) {
-                throw new InvalidArgumentException('Options argument is not found.');
+                throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
             } else {
                 $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $timeoutMillis;
             }
@@ -143,7 +142,7 @@ class ApiCallable
             if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
                 !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
             ) {
-                throw new InvalidArgumentException('Options argument is not found.');
+                throw new InvalidArgumentException('Invalid parameter count or options argument is not found.');
             } else {
                 $headers = [];
                 // Check user-specified $headers first, and then merge $headerDescriptor headers, to ensure
@@ -181,11 +180,25 @@ class ApiCallable
      * @throws ValidationException
      * @return callable
      */
-    public static function createApiCall($stub, $methodName, CallSettings $settings, $options = [])
-    {
+    public static function createApiCall(
+        TransportInterface $transport,
+        $methodName,
+        CallSettings $settings,
+        $options = []
+    ) {
         ApiCallable::validateApiCallSettings($settings, $options);
 
-        $apiCall = array($stub, $methodName);
+        $apiCall = function() use ($transport, $methodName) {
+            $callable = [$transport, $methodName];
+            return call_user_func_array($callable, func_get_args());
+        };
+
+        // Call the sync method "wait" if this is not a gRPC call
+        if (!array_key_exists('grpcStreamingDescriptor', $options)) {
+            $apiCall = function() use ($apiCall) {
+                return call_user_func_array($apiCall, func_get_args())->wait();
+            };
+        }
 
         $retrySettings = $settings->getRetrySettings();
         if (!is_null($retrySettings)) {

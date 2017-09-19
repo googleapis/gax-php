@@ -32,6 +32,7 @@
 namespace Google\GAX\Grpc;
 
 use Google\GAX\ApiException;
+use Google\GAX\CallHelperTrait;
 use Google\GAX\ClientStreamInterface;
 
 class GrpcClientStream implements ClientStreamInterface
@@ -52,19 +53,6 @@ class GrpcClientStream implements ClientStreamInterface
     }
 
     /**
-     * @param callable $callable
-     * @param mixed[] $grpcStreamingDescriptor
-     * @return callable ApiCall
-     */
-    public static function createApiCall($callable, $grpcStreamingDescriptor)
-    {
-        return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = self::callWithoutRequest($callable, func_get_args());
-            return new ClientStream($response, $grpcStreamingDescriptor);
-        };
-    }
-
-    /**
      * Write request to the server.
      *
      * @param mixed $request The request to write
@@ -82,12 +70,7 @@ class GrpcClientStream implements ClientStreamInterface
      */
     public function readResponse()
     {
-        list($response, $status) = $this->call->wait();
-        if ($status->code == \Google\Rpc\Code::OK) {
-            return $response;
-        } else {
-            throw ApiException::createFromStdClass($status);
-        }
+        return $this->call->wait();
     }
 
     /**

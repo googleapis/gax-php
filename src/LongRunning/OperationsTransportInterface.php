@@ -49,6 +49,7 @@ use Google\GAX\ApiCallable;
 use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\PageStreamingDescriptor;
+use Google\GAX\TransportInterface;
 use Google\GAX\ValidationException;
 use Google\Longrunning\CancelOperationRequest;
 use Google\Longrunning\DeleteOperationRequest;
@@ -58,7 +59,7 @@ use Google\Longrunning\ListOperationsResponse;
 use Google\Longrunning\OperationsGrpcClient;
 
 
-interface OperationsTransportInterface
+interface OperationsTransportInterface extends TransportInterface
 {
     /**
      * @param GetOperationRequest $request
@@ -72,7 +73,7 @@ interface OperationsTransportInterface
      * @return \Google\GAX\UnaryCall with wait() returning \Google\Longrunning\Operation
      * @throws \Google\GAX\ApiException if the remote call fails
      */
-    public function GetOperation(GetOperationRequest $request, $optionalArgs = []);
+    public function getOperation(GetOperationRequest $request, $optionalArgs = []);
 
     /**
      * @param ListOperationsRequest $request
@@ -87,7 +88,7 @@ interface OperationsTransportInterface
      *
      * @throws \Google\GAX\ApiException if the remote call fails
      */
-    public function ListOperations(ListOperationsRequest $request, $optionalArgs = []);
+    public function listOperations(ListOperationsRequest $request, $optionalArgs = []);
 
     /**
      * @param CancelOperationRequest $request

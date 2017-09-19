@@ -32,18 +32,15 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
+use Google\GAX\TransportInterface;
 
-class MockBidiStreamingStub
+class MockTransport implements TransportInterface
 {
-    use MockStubTrait;
+    private $stub;
 
-    private $deserialize;
-
-    public function __construct($deserialize = null)
+    public function __construct($stub = null)
     {
-        $this->deserialize = $deserialize;
+        $this->stub = $stub;
     }
 
     /**
@@ -53,23 +50,22 @@ class MockBidiStreamingStub
      * @param callable $deserialize
      * @return MockBidiStreamingStub
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public static function create($stub)
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
+        return new self($stub);
     }
 
     public function __call($name, $arguments)
     {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        $metadata = [];
+        $options = [];
+        list($request, $optionalArgs) = $arguments;
+
+        if (array_key_exists('headers', $optionalArgs)) {
+            $metadata = $optionalArgs['headers'];
+        }
+
+        $newArgs = [$request, $metadata, $optionalArgs];
+        return call_user_func_array([$this->stub, $name], $newArgs);
     }
 }

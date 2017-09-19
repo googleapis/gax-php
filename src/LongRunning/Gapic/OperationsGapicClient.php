@@ -252,7 +252,7 @@ class OperationsGapicClient
                     case 'grpc':
                         return new \Google\GAX\LongRunning\OperationsGrpcTransport($options);
                 }
-                throw new InvalidArgumentException('Invalid transport provided');
+                throw new InvalidArgumentException('Invalid transport provided: ' . $transport);
             };
         }
         $this->operationsTransport = call_user_func_array(
@@ -311,6 +311,7 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
+
         $callable = ApiCallable::createApiCall(
             $this->operationsTransport,
             'GetOperation',
@@ -318,7 +319,7 @@ class OperationsGapicClient
             $this->descriptors['getOperation']
         );
 
-        return $callable($request, [])->wait();
+        return $callable($request, []);
     }
 
     /**
@@ -410,7 +411,7 @@ class OperationsGapicClient
             $this->descriptors['listOperations']
         );
 
-        return $callable($request, [])->wait();
+        return $callable($request, []);
     }
 
     /**
@@ -475,7 +476,7 @@ class OperationsGapicClient
             $this->descriptors['cancelOperation']
         );
 
-        return $callable($request, [])->wait();
+        return $callable($request, []);
     }
 
     /**
@@ -534,7 +535,7 @@ class OperationsGapicClient
             $this->descriptors['deleteOperation']
         );
 
-        return $callable($request, [])->wait();
+        return $callable($request, []);
     }
 
     /**

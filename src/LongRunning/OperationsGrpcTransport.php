@@ -64,7 +64,7 @@ class OperationsGrpcTransport implements \Google\GAX\LongRunning\OperationsTrans
 {
     use GrpcTransportTrait;
 
-    private static $grpcStubClassName = 'Google\GAX\LongRunning\OperationsGrpcClient';
+    private static $grpcStubClassName = 'Google\LongRunning\OperationsGrpcClient';
 
     /**
      * @param GetOperationRequest $request
@@ -98,7 +98,12 @@ class OperationsGrpcTransport implements \Google\GAX\LongRunning\OperationsTrans
      *
      * @throws \Google\GAX\ApiException if the remote call fails
      */
-    public function ListOperations(ListOperationsRequest $request, $optionalArgs = []);
+    public function ListOperations(ListOperationsRequest $request, $optionalArgs = [])
+    {
+        list($metadata, $options) = $this->constructGrpcArgs($optionalArgs);
+        $innerUnaryCall = $this->grpcStub->ListOperations($request, $metadata, $options);
+        return new GrpcUnaryCall($innerUnaryCall);
+    }
 
     /**
      * @param CancelOperationRequest $request
@@ -112,7 +117,12 @@ class OperationsGrpcTransport implements \Google\GAX\LongRunning\OperationsTrans
      * @return \Google\GAX\UnaryCall with wait() returning CancelOperationsResponse
      * @throws \Google\GAX\ApiException if the remote call fails
      */
-    public function CancelOperation(CancelOperationRequest $request, $optionalArgs = []);
+    public function CancelOperation(CancelOperationRequest $request, $optionalArgs = [])
+    {
+        list($metadata, $options) = $this->constructGrpcArgs($optionalArgs);
+        $innerUnaryCall = $this->grpcStub->CancelOperation($request, $metadata, $options);
+        return new GrpcUnaryCall($innerUnaryCall);
+    }
 
     /**
      * @param DeleteOperationRequest $request
@@ -126,6 +136,11 @@ class OperationsGrpcTransport implements \Google\GAX\LongRunning\OperationsTrans
      * @return \Google\GAX\UnaryCall with wait() returning DeleteOperationsResponse
      * @throws \Google\GAX\ApiException if the remote call fails
      */
-    public function DeleteOperation(DeleteOperationRequest $request, $optionalArgs = []);
+    public function DeleteOperation(DeleteOperationRequest $request, $optionalArgs = [])
+    {
+        list($metadata, $options) = $this->constructGrpcArgs($optionalArgs);
+        $innerUnaryCall = $this->grpcStub->DeleteOperation($request, $metadata, $options);
+        return new GrpcUnaryCall($innerUnaryCall);
+    }
 
 }

@@ -32,6 +32,8 @@
 
 namespace Google\GAX\Testing;
 
+use Google\GAX\ApiException;
+use Google\GAX\UnaryCallInterface;
 use Google\Rpc\Code;
 
 /**
@@ -42,7 +44,7 @@ use Google\Rpc\Code;
  * method, and an optional status. The response object and status are returned immediately from the
  * wait() method.
  */
-class MockUnaryCall
+class MockUnaryCall implements UnaryCallInterface
 {
     use SerializationTrait;
 

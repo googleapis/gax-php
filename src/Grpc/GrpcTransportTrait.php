@@ -117,7 +117,7 @@ trait GrpcTransportTrait
             );
         }
 
-        $credentialsLoader = $this->args['credentialsLoader'];
+        $credentialsLoader = $args['credentialsLoader'];
         $this->credentialsCallback = function () use ($credentialsLoader) {
             $token = $credentialsLoader->fetchAuthToken();
             return ['authorization' => array('Bearer ' . $token['access_token'])];
@@ -146,7 +146,21 @@ trait GrpcTransportTrait
             $stubOpts['force_new'] = true;
         }
 
-        $this->grpcStub = new self::$grpcStubClassName($fullAddress, $stubOpts, $channel);
+        if (empty($args['createGrpcStubFunction'])) {
+            $grpcStubClassName = self::$grpcStubClassName;
+            $args['createGrpcStubFunction'] = function(
+                $fullAddress,
+                $stubOpts,
+                $channel
+            ) use ($grpcStubClassName) {
+                return new $grpcStubClassName($fullAddress, $stubOpts, $channel);
+            };
+        }
+
+        $this->grpcStub = call_user_func_array(
+            $args['createGrpcStubFunction'],
+            [$fullAddress, $stubOpts, $channel]
+        );
     }
 
     private function constructGrpcArgs($optionalArgs = [])
@@ -159,7 +173,6 @@ trait GrpcTransportTrait
         if (array_key_exists('headers', $optionalArgs)) {
             $metadata = $optionalArgs['headers'];
         }
-        $options['call_credentials_callback'] = $this->credentialsCallback;
         if (array_key_exists('credentialsLoader', $optionalArgs)) {
             $credentialsLoader = $optionalArgs['credentialsLoader'];
             $callback = function () use ($credentialsLoader) {
@@ -167,6 +180,9 @@ trait GrpcTransportTrait
                 return ['authorization' => array('Bearer ' . $token['access_token'])];
             };
             $options['call_credentials_callback'] = $callback;
+        }
+        if (empty($options['call_credentials_callback'])) {
+            $options['call_credentials_callback'] = $this->credentialsCallback;
         }
         return [$metadata, $options];
     }
