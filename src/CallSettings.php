@@ -151,7 +151,7 @@ class CallSettings
      *
      * @param array $settings {
      *    Optional.
-     * @type \Google\GAX\RetrySettings $retrySettings
+     * @type \Google\GAX\RetrySettings|array $retrySettings
      *          Retry settings to use for CallSettings object.
      * @type array $userHeaders
      *          An array of headers to be included in the request.
@@ -161,6 +161,9 @@ class CallSettings
     public function with(array $settings)
     {
         $existingSettings = $this->toArray();
+        if (isset($settings['retrySettings']) && is_array($settings['retrySettings'])) {
+            $settings['retrySettings'] = $existingSettings['retrySettings']->with($settings['retrySettings']);
+        }
         return new CallSettings($settings + $existingSettings);
     }
 
