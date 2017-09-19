@@ -93,13 +93,26 @@ class CallSettings
         $retryCodes,
         $retryParams
     ) {
+        $timeoutMillis = $methodConfig['timeout_millis'];
+
         if (empty($methodConfig['retry_codes_name']) || empty($methodConfig['retry_params_name'])) {
-            return null;
+            // Construct a RetrySettings object with retries disabled
+            return new RetrySettings([
+                'retriesEnabled' => false,
+                'noRetriesRpcTimeoutMillis' => $timeoutMillis,
+                'initialRetryDelayMillis' => 100,
+                'retryDelayMultiplier' => 1.3,
+                'maxRetryDelayMillis' => 60000,
+                'initialRpcTimeoutMillis' => 20000,
+                'rpcTimeoutMultiplier' => 1,
+                'maxRpcTimeoutMillis' => 20000,
+                'totalTimeoutMillis' => 600000,
+                'retryableCodes' => []
+            ]);
         }
 
         $retryCodesName = $methodConfig['retry_codes_name'];
         $retryParamsName = $methodConfig['retry_params_name'];
-        $timeoutMillis = $methodConfig['timeout_millis'];
 
         if (!array_key_exists($retryCodesName, $retryCodes)) {
             throw new ValidationException("Invalid retry_codes_name setting: '$retryCodesName'");
