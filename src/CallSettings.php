@@ -58,8 +58,8 @@ class CallSettings
         $serviceName,
         $clientConfig,
         $retryingOverrides
-    )
-    {
+    ) {
+    
         $callSettings = [];
 
         $serviceConfig = $clientConfig['interfaces'][$serviceName];
