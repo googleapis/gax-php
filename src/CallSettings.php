@@ -58,7 +58,8 @@ class CallSettings
         $serviceName,
         $clientConfig,
         $retryingOverrides
-    ) {
+    )
+    {
         $callSettings = [];
 
         $serviceConfig = $clientConfig['interfaces'][$serviceName];
@@ -88,6 +89,22 @@ class CallSettings
         return $callSettings;
     }
 
+
+    private static function constructDefaultRetrySettings()
+    {
+        return new RetrySettings([
+            'retriesEnabled' => false,
+            'noRetriesRpcTimeoutMillis' => 30000,
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 60000,
+            'initialRpcTimeoutMillis' => 20000,
+            'rpcTimeoutMultiplier' => 1,
+            'maxRpcTimeoutMillis' => 20000,
+            'totalTimeoutMillis' => 600000,
+            'retryableCodes' => []]);
+    }
+
     private static function constructRetry(
         $methodConfig,
         $retryCodes,
@@ -97,17 +114,8 @@ class CallSettings
 
         if (empty($methodConfig['retry_codes_name']) || empty($methodConfig['retry_params_name'])) {
             // Construct a RetrySettings object with retries disabled
-            return new RetrySettings([
-                'retriesEnabled' => false,
+            return self::constructDefaultRetrySettings()->with([
                 'noRetriesRpcTimeoutMillis' => $timeoutMillis,
-                'initialRetryDelayMillis' => 100,
-                'retryDelayMultiplier' => 1.3,
-                'maxRetryDelayMillis' => 60000,
-                'initialRpcTimeoutMillis' => 20000,
-                'rpcTimeoutMultiplier' => 1,
-                'maxRpcTimeoutMillis' => 20000,
-                'totalTimeoutMillis' => 600000,
-                'retryableCodes' => []
             ]);
         }
 
