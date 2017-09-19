@@ -29,16 +29,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\Grpc;
 
-use Grpc;
 use Google\GAX\ApiException;
+use Google\GAX\BidiStreamInterface;
+use Google\GAX\CallHelperTrait;
 use Google\GAX\ValidationException;
 
-/**
- * BidiStream is the response object from a gRPC bidirectional streaming API call.
- */
-class BidiStream
+class GrpcBidiStream implements BidiStreamInterface
 {
     use CallHelperTrait;
 
@@ -156,7 +154,7 @@ class BidiStream
         if (is_null($result)) {
             $status = $this->call->getStatus();
             $this->isComplete = true;
-            if (!($status->code == Grpc\STATUS_OK)) {
+            if (!($status->code == \Google\Rpc\Code::OK)) {
                 throw ApiException::createFromStdClass($status);
             }
         }

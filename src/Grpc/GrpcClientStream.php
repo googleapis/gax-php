@@ -29,30 +29,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\Grpc;
 
-use Grpc;
+use Google\GAX\ApiException;
+use Google\GAX\ClientStreamInterface;
 
-/**
- * ServerStream is the response object from a gRPC server streaming API call.
- */
-class ServerStream
+class GrpcClientStream implements ClientStreamInterface
 {
+    use CallHelperTrait;
+
     private $call;
-    private $resourcesGetMethod;
 
     /**
-     * ServerStream constructor.
+     * ClientStream constructor.
      *
-     * @param \Grpc\ServerStreamingCall $serverStreamingCall The gRPC server streaming call object
+     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
      * @param array $grpcStreamingDescriptor
      */
-    public function __construct($serverStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct($clientStreamingCall, $grpcStreamingDescriptor = [])
     {
-        $this->call = $serverStreamingCall;
-        if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
-            $this->resourcesGetMethod = $grpcStreamingDescriptor['resourcesGetMethod'];
-        }
+        $this->call = $clientStreamingCall;
     }
 
     /**
@@ -63,44 +59,58 @@ class ServerStream
     public static function createApiCall($callable, $grpcStreamingDescriptor)
     {
         return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = call_user_func_array($callable, func_get_args());
-            return new ServerStream($response, $grpcStreamingDescriptor);
+            $response = self::callWithoutRequest($callable, func_get_args());
+            return new ClientStream($response, $grpcStreamingDescriptor);
         };
     }
 
     /**
-     * A generator which yields results from the server until the streaming call
-     * completes. Throws an ApiException if the streaming call failed.
+     * Write request to the server.
+     *
+     * @param mixed $request The request to write
+     */
+    public function write($request)
+    {
+        $this->call->write($request);
+    }
+
+    /**
+     * Read the response from the server, completing the streaming call.
      *
      * @throws ApiException
-     * @return \Generator|mixed
+     * @return mixed The response object from the server
      */
-    public function readAll()
+    public function readResponse()
     {
-        $resourcesGetMethod = $this->resourcesGetMethod;
-        if (!is_null($resourcesGetMethod)) {
-            foreach ($this->call->responses() as $response) {
-                foreach ($response->$resourcesGetMethod() as $resource) {
-                    yield $resource;
-                }
-            }
+        list($response, $status) = $this->call->wait();
+        if ($status->code == \Google\Rpc\Code::OK) {
+            return $response;
         } else {
-            foreach ($this->call->responses() as $response) {
-                yield $response;
-            }
-        }
-        $status = $this->call->getStatus();
-        if (!($status->code == Grpc\STATUS_OK)) {
             throw ApiException::createFromStdClass($status);
         }
     }
 
     /**
+     * Write all data in $dataArray and read the response from the server, completing the streaming
+     * call.
+     *
+     * @param mixed[] $requests An iterator of request objects to write to the server
+     * @return mixed The response object from the server
+     */
+    public function writeAllAndReadResponse($requests)
+    {
+        foreach ($requests as $request) {
+            $this->write($request);
+        }
+        return $this->readResponse();
+    }
+
+    /**
      * Return the underlying gRPC call object
      *
-     * @return \Grpc\ServerStreamingCall
+     * @return \Grpc\ClientStreamingCall
      */
-    public function getServerStreamingCall()
+    public function getClientStreamingCall()
     {
         return $this->call;
     }

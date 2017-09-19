@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,52 +29,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX;
 
-namespace Google\GAX\Testing;
-
-use Google\Rpc\Code;
-
-/**
- * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
- * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
- *
- * The MockUnaryCall object is constructed with a response object, an optional deserialize
- * method, and an optional status. The response object and status are returned immediately from the
- * wait() method.
- */
-class MockUnaryCall
+interface BidiStreamInterface
 {
-    use SerializationTrait;
-
-    private $response;
-    private $deserialize;
-    private $status;
+    /**
+     * Write request to the server.
+     *
+     * @param mixed $request The request to write
+     * @throws ValidationException
+     */
+    public function write($request);
 
     /**
-     * MockUnaryCall constructor.
-     * @param \Google\Protobuf\Internal\Message $response The response object.
-     * @param callable|null $deserialize An optional deserialize method for the response object.
-     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
+     * Write all requests in $requests.
+     *
+     * @param mixed[] $requests An Iterable of request objects to write to the server
+     *
+     * @throws ValidationException
+     * @throws ApiException
      */
-    public function __construct($response, $deserialize = null, $status = null)
-    {
-        $this->response = $response;
-        $this->deserialize = $deserialize;
-        if (is_null($status)) {
-            $status = new MockStatus(Code::OK);
-        }
-        $this->status = $status;
-    }
+    public function writeAll($requests = []);
 
     /**
-     * Immediately return the preset response object and status.
-     * @return array The response object and status.
+     * Inform the server that no more requests will be written. The write() function cannot be
+     * called after closeWrite() is called.
      */
-    public function wait()
-    {
-        if ($this->status->code != \Google\Rpc\Code::OK) {
-            throw ApiException::createFromStdClass($this->status);
-        }
-        return $this->deserializeMessage($this->response, $this->deserialize);
-    }
+    public function closeWrite();
+
+    /**
+     * Read the next response from the server. Returns null if the streaming call completed
+     * successfully. Throws an ApiException if the streaming call failed.
+     *
+     * @throws ValidationException
+     * @throws ApiException
+     * @return mixed
+     */
+    public function read();
+
+    /**
+     * Call closeWrite(), and read all responses from the server, until the streaming call is
+     * completed. Throws an ApiException if the streaming call failed.
+     *
+     * @throws ValidationException
+     * @throws ApiException
+     * @return \Generator|mixed[]
+     */
+    public function closeWriteAndReadAll();
 }

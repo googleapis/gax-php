@@ -69,8 +69,8 @@ class Page implements IteratorAggregate
         $requestPageTokenGetMethod = $this->pageStreamingDescriptor->getRequestPageTokenGetMethod();
         $this->pageToken = $params[0]->$requestPageTokenGetMethod();
 
-        // Make gRPC call eagerly
-        $this->response = call_user_func_array($this->callable, $this->parameters);
+        // Make API call eagerly
+        $this->response = call_user_func_array($this->callable, $this->parameters)->wait();
     }
 
     /**

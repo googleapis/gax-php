@@ -31,10 +31,29 @@
  */
 namespace Google\GAX;
 
-interface UnaryCall
+interface ClientStreamInterface
 {
     /**
-     * @return mixed
+     * Write request to the server.
+     *
+     * @param mixed $request The request to write
      */
-    public function wait();
+    public function write($request);
+
+    /**
+     * Read the response from the server, completing the streaming call.
+     *
+     * @throws ApiException
+     * @return mixed The response object from the server
+     */
+    public function readResponse();
+
+    /**
+     * Write all data and read the response from the server, completing the streaming
+     * call.
+     *
+     * @param mixed[] $requests An iterator of request objects to write to the server
+     * @return mixed The response object from the server
+     */
+    public function writeAllAndReadResponse($requests);
 }

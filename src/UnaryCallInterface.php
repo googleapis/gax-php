@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,28 +29,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX\Grpc;
+namespace Google\GAX;
 
-use Google\GAX\ApiException;
-use Google\GAX\UnaryCallInterface;
-use InvalidArgumentException;
-
-class GrpcUnaryCall implements UnaryCallInterface
+interface UnaryCallInterface
 {
-    private $innerUnaryCall;
-
-    public function __construct(\Grpc\UnaryCall $innerUnaryCall)
-    {
-        $this->innerUnaryCall = $innerUnaryCall;
-    }
-
-    public function wait()
-    {
-        list($response, $status) = $this->innerUnaryCall->wait();
-        if ($status->code == \Google\Rpc\Code::OK) {
-            return $response;
-        } else {
-            throw ApiException::createFromStdClass($status);
-        }
-    }
+    /**
+     * @return mixed
+     */
+    public function wait();
 }
