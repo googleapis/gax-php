@@ -58,7 +58,7 @@ use Google\Rpc\Status;
 use PHPUnit_Framework_TestCase;
 use Grpc;
 
-class ApiCallableTest extends PHPUnit_Framework_TestCase
+class CallStackTraitTest extends PHPUnit_Framework_TestCase
 {
     public function testBaseCall()
     {
@@ -70,7 +70,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $transport = MockTransport::create($stub);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall($transport, 'takeAction', $callSettings);
+        $apiCall = $transport->createApiCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, $options);
         $this->assertEquals($response, $actualResponse);
 
@@ -102,7 +102,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $callSettings = new CallSettings([
             'retrySettings' => $retrySettings
         ]);
-        $apiCall = ApiCallable::createApiCall($transport, 'takeAction', $callSettings);
+        $apiCall = $transport->createApiCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, []);
 
         $this->assertEquals($response, $actualResponse);
@@ -135,7 +135,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $isExceptionRaised = false;
         try {
-            $apiCall = ApiCallable::createApiCall($transport, 'takeAction', $callSettings);
+            $apiCall = $transport->createApiCall('takeAction', $callSettings);
             $response = $apiCall($request, []);
         } catch (\Exception $e) {
             $isExceptionRaised = true;
@@ -172,7 +172,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
         ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
-        $apiCall = ApiCallable::createApiCall($transport, 'takeAction', $callSettings);
+        $apiCall = $transport->createApiCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, []);
 
         $this->assertEquals($responseC, $actualResponse);
@@ -223,8 +223,7 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $raisedException = null;
         try {
             $transport = MockTransport::create($stub);
-            $apiCall = ApiCallable::createApiCall(
-                $transport,
+            $apiCall = $transport->createApiCall(
                 'takeAction',
                 $callSettings,
                 ['timeFuncMillis' => $timeFuncMillis]
@@ -260,8 +259,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -296,8 +295,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -343,8 +342,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -385,8 +384,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -415,8 +414,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -445,8 +444,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -473,8 +472,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings(['timeout' => 1000]);
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -502,8 +501,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'phpVersion' => '5.5.0',
             'grpcVersion' => '1.0.1'
         ]);
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             new CallSettings(),
             ['headerDescriptor' => $headerDescriptor]
@@ -534,8 +533,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $callSettings = new CallSettings([
             'userHeaders' => $userHeaders,
         ]);
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['headerDescriptor' => $headerDescriptor]
@@ -568,8 +567,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $callSettings = new CallSettings([
             'userHeaders' => $userHeaders,
         ]);
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($stub),
+        $transport = MockTransport::create($stub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['headerDescriptor' => $headerDescriptor]
@@ -641,8 +640,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($callStub),
+        $transport = MockTransport::create($callStub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -720,8 +719,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($callStub),
+        $transport = MockTransport::create($callStub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -791,8 +790,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($callStub),
+        $transport = MockTransport::create($callStub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -860,8 +859,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($callStub),
+        $transport = MockTransport::create($callStub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -947,8 +946,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($callStub),
+        $transport = MockTransport::create($callStub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -1018,8 +1017,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = ApiCallable::createApiCall(
-            MockTransport::create($callStub),
+        $transport = MockTransport::create($callStub);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -1079,8 +1078,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
 
         $callSettings = new CallSettings([]);
 
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1122,8 +1121,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockClientStreamingStub::create($response, $finalStatus);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1180,8 +1179,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockServerStreamingStub::createWithResponseSequence($responses, null, $deserialize);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1224,8 +1223,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockServerStreamingStub::createWithResponseSequence($responses);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1263,8 +1262,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockServerStreamingStub::createWithResponseSequence($responses, $finalStatus);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1314,8 +1313,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockBidiStreamingStub::createWithResponseSequence($responses, null, $deserialize);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             $options
@@ -1364,8 +1363,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockBidiStreamingStub::createWithResponseSequence([$response]);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             $options
@@ -1410,8 +1409,8 @@ class ApiCallableTest extends PHPUnit_Framework_TestCase
         $stub = MockBidiStreamingStub::createWithResponseSequence($responses, $finalStatus);
 
         $callSettings = new CallSettings([]);
-        $apiCall = ApiCallable::createApiCall(
-            MockGrpcStreamingTransport::create($stub, $descriptor),
+        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
+        $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             $options

@@ -40,36 +40,8 @@ use Google\GAX\Middleware\TimeoutMiddleware;
 /**
  * Creates a function wrapper that provides extra functionalities such as retry and bundling.
  */
-class ApiCallable
+trait CallStackTrait
 {
-    const TRANSPORT_METHOD_PARAM_COUNT = 2;
-    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
-
-    private static function setTimeout($callable, $timeoutMillis)
-    {
-        return new TimeoutMiddleware($callable, $timeoutMillis);
-    }
-
-    private static function setRetry($callable, RetrySettings $retrySettings, $timeFuncMillis)
-    {
-        return new RetryMiddleware($callable, $retrySettings, $timeFuncMillis);
-    }
-
-    private static function setPageStreaming($callable, $pageStreamingDescriptor)
-    {
-        return new PageStreamingMiddleware($callable, $pageStreamingDescriptor);
-    }
-
-    private static function setLongRunnning($callable, $longRunningDescriptor)
-    {
-        return new LongRunningMiddleware($callable, $longRunningDescriptor);
-    }
-
-    private static function setCustomHeader($callable, $headerDescriptor, $userHeaders = null)
-    {
-        return new CustomHeaderMiddleware($callable, $headerDescriptor, $userHeaders);
-    }
-
     /**
      * @param callable $callable a callable to make API call through.
      * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
@@ -81,29 +53,13 @@ class ApiCallable
      *           the descriptor used for creating GAPIC header.
      * }
      *
-     * @throws ValidationException
      * @return callable
      */
-    public static function createApiCall(
-        TransportInterface $transport,
-        $methodName,
+    private static function createCallStack(
+        callable $callable,
         CallSettings $settings,
         $options = []
     ) {
-        ApiCallable::validateApiCallSettings($settings, $options);
-
-        $callable = function() use ($transport, $methodName) {
-            $callable = [$transport, $methodName];
-            return call_user_func_array($callable, func_get_args());
-        };
-
-        // Call the sync method "wait" if this is not a gRPC call
-        if (!array_key_exists('grpcStreamingDescriptor', $options)) {
-            $callable = function() use ($callable) {
-                return call_user_func_array($callable, func_get_args())->wait();
-            };
-        }
-
         $retrySettings = $settings->getRetrySettings();
         if (!is_null($retrySettings)) {
             if ($retrySettings->retriesEnabled()) {
@@ -111,47 +67,24 @@ class ApiCallable
                 if (array_key_exists('timeFuncMillis', $options)) {
                     $timeFuncMillis = $options['timeFuncMillis'];
                 }
-                $callable = self::setRetry($callable, $retrySettings, $timeFuncMillis);
+                $callable = new RetryMiddleware($callable, $retrySettings, $timeFuncMillis);
             } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $callable = self::setTimeout($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
+                $callable = new TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
             }
         }
 
         if (array_key_exists('pageStreamingDescriptor', $options)) {
-            $callable = self::setPageStreaming($callable, $options['pageStreamingDescriptor']);
+            $callable = new PageStreamingMiddleware($callable, $options['pageStreamingDescriptor']);
         }
 
         if (array_key_exists('longRunningDescriptor', $options)) {
-            $callable = self::setLongRunnning($callable, $options['longRunningDescriptor']);
+            $callable = new LongRunningMiddleware($callable, $options['longRunningDescriptor']);
         }
 
         if (array_key_exists('headerDescriptor', $options) || !is_null($settings->getUserHeaders())) {
-            $callable = self::setCustomHeader($callable, $options['headerDescriptor'], $settings->getUserHeaders());
+            $callable = new CustomHeaderMiddleware($callable, $options['headerDescriptor'], $settings->getUserHeaders());
         }
 
         return $callable;
-    }
-
-    private static function validateApiCallSettings(CallSettings $settings, $options)
-    {
-        $retrySettings = $settings->getRetrySettings();
-        $isGrpcStreaming = array_key_exists('grpcStreamingDescriptor', $options);
-        if ($isGrpcStreaming) {
-            if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with retry settings'
-                );
-            }
-            if (array_key_exists('pageStreamingDescriptor', $options)) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
-                );
-            }
-            if (array_key_exists('longRunningDescriptor', $options)) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
-                );
-            }
-        }
     }
 }

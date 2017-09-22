@@ -33,4 +33,5 @@ namespace Google\GAX;
 
 interface TransportInterface
 {
+	public function createApiCall($method, CallSettings $settings, $options = []);
 }

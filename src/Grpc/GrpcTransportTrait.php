@@ -35,12 +35,15 @@ use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\GAX\CallSettings;
+use Google\GAX\CallStackTrait;
 use Google\GAX\ValidationTrait;
+use Google\GAX\ValidationException;
 use Grpc\ChannelCredentials;
-use InvalidArgumentException;
 
 trait GrpcTransportTrait
 {
+    use CallStackTrait;
     use ValidationTrait;
 
     private $grpcStub;
@@ -185,6 +188,49 @@ trait GrpcTransportTrait
             $options['call_credentials_callback'] = $this->credentialsCallback;
         }
         return [$metadata, $options];
+    }
+
+    public function createApiCall($method, CallSettings $settings, $options = [])
+    {
+        $this->validateApiCallSettings($settings, $options);
+
+        $handler = [$this, $method];
+
+        // Call the sync method "wait" if this is not a gRPC call
+        if (array_key_exists('grpcStreamingDescriptor', $options)) {
+            $callable = function() use ($handler) {
+                return call_user_func_array($handler, func_get_args());
+            };
+        } else {
+            $callable = function() use ($handler) {
+                return call_user_func_array($handler, func_get_args())->wait();
+            };
+        }
+
+        return $this->createCallStack($callable, $settings, $options);
+    }
+
+    private function validateApiCallSettings(CallSettings $settings, $options)
+    {
+        $retrySettings = $settings->getRetrySettings();
+        $isGrpcStreaming = array_key_exists('grpcStreamingDescriptor', $options);
+        if ($isGrpcStreaming) {
+            if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with retry settings'
+                );
+            }
+            if (array_key_exists('pageStreamingDescriptor', $options)) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
+                );
+            }
+            if (array_key_exists('longRunningDescriptor', $options)) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
+                );
+            }
+        }
     }
 
     /**
