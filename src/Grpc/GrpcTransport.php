@@ -41,12 +41,12 @@ use Google\GAX\ValidationTrait;
 use Google\GAX\ValidationException;
 use Grpc\ChannelCredentials;
 
-trait GrpcTransportTrait
+class GrpcTransport
 {
     use CallStackTrait;
     use ValidationTrait;
 
-    private $grpcStub;
+    protected $grpcStub;
     private $credentialsCallback;
 
     /**
@@ -89,6 +89,7 @@ trait GrpcTransportTrait
         $this->validateNotNull($args, [
             'serviceAddress',
             'port',
+            'createGrpcStubFunction',
         ]);
 
         $defaultOptions = [
@@ -148,18 +149,6 @@ trait GrpcTransportTrait
         if (isset($args['forceNewChannel']) && $args['forceNewChannel']) {
             $stubOpts['force_new'] = true;
         }
-
-        if (empty($args['createGrpcStubFunction'])) {
-            $grpcStubClassName = self::$grpcStubClassName;
-            $args['createGrpcStubFunction'] = function (
-                $fullAddress,
-                $stubOpts,
-                $channel
-            ) use ($grpcStubClassName) {
-                return new $grpcStubClassName($fullAddress, $stubOpts, $channel);
-            };
-        }
-
         $this->grpcStub = call_user_func_array(
             $args['createGrpcStubFunction'],
             [$fullAddress, $stubOpts, $channel]
@@ -184,7 +173,32 @@ trait GrpcTransportTrait
     {
         $this->validateApiCallSettings($settings, $options);
 
-        $handler = [$this, $methodName];
+        $callClass = 'Google\GAX\Grpc\GrpcUnaryCall';
+        if (array_key_exists('grpcStreamingDescriptor', $options)) {
+            $grpcStreamingDescriptor = $options['grpcStreamingDescriptor'];
+            switch ($grpcStreamingDescriptor['grpcStreamingType']) {
+                case 'ClientStreaming':
+                    $callClass = 'Google\GAX\Grpc\GrpcClientStream';
+                    break;
+                case 'ServerStreaming':
+                    $callClass = 'Google\GAX\Grpc\GrpcServerStream';
+                    break;
+                case 'BidiStreaming':
+                    $callClass = 'Google\GAX\Grpc\GrpcBidiStream';
+                    break;
+                default:
+                    throw new ValidationException('Unexpected gRPC streaming type: ' .
+                        $grpcStreamingDescriptor['grpcStreamingType']);
+            }
+        }
+
+        $handler = function () use ($methodName, $callClass) {
+            $args = func_get_args();
+            $optionalArgs = array_pop($args);
+            $args = array_merge($args, $this->constructGrpcArgs($optionalArgs));
+            $innerUnaryCall = call_user_func_array([$this->grpcStub, $methodName], $args);
+            return new $callClass($innerUnaryCall);
+        };
 
         // Call the sync method "wait" if this is not a gRPC call
         if (array_key_exists('grpcStreamingDescriptor', $options)) {
@@ -200,7 +214,7 @@ trait GrpcTransportTrait
         return $this->createCallStack($callable, $settings, $options);
     }
 
-    private function constructGrpcArgs($optionalArgs = [])
+    protected function constructGrpcArgs($optionalArgs = [])
     {
         $metadata = [];
         $options = [];

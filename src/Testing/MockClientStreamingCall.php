@@ -68,7 +68,12 @@ class MockClientStreamingCall
     public function wait()
     {
         $this->waitCalled = true;
-        return $this->mockUnaryCall->wait();
+        list($response, $status)  = $this->mockUnaryCall->wait();
+        if ($status->code == \Google\Rpc\Code::OK) {
+            return $response;
+        } else {
+            throw ApiException::createFromStdClass($status);
+        }
     }
 
     /**

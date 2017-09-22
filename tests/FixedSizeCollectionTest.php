@@ -35,7 +35,7 @@ use Google\GAX\Page;
 use Google\GAX\FixedSizeCollection;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\Testing\MockStatus;
-use Google\GAX\UnitTests\Mocks\MockStub;
+use Google\GAX\UnitTests\Mocks\MockTransport;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingRequest;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
 use PHPUnit_Framework_TestCase;
@@ -46,7 +46,7 @@ class FixedSizeCollectionTest extends PHPUnit_Framework_TestCase
     private static function createPage($responseSequence)
     {
         $mockRequest = MockPageStreamingRequest::createPageStreamingRequest('token', 3);
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $stub = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
@@ -54,10 +54,11 @@ class FixedSizeCollectionTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $mockApiCall = function () use ($stub) {
-            return call_user_func_array(
+            list($response, $status) = call_user_func_array(
                 array($stub, 'takeAction'),
                 func_get_args()
             )->wait();
+            return $response;
         };
         return new Page([$mockRequest, [], []], $mockApiCall, $descriptor);
     }

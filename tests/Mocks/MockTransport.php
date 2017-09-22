@@ -32,28 +32,17 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
+use Google\GAX\ApiException;
+use Google\GAX\ApiTransportInterface;
 use Google\GAX\CallSettings;
 use Google\GAX\CallStackTrait;
-use Google\GAX\ApiTransportInterface;
+use Google\GAX\Testing\MockStubTrait;
+use Google\GAX\Testing\ReceivedRequest;
 
 class MockTransport implements ApiTransportInterface
 {
     use CallStackTrait;
-
-    private $stub;
-
-    public function __construct($stub = null)
-    {
-        $this->stub = $stub;
-    }
-
-    /**
-     * Creates a transport instance from a stub
-     */
-    public static function create($stub)
-    {
-        return new self($stub);
-    }
+    use MockStubTrait;
 
     /**
      * Creates an API request
@@ -63,7 +52,12 @@ class MockTransport implements ApiTransportInterface
     {
         $handler = [$this, $method];
         $callable = function () use ($handler) {
-            return call_user_func_array($handler, func_get_args())->wait();
+            list($response, $status) = call_user_func_array($handler, func_get_args())->wait();
+            if ($status->code == \Google\Rpc\Code::OK) {
+                return $response;
+            } else {
+                throw ApiException::createFromStdClass($status);
+            }
         };
         return $this->createCallStack($callable, $settings, $options);
     }
@@ -78,7 +72,23 @@ class MockTransport implements ApiTransportInterface
             $metadata = $optionalArgs['headers'];
         }
 
-        $newArgs = [$request, $metadata, $optionalArgs];
-        return call_user_func_array([$this->stub, $name], $newArgs);
+        $newArgs = [$name, $request, $this->deserialize, $metadata, $optionalArgs];
+        return call_user_func_array(array($this, '_simpleRequest'), $newArgs);
+    }
+
+    public function methodThatSleeps($argument, $options)
+    {
+        $metadata = [];
+        $this->receivedFuncCalls[] = new ReceivedRequest(
+            'methodThatSleeps',
+            $argument,
+            $this->deserialize,
+            $metadata,
+            $options
+        );
+        $timeoutMillis = isset($options['timeoutMillis']) ? $options['timeoutMillis'] : null;
+        $call = new MockDeadlineExceededUnaryCall($timeoutMillis * 1000);
+        $this->callObjects[] = $call;
+        return $call;
     }
 }

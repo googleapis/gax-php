@@ -55,6 +55,7 @@ use Google\Longrunning\CancelOperationRequest;
 use Google\Longrunning\DeleteOperationRequest;
 use Google\Longrunning\GetOperationRequest;
 use Google\Longrunning\ListOperationsRequest;
+use Google\LongRunning\OperationsGrpcClient;
 use InvalidArgumentException;
 
 /**
@@ -246,18 +247,23 @@ class OperationsGapicClient
 
         $this->scopes = $options['scopes'];
 
-        if (empty($options['createOperationsTransportFunction'])) {
-            $options['createOperationsTransportFunction'] = function ($transport, $options) {
+        if (empty($options['createTransportFunction'])) {
+            $options['createTransportFunction'] = function ($options, $transport = null) {
                 switch ($transport) {
                     case 'grpc':
-                        return new \Google\GAX\LongRunning\OperationsGrpcTransport($options);
+                        if (empty($options['createGrpcStubFunction'])) {
+                            $options['createGrpcStubFunction'] = function($fullAddress, $stubOpts, $channel) {
+                                return new OperationsGrpcClient($fullAddress, $stubOpts, $channel);
+                            };
+                        }
+                        return new \Google\GAX\Grpc\GrpcTransport($options);
                 }
                 throw new InvalidArgumentException('Invalid transport provided: ' . $transport);
             };
         }
         $this->operationsTransport = call_user_func_array(
-            $options['createOperationsTransportFunction'],
-            [$this->getTransport($options), $options]
+            $options['createTransportFunction'],
+            [$options, $this->getTransport($options)]
         );
     }
 

@@ -151,7 +151,7 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
     public static function createOperationsClient($transport = null)
     {
         $client = new OperationsClient([
-            'createOperationsTransportFunction' => function ($hostname, $opts) use ($transport) {
+            'createTransportFunction' => function ($hostname, $opts) use ($transport) {
                 return $transport;
             },
             'serviceAddress' => '',

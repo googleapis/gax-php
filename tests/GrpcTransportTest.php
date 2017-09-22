@@ -32,11 +32,11 @@
 namespace Google\GAX\UnitTests;
 
 use PHPUnit_Framework_TestCase;
-use Google\GAX\Grpc\GrpcTransportTrait;
 use Google\GAX\UnitTests\Mocks\MockCredentialsLoader;
 use Google\GAX\UnitTests\Mocks\MockGrpcTransport;
+use Google\GAX\UnitTests\Mocks\MockGrpcTransportStub;
 
-class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
+class GrpcTransportTest extends PHPUnit_Framework_TestCase
 {
     private $defaultScope = ['my-scope'];
     private $defaultTokens = [
@@ -86,19 +86,19 @@ class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
 
     public function testConstructGrpcArgsDefault()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'scopes' => $this->defaultScope,
         ]);
-        list($request, $options) = $grpcTransportImpl->doConstructGrpcArgs();
+        list($request, $options) = $grpcTransport->doConstructGrpcArgs();
         $callbackResult = call_user_func($options['call_credentials_callback']);
         $this->assertEquals(['Bearer adcAccessToken'], $callbackResult['authorization']);
     }
 
     public function testConstructGrpcArgsCustomCredsLoader()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'credentialsLoader' => new MockCredentialsLoader(
@@ -106,14 +106,14 @@ class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
                 $this->defaultTokens
             )
         ]);
-        list($request, $options) = $grpcTransportImpl->doConstructGrpcArgs();
+        list($request, $options) = $grpcTransport->doConstructGrpcArgs();
         $callbackResult = call_user_func($options['call_credentials_callback']);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
     }
 
     public function testCreateCallCredentialsCallbackDisableCaching()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'credentialsLoader' => new MockCredentialsLoader(
@@ -122,17 +122,17 @@ class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
             ),
             'enableCaching' => false,
         ]);
-        list($request, $options) = $grpcTransportImpl->doConstructGrpcArgs();
+        list($request, $options) = $grpcTransport->doConstructGrpcArgs();
         $callbackResult = call_user_func($options['call_credentials_callback']);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
-        list($request, $options) = $grpcTransportImpl->doConstructGrpcArgs();
+        list($request, $options) = $grpcTransport->doConstructGrpcArgs();
         $callbackResult = call_user_func($options['call_credentials_callback']);
         $this->assertEquals(['Bearer accessToken2'], $callbackResult['authorization']);
     }
 
     public function testCreateCallCredentialsCallbackCaching()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'credentialsLoader' => new MockCredentialsLoader(
@@ -140,102 +140,97 @@ class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
                 $this->defaultTokens
             ),
         ]);
-        list($request, $options) = $grpcTransportImpl->doConstructGrpcArgs();
+        list($request, $options) = $grpcTransport->doConstructGrpcArgs();
         $callbackResult = call_user_func($options['call_credentials_callback']);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
-        list($request, $options) = $grpcTransportImpl->doConstructGrpcArgs();
+        list($request, $options) = $grpcTransport->doConstructGrpcArgs();
         $callbackResult = call_user_func($options['call_credentials_callback']);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
     }
 
     public function testCreateStubWithDefaultSslCreds()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'scopes' => $this->defaultScope,
         ]);
-        $stub = $grpcTransportImpl->getGrpcStub();
-        $this->assertEquals('my-service-address:8443', $stub->hostname);
-        $this->assertEquals('DummySslCreds', $stub->stubOpts['credentials']);
+        $this->assertEquals('my-service-address:8443', $grpcTransport->hostname);
+        $this->assertEquals('DummySslCreds', $grpcTransport->stubOpts['credentials']);
         $this->assertEquals(
             'my-service-address:8443',
-            $stub->stubOpts['grpc.ssl_target_name_override']
+            $grpcTransport->stubOpts['grpc.ssl_target_name_override']
         );
-        $this->assertNull($stub->channel);
+        $this->assertNull($grpcTransport->channel);
     }
 
     public function testCreateStubWithExplicitSslCreds()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'scopes' => $this->defaultScope,
             'sslCreds' => 'provided-creds',
         ]);
-        $stub = $grpcTransportImpl->getGrpcStub();
-        $this->assertEquals('my-service-address:8443', $stub->hostname);
-        $this->assertEquals('provided-creds', $stub->stubOpts['credentials']);
+        $this->assertEquals('my-service-address:8443', $grpcTransport->hostname);
+        $this->assertEquals('provided-creds', $grpcTransport->stubOpts['credentials']);
         $this->assertEquals(
             'my-service-address:8443',
-            $stub->stubOpts['grpc.ssl_target_name_override']
+            $grpcTransport->stubOpts['grpc.ssl_target_name_override']
         );
-        $this->assertNull($stub->channel);
+        $this->assertNull($grpcTransport->channel);
     }
 
     public function testCreateStubWithInsecureSslCreds()
     {
         $insecureCreds = \Grpc\ChannelCredentials::createInsecure();
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'scopes' => $this->defaultScope,
             'sslCreds' => $insecureCreds,
         ]);
-        $stub = $grpcTransportImpl->getGrpcStub();
-        $this->assertEquals('my-service-address:8443', $stub->hostname);
-        $this->assertEquals($insecureCreds, $stub->stubOpts['credentials']);
+        $this->assertEquals('my-service-address:8443', $grpcTransport->hostname);
+        $this->assertEquals($insecureCreds, $grpcTransport->stubOpts['credentials']);
         $this->assertEquals(
             'my-service-address:8443',
-            $stub->stubOpts['grpc.ssl_target_name_override']
+            $grpcTransport->stubOpts['grpc.ssl_target_name_override']
         );
-        $this->assertNull($stub->channel);
+        $this->assertNull($grpcTransport->channel);
     }
 
     public function testCreateStubWithChannel()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'scopes' => $this->defaultScope,
             'channel' => 'my-channel'
         ]);
-        $stub = $grpcTransportImpl->getGrpcStub();
-        $this->assertEquals('my-service-address:8443', $stub->hostname);
-        $this->assertEquals('DummySslCreds', $stub->stubOpts['credentials']);
+        $this->assertEquals('my-service-address:8443', $grpcTransport->hostname);
+        $this->assertEquals('DummySslCreds', $grpcTransport->stubOpts['credentials']);
         $this->assertEquals(
             'my-service-address:8443',
-            $stub->stubOpts['grpc.ssl_target_name_override']
+            $grpcTransport->stubOpts['grpc.ssl_target_name_override']
         );
-        $this->assertEquals('my-channel', $stub->channel);
+        $this->assertEquals('my-channel', $grpcTransport->channel);
     }
 
     public function testCreateStubWithForceNew()
     {
-        $grpcTransportImpl = new MockGrpcTransport([
+        $grpcTransport = new MockGrpcTransport([
             'serviceAddress' => 'my-service-address',
             'port' => 8443,
             'scopes' => $this->defaultScope,
             'forceNewChannel' => true
         ]);
-        $stub = $grpcTransportImpl->getGrpcStub();
-        $this->assertEquals('my-service-address:8443', $stub->hostname);
-        $this->assertEquals('DummySslCreds', $stub->stubOpts['credentials']);
+        $this->assertEquals('my-service-address:8443', $grpcTransport->hostname);
+        $this->assertEquals('DummySslCreds', $grpcTransport->stubOpts['credentials']);
         $this->assertEquals(
             'my-service-address:8443',
-            $stub->stubOpts['grpc.ssl_target_name_override']
+            $grpcTransport->stubOpts['grpc.ssl_target_name_override']
         );
-        $this->assertNull($stub->channel);
-        $this->assertTrue($stub->stubOpts['force_new']);
+        $this->assertNull($grpcTransport->channel);
+        $this->assertTrue($grpcTransport->stubOpts['force_new']);
     }
 }
