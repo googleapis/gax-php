@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,12 +35,15 @@ use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\GAX\CallSettings;
+use Google\GAX\CallStackTrait;
 use Google\GAX\ValidationTrait;
+use Google\GAX\ValidationException;
 use Grpc\ChannelCredentials;
-use InvalidArgumentException;
 
 trait GrpcTransportTrait
 {
+    use CallStackTrait;
     use ValidationTrait;
 
     private $grpcStub;
@@ -148,7 +151,7 @@ trait GrpcTransportTrait
 
         if (empty($args['createGrpcStubFunction'])) {
             $grpcStubClassName = self::$grpcStubClassName;
-            $args['createGrpcStubFunction'] = function(
+            $args['createGrpcStubFunction'] = function (
                 $fullAddress,
                 $stubOpts,
                 $channel
@@ -161,6 +164,40 @@ trait GrpcTransportTrait
             $args['createGrpcStubFunction'],
             [$fullAddress, $stubOpts, $channel]
         );
+    }
+
+    /**
+     * @param string $methodName the method name to return a callable for.
+     * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
+     * @param array $options {
+     *     Optional.
+     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
+     *           the descriptor used for page-streaming.
+     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
+     *           the descriptor used for creating GAPIC header.
+     * }
+     *
+     * @throws \Google\GAX\ValidationException
+     * @return callable
+     */
+    public function createApiCall($methodName, CallSettings $settings, $options = [])
+    {
+        $this->validateApiCallSettings($settings, $options);
+
+        $handler = [$this, $methodName];
+
+        // Call the sync method "wait" if this is not a gRPC call
+        if (array_key_exists('grpcStreamingDescriptor', $options)) {
+            $callable = function () use ($handler) {
+                return call_user_func_array($handler, func_get_args());
+            };
+        } else {
+            $callable = function () use ($handler) {
+                return call_user_func_array($handler, func_get_args())->wait();
+            };
+        }
+
+        return $this->createCallStack($callable, $settings, $options);
     }
 
     private function constructGrpcArgs($optionalArgs = [])
@@ -185,6 +222,29 @@ trait GrpcTransportTrait
             $options['call_credentials_callback'] = $this->credentialsCallback;
         }
         return [$metadata, $options];
+    }
+
+    private function validateApiCallSettings(CallSettings $settings, $options)
+    {
+        $retrySettings = $settings->getRetrySettings();
+        $isGrpcStreaming = array_key_exists('grpcStreamingDescriptor', $options);
+        if ($isGrpcStreaming) {
+            if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with retry settings'
+                );
+            }
+            if (array_key_exists('pageStreamingDescriptor', $options)) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
+                );
+            }
+            if (array_key_exists('longRunningDescriptor', $options)) {
+                throw new ValidationException(
+                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
+                );
+            }
+        }
     }
 
     /**

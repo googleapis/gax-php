@@ -32,10 +32,14 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\TransportInterface;
+use Google\GAX\CallSettings;
+use Google\GAX\CallStackTrait;
+use Google\GAX\ApiTransportInterface;
 
-class MockTransport implements TransportInterface
+class MockTransport implements ApiTransportInterface
 {
+    use CallStackTrait;
+
     private $stub;
 
     public function __construct($stub = null)
@@ -44,15 +48,24 @@ class MockTransport implements TransportInterface
     }
 
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * Creates a transport instance from a stub
      */
     public static function create($stub)
     {
         return new self($stub);
+    }
+
+    /**
+     * Creates an API request
+     * @return callable
+     */
+    public function createApiCall($method, CallSettings $settings, $options = [])
+    {
+        $handler = [$this, $method];
+        $callable = function () use ($handler) {
+            return call_user_func_array($handler, func_get_args())->wait();
+        };
+        return $this->createCallStack($callable, $settings, $options);
     }
 
     public function __call($name, $arguments)

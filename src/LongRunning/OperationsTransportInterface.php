@@ -46,10 +46,10 @@ namespace Google\GAX\LongRunning;
 
 use Google\GAX\AgentHeaderDescriptor;
 use Google\GAX\ApiCallable;
+use Google\GAX\ApiTransportInterface;
 use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\PageStreamingDescriptor;
-use Google\GAX\TransportInterface;
 use Google\GAX\ValidationException;
 use Google\Longrunning\CancelOperationRequest;
 use Google\Longrunning\DeleteOperationRequest;
@@ -59,7 +59,7 @@ use Google\Longrunning\ListOperationsResponse;
 use Google\Longrunning\OperationsGrpcClient;
 
 
-interface OperationsTransportInterface extends TransportInterface
+interface OperationsTransportInterface extends ApiTransportInterface
 {
     /**
      * @param GetOperationRequest $request

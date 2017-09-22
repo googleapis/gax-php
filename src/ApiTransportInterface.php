@@ -31,50 +31,21 @@
  */
 namespace Google\GAX;
 
-interface BidiStreamInterface
+interface ApiTransportInterface
 {
     /**
-     * Write request to the server.
+     * @param string $methodName The method name to return a callable for.
+     * @param \Google\GAX\CallSettings $settings The call settings to use for this call.
+     * @param array $options {
+     *     Optional.
+     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
+     *           the descriptor used for page-streaming.
+     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
+     *           the descriptor used for creating the GAPIC header.
+     * }
      *
-     * @param mixed $request The request to write
-     * @throws ValidationException
-     * @throws ApiException
+     * @throws \Google\GAX\ValidationException
+     * @return callable
      */
-    public function write($request);
-
-    /**
-     * Write all requests in $requests.
-     *
-     * @param mixed[] $requests An Iterable of request objects to write to the server
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     */
-    public function writeAll($requests = []);
-
-    /**
-     * Inform the server that no more requests will be written. The write() function cannot be
-     * called after closeWrite() is called.
-     */
-    public function closeWrite();
-
-    /**
-     * Read the next response from the server. Returns null if the streaming call completed
-     * successfully. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return mixed
-     */
-    public function read();
-
-    /**
-     * Call closeWrite(), and read all responses from the server, until the streaming call is
-     * completed. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return \Generator|mixed[]
-     */
-    public function closeWriteAndReadAll();
+    public function createApiCall($methodName, CallSettings $settings, $options = []);
 }

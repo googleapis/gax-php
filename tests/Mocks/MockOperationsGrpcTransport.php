@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,52 +29,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
 
-interface BidiStreamInterface
+namespace Google\GAX\UnitTests\Mocks;
+
+use Google\GAX\ApiTransportInterface;
+use Google\GAX\Grpc\GrpcTransportTrait;
+
+class MockOperationsGrpcTransport implements ApiTransportInterface
 {
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     * @throws ValidationException
-     * @throws ApiException
-     */
-    public function write($request);
+    use GrpcTransportTrait;
 
     /**
-     * Write all requests in $requests.
-     *
-     * @param mixed[] $requests An Iterable of request objects to write to the server
-     *
-     * @throws ValidationException
-     * @throws ApiException
+     * Get the generated Grpc Stub
      */
-    public function writeAll($requests = []);
+    public function getGrpcStub()
+    {
+        return $this->grpcStub;
+    }
 
-    /**
-     * Inform the server that no more requests will be written. The write() function cannot be
-     * called after closeWrite() is called.
-     */
-    public function closeWrite();
+    public function __call($name, $arguments)
+    {
+        $metadata = [];
+        $options = [];
+        list($request, $optionalArgs) = $arguments;
 
-    /**
-     * Read the next response from the server. Returns null if the streaming call completed
-     * successfully. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return mixed
-     */
-    public function read();
+        if (array_key_exists('headers', $optionalArgs)) {
+            $metadata = $optionalArgs['headers'];
+        }
 
-    /**
-     * Call closeWrite(), and read all responses from the server, until the streaming call is
-     * completed. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return \Generator|mixed[]
-     */
-    public function closeWriteAndReadAll();
+        $newArgs = [$request, $metadata, $optionalArgs];
+        return call_user_func_array([$this->grpcStub, $name], $newArgs);
+    }
 }

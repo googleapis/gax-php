@@ -312,8 +312,7 @@ class OperationsGapicClient
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
 
-        $callable = ApiCallable::createApiCall(
-            $this->operationsTransport,
+        $callable = $this->operationsTransport->createApiCall(
             'GetOperation',
             $mergedSettings,
             $this->descriptors['getOperation']
@@ -404,8 +403,7 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsTransport,
+        $callable = $this->operationsTransport->createApiCall(
             'ListOperations',
             $mergedSettings,
             $this->descriptors['listOperations']
@@ -469,8 +467,7 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsTransport,
+        $callable = $this->operationsTransport->createApiCall(
             'CancelOperation',
             $mergedSettings,
             $this->descriptors['cancelOperation']
@@ -528,8 +525,7 @@ class OperationsGapicClient
             );
         }
         $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = ApiCallable::createApiCall(
-            $this->operationsTransport,
+        $callable = $this->operationsTransport->createApiCall(
             'DeleteOperation',
             $mergedSettings,
             $this->descriptors['deleteOperation']

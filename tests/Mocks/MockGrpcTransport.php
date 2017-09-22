@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,52 +29,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
 
-interface BidiStreamInterface
+namespace Google\GAX\UnitTests\Mocks;
+
+use Google\GAX\Grpc\GrpcTransportTrait;
+
+class MockGrpcTransport
 {
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     * @throws ValidationException
-     * @throws ApiException
-     */
-    public function write($request);
+    use GrpcTransportTrait;
+
+    private static $grpcStubClassName = 'Google\GAX\UnitTests\Mocks\MockGrpcTransportStub';
 
     /**
-     * Write all requests in $requests.
-     *
-     * @param mixed[] $requests An Iterable of request objects to write to the server
-     *
-     * @throws ValidationException
-     * @throws ApiException
+     * Get the generated Grpc Stub
      */
-    public function writeAll($requests = []);
+    public function getGrpcStub()
+    {
+        return $this->grpcStub;
+    }
 
     /**
-     * Inform the server that no more requests will be written. The write() function cannot be
-     * called after closeWrite() is called.
+     * Test constructGrpcArgs function
      */
-    public function closeWrite();
+    public function doConstructGrpcArgs($optionalArgs = [])
+    {
+        return $this->constructGrpcArgs($optionalArgs);
+    }
 
-    /**
-     * Read the next response from the server. Returns null if the streaming call completed
-     * successfully. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return mixed
-     */
-    public function read();
+    protected function getADCCredentials($scopes)
+    {
+        return new MockCredentialsLoader($scopes, [
+            [
+                'access_token' => 'adcAccessToken',
+                'expires_in' => '100',
+            ],
+        ]);
+    }
 
-    /**
-     * Call closeWrite(), and read all responses from the server, until the streaming call is
-     * completed. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return \Generator|mixed[]
-     */
-    public function closeWriteAndReadAll();
+    protected function createSslChannelCredentials()
+    {
+        return "DummySslCreds";
+    }
 }

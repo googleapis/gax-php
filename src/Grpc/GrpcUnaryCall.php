@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,7 @@ namespace Google\GAX\Grpc;
 
 use Google\GAX\ApiException;
 use Google\GAX\UnaryCallInterface;
+use Google\Rpc\Code;
 use InvalidArgumentException;
 
 class GrpcUnaryCall implements UnaryCallInterface
@@ -47,7 +48,7 @@ class GrpcUnaryCall implements UnaryCallInterface
     public function wait()
     {
         list($response, $status) = $this->innerUnaryCall->wait();
-        if ($status->code == \Google\Rpc\Code::OK) {
+        if ($status->code == Code::OK) {
             return $response;
         } else {
             throw ApiException::createFromStdClass($status);

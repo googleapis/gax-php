@@ -32,13 +32,17 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\TransportInterface;
+use Google\GAX\ApiTransportInterface;
+use Google\GAX\CallSettings;
+use Google\GAX\CallStackTrait;
 use Google\GAX\Grpc\GrpcBidiStream;
 use Google\GAX\Grpc\GrpcClientStream;
 use Google\GAX\Grpc\GrpcServerStream;
 
-class MockGrpcStreamingTransport implements TransportInterface
+class MockGrpcStreamingTransport implements ApiTransportInterface
 {
+    use CallStackTrait;
+
     private $stub;
     private $descriptor;
 
@@ -58,6 +62,19 @@ class MockGrpcStreamingTransport implements TransportInterface
     public static function create($stub, $descriptor = null)
     {
         return new self($stub, $descriptor);
+    }
+
+    /**
+     * Creates an API request
+     * @return callable
+     */
+    public function createApiCall($method, CallSettings $settings, $options = [])
+    {
+        $handler = [$this, $method];
+        $callable = function () use ($handler) {
+            return call_user_func_array($handler, func_get_args());
+        };
+        return $this->createCallStack($callable, $settings, $options);
     }
 
     public function __call($name, $arguments)

@@ -29,52 +29,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\Middleware;
 
-interface BidiStreamInterface
+use InvalidArgumentException;
+
+/**
+* Middleware for adding timeouts
+*/
+class TimeoutMiddleware
 {
-    /**
-     * Write request to the server.
-     *
-     * @param mixed $request The request to write
-     * @throws ValidationException
-     * @throws ApiException
-     */
-    public function write($request);
+    const TRANSPORT_METHOD_PARAM_COUNT = 2;
+    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
 
-    /**
-     * Write all requests in $requests.
-     *
-     * @param mixed[] $requests An Iterable of request objects to write to the server
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     */
-    public function writeAll($requests = []);
+    /** @var callable */
+    private $nextHandler;
 
-    /**
-     * Inform the server that no more requests will be written. The write() function cannot be
-     * called after closeWrite() is called.
-     */
-    public function closeWrite();
+    /** @var int */
+    private $timeoutMillis;
 
-    /**
-     * Read the next response from the server. Returns null if the streaming call completed
-     * successfully. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return mixed
-     */
-    public function read();
+    public function __construct(callable $nextHandler, $timeoutMillis)
+    {
+        $this->nextHandler = $nextHandler;
+        $this->timeoutMillis = $timeoutMillis;
+    }
 
-    /**
-     * Call closeWrite(), and read all responses from the server, until the streaming call is
-     * completed. Throws an ApiException if the streaming call failed.
-     *
-     * @throws ValidationException
-     * @throws ApiException
-     * @return \Generator|mixed[]
-     */
-    public function closeWriteAndReadAll();
+    public function __invoke()
+    {
+        $params = func_get_args();
+        if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
+            !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
+        ) {
+            throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
+        } else {
+            $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
+        }
+        return call_user_func_array($this->nextHandler, $params);
+    }
 }

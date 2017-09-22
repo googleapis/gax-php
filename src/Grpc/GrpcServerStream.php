@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@ namespace Google\GAX\Grpc;
 use Google\GAX\ApiException;
 use Google\GAX\CallHelperTrait;
 use Google\GAX\ServerStreamInterface;
+use Google\Rpc\Code;
 
 class GrpcServerStream implements ServerStreamInterface
 {
@@ -76,7 +77,7 @@ class GrpcServerStream implements ServerStreamInterface
             }
         }
         $status = $this->call->getStatus();
-        if (!($status->code == \Google\Rpc\Code::OK)) {
+        if (!($status->code == Code::OK)) {
             throw ApiException::createFromStdClass($status);
         }
     }

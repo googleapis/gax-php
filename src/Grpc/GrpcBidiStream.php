@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@ use Google\GAX\ApiException;
 use Google\GAX\BidiStreamInterface;
 use Google\GAX\CallHelperTrait;
 use Google\GAX\ValidationException;
+use Google\Rpc\Code;
 
 class GrpcBidiStream implements BidiStreamInterface
 {
@@ -141,7 +142,7 @@ class GrpcBidiStream implements BidiStreamInterface
         if (is_null($result)) {
             $status = $this->call->getStatus();
             $this->isComplete = true;
-            if (!($status->code == \Google\Rpc\Code::OK)) {
+            if (!($status->code == Code::OK)) {
                 throw ApiException::createFromStdClass($status);
             }
         }
