@@ -31,7 +31,21 @@
  */
 namespace Google\GAX;
 
-interface TransportInterface
+interface ApiTransportInterface
 {
-	public function createApiCall($method, CallSettings $settings, $options = []);
+    /**
+     * @param string $methodName the method name to return a callable for.
+     * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
+     * @param array $options {
+     *     Optional.
+     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
+     *           the descriptor used for page-streaming.
+     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
+     *           the descriptor used for creating GAPIC header.
+     * }
+     *
+     * @throws \Google\GAX\ValidationException
+     * @return callable
+     */
+    public function createApiCall($methodName, CallSettings $settings, $options = []);
 }

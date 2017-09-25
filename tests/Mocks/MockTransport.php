@@ -34,9 +34,9 @@ namespace Google\GAX\UnitTests\Mocks;
 
 use Google\GAX\CallSettings;
 use Google\GAX\CallStackTrait;
-use Google\GAX\TransportInterface;
+use Google\GAX\ApiTransportInterface;
 
-class MockTransport implements TransportInterface
+class MockTransport implements ApiTransportInterface
 {
     use CallStackTrait;
 

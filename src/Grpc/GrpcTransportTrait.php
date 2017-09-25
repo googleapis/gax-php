@@ -166,6 +166,40 @@ trait GrpcTransportTrait
         );
     }
 
+    /**
+     * @param string $methodName the method name to return a callable for.
+     * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
+     * @param array $options {
+     *     Optional.
+     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
+     *           the descriptor used for page-streaming.
+     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
+     *           the descriptor used for creating GAPIC header.
+     * }
+     *
+     * @throws \Google\GAX\ValidationException
+     * @return callable
+     */
+    public function createApiCall($methodName, CallSettings $settings, $options = [])
+    {
+        $this->validateApiCallSettings($settings, $options);
+
+        $handler = [$this, $methodName];
+
+        // Call the sync method "wait" if this is not a gRPC call
+        if (array_key_exists('grpcStreamingDescriptor', $options)) {
+            $callable = function() use ($handler) {
+                return call_user_func_array($handler, func_get_args());
+            };
+        } else {
+            $callable = function() use ($handler) {
+                return call_user_func_array($handler, func_get_args())->wait();
+            };
+        }
+
+        return $this->createCallStack($callable, $settings, $options);
+    }
+
     private function constructGrpcArgs($optionalArgs = [])
     {
         $metadata = [];
@@ -188,26 +222,6 @@ trait GrpcTransportTrait
             $options['call_credentials_callback'] = $this->credentialsCallback;
         }
         return [$metadata, $options];
-    }
-
-    public function createApiCall($method, CallSettings $settings, $options = [])
-    {
-        $this->validateApiCallSettings($settings, $options);
-
-        $handler = [$this, $method];
-
-        // Call the sync method "wait" if this is not a gRPC call
-        if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $callable = function() use ($handler) {
-                return call_user_func_array($handler, func_get_args());
-            };
-        } else {
-            $callable = function() use ($handler) {
-                return call_user_func_array($handler, func_get_args())->wait();
-            };
-        }
-
-        return $this->createCallStack($callable, $settings, $options);
     }
 
     private function validateApiCallSettings(CallSettings $settings, $options)

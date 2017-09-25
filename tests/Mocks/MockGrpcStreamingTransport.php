@@ -32,14 +32,14 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
+use Google\GAX\ApiTransportInterface;
 use Google\GAX\CallSettings;
 use Google\GAX\CallStackTrait;
-use Google\GAX\TransportInterface;
 use Google\GAX\Grpc\GrpcBidiStream;
 use Google\GAX\Grpc\GrpcClientStream;
 use Google\GAX\Grpc\GrpcServerStream;
 
-class MockGrpcStreamingTransport implements TransportInterface
+class MockGrpcStreamingTransport implements ApiTransportInterface
 {
     use CallStackTrait;
 

@@ -36,12 +36,12 @@
 
 namespace Google\GAX\UnitTests\LongRunning;
 
-use Google\GAX\LongRunning\OperationsClient;
 use Google\GAX\ApiException;
+use Google\GAX\ApiTransportInterface;
 use Google\GAX\Grpc\GrpcTransportTrait;
+use Google\GAX\LongRunning\OperationsClient;
 use Google\GAX\Testing\GeneratedTest;
 use Google\GAX\Testing\LongRunning\MockOperationsImpl;
-use Google\GAX\TransportInterface;
 use Google\GAX\UnitTests\Mocks\MockTransport;
 use Google\Longrunning\ListOperationsResponse;
 use Google\Longrunning\Operation;
@@ -384,7 +384,7 @@ class OperationsClientTest extends GeneratedTest
     }
 }
 
-class MockOperationsGrpcTransport implements TransportInterface
+class MockOperationsGrpcTransport implements ApiTransportInterface
 {
     use GrpcTransportTrait;
 
