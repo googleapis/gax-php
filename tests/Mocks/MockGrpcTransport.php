@@ -32,53 +32,42 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\CallSettings;
-use Google\GAX\CallStackTrait;
-use Google\GAX\ApiTransportInterface;
+use Google\GAX\Grpc\GrpcTransportTrait;
 
-class MockTransport implements ApiTransportInterface
+class MockGrpcTransport
 {
-    use CallStackTrait;
+    use GrpcTransportTrait;
 
-    private $stub;
+    private static $grpcStubClassName = 'Google\GAX\UnitTests\Mocks\MockGrpcTransportStub';
 
-    public function __construct($stub = null)
+    /**
+     * Get the generated Grpc Stub
+     */
+    public function getGrpcStub()
     {
-        $this->stub = $stub;
+        return $this->grpcStub;
     }
 
     /**
-     * Creates a transport instance from a stub
+     * Test constructGrpcArgs function
      */
-    public static function create($stub)
+    public function doConstructGrpcArgs($optionalArgs = [])
     {
-        return new self($stub);
+        return $this->constructGrpcArgs($optionalArgs);
     }
 
-    /**
-     * Creates an API request
-     * @return callable
-     */
-    public function createApiCall($method, CallSettings $settings, $options = [])
+    protected function getADCCredentials($scopes)
     {
-        $handler = [$this, $method];
-        $callable = function () use ($handler) {
-            return call_user_func_array($handler, func_get_args())->wait();
-        };
-        return $this->createCallStack($callable, $settings, $options);
+        return new MockCredentialsLoader($scopes, [
+            [
+                'access_token' => 'adcAccessToken',
+                'expires_in' => '100',
+            ],
+        ]);
     }
 
-    public function __call($name, $arguments)
+    protected function createSslChannelCredentials()
     {
-        $metadata = [];
-        $options = [];
-        list($request, $optionalArgs) = $arguments;
-
-        if (array_key_exists('headers', $optionalArgs)) {
-            $metadata = $optionalArgs['headers'];
-        }
-
-        $newArgs = [$request, $metadata, $optionalArgs];
-        return call_user_func_array([$this->stub, $name], $newArgs);
+        return "DummySslCreds";
     }
 }

@@ -42,7 +42,7 @@ use Google\GAX\Grpc\GrpcTransportTrait;
 use Google\GAX\LongRunning\OperationsClient;
 use Google\GAX\Testing\GeneratedTest;
 use Google\GAX\Testing\LongRunning\MockOperationsImpl;
-use Google\GAX\UnitTests\Mocks\MockTransport;
+use Google\GAX\UnitTests\Mocks\MockOperationsGrpcTransport;
 use Google\Longrunning\ListOperationsResponse;
 use Google\Longrunning\Operation;
 use Google\Protobuf\Any;
@@ -381,32 +381,5 @@ class OperationsClientTest extends GeneratedTest
         // Call popReceivedCalls to ensure the stub is exhausted
         $grpcStub->popReceivedCalls();
         $this->assertTrue($grpcStub->isExhausted());
-    }
-}
-
-class MockOperationsGrpcTransport implements ApiTransportInterface
-{
-    use GrpcTransportTrait;
-
-    /**
-     * Get the generated Grpc Stub
-     */
-    public function getGrpcStub()
-    {
-        return $this->grpcStub;
-    }
-
-    public function __call($name, $arguments)
-    {
-        $metadata = [];
-        $options = [];
-        list($request, $optionalArgs) = $arguments;
-
-        if (array_key_exists('headers', $optionalArgs)) {
-            $metadata = $optionalArgs['headers'];
-        }
-
-        $newArgs = [$request, $metadata, $optionalArgs];
-        return call_user_func_array([$this->grpcStub, $name], $newArgs);
     }
 }

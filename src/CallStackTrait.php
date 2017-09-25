@@ -82,7 +82,11 @@ trait CallStackTrait
         }
 
         if (array_key_exists('headerDescriptor', $options) || !is_null($settings->getUserHeaders())) {
-            $callable = new CustomHeaderMiddleware($callable, $options['headerDescriptor'], $settings->getUserHeaders());
+            $callable = new CustomHeaderMiddleware(
+                $callable,
+                $options['headerDescriptor'],
+                $settings->getUserHeaders()
+            );
         }
 
         return $callable;

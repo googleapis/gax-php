@@ -151,7 +151,7 @@ trait GrpcTransportTrait
 
         if (empty($args['createGrpcStubFunction'])) {
             $grpcStubClassName = self::$grpcStubClassName;
-            $args['createGrpcStubFunction'] = function(
+            $args['createGrpcStubFunction'] = function (
                 $fullAddress,
                 $stubOpts,
                 $channel
@@ -188,11 +188,11 @@ trait GrpcTransportTrait
 
         // Call the sync method "wait" if this is not a gRPC call
         if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $callable = function() use ($handler) {
+            $callable = function () use ($handler) {
                 return call_user_func_array($handler, func_get_args());
             };
         } else {
-            $callable = function() use ($handler) {
+            $callable = function () use ($handler) {
                 return call_user_func_array($handler, func_get_args())->wait();
             };
         }

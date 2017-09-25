@@ -32,53 +32,16 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\CallSettings;
-use Google\GAX\CallStackTrait;
-use Google\GAX\ApiTransportInterface;
-
-class MockTransport implements ApiTransportInterface
+class MockGrpcTransportStub
 {
-    use CallStackTrait;
+    public $hostname;
+    public $stubOpts;
+    public $channel;
 
-    private $stub;
-
-    public function __construct($stub = null)
+    public function __construct($hostname, $stubOpts, $channel)
     {
-        $this->stub = $stub;
-    }
-
-    /**
-     * Creates a transport instance from a stub
-     */
-    public static function create($stub)
-    {
-        return new self($stub);
-    }
-
-    /**
-     * Creates an API request
-     * @return callable
-     */
-    public function createApiCall($method, CallSettings $settings, $options = [])
-    {
-        $handler = [$this, $method];
-        $callable = function () use ($handler) {
-            return call_user_func_array($handler, func_get_args())->wait();
-        };
-        return $this->createCallStack($callable, $settings, $options);
-    }
-
-    public function __call($name, $arguments)
-    {
-        $metadata = [];
-        $options = [];
-        list($request, $optionalArgs) = $arguments;
-
-        if (array_key_exists('headers', $optionalArgs)) {
-            $metadata = $optionalArgs['headers'];
-        }
-
-        $newArgs = [$request, $metadata, $optionalArgs];
-        return call_user_func_array([$this->stub, $name], $newArgs);
+        $this->hostname = $hostname;
+        $this->stubOpts = $stubOpts;
+        $this->channel = $channel;
     }
 }

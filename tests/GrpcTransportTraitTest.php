@@ -34,6 +34,7 @@ namespace Google\GAX\UnitTests;
 use PHPUnit_Framework_TestCase;
 use Google\GAX\Grpc\GrpcTransportTrait;
 use Google\GAX\UnitTests\Mocks\MockCredentialsLoader;
+use Google\GAX\UnitTests\Mocks\MockGrpcTransport;
 
 class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
 {
@@ -236,57 +237,5 @@ class GrpcTransportTraitTest extends PHPUnit_Framework_TestCase
         );
         $this->assertNull($stub->channel);
         $this->assertTrue($stub->stubOpts['force_new']);
-    }
-}
-
-class MockGrpcTransport
-{
-    use GrpcTransportTrait;
-
-    private static $grpcStubClassName = 'Google\GAX\UnitTests\MockGrpcTransportStub';
-
-    /**
-     * Get the generated Grpc Stub
-     */
-    public function getGrpcStub()
-    {
-        return $this->grpcStub;
-    }
-
-    /**
-     * Test constructGrpcArgs function
-     */
-    public function doConstructGrpcArgs($optionalArgs = [])
-    {
-        return $this->constructGrpcArgs($optionalArgs);
-    }
-
-    protected function getADCCredentials($scopes)
-    {
-        return new MockCredentialsLoader($scopes, [
-            [
-                'access_token' => 'adcAccessToken',
-                'expires_in' => '100',
-            ],
-        ]);
-    }
-
-    protected function createSslChannelCredentials()
-    {
-        return "DummySslCreds";
-    }
-}
-
-class MockGrpcTransportStub
-{
-    public $hostname;
-    public $stubOpts;
-    public $channel;
-
-    public function __construct($hostname, $stubOpts, $channel)
-    {
-        $this->hostname = $hostname;
-        $this->stubOpts = $stubOpts;
-        $this->channel = $channel;
     }
 }
