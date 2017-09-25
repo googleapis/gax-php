@@ -32,6 +32,8 @@
 
 namespace Google\GAX\Testing;
 
+use Google\GAX\ApiException;
+use Google\GAX\UnaryCallInterface;
 use Google\Rpc\Code;
 
 /**
@@ -42,7 +44,7 @@ use Google\Rpc\Code;
  * method, and an optional status. The response object and status are returned immediately from the
  * wait() method.
  */
-class MockUnaryCall
+class MockUnaryCall implements UnaryCallInterface
 {
     use SerializationTrait;
 
@@ -72,7 +74,9 @@ class MockUnaryCall
      */
     public function wait()
     {
-        $obj = $this->deserializeMessage($this->response, $this->deserialize);
-        return [$obj, $this->status];
+        if ($this->status->code != \Google\Rpc\Code::OK) {
+            throw ApiException::createFromStdClass($this->status);
+        }
+        return $this->deserializeMessage($this->response, $this->deserialize);
     }
 }

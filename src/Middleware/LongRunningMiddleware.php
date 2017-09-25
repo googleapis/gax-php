@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\Middleware;
 
-namespace Google\GAX\UnitTests\Mocks;
+use Google\GAX\OperationResponse;
 
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
-
-class MockBidiStreamingStub
+/**
+* Middleware that adds long running functionality
+*/
+class LongRunningMiddleware
 {
-    use MockStubTrait;
+    /** @var callable */
+    private $nextHandler;
 
-    private $deserialize;
+    /** @var array */
+    private $longRunningDescriptor;
 
-    public function __construct($deserialize = null)
+    public function __construct(callable $nextHandler, $longRunningDescriptor)
     {
-        $this->deserialize = $deserialize;
+        $this->nextHandler = $nextHandler;
+        $this->longRunningDescriptor = $longRunningDescriptor;
     }
 
-    /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
-     */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public function __invoke()
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
-    }
-
-    public function __call($name, $arguments)
-    {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        $response = call_user_func_array($this->nextHandler, func_get_args());
+        $name = $response->getName();
+        $client = $this->longRunningDescriptor['operationsClient'];
+        $options = $this->longRunningDescriptor + [
+            'lastProtoResponse' => $response,
+        ];
+        return new OperationResponse($name, $client, $options);
     }
 }

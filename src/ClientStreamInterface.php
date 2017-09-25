@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,50 +31,14 @@
  */
 namespace Google\GAX;
 
-use Grpc;
-
-/**
- * ClientStream is the response object from a gRPC client streaming API call.
- */
-class ClientStream
+interface ClientStreamInterface
 {
-    use CallHelperTrait;
-
-    private $call;
-
-    /**
-     * ClientStream constructor.
-     *
-     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
-     */
-    public function __construct($clientStreamingCall, $grpcStreamingDescriptor = [])
-    {
-        $this->call = $clientStreamingCall;
-    }
-
-    /**
-     * @param callable $callable
-     * @param mixed[] $grpcStreamingDescriptor
-     * @return callable ApiCall
-     */
-    public static function createApiCall($callable, $grpcStreamingDescriptor)
-    {
-        return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = self::callWithoutRequest($callable, func_get_args());
-            return new ClientStream($response, $grpcStreamingDescriptor);
-        };
-    }
-
     /**
      * Write request to the server.
      *
      * @param mixed $request The request to write
      */
-    public function write($request)
-    {
-        $this->call->write($request);
-    }
+    public function write($request);
 
     /**
      * Read the response from the server, completing the streaming call.
@@ -82,38 +46,14 @@ class ClientStream
      * @throws ApiException
      * @return mixed The response object from the server
      */
-    public function readResponse()
-    {
-        list($response, $status) = $this->call->wait();
-        if ($status->code == Grpc\STATUS_OK) {
-            return $response;
-        } else {
-            throw ApiException::createFromStdClass($status);
-        }
-    }
+    public function readResponse();
 
     /**
-     * Write all data in $dataArray and read the response from the server, completing the streaming
+     * Write all data and read the response from the server, completing the streaming
      * call.
      *
      * @param mixed[] $requests An iterator of request objects to write to the server
      * @return mixed The response object from the server
      */
-    public function writeAllAndReadResponse($requests)
-    {
-        foreach ($requests as $request) {
-            $this->write($request);
-        }
-        return $this->readResponse();
-    }
-
-    /**
-     * Return the underlying gRPC call object
-     *
-     * @return \Grpc\ClientStreamingCall
-     */
-    public function getClientStreamingCall()
-    {
-        return $this->call;
-    }
+    public function writeAllAndReadResponse($requests);
 }

@@ -32,44 +32,32 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
+use Google\GAX\ApiTransportInterface;
+use Google\GAX\Grpc\GrpcTransportTrait;
 
-class MockBidiStreamingStub
+class MockOperationsGrpcTransport implements ApiTransportInterface
 {
-    use MockStubTrait;
-
-    private $deserialize;
-
-    public function __construct($deserialize = null)
-    {
-        $this->deserialize = $deserialize;
-    }
+    use GrpcTransportTrait;
 
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * Get the generated Grpc Stub
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public function getGrpcStub()
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
+        return $this->grpcStub;
     }
 
     public function __call($name, $arguments)
     {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        $metadata = [];
+        $options = [];
+        list($request, $optionalArgs) = $arguments;
+
+        if (array_key_exists('headers', $optionalArgs)) {
+            $metadata = $optionalArgs['headers'];
+        }
+
+        $newArgs = [$request, $metadata, $optionalArgs];
+        return call_user_func_array([$this->grpcStub, $name], $newArgs);
     }
 }

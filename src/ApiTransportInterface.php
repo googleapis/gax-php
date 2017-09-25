@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
-
-class MockBidiStreamingStub
+interface ApiTransportInterface
 {
-    use MockStubTrait;
-
-    private $deserialize;
-
-    public function __construct($deserialize = null)
-    {
-        $this->deserialize = $deserialize;
-    }
-
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * @param string $methodName the method name to return a callable for.
+     * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
+     * @param array $options {
+     *     Optional.
+     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
+     *           the descriptor used for page-streaming.
+     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
+     *           the descriptor used for creating GAPIC header.
+     * }
+     *
+     * @throws \Google\GAX\ValidationException
+     * @return callable
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
-    {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
-    }
-
-    public function __call($name, $arguments)
-    {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
-    }
+    public function createApiCall($methodName, CallSettings $settings, $options = []);
 }

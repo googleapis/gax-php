@@ -32,44 +32,42 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
+use Google\GAX\Grpc\GrpcTransportTrait;
 
-class MockBidiStreamingStub
+class MockGrpcTransport
 {
-    use MockStubTrait;
+    use GrpcTransportTrait;
 
-    private $deserialize;
+    private static $grpcStubClassName = 'Google\GAX\UnitTests\Mocks\MockGrpcTransportStub';
 
-    public function __construct($deserialize = null)
+    /**
+     * Get the generated Grpc Stub
+     */
+    public function getGrpcStub()
     {
-        $this->deserialize = $deserialize;
+        return $this->grpcStub;
     }
 
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * Test constructGrpcArgs function
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public function doConstructGrpcArgs($optionalArgs = [])
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
+        return $this->constructGrpcArgs($optionalArgs);
     }
 
-    public function __call($name, $arguments)
+    protected function getADCCredentials($scopes)
     {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        return new MockCredentialsLoader($scopes, [
+            [
+                'access_token' => 'adcAccessToken',
+                'expires_in' => '100',
+            ],
+        ]);
+    }
+
+    protected function createSslChannelCredentials()
+    {
+        return "DummySslCreds";
     }
 }

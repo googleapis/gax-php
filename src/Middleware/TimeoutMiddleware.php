@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\Middleware;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-use Google\GAX\Testing\MockStubTrait;
 use InvalidArgumentException;
 
-class MockBidiStreamingStub
+/**
+* Middleware for adding timeouts
+*/
+class TimeoutMiddleware
 {
-    use MockStubTrait;
+    const TRANSPORT_METHOD_PARAM_COUNT = 2;
+    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
 
-    private $deserialize;
+    /** @var callable */
+    private $nextHandler;
 
-    public function __construct($deserialize = null)
+    /** @var int */
+    private $timeoutMillis;
+
+    public function __construct(callable $nextHandler, $timeoutMillis)
     {
-        $this->deserialize = $deserialize;
+        $this->nextHandler = $nextHandler;
+        $this->timeoutMillis = $timeoutMillis;
     }
 
-    /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
-     */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public function __invoke()
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
+        $params = func_get_args();
+        if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
+            !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
+        ) {
+            throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
+        } else {
+            $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
         }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
-    }
-
-    public function __call($name, $arguments)
-    {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        return call_user_func_array($this->nextHandler, $params);
     }
 }

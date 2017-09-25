@@ -32,22 +32,16 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\GrpcCredentialsHelper;
-
-class MockGrpcCredentialsHelper extends GrpcCredentialsHelper
+class MockGrpcTransportStub
 {
-    protected function getADCCredentials($scopes)
-    {
-        return new MockCredentialsLoader($scopes, [
-            [
-                'access_token' => 'adcAccessToken',
-                'expires_in' => '100',
-            ],
-        ]);
-    }
+    public $hostname;
+    public $stubOpts;
+    public $channel;
 
-    protected function createSslChannelCredentials()
+    public function __construct($hostname, $stubOpts, $channel)
     {
-        return "DummySslCreds";
+        $this->hostname = $hostname;
+        $this->stubOpts = $stubOpts;
+        $this->channel = $channel;
     }
 }

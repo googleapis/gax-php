@@ -29,47 +29,72 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\Grpc;
 
-namespace Google\GAX\UnitTests\Mocks;
+use Google\GAX\ApiException;
+use Google\GAX\CallHelperTrait;
+use Google\GAX\ClientStreamInterface;
 
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
-
-class MockBidiStreamingStub
+class GrpcClientStream implements ClientStreamInterface
 {
-    use MockStubTrait;
+    use CallHelperTrait;
 
-    private $deserialize;
+    private $call;
 
-    public function __construct($deserialize = null)
+    /**
+     * ClientStream constructor.
+     *
+     * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
+     * @param array $grpcStreamingDescriptor
+     */
+    public function __construct($clientStreamingCall, $grpcStreamingDescriptor = [])
     {
-        $this->deserialize = $deserialize;
+        $this->call = $clientStreamingCall;
     }
 
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * Write request to the server.
+     *
+     * @param mixed $request The request to write
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public function write($request)
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
+        $this->call->write($request);
     }
 
-    public function __call($name, $arguments)
+    /**
+     * Read the response from the server, completing the streaming call.
+     *
+     * @throws ApiException
+     * @return mixed The response object from the server
+     */
+    public function readResponse()
     {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        return $this->call->wait();
+    }
+
+    /**
+     * Write all data in $dataArray and read the response from the server, completing the streaming
+     * call.
+     *
+     * @param mixed[] $requests An iterator of request objects to write to the server
+     * @return mixed The response object from the server
+     */
+    public function writeAllAndReadResponse($requests)
+    {
+        foreach ($requests as $request) {
+            $this->write($request);
+        }
+        return $this->readResponse();
+    }
+
+    /**
+     * Return the underlying gRPC call object
+     *
+     * @return \Grpc\ClientStreamingCall
+     */
+    public function getClientStreamingCall()
+    {
+        return $this->call;
     }
 }

@@ -148,11 +148,11 @@ class OperationResponseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($innerMetadata, $op->getMetadata());
     }
 
-    public static function createOperationsClient($stub = null)
+    public static function createOperationsClient($transport = null)
     {
         $client = new OperationsClient([
-            'createOperationsStubFunction' => function ($hostname, $opts) use ($stub) {
-                return $stub;
+            'createOperationsTransportFunction' => function ($hostname, $opts) use ($transport) {
+                return $transport;
             },
             'serviceAddress' => '',
             'scopes' => [],

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
-
-class MockBidiStreamingStub
+interface ServerStreamInterface
 {
-    use MockStubTrait;
-
-    private $deserialize;
-
-    public function __construct($deserialize = null)
-    {
-        $this->deserialize = $deserialize;
-    }
-
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * A generator which yields results from the server until the streaming call
+     * completes. Throws an ApiException if the streaming call failed.
+     *
+     * @throws ApiException
+     * @return \Generator|mixed
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
-    {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
-    }
-
-    public function __call($name, $arguments)
-    {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
-    }
+    public function readAll();
 }
