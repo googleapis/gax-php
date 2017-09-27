@@ -132,10 +132,10 @@ class GrpcCredentialsHelper
         $callback = function () use ($credentialsLoader) {
             $token = null;
             if ($this->args['enableCaching']) {
-              $token = $credentialsLoader->getLastReceivedToken();
+                $token = $credentialsLoader->getLastReceivedToken();
             }
             if (is_null($token) || time() > $token['expires_at']) {
-              $token = $credentialsLoader->fetchAuthToken();
+                $token = $credentialsLoader->fetchAuthToken();
             }
             return ['authorization' => array('Bearer ' . $token['access_token'])];
         };
