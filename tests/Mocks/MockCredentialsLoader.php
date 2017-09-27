@@ -48,7 +48,7 @@ class MockCredentialsLoader implements FetchAuthTokenInterface
     public function fetchAuthToken(callable $httpHandler = null)
     {
         $this->index = ($this->index + 1) % count($this->tokens);
-        return $this->tokens[$this->index];
+        return $this->toStdToken($this->tokens[$this->index]);
     }
 
     public function getCacheKey()
@@ -61,7 +61,15 @@ class MockCredentialsLoader implements FetchAuthTokenInterface
         if ($this->index == -1) {
             return null;
         } else {
-            return $this->tokens[$this->index];
+            return $this->toStdToken($this->tokens[$this->index]);
         }
+    }
+
+    private function toStdToken($tok)
+    {
+        return [
+            'access_token' => $tok['access_token'],
+            'expires_at' => time() + $tok['expires_in'],
+        ];
     }
 }
