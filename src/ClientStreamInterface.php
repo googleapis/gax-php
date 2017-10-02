@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,25 +29,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-use Google\GAX\GrpcCredentialsHelper;
-
-class MockGrpcCredentialsHelper extends GrpcCredentialsHelper
+interface ClientStreamInterface
 {
-    protected function getADCCredentials($scopes)
-    {
-        return new MockCredentialsLoader($scopes, [
-            [
-                'access_token' => 'adcAccessToken',
-                'expires_in' => '100',
-            ],
-        ]);
-    }
+    /**
+     * Write request to the server.
+     *
+     * @param mixed $request The request to write
+     */
+    public function write($request);
 
-    protected function createSslChannelCredentials()
-    {
-        return "DummySslCreds";
-    }
+    /**
+     * Read the response from the server, completing the streaming call.
+     *
+     * @throws ApiException
+     * @return mixed The response object from the server
+     */
+    public function readResponse();
+
+    /**
+     * Write all data and read the response from the server, completing the streaming
+     * call.
+     *
+     * @param mixed[] $requests An iterator of request objects to write to the server
+     * @return mixed The response object from the server
+     */
+    public function writeAllAndReadResponse($requests);
 }

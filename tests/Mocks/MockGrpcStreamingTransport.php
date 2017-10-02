@@ -32,18 +32,20 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
+use Google\GAX\TransportInterface;
+use Google\GAX\Grpc\GrpcBidiStream;
+use Google\GAX\Grpc\GrpcClientStream;
+use Google\GAX\Grpc\GrpcServerStream;
 
-class MockBidiStreamingStub
+class MockGrpcStreamingTransport implements TransportInterface
 {
-    use MockStubTrait;
+    private $stub;
+    private $descriptor;
 
-    private $deserialize;
-
-    public function __construct($deserialize = null)
+    public function __construct($stub = null, $descriptor = null)
     {
-        $this->deserialize = $deserialize;
+        $this->stub = $stub;
+        $this->descriptor = $descriptor;
     }
 
     /**
@@ -53,23 +55,36 @@ class MockBidiStreamingStub
      * @param callable $deserialize
      * @return MockBidiStreamingStub
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public static function create($stub, $descriptor = null)
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
+        return new self($stub, $descriptor);
     }
 
     public function __call($name, $arguments)
     {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+        $metadata = [];
+        $options = [];
+        list($request, $optionalArgs) = $arguments;
+
+        if (array_key_exists('headers', $optionalArgs)) {
+            $metadata = $optionalArgs['headers'];
+        }
+
+        $newArgs = [$request, $metadata, $optionalArgs];
+        $response = call_user_func_array([$this->stub, $name], $newArgs);
+
+        switch ($this->descriptor['grpcStreamingType']) {
+            case 'BidiStreaming':
+                return new GrpcBidiStream($response, $this->descriptor);
+
+            case 'ClientStreaming':
+                return new GrpcClientStream($response, $this->descriptor);
+
+            case 'ServerStreaming':
+                return new GrpcServerStream($response, $this->descriptor);
+
+            default:
+                throw new \Exception('Invalid streaming type');
+        }
     }
 }

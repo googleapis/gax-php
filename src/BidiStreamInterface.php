@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-use Google\GAX\Testing\MockStubTrait;
-use InvalidArgumentException;
-
-class MockBidiStreamingStub
+interface BidiStreamInterface
 {
-    use MockStubTrait;
-
-    private $deserialize;
-
-    public function __construct($deserialize = null)
-    {
-        $this->deserialize = $deserialize;
-    }
+    /**
+     * Write request to the server.
+     *
+     * @param mixed $request The request to write
+     * @throws ValidationException
+     */
+    public function write($request);
 
     /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
+     * Write all requests in $requests.
+     *
+     * @param mixed[] $requests An Iterable of request objects to write to the server
+     *
+     * @throws ValidationException
+     * @throws ApiException
      */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
-    {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
-        }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
-    }
+    public function writeAll($requests = []);
 
-    public function __call($name, $arguments)
-    {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
-    }
+    /**
+     * Inform the server that no more requests will be written. The write() function cannot be
+     * called after closeWrite() is called.
+     */
+    public function closeWrite();
+
+    /**
+     * Read the next response from the server. Returns null if the streaming call completed
+     * successfully. Throws an ApiException if the streaming call failed.
+     *
+     * @throws ValidationException
+     * @throws ApiException
+     * @return mixed
+     */
+    public function read();
+
+    /**
+     * Call closeWrite(), and read all responses from the server, until the streaming call is
+     * completed. Throws an ApiException if the streaming call failed.
+     *
+     * @throws ValidationException
+     * @throws ApiException
+     * @return \Generator|mixed[]
+     */
+    public function closeWriteAndReadAll();
 }

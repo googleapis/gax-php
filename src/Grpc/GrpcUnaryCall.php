@@ -29,47 +29,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\GAX\Grpc;
 
-namespace Google\GAX\UnitTests\Mocks;
-
-use Google\GAX\Testing\MockStubTrait;
+use Google\GAX\ApiException;
+use Google\GAX\UnaryCallInterface;
 use InvalidArgumentException;
 
-class MockBidiStreamingStub
+class GrpcUnaryCall implements UnaryCallInterface
 {
-    use MockStubTrait;
+    private $innerUnaryCall;
 
-    private $deserialize;
-
-    public function __construct($deserialize = null)
+    public function __construct(\Grpc\UnaryCall $innerUnaryCall)
     {
-        $this->deserialize = $deserialize;
+        $this->innerUnaryCall = $innerUnaryCall;
     }
 
-    /**
-     * Creates a sequence such that the responses are returned in order.
-     * @param mixed[] $sequence
-     * @param $finalStatus
-     * @param callable $deserialize
-     * @return MockBidiStreamingStub
-     */
-    public static function createWithResponseSequence($sequence, $finalStatus = null, $deserialize = null)
+    public function wait()
     {
-        if (count($sequence) == 0) {
-            throw new InvalidArgumentException("createResponseSequence: need at least 1 response");
+        list($response, $status) = $this->innerUnaryCall->wait();
+        if ($status->code == \Google\Rpc\Code::OK) {
+            return $response;
+        } else {
+            throw ApiException::createFromStdClass($status);
         }
-        $stub = new MockBidiStreamingStub($deserialize);
-        foreach ($sequence as $resp) {
-            $stub->addResponse($resp);
-        }
-        $stub->setStreamingStatus($finalStatus);
-        return $stub;
-    }
-
-    public function __call($name, $arguments)
-    {
-        list($request, $metadata, $options) = $arguments;
-        $newArgs = [$name, $this->deserialize, $metadata, $options];
-        return call_user_func_array(array($this, '_bidiRequest'), $newArgs);
     }
 }

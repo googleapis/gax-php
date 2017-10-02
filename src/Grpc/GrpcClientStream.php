@@ -29,14 +29,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX;
+namespace Google\GAX\Grpc;
 
-use Grpc;
+use Google\GAX\ApiException;
+use Google\GAX\CallHelperTrait;
+use Google\GAX\ClientStreamInterface;
 
-/**
- * ClientStream is the response object from a gRPC client streaming API call.
- */
-class ClientStream
+class GrpcClientStream implements ClientStreamInterface
 {
     use CallHelperTrait;
 
@@ -51,19 +50,6 @@ class ClientStream
     public function __construct($clientStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $clientStreamingCall;
-    }
-
-    /**
-     * @param callable $callable
-     * @param mixed[] $grpcStreamingDescriptor
-     * @return callable ApiCall
-     */
-    public static function createApiCall($callable, $grpcStreamingDescriptor)
-    {
-        return function () use ($callable, $grpcStreamingDescriptor) {
-            $response = self::callWithoutRequest($callable, func_get_args());
-            return new ClientStream($response, $grpcStreamingDescriptor);
-        };
     }
 
     /**
@@ -84,12 +70,7 @@ class ClientStream
      */
     public function readResponse()
     {
-        list($response, $status) = $this->call->wait();
-        if ($status->code == Grpc\STATUS_OK) {
-            return $response;
-        } else {
-            throw ApiException::createFromStdClass($status);
-        }
+        return $this->call->wait();
     }
 
     /**
