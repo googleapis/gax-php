@@ -65,7 +65,7 @@ class ApiCallable
     {
         if (!isset($timeFuncMillis)) {
             $timeFuncMillis = function () {
-                return microtime(true) / 1000.0;
+                return microtime(true) * 1000.0;
             };
         }
 
