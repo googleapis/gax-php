@@ -196,8 +196,8 @@ class GrpcTransport
             $args = func_get_args();
             $optionalArgs = array_pop($args);
             $args = array_merge($args, $this->constructGrpcArgs($optionalArgs));
-            $innerUnaryCall = call_user_func_array([$this->grpcStub, $methodName], $args);
-            return new $callClass($innerUnaryCall);
+            $innerCall = call_user_func_array([$this->grpcStub, $methodName], $args);
+            return new $callClass($innerCall);
         };
 
         // Call the sync method "wait" if this is not a gRPC call

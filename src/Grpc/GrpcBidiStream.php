@@ -53,7 +53,7 @@ class GrpcBidiStream implements BidiStreamInterface
      * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      * @param array $grpcStreamingDescriptor
      */
-    public function __construct($bidiStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct(\Grpc\BidiStreamingCall $bidiStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $bidiStreamingCall;
         if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {

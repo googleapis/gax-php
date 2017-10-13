@@ -47,7 +47,7 @@ class GrpcServerStream implements ServerStreamInterface
      * @param \Grpc\ServerStreamingCall $serverStreamingCall The gRPC server streaming call object
      * @param array $grpcStreamingDescriptor
      */
-    public function __construct($serverStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct(\Grpc\ServerStreamingCall $serverStreamingCall, $grpcStreamingDescriptor = [])
     {
         $this->call = $serverStreamingCall;
         if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
