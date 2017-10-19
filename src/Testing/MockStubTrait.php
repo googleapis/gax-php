@@ -31,6 +31,7 @@
  */
 namespace Google\GAX\Testing;
 
+use Google\GAX\ApiException;
 use UnderflowException;
 
 /**
@@ -45,6 +46,12 @@ trait MockStubTrait
     private $responses = [];
     private $serverStreamingStatus = null;
     private $callObjects = [];
+    private $deserialize;
+
+    public function __construct($deserialize = null)
+    {
+        $this->deserialize = $deserialize;
+    }
 
     /**
      * Overrides the _simpleRequest method in \Grpc\BaseStub
@@ -98,7 +105,6 @@ trait MockStubTrait
         array $metadata = [],
         array $options = []
     ) {
-
         $this->receivedFuncCalls[] = new ReceivedRequest($method, null, $deserialize, $metadata, $options);
         if (count($this->responses) < 1) {
             throw new UnderflowException("ran out of responses");
@@ -245,5 +251,40 @@ trait MockStubTrait
     {
         return count($this->receivedFuncCalls) === 0
             && count($this->responses) === 0;
+    }
+
+    /**
+     * @param mixed $responseObject
+     * @param $status
+     * @return MockTransport
+     */
+    public static function create($responseObject, $status = null, $deserialize = null)
+    {
+        $stub = new static($deserialize);
+        $stub->addResponse($responseObject, $status);
+        return $stub;
+    }
+
+    /**
+     * Creates a sequence such that the responses are returned in order.
+     * @param mixed[] $sequence
+     * @param callable $deserialize
+     * @return MockTransport
+     */
+    public static function createWithResponseSequence($sequence, $deserialize = null, $finalStatus = null)
+    {
+        $stub = new static($deserialize);
+        foreach ($sequence as $elem) {
+            if (count($elem) == 1) {
+                list($resp, $status) = [$elem, null];
+            } else {
+                list($resp, $status) = $elem;
+            }
+            $stub->addResponse($resp, $status);
+        }
+        if ($finalStatus) {
+            $stub->setStreamingStatus($finalStatus);
+        }
+        return $stub;
     }
 }

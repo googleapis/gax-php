@@ -40,12 +40,11 @@ use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\RetrySettings;
 use Google\GAX\ApiStatus;
 use Google\GAX\Testing\MockStatus;
-use Google\GAX\UnitTests\Mocks\MockBidiStreamingStub;
-use Google\GAX\UnitTests\Mocks\MockClientStreamingStub;
-use Google\GAX\UnitTests\Mocks\MockServerStreamingStub;
-use Google\GAX\UnitTests\Mocks\MockStub;
+use Google\GAX\UnitTests\Mocks\MockBidiStreamingTransport;
+use Google\GAX\UnitTests\Mocks\MockClientStreamingTransport;
+use Google\GAX\UnitTests\Mocks\MockServerStreamingTransport;
 use Google\GAX\UnitTests\Mocks\MockTransport;
-use Google\GAX\UnitTests\Mocks\MockGrpcStreamingTransport;
+use Google\GAX\UnitTests\Mocks\MockStreamingTransport;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingRequest;
 use Google\GAX\UnitTests\Mocks\MockPageStreamingResponse;
 use Google\GAX\ValidationException;
@@ -65,15 +64,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $metadata = [];
         $options = ['call_credentials_callback' => 'fake_callback'];
         $response = "response";
-        $stub = MockStub::create($response);
-        $transport = MockTransport::create($stub);
+        $transport = MockTransport::create($response);
 
         $callSettings = new CallSettings([]);
         $apiCall = $transport->createApiCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, $options);
         $this->assertEquals($response, $actualResponse);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
         $this->assertEquals($metadata, $actualCalls[0]->getMetadata());
@@ -84,8 +82,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
     {
         $request = "request";
         $response = "response";
-        $stub = MockStub::create($response);
-        $transport = MockTransport::create($stub);
+        $transport = MockTransport::create($response);
 
         $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
@@ -106,7 +103,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($response, $actualResponse);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -118,8 +115,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $request = "request";
         $response = "response";
         $status = new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded');
-        $stub = MockStub::createWithResponseSequence([[$response, $status]]);
-        $transport = MockTransport::create($stub);
+        $transport = MockTransport::createWithResponseSequence([[$response, $status]]);
         $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
@@ -140,7 +136,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             $isExceptionRaised = true;
         }
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
 
@@ -158,8 +154,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseB, new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded')],
             [$responseC, new MockStatus(Code::OK, '')]
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
-        $transport = MockTransport::create($stub);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
@@ -176,7 +171,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($responseC, $actualResponse);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(3, count($actualCalls));
 
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
@@ -194,7 +189,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $request = "request";
         $response = "response";
         $status = new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded');
-        $stub = MockStub::createWithResponseSequence([
+        $transport = MockTransport::createWithResponseSequence([
             [$response, $status],
             [$response, $status],
             [$response, $status]
@@ -214,14 +209,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         // Use time function that simulates 1100ms elapsing with each call to the stub
         $incrementMillis = 1100;
         $elapsed = 0;
-        $timeFuncMillis = function () use ($stub, $incrementMillis, $elapsed) {
-            $actualCalls = $stub->getReceivedCallCount();
+        $timeFuncMillis = function () use ($transport, $incrementMillis, $elapsed) {
+            $actualCalls = $transport->getReceivedCallCount();
             return $actualCalls * $incrementMillis;
         };
 
         $raisedException = null;
         try {
-            $transport = MockTransport::create($stub);
             $apiCall = $transport->createApiCall(
                 'takeAction',
                 $callSettings,
@@ -232,7 +226,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             $raisedException = $e;
         }
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(3, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
 
@@ -244,7 +238,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
     {
         $request = "request";
         $response = "response";
-        $stub = MockStub::createWithResponseSequence([]);
+        $transport = MockTransport::createWithResponseSequence([]);
         $retrySettings = new RetrySettings([
             'initialRetryDelayMillis' => 10,
             'retryDelayMultiplier' => 1,
@@ -259,13 +253,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
 
         $raisedException = null;
         try {
-            $apiCall = ApiCallable::createApiCall($stub, 'methodThatSleeps', $callSettings);
-            $response = $apiCall($request, [], []);
+            $apiCall = $transport->createApiCall('methodThatSleeps', $callSettings);
+            $response = $apiCall($request, []);
         } catch (ApiException $e) {
             $raisedException = $e;
         }
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(3, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
 
@@ -284,27 +278,26 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseB, new MockStatus(Code::OK, '')],
             [$responseC, new MockStatus(Code::OK, '')]
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
         );
         $response = $apiCall($request, []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $actualResources = [];
         foreach ($response->iterateAllElements() as $element) {
             array_push($actualResources, $element);
         }
-        $actualCalls = array_merge($actualCalls, $stub->popReceivedCalls());
+        $actualCalls = array_merge($actualCalls, $transport->popReceivedCalls());
         $this->assertEquals(3, count($actualCalls));
         $this->assertEquals(['resource1', 'resource2', 'resource3', 'resource4'], $actualResources);
     }
@@ -320,14 +313,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseB, new MockStatus(Code::OK, '')],
             [$responseC, new MockStatus(Code::OK, '')]
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -335,7 +327,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         );
         /** @var PagedListResponse $response */
         $response = $apiCall($request, []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $actualResources = [];
         $actualTokens = [];
@@ -345,7 +337,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
                 array_push($actualResources, $element);
             }
         }
-        $actualCalls = array_merge($actualCalls, $stub->popReceivedCalls());
+        $actualCalls = array_merge($actualCalls, $transport->popReceivedCalls());
         $this->assertEquals(3, count($actualCalls));
         $this->assertEquals(['resource1', 'resource2', 'resource3', 'resource4'], $actualResources);
         $this->assertEquals(
@@ -365,7 +357,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseB, new MockStatus(Code::OK, '')],
             [$responseC, new MockStatus(Code::OK, '')]
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
@@ -374,14 +366,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
         );
         $response = $apiCall($request, []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $actualResources = [];
         $collectionCount = 0;
@@ -391,7 +382,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
                 array_push($actualResources, $element);
             }
         }
-        $actualCalls = array_merge($actualCalls, $stub->popReceivedCalls());
+        $actualCalls = array_merge($actualCalls, $transport->popReceivedCalls());
         $this->assertEquals(3, count($actualCalls));
         $this->assertEquals(2, $collectionCount);
         $this->assertEquals(['resource1', 'resource2', 'resource3', 'resource4'], $actualResources);
@@ -408,7 +399,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $responseSequence = [
             [$responseA, new MockStatus(Code::OK, '')],
                              ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
@@ -416,7 +407,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -437,7 +427,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $responseSequence = [
             [$responseA, new MockStatus(Code::OK, '')],
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
@@ -446,7 +436,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -468,7 +457,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $responseSequence = [
             [$responseA, new MockStatus(Code::OK, '')]
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'requestPageSizeField' => 'pageSize',
@@ -476,7 +465,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -497,34 +485,33 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseB, new MockStatus(Code::OK, '')],
             [$responseC, new MockStatus(Code::OK, '')]
         ];
-        $stub = MockStub::createWithResponseSequence($responseSequence);
+        $transport = MockTransport::createWithResponseSequence($responseSequence);
         $descriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings(['timeout' => 1000]);
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
         );
         $response = $apiCall($request, []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $actualResources = [];
         foreach ($response->iterateAllElements() as $element) {
             array_push($actualResources, $element);
         }
-        $actualCalls = array_merge($actualCalls, $stub->popReceivedCalls());
+        $actualCalls = array_merge($actualCalls, $transport->popReceivedCalls());
         $this->assertEquals(3, count($actualCalls));
         $this->assertEquals(['resource1', 'resource2', 'resource3', 'resource4'], $actualResources);
     }
 
     public function testCustomHeader()
     {
-        $stub = MockStub::create(new MockPageStreamingResponse());
+        $transport = MockTransport::create(new MockPageStreamingResponse());
         $headerDescriptor = new AgentHeaderDescriptor([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
@@ -533,14 +520,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'phpVersion' => '5.5.0',
             'grpcVersion' => '1.0.1'
         ]);
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             new CallSettings(),
             ['headerDescriptor' => $headerDescriptor]
         );
         $resources = $apiCall(new MockPageStreamingRequest(), []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $expectedMetadata = [
             'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1']
@@ -550,7 +536,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
 
     public function testUserHeaders()
     {
-        $stub = MockStub::create(new MockPageStreamingResponse());
+        $transport = MockTransport::create(new MockPageStreamingResponse());
         $headerDescriptor = new AgentHeaderDescriptor([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
@@ -565,14 +551,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $callSettings = new CallSettings([
             'userHeaders' => $userHeaders,
         ]);
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['headerDescriptor' => $headerDescriptor]
         );
         $resources = $apiCall(new MockPageStreamingRequest(), []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $expectedMetadata = [
             'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1'],
@@ -583,7 +568,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
 
     public function testUserHeadersOverwriteBehavior()
     {
-        $stub = MockStub::create(new MockPageStreamingResponse());
+        $transport = MockTransport::create(new MockPageStreamingResponse());
         $headerDescriptor = new AgentHeaderDescriptor([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
@@ -599,14 +584,13 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $callSettings = new CallSettings([
             'userHeaders' => $userHeaders,
         ]);
-        $transport = MockTransport::create($stub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['headerDescriptor' => $headerDescriptor]
         );
         $resources = $apiCall(new MockPageStreamingRequest(), []);
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertEquals(1, count($actualCalls));
         $expectedMetadata = [
             'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1'],
@@ -656,15 +640,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Code::OK, '')],
             [$responseB, new MockStatus(Code::OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence(
+        $transport = MockTransport::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence(
+        $opTransport = MockTransport::createWithResponseSequence(
             $responseSequence,
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opTransport = MockTransport::create($opStub);
         $opClient = OperationResponseTest::createOperationsClient($opTransport);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -672,7 +655,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($callStub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -687,8 +669,8 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $metadataResponses = [$response->getMetadata()];
         $isDoneResponses = [$response->isDone()];
 
-        $apiReceivedCalls = $callStub->popReceivedCalls();
-        $opReceivedCallsEmpty = $opStub->popReceivedCalls();
+        $apiReceivedCalls = $transport->popReceivedCalls();
+        $opReceivedCallsEmpty = $opTransport->popReceivedCalls();
 
         $this->assertSame(1, count($apiReceivedCalls));
         $this->assertSame(0, count($opReceivedCallsEmpty));
@@ -701,8 +683,8 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             $isDoneResponses[] = $response->isDone();
         }
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = $opStub->popReceivedCalls();
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = $opTransport->popReceivedCalls();
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(2, count($opReceivedCalls));
@@ -735,15 +717,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Code::OK, '')],
             [$responseB, new MockStatus(Code::OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence(
+        $transport = MockTransport::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence(
+        $opTransport = MockTransport::createWithResponseSequence(
             $responseSequence,
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opTransport = MockTransport::create($opStub);
         $opClient = OperationResponseTest::createOperationsClient($opTransport);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -751,7 +732,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($callStub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -759,10 +739,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         );
 
         /* @var $response \Google\GAX\OperationResponse */
-        $response = $apiCall($request, [], []);
+        $response = $apiCall($request, []);
 
-        $apiReceivedCalls = $callStub->popReceivedCalls();
-        $opReceivedCallsEmpty = $opStub->popReceivedCalls();
+        $apiReceivedCalls = $transport->popReceivedCalls();
+        $opReceivedCallsEmpty = $opTransport->popReceivedCalls();
 
         $this->assertSame(1, count($apiReceivedCalls));
         $this->assertSame(0, count($opReceivedCallsEmpty));
@@ -771,8 +751,8 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($complete);
         $this->assertTrue($response->isDone());
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = $opStub->popReceivedCalls();
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = $opTransport->popReceivedCalls();
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(2, count($opReceivedCalls));
@@ -806,15 +786,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Code::OK, '')],
             [$responseB, new MockStatus(Code::OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence(
+        $transport = MockTransport::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence(
+        $opTransport = MockTransport::createWithResponseSequence(
             $responseSequence,
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opTransport = MockTransport::create($opStub);
         $opClient = OperationResponseTest::createOperationsClient($opTransport);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -822,7 +801,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($callStub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -830,10 +808,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         );
 
         /* @var $response \Google\GAX\OperationResponse */
-        $response = $apiCall($request, [], []);
+        $response = $apiCall($request, []);
 
-        $apiReceivedCalls = $callStub->popReceivedCalls();
-        $opReceivedCallsEmpty = $opStub->popReceivedCalls();
+        $apiReceivedCalls = $transport->popReceivedCalls();
+        $opReceivedCallsEmpty = $opTransport->popReceivedCalls();
 
         $this->assertSame(1, count($apiReceivedCalls));
         $this->assertSame(0, count($opReceivedCallsEmpty));
@@ -845,8 +823,8 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($complete);
         $this->assertFalse($response->isDone());
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = $opStub->popReceivedCalls();
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = $opTransport->popReceivedCalls();
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(2, count($opReceivedCalls));
@@ -875,15 +853,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Code::OK, '')],
             [$responseB, new MockStatus(Code::OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence(
+        $transport = MockTransport::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence(
+        $opTransport = MockTransport::createWithResponseSequence(
             $responseSequence,
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opTransport = MockTransport::create($opStub);
         $opClient = OperationResponseTest::createOperationsClient($opTransport);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -891,7 +868,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($callStub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -899,15 +875,15 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         );
 
         /* @var $response \Google\GAX\OperationResponse */
-        $response = $apiCall($request, [], []);
+        $response = $apiCall($request, []);
 
         $results = [$response->getResult()];
         $errors = [$response->getError()];
         $metadataResponses = [$response->getMetadata()];
         $isDoneResponses = [$response->isDone()];
 
-        $apiReceivedCalls = $callStub->popReceivedCalls();
-        $opReceivedCallsEmpty = $opStub->popReceivedCalls();
+        $apiReceivedCalls = $transport->popReceivedCalls();
+        $opReceivedCallsEmpty = $opTransport->popReceivedCalls();
 
         $this->assertSame(1, count($apiReceivedCalls));
         $this->assertSame(0, count($opReceivedCallsEmpty));
@@ -920,8 +896,8 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             $isDoneResponses[] = $response->isDone();
         }
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = $opStub->popReceivedCalls();
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = $opTransport->popReceivedCalls();
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(2, count($opReceivedCalls));
@@ -962,15 +938,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             [$responseA, new MockStatus(Code::OK, '')],
             [$responseB, new MockStatus(Code::OK, '')],
         ];
-        $callStub = MockStub::createWithResponseSequence(
+        $transport = MockTransport::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence(
+        $opTransport = MockTransport::createWithResponseSequence(
             $responseSequence,
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opTransport = MockTransport::create($opStub);
         $opClient = OperationResponseTest::createOperationsClient($opTransport);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -978,7 +953,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($callStub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -986,18 +960,18 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         );
 
         /* @var $response \Google\GAX\OperationResponse */
-        $response = $apiCall($request, [], []);
+        $response = $apiCall($request, []);
 
-        $apiReceivedCalls = $callStub->popReceivedCalls();
-        $opReceivedCallsEmpty = $opStub->popReceivedCalls();
+        $apiReceivedCalls = $transport->popReceivedCalls();
+        $opReceivedCallsEmpty = $opTransport->popReceivedCalls();
 
         $this->assertSame(1, count($apiReceivedCalls));
         $this->assertSame(0, count($opReceivedCallsEmpty));
 
         $response->cancel();
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = $opStub->popReceivedCalls();
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = $opTransport->popReceivedCalls();
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(1, count($opReceivedCalls));
@@ -1006,8 +980,8 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             $response->reload();
         }
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = array_merge($opReceivedCalls, $opStub->popReceivedCalls());
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = array_merge($opReceivedCalls, $opTransport->popReceivedCalls());
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(3, count($opReceivedCalls));
@@ -1033,15 +1007,14 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $request = null;
 
         $initialResponse = self::createIncompleteOperationResponse($opName, 'm1');
-        $callStub = MockStub::createWithResponseSequence(
+        $transport = MockTransport::createWithResponseSequence(
             [[$initialResponse, new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opStub = MockStub::createWithResponseSequence(
+        $opTransport = MockTransport::createWithResponseSequence(
             [[new GPBEmpty(), new MockStatus(Code::OK, '')]],
             ['\Google\Longrunning\Operation', 'mergeFromString']
         );
-        $opTransport = MockTransport::create($opStub);
         $opClient = OperationResponseTest::createOperationsClient($opTransport);
         $descriptor = [
             'operationsClient' => $opClient,
@@ -1049,7 +1022,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $transport = MockTransport::create($callStub);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1057,18 +1029,18 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         );
 
         /* @var $response \Google\GAX\OperationResponse */
-        $response = $apiCall($request, [], []);
+        $response = $apiCall($request, []);
 
-        $apiReceivedCalls = $callStub->popReceivedCalls();
-        $opReceivedCallsEmpty = $opStub->popReceivedCalls();
+        $apiReceivedCalls = $transport->popReceivedCalls();
+        $opReceivedCallsEmpty = $opTransport->popReceivedCalls();
 
         $this->assertSame(1, count($apiReceivedCalls));
         $this->assertSame(0, count($opReceivedCallsEmpty));
 
         $response->delete();
 
-        $apiReceivedCallsEmpty = $callStub->popReceivedCalls();
-        $opReceivedCalls = $opStub->popReceivedCalls();
+        $apiReceivedCallsEmpty = $transport->popReceivedCalls();
+        $opReceivedCalls = $opTransport->popReceivedCalls();
 
         $this->assertSame(0, count($apiReceivedCallsEmpty));
         $this->assertSame(1, count($opReceivedCalls));
@@ -1077,16 +1049,6 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertSame('DeleteOperation', $opReceivedCalls[0]->getFuncCall());
 
         $response->reload();
-    }
-
-    public function testClientStreamingSuccessSimple()
-    {
-        $request = "request";
-        $response = "response";
-        $descriptor = [
-            'grpcStreamingType' => 'ClientStreaming',
-        ];
-        $this->clientStreamingTestImpl($request, $response, $descriptor, null);
     }
 
     public function testClientStreamingSuccessObject()
@@ -1106,23 +1068,23 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
     private function clientStreamingTestImpl($request, $response, $descriptor, $deserialize)
     {
         $options = ['call_credentials_callback' => 'fake_callback'];
-        $stub = MockClientStreamingStub::create($response, null, $deserialize);
+        $transport = MockStreamingTransport::create($response, null, $deserialize);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
 
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
         );
 
-        /* @var $stream \Google\GAX\ClientStream */
+        /* @var $stream \Google\GAX\ClientStreamInterface */
         $stream = $apiCall(null, $options);
         $actualResponse = $stream->writeAllAndReadResponse([$request]);
         $this->assertEquals($response, $actualResponse);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertNull($actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1150,10 +1112,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $finalStatus = new MockStatus(Code::INTERNAL, 'client streaming failure');
 
         $options = ['call_credentials_callback' => 'fake_callback'];
-        $stub = MockClientStreamingStub::create($response, $finalStatus);
+        $transport = MockStreamingTransport::create($response, $finalStatus);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1164,7 +1126,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $stream = $apiCall(null, $options);
         $stream->write($request);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertNull($actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1208,10 +1170,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
     private function serverStreamingTestImpl($request, $responses, $descriptor, $deserialize)
     {
         $options = ['call_credentials_callback' => 'fake_callback'];
-        $stub = MockServerStreamingStub::createWithResponseSequence($responses, null, $deserialize);
+        $transport = MockStreamingTransport::createWithResponseSequence($responses, $deserialize);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1224,7 +1186,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertSame(1, count($actualResponses));
         $this->assertEquals($responses, $actualResponses);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1252,10 +1214,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         ];
 
         $options = ['call_credentials_callback' => 'fake_callback'];
-        $stub = MockServerStreamingStub::createWithResponseSequence($responses);
+        $transport = MockStreamingTransport::createWithResponseSequence($responses);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1268,7 +1230,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertSame(2, count($actualResponses));
         $this->assertEquals($resources, $actualResponses);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertEquals($request, $actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1291,10 +1253,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $finalStatus = new MockStatus(Code::INTERNAL, 'server streaming failure');
 
         $options = ['call_credentials_callback' => 'fake_callback'];
-        $stub = MockServerStreamingStub::createWithResponseSequence($responses, $finalStatus);
+        $transport = MockStreamingTransport::createWithResponseSequence($responses, null, $finalStatus);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1307,7 +1269,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         foreach ($stream->readAll() as $actualResponse) {
             $this->assertEquals($response, $actualResponse);
 
-            $actualCalls = $stub->popReceivedCalls();
+            $actualCalls = $transport->popReceivedCalls();
             $this->assertSame(1, count($actualCalls));
             $this->assertEquals($request, $actualCalls[0]->getRequestObject());
             $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1342,10 +1304,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
     private function bidiStreamingTestImpl($request, $responses, $descriptor, $deserialize)
     {
         $options = ['grpcStreamingDescriptor' => $descriptor];
-        $stub = MockBidiStreamingStub::createWithResponseSequence($responses, null, $deserialize);
+        $transport = MockStreamingTransport::createWithResponseSequence($responses, $deserialize);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1359,7 +1321,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertSame(1, count($actualResponses));
         $this->assertEquals($responses, $actualResponses);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertNull($actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1392,10 +1354,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         ];
 
         $options = ['grpcStreamingDescriptor' => $descriptor];
-        $stub = MockBidiStreamingStub::createWithResponseSequence([$response]);
+        $transport = MockStreamingTransport::createWithResponseSequence([$response]);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1409,7 +1371,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $this->assertSame(2, count($actualResponses));
         $this->assertEquals($resources, $actualResponses);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertNull($actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());
@@ -1438,10 +1400,10 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $finalStatus = new MockStatus(Code::INTERNAL, 'bidi failure');
 
         $options = ['grpcStreamingDescriptor' => $descriptor];
-        $stub = MockBidiStreamingStub::createWithResponseSequence($responses, $finalStatus);
+        $transport = MockStreamingTransport::createWithResponseSequence($responses, null, $finalStatus);
+        $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $transport = MockGrpcStreamingTransport::create($stub, $descriptor);
         $apiCall = $transport->createApiCall(
             'takeAction',
             $callSettings,
@@ -1455,7 +1417,7 @@ class CallStackTraitTest extends PHPUnit_Framework_TestCase
         $actualResponse = $stream->read();
         $this->assertEquals($response, $actualResponse);
 
-        $actualCalls = $stub->popReceivedCalls();
+        $actualCalls = $transport->popReceivedCalls();
         $this->assertSame(1, count($actualCalls));
         $this->assertNull($actualCalls[0]->getRequestObject());
         $this->assertEquals([], $actualCalls[0]->getMetadata());

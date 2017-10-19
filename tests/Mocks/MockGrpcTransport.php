@@ -32,14 +32,23 @@
 
 namespace Google\GAX\UnitTests\Mocks;
 
-use Google\GAX\Grpc\GrpcTransportTrait;
+use Google\GAX\Grpc\GrpcTransport;
 
-class MockGrpcTransport
+class MockGrpcTransport extends GrpcTransport
 {
-    use GrpcTransportTrait;
+    public $hostname;
+    public $stubOpts;
+    public $channel;
 
-    private static $grpcStubClassName = 'Google\GAX\UnitTests\Mocks\MockGrpcTransportStub';
-
+    public function __construct($args = [])
+    {
+        $args['createGrpcStubFunction'] = function ($hostname, $stubOpts, $channel) {
+            $this->hostname = $hostname;
+            $this->stubOpts = $stubOpts;
+            $this->channel = $channel;
+        };
+        parent::__construct($args);
+    }
     /**
      * Get the generated Grpc Stub
      */

@@ -39,9 +39,9 @@ interface ApiTransportInterface
      * @param array $options {
      *     Optional.
      *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
-     *           the descriptor used for page-streaming.
+     *           The descriptor used for page-streaming.
      *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
-     *           the descriptor used for creating the GAPIC header.
+     *           The descriptor used for creating the GAPIC header.
      * }
      *
      * @throws \Google\GAX\ValidationException
