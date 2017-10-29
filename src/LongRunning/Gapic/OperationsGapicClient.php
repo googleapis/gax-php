@@ -48,10 +48,8 @@ use Google\Cloud\Version;
 use Google\GAX\AgentHeaderDescriptor;
 use Google\GAX\ApiCallable;
 use Google\GAX\CallSettings;
-use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
-use Google\GAX\PathTemplate;
 use Google\GAX\ValidationException;
 use Google\Longrunning\CancelOperationRequest;
 use Google\Longrunning\DeleteOperationRequest;
@@ -97,7 +95,6 @@ use Google\Longrunning\OperationsGrpcClient;
  */
 class OperationsGapicClient
 {
-
     /**
      * The default port of the service.
      */
@@ -113,7 +110,6 @@ class OperationsGapicClient
      */
     const CODEGEN_VERSION = '0.0.5';
 
-
     private static $gapicVersion;
     private static $gapicVersionLoaded = false;
 
@@ -122,7 +118,6 @@ class OperationsGapicClient
     private $scopes;
     private $defaultCallSettings;
     private $descriptors;
-
 
     private static function getPageStreamingDescriptors()
     {
@@ -143,30 +138,26 @@ class OperationsGapicClient
         return $pageStreamingDescriptors;
     }
 
-
-
     private static function getGapicVersion()
     {
         if (!self::$gapicVersionLoaded) {
-            if (file_exists(__DIR__ . '/../VERSION')) {
-                self::$gapicVersion = trim(file_get_contents(__DIR__ . '/../VERSION'));
+            if (file_exists(__DIR__.'/../VERSION')) {
+                self::$gapicVersion = trim(file_get_contents(__DIR__.'/../VERSION'));
             } elseif (class_exists(Version::class)) {
                 self::$gapicVersion = Version::VERSION;
             }
             self::$gapicVersionLoaded = true;
         }
+
         return self::$gapicVersion;
     }
-
-
-
 
     /**
      * Constructor.
      *
      * @param array $options {
-     *     Required. Options for configuring the service API wrapper. Those options
-     *     that must be provided are marked as Required.
+     *                       Required. Options for configuring the service API wrapper. Those options
+     *                       that must be provided are marked as Required.
      *
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
@@ -199,8 +190,9 @@ class OperationsGapicClient
      *           ['retriesEnabled' => false]. Retry settings provided in this setting override the
      *           settings in $clientConfigPath.
      * }
-     * @throws ValidationException Throws a ValidationException if required arguments are missing
-     *                             from the $options array.
+     *
+     * @throws ValidationException throws a ValidationException if required arguments are missing
+     *                             from the $options array
      * @experimental
      */
     public function __construct($options = [])
@@ -216,10 +208,9 @@ class OperationsGapicClient
             'retryingOverride' => null,
             'libName' => null,
             'libVersion' => null,
-            'clientConfigPath' => __DIR__ . '/../resources/operations_client_config.json',
+            'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
         ];
         $options = array_merge($defaultOptions, $options);
-
 
         $gapicVersion = $options['libVersion'] ?: self::getGapicVersion();
 
@@ -289,9 +280,10 @@ class OperationsGapicClient
      * }
      * ```
      *
-     * @param string $name The name of the operation resource.
-     * @param array $optionalArgs {
-     *     Optional.
+     * @param string $name         the name of the operation resource
+     * @param array  $optionalArgs {
+     *                             Optional
+     *
      *     @type \Google\GAX\RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\GAX\RetrySettings} object, or an associative array
@@ -366,10 +358,11 @@ class OperationsGapicClient
      * }
      * ```
      *
-     * @param string $name The name of the operation collection.
-     * @param string $filter The standard list filter.
-     * @param array $optionalArgs {
-     *     Optional.
+     * @param string $name         the name of the operation collection
+     * @param string $filter       the standard list filter
+     * @param array  $optionalArgs {
+     *                             Optional
+     *
      *     @type int $pageSize
      *          The maximum number of resources contained in the underlying API
      *          response. The API may return fewer values in a page, even if
@@ -452,9 +445,10 @@ class OperationsGapicClient
      * }
      * ```
      *
-     * @param string $name The name of the operation resource to be cancelled.
-     * @param array $optionalArgs {
-     *     Optional.
+     * @param string $name         the name of the operation resource to be cancelled
+     * @param array  $optionalArgs {
+     *                             Optional
+     *
      *     @type \Google\GAX\RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\GAX\RetrySettings} object, or an associative array
@@ -513,9 +507,10 @@ class OperationsGapicClient
      * }
      * ```
      *
-     * @param string $name The name of the operation resource to be deleted.
-     * @param array $optionalArgs {
-     *     Optional.
+     * @param string $name         the name of the operation resource to be deleted
+     * @param array  $optionalArgs {
+     *                             Optional
+     *
      *     @type \Google\GAX\RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\GAX\RetrySettings} object, or an associative array
@@ -554,6 +549,7 @@ class OperationsGapicClient
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
      * calls are immediately cancelled.
+     *
      * @experimental
      */
     public function close()
