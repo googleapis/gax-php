@@ -46,6 +46,11 @@ class GrpcTransport
     use CallStackTrait;
     use ValidationTrait;
 
+    const UNARY_CALL_CLASS = 'Google\GAX\Grpc\GrpcUnaryCall';
+    const CLIENT_STREAM_CALL_CLASS = 'Google\GAX\Grpc\GrpcClientStream';
+    const SERVER_STREAM_CALL_CLASS = 'Google\GAX\Grpc\GrpcServerStream';
+    const BIDI_STREAM_CALL_CLASS = 'Google\GAX\Grpc\GrpcBidiStream';
+
     protected $grpcStub;
     private $credentialsCallback;
 
@@ -173,18 +178,18 @@ class GrpcTransport
     {
         $this->validateApiCallSettings($settings, $options);
 
-        $callClass = 'Google\GAX\Grpc\GrpcUnaryCall';
+        $callClass = self::UNARY_CALL_CLASS;
         if (array_key_exists('grpcStreamingDescriptor', $options)) {
             $grpcStreamingDescriptor = $options['grpcStreamingDescriptor'];
             switch ($grpcStreamingDescriptor['grpcStreamingType']) {
                 case 'ClientStreaming':
-                    $callClass = 'Google\GAX\Grpc\GrpcClientStream';
+                    $callClass = self::CLIENT_STREAM_CALL_CLASS;
                     break;
                 case 'ServerStreaming':
-                    $callClass = 'Google\GAX\Grpc\GrpcServerStream';
+                    $callClass = self::SERVER_STREAM_CALL_CLASS;
                     break;
                 case 'BidiStreaming':
-                    $callClass = 'Google\GAX\Grpc\GrpcBidiStream';
+                    $callClass = self::BIDI_STREAM_CALL_CLASS;
                     break;
                 default:
                     throw new ValidationException('Unexpected gRPC streaming type: ' .
