@@ -196,7 +196,7 @@ class GrpcCredentialsHelper
     {
         QMetric::startBenchmark('app_time_grpc_channelcreds_createssl');
         $creds = ChannelCredentials::createSsl();
-        QMetric::timing('spanner.app_time.grpc', 'app_time_grpc_channelcreds_createssl');
+        QMetric::profile('spanner.app_time.grpc', 'app_time_grpc_channelcreds_createssl');
         return $creds;
     }
 }
