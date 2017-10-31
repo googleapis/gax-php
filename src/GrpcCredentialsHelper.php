@@ -194,9 +194,9 @@ class GrpcCredentialsHelper
      */
     protected function createSslChannelCredentials()
     {
-        QMetric::startBenchmark('app_time_grpc_channelcreds_createssl');
+        QMetric::startNonoverlappingBenchmark('app_time_grpc_channelcreds_createssl');
         $creds = ChannelCredentials::createSsl();
-        QMetric::profile('spanner.app_time.grpc', 'app_time_grpc_channelcreds_createssl');
+        QMetric::profileNonoverlapping('spanner.app_time.grpc', 'app_time_grpc_channelcreds_createssl');
         return $creds;
     }
 }
