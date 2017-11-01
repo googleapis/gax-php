@@ -66,6 +66,9 @@ class GrpcCredentialsHelper
      *           Optional. A user-created CredentialsLoader object. Defaults to using
      *           ApplicationDefaultCredentials with the provided $scopes argument.
      *           Exactly one of $scopes or $credentialsLoader must be provided.
+     *     @type callable $authHttpHandler
+     *           Optional. A callback which delivers psr7 request.
+     *           Helpful for setting timeouts on the http auth call.
      *     @type \Grpc\Channel $channel
      *           Optional. A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
      *     @type \Grpc\ChannelCredentials $sslCreds
@@ -91,6 +94,7 @@ class GrpcCredentialsHelper
         $defaultOptions = [
             'forceNewChannel' => false,
             'enableCaching' => true,
+            'authHttpHandler' => null,
         ];
         $args = array_merge($defaultOptions, $args);
 
@@ -129,8 +133,9 @@ class GrpcCredentialsHelper
     public function createCallCredentialsCallback()
     {
         $credentialsLoader = $this->args['credentialsLoader'];
+        $authHttpHandler = $this->args['authHttpHandler'];
         $callback = function () use ($credentialsLoader) {
-            $token = $credentialsLoader->fetchAuthToken();
+            $token = $credentialsLoader->fetchAuthToken($authHttpHandler);
             return ['authorization' => array('Bearer ' . $token['access_token'])];
         };
         return $callback;
