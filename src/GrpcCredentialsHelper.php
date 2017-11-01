@@ -134,7 +134,7 @@ class GrpcCredentialsHelper
     {
         $credentialsLoader = $this->args['credentialsLoader'];
         $authHttpHandler = $this->args['authHttpHandler'];
-        $callback = function () use ($credentialsLoader) {
+        $callback = function () use ($credentialsLoader, $authHttpHandler) {
             $token = $credentialsLoader->fetchAuthToken($authHttpHandler);
             return ['authorization' => array('Bearer ' . $token['access_token'])];
         };
