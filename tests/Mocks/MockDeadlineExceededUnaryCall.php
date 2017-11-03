@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,37 +29,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\GAX\UnitTests;
 
-use Exception;
-use Google\GAX\GrpcConstants;
-use PHPUnit_Framework_TestCase;
-use ReflectionClass;
+namespace Google\GAX\UnitTests\Mocks;
 
-class GrpcConstantsTest extends PHPUnit_Framework_TestCase
+use Google\GAX\Testing\MockStatus;
+use Google\GAX\ValidationException;
+use Google\Rpc\Code;
+
+/**
+ * Class MockDeadlineExceededUnaryCall simulates a unary call returning DEADLINE_EXCEEDED.
+ *
+ * If $timeoutMicros is set, the call to wait() will sleep before returning.
+ */
+class MockDeadlineExceededUnaryCall
 {
-    public function testGetStatusCodeNames()
+    private $timeoutMicros;
+
+    public function __construct($timeoutMicros = null)
     {
-        $statusCodeNames = GrpcConstants::getStatusCodeNames();
-
-        $this->assertTrue(is_array($statusCodeNames));
-        $this->assertFalse(empty($statusCodeNames));
-
-        // test getting the status code names again does not throw exception
-        GrpcConstants::getStatusCodeNames();
+        $this->timeoutMicros = $timeoutMicros;
     }
 
     /**
-     * @expectedException Exception
-     * @expectedExceptionMessage GrpcConstants::initStatusCodeNames called more than once
+     * Wait for $timeoutMicros, then return DEADLINE_EXCEEDED
+     * @return array The null response object and DEADLINE_EXCEEDED status.
      */
-    public function testInitStatusCodeNamesThrowsException()
+    public function wait()
     {
-        $statusCodeNames = GrpcConstants::getStatusCodeNames();
-
-        $reflection = new ReflectionClass('Google\GAX\GrpcConstants');
-        $method = $reflection->getMethod('initStatusCodeNames');
-        $method->setAccessible(true);
-        $method->invoke(new GrpcConstants);
+        if ($this->timeoutMicros) {
+            usleep($this->timeoutMicros);
+        }
+        return [null, new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded')];
     }
 }
