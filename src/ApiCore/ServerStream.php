@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore;
 
+use Google\GAX\ApiException;
 use Google\Rpc\Code;
 
 class ServerStream
@@ -88,4 +89,3 @@ class ServerStream
     {
         return $this->call;
     }
-}

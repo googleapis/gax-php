@@ -29,26 +29,50 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace Google\GAX;
 
-use Google\Rpc\Code;
+use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Psr7\Request;
 
-class UnaryCall
+class RequestBuilder
 {
-    private $innerUnaryCall;
-
-    public function __construct(\Grpc\UnaryCall $innerUnaryCall)
+    public function __construct($baseUri, $clientConfigPath)
     {
-        $this->innerUnaryCall = $innerUnaryCall;
+        $this->baseUri = $baseUri;
+        $this->clientConfig = $this->loadClientConfig($clientConfigPath);
     }
 
-    public function wait()
+    public function build($path, Message $message)
     {
-        list($response, $status) = $this->innerUnaryCall->wait();
-        if ($status->code == Code::OK) {
-            return $response;
-        } else {
-            throw ApiException::createFromStdClass($status);
+        list($interface, $method) = explode('/', $path);
+
+        if (isset($this->clientConfig['interfaces'][$interface]['methods'][$method])) {
+            $template = new PathTemplate(
+                $this->clientConfig['interfaces'][$interface]['methods'][$method]['uri']
+            );
+
+            // @todo need to determine how to fetch the placeholder
+            return new Request(
+                $this->clientConfig['interfaces'][$interface]['methods'][$method]['method'],
+                sprintf(
+                    'https://%s/%s',
+                    $this->baseUri,
+                    $template->render([])
+                ),
+                ['Content-Type' => 'application/json'],
+                $message->serializeToJsonString()
+            );
         }
+
+        throw new \Exception('Unable to build request.');
+    }
+
+    private function loadClientConfig($clientConfigPath)
+    {
+        return json_decode(
+            file_get_contents($clientConfigPath, true),
+            true
+        );
     }
 }

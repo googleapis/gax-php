@@ -256,7 +256,7 @@ class OperationsGapicClient
                                 return new OperationsGrpcClient($fullAddress, $stubOpts, $channel);
                             };
                         }
-                        return new \Google\GAX\GrpcTransport($options);
+                        return new \Google\GAX\Grpc\GrpcTransport($options);
                 }
                 throw new InvalidArgumentException('Invalid transport provided: ' . $transport);
             };

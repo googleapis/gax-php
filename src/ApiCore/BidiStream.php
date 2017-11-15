@@ -31,12 +31,13 @@
  */
 namespace Google\ApiCore;
 
+use Google\GAX\BidiStreamInterface;
+use Google\GAX\ApiException;
+use Google\GAX\ValidationException;
 use Google\Rpc\Code;
 
 class BidiStream
 {
-    use CallHelperTrait;
-
     private $call;
     private $isComplete = false;
     private $writesClosed = false;

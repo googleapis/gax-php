@@ -148,11 +148,14 @@ class CallSettings
      * Construct an instance.
      *
      * @param array $settings {
-     *    Optional.
-     *    @type \Google\ApiCore\RetrySettings $retrySettings
-     *          Retry settings to use for this method.
-     *    @type array $userHeaders
-     *          An array of headers to be included in the request.
+     *     Optional.
+     *
+     *     @type \Google\ApiCore\RetrySettings $retrySettings
+     *           Retry settings to use for this method.
+     *     @type array $userHeaders
+     *           An array of headers to be included in the request.
+     *     @type array $grpcOptions
+     *
      * }
      */
     public function __construct(array $settings = [])
@@ -170,11 +173,12 @@ class CallSettings
      * with the settings specified in the $settings parameter.
      *
      * @param array $settings {
-     *    Optional.
-     * @type \Google\ApiCore\RetrySettings $retrySettings
-     *          Retry settings to use for CallSettings object.
-     * @type array $userHeaders
-     *          An array of headers to be included in the request.
+     *     Optional.
+     *
+     *     @type \Google\ApiCore\RetrySettings $retrySettings
+     *           Retry settings to use for CallSettings object.
+     *     @type array $userHeaders
+     *           An array of headers to be included in the request.
      * }
      * @return CallSettings
      */

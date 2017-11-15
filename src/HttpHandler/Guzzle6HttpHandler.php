@@ -30,32 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX;
+namespace Google\GAX\HttpHandler;
 
-use Google\GAX\CallSettings;
-use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\RequestInterface;
 
-interface ApiTransportInterface
+class Guzzle6HttpHandler
 {
     /**
-     * @param string $method The method to start a call for.
-     * @param Message $message The message to deliver.
-     * @param string $decodeTo The type to decode the response to.
-     * @param CallSettings $settings The call settings to use for this call.
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @param ClientInterface $client
+     */
+    public function __construct(ClientInterface $client = null)
+    {
+        $this->client = $client ?: new Client;
+    }
+
+    /**
+     * Accepts a PSR-7 request and an array of options and returns a PSR-7 response.
+     *
+     * @param RequestInterface $request
+     * @param array $options
      *
      * @return PromiseInterface
      */
-    public function startCall($method, Message $message, $decodeTo, CallSettings $settings);
-
-    /**
-     * @param string $method The method to start a call for.
-     * @param string $decodeTo The type to decode the response to.
-     * @param CallSettings $settings The call settings to use for this call.
-     * @param Message $message The message to deliver.
-     *
-     * @return StreamingCallInterface
-     * @todo interface for streaming calls?
-     */
-    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null);
+    public function __invoke(RequestInterface $request, array $options = [])
+    {
+        return $this->client->sendAsync($request, $options);
+    }
 }
