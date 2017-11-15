@@ -29,189 +29,194 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace Google\GAX;
 
-use Google\Auth\ApplicationDefaultCredentials;
-use Google\Auth\CredentialsLoader;
-use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\Cache\MemoryCacheItemPool;
-use Google\GAX\CallSettings;
-use Google\GAX\CallStackTrait;
-use Google\GAX\ValidationTrait;
-use Google\GAX\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
+use Google\Protobuf\Internal\Message;
+use Google\Rpc\Code;
+use Grpc\BaseStub;
+use Grpc\Channel;
 use Grpc\ChannelCredentials;
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 
-class GrpcTransport
+class GrpcTransport extends BaseStub implements ApiTransportInterface
 {
-    use CallStackTrait;
+    use ApiTransportTrait;
     use ValidationTrait;
 
-    protected $grpcStub;
     private $credentialsCallback;
 
     /**
-     * Accepts an optional credentialsLoader argument, to be used instead of using
-     * the ApplicationDefaultCredentials
+     * @param string $host The domain name and port of the API remote host.
+     * @param array $options {
+     *     Optional.
      *
-     * @param array $args {
-     *     Required. An array of required and optional arguments. Arguments in addition to those documented below
-     *     will be passed as optional arguments to Google\Auth\FetchAuthTokenCache when caching is enabled.
-     *
-     *     @type string $serviceAddress
-     *           Required. The domain name of the API remote host.
-     *     @type mixed $port
-     *           Required. The port on which to connect to the remote host.
      *     @type string[] $scopes
-     *           Optional. A list of scopes required for API access.
-     *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *           NOTE: if $credentialsLoader is provided, this argument is ignored.
-     *     @type \Google\Auth\CredentialsLoader $credentialsLoader
-     *           Optional. A user-created CredentialsLoader object. Defaults to using
+     *           A list of scopes required for API access. Exactly one of
+     *           $scopes or $credentialsLoader must be provided.
+     *           NOTE: if $credentialsLoader is provided, this argument is
+     *           ignored.
+     *     @type FetchAuthTokenInterface $credentialsLoader
+     *           A user-created CredentialsLoader object. Defaults to using
      *           ApplicationDefaultCredentials with the provided $scopes argument.
      *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *     @type \Grpc\Channel $channel
-     *           Optional. A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
-     *     @type \Grpc\ChannelCredentials $sslCreds
-     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
-     *           Default: a credentials object returned from
+     *     @type Channel $channel
+     *           A `Channel` object to be used by gRPC. If not specified, a
+     *           channel will be constructed.
+     *     @type ChannelCredentials $sslCreds
+     *           A `ChannelCredentials` object for use with an SSL-enabled
+     *           channel. Default: a credentials object returned from
      *           \Grpc\ChannelCredentials::createSsl()
-     *           NOTE: if the $channel optional argument is specified, then this option is unused.
+     *           NOTE: if the $channel optional argument is specified, then this
+     *           option is unused.
      *     @type bool $forceNewChannel
-     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
-     *           Defaults to false.
-     *           NOTE: if the $channel optional argument is specified, then this option is unused.
+     *           If true, this forces gRPC to create a new channel instead of
+     *           using a persistent channel. Defaults to false.
+     *           NOTE: if the $channel optional argument is specified, then this
+     *           option is unused.
      *     @type boolean $enableCaching
-     *           Optional. Enable caching of access tokens. Defaults to true.
+     *           Enable caching of access tokens. Defaults to true.
+     *     @type CacheItemPoolInterface $authCache
+     *           A cache for storing access tokens. Defaults to a simple in
+     *           memory implementation.
+     *     @type array $authCacheOptions
+     *           Cache configuration options.
+     *     @type callable $authHttpHandler
+     *           A handler used to deliver Psr7 requests specifically for
+     *           authentication.
      * }
      */
-    public function __construct($args)
+    public function __construct($host, array $options = [])
     {
-        $this->validateNotNull($args, [
-            'serviceAddress',
-            'port',
-            'createGrpcStubFunction',
+        $options = $this->setCommonDefaults($options + [
+            'forceNewChannel' => false
         ]);
 
-        $defaultOptions = [
-            'forceNewChannel' => false,
-            'enableCaching' => true,
-        ];
-        $args = array_merge($defaultOptions, $args);
-
-        if (empty($args['credentialsLoader'])) {
-            $this->validateNotNull($args, ['scopes']);
-            $args['credentialsLoader'] = $this->getADCCredentials($args['scopes']);
-        }
-
-        if ($args['enableCaching']) {
-            $cachingOptions = array_diff_key($args, array_flip([
-                'serviceAddress',
-                'port',
-                'scopes',
-                'credentialsLoader',
-                'channel',
-                'sslCreds',
-                'forceNewChannel',
-                'enableCaching'
-            ]));
-            $args['credentialsLoader'] = new FetchAuthTokenCache(
-                $args['credentialsLoader'],
-                $cachingOptions,
-                new MemoryCacheItemPool()
-            );
-        }
-
-        $credentialsLoader = $args['credentialsLoader'];
+        $credentialsLoader = $options['credentialsLoader'];
         $this->credentialsCallback = function () use ($credentialsLoader) {
             $token = $credentialsLoader->fetchAuthToken();
-            return ['authorization' => array('Bearer ' . $token['access_token'])];
+            return ['authorization' => ['Bearer ' . $token['access_token']]];
         };
 
-        $stubOpts = [];
+        $stubOpts = [
+            'force_new' => $options['forceNewChannel']
+        ];
         // We need to use array_key_exists here because null is a valid value
-        if (!array_key_exists('sslCreds', $args)) {
+        if (!array_key_exists('sslCreds', $options)) {
             $stubOpts['credentials'] = $this->createSslChannelCredentials();
         } else {
-            $stubOpts['credentials'] = $args['sslCreds'];
+            $stubOpts['credentials'] = $options['sslCreds'];
         }
 
-        $serviceAddress = $args['serviceAddress'];
-        $port = $args['port'];
-        $fullAddress = "$serviceAddress:$port";
-        $stubOpts['grpc.ssl_target_name_override'] = $fullAddress;
-
-        if (isset($args['channel'])) {
-            $channel = $args['channel'];
-        } else {
-            $channel = null;
-        }
-
-        if (isset($args['forceNewChannel']) && $args['forceNewChannel']) {
-            $stubOpts['force_new'] = true;
-        }
-        $this->grpcStub = call_user_func_array(
-            $args['createGrpcStubFunction'],
-            [$fullAddress, $stubOpts, $channel]
+        parent::__construct(
+            $host,
+            $stubOpts,
+            $this->pluck('channel', $options, false)
         );
     }
 
     /**
-     * @param string $methodName the method name to return a callable for.
-     * @param \Google\GAX\CallSettings $settings the call settings to use for this call.
-     * @param array $options {
-     *     Optional.
-     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
-     *           the descriptor used for page-streaming.
-     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
-     *           the descriptor used for creating GAPIC header.
-     * }
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param string $streamingType
+     * @param string $resourcesGetMethod
      *
-     * @throws \Google\GAX\ValidationException
-     * @return callable
+     * @return StreamingCallInterface
+     * @todo interface for streaming calls?
+     * @todo pass along resourceGetMethod
      */
-    public function createApiCall($methodName, CallSettings $settings, $options = [])
+    public function startStreamingCall(
+        Call $call,
+        CallSettings $callSettings,
+        $streamingType,
+        $resourcesGetMethod = null
+    ) {
+        $this->validateStreamingApiCallSettings($callSettings);
+        list($metadata, $options) = $this->constructGrpcArgs([]); // @todo source from call settings?
+
+        switch ($streamingType) {
+            case 'ClientStreaming':
+                return new ClientStream(
+                    $this->_clientStreamRequest(
+                        $call->getMethod(),
+                        $call->getDecodeType(),
+                        $metadata,
+                        $options
+                    )
+                );
+            case 'ServerStreaming':
+                $message = $call->getMessage();
+
+                if (!$message) {
+                    throw new \Exception('$message is required for ServerStreaming calls.');
+                }
+
+                return new ServerStream(
+                    $this->_serverStreamRequest(
+                        $call->getMethod(),
+                        $message,
+                        $call->getDecodeType(),
+                        $metadata,
+                        $options
+                    )
+                );
+            case 'BidiStreaming':
+                return new BidiStream(
+                    $this->_bidiRequest(
+                        $call->getMethod(),
+                        $call->getDecodeType(),
+                        $metadata,
+                        $options
+                    )
+                );
+            default:
+                throw new ValidationException("Unexpected gRPC streaming type: $streamingType");
+        }
+    }
+
+    private function getCallable(CallSettings $settings)
     {
-        $this->validateApiCallSettings($settings, $options);
+        return $this->createCallStack(
+            function (Call $call, CallSettings $settings) {
+                $call = $this->_simpleRequest(
+                    '/' . $call->getMethod(),
+                    $call->getMessage(),
+                    [$call->getDecodeType(), 'decode'],
+                    $settings->getUserHeaders(),
+                    ['call_credentials_callback' => $this->credentialsCallback]
+                );
 
-        $callClass = UnaryCall::class;
-        if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $grpcStreamingDescriptor = $options['grpcStreamingDescriptor'];
-            switch ($grpcStreamingDescriptor['grpcStreamingType']) {
-                case 'ClientStreaming':
-                    $callClass = ClientStream::class;
-                    break;
-                case 'ServerStreaming':
-                    $callClass = ServerStream::class;
-                    break;
-                case 'BidiStreaming':
-                    $callClass = BidiStream::class;
-                    break;
-                default:
-                    throw new ValidationException('Unexpected gRPC streaming type: ' .
-                        $grpcStreamingDescriptor['grpcStreamingType']);
-            }
+                $promise = new Promise(
+                    function() use ($call, &$promise) {
+                        list($response, $status) = $call->wait();
+
+                        if ($status->code == Code::OK) {
+                            $promise->resolve($response);
+                        } else {
+                            throw ApiException::createFromStdClass($status);
+                        }
+                   },
+                   [$call, 'cancel']
+                );
+
+                return $promise;
+            },
+            $settings
+        );
+    }
+
+    private function validateStreamingApiCallSettings(CallSettings $settings)
+    {
+        $retrySettings = $settings->getRetrySettings();
+
+        if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
+            throw new ValidationException(
+                'grpcStreamingDescriptor not compatible with retry settings'
+            );
         }
-
-        $handler = function () use ($methodName, $callClass) {
-            $args = func_get_args();
-            $optionalArgs = array_pop($args);
-            $args = array_merge($args, $this->constructGrpcArgs($optionalArgs));
-            $innerCall = call_user_func_array([$this->grpcStub, $methodName], $args);
-            return new $callClass($innerCall);
-        };
-
-        // Call the sync method "wait" if this is not a gRPC call
-        if (array_key_exists('grpcStreamingDescriptor', $options)) {
-            $callable = function () use ($handler) {
-                return call_user_func_array($handler, func_get_args());
-            };
-        } else {
-            $callable = function () use ($handler) {
-                return call_user_func_array($handler, func_get_args())->wait();
-            };
-        }
-
-        return $this->createCallStack($callable, $settings, $options);
     }
 
     protected function constructGrpcArgs($optionalArgs = [])
@@ -228,7 +233,7 @@ class GrpcTransport
             $credentialsLoader = $optionalArgs['credentialsLoader'];
             $callback = function () use ($credentialsLoader) {
                 $token = $credentialsLoader->fetchAuthToken();
-                return ['authorization' => array('Bearer ' . $token['access_token'])];
+                return ['authorization' => ['Bearer ' . $token['access_token']]];
             };
             $options['call_credentials_callback'] = $callback;
         }
@@ -236,40 +241,6 @@ class GrpcTransport
             $options['call_credentials_callback'] = $this->credentialsCallback;
         }
         return [$metadata, $options];
-    }
-
-    private function validateApiCallSettings(CallSettings $settings, $options)
-    {
-        $retrySettings = $settings->getRetrySettings();
-        $isGrpcStreaming = array_key_exists('grpcStreamingDescriptor', $options);
-        if ($isGrpcStreaming) {
-            if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with retry settings'
-                );
-            }
-            if (array_key_exists('pageStreamingDescriptor', $options)) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
-                );
-            }
-            if (array_key_exists('longRunningDescriptor', $options)) {
-                throw new ValidationException(
-                    'grpcStreamingDescriptor not compatible with longRunningDescriptor'
-                );
-            }
-        }
-    }
-
-    /**
-     * Gets credentials from ADC. This exists to allow overriding in unit tests.
-     *
-     * @param string[] $scopes
-     * @return CredentialsLoader
-     */
-    protected function getADCCredentials($scopes)
-    {
-        return ApplicationDefaultCredentials::getCredentials($scopes);
     }
 
     /**

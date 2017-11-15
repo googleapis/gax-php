@@ -31,60 +31,51 @@
  */
 namespace Google\GAX\Middleware;
 
+use Google\Auth\FetchAuthTokenInterface;
+use Google\GAX\Call;
+use Google\GAX\CallSettings;
 use InvalidArgumentException;
 
 /**
-* Middleware that adds custom headers
+* Middleware which configures headers for the request.
 */
-class CustomHeaderMiddleware
+class HeaderMiddleware
 {
-    const TRANSPORT_METHOD_PARAM_COUNT = 2;
-    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
-
     /** @var callable */
     private $nextHandler;
 
-    /** @var array */
+    /** @var AgentHeaderDescriptor */
     private $headerDescriptor;
 
-    /** @var array */
-    private $userHeaders;
+    /** @var FetchAuthTokenInterface */
+    private $credentialsLoader;
 
-    public function __construct(callable $nextHandler, $headerDescriptor, $userHeaders = null)
-    {
+    public function __construct(
+        callable $nextHandler,
+        $headerDescriptor,
+        FetchAuthTokenInterface $credentialsLoader = null
+    ) {
         $this->nextHandler = $nextHandler;
         $this->headerDescriptor = $headerDescriptor;
-        $this->userHeaders = $userHeaders;
+        $this->credentialsLoader = $credentialsLoader;
     }
 
-    public function __invoke()
+    public function __invoke(Call $call, CallSettings $settings)
     {
-        $params = func_get_args();
+        $next = $this->nextHandler;
+        $headers = $this->headerDescriptor->getHeader();
 
-        if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT) {
-            throw new InvalidArgumentException('Invalid parameter count.');
+        if ($this->credentialsLoader) {
+            $headers += [
+                'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
+            ];
         }
 
-        if (!is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])) {
-            throw new InvalidArgumentException('Options argument is not found.');
-        }
-
-        $headers = [];
-        // Check user-specified $headers first, and then merge $headerDescriptor headers, to ensure
-        // that $headerDescriptor headers such as x-goog-api-client cannot be overwritten
-        // by the $userHeaders.
-        $options = $params[self::TRANSPORT_METHOD_OPTIONS_INDEX];
-        if (array_key_exists('headers', $options)) {
-            $headers = $options['headers'];
-        }
-        if (!is_null($this->userHeaders)) {
-            $headers = array_merge($headers, $this->userHeaders);
-        }
-        if (!is_null($this->headerDescriptor)) {
-            $headers = array_merge($headers, $this->headerDescriptor->getHeader());
-        }
-        $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['headers'] = $headers;
-
-        return call_user_func_array($this->nextHandler, $params);
+        return $next(
+            $call,
+            $settings->with([
+                'userHeaders' => $headers
+            ])
+        );
     }
 }

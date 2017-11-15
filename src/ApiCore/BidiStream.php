@@ -35,8 +35,6 @@ use Google\Rpc\Code;
 
 class BidiStream
 {
-    use CallHelperTrait;
-
     private $call;
     private $isComplete = false;
     private $writesClosed = false;

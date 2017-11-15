@@ -43,8 +43,9 @@ class Page implements IteratorAggregate
 {
     const FINAL_PAGE_TOKEN = "";
 
-    private $parameters;
+    private $call;
     private $callable;
+    private $settings;
     private $pageStreamingDescriptor;
 
     private $pageToken;
@@ -53,24 +54,31 @@ class Page implements IteratorAggregate
 
     /**
      * Page constructor.
-     * @param array $params
+     *
+     * @param Call $call
+     * @param CallSettings $settings
      * @param callable $callable
      * @param PageStreamingDescriptor $pageStreamingDescriptor
      */
-    public function __construct($params, $callable, $pageStreamingDescriptor)
-    {
-        if (empty($params) || !is_object($params[0])) {
-            throw new InvalidArgumentException('First argument must be a request object.');
-        }
-        $this->parameters = $params;
+    public function __construct(
+        Call $call,
+        CallSettings $settings,
+        callable $callable,
+        PageStreamingDescriptor $pageStreamingDescriptor
+    ) {
+        $this->call = $call;
+        $this->settings = $settings;
         $this->callable = $callable;
         $this->pageStreamingDescriptor = $pageStreamingDescriptor;
 
         $requestPageTokenGetMethod = $this->pageStreamingDescriptor->getRequestPageTokenGetMethod();
-        $this->pageToken = $params[0]->$requestPageTokenGetMethod();
+        $this->pageToken = $this->call->getMessage()->$requestPageTokenGetMethod();
 
         // Make API call eagerly
-        $this->response = call_user_func_array($this->callable, $this->parameters);
+        $this->response = call_user_func_array(
+            $this->callable,
+            [$this->call, $this->settings]
+        )->wait();
     }
 
     /**
@@ -127,11 +135,14 @@ class Page implements IteratorAggregate
             $requestPageSizeSetMethod = $this->pageStreamingDescriptor->getRequestPageSizeSetMethod();
             $newRequest->$requestPageSizeSetMethod($pageSize);
         }
+        $this->call->setMessage($newRequest);
 
-
-        $nextParameters = [$newRequest] + $this->parameters;
-
-        return new Page($nextParameters, $this->callable, $this->pageStreamingDescriptor);
+        return new Page(
+            $this->call,
+            $this->settings,
+            $this->callable,
+            $this->pageStreamingDescriptor
+        );
     }
 
     /**
@@ -182,7 +193,7 @@ class Page implements IteratorAggregate
      */
     public function getRequestObject()
     {
-        return $this->parameters[0];
+        return $this->call->getMessage();
     }
 
     /**
