@@ -31,9 +31,6 @@
  */
 namespace Google\ApiCore;
 
-use Google\GAX\ApiException;
-use Google\GAX\ClientStreamInterface;
-
 class ClientStream
 {
     private $call;
