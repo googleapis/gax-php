@@ -29,26 +29,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace Google\GAX;
 
-use Google\Rpc\Code;
+use Google\Protobuf\Internal\Message;
 
-class UnaryCall
+class Call
 {
-    private $innerUnaryCall;
+    private $method;
+    private $decodeType;
+    private $message;
 
-    public function __construct(\Grpc\UnaryCall $innerUnaryCall)
+    public function __construct($method, $decodeType, Message $message = null)
     {
-        $this->innerUnaryCall = $innerUnaryCall;
+        $this->method = $method;
+        $this->decodeType = $decodeType;
+        $this->message = $message;
     }
 
-    public function wait()
+    public function getMessage()
     {
-        list($response, $status) = $this->innerUnaryCall->wait();
-        if ($status->code == Code::OK) {
-            return $response;
-        } else {
-            throw ApiException::createFromStdClass($status);
-        }
+        return $this->message;
+    }
+
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    public function getDecodeType()
+    {
+        return $this->decodeType;
+    }
+
+    public function setMessage(Message $message)
+    {
+        $this->message = $message;
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    public function setDecodeType($decodeType)
+    {
+        $this->decodeType = $decodeType;
     }
 }

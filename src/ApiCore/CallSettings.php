@@ -37,6 +37,8 @@ namespace Google\ApiCore;
  */
 class CallSettings
 {
+    use ArrayTrait;
+
     private $retrySettings;
     private $userHeaders;
 
@@ -87,7 +89,6 @@ class CallSettings
         }
         return $callSettings;
     }
-
 
     private static function constructDefaultRetrySettings()
     {
@@ -148,21 +149,22 @@ class CallSettings
      * Construct an instance.
      *
      * @param array $settings {
-     *    Optional.
-     *    @type \Google\ApiCore\RetrySettings $retrySettings
-     *          Retry settings to use for this method.
-     *    @type array $userHeaders
-     *          An array of headers to be included in the request.
+     *     Optional.
+     *
+     *     @type \Google\ApiCore\RetrySettings $retrySettings
+     *           Retry settings to use for this method.
+     *     @type array $userHeaders
+     *           An array of headers to be included in the request.
+     *     @type array $grpcOptions
+     *     @type array $restOptions
      * }
      */
     public function __construct(array $settings = [])
     {
-        if (array_key_exists('retrySettings', $settings)) {
-            $this->retrySettings = $settings['retrySettings'];
-        }
-        if (array_key_exists('userHeaders', $settings)) {
-            $this->userHeaders = $settings['userHeaders'];
-        }
+        $this->retrySettings = $this->pluck('retrySettings', $settings, false);
+        $this->userHeaders = $this->pluck('userHeaders', $settings, false);
+        $this->grpcOptions = $this->pluck('grpcOptions', $settings, false);
+        $this->restOptions = $this->pluck('restOptions', $settings, false);
     }
 
     /**
@@ -170,11 +172,12 @@ class CallSettings
      * with the settings specified in the $settings parameter.
      *
      * @param array $settings {
-     *    Optional.
-     * @type \Google\ApiCore\RetrySettings $retrySettings
-     *          Retry settings to use for CallSettings object.
-     * @type array $userHeaders
-     *          An array of headers to be included in the request.
+     *     Optional.
+     *
+     *     @type \Google\ApiCore\RetrySettings $retrySettings
+     *           Retry settings to use for CallSettings object.
+     *     @type array $userHeaders
+     *           An array of headers to be included in the request.
      * }
      * @return CallSettings
      */
@@ -201,6 +204,22 @@ class CallSettings
     }
 
     /**
+     * @return array User headers
+     */
+    public function getGrpcOptions()
+    {
+        return $this->grpcOptions;
+    }
+
+    /**
+     * @return array User headers
+     */
+    public function getRestOptions()
+    {
+        return $this->restOptions;
+    }
+
+    /**
      * Returns a new CallSettings merged from this and another CallSettings object.
      *
      * @param CallSettings $otherSettings
@@ -221,14 +240,12 @@ class CallSettings
      */
     private function toArray()
     {
-        $arr = [];
-        if (!is_null($this->getRetrySettings())) {
-            $arr['retrySettings'] = $this->getRetrySettings();
-        }
-        if (!is_null($this->getUserHeaders())) {
-            $arr['userHeaders'] = $this->getUserHeaders();
-        }
-        return $arr;
+        return array_filter([
+            'retrySettings' => $this->getRetrySettings(),
+            'userHeaders' => $this->getUserHeaders(),
+            'grpcOptions' => $this->getGrpcOptions(),
+            'grpcOptions' => $this->getRestOptions()
+        ]);
     }
 
     private static function convertArrayFromSnakeCase($settings)

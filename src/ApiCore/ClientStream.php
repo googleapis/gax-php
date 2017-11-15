@@ -33,8 +33,6 @@ namespace Google\ApiCore;
 
 class ClientStream
 {
-    use CallHelperTrait;
-
     private $call;
 
     /**

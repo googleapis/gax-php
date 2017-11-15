@@ -30,43 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\Middleware;
+namespace Google\GAX\HttpHandler;
 
-use Google\GAX\CallSettings;
-use InvalidArgumentException;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\RequestInterface;
 
-/**
-* Middleware for adding timeouts
-*/
-class TimeoutMiddleware
+class Guzzle6HttpHandler
 {
-    const TRANSPORT_METHOD_PARAM_COUNT = 2;
-    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
+    /**
+     * @var ClientInterface
+     */
+    private $client;
 
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var int */
-    private $timeoutMillis;
-
-    public function __construct(callable $nextHandler, $timeoutMillis)
+    /**
+     * @param ClientInterface $client
+     */
+    public function __construct(ClientInterface $client = null)
     {
-        $this->nextHandler = $nextHandler;
-        $this->timeoutMillis = $timeoutMillis;
+        $this->client = $client ?: new Client;
     }
 
-    public function __invoke(CallSettings $settings)
+    /**
+     * Accepts a PSR-7 request and an array of options and returns a PSR-7 response.
+     *
+     * @param RequestInterface $request
+     * @param array $options
+     *
+     * @return PromiseInterface
+     */
+    public function __invoke(RequestInterface $request, array $options = [])
     {
-        var_dump('timeout');
-        return call_user_func_array($this->nextHandler, [$settings]);
-        // $params = func_get_args();
-        // if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
-        //     !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
-        // ) {
-        //     throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
-        // } else {
-        //     $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
-        // }
-        // return call_user_func_array($this->nextHandler, $params);
+        return $this->client->sendAsync($request, $options);
     }
 }

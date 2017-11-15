@@ -29,23 +29,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace Google\GAX;
+
+use GuzzleHttp\Promise\PromiseInterface;
 
 interface ApiTransportInterface
 {
     /**
-     * @param string $methodName The method name to return a callable for.
-     * @param \Google\GAX\CallSettings $settings The call settings to use for this call.
-     * @param array $options {
-     *     Optional.
-     *     @type \Google\GAX\PageStreamingDescriptor $pageStreamingDescriptor
-     *           The descriptor used for page-streaming.
-     *     @type \Google\GAX\AgentHeaderDescriptor $headerDescriptor
-     *           The descriptor used for creating the GAPIC header.
-     * }
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
      *
-     * @throws \Google\GAX\ValidationException
-     * @return callable
+     * @return PromiseInterface
      */
-    public function createApiCall($methodName, CallSettings $settings, $options = []);
+    public function startCall(Call $call, CallSettings $settings);
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param string $streamingType
+     * @param string $resourcesGetMethod
+     *
+     * @return StreamingCallInterface
+     * @todo interface for streaming calls?
+     */
+    public function startStreamingCall(
+        Call $call,
+        CallSettings $callSettings,
+        $streamingType,
+        $resourcesGetMethod = null
+    );
 }

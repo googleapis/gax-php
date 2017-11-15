@@ -30,43 +30,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\Middleware;
+namespace Google\GAX;
 
-use Google\GAX\CallSettings;
-use InvalidArgumentException;
+use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Psr7\Request;
 
-/**
-* Middleware for adding timeouts
-*/
-class TimeoutMiddleware
+class RequestBuilder
 {
-    const TRANSPORT_METHOD_PARAM_COUNT = 2;
-    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
-
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var int */
-    private $timeoutMillis;
-
-    public function __construct(callable $nextHandler, $timeoutMillis)
+    public function __construct($baseUri, $clientConfigPath)
     {
-        $this->nextHandler = $nextHandler;
-        $this->timeoutMillis = $timeoutMillis;
+        $this->baseUri = $baseUri;
+        $this->clientConfig = $this->loadClientConfig($clientConfigPath);
     }
 
-    public function __invoke(CallSettings $settings)
+    public function build($path, Message $message, array $headers = [])
     {
-        var_dump('timeout');
-        return call_user_func_array($this->nextHandler, [$settings]);
-        // $params = func_get_args();
-        // if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
-        //     !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
-        // ) {
-        //     throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
-        // } else {
-        //     $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
-        // }
-        // return call_user_func_array($this->nextHandler, $params);
+        list($interface, $method) = explode('/', $path);
+
+        if (isset($this->clientConfig['interfaces'][$interface]['methods'][$method])) {
+            $call = $this->clientConfig['interfaces'][$interface]['methods'][$method];
+            $template = new PathTemplate(
+                $call['uri']
+            );
+
+            $path = $template->render(['subscription' => $message->getSubscription()]);
+            // @todo need to determine how to fetch the placeholder
+            return new Request(
+                $call['method'],
+                "https://$this->baseUri/$path",
+                ['Content-Type' => 'application/json'] + $headers,
+                isset($call['body']) ? $message->serializeToJsonString() : null
+            );
+        }
+
+        throw new \Exception('Unable to build request.');
+    }
+
+    private function loadClientConfig($clientConfigPath)
+    {
+        return json_decode(
+            file_get_contents($clientConfigPath, true),
+            true
+        );
     }
 }
