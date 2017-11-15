@@ -31,10 +31,7 @@
  */
 namespace Google\GAX;
 
-use Google\Auth\ApplicationDefaultCredentials;
-use Google\Auth\Cache\MemoryCacheItemPool;
-use Google\Auth\CredentialsLoader;
-use Google\Auth\FetchAuthTokenCache;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\GAX\HttpHandler\Guzzle6HttpHandler;
 use Google\Protobuf\Internal\Message;
 use Psr\Http\Message\ResponseInterface;

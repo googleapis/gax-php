@@ -31,9 +31,6 @@
  */
 namespace Google\ApiCore;
 
-use Google\GAX\BidiStreamInterface;
-use Google\GAX\ApiException;
-use Google\GAX\ValidationException;
 use Google\Rpc\Code;
 
 class BidiStream
