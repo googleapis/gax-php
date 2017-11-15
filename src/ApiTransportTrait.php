@@ -32,30 +32,54 @@
 
 namespace Google\GAX;
 
-use Google\GAX\CallSettings;
-use Google\Protobuf\Internal\Message;
-use GuzzleHttp\Promise\PromiseInterface;
+use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\Auth\CredentialsLoader;
+use Google\Auth\FetchAuthTokenCache;
+use Google\GAX\HttpHandler\Guzzle6HttpHandler;
 
-interface ApiTransportInterface
+trait ApiTransportTrait
 {
-    /**
-     * @param string $method The method to start a call for.
-     * @param Message $message The message to deliver.
-     * @param string $decodeTo The type to decode the response to.
-     * @param CallSettings $settings The call settings to use for this call.
-     *
-     * @return PromiseInterface
-     */
-    public function startCall($method, Message $message, $decodeTo, CallSettings $settings);
+    use ArrayTrait;
+
+    private $times = 0;
+
+    private function setCommonDefaults(array $options)
+    {
+        $options += [
+            'enableCaching' => true,
+            'authCache' => new MemoryCacheItemPool(),
+            'authHttpHandler' => new Guzzle6HttpHandler() // @todo use factory
+        ];
+
+        if (empty($options['credentialsLoader'])) {
+            $this->validateNotNull($options, ['scopes']);
+            $options['credentialsLoader'] = $this->getADCCredentials(
+                $options['scopes'],
+                $options['authHttpHandler']
+            );
+        }
+
+        if ($options['enableCaching']) {
+            $options['credentialsLoader'] = new FetchAuthTokenCache(
+                $options['credentialsLoader'],
+                $this->pluck('authCacheOptions', $options, false),
+                $options['authCache']
+            );
+        }
+
+        return $options;
+    }
 
     /**
-     * @param string $method The method to start a call for.
-     * @param string $decodeTo The type to decode the response to.
-     * @param CallSettings $settings The call settings to use for this call.
-     * @param Message $message The message to deliver.
+     * Gets credentials from ADC. This exists to allow overriding in unit tests.
      *
-     * @return StreamingCallInterface
-     * @todo interface for streaming calls?
+     * @param string[] $scopes
+     * @param callable $httpHandler
+     * @return CredentialsLoader
      */
-    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null);
+    protected function getADCCredentials(array $scopes, callable $httpHandler)
+    {
+        return ApplicationDefaultCredentials::getCredentials($scopes, $httpHandler);
+    }
 }
