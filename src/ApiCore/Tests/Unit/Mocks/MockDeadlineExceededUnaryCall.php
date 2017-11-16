@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2017, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,27 +30,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
+namespace Google\ApiCore\Tests\Unit\Mocks;
 
-namespace Google\LongRunning;
-
-use Google\LongRunning\Gapic\OperationsGapicClient;
+use Google\ApiCore\Testing\MockStatus;
+use Google\ApiCore\ValidationException;
+use Google\Rpc\Code;
 
 /**
- * {@inheritdoc}
+ * Class MockDeadlineExceededUnaryCall simulates a unary call returning DEADLINE_EXCEEDED.
+ *
+ * If $timeoutMicros is set, the call to wait() will sleep before returning.
  */
-class OperationsClient extends OperationsGapicClient
+class MockDeadlineExceededUnaryCall
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    private $timeoutMicros;
+
+    public function __construct($timeoutMicros = null)
+    {
+        $this->timeoutMicros = $timeoutMicros;
+    }
+
+    /**
+     * Wait for $timeoutMicros, then return DEADLINE_EXCEEDED
+     * @return array The null response object and DEADLINE_EXCEEDED status.
+     */
+    public function wait()
+    {
+        if ($this->timeoutMicros) {
+            usleep($this->timeoutMicros);
+        }
+        return [null, new MockStatus(Code::DEADLINE_EXCEEDED, 'Deadline Exceeded')];
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2016, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,28 +29,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+require_once __DIR__ . '/vendor/autoload.php';
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
-
-namespace Google\LongRunning;
-
-use Google\LongRunning\Gapic\OperationsGapicClient;
-
-/**
- * {@inheritdoc}
- */
-class OperationsClient extends OperationsGapicClient
-{
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
-}
+date_default_timezone_set('UTC');
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');

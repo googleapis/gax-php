@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2017, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,28 +29,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
-
-namespace Google\LongRunning;
-
-use Google\LongRunning\Gapic\OperationsGapicClient;
+namespace Google\ApiCore;
 
 /**
- * {@inheritdoc}
+ * Container class for Protobuf type constants. See FieldDescriptorProto.Type in
+ * https://github.com/google/protobuf/blob/master/src/google/protobuf/descriptor.proto
  */
-class OperationsClient extends OperationsGapicClient
+class GPBType
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    const DOUBLE   =  1;
+    const FLOAT    =  2;
+    const INT64    =  3;
+    const UINT64   =  4;
+    const INT32    =  5;
+    const FIXED64  =  6;
+    const FIXED32  =  7;
+    const BOOL     =  8;
+    const STRING   =  9;
+    const GROUP    = 10;
+    const MESSAGE  = 11;
+    const BYTES    = 12;
+    const UINT32   = 13;
+    const ENUM     = 14;
+    const SFIXED32 = 15;
+    const SFIXED64 = 16;
+    const SINT32   = 17;
+    const SINT64   = 18;
 }

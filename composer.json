@@ -17,10 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-          "Google\\GAX\\":"src/",
-          "Google\\GAX\\UnitTests\\":"tests/",
-          "Google\\":"src/generated/Google/",
-          "GPBMetadata\\":"src/generated/GPBMetadata/"
+            "Google\\": "src",
+            "": "google-common-protos"
         }
     }
 }

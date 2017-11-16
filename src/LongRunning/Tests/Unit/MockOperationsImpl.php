@@ -31,25 +31,27 @@
 
 /*
  * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
+ * This file was automatically generated - do not edit!
  */
 
-namespace Google\LongRunning;
+namespace Google\LongRunning\Tests\Unit;
 
-use Google\LongRunning\Gapic\OperationsGapicClient;
+use Google\ApiCore\ApiException;
+use Google\ApiCore\BidiStream;
+use Google\ApiCore\GrpcCredentialsHelper;
+use Google\LongRunning\OperationsClient;
+use Google\ApiCore\ServerStream;
+use Google\ApiCore\Testing\GeneratedTest;
+use Google\ApiCore\Testing\MockStubTrait;
+use Google\Longrunning\GetOperationRequest;
+use Google\Longrunning\OperationsGrpcClient;
+use Google\Protobuf\Any;
+use Google\Protobuf\GPBEmpty;
+use Grpc;
+use PHPUnit\Framework\TestCase;
+use stdClass;
 
-/**
- * {@inheritdoc}
- */
-class OperationsClient extends OperationsGapicClient
+class MockOperationsImpl extends OperationsGrpcClient
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    use MockStubTrait;
 }

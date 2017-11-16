@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2016, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,27 +30,49 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
+namespace Google\ApiCore\Testing;
 
-namespace Google\LongRunning;
-
-use Google\LongRunning\Gapic\OperationsGapicClient;
+use Google\Rpc\Code;
 
 /**
- * {@inheritdoc}
+ * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
+ *
+ * The MockUnaryCall object is constructed with a response object, an optional deserialize
+ * method, and an optional status. The response object and status are returned immediately from the
+ * wait() method.
  */
-class OperationsClient extends OperationsGapicClient
+class MockUnaryCall
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    use SerializationTrait;
+
+    private $response;
+    private $deserialize;
+    private $status;
+
+    /**
+     * MockUnaryCall constructor.
+     * @param \Google\Protobuf\Internal\Message $response The response object.
+     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
+     */
+    public function __construct($response, $deserialize = null, $status = null)
+    {
+        $this->response = $response;
+        $this->deserialize = $deserialize;
+        if (is_null($status)) {
+            $status = new MockStatus(Code::OK);
+        }
+        $this->status = $status;
+    }
+
+    /**
+     * Immediately return the preset response object and status.
+     * @return array The response object and status.
+     */
+    public function wait()
+    {
+        $obj = $this->deserializeMessage($this->response, $this->deserialize);
+        return [$obj, $this->status];
+    }
 }

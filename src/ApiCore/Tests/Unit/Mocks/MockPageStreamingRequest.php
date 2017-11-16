@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2016, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,27 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
+namespace Google\ApiCore\Tests\Unit\Mocks;
 
-namespace Google\LongRunning;
-
-use Google\LongRunning\Gapic\OperationsGapicClient;
-
-/**
- * {@inheritdoc}
- */
-class OperationsClient extends OperationsGapicClient
+class MockPageStreamingRequest
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    private $pageToken;
+    private $pageSize;
+
+    public static function createPageStreamingRequest($pageToken, $pageSize = null)
+    {
+        $request = new MockPageStreamingRequest();
+        $request->pageToken = $pageToken;
+        $request->pageSize = $pageSize;
+        return $request;
+    }
+
+    public function getPageToken()
+    {
+        return $this->pageToken;
+    }
+
+    public function getPageSize()
+    {
+        return $this->pageSize;
+    }
+
+    public function setPageSize($pageSize)
+    {
+        $this->pageSize = $pageSize;
+    }
+
+    public function setPageToken($pageToken)
+    {
+        return $this->pageToken = $pageToken;
+    }
 }

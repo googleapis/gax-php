@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2016, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,27 +30,62 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
+namespace Google\ApiCore\Jison;
 
-namespace Google\LongRunning;
-
-use Google\LongRunning\Gapic\OperationsGapicClient;
+use ArrayObject;
 
 /**
- * {@inheritdoc}
+ * This class represents a segment in a path template.
+ * We extend ArrayObject to allow property access from
+ * JisonParser
  */
-class OperationsClient extends OperationsGapicClient
+class Segment extends ArrayObject
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    const BINDING = 1;
+    const END_BINDING = 2;
+    const TERMINAL = 3;
+
+    public $kind;
+    public $literal;
+
+    private static $bindingCount = 0;
+    private static $segmentCount = 0;
+
+    public function __construct($kind, $literal)
+    {
+        $this->kind = $kind;
+        $this->literal = $literal;
+        $this['kind'] = $kind;
+        $this['literal'] = $literal;
+    }
+
+    public static function getBindingCount()
+    {
+        return self::$bindingCount;
+    }
+
+    public static function incrementBindingCount()
+    {
+        self::$bindingCount++;
+    }
+
+    public static function resetBindingCount()
+    {
+        self::$bindingCount = 0;
+    }
+
+    public static function getSegmentCount()
+    {
+        return self::$segmentCount;
+    }
+
+    public static function incrementSegmentCount()
+    {
+        self::$segmentCount++;
+    }
+
+    public static function resetSegmentCount()
+    {
+        self::$segmentCount = 0;
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017, Google Inc. All rights reserved.
+ * Copyright 2016, Google Inc.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,27 +30,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: this client library class has not yet been declared beta. This class may change
- * more frequently than those which have been declared beta or 1.0, including changes which break
- * backwards compatibility.
- *
- * @experimental
- */
+namespace Google\ApiCore\Tests\Unit\Mocks;
 
-namespace Google\LongRunning;
+use Google\ApiCore\Testing\MockStubTrait;
+use InvalidArgumentException;
 
-use Google\LongRunning\Gapic\OperationsGapicClient;
-
-/**
- * {@inheritdoc}
- */
-class OperationsClient extends OperationsGapicClient
+class MockClientStreamingStub
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    use MockStubTrait;
+
+    private $deserialize;
+
+    public function __construct($deserialize = null)
+    {
+        $this->deserialize = $deserialize;
+    }
+
+    /**
+     * @param mixed $responseObject
+     * @param $status
+     * @param callable $deserialize
+     * @return MockClientStreamingStub
+     */
+    public static function create($responseObject, $status = null, $deserialize = null)
+    {
+        $stub = new MockClientStreamingStub($deserialize);
+        $stub->addResponse($responseObject, $status);
+        return $stub;
+    }
+
+    public function __call($name, $arguments)
+    {
+        list($metadata, $options) = $arguments;
+        $newArgs = [$name, $this->deserialize, $metadata, $options];
+        return call_user_func_array(array($this, '_clientStreamRequest'), $newArgs);
+    }
 }
