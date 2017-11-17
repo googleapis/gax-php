@@ -51,5 +51,6 @@ use Google\LongRunning\Gapic\OperationsGapicClient;
  */
 class OperationsClient extends OperationsGapicClient
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see OperationsClientImpl} class.
+    // This class is intentionally empty, and is intended to hold manual
+    // additions to the generated {@see OperationsClientImpl} class.
 }
