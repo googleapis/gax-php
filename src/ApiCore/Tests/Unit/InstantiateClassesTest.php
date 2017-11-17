@@ -53,15 +53,43 @@ class InstantiateClassesTest extends TestCase
         $this->assertNotNull($instance);
     }
 
+    public function testClassesProvider()
+    {
+        $classes = iterator_to_array($this->classesProvider());
+        $this->assertSame(132, count($classes));
+    }
+
     public function classesProvider()
     {
-        $dir = new RecursiveDirectoryIterator('google-common-protos/Google');
+        $folder = 'src/';
+        $folderLength = strlen($folder);
+        $namespacePrefix = 'Google';
+        $excludePatterns = [
+            'ApiCore',
+            'OperationsClient',
+            'OperationsGapicClient',
+            'OperationsGrpcClient',
+            'MockOperationsImpl',
+        ];
+        $dir = new RecursiveDirectoryIterator($folder);
         $it = new RecursiveIteratorIterator($dir);
         $reg = new RegexIterator($it, '#.+\.php$#', RecursiveRegexIterator::GET_MATCH);
         foreach ($reg as $files) {
             $file = $files[0];
-            $namespace = str_replace("/", "\\", substr($file, strlen('google-common-protos/')));
-            $class = explode('.', $namespace)[0];
+            $exclude = false;
+            foreach ($excludePatterns as $exclusion) {
+                if (strpos($file, $exclusion) !== false) {
+                    $exclude = true;
+                    break;
+                }
+            }
+            if ($exclude) {
+                continue;
+            }
+            $unprefixedFile = substr($file, $folderLength);
+            $fileWithouExtension = explode('.', $unprefixedFile)[0];
+            $partialClass = str_replace("/", "\\", $fileWithouExtension);
+            $class = "$namespacePrefix\\$partialClass";
             yield [$class];
         }
     }

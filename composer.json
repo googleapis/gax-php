@@ -18,7 +18,7 @@
     "autoload": {
         "psr-4": {
             "Google\\": "src",
-            "": "google-common-protos"
+            "GPBMetadata\\Google\\": "metadata"
         }
     }
 }
