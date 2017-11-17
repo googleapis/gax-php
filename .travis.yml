@@ -4,6 +4,7 @@ php:
   - '5.6.25'
   - '7.0'
   - '7.1'
+  - '7.2'
 env:
   - PROTOBUF_C_EXT=true
   - PROTOBUF_C_EXT=false
@@ -12,6 +13,8 @@ matrix:
     - php: '5.5.38'
       env: PROTOBUF_C_EXT=true
     - php: '7.0'
+      env: PROTOBUF_C_EXT=true
+    - php: '7.1'
       env: PROTOBUF_C_EXT=true
 sudo: required
 dist: trusty
