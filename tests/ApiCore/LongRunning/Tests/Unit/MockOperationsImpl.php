@@ -34,7 +34,7 @@
  * This file was automatically generated - do not edit!
  */
 
-namespace Google\LongRunning\Tests\Unit;
+namespace Google\ApiCore\LongRunning\Tests\Unit;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\BidiStream;
