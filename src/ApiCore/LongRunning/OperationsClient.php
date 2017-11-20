@@ -42,7 +42,7 @@
  * @experimental
  */
 
-namespace Google\LongRunning;
+namespace Google\ApiCore\LongRunning;
 
 use Google\LongRunning\Gapic\OperationsGapicClient;
 

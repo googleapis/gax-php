@@ -42,7 +42,7 @@
  * @experimental
  */
 
-namespace Google\LongRunning\Gapic;
+namespace Google\ApiCore\LongRunning\Gapic;
 
 use Google\Cloud\Version;
 use Google\ApiCore\AgentHeaderDescriptor;
