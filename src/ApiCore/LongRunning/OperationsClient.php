@@ -44,7 +44,7 @@
 
 namespace Google\ApiCore\LongRunning;
 
-use Google\LongRunning\Gapic\OperationsGapicClient;
+use Google\ApiCore\LongRunning\Gapic\OperationsGapicClient;
 
 /**
  * {@inheritdoc}

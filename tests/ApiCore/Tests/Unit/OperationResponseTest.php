@@ -33,7 +33,7 @@ namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\OperationResponse;
 use Google\Longrunning\Operation;
-use Google\LongRunning\OperationsClient;
+use Google\ApiCore\LongRunning\OperationsClient;
 use Google\Protobuf\Any;
 use Google\Rpc\Status;
 use PHPUnit\Framework\TestCase;
