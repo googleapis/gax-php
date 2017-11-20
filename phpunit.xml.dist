@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="bootstrap.php"
+<phpunit bootstrap="tests/bootstrap.php"
          colors="true">
   <testsuites>
     <testsuite>
-      <directory>src/ApiCore/Tests/Unit</directory>
-      <directory>src/LongRunning/Tests/Unit</directory>
+      <directory>tests/ApiCore/Tests/Unit</directory>
+      <directory>tests/LongRunning/Tests/Unit</directory>
     </testsuite>
   </testsuites>
   <filter>
