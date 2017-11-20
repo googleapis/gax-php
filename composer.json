@@ -20,5 +20,10 @@
             "Google\\": "src",
             "GPBMetadata\\Google\\": "metadata"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Google\\": "tests"
+        }
     }
 }
