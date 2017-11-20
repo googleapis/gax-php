@@ -2,5 +2,6 @@
 <ruleset name="Google-Cloud-PHP-PSR2">
   <rule ref="PSR2" />
   <exclude-pattern>src/ApiCore/Jison</exclude-pattern>
+  <exclude-pattern>src/ApiCore/LongRunning</exclude-pattern>
   <file>src/ApiCore</file>
 </ruleset>
