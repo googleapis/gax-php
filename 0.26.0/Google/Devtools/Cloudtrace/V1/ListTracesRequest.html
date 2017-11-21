@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Devtools\Cloudtrace\V1\ListTracesRequest | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Devtools_Cloudtrace_V1_ListTracesRequest" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Devtools.html">Devtools</a></li><li class="backslash">\</li><li><a href="../../../../Google/Devtools/Cloudtrace.html">Cloudtrace</a></li><li class="backslash">\</li><li><a href="../../../../Google/Devtools/Cloudtrace/V1.html">V1</a></li><li class="backslash">\</li><li>ListTracesRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ListTracesRequest
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ListTracesRequest</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The request message for the <code>ListTraces</code> method. All fields are required
+unless specified.</p>            <p>Generated from protobuf message <code>google.devtools.cloudtrace.v1.ListTracesRequest</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getProjectId">getProjectId</a>()
+        
+                                            <p>ID of the Cloud project where the trace data is stored.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setProjectId">setProjectId</a>(string $var)
+        
+                                            <p>ID of the Cloud project where the trace data is stored.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getView">getView</a>()
+        
+                                            <p>Type of data returned for traces in the list. Optional. Default is
+<code>MINIMAL</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setView">setView</a>(int $var)
+        
+                                            <p>Type of data returned for traces in the list. Optional. Default is
+<code>MINIMAL</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPageSize">getPageSize</a>()
+        
+                                            <p>Maximum number of traces to return. If not specified or &lt;= 0, the
+implementation selects a reasonable value.  The implementation may
+return fewer traces than the requested page size. Optional.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPageSize">setPageSize</a>(int $var)
+        
+                                            <p>Maximum number of traces to return. If not specified or &lt;= 0, the
+implementation selects a reasonable value.  The implementation may
+return fewer traces than the requested page size. Optional.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPageToken">getPageToken</a>()
+        
+                                            <p>Token identifying the page of results to return. If provided, use the
+value of the <code>next_page_token</code> field from a previous request. Optional.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPageToken">setPageToken</a>(string $var)
+        
+                                            <p>Token identifying the page of results to return. If provided, use the
+value of the <code>next_page_token</code> field from a previous request. Optional.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStartTime">getStartTime</a>()
+        
+                                            <p>End of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStartTime">setStartTime</a>(<a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a> $var)
+        
+                                            <p>End of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndTime">getEndTime</a>()
+        
+                                            <p>Start of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEndTime">setEndTime</a>(<a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a> $var)
+        
+                                            <p>Start of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFilter">getFilter</a>()
+        
+                                            <p>An optional filter for the request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setFilter">setFilter</a>(string $var)
+        
+                                            <p>An optional filter for the request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOrderBy">getOrderBy</a>()
+        
+                                            <p>Field used to sort the returned traces. Optional.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setOrderBy">setOrderBy</a>(string $var)
+        
+                                            <p>Field used to sort the returned traces. Optional.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 83</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getProjectId">
+        <div class="location">at         line 94</div>
+        <code>                    string
+    <strong>getProjectId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ID of the Cloud project where the trace data is stored.</p>                    <p>Generated from protobuf field <code>string project_id = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setProjectId">
+        <div class="location">at         line 106</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setProjectId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ID of the Cloud project where the trace data is stored.</p>                    <p>Generated from protobuf field <code>string project_id = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getView">
+        <div class="location">at         line 121</div>
+        <code>                    int
+    <strong>getView</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Type of data returned for traces in the list. Optional. Default is
+<code>MINIMAL</code>.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v1.ListTracesRequest.ViewType view = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setView">
+        <div class="location">at         line 134</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setView</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Type of data returned for traces in the list. Optional. Default is
+<code>MINIMAL</code>.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v1.ListTracesRequest.ViewType view = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPageSize">
+        <div class="location">at         line 150</div>
+        <code>                    int
+    <strong>getPageSize</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Maximum number of traces to return. If not specified or &lt;= 0, the
+implementation selects a reasonable value.  The implementation may
+return fewer traces than the requested page size. Optional.</p>                    <p>Generated from protobuf field <code>int32 page_size = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPageSize">
+        <div class="location">at         line 164</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setPageSize</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Maximum number of traces to return. If not specified or &lt;= 0, the
+implementation selects a reasonable value.  The implementation may
+return fewer traces than the requested page size. Optional.</p>                    <p>Generated from protobuf field <code>int32 page_size = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPageToken">
+        <div class="location">at         line 179</div>
+        <code>                    string
+    <strong>getPageToken</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Token identifying the page of results to return. If provided, use the
+value of the <code>next_page_token</code> field from a previous request. Optional.</p>                    <p>Generated from protobuf field <code>string page_token = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPageToken">
+        <div class="location">at         line 192</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setPageToken</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Token identifying the page of results to return. If provided, use the
+value of the <code>next_page_token</code> field from a previous request. Optional.</p>                    <p>Generated from protobuf field <code>string page_token = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStartTime">
+        <div class="location">at         line 207</div>
+        <code>                    <a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a>
+    <strong>getStartTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>End of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp start_time = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStartTime">
+        <div class="location">at         line 220</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setStartTime</strong>(<a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>End of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp start_time = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndTime">
+        <div class="location">at         line 235</div>
+        <code>                    <a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a>
+    <strong>getEndTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Start of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp end_time = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEndTime">
+        <div class="location">at         line 248</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setEndTime</strong>(<a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Start of the time interval (inclusive) during which the trace data was
+collected from the application.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp end_time = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Protobuf/Timestamp.html"><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFilter">
+        <div class="location">at         line 262</div>
+        <code>                    string
+    <strong>getFilter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional filter for the request.</p>                    <p>Generated from protobuf field <code>string filter = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setFilter">
+        <div class="location">at         line 274</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setFilter</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional filter for the request.</p>                    <p>Generated from protobuf field <code>string filter = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOrderBy">
+        <div class="location">at         line 297</div>
+        <code>                    string
+    <strong>getOrderBy</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Field used to sort the returned traces. Optional.</p>                    <p>Can be one of the following:
+*   <code>trace_id</code>
+*   <code>name</code> (<code>name</code> field of root span in the trace)
+*   <code>duration</code> (difference between <code>end_time</code> and <code>start_time</code> fields of
+     the root span)
+*   <code>start</code> (<code>start_time</code> field of the root span)
+Descending order can be specified by appending <code>desc</code> to the sort field
+(for example, <code>name desc</code>).
+Only one sort field is permitted.</p>
+
+<p>Generated from protobuf field <code>string order_by = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setOrderBy">
+        <div class="location">at         line 318</div>
+        <code>                    <abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr>
+    <strong>setOrderBy</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Field used to sort the returned traces. Optional.</p>                    <p>Can be one of the following:
+*   <code>trace_id</code>
+*   <code>name</code> (<code>name</code> field of root span in the trace)
+*   <code>duration</code> (difference between <code>end_time</code> and <code>start_time</code> fields of
+     the root span)
+*   <code>start</code> (<code>start_time</code> field of the root span)
+Descending order can be specified by appending <code>desc</code> to the sort field
+(for example, <code>name desc</code>).
+Only one sort field is permitted.</p>
+
+<p>Generated from protobuf field <code>string order_by = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Devtools\Cloudtrace\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Protobuf\Duration | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Protobuf_Duration" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Protobuf.html">Protobuf</a></li><li class="backslash">\</li><li>Duration</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Duration
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Duration</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A Duration represents a signed, fixed-length span of time represented
+as a count of seconds and fractions of seconds at nanosecond
+resolution. It is independent of any calendar and concepts like "day"
+or "month". It is related to Timestamp in that the difference between
+two Timestamp values is a Duration and it can be added or subtracted
+from a Timestamp. Range is approximately +-10,000 years.</p>            <p><h1>Examples</h1>
+
+<p>Example 1: Compute Duration from two Timestamps in pseudo code.
+    Timestamp start = ...;
+    Timestamp end = ...;
+    Duration duration = ...;
+    duration.seconds = end.seconds - start.seconds;
+    duration.nanos = end.nanos - start.nanos;
+    if (duration.seconds &lt; 0 &amp;&amp; duration.nanos > 0) {
+      duration.seconds += 1;
+      duration.nanos -= 1000000000;
+    } else if (durations.seconds > 0 &amp;&amp; duration.nanos &lt; 0) {
+      duration.seconds -= 1;
+      duration.nanos += 1000000000;
+    }
+Example 2: Compute Timestamp from Timestamp + Duration in pseudo code.
+    Timestamp start = ...;
+    Duration duration = ...;
+    Timestamp end = ...;
+    end.seconds = start.seconds + duration.seconds;
+    end.nanos = start.nanos + duration.nanos;
+    if (end.nanos &lt; 0) {
+      end.seconds -= 1;
+      end.nanos += 1000000000;
+    } else if (end.nanos >= 1000000000) {
+      end.seconds += 1;
+      end.nanos -= 1000000000;
+    }
+Example 3: Compute Duration from datetime.timedelta in Python.
+    td = datetime.timedelta(days=3, minutes=10)
+    duration = Duration()
+    duration.FromTimedelta(td)</p>
+
+<h1>JSON Mapping</h1>
+
+<p>In JSON format, the Duration type is encoded as a string rather than an
+object, where the string ends in the suffix "s" (indicating seconds) and
+is preceded by the number of seconds, with nanoseconds expressed as
+fractional seconds. For example, 3 seconds with 0 nanoseconds should be
+encoded in JSON format as "3s", while 3 seconds and 1 nanosecond should
+be expressed in JSON format as "3.000000001s", and 3 seconds and 1
+microsecond should be expressed in JSON format as "3.000001s".</p>
+
+<p>Protobuf type <code>Google\Protobuf\Duration</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int|string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSeconds">getSeconds</a>()
+        
+                                            <p>Signed seconds of the span of time. Must be from -315,576,000,000
+to +315,576,000,000 inclusive. Note: these bounds are computed from:
+60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSeconds">setSeconds</a>(int|string $var)
+        
+                                            <p>Signed seconds of the span of time. Must be from -315,576,000,000
+to +315,576,000,000 inclusive. Note: these bounds are computed from:
+60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNanos">getNanos</a>()
+        
+                                            <p>Signed fractions of a second at nanosecond resolution of the span
+of time. Durations less than one second are represented with a 0
+<code>seconds</code> field and a positive or negative <code>nanos</code> field. For durations
+of one second or more, a non-zero value for the <code>nanos</code> field must be
+of the same sign as the <code>seconds</code> field. Must be from -999,999,999
+to +999,999,999 inclusive.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setNanos">setNanos</a>(int $var)
+        
+                                            <p>Signed fractions of a second at nanosecond resolution of the span
+of time. Durations less than one second are represented with a 0
+<code>seconds</code> field and a positive or negative <code>nanos</code> field. For durations
+of one second or more, a non-zero value for the <code>nanos</code> field must be
+of the same sign as the <code>seconds</code> field. Must be from -999,999,999
+to +999,999,999 inclusive.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 82</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSeconds">
+        <div class="location">at         line 95</div>
+        <code>                    int|string
+    <strong>getSeconds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Signed seconds of the span of time. Must be from -315,576,000,000
+to +315,576,000,000 inclusive. Note: these bounds are computed from:
+60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years</p>                    <p>Generated from protobuf field <code>int64 seconds = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSeconds">
+        <div class="location">at         line 108</div>
+        <code>                    
+    <strong>setSeconds</strong>(int|string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Signed seconds of the span of time. Must be from -315,576,000,000
+to +315,576,000,000 inclusive. Note: these bounds are computed from:
+60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years</p>                    <p>Generated from protobuf field <code>int64 seconds = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int|string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNanos">
+        <div class="location">at         line 125</div>
+        <code>                    int
+    <strong>getNanos</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Signed fractions of a second at nanosecond resolution of the span
+of time. Durations less than one second are represented with a 0
+<code>seconds</code> field and a positive or negative <code>nanos</code> field. For durations
+of one second or more, a non-zero value for the <code>nanos</code> field must be
+of the same sign as the <code>seconds</code> field. Must be from -999,999,999
+to +999,999,999 inclusive.</p>                    <p>Generated from protobuf field <code>int32 nanos = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setNanos">
+        <div class="location">at         line 141</div>
+        <code>                    
+    <strong>setNanos</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Signed fractions of a second at nanosecond resolution of the span
+of time. Durations less than one second are represented with a 0
+<code>seconds</code> field and a positive or negative <code>nanos</code> field. For durations
+of one second or more, a non-zero value for the <code>nanos</code> field must be
+of the same sign as the <code>seconds</code> field. Must be from -999,999,999
+to +999,999,999 inclusive.</p>                    <p>Generated from protobuf field <code>int32 nanos = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
