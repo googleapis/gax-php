@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Api\Service | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Api_Service" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Api.html">Api</a></li><li class="backslash">\</li><li>Service</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Service
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Service</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p><code>Service</code> is the root object of Google service configuration schema. It
+describes basic information about a service, such as the name and the
+title, and delegates other aspects to sub-sections. Each sub-section is
+either a proto message or a repeated proto message that configures a
+specific aspect, such as auth. See each proto message definition for details.</p>            <p>Example:
+    type: google.api.Service
+    config_version: 3
+    name: calendar.googleapis.com
+    title: Google Calendar API
+    apis:
+    - name: google.calendar.v3.Calendar
+    authentication:
+      providers:
+      - id: google_calendar_auth
+        jwks_uri: https://www.googleapis.com/oauth2/v1/certs
+        issuer: https://securetoken.google.com
+      rules:
+      - selector: "*"
+        requirements:
+          provider_id: google_calendar_auth</p>
+
+<p>Protobuf type <code>Google\Api\Service</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Protobuf/UInt32Value.html"><abbr title="Google\Protobuf\UInt32Value">UInt32Value</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConfigVersion">getConfigVersion</a>()
+        
+                                            <p>The version of the service configuration. The config version may
+influence interpretation of the configuration, for example, to
+determine defaults. This is documented together with applicable
+options. The current default for the config version itself is <code>3</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setConfigVersion">setConfigVersion</a>(<a href="../../Google/Protobuf/UInt32Value.html"><abbr title="Google\Protobuf\UInt32Value">UInt32Value</abbr></a> $var)
+        
+                                            <p>The version of the service configuration. The config version may
+influence interpretation of the configuration, for example, to
+determine defaults. This is documented together with applicable
+options. The current default for the config version itself is <code>3</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>The DNS address at which this service is available,
+e.g. <code>calendar.googleapis.com</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>The DNS address at which this service is available,
+e.g. <code>calendar.googleapis.com</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getId">getId</a>()
+        
+                                            <p>A unique ID for a specific instance of this message, typically assigned
+by the client for tracking purpose. If empty, the server may choose to
+generate one instead.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setId">setId</a>(string $var)
+        
+                                            <p>A unique ID for a specific instance of this message, typically assigned
+by the client for tracking purpose. If empty, the server may choose to
+generate one instead.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTitle">getTitle</a>()
+        
+                                            <p>The product title associated with this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTitle">setTitle</a>(string $var)
+        
+                                            <p>The product title associated with this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getProducerProjectId">getProducerProjectId</a>()
+        
+                                            <p>The id of the Google developer project that owns the service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setProducerProjectId">setProducerProjectId</a>(string $var)
+        
+                                            <p>The id of the Google developer project that owns the service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getApis">getApis</a>()
+        
+                                            <p>A list of API interfaces exported by this service. Only the <code>name</code> field
+of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
+author, as the remaining fields will be derived from the IDL during the
+normalization process. It is an error to specify an API interface here
+which cannot be resolved against the associated IDL files.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setApis">setApis</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>A list of API interfaces exported by this service. Only the <code>name</code> field
+of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
+author, as the remaining fields will be derived from the IDL during the
+normalization process. It is an error to specify an API interface here
+which cannot be resolved against the associated IDL files.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTypes">getTypes</a>()
+        
+                                            <p>A list of all proto message types included in this API service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTypes">setTypes</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>A list of all proto message types included in this API service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnums">getEnums</a>()
+        
+                                            <p>A list of all enum types included in this API service.  Enums
+referenced directly or indirectly by the <code>apis</code> are automatically
+included.  Enums which are not referenced but shall be included
+should be listed here by name. Example:
+    enums:
+    - name: google.someapi.v1.SomeEnum</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnums">setEnums</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>A list of all enum types included in this API service.  Enums
+referenced directly or indirectly by the <code>apis</code> are automatically
+included.  Enums which are not referenced but shall be included
+should be listed here by name. Example:
+    enums:
+    - name: google.someapi.v1.SomeEnum</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Documentation.html"><abbr title="Google\Api\Documentation">Documentation</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocumentation">getDocumentation</a>()
+        
+                                            <p>Additional API documentation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDocumentation">setDocumentation</a>(<a href="../../Google/Api/Documentation.html"><abbr title="Google\Api\Documentation">Documentation</abbr></a> $var)
+        
+                                            <p>Additional API documentation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Backend.html"><abbr title="Google\Api\Backend">Backend</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBackend">getBackend</a>()
+        
+                                            <p>API backend configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBackend">setBackend</a>(<a href="../../Google/Api/Backend.html"><abbr title="Google\Api\Backend">Backend</abbr></a> $var)
+        
+                                            <p>API backend configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Http.html"><abbr title="Google\Api\Http">Http</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHttp">getHttp</a>()
+        
+                                            <p>HTTP configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setHttp">setHttp</a>(<a href="../../Google/Api/Http.html"><abbr title="Google\Api\Http">Http</abbr></a> $var)
+        
+                                            <p>HTTP configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Quota.html"><abbr title="Google\Api\Quota">Quota</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getQuota">getQuota</a>()
+        
+                                            <p>Quota configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setQuota">setQuota</a>(<a href="../../Google/Api/Quota.html"><abbr title="Google\Api\Quota">Quota</abbr></a> $var)
+        
+                                            <p>Quota configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Authentication.html"><abbr title="Google\Api\Authentication">Authentication</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAuthentication">getAuthentication</a>()
+        
+                                            <p>Auth configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAuthentication">setAuthentication</a>(<a href="../../Google/Api/Authentication.html"><abbr title="Google\Api\Authentication">Authentication</abbr></a> $var)
+        
+                                            <p>Auth configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Context.html"><abbr title="Google\Api\Context">Context</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getContext">getContext</a>()
+        
+                                            <p>Context configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setContext">setContext</a>(<a href="../../Google/Api/Context.html"><abbr title="Google\Api\Context">Context</abbr></a> $var)
+        
+                                            <p>Context configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Usage.html"><abbr title="Google\Api\Usage">Usage</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUsage">getUsage</a>()
+        
+                                            <p>Configuration controlling usage of this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUsage">setUsage</a>(<a href="../../Google/Api/Usage.html"><abbr title="Google\Api\Usage">Usage</abbr></a> $var)
+        
+                                            <p>Configuration controlling usage of this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndpoints">getEndpoints</a>()
+        
+                                            <p>Configuration for network endpoints.  If this is empty, then an endpoint
+with the same name as the service is automatically generated to service all
+defined APIs.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEndpoints">setEndpoints</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Configuration for network endpoints.  If this is empty, then an endpoint
+with the same name as the service is automatically generated to service all
+defined APIs.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Control.html"><abbr title="Google\Api\Control">Control</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getControl">getControl</a>()
+        
+                                            <p>Configuration for the service control plane.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setControl">setControl</a>(<a href="../../Google/Api/Control.html"><abbr title="Google\Api\Control">Control</abbr></a> $var)
+        
+                                            <p>Configuration for the service control plane.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLogs">getLogs</a>()
+        
+                                            <p>Defines the logs used by this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLogs">setLogs</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Defines the logs used by this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMetrics">getMetrics</a>()
+        
+                                            <p>Defines the metrics used by this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMetrics">setMetrics</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Defines the metrics used by this service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMonitoredResources">getMonitoredResources</a>()
+        
+                                            <p>Defines the monitored resources used by this service. This is required
+by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMonitoredResources">setMonitoredResources</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Defines the monitored resources used by this service. This is required
+by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Logging.html"><abbr title="Google\Api\Logging">Logging</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLogging">getLogging</a>()
+        
+                                            <p>Logging configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLogging">setLogging</a>(<a href="../../Google/Api/Logging.html"><abbr title="Google\Api\Logging">Logging</abbr></a> $var)
+        
+                                            <p>Logging configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMonitoring">getMonitoring</a>()
+        
+                                            <p>Monitoring configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMonitoring">setMonitoring</a>(<a href="../../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a> $var)
+        
+                                            <p>Monitoring configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/SystemParameters.html"><abbr title="Google\Api\SystemParameters">SystemParameters</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSystemParameters">getSystemParameters</a>()
+        
+                                            <p>System parameter configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSystemParameters">setSystemParameters</a>(<a href="../../Google/Api/SystemParameters.html"><abbr title="Google\Api\SystemParameters">SystemParameters</abbr></a> $var)
+        
+                                            <p>System parameter configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/SourceInfo.html"><abbr title="Google\Api\SourceInfo">SourceInfo</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSourceInfo">getSourceInfo</a>()
+        
+                                            <p>Output only. The source information for this configuration if available.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSourceInfo">setSourceInfo</a>(<a href="../../Google/Api/SourceInfo.html"><abbr title="Google\Api\SourceInfo">SourceInfo</abbr></a> $var)
+        
+                                            <p>Output only. The source information for this configuration if available.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/Experimental.html"><abbr title="Google\Api\Experimental">Experimental</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getExperimental">getExperimental</a>()
+        
+                                            <p>Experimental configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setExperimental">setExperimental</a>(<a href="../../Google/Api/Experimental.html"><abbr title="Google\Api\Experimental">Experimental</abbr></a> $var)
+        
+                                            <p>Experimental configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 215</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConfigVersion">
+        <div class="location">at         line 229</div>
+        <code>                    <a href="../../Google/Protobuf/UInt32Value.html"><abbr title="Google\Protobuf\UInt32Value">UInt32Value</abbr></a>
+    <strong>getConfigVersion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The version of the service configuration. The config version may
+influence interpretation of the configuration, for example, to
+determine defaults. This is documented together with applicable
+options. The current default for the config version itself is <code>3</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.UInt32Value config_version = 20;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Protobuf/UInt32Value.html"><abbr title="Google\Protobuf\UInt32Value">UInt32Value</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setConfigVersion">
+        <div class="location">at         line 243</div>
+        <code>                    
+    <strong>setConfigVersion</strong>(<a href="../../Google/Protobuf/UInt32Value.html"><abbr title="Google\Protobuf\UInt32Value">UInt32Value</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The version of the service configuration. The config version may
+influence interpretation of the configuration, for example, to
+determine defaults. This is documented together with applicable
+options. The current default for the config version itself is <code>3</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.UInt32Value config_version = 20;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Protobuf/UInt32Value.html"><abbr title="Google\Protobuf\UInt32Value">UInt32Value</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 256</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The DNS address at which this service is available,
+e.g. <code>calendar.googleapis.com</code>.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 268</div>
+        <code>                    
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The DNS address at which this service is available,
+e.g. <code>calendar.googleapis.com</code>.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getId">
+        <div class="location">at         line 282</div>
+        <code>                    string
+    <strong>getId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A unique ID for a specific instance of this message, typically assigned
+by the client for tracking purpose. If empty, the server may choose to
+generate one instead.</p>                    <p>Generated from protobuf field <code>string id = 33;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setId">
+        <div class="location">at         line 295</div>
+        <code>                    
+    <strong>setId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A unique ID for a specific instance of this message, typically assigned
+by the client for tracking purpose. If empty, the server may choose to
+generate one instead.</p>                    <p>Generated from protobuf field <code>string id = 33;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTitle">
+        <div class="location">at         line 307</div>
+        <code>                    string
+    <strong>getTitle</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The product title associated with this service.</p>                    <p>Generated from protobuf field <code>string title = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTitle">
+        <div class="location">at         line 318</div>
+        <code>                    
+    <strong>setTitle</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The product title associated with this service.</p>                    <p>Generated from protobuf field <code>string title = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getProducerProjectId">
+        <div class="location">at         line 332</div>
+        <code>                    string
+    <strong>getProducerProjectId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The id of the Google developer project that owns the service.</p>                    <p>Members of this project can manage the service configuration,
+manage consumption of the service, etc.</p>
+
+<p>Generated from protobuf field <code>string producer_project_id = 22;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setProducerProjectId">
+        <div class="location">at         line 345</div>
+        <code>                    
+    <strong>setProducerProjectId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The id of the Google developer project that owns the service.</p>                    <p>Members of this project can manage the service configuration,
+manage consumption of the service, etc.</p>
+
+<p>Generated from protobuf field <code>string producer_project_id = 22;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getApis">
+        <div class="location">at         line 361</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getApis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of API interfaces exported by this service. Only the <code>name</code> field
+of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
+author, as the remaining fields will be derived from the IDL during the
+normalization process. It is an error to specify an API interface here
+which cannot be resolved against the associated IDL files.</p>                    <p>Generated from protobuf field <code>repeated .google.protobuf.Api apis = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setApis">
+        <div class="location">at         line 376</div>
+        <code>                    
+    <strong>setApis</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of API interfaces exported by this service. Only the <code>name</code> field
+of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
+author, as the remaining fields will be derived from the IDL during the
+normalization process. It is an error to specify an API interface here
+which cannot be resolved against the associated IDL files.</p>                    <p>Generated from protobuf field <code>repeated .google.protobuf.Api apis = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTypes">
+        <div class="location">at         line 394</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getTypes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of all proto message types included in this API service.</p>                    <p>Types referenced directly or indirectly by the <code>apis</code> are
+automatically included.  Messages which are not referenced but
+shall be included, such as types used by the <code>google.protobuf.Any</code> type,
+should be listed here by name. Example:
+    types:
+    - name: google.protobuf.Int32</p>
+
+<p>Generated from protobuf field <code>repeated .google.protobuf.Type types = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTypes">
+        <div class="location">at         line 411</div>
+        <code>                    
+    <strong>setTypes</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of all proto message types included in this API service.</p>                    <p>Types referenced directly or indirectly by the <code>apis</code> are
+automatically included.  Messages which are not referenced but
+shall be included, such as types used by the <code>google.protobuf.Any</code> type,
+should be listed here by name. Example:
+    types:
+    - name: google.protobuf.Int32</p>
+
+<p>Generated from protobuf field <code>repeated .google.protobuf.Type types = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnums">
+        <div class="location">at         line 428</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getEnums</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of all enum types included in this API service.  Enums
+referenced directly or indirectly by the <code>apis</code> are automatically
+included.  Enums which are not referenced but shall be included
+should be listed here by name. Example:
+    enums:
+    - name: google.someapi.v1.SomeEnum</p>                    <p>Generated from protobuf field <code>repeated .google.protobuf.Enum enums = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnums">
+        <div class="location">at         line 444</div>
+        <code>                    
+    <strong>setEnums</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of all enum types included in this API service.  Enums
+referenced directly or indirectly by the <code>apis</code> are automatically
+included.  Enums which are not referenced but shall be included
+should be listed here by name. Example:
+    enums:
+    - name: google.someapi.v1.SomeEnum</p>                    <p>Generated from protobuf field <code>repeated .google.protobuf.Enum enums = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocumentation">
+        <div class="location">at         line 456</div>
+        <code>                    <a href="../../Google/Api/Documentation.html"><abbr title="Google\Api\Documentation">Documentation</abbr></a>
+    <strong>getDocumentation</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Additional API documentation.</p>                    <p>Generated from protobuf field <code>.google.api.Documentation documentation = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Documentation.html"><abbr title="Google\Api\Documentation">Documentation</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDocumentation">
+        <div class="location">at         line 467</div>
+        <code>                    
+    <strong>setDocumentation</strong>(<a href="../../Google/Api/Documentation.html"><abbr title="Google\Api\Documentation">Documentation</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Additional API documentation.</p>                    <p>Generated from protobuf field <code>.google.api.Documentation documentation = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Documentation.html"><abbr title="Google\Api\Documentation">Documentation</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBackend">
+        <div class="location">at         line 479</div>
+        <code>                    <a href="../../Google/Api/Backend.html"><abbr title="Google\Api\Backend">Backend</abbr></a>
+    <strong>getBackend</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>API backend configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Backend backend = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Backend.html"><abbr title="Google\Api\Backend">Backend</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBackend">
+        <div class="location">at         line 490</div>
+        <code>                    
+    <strong>setBackend</strong>(<a href="../../Google/Api/Backend.html"><abbr title="Google\Api\Backend">Backend</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>API backend configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Backend backend = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Backend.html"><abbr title="Google\Api\Backend">Backend</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHttp">
+        <div class="location">at         line 502</div>
+        <code>                    <a href="../../Google/Api/Http.html"><abbr title="Google\Api\Http">Http</abbr></a>
+    <strong>getHttp</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>HTTP configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Http http = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Http.html"><abbr title="Google\Api\Http">Http</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setHttp">
+        <div class="location">at         line 513</div>
+        <code>                    
+    <strong>setHttp</strong>(<a href="../../Google/Api/Http.html"><abbr title="Google\Api\Http">Http</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>HTTP configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Http http = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Http.html"><abbr title="Google\Api\Http">Http</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getQuota">
+        <div class="location">at         line 525</div>
+        <code>                    <a href="../../Google/Api/Quota.html"><abbr title="Google\Api\Quota">Quota</abbr></a>
+    <strong>getQuota</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Quota configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Quota quota = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Quota.html"><abbr title="Google\Api\Quota">Quota</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setQuota">
+        <div class="location">at         line 536</div>
+        <code>                    
+    <strong>setQuota</strong>(<a href="../../Google/Api/Quota.html"><abbr title="Google\Api\Quota">Quota</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Quota configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Quota quota = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Quota.html"><abbr title="Google\Api\Quota">Quota</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAuthentication">
+        <div class="location">at         line 548</div>
+        <code>                    <a href="../../Google/Api/Authentication.html"><abbr title="Google\Api\Authentication">Authentication</abbr></a>
+    <strong>getAuthentication</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Auth configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Authentication authentication = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Authentication.html"><abbr title="Google\Api\Authentication">Authentication</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAuthentication">
+        <div class="location">at         line 559</div>
+        <code>                    
+    <strong>setAuthentication</strong>(<a href="../../Google/Api/Authentication.html"><abbr title="Google\Api\Authentication">Authentication</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Auth configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Authentication authentication = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Authentication.html"><abbr title="Google\Api\Authentication">Authentication</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getContext">
+        <div class="location">at         line 571</div>
+        <code>                    <a href="../../Google/Api/Context.html"><abbr title="Google\Api\Context">Context</abbr></a>
+    <strong>getContext</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Context configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Context context = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Context.html"><abbr title="Google\Api\Context">Context</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setContext">
+        <div class="location">at         line 582</div>
+        <code>                    
+    <strong>setContext</strong>(<a href="../../Google/Api/Context.html"><abbr title="Google\Api\Context">Context</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Context configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Context context = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Context.html"><abbr title="Google\Api\Context">Context</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUsage">
+        <div class="location">at         line 594</div>
+        <code>                    <a href="../../Google/Api/Usage.html"><abbr title="Google\Api\Usage">Usage</abbr></a>
+    <strong>getUsage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration controlling usage of this service.</p>                    <p>Generated from protobuf field <code>.google.api.Usage usage = 15;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Usage.html"><abbr title="Google\Api\Usage">Usage</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUsage">
+        <div class="location">at         line 605</div>
+        <code>                    
+    <strong>setUsage</strong>(<a href="../../Google/Api/Usage.html"><abbr title="Google\Api\Usage">Usage</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration controlling usage of this service.</p>                    <p>Generated from protobuf field <code>.google.api.Usage usage = 15;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Usage.html"><abbr title="Google\Api\Usage">Usage</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndpoints">
+        <div class="location">at         line 619</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getEndpoints</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration for network endpoints.  If this is empty, then an endpoint
+with the same name as the service is automatically generated to service all
+defined APIs.</p>                    <p>Generated from protobuf field <code>repeated .google.api.Endpoint endpoints = 18;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEndpoints">
+        <div class="location">at         line 632</div>
+        <code>                    
+    <strong>setEndpoints</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration for network endpoints.  If this is empty, then an endpoint
+with the same name as the service is automatically generated to service all
+defined APIs.</p>                    <p>Generated from protobuf field <code>repeated .google.api.Endpoint endpoints = 18;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getControl">
+        <div class="location">at         line 644</div>
+        <code>                    <a href="../../Google/Api/Control.html"><abbr title="Google\Api\Control">Control</abbr></a>
+    <strong>getControl</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration for the service control plane.</p>                    <p>Generated from protobuf field <code>.google.api.Control control = 21;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Control.html"><abbr title="Google\Api\Control">Control</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setControl">
+        <div class="location">at         line 655</div>
+        <code>                    
+    <strong>setControl</strong>(<a href="../../Google/Api/Control.html"><abbr title="Google\Api\Control">Control</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration for the service control plane.</p>                    <p>Generated from protobuf field <code>.google.api.Control control = 21;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Control.html"><abbr title="Google\Api\Control">Control</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLogs">
+        <div class="location">at         line 667</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getLogs</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Defines the logs used by this service.</p>                    <p>Generated from protobuf field <code>repeated .google.api.LogDescriptor logs = 23;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLogs">
+        <div class="location">at         line 678</div>
+        <code>                    
+    <strong>setLogs</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Defines the logs used by this service.</p>                    <p>Generated from protobuf field <code>repeated .google.api.LogDescriptor logs = 23;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMetrics">
+        <div class="location">at         line 690</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getMetrics</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Defines the metrics used by this service.</p>                    <p>Generated from protobuf field <code>repeated .google.api.MetricDescriptor metrics = 24;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMetrics">
+        <div class="location">at         line 701</div>
+        <code>                    
+    <strong>setMetrics</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Defines the metrics used by this service.</p>                    <p>Generated from protobuf field <code>repeated .google.api.MetricDescriptor metrics = 24;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMonitoredResources">
+        <div class="location">at         line 714</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getMonitoredResources</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Defines the monitored resources used by this service. This is required
+by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.</p>                    <p>Generated from protobuf field <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMonitoredResources">
+        <div class="location">at         line 726</div>
+        <code>                    
+    <strong>setMonitoredResources</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Defines the monitored resources used by this service. This is required
+by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.</p>                    <p>Generated from protobuf field <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLogging">
+        <div class="location">at         line 738</div>
+        <code>                    <a href="../../Google/Api/Logging.html"><abbr title="Google\Api\Logging">Logging</abbr></a>
+    <strong>getLogging</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Logging configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Logging logging = 27;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Logging.html"><abbr title="Google\Api\Logging">Logging</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLogging">
+        <div class="location">at         line 749</div>
+        <code>                    
+    <strong>setLogging</strong>(<a href="../../Google/Api/Logging.html"><abbr title="Google\Api\Logging">Logging</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Logging configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Logging logging = 27;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Logging.html"><abbr title="Google\Api\Logging">Logging</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMonitoring">
+        <div class="location">at         line 761</div>
+        <code>                    <a href="../../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a>
+    <strong>getMonitoring</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Monitoring configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Monitoring monitoring = 28;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMonitoring">
+        <div class="location">at         line 772</div>
+        <code>                    
+    <strong>setMonitoring</strong>(<a href="../../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Monitoring configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Monitoring monitoring = 28;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSystemParameters">
+        <div class="location">at         line 784</div>
+        <code>                    <a href="../../Google/Api/SystemParameters.html"><abbr title="Google\Api\SystemParameters">SystemParameters</abbr></a>
+    <strong>getSystemParameters</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>System parameter configuration.</p>                    <p>Generated from protobuf field <code>.google.api.SystemParameters system_parameters = 29;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/SystemParameters.html"><abbr title="Google\Api\SystemParameters">SystemParameters</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSystemParameters">
+        <div class="location">at         line 795</div>
+        <code>                    
+    <strong>setSystemParameters</strong>(<a href="../../Google/Api/SystemParameters.html"><abbr title="Google\Api\SystemParameters">SystemParameters</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>System parameter configuration.</p>                    <p>Generated from protobuf field <code>.google.api.SystemParameters system_parameters = 29;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/SystemParameters.html"><abbr title="Google\Api\SystemParameters">SystemParameters</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSourceInfo">
+        <div class="location">at         line 807</div>
+        <code>                    <a href="../../Google/Api/SourceInfo.html"><abbr title="Google\Api\SourceInfo">SourceInfo</abbr></a>
+    <strong>getSourceInfo</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The source information for this configuration if available.</p>                    <p>Generated from protobuf field <code>.google.api.SourceInfo source_info = 37;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/SourceInfo.html"><abbr title="Google\Api\SourceInfo">SourceInfo</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSourceInfo">
+        <div class="location">at         line 818</div>
+        <code>                    
+    <strong>setSourceInfo</strong>(<a href="../../Google/Api/SourceInfo.html"><abbr title="Google\Api\SourceInfo">SourceInfo</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The source information for this configuration if available.</p>                    <p>Generated from protobuf field <code>.google.api.SourceInfo source_info = 37;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/SourceInfo.html"><abbr title="Google\Api\SourceInfo">SourceInfo</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getExperimental">
+        <div class="location">at         line 830</div>
+        <code>                    <a href="../../Google/Api/Experimental.html"><abbr title="Google\Api\Experimental">Experimental</abbr></a>
+    <strong>getExperimental</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Experimental configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Experimental experimental = 101;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/Experimental.html"><abbr title="Google\Api\Experimental">Experimental</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setExperimental">
+        <div class="location">at         line 841</div>
+        <code>                    
+    <strong>setExperimental</strong>(<a href="../../Google/Api/Experimental.html"><abbr title="Google\Api\Experimental">Experimental</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Experimental configuration.</p>                    <p>Generated from protobuf field <code>.google.api.Experimental experimental = 101;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Experimental.html"><abbr title="Google\Api\Experimental">Experimental</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

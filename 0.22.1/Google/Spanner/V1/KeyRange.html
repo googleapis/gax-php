@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Spanner\V1\KeyRange | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Spanner_V1_KeyRange" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/Spanner.html">Spanner</a></li><li class="backslash">\</li><li><a href="../../../Google/Spanner/V1.html">V1</a></li><li class="backslash">\</li><li>KeyRange</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            KeyRange
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>KeyRange</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>KeyRange represents a range of rows in a table or index.</p>            <p>A range has a start key and an end key. These keys can be open or
+closed, indicating if the range includes rows with that key.
+Keys are represented by lists, where the ith value in the list
+corresponds to the ith component of the table or index primary key.
+Individual values are encoded as described [here][google.spanner.v1.TypeCode].
+For example, consider the following table definition:
+    CREATE TABLE UserEvents (
+      UserName STRING(MAX),
+      EventDate STRING(10)
+    ) PRIMARY KEY(UserName, EventDate);
+The following keys name rows in this table:
+    ["Bob", "2014-09-23"]
+    ["Alfred", "2015-06-12"]
+Since the <code>UserEvents</code> table's <code>PRIMARY KEY</code> clause names two
+columns, each <code>UserEvents</code> key has two elements; the first is the
+<code>UserName</code>, and the second is the <code>EventDate</code>.
+Key ranges with multiple components are interpreted
+lexicographically by component using the table or index key's declared
+sort order. For example, the following range returns all events for
+user <code>"Bob"</code> that occurred in the year 2015:
+    "start_closed": ["Bob", "2015-01-01"]
+    "end_closed": ["Bob", "2015-12-31"]
+Start and end keys can omit trailing key components. This affects the
+inclusion and exclusion of rows that exactly match the provided key
+components: if the key is closed, then rows that exactly match the
+provided components are included; if the key is open, then rows
+that exactly match are not included.
+For example, the following range includes all events for <code>"Bob"</code> that
+occurred during and after the year 2000:
+    "start_closed": ["Bob", "2000-01-01"]
+    "end_closed": ["Bob"]
+The next example retrieves all events for <code>"Bob"</code>:
+    "start_closed": ["Bob"]
+    "end_closed": ["Bob"]
+To retrieve events before the year 2000:
+    "start_closed": ["Bob"]
+    "end_open": ["Bob", "2000-01-01"]
+The following range includes all rows in the table:
+    "start_closed": []
+    "end_closed": []
+This range returns all users whose <code>UserName</code> begins with any
+character from A to C:
+    "start_closed": ["A"]
+    "end_open": ["D"]
+This range returns all users whose <code>UserName</code> begins with B:
+    "start_closed": ["B"]
+    "end_open": ["C"]
+Key ranges honor column sort order. For example, suppose a table is
+defined as follows:
+    CREATE TABLE DescendingSortedTable {
+      Key INT64,
+      ...
+    ) PRIMARY KEY(Key DESC);
+The following range retrieves all rows with key values between 1
+and 100 inclusive:
+    "start_closed": ["100"]
+    "end_closed": ["1"]
+Note that 100 is passed as the start, and 1 is passed as the end,
+because <code>Key</code> is a descending column in the schema.</p>
+
+<p>Generated from protobuf message <code>google.spanner.v1.KeyRange</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_start_key_type">
+                                        protected                                        
+                </td>
+                <td>$start_key_type</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_end_key_type">
+                                        protected                                        
+                </td>
+                <td>$end_key_type</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStartClosed">getStartClosed</a>()
+        
+                                            <p>If the start is closed, then the range includes all rows whose
+first <code>len(start_closed)</code> key columns exactly match <code>start_closed</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStartClosed">setStartClosed</a>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        
+                                            <p>If the start is closed, then the range includes all rows whose
+first <code>len(start_closed)</code> key columns exactly match <code>start_closed</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStartOpen">getStartOpen</a>()
+        
+                                            <p>If the start is open, then the range excludes rows whose first
+<code>len(start_open)</code> key columns exactly match <code>start_open</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStartOpen">setStartOpen</a>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        
+                                            <p>If the start is open, then the range excludes rows whose first
+<code>len(start_open)</code> key columns exactly match <code>start_open</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndClosed">getEndClosed</a>()
+        
+                                            <p>If the end is closed, then the range includes all rows whose
+first <code>len(end_closed)</code> key columns exactly match <code>end_closed</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEndClosed">setEndClosed</a>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        
+                                            <p>If the end is closed, then the range includes all rows whose
+first <code>len(end_closed)</code> key columns exactly match <code>end_closed</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndOpen">getEndOpen</a>()
+        
+                                            <p>If the end is open, then the range excludes rows whose first
+<code>len(end_open)</code> key columns exactly match <code>end_open</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEndOpen">setEndOpen</a>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        
+                                            <p>If the end is open, then the range excludes rows whose first
+<code>len(end_open)</code> key columns exactly match <code>end_open</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStartKeyType">getStartKeyType</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndKeyType">getEndKeyType</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 80</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStartClosed">
+        <div class="location">at         line 92</div>
+        <code>                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+    <strong>getStartClosed</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the start is closed, then the range includes all rows whose
+first <code>len(start_closed)</code> key columns exactly match <code>start_closed</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue start_closed = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStartClosed">
+        <div class="location">at         line 104</div>
+        <code>                    
+    <strong>setStartClosed</strong>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the start is closed, then the range includes all rows whose
+first <code>len(start_closed)</code> key columns exactly match <code>start_closed</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue start_closed = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStartOpen">
+        <div class="location">at         line 117</div>
+        <code>                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+    <strong>getStartOpen</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the start is open, then the range excludes rows whose first
+<code>len(start_open)</code> key columns exactly match <code>start_open</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue start_open = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStartOpen">
+        <div class="location">at         line 129</div>
+        <code>                    
+    <strong>setStartOpen</strong>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the start is open, then the range excludes rows whose first
+<code>len(start_open)</code> key columns exactly match <code>start_open</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue start_open = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndClosed">
+        <div class="location">at         line 142</div>
+        <code>                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+    <strong>getEndClosed</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the end is closed, then the range includes all rows whose
+first <code>len(end_closed)</code> key columns exactly match <code>end_closed</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue end_closed = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEndClosed">
+        <div class="location">at         line 154</div>
+        <code>                    
+    <strong>setEndClosed</strong>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the end is closed, then the range includes all rows whose
+first <code>len(end_closed)</code> key columns exactly match <code>end_closed</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue end_closed = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndOpen">
+        <div class="location">at         line 167</div>
+        <code>                    <a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a>
+    <strong>getEndOpen</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the end is open, then the range excludes rows whose first
+<code>len(end_open)</code> key columns exactly match <code>end_open</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue end_open = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEndOpen">
+        <div class="location">at         line 179</div>
+        <code>                    
+    <strong>setEndOpen</strong>(<a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If the end is open, then the range excludes rows whose first
+<code>len(end_open)</code> key columns exactly match <code>end_open</code>.</p>                    <p>Generated from protobuf field <code>.google.protobuf.ListValue end_open = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Protobuf/ListValue.html"><abbr title="Google\Protobuf\ListValue">ListValue</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStartKeyType">
+        <div class="location">at         line 188</div>
+        <code>                    string
+    <strong>getStartKeyType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndKeyType">
+        <div class="location">at         line 196</div>
+        <code>                    string
+    <strong>getEndKeyType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

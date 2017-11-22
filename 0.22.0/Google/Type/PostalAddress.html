@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Type\PostalAddress | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Type_PostalAddress" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Type.html">Type</a></li><li class="backslash">\</li><li>PostalAddress</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            PostalAddress
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>PostalAddress</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Represents a postal address, e.g. for postal delivery or payments addresses.</p>            <p>Given a postal address, a postal service can deliver items to a premise, P.O.
+Box or similar.
+It is not intended to model geographical locations (roads, towns,
+mountains).
+In typical usage an address would be created via user input or from importing
+existing data, depending on the type of process.
+Advice on address input / editing:
+ - Use an i18n-ready address widget such as
+   https://github.com/googlei18n/libaddressinput)
+- Users should not be presented with UI elements for input or editing of
+  fields outside countries where that field is used.
+For more guidance on how to use this schema, please see:
+https://support.google.com/business/answer/6397478</p>
+
+<p>Protobuf type <code>Google\Type\PostalAddress</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRevision">getRevision</a>()
+        
+                                            <p>The schema revision of the <code>PostalAddress</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRevision">setRevision</a>(int $var)
+        
+                                            <p>The schema revision of the <code>PostalAddress</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRegionCode">getRegionCode</a>()
+        
+                                            <p>Required. CLDR region code of the country/region of the address. This
+is never inferred and it is up to the user to ensure the value is
+correct. See http://cldr.unicode.org/ and
+http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+for details. Example: "CH" for Switzerland.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRegionCode">setRegionCode</a>(string $var)
+        
+                                            <p>Required. CLDR region code of the country/region of the address. This
+is never inferred and it is up to the user to ensure the value is
+correct. See http://cldr.unicode.org/ and
+http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+for details. Example: "CH" for Switzerland.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLanguageCode">getLanguageCode</a>()
+        
+                                            <p>Optional. BCP-47 language code of the contents of this address (if
+known). This is often the UI language of the input form or is expected
+to match one of the languages used in the address' country/region, or their
+transliterated equivalents.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLanguageCode">setLanguageCode</a>(string $var)
+        
+                                            <p>Optional. BCP-47 language code of the contents of this address (if
+known). This is often the UI language of the input form or is expected
+to match one of the languages used in the address' country/region, or their
+transliterated equivalents.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPostalCode">getPostalCode</a>()
+        
+                                            <p>Optional. Postal code of the address. Not all countries use or require
+postal codes to be present, but where they are used, they may trigger
+additional validation with other parts of the address (e.g. state/zip
+validation in the U.S.A.).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPostalCode">setPostalCode</a>(string $var)
+        
+                                            <p>Optional. Postal code of the address. Not all countries use or require
+postal codes to be present, but where they are used, they may trigger
+additional validation with other parts of the address (e.g. state/zip
+validation in the U.S.A.).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSortingCode">getSortingCode</a>()
+        
+                                            <p>Optional. Additional, country-specific, sorting code. This is not used
+in most regions. Where it is used, the value is either a string like
+"CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+alone, representing the "sector code" (Jamaica), "delivery area indicator"
+(Malawi) or "post office indicator" (e.g. Côte d'Ivoire).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSortingCode">setSortingCode</a>(string $var)
+        
+                                            <p>Optional. Additional, country-specific, sorting code. This is not used
+in most regions. Where it is used, the value is either a string like
+"CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+alone, representing the "sector code" (Jamaica), "delivery area indicator"
+(Malawi) or "post office indicator" (e.g. Côte d'Ivoire).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAdministrativeArea">getAdministrativeArea</a>()
+        
+                                            <p>Optional. Highest administrative subdivision which is used for postal
+addresses of a country or region.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAdministrativeArea">setAdministrativeArea</a>(string $var)
+        
+                                            <p>Optional. Highest administrative subdivision which is used for postal
+addresses of a country or region.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLocality">getLocality</a>()
+        
+                                            <p>Optional. Generally refers to the city/town portion of the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLocality">setLocality</a>(string $var)
+        
+                                            <p>Optional. Generally refers to the city/town portion of the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSublocality">getSublocality</a>()
+        
+                                            <p>Optional. Sublocality of the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSublocality">setSublocality</a>(string $var)
+        
+                                            <p>Optional. Sublocality of the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAddressLines">getAddressLines</a>()
+        
+                                            <p>Unstructured address lines describing the lower levels of an address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAddressLines">setAddressLines</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Unstructured address lines describing the lower levels of an address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRecipients">getRecipients</a>()
+        
+                                            <p>Optional. The recipient at the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRecipients">setRecipients</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Optional. The recipient at the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOrganization">getOrganization</a>()
+        
+                                            <p>Optional. The name of the organization at the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setOrganization">setOrganization</a>(string $var)
+        
+                                            <p>Optional. The name of the organization at the address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 149</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRevision">
+        <div class="location">at         line 161</div>
+        <code>                    int
+    <strong>getRevision</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The schema revision of the <code>PostalAddress</code>.</p>                    <p>All new revisions <strong>must</strong> be backward compatible with old revisions.</p>
+
+<p>Generated from protobuf field <code>int32 revision = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRevision">
+        <div class="location">at         line 173</div>
+        <code>                    
+    <strong>setRevision</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The schema revision of the <code>PostalAddress</code>.</p>                    <p>All new revisions <strong>must</strong> be backward compatible with old revisions.</p>
+
+<p>Generated from protobuf field <code>int32 revision = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRegionCode">
+        <div class="location">at         line 189</div>
+        <code>                    string
+    <strong>getRegionCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. CLDR region code of the country/region of the address. This
+is never inferred and it is up to the user to ensure the value is
+correct. See http://cldr.unicode.org/ and
+http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+for details. Example: "CH" for Switzerland.</p>                    <p>Generated from protobuf field <code>string region_code = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRegionCode">
+        <div class="location">at         line 204</div>
+        <code>                    
+    <strong>setRegionCode</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. CLDR region code of the country/region of the address. This
+is never inferred and it is up to the user to ensure the value is
+correct. See http://cldr.unicode.org/ and
+http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+for details. Example: "CH" for Switzerland.</p>                    <p>Generated from protobuf field <code>string region_code = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLanguageCode">
+        <div class="location">at         line 225</div>
+        <code>                    string
+    <strong>getLanguageCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. BCP-47 language code of the contents of this address (if
+known). This is often the UI language of the input form or is expected
+to match one of the languages used in the address' country/region, or their
+transliterated equivalents.</p>                    <p>This can affect formatting in certain countries, but is not critical
+to the correctness of the data and will never affect any validation or
+other non-formatting related operations.
+If this value is not known, it should be omitted (rather than specifying a
+possibly incorrect default).
+Examples: "zh-Hant", "ja", "ja-Latn", "en".</p>
+
+<p>Generated from protobuf field <code>string language_code = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLanguageCode">
+        <div class="location">at         line 245</div>
+        <code>                    
+    <strong>setLanguageCode</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. BCP-47 language code of the contents of this address (if
+known). This is often the UI language of the input form or is expected
+to match one of the languages used in the address' country/region, or their
+transliterated equivalents.</p>                    <p>This can affect formatting in certain countries, but is not critical
+to the correctness of the data and will never affect any validation or
+other non-formatting related operations.
+If this value is not known, it should be omitted (rather than specifying a
+possibly incorrect default).
+Examples: "zh-Hant", "ja", "ja-Latn", "en".</p>
+
+<p>Generated from protobuf field <code>string language_code = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPostalCode">
+        <div class="location">at         line 260</div>
+        <code>                    string
+    <strong>getPostalCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Postal code of the address. Not all countries use or require
+postal codes to be present, but where they are used, they may trigger
+additional validation with other parts of the address (e.g. state/zip
+validation in the U.S.A.).</p>                    <p>Generated from protobuf field <code>string postal_code = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPostalCode">
+        <div class="location">at         line 274</div>
+        <code>                    
+    <strong>setPostalCode</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Postal code of the address. Not all countries use or require
+postal codes to be present, but where they are used, they may trigger
+additional validation with other parts of the address (e.g. state/zip
+validation in the U.S.A.).</p>                    <p>Generated from protobuf field <code>string postal_code = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSortingCode">
+        <div class="location">at         line 290</div>
+        <code>                    string
+    <strong>getSortingCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Additional, country-specific, sorting code. This is not used
+in most regions. Where it is used, the value is either a string like
+"CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+alone, representing the "sector code" (Jamaica), "delivery area indicator"
+(Malawi) or "post office indicator" (e.g. Côte d'Ivoire).</p>                    <p>Generated from protobuf field <code>string sorting_code = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSortingCode">
+        <div class="location">at         line 305</div>
+        <code>                    
+    <strong>setSortingCode</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Additional, country-specific, sorting code. This is not used
+in most regions. Where it is used, the value is either a string like
+"CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a number
+alone, representing the "sector code" (Jamaica), "delivery area indicator"
+(Malawi) or "post office indicator" (e.g. Côte d'Ivoire).</p>                    <p>Generated from protobuf field <code>string sorting_code = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAdministrativeArea">
+        <div class="location">at         line 323</div>
+        <code>                    string
+    <strong>getAdministrativeArea</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Highest administrative subdivision which is used for postal
+addresses of a country or region.</p>                    <p>For example, this can be a state, a province, an oblast, or a prefecture.
+Specifically, for Spain this is the province and not the autonomous
+community (e.g. "Barcelona" and not "Catalonia").
+Many countries don't use an administrative area in postal addresses. E.g.
+in Switzerland this should be left unpopulated.</p>
+
+<p>Generated from protobuf field <code>string administrative_area = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAdministrativeArea">
+        <div class="location">at         line 340</div>
+        <code>                    
+    <strong>setAdministrativeArea</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Highest administrative subdivision which is used for postal
+addresses of a country or region.</p>                    <p>For example, this can be a state, a province, an oblast, or a prefecture.
+Specifically, for Spain this is the province and not the autonomous
+community (e.g. "Barcelona" and not "Catalonia").
+Many countries don't use an administrative area in postal addresses. E.g.
+in Switzerland this should be left unpopulated.</p>
+
+<p>Generated from protobuf field <code>string administrative_area = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLocality">
+        <div class="location">at         line 355</div>
+        <code>                    string
+    <strong>getLocality</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Generally refers to the city/town portion of the address.</p>                    <p>Examples: US city, IT comune, UK post town.
+In regions of the world where localities are not well defined or do not fit
+into this structure well, leave locality empty and use address_lines.</p>
+
+<p>Generated from protobuf field <code>string locality = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLocality">
+        <div class="location">at         line 369</div>
+        <code>                    
+    <strong>setLocality</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Generally refers to the city/town portion of the address.</p>                    <p>Examples: US city, IT comune, UK post town.
+In regions of the world where localities are not well defined or do not fit
+into this structure well, leave locality empty and use address_lines.</p>
+
+<p>Generated from protobuf field <code>string locality = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSublocality">
+        <div class="location">at         line 382</div>
+        <code>                    string
+    <strong>getSublocality</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Sublocality of the address.</p>                    <p>For example, this can be neighborhoods, boroughs, districts.</p>
+
+<p>Generated from protobuf field <code>string sublocality = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSublocality">
+        <div class="location">at         line 394</div>
+        <code>                    
+    <strong>setSublocality</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Sublocality of the address.</p>                    <p>For example, this can be neighborhoods, boroughs, districts.</p>
+
+<p>Generated from protobuf field <code>string sublocality = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAddressLines">
+        <div class="location">at         line 424</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAddressLines</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Unstructured address lines describing the lower levels of an address.</p>                    <p>Because values in address_lines do not have type information and may
+sometimes contain multiple values in a single field (e.g.
+"Austin, TX"), it is important that the line order is clear. The order of
+address lines should be "envelope order" for the country/region of the
+address. In places where this can vary (e.g. Japan), address_language is
+used to make it explicit (e.g. "ja" for large-to-small ordering and
+"ja-Latn" or "en" for small-to-large). This way, the most specific line of
+an address can be selected based on the language.
+The minimum permitted structural representation of an address consists
+of a region_code with all remaining information placed in the
+address_lines. It would be possible to format such an address very
+approximately without geocoding, but no semantic reasoning could be
+made about any of the address components until it was at least
+partially resolved.
+Creating an address only containing a region_code and address_lines, and
+then geocoding is the recommended way to handle completely unstructured
+addresses (as opposed to guessing which parts of the address should be
+localities or administrative areas).</p>
+
+<p>Generated from protobuf field <code>repeated string address_lines = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAddressLines">
+        <div class="location">at         line 453</div>
+        <code>                    
+    <strong>setAddressLines</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Unstructured address lines describing the lower levels of an address.</p>                    <p>Because values in address_lines do not have type information and may
+sometimes contain multiple values in a single field (e.g.
+"Austin, TX"), it is important that the line order is clear. The order of
+address lines should be "envelope order" for the country/region of the
+address. In places where this can vary (e.g. Japan), address_language is
+used to make it explicit (e.g. "ja" for large-to-small ordering and
+"ja-Latn" or "en" for small-to-large). This way, the most specific line of
+an address can be selected based on the language.
+The minimum permitted structural representation of an address consists
+of a region_code with all remaining information placed in the
+address_lines. It would be possible to format such an address very
+approximately without geocoding, but no semantic reasoning could be
+made about any of the address components until it was at least
+partially resolved.
+Creating an address only containing a region_code and address_lines, and
+then geocoding is the recommended way to handle completely unstructured
+addresses (as opposed to guessing which parts of the address should be
+localities or administrative areas).</p>
+
+<p>Generated from protobuf field <code>repeated string address_lines = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRecipients">
+        <div class="location">at         line 467</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getRecipients</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The recipient at the address.</p>                    <p>This field may, under certain circumstances, contain multiline information.
+For example, it might contain "care of" information.</p>
+
+<p>Generated from protobuf field <code>repeated string recipients = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRecipients">
+        <div class="location">at         line 480</div>
+        <code>                    
+    <strong>setRecipients</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The recipient at the address.</p>                    <p>This field may, under certain circumstances, contain multiline information.
+For example, it might contain "care of" information.</p>
+
+<p>Generated from protobuf field <code>repeated string recipients = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOrganization">
+        <div class="location">at         line 492</div>
+        <code>                    string
+    <strong>getOrganization</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The name of the organization at the address.</p>                    <p>Generated from protobuf field <code>string organization = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setOrganization">
+        <div class="location">at         line 503</div>
+        <code>                    
+    <strong>setOrganization</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The name of the organization at the address.</p>                    <p>Generated from protobuf field <code>string organization = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
