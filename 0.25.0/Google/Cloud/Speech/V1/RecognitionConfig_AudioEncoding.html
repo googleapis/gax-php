@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Speech\V1\RecognitionConfig_AudioEncoding | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Speech_V1_RecognitionConfig_AudioEncoding" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Speech.html">Speech</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Speech/V1.html">V1</a></li><li class="backslash">\</li><li>RecognitionConfig_AudioEncoding</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            RecognitionConfig_AudioEncoding
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>RecognitionConfig_AudioEncoding</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Audio encoding of the data sent in the audio message. All encodings support
+only 1 channel (mono) audio. Only <code>FLAC</code> and <code>WAV</code> include a header that
+describes the bytes of audio that follow the header. The other encodings
+are raw audio bytes with no header.</p>            <p>For best results, the audio source should be captured and transmitted using
+a lossless encoding (<code>FLAC</code> or <code>LINEAR16</code>). Recognition accuracy may be
+reduced if lossy codecs, which include the other codecs listed in
+this section, are used to capture or transmit the audio, particularly if
+background noise is present.</p>
+
+<p>Protobuf enum <code>Google\Cloud\Speech\V1\RecognitionConfig\AudioEncoding</code></p>                    </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>ENCODING_UNSPECIFIED</td>
+                <td class="last">
+                    <p><em>Not specified. Will return result [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT].</em></p>
+                    <p>Generated from protobuf enum <code>ENCODING_UNSPECIFIED = 0;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>LINEAR16</td>
+                <td class="last">
+                    <p><em>Uncompressed 16-bit signed little-endian samples (Linear PCM).</em></p>
+                    <p>Generated from protobuf enum <code>LINEAR16 = 1;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>FLAC</td>
+                <td class="last">
+                    <p><em><a href="https://xiph.org/flac/documentation.html"><code>FLAC</code></a> (Free Lossless Audio
+Codec) is the recommended encoding because it is
+lossless--therefore recognition is not compromised--and
+requires only about half the bandwidth of <code>LINEAR16</code>. <code>FLAC</code> stream
+encoding supports 16-bit and 24-bit samples, however, not all fields in
+<code>STREAMINFO</code> are supported.</em></p>
+                    <p>Generated from protobuf enum <code>FLAC = 2;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>MULAW</td>
+                <td class="last">
+                    <p><em>8-bit samples that compand 14-bit audio samples using G.711 PCMU/mu-law.</em></p>
+                    <p>Generated from protobuf enum <code>MULAW = 3;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>AMR</td>
+                <td class="last">
+                    <p><em>Adaptive Multi-Rate Narrowband codec. <code>sample_rate_hertz</code> must be 8000.</em></p>
+                    <p>Generated from protobuf enum <code>AMR = 4;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>AMR_WB</td>
+                <td class="last">
+                    <p><em>Adaptive Multi-Rate Wideband codec. <code>sample_rate_hertz</code> must be 16000.</em></p>
+                    <p>Generated from protobuf enum <code>AMR_WB = 5;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>OGG_OPUS</td>
+                <td class="last">
+                    <p><em>Opus encoded audio frames in Ogg container
+(<a href="https://wiki.xiph.org/OggOpus">OggOpus</a>).</em></p>
+                    <p><code>sample_rate_hertz</code> must be 16000.</p>
+
+<p>Generated from protobuf enum <code>OGG_OPUS = 6;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SPEEX_WITH_HEADER_BYTE</td>
+                <td class="last">
+                    <p><em>Although the use of lossy encodings is not recommended, if a very low
+bitrate encoding is required, <code>OGG_OPUS</code> is highly preferred over
+Speex encoding. The <a href="https://speex.org/">Speex</a>  encoding supported by
+Cloud Speech API has a header byte in each block, as in MIME type
+<code>audio/x-speex-with-header-byte</code>.</em></p>
+                    <p>It is a variant of the RTP Speex encoding defined in
+<a href="https://tools.ietf.org/html/rfc5574">RFC 5574</a>.
+The stream is a sequence of blocks, one block per RTP packet. Each block
+starts with a byte containing the length of the block, in bytes, followed
+by one or more frames of Speex data, padded to an integral number of
+bytes (octets) as specified in RFC 5574. In other words, each RTP header
+is replaced with a single byte containing the block length. Only Speex
+wideband is supported. <code>sample_rate_hertz</code> must be 16000.</p>
+
+<p>Generated from protobuf enum <code>SPEEX_WITH_HEADER_BYTE = 7;</code></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

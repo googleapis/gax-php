@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Firestore\V1beta1\TargetChange_TargetChangeType | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Firestore_V1beta1_TargetChange_TargetChangeType" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/Firestore.html">Firestore</a></li><li class="backslash">\</li><li><a href="../../../Google/Firestore/V1beta1.html">V1beta1</a></li><li class="backslash">\</li><li>TargetChange_TargetChangeType</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            TargetChange_TargetChangeType
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>TargetChange_TargetChangeType</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The type of change.</p>            <p>Protobuf enum <code>Google\Firestore\V1beta1\TargetChange\TargetChangeType</code></p>                    </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>NO_CHANGE</td>
+                <td class="last">
+                    <p><em>No change has occurred. Used only to send an updated <code>resume_token</code>.</em></p>
+                    <p>Generated from protobuf enum <code>NO_CHANGE = 0;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ADD</td>
+                <td class="last">
+                    <p><em>The targets have been added.</em></p>
+                    <p>Generated from protobuf enum <code>ADD = 1;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REMOVE</td>
+                <td class="last">
+                    <p><em>The targets have been removed.</em></p>
+                    <p>Generated from protobuf enum <code>REMOVE = 2;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>CURRENT</td>
+                <td class="last">
+                    <p><em>The targets reflect all changes committed before the targets were added
+to the stream.</em></p>
+                    <p>This will be sent after or with a <code>read_time</code> that is greater than or
+equal to the time at which the targets were added.
+Listeners can wait for this change if read-after-write semantics
+are desired.</p>
+
+<p>Generated from protobuf enum <code>CURRENT = 3;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>RESET</td>
+                <td class="last">
+                    <p><em>The targets have been reset, and a new initial state for the targets
+will be returned in subsequent changes.</em></p>
+                    <p>After the initial state is complete, <code>CURRENT</code> will be returned even
+if the target was previously indicated to be <code>CURRENT</code>.</p>
+
+<p>Generated from protobuf enum <code>RESET = 4;</code></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
