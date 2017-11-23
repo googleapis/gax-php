@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -96,38 +86,26 @@
     
 
             <div class="description">
-            <p>Billing related configuration of the service.</p>            <p>The following example shows how to configure metrics for billing:
+            <p>Billing related configuration of the service.</p>            <p>The following example shows how to configure monitored resources and metrics
+for billing:
+    monitored_resources:
+    - type: library.googleapis.com/branch
+      labels:
+      - key: /city
+        description: The city where the library branch is located in.
+      - key: /name
+        description: The name of the branch.
     metrics:
-    - name: library.googleapis.com/read_calls
-      metric_kind: DELTA
-      value_type: INT64
-    - name: library.googleapis.com/write_calls
+    - name: library.googleapis.com/book/borrowed_count
       metric_kind: DELTA
       value_type: INT64
     billing:
-      metrics:
-      - library.googleapis.com/read_calls
-      - library.googleapis.com/write_calls
-The next example shows how to enable billing status check and customize the
-check behavior. It makes sure billing status check is included in the <code>Check</code>
-method of <a href="https://cloud.google.com/service-control/">Service Control API</a>.
-In the example, "google.storage.Get" method can be served when the billing
-status is either <code>current</code> or <code>delinquent</code>, while "google.storage.Write"
-method can only be served when the billing status is <code>current</code>:
-    billing:
-      rules:
-      - selector: google.storage.Get
-        allowed_statuses:
-        - current
-        - delinquent
-      - selector: google.storage.Write
-        allowed_statuses: current
-Mostly services should only allow <code>current</code> status when serving requests.
-In addition, services can choose to allow both <code>current</code> and <code>delinquent</code>
-statuses when serving read-only requests to resources. If there's no
-matching selector for operation, no billing status check will be performed.</p>
+      consumer_destinations:
+      - monitored_resource: library.googleapis.com/branch
+        metrics:
+        - library.googleapis.com/book/borrowed_count</p>
 
-<p>Protobuf type <code>Google\Api\Billing</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.Billing</code></p>                    </div>
     
     
     
@@ -151,41 +129,19 @@ matching selector for operation, no billing status check will be performed.</p>
                     <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_getMetrics">getMetrics</a>()
+                    <a href="#method_getConsumerDestinations">getConsumerDestinations</a>()
         
-                                            <p>Names of the metrics to report to billing. Each name must
-be defined in [Service.metrics][google.api.Service.metrics] section.</p>                </div>
+                                            <p>Billing configurations for sending metrics to the consumer project.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setMetrics">setMetrics</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setConsumerDestinations">setConsumerDestinations</a>(<a href="../../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
-                                            <p>Names of the metrics to report to billing. Each name must
-be defined in [Service.metrics][google.api.Service.metrics] section.</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getRules">getRules</a>()
-        
-                                            <p>A list of billing status rules for configuring billing status check.</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_setRules">setRules</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
-        
-                                            <p>A list of billing status rules for configuring billing status check.</p>                </div>
+                                            <p>Billing configurations for sending metrics to the consumer project.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -196,7 +152,7 @@ be defined in [Service.metrics][google.api.Service.metrics] section.</p>        
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 62</div>
+        <div class="location">at         line 46</div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -214,10 +170,10 @@ be defined in [Service.metrics][google.api.Service.metrics] section.</p>        
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getMetrics">
-        <div class="location">at         line 74</div>
+                    <h3 id="method_getConsumerDestinations">
+        <div class="location">at         line 60</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
-    <strong>getMetrics</strong>()
+    <strong>getConsumerDestinations</strong>()
         </code>
     </h3>
     <div class="details">
@@ -225,8 +181,11 @@ be defined in [Service.metrics][google.api.Service.metrics] section.</p>        
     
 
                     <div class="method-description">
-                                    <p>Names of the metrics to report to billing. Each name must
-be defined in [Service.metrics][google.api.Service.metrics] section.</p>                    <p>Generated from protobuf field <code>repeated string metrics = 1;</code></p>                            </div>
+                                    <p>Billing configurations for sending metrics to the consumer project.</p>                    <p>There can be multiple consumer destinations per service, each one must have
+a different monitored resource type. A metric can be used in at most
+one consumer destination.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code></p>                            </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -245,10 +204,10 @@ be defined in [Service.metrics][google.api.Service.metrics] section.</p>        
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_setMetrics">
-        <div class="location">at         line 86</div>
-        <code>                    
-    <strong>setMetrics</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <h3 id="method_setConsumerDestinations">
+        <div class="location">at         line 75</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setConsumerDestinations</strong>(<a href="../../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -256,81 +215,32 @@ be defined in [Service.metrics][google.api.Service.metrics] section.</p>        
     
 
                     <div class="method-description">
-                                    <p>Names of the metrics to report to billing. Each name must
-be defined in [Service.metrics][google.api.Service.metrics] section.</p>                    <p>Generated from protobuf field <code>repeated string metrics = 1;</code></p>                            </div>
+                                    <p>Billing configurations for sending metrics to the consumer project.</p>                    <p>There can be multiple consumer destinations per service, each one must have
+a different monitored resource type. A metric can be used in at most
+one consumer destination.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code></p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_getRules">
-        <div class="location">at         line 98</div>
-        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
-    <strong>getRules</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>A list of billing status rules for configuring billing status check.</p>                    <p>Generated from protobuf field <code>repeated .google.api.BillingStatusRule rules = 5;</code></p>                            </div>
-                <div class="tags">
             
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
             <td></td>
         </tr>
     </table>
 
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_setRules">
-        <div class="location">at         line 109</div>
-        <code>                    
-    <strong>setRules</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>A list of billing status rules for configuring billing status check.</p>                    <p>Generated from protobuf field <code>repeated .google.api.BillingStatusRule rules = 5;</code></p>                            </div>
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
-                <td>$var</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
             
             
                     </div>

@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -140,7 +130,7 @@ Notes:
   <code>results</code> in #6 and later correspond to the portion of audio after
   "to be or not to be".</p>
 
-<p>Protobuf type <code>Google\Cloud\Speech\V1beta1\StreamingRecognizeResponse</code></p>                    </div>
+<p>Generated from protobuf message <code>google.cloud.speech.v1beta1.StreamingRecognizeResponse</code></p>                    </div>
     
     
     
@@ -172,7 +162,7 @@ specifies the error for the operation.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setError">setError</a>(<a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
@@ -194,10 +184,10 @@ correspond to consecutive portions of the audio currently being processed.</p>  
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setResults">setResults</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setResults">setResults</a>(<a href="../../../../Google/Cloud/Speech/V1beta1/StreamingRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1beta1\StreamingRecognitionResult">StreamingRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p><em>Output-only</em> This repeated list contains zero or more results that
 correspond to consecutive portions of the audio currently being processed.</p>                </div>
@@ -217,7 +207,7 @@ results at this index and higher.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setResultIndex">setResultIndex</a>(int $var)
@@ -239,7 +229,7 @@ results at this index and higher.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setEndpointerType">setEndpointerType</a>(int $var)
@@ -305,8 +295,8 @@ specifies the error for the operation.</p>                    <p>Generated from 
             </div>
                     <div class="method-item">
                     <h3 id="method_setError">
-        <div class="location">at         line 116</div>
-        <code>                    
+        <div class="location">at         line 117</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
     <strong>setError</strong>(<a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
         </code>
     </h3>
@@ -329,6 +319,15 @@ specifies the error for the operation.</p>                    <p>Generated from 
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -337,7 +336,7 @@ specifies the error for the operation.</p>                    <p>Generated from 
             </div>
                     <div class="method-item">
                     <h3 id="method_getResults">
-        <div class="location">at         line 131</div>
+        <div class="location">at         line 134</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getResults</strong>()
         </code>
@@ -371,9 +370,9 @@ followed by zero or more <code>is_final=false</code> results.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setResults">
-        <div class="location">at         line 145</div>
-        <code>                    
-    <strong>setResults</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 149</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
+    <strong>setResults</strong>(<a href="../../../../Google/Cloud/Speech/V1beta1/StreamingRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1beta1\StreamingRecognitionResult">StreamingRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -391,13 +390,22 @@ followed by zero or more <code>is_final=false</code> results.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Speech/V1beta1/StreamingRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1beta1\StreamingRecognitionResult">StreamingRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -406,7 +414,7 @@ followed by zero or more <code>is_final=false</code> results.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getResultIndex">
-        <div class="location">at         line 159</div>
+        <div class="location">at         line 165</div>
         <code>                    int
     <strong>getResultIndex</strong>()
         </code>
@@ -438,8 +446,8 @@ results at this index and higher.</p>                    <p>Generated from proto
             </div>
                     <div class="method-item">
                     <h3 id="method_setResultIndex">
-        <div class="location">at         line 172</div>
-        <code>                    
+        <div class="location">at         line 179</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
     <strong>setResultIndex</strong>(int $var)
         </code>
     </h3>
@@ -463,6 +471,15 @@ results at this index and higher.</p>                    <p>Generated from proto
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -471,7 +488,7 @@ results at this index and higher.</p>                    <p>Generated from proto
             </div>
                     <div class="method-item">
                     <h3 id="method_getEndpointerType">
-        <div class="location">at         line 184</div>
+        <div class="location">at         line 193</div>
         <code>                    int
     <strong>getEndpointerType</strong>()
         </code>
@@ -501,8 +518,8 @@ results at this index and higher.</p>                    <p>Generated from proto
             </div>
                     <div class="method-item">
                     <h3 id="method_setEndpointerType">
-        <div class="location">at         line 195</div>
-        <code>                    
+        <div class="location">at         line 205</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr>
     <strong>setEndpointerType</strong>(int $var)
         </code>
     </h3>
@@ -524,6 +541,15 @@ results at this index and higher.</p>                    <p>Generated from proto
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

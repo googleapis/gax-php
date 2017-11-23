@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -97,7 +87,7 @@
 
             <div class="description">
             <p>A context rule provides information about the context for an individual API
-element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>                    </div>
+element.</p>            <p>Generated from protobuf message <code>google.api.ContextRule</code></p>                    </div>
     
     
     
@@ -128,7 +118,7 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setSelector">setSelector</a>(string $var)
@@ -148,10 +138,10 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setRequested">setRequested</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setRequested">setRequested</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>A list of full type names of requested contexts.</p>                </div>
                 <div class="col-md-2"></div>
@@ -168,10 +158,10 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setProvided">setProvided</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setProvided">setProvided</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>A list of full type names of provided contexts.</p>                </div>
                 <div class="col-md-2"></div>
@@ -235,8 +225,8 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSelector">
-        <div class="location">at         line 63</div>
-        <code>                    
+        <div class="location">at         line 64</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSelector</strong>(string $var)
         </code>
     </h3>
@@ -260,6 +250,15 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -268,7 +267,7 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRequested">
-        <div class="location">at         line 75</div>
+        <div class="location">at         line 78</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getRequested</strong>()
         </code>
@@ -298,9 +297,9 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setRequested">
-        <div class="location">at         line 86</div>
-        <code>                    
-    <strong>setRequested</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 90</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setRequested</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -314,13 +313,22 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -329,7 +337,7 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getProvided">
-        <div class="location">at         line 98</div>
+        <div class="location">at         line 104</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getProvided</strong>()
         </code>
@@ -359,9 +367,9 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setProvided">
-        <div class="location">at         line 109</div>
-        <code>                    
-    <strong>setProvided</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 116</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setProvided</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -375,13 +383,22 @@ element.</p>            <p>Protobuf type <code>Google\Api\ContextRule</code></p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

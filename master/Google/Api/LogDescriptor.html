@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -103,7 +93,7 @@
       - key: /customer_id
         description: Identifier of a library customer</p>
 
-<p>Protobuf type <code>Google\Api\LogDescriptor</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.LogDescriptor</code></p>                    </div>
     
     
     
@@ -137,7 +127,7 @@ slash, underscore, hyphen, period [/_-.].</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setName">setName</a>(string $var)
@@ -160,10 +150,10 @@ slash, underscore, hyphen, period [/_-.].</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setLabels">setLabels</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setLabels">setLabels</a>(<a href="../../Google/Api/LabelDescriptor.html"><abbr title="Google\Api\LabelDescriptor">LabelDescriptor</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>The set of labels that are available to describe a specific log entry.</p>                </div>
                 <div class="col-md-2"></div>
@@ -181,7 +171,7 @@ the documentation and can contain details.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setDescription">setDescription</a>(string $var)
@@ -203,7 +193,7 @@ the user interface and should be concise.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setDisplayName">setDisplayName</a>(string $var)
@@ -272,8 +262,8 @@ slash, underscore, hyphen, period [/_-.].</p>                    <p>Generated fr
             </div>
                     <div class="method-item">
                     <h3 id="method_setName">
-        <div class="location">at         line 84</div>
-        <code>                    
+        <div class="location">at         line 85</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setName</strong>(string $var)
         </code>
     </h3>
@@ -298,6 +288,15 @@ slash, underscore, hyphen, period [/_-.].</p>                    <p>Generated fr
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -306,7 +305,7 @@ slash, underscore, hyphen, period [/_-.].</p>                    <p>Generated fr
             </div>
                     <div class="method-item">
                     <h3 id="method_getLabels">
-        <div class="location">at         line 98</div>
+        <div class="location">at         line 101</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getLabels</strong>()
         </code>
@@ -339,9 +338,9 @@ considered invalid.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setLabels">
-        <div class="location">at         line 111</div>
-        <code>                    
-    <strong>setLabels</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 115</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setLabels</strong>(<a href="../../Google/Api/LabelDescriptor.html"><abbr title="Google\Api\LabelDescriptor">LabelDescriptor</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -358,13 +357,22 @@ considered invalid.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/LabelDescriptor.html"><abbr title="Google\Api\LabelDescriptor">LabelDescriptor</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -373,7 +381,7 @@ considered invalid.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDescription">
-        <div class="location">at         line 124</div>
+        <div class="location">at         line 130</div>
         <code>                    string
     <strong>getDescription</strong>()
         </code>
@@ -404,8 +412,8 @@ the documentation and can contain details.</p>                    <p>Generated f
             </div>
                     <div class="method-item">
                     <h3 id="method_setDescription">
-        <div class="location">at         line 136</div>
-        <code>                    
+        <div class="location">at         line 143</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDescription</strong>(string $var)
         </code>
     </h3>
@@ -428,6 +436,15 @@ the documentation and can contain details.</p>                    <p>Generated f
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -436,7 +453,7 @@ the documentation and can contain details.</p>                    <p>Generated f
             </div>
                     <div class="method-item">
                     <h3 id="method_getDisplayName">
-        <div class="location">at         line 149</div>
+        <div class="location">at         line 158</div>
         <code>                    string
     <strong>getDisplayName</strong>()
         </code>
@@ -467,8 +484,8 @@ the user interface and should be concise.</p>                    <p>Generated fr
             </div>
                     <div class="method-item">
                     <h3 id="method_setDisplayName">
-        <div class="location">at         line 161</div>
-        <code>                    
+        <div class="location">at         line 171</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDisplayName</strong>(string $var)
         </code>
     </h3>
@@ -491,6 +508,15 @@ the user interface and should be concise.</p>                    <p>Generated fr
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

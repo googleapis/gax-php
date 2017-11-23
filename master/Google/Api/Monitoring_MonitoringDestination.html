@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -97,7 +87,7 @@
 
             <div class="description">
             <p>Configuration of a specific monitoring destination (the producer project
-or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monitoring\MonitoringDestination</code></p>                    </div>
+or the consumer project).</p>            <p>Generated from protobuf message <code>google.api.Monitoring.MonitoringDestination</code></p>                    </div>
     
     
     
@@ -129,7 +119,7 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setMonitoredResource">setMonitoredResource</a>(string $var)
@@ -150,10 +140,10 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setMetrics">setMetrics</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setMetrics">setMetrics</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Names of the metrics to report to this monitoring destination.</p>                </div>
                 <div class="col-md-2"></div>
@@ -216,8 +206,8 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
             </div>
                     <div class="method-item">
                     <h3 id="method_setMonitoredResource">
-        <div class="location">at         line 58</div>
-        <code>                    
+        <div class="location">at         line 59</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMonitoredResource</strong>(string $var)
         </code>
     </h3>
@@ -240,6 +230,15 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -248,7 +247,7 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetrics">
-        <div class="location">at         line 71</div>
+        <div class="location">at         line 74</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getMetrics</strong>()
         </code>
@@ -280,9 +279,9 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
             </div>
                     <div class="method-item">
                     <h3 id="method_setMetrics">
-        <div class="location">at         line 83</div>
-        <code>                    
-    <strong>setMetrics</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 87</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setMetrics</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -298,13 +297,22 @@ or the consumer project).</p>            <p>Protobuf type <code>Google\Api\Monit
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

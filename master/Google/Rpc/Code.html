@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -166,9 +156,11 @@ enough for the deadline to expire.</em></p>
                 <td>NOT_FOUND</td>
                 <td class="last">
                     <p><em>Some requested entity (e.g., file or directory) was not found.</em></p>
-                    <p>For privacy reasons, this code <em>may</em> be returned when the client
-does not have the access rights to the entity, though such usage is
-discouraged.
+                    <p>Note to server developers: if a request is denied for an entire class
+of users, such as gradual feature rollout or undocumented whitelist,
+<code>NOT_FOUND</code> may be used. If a request is denied for some users within
+a class of users, such as user-based access control, <code>PERMISSION_DENIED</code>
+must be used.
 HTTP Mapping: 404 Not Found</p>
 
 <p>Generated from protobuf enum <code>NOT_FOUND = 5;</code></p>
@@ -192,7 +184,9 @@ operation. <code>PERMISSION_DENIED</code> must not be used for rejections
 caused by exhausting some resource (use <code>RESOURCE_EXHAUSTED</code>
 instead for those errors). <code>PERMISSION_DENIED</code> must not be
 used if the caller can not be identified (use <code>UNAUTHENTICATED</code>
-instead for those errors).</em></p>
+instead for those errors). This error code does not imply the
+request is valid or the requested entity exists or satisfies
+other pre-conditions.</em></p>
                     <p>HTTP Mapping: 403 Forbidden</p>
 
 <p>Generated from protobuf enum <code>PERMISSION_DENIED = 7;</code></p>
@@ -229,7 +223,8 @@ a non-directory, etc.</em></p>
 between <code>FAILED_PRECONDITION</code>, <code>ABORTED</code>, and <code>UNAVAILABLE</code>:
  (a) Use <code>UNAVAILABLE</code> if the client can retry just the failing call.
  (b) Use <code>ABORTED</code> if the client should retry at a higher level
-     (e.g., restarting a read-modify-write sequence).
+     (e.g., when a client-specified test-and-set fails, indicating the
+     client should restart a read-modify-write sequence).
  (c) Use <code>FAILED_PRECONDITION</code> if the client should not retry until
      the system state has been explicitly fixed.  E.g., if an "rmdir"
      fails because the directory is non-empty, <code>FAILED_PRECONDITION</code>

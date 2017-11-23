@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -96,7 +86,7 @@
     
 
             <div class="description">
-            <p>The text annotations response message.</p>            <p>Protobuf type <code>Google\Cloud\Language\V1beta2\AnnotateTextResponse</code></p>                    </div>
+            <p>The text annotations response message.</p>            <p>Generated from protobuf message <code>google.cloud.language.v1beta2.AnnotateTextResponse</code></p>                    </div>
     
     
     
@@ -128,10 +118,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setSentences">setSentences</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setSentences">setSentences</a>(<a href="../../../../Google/Cloud/Language/V1beta2/Sentence.html"><abbr title="Google\Cloud\Language\V1beta2\Sentence">Sentence</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Sentences in the input document. Populated if the user enables
 [AnnotateTextRequest.Features.extract_syntax][google.cloud.language.v1beta2.AnnotateTextRequest.Features.extract_syntax].</p>                </div>
@@ -149,10 +139,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setTokens">setTokens</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setTokens">setTokens</a>(<a href="../../../../Google/Cloud/Language/V1beta2/Token.html"><abbr title="Google\Cloud\Language\V1beta2\Token">Token</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Tokens, along with their syntactic information, in the input document.</p>                </div>
                 <div class="col-md-2"></div>
@@ -169,10 +159,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setEntities">setEntities</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setEntities">setEntities</a>(<a href="../../../../Google/Cloud/Language/V1beta2/Entity.html"><abbr title="Google\Cloud\Language\V1beta2\Entity">Entity</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Entities, along with their semantic information, in the input document.</p>                </div>
                 <div class="col-md-2"></div>
@@ -190,7 +180,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setDocumentSentiment">setDocumentSentiment</a>(<a href="../../../../Google/Cloud/Language/V1beta2/Sentiment.html"><abbr title="Google\Cloud\Language\V1beta2\Sentiment">Sentiment</abbr></a> $var)
@@ -212,13 +202,33 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setLanguage">setLanguage</a>(string $var)
         
                                             <p>The language of the text, which will be the same as the language specified
 in the request or, if not specified, the automatically-detected language.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCategories">getCategories</a>()
+        
+                                            <p>Categories identified in the input document.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCategories">setCategories</a>(<a href="../../../../Google/Cloud/Language/V1beta2/ClassificationCategory.html"><abbr title="Google\Cloud\Language\V1beta2\ClassificationCategory">ClassificationCategory</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Categories identified in the input document.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -229,7 +239,7 @@ in the request or, if not specified, the automatically-detected language.</p>   
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 57</div>
+        <div class="location">at         line 63</div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -248,7 +258,7 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_getSentences">
-        <div class="location">at         line 69</div>
+        <div class="location">at         line 75</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getSentences</strong>()
         </code>
@@ -279,9 +289,9 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_setSentences">
-        <div class="location">at         line 81</div>
-        <code>                    
-    <strong>setSentences</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 88</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+    <strong>setSentences</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/Sentence.html"><abbr title="Google\Cloud\Language\V1beta2\Sentence">Sentence</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -296,13 +306,22 @@ in the request or, if not specified, the automatically-detected language.</p>   
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Language/V1beta2/Sentence.html"><abbr title="Google\Cloud\Language\V1beta2\Sentence">Sentence</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -311,7 +330,7 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_getTokens">
-        <div class="location">at         line 95</div>
+        <div class="location">at         line 104</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getTokens</strong>()
         </code>
@@ -344,9 +363,9 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_setTokens">
-        <div class="location">at         line 108</div>
-        <code>                    
-    <strong>setTokens</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 118</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+    <strong>setTokens</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/Token.html"><abbr title="Google\Cloud\Language\V1beta2\Token">Token</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -363,13 +382,22 @@ in the request or, if not specified, the automatically-detected language.</p>   
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Language/V1beta2/Token.html"><abbr title="Google\Cloud\Language\V1beta2\Token">Token</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -378,7 +406,7 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_getEntities">
-        <div class="location">at         line 122</div>
+        <div class="location">at         line 134</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getEntities</strong>()
         </code>
@@ -411,9 +439,9 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_setEntities">
-        <div class="location">at         line 135</div>
-        <code>                    
-    <strong>setEntities</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 148</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+    <strong>setEntities</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/Entity.html"><abbr title="Google\Cloud\Language\V1beta2\Entity">Entity</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -430,13 +458,22 @@ in the request or, if not specified, the automatically-detected language.</p>   
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Language/V1beta2/Entity.html"><abbr title="Google\Cloud\Language\V1beta2\Entity">Entity</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -445,7 +482,7 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_getDocumentSentiment">
-        <div class="location">at         line 148</div>
+        <div class="location">at         line 163</div>
         <code>                    <a href="../../../../Google/Cloud/Language/V1beta2/Sentiment.html"><abbr title="Google\Cloud\Language\V1beta2\Sentiment">Sentiment</abbr></a>
     <strong>getDocumentSentiment</strong>()
         </code>
@@ -476,8 +513,8 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_setDocumentSentiment">
-        <div class="location">at         line 160</div>
-        <code>                    
+        <div class="location">at         line 176</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
     <strong>setDocumentSentiment</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/Sentiment.html"><abbr title="Google\Cloud\Language\V1beta2\Sentiment">Sentiment</abbr></a> $var)
         </code>
     </h3>
@@ -500,6 +537,15 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -508,7 +554,7 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_getLanguage">
-        <div class="location">at         line 174</div>
+        <div class="location">at         line 192</div>
         <code>                    string
     <strong>getLanguage</strong>()
         </code>
@@ -541,8 +587,8 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </div>
                     <div class="method-item">
                     <h3 id="method_setLanguage">
-        <div class="location">at         line 187</div>
-        <code>                    
+        <div class="location">at         line 206</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
     <strong>setLanguage</strong>(string $var)
         </code>
     </h3>
@@ -567,6 +613,85 @@ in the request or, if not specified, the automatically-detected language.</p>   
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCategories">
+        <div class="location">at         line 220</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getCategories</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Categories identified in the input document.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.language.v1beta2.ClassificationCategory categories = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCategories">
+        <div class="location">at         line 232</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+    <strong>setCategories</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/ClassificationCategory.html"><abbr title="Google\Cloud\Language\V1beta2\ClassificationCategory">ClassificationCategory</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Categories identified in the input document.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.language.v1beta2.ClassificationCategory categories = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Language/V1beta2/ClassificationCategory.html"><abbr title="Google\Cloud\Language\V1beta2\ClassificationCategory">ClassificationCategory</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

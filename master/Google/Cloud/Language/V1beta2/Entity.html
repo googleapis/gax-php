@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -98,7 +88,7 @@
             <div class="description">
             <p>Represents a phrase in the text that is a known entity, such as
 a person, an organization, or location. The API associates information, such
-as salience and mentions, with entities.</p>            <p>Protobuf type <code>Google\Cloud\Language\V1beta2\Entity</code></p>                    </div>
+as salience and mentions, with entities.</p>            <p>Generated from protobuf message <code>google.cloud.language.v1beta2.Entity</code></p>                    </div>
     
     
     
@@ -129,7 +119,7 @@ as salience and mentions, with entities.</p>            <p>Protobuf type <code>G
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setName">setName</a>(string $var)
@@ -149,7 +139,7 @@ as salience and mentions, with entities.</p>            <p>Protobuf type <code>G
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setType">setType</a>(int $var)
@@ -159,7 +149,7 @@ as salience and mentions, with entities.</p>            <p>Protobuf type <code>G
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getMetadata">getMetadata</a>()
@@ -169,10 +159,10 @@ as salience and mentions, with entities.</p>            <p>Protobuf type <code>G
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setMetadata">setMetadata</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setMetadata">setMetadata</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
         
                                             <p>Metadata associated with the entity.</p>                </div>
                 <div class="col-md-2"></div>
@@ -189,7 +179,7 @@ as salience and mentions, with entities.</p>            <p>Protobuf type <code>G
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setSalience">setSalience</a>(float $var)
@@ -210,10 +200,10 @@ supports proper noun mentions.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setMentions">setMentions</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setMentions">setMentions</a>(<a href="../../../../Google/Cloud/Language/V1beta2/EntityMention.html"><abbr title="Google\Cloud\Language\V1beta2\EntityMention">EntityMention</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>The mentions of this entity in the input document. The API currently
 supports proper noun mentions.</p>                </div>
@@ -234,7 +224,7 @@ entity in the provided document.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setSentiment">setSentiment</a>(<a href="../../../../Google/Cloud/Language/V1beta2/Sentiment.html"><abbr title="Google\Cloud\Language\V1beta2\Sentiment">Sentiment</abbr></a> $var)
@@ -302,8 +292,8 @@ entity in the provided document.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setName">
-        <div class="location">at         line 89</div>
-        <code>                    
+        <div class="location">at         line 90</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
     <strong>setName</strong>(string $var)
         </code>
     </h3>
@@ -325,6 +315,15 @@ entity in the provided document.</p>                </div>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -333,7 +332,7 @@ entity in the provided document.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getType">
-        <div class="location">at         line 101</div>
+        <div class="location">at         line 104</div>
         <code>                    int
     <strong>getType</strong>()
         </code>
@@ -363,8 +362,8 @@ entity in the provided document.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setType">
-        <div class="location">at         line 112</div>
-        <code>                    
+        <div class="location">at         line 116</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
     <strong>setType</strong>(int $var)
         </code>
     </h3>
@@ -386,6 +385,15 @@ entity in the provided document.</p>                </div>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -394,8 +402,8 @@ entity in the provided document.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetadata">
-        <div class="location">at         line 126</div>
-        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+        <div class="location">at         line 132</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
     <strong>getMetadata</strong>()
         </code>
     </h3>
@@ -414,7 +422,7 @@ available. The associated keys are "wikipedia_url" and "mid", respectively.</p>
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
             <td></td>
         </tr>
     </table>
@@ -427,9 +435,9 @@ available. The associated keys are "wikipedia_url" and "mid", respectively.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setMetadata">
-        <div class="location">at         line 139</div>
-        <code>                    
-    <strong>setMetadata</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 146</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+    <strong>setMetadata</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -446,13 +454,22 @@ available. The associated keys are "wikipedia_url" and "mid", respectively.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -461,7 +478,7 @@ available. The associated keys are "wikipedia_url" and "mid", respectively.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getSalience">
-        <div class="location">at         line 155</div>
+        <div class="location">at         line 164</div>
         <code>                    float
     <strong>getSalience</strong>()
         </code>
@@ -496,8 +513,8 @@ salient.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSalience">
-        <div class="location">at         line 170</div>
-        <code>                    
+        <div class="location">at         line 180</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
     <strong>setSalience</strong>(float $var)
         </code>
     </h3>
@@ -524,6 +541,15 @@ salient.</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -532,7 +558,7 @@ salient.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMentions">
-        <div class="location">at         line 183</div>
+        <div class="location">at         line 195</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getMentions</strong>()
         </code>
@@ -563,9 +589,9 @@ supports proper noun mentions.</p>                    <p>Generated from protobuf
             </div>
                     <div class="method-item">
                     <h3 id="method_setMentions">
-        <div class="location">at         line 195</div>
-        <code>                    
-    <strong>setMentions</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 208</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
+    <strong>setMentions</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/EntityMention.html"><abbr title="Google\Cloud\Language\V1beta2\EntityMention">EntityMention</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -580,13 +606,22 @@ supports proper noun mentions.</p>                    <p>Generated from protobuf
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Language/V1beta2/EntityMention.html"><abbr title="Google\Cloud\Language\V1beta2\EntityMention">EntityMention</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -595,7 +630,7 @@ supports proper noun mentions.</p>                    <p>Generated from protobuf
             </div>
                     <div class="method-item">
                     <h3 id="method_getSentiment">
-        <div class="location">at         line 210</div>
+        <div class="location">at         line 225</div>
         <code>                    <a href="../../../../Google/Cloud/Language/V1beta2/Sentiment.html"><abbr title="Google\Cloud\Language\V1beta2\Sentiment">Sentiment</abbr></a>
     <strong>getSentiment</strong>()
         </code>
@@ -628,8 +663,8 @@ entity in the provided document.</p>                    <p>Generated from protob
             </div>
                     <div class="method-item">
                     <h3 id="method_setSentiment">
-        <div class="location">at         line 224</div>
-        <code>                    
+        <div class="location">at         line 240</div>
+        <code>                    <abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr>
     <strong>setSentiment</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/Sentiment.html"><abbr title="Google\Cloud\Language\V1beta2\Sentiment">Sentiment</abbr></a> $var)
         </code>
     </h3>
@@ -654,6 +689,15 @@ entity in the provided document.</p>                    <p>Generated from protob
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Language\V1beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

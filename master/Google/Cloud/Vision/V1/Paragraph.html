@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -96,7 +86,7 @@
     
 
             <div class="description">
-            <p>Structural unit of text representing a number of words in certain order.</p>            <p>Protobuf type <code>Google\Cloud\Vision\V1\Paragraph</code></p>                    </div>
+            <p>Structural unit of text representing a number of words in certain order.</p>            <p>Generated from protobuf message <code>google.cloud.vision.v1.Paragraph</code></p>                    </div>
     
     
     
@@ -127,7 +117,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setProperty">setProperty</a>(<a href="../../../../Google/Cloud/Vision/V1/TextAnnotation_TextProperty.html"><abbr title="Google\Cloud\Vision\V1\TextAnnotation_TextProperty">TextAnnotation_TextProperty</abbr></a> $var)
@@ -147,7 +137,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setBoundingBox">setBoundingBox</a>(<a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a> $var)
@@ -167,10 +157,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setWords">setWords</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setWords">setWords</a>(<a href="../../../../Google/Cloud/Vision/V1/Word.html"><abbr title="Google\Cloud\Vision\V1\Word">Word</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>List of words in this paragraph.</p>                </div>
                 <div class="col-md-2"></div>
@@ -232,8 +222,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setProperty">
-        <div class="location">at         line 73</div>
-        <code>                    
+        <div class="location">at         line 74</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
     <strong>setProperty</strong>(<a href="../../../../Google/Cloud/Vision/V1/TextAnnotation_TextProperty.html"><abbr title="Google\Cloud\Vision\V1\TextAnnotation_TextProperty">TextAnnotation_TextProperty</abbr></a> $var)
         </code>
     </h3>
@@ -255,6 +245,15 @@
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -263,7 +262,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBoundingBox">
-        <div class="location">at         line 99</div>
+        <div class="location">at         line 102</div>
         <code>                    <a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a>
     <strong>getBoundingBox</strong>()
         </code>
@@ -308,8 +307,8 @@ For example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setBoundingBox">
-        <div class="location">at         line 124</div>
-        <code>                    
+        <div class="location">at         line 128</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
     <strong>setBoundingBox</strong>(<a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a> $var)
         </code>
     </h3>
@@ -346,6 +345,15 @@ For example:
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -354,7 +362,7 @@ For example:
             </div>
                     <div class="method-item">
                     <h3 id="method_getWords">
-        <div class="location">at         line 136</div>
+        <div class="location">at         line 142</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getWords</strong>()
         </code>
@@ -384,9 +392,9 @@ For example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setWords">
-        <div class="location">at         line 147</div>
-        <code>                    
-    <strong>setWords</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 154</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setWords</strong>(<a href="../../../../Google/Cloud/Vision/V1/Word.html"><abbr title="Google\Cloud\Vision\V1\Word">Word</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -400,13 +408,22 @@ For example:
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Vision/V1/Word.html"><abbr title="Google\Cloud\Vision\V1\Word">Word</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

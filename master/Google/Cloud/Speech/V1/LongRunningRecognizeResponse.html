@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -101,7 +91,7 @@ messages. It is included in the <code>result.response</code> field of the <code>
 returned by the <code>GetOperation</code> call of the <code>google::longrunning::Operations</code>
 service.</p>
 
-<p>Protobuf type <code>Google\Cloud\Speech\V1\LongRunningRecognizeResponse</code></p>                    </div>
+<p>Generated from protobuf message <code>google.cloud.speech.v1.LongRunningRecognizeResponse</code></p>                    </div>
     
     
     
@@ -133,10 +123,10 @@ sequential portions of audio.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setResults">setResults</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setResults">setResults</a>(<a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionResult">SpeechRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p><em>Output-only</em> Sequential list of transcription results corresponding to
 sequential portions of audio.</p>                </div>
@@ -200,9 +190,9 @@ sequential portions of audio.</p>                    <p>Generated from protobuf 
             </div>
                     <div class="method-item">
                     <h3 id="method_setResults">
-        <div class="location">at         line 54</div>
-        <code>                    
-    <strong>setResults</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 55</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+    <strong>setResults</strong>(<a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionResult">SpeechRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -217,13 +207,22 @@ sequential portions of audio.</p>                    <p>Generated from protobuf 
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionResult">SpeechRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

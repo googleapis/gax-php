@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -156,6 +146,24 @@ which can be attached to an RPC error.
             </div>
                     <div class="row">
                 <div class="col-md-6">
+                                            <a href="../Google/Rpc/PreconditionFailure.html"><abbr title="Google\Rpc\PreconditionFailure">PreconditionFailure</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Describes what preconditions have failed.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Rpc/PreconditionFailure_Violation.html"><abbr title="Google\Rpc\PreconditionFailure_Violation">PreconditionFailure_Violation</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A message type used to describe a single precondition failure.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
                                             <a href="../Google/Rpc/QuotaFailure.html"><abbr title="Google\Rpc\QuotaFailure">QuotaFailure</abbr></a>
                                             
                 </div>
@@ -225,7 +233,7 @@ developers <em>understand</em> and <em>resolve</em> the error. If a localized us
 error message is needed, put the localized message in the error details or
 localize it in the client. The optional error details may contain arbitrary
 information about the error. There is a predefined set of error detail types
-in the package <code>google.rpc</code> which can be used for common error conditions.
+in the package <code>google.rpc</code> that can be used for common error conditions.
                 </div>
             </div>
             </div>

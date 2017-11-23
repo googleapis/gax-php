@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -175,11 +165,12 @@ information about how a change will affect the existing service.
             </div>
                     <div class="row">
                 <div class="col-md-6">
-                                            <a href="../Google/Api/BillingStatusRule.html"><abbr title="Google\Api\BillingStatusRule">BillingStatusRule</abbr></a>
+                                            <a href="../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>
                                             
                 </div>
                 <div class="col-md-6">
-                    Defines the billing status requirements for operations.
+                    Configuration of a specific billing destination (Currently only support
+bill against consumer project).
                 </div>
             </div>
                     <div class="row">

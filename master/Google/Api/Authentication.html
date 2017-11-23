@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -108,7 +98,7 @@
         requirements:
           provider_id: google_calendar_auth</p>
 
-<p>Protobuf type <code>Google\Api\Authentication</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.Authentication</code></p>                    </div>
     
     
     
@@ -139,10 +129,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setRules">setRules</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setRules">setRules</a>(<a href="../../Google/Api/AuthenticationRule.html"><abbr title="Google\Api\AuthenticationRule">AuthenticationRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>A list of authentication rules that apply to individual API methods.</p>                </div>
                 <div class="col-md-2"></div>
@@ -159,10 +149,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setProviders">setProviders</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setProviders">setProviders</a>(<a href="../../Google/Api/AuthProvider.html"><abbr title="Google\Api\AuthProvider">AuthProvider</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Defines a set of authentication providers that a service supports.</p>                </div>
                 <div class="col-md-2"></div>
@@ -226,9 +216,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setRules">
-        <div class="location">at         line 67</div>
-        <code>                    
-    <strong>setRules</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 68</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setRules</strong>(<a href="../../Google/Api/AuthenticationRule.html"><abbr title="Google\Api\AuthenticationRule">AuthenticationRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -244,13 +234,22 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/AuthenticationRule.html"><abbr title="Google\Api\AuthenticationRule">AuthenticationRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -259,7 +258,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getProviders">
-        <div class="location">at         line 79</div>
+        <div class="location">at         line 82</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getProviders</strong>()
         </code>
@@ -289,9 +288,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setProviders">
-        <div class="location">at         line 90</div>
-        <code>                    
-    <strong>setProviders</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 94</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setProviders</strong>(<a href="../../Google/Api/AuthProvider.html"><abbr title="Google\Api\AuthProvider">AuthProvider</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -305,13 +304,22 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/AuthProvider.html"><abbr title="Google\Api\AuthProvider">AuthProvider</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

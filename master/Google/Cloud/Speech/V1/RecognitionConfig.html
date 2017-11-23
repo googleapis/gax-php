@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -97,7 +87,7 @@
 
             <div class="description">
             <p>Provides information to the recognizer that specifies how to process the
-request.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\RecognitionConfig</code></p>                    </div>
+request.</p>            <p>Generated from protobuf message <code>google.cloud.speech.v1.RecognitionConfig</code></p>                    </div>
     
     
     
@@ -128,7 +118,7 @@ request.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\Recognitio
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setEncoding">setEncoding</a>(int $var)
@@ -149,7 +139,7 @@ request.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\Recognitio
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setSampleRateHertz">setSampleRateHertz</a>(int $var)
@@ -171,7 +161,7 @@ request.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\Recognitio
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setLanguageCode">setLanguageCode</a>(string $var)
@@ -192,7 +182,7 @@ request.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\Recognitio
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setMaxAlternatives">setMaxAlternatives</a>(int $var)
@@ -215,7 +205,7 @@ won't be filtered out.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setProfanityFilter">setProfanityFilter</a>(bool $var)
@@ -238,12 +228,38 @@ won't be filtered out.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setSpeechContexts">setSpeechContexts</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setSpeechContexts">setSpeechContexts</a>(<a href="../../../../Google/Cloud/Speech/V1/SpeechContext.html"><abbr title="Google\Cloud\Speech\V1\SpeechContext">SpeechContext</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p><em>Optional</em> A means to provide context to assist the speech recognition.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnableWordTimeOffsets">getEnableWordTimeOffsets</a>()
+        
+                                            <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnableWordTimeOffsets">setEnableWordTimeOffsets</a>(bool $var)
+        
+                                            <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -254,7 +270,7 @@ won't be filtered out.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 72</div>
+        <div class="location">at         line 81</div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -273,7 +289,7 @@ won't be filtered out.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getEncoding">
-        <div class="location">at         line 83</div>
+        <div class="location">at         line 92</div>
         <code>                    int
     <strong>getEncoding</strong>()
         </code>
@@ -303,8 +319,8 @@ won't be filtered out.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setEncoding">
-        <div class="location">at         line 94</div>
-        <code>                    
+        <div class="location">at         line 104</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setEncoding</strong>(int $var)
         </code>
     </h3>
@@ -326,6 +342,15 @@ won't be filtered out.</p>                </div>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -334,7 +359,7 @@ won't be filtered out.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getSampleRateHertz">
-        <div class="location">at         line 110</div>
+        <div class="location">at         line 122</div>
         <code>                    int
     <strong>getSampleRateHertz</strong>()
         </code>
@@ -369,8 +394,8 @@ the audio source (instead of re-sampling).</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSampleRateHertz">
-        <div class="location">at         line 125</div>
-        <code>                    
+        <div class="location">at         line 138</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setSampleRateHertz</strong>(int $var)
         </code>
     </h3>
@@ -397,6 +422,15 @@ the audio source (instead of re-sampling).</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -405,7 +439,7 @@ the audio source (instead of re-sampling).</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getLanguageCode">
-        <div class="location">at         line 141</div>
+        <div class="location">at         line 156</div>
         <code>                    string
     <strong>getLanguageCode</strong>()
         </code>
@@ -440,8 +474,8 @@ for a list of the currently supported language codes.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setLanguageCode">
-        <div class="location">at         line 156</div>
-        <code>                    
+        <div class="location">at         line 172</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setLanguageCode</strong>(string $var)
         </code>
     </h3>
@@ -468,6 +502,15 @@ for a list of the currently supported language codes.</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -476,7 +519,7 @@ for a list of the currently supported language codes.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMaxAlternatives">
-        <div class="location">at         line 173</div>
+        <div class="location">at         line 191</div>
         <code>                    int
     <strong>getMaxAlternatives</strong>()
         </code>
@@ -512,8 +555,8 @@ one. If omitted, will return a maximum of one.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setMaxAlternatives">
-        <div class="location">at         line 189</div>
-        <code>                    
+        <div class="location">at         line 208</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setMaxAlternatives</strong>(int $var)
         </code>
     </h3>
@@ -541,6 +584,15 @@ one. If omitted, will return a maximum of one.</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -549,7 +601,7 @@ one. If omitted, will return a maximum of one.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getProfanityFilter">
-        <div class="location">at         line 204</div>
+        <div class="location">at         line 225</div>
         <code>                    bool
     <strong>getProfanityFilter</strong>()
         </code>
@@ -582,8 +634,8 @@ won't be filtered out.</p>                    <p>Generated from protobuf field <
             </div>
                     <div class="method-item">
                     <h3 id="method_setProfanityFilter">
-        <div class="location">at         line 218</div>
-        <code>                    
+        <div class="location">at         line 240</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setProfanityFilter</strong>(bool $var)
         </code>
     </h3>
@@ -608,6 +660,15 @@ won't be filtered out.</p>                    <p>Generated from protobuf field <
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -616,7 +677,7 @@ won't be filtered out.</p>                    <p>Generated from protobuf field <
             </div>
                     <div class="method-item">
                     <h3 id="method_getSpeechContexts">
-        <div class="location">at         line 230</div>
+        <div class="location">at         line 254</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getSpeechContexts</strong>()
         </code>
@@ -646,9 +707,9 @@ won't be filtered out.</p>                    <p>Generated from protobuf field <
             </div>
                     <div class="method-item">
                     <h3 id="method_setSpeechContexts">
-        <div class="location">at         line 241</div>
-        <code>                    
-    <strong>setSpeechContexts</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 266</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+    <strong>setSpeechContexts</strong>(<a href="../../../../Google/Cloud/Speech/V1/SpeechContext.html"><abbr title="Google\Cloud\Speech\V1\SpeechContext">SpeechContext</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -662,13 +723,98 @@ won't be filtered out.</p>                    <p>Generated from protobuf field <
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Speech/V1/SpeechContext.html"><abbr title="Google\Cloud\Speech\V1\SpeechContext">SpeechContext</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnableWordTimeOffsets">
+        <div class="location">at         line 283</div>
+        <code>                    bool
+    <strong>getEnableWordTimeOffsets</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                    <p>Generated from protobuf field <code>bool enable_word_time_offsets = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnableWordTimeOffsets">
+        <div class="location">at         line 298</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+    <strong>setEnableWordTimeOffsets</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                    <p>Generated from protobuf field <code>bool enable_word_time_offsets = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

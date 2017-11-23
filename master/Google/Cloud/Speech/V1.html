@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -145,9 +135,9 @@ request.
                 </div>
                 <div class="col-md-6">
                     Audio encoding of the data sent in the audio message. All encodings support
-only 1 channel (mono) audio. Only <code>FLAC</code> includes a header that describes
-the bytes of audio that follow the header. The other encodings are raw
-audio bytes with no header.
+only 1 channel (mono) audio. Only <code>FLAC</code> and <code>WAV</code> include a header that
+describes the bytes of audio that follow the header. The other encodings
+are raw audio bytes with no header.
                 </div>
             </div>
                     <div class="row">
@@ -243,8 +233,10 @@ that is currently being processed.
                 </div>
                 <div class="col-md-6">
                     <code>StreamingRecognizeResponse</code> is the only message returned to the client by
-<code>StreamingRecognize</code>. A series of one or more <code>StreamingRecognizeResponse</code>
-messages are streamed back to the client.
+<code>StreamingRecognize</code>. A series of zero or more <code>StreamingRecognizeResponse</code>
+messages are streamed back to the client. If there is no recognizable
+audio, and <code>single_utterance</code> is set to false, then no messages are streamed
+back to the client.
                 </div>
             </div>
                     <div class="row">
@@ -254,6 +246,17 @@ messages are streamed back to the client.
                 </div>
                 <div class="col-md-6">
                     Indicates the type of speech event.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Speech/V1/WordInfo.html"><abbr title="Google\Cloud\Speech\V1\WordInfo">WordInfo</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Word-specific information for recognized words. Word information is only
+included in the response when certain request parameters are set, such
+as <code>enable_word_time_offsets</code>.
                 </div>
             </div>
             </div>

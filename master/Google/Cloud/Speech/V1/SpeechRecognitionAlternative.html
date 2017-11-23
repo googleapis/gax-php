@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -96,7 +86,7 @@
     
 
             <div class="description">
-            <p>Alternative hypotheses (a.k.a. n-best list).</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\SpeechRecognitionAlternative</code></p>                    </div>
+            <p>Alternative hypotheses (a.k.a. n-best list).</p>            <p>Generated from protobuf message <code>google.cloud.speech.v1.SpeechRecognitionAlternative</code></p>                    </div>
     
     
     
@@ -127,7 +117,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setTranscript">setTranscript</a>(string $var)
@@ -146,13 +136,12 @@
 indicates an estimated greater likelihood that the recognized words are
 correct. This field is typically provided only for the top hypothesis, and
 only for <code>is_final=true</code> results. Clients should not rely on the
-<code>confidence</code> field as it is not guaranteed to be accurate, or even set, in
-any of the results.</p>                </div>
+<code>confidence</code> field as it is not guaranteed to be accurate or consistent.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setConfidence">setConfidence</a>(float $var)
@@ -161,8 +150,27 @@ any of the results.</p>                </div>
 indicates an estimated greater likelihood that the recognized words are
 correct. This field is typically provided only for the top hypothesis, and
 only for <code>is_final=true</code> results. Clients should not rely on the
-<code>confidence</code> field as it is not guaranteed to be accurate, or even set, in
-any of the results.</p>                </div>
+<code>confidence</code> field as it is not guaranteed to be accurate or consistent.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getWords">getWords</a>()
+        
+                                            <p><em>Output-only</em> A list of word-specific information for each recognized word.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setWords">setWords</a>(<a href="../../../../Google/Cloud/Speech/V1/WordInfo.html"><abbr title="Google\Cloud\Speech\V1\WordInfo">WordInfo</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p><em>Output-only</em> A list of word-specific information for each recognized word.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -173,7 +181,7 @@ any of the results.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 37</div>
+        <div class="location">at         line 42</div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -192,7 +200,7 @@ any of the results.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getTranscript">
-        <div class="location">at         line 48</div>
+        <div class="location">at         line 53</div>
         <code>                    string
     <strong>getTranscript</strong>()
         </code>
@@ -222,8 +230,8 @@ any of the results.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setTranscript">
-        <div class="location">at         line 59</div>
-        <code>                    
+        <div class="location">at         line 65</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setTranscript</strong>(string $var)
         </code>
     </h3>
@@ -245,6 +253,15 @@ any of the results.</p>                </div>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -253,7 +270,7 @@ any of the results.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getConfidence">
-        <div class="location">at         line 77</div>
+        <div class="location">at         line 84</div>
         <code>                    float
     <strong>getConfidence</strong>()
         </code>
@@ -267,8 +284,7 @@ any of the results.</p>                </div>
 indicates an estimated greater likelihood that the recognized words are
 correct. This field is typically provided only for the top hypothesis, and
 only for <code>is_final=true</code> results. Clients should not rely on the
-<code>confidence</code> field as it is not guaranteed to be accurate, or even set, in
-any of the results.</p>                    <p>The default of 0.0 is a sentinel value indicating <code>confidence</code> was not set.</p>
+<code>confidence</code> field as it is not guaranteed to be accurate or consistent.</p>                    <p>The default of 0.0 is a sentinel value indicating <code>confidence</code> was not set.</p>
 
 <p>Generated from protobuf field <code>float confidence = 2;</code></p>                            </div>
                 <div class="tags">
@@ -290,8 +306,8 @@ any of the results.</p>                    <p>The default of 0.0 is a sentinel v
             </div>
                     <div class="method-item">
                     <h3 id="method_setConfidence">
-        <div class="location">at         line 94</div>
-        <code>                    
+        <div class="location">at         line 101</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setConfidence</strong>(float $var)
         </code>
     </h3>
@@ -304,8 +320,7 @@ any of the results.</p>                    <p>The default of 0.0 is a sentinel v
 indicates an estimated greater likelihood that the recognized words are
 correct. This field is typically provided only for the top hypothesis, and
 only for <code>is_final=true</code> results. Clients should not rely on the
-<code>confidence</code> field as it is not guaranteed to be accurate, or even set, in
-any of the results.</p>                    <p>The default of 0.0 is a sentinel value indicating <code>confidence</code> was not set.</p>
+<code>confidence</code> field as it is not guaranteed to be accurate or consistent.</p>                    <p>The default of 0.0 is a sentinel value indicating <code>confidence</code> was not set.</p>
 
 <p>Generated from protobuf field <code>float confidence = 2;</code></p>                            </div>
                 <div class="tags">
@@ -320,6 +335,85 @@ any of the results.</p>                    <p>The default of 0.0 is a sentinel v
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getWords">
+        <div class="location">at         line 115</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getWords</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Output-only</em> A list of word-specific information for each recognized word.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.speech.v1.WordInfo words = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setWords">
+        <div class="location">at         line 127</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+    <strong>setWords</strong>(<a href="../../../../Google/Cloud/Speech/V1/WordInfo.html"><abbr title="Google\Cloud\Speech\V1\WordInfo">WordInfo</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Output-only</em> A list of word-specific information for each recognized word.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.speech.v1.WordInfo words = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Speech/V1/WordInfo.html"><abbr title="Google\Cloud\Speech\V1\WordInfo">WordInfo</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

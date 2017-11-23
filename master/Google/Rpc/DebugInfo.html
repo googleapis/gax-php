@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -96,7 +86,7 @@
     
 
             <div class="description">
-            <p>Describes additional debugging info.</p>            <p>Protobuf type <code>Google\Rpc\DebugInfo</code></p>                    </div>
+            <p>Describes additional debugging info.</p>            <p>Generated from protobuf message <code>google.rpc.DebugInfo</code></p>                    </div>
     
     
     
@@ -127,10 +117,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Rpc\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setStackEntries">setStackEntries</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setStackEntries">setStackEntries</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>The stack trace entries indicating where the error occurred.</p>                </div>
                 <div class="col-md-2"></div>
@@ -147,7 +137,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Rpc\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setDetail">setDetail</a>(string $var)
@@ -212,9 +202,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setStackEntries">
-        <div class="location">at         line 53</div>
-        <code>                    
-    <strong>setStackEntries</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 54</div>
+        <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
+    <strong>setStackEntries</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -228,13 +218,22 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Rpc\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -243,7 +242,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getDetail">
-        <div class="location">at         line 65</div>
+        <div class="location">at         line 68</div>
         <code>                    string
     <strong>getDetail</strong>()
         </code>
@@ -273,8 +272,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setDetail">
-        <div class="location">at         line 76</div>
-        <code>                    
+        <div class="location">at         line 80</div>
+        <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
     <strong>setDetail</strong>(string $var)
         </code>
     </h3>
@@ -296,6 +295,15 @@
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Rpc\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

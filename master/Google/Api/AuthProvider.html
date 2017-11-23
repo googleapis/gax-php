@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -97,7 +87,7 @@
 
             <div class="description">
             <p>Configuration for an anthentication provider, including support for
-<a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32">JSON Web Token (JWT)</a>.</p>            <p>Protobuf type <code>Google\Api\AuthProvider</code></p>                    </div>
+<a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32">JSON Web Token (JWT)</a>.</p>            <p>Generated from protobuf message <code>google.api.AuthProvider</code></p>                    </div>
     
     
     
@@ -129,7 +119,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setId">setId</a>(string $var)
@@ -152,7 +142,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setIssuer">setIssuer</a>(string $var)
@@ -175,7 +165,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setJwksUri">setJwksUri</a>(string $var)
@@ -197,13 +187,33 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setAudiences">setAudiences</a>(string $var)
         
                                             <p>The list of JWT
 <a href="https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3">audiences</a>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAuthorizationUrl">getAuthorizationUrl</a>()
+        
+                                            <p>Redirect URL if JWT token is required but no present or is expired.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAuthorizationUrl">setAuthorizationUrl</a>(string $var)
+        
+                                            <p>Redirect URL if JWT token is required but no present or is expired.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -214,7 +224,7 @@ Usually a URL or an email address.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 67</div>
+        <div class="location">at         line 74</div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -233,7 +243,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getId">
-        <div class="location">at         line 80</div>
+        <div class="location">at         line 87</div>
         <code>                    string
     <strong>getId</strong>()
         </code>
@@ -266,8 +276,8 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setId">
-        <div class="location">at         line 93</div>
-        <code>                    
+        <div class="location">at         line 101</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setId</strong>(string $var)
         </code>
     </h3>
@@ -292,6 +302,15 @@ Usually a URL or an email address.</p>                </div>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -300,7 +319,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getIssuer">
-        <div class="location">at         line 109</div>
+        <div class="location">at         line 119</div>
         <code>                    string
     <strong>getIssuer</strong>()
         </code>
@@ -335,8 +354,8 @@ Example: 1234567-compute&#64;developer.gserviceaccount.com</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setIssuer">
-        <div class="location">at         line 124</div>
-        <code>                    
+        <div class="location">at         line 135</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setIssuer</strong>(string $var)
         </code>
     </h3>
@@ -363,6 +382,15 @@ Example: 1234567-compute&#64;developer.gserviceaccount.com</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -371,7 +399,7 @@ Example: 1234567-compute&#64;developer.gserviceaccount.com</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getJwksUri">
-        <div class="location">at         line 143</div>
+        <div class="location">at         line 156</div>
         <code>                    string
     <strong>getJwksUri</strong>()
         </code>
@@ -409,8 +437,8 @@ Example: https://www.googleapis.com/oauth2/v1/certs</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setJwksUri">
-        <div class="location">at         line 161</div>
-        <code>                    
+        <div class="location">at         line 175</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setJwksUri</strong>(string $var)
         </code>
     </h3>
@@ -440,6 +468,15 @@ Example: https://www.googleapis.com/oauth2/v1/certs</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -448,7 +485,7 @@ Example: https://www.googleapis.com/oauth2/v1/certs</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getAudiences">
-        <div class="location">at         line 183</div>
+        <div class="location">at         line 199</div>
         <code>                    string
     <strong>getAudiences</strong>()
         </code>
@@ -489,8 +526,8 @@ Example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setAudiences">
-        <div class="location">at         line 204</div>
-        <code>                    
+        <div class="location">at         line 221</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAudiences</strong>(string $var)
         </code>
     </h3>
@@ -523,6 +560,89 @@ Example:
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAuthorizationUrl">
+        <div class="location">at         line 236</div>
+        <code>                    string
+    <strong>getAuthorizationUrl</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Redirect URL if JWT token is required but no present or is expired.</p>                    <p>Implement authorizationUrl of securityDefinitions in OpenAPI spec.</p>
+
+<p>Generated from protobuf field <code>string authorization_url = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAuthorizationUrl">
+        <div class="location">at         line 249</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setAuthorizationUrl</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Redirect URL if JWT token is required but no present or is expired.</p>                    <p>Implement authorizationUrl of securityDefinitions in OpenAPI spec.</p>
+
+<p>Generated from protobuf field <code>string authorization_url = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

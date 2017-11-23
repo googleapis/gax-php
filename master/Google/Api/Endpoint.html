@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -110,7 +100,7 @@ Example service configuration:
     - name: library-example.googleapis.com
       allow_cors: true</p>
 
-<p>Protobuf type <code>Google\Api\Endpoint</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.Endpoint</code></p>                    </div>
     
     
     
@@ -141,7 +131,7 @@ Example service configuration:
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setName">setName</a>(string $var)
@@ -163,10 +153,10 @@ alias.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setAliases">setAliases</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setAliases">setAliases</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>DEPRECATED: This field is no longer supported. Instead of using aliases,
 please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
@@ -185,10 +175,10 @@ alias.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setApis">setApis</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setApis">setApis</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>The list of APIs served by this endpoint.</p>                </div>
                 <div class="col-md-2"></div>
@@ -205,10 +195,10 @@ alias.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setFeatures">setFeatures</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setFeatures">setFeatures</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>The list of features enabled on this endpoint.</p>                </div>
                 <div class="col-md-2"></div>
@@ -226,7 +216,7 @@ handle requests to this <a href="https://cloud.google.com/apis/design/glossary">
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setTarget">setTarget</a>(string $var)
@@ -252,7 +242,7 @@ allowed to proceed.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setAllowCors">setAllowCors</a>(bool $var)
@@ -322,8 +312,8 @@ allowed to proceed.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setName">
-        <div class="location">at         line 101</div>
-        <code>                    
+        <div class="location">at         line 102</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setName</strong>(string $var)
         </code>
     </h3>
@@ -345,6 +335,15 @@ allowed to proceed.</p>                </div>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -353,7 +352,7 @@ allowed to proceed.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getAliases">
-        <div class="location">at         line 116</div>
+        <div class="location">at         line 119</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getAliases</strong>()
         </code>
@@ -387,9 +386,9 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
             </div>
                     <div class="method-item">
                     <h3 id="method_setAliases">
-        <div class="location">at         line 130</div>
-        <code>                    
-    <strong>setAliases</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 134</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setAliases</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -407,13 +406,22 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -422,7 +430,7 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
             </div>
                     <div class="method-item">
                     <h3 id="method_getApis">
-        <div class="location">at         line 142</div>
+        <div class="location">at         line 148</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getApis</strong>()
         </code>
@@ -452,9 +460,9 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
             </div>
                     <div class="method-item">
                     <h3 id="method_setApis">
-        <div class="location">at         line 153</div>
-        <code>                    
-    <strong>setApis</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 160</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setApis</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -468,13 +476,22 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -483,7 +500,7 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
             </div>
                     <div class="method-item">
                     <h3 id="method_getFeatures">
-        <div class="location">at         line 165</div>
+        <div class="location">at         line 174</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getFeatures</strong>()
         </code>
@@ -513,9 +530,9 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
             </div>
                     <div class="method-item">
                     <h3 id="method_setFeatures">
-        <div class="location">at         line 176</div>
-        <code>                    
-    <strong>setFeatures</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 186</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setFeatures</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -529,13 +546,22 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -544,7 +570,7 @@ alias.</p>                    <p>Additional names that this endpoint will be hos
             </div>
                     <div class="method-item">
                     <h3 id="method_getTarget">
-        <div class="location">at         line 191</div>
+        <div class="location">at         line 203</div>
         <code>                    string
     <strong>getTarget</strong>()
         </code>
@@ -578,8 +604,8 @@ For example, "8.8.8.8" or "myservice.appspot.com".</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setTarget">
-        <div class="location">at         line 205</div>
-        <code>                    
+        <div class="location">at         line 218</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setTarget</strong>(string $var)
         </code>
     </h3>
@@ -605,6 +631,15 @@ For example, "8.8.8.8" or "myservice.appspot.com".</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -613,7 +648,7 @@ For example, "8.8.8.8" or "myservice.appspot.com".</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getAllowCors">
-        <div class="location">at         line 222</div>
+        <div class="location">at         line 237</div>
         <code>                    bool
     <strong>getAllowCors</strong>()
         </code>
@@ -648,8 +683,8 @@ allowed to proceed.</p>                    <p>Generated from protobuf field <cod
             </div>
                     <div class="method-item">
                     <h3 id="method_setAllowCors">
-        <div class="location">at         line 238</div>
-        <code>                    
+        <div class="location">at         line 254</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAllowCors</strong>(bool $var)
         </code>
     </h3>
@@ -676,6 +711,15 @@ allowed to proceed.</p>                    <p>Generated from protobuf field <cod
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

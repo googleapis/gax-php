@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -103,7 +93,7 @@ request.
 If a method doesn't have any auth requirements, request credentials will be
 ignored.</p>
 
-<p>Protobuf type <code>Google\Api\AuthenticationRule</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.AuthenticationRule</code></p>                    </div>
     
     
     
@@ -134,7 +124,7 @@ ignored.</p>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setSelector">setSelector</a>(string $var)
@@ -154,7 +144,7 @@ ignored.</p>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setOauth">setOauth</a>(<a href="../../Google/Api/OAuthRequirements.html"><abbr title="Google\Api\OAuthRequirements">OAuthRequirements</abbr></a> $var)
@@ -175,7 +165,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setAllowWithoutCredential">setAllowWithoutCredential</a>(bool $var)
@@ -196,10 +186,10 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setRequirements">setRequirements</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setRequirements">setRequirements</a>(<a href="../../Google/Api/AuthRequirement.html"><abbr title="Google\Api\AuthRequirement">AuthRequirement</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Requirements for additional authentication providers.</p>                </div>
                 <div class="col-md-2"></div>
@@ -263,8 +253,8 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_setSelector">
-        <div class="location">at         line 79</div>
-        <code>                    
+        <div class="location">at         line 80</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSelector</strong>(string $var)
         </code>
     </h3>
@@ -288,6 +278,15 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -296,7 +295,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_getOauth">
-        <div class="location">at         line 91</div>
+        <div class="location">at         line 94</div>
         <code>                    <a href="../../Google/Api/OAuthRequirements.html"><abbr title="Google\Api\OAuthRequirements">OAuthRequirements</abbr></a>
     <strong>getOauth</strong>()
         </code>
@@ -326,8 +325,8 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_setOauth">
-        <div class="location">at         line 102</div>
-        <code>                    
+        <div class="location">at         line 106</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setOauth</strong>(<a href="../../Google/Api/OAuthRequirements.html"><abbr title="Google\Api\OAuthRequirements">OAuthRequirements</abbr></a> $var)
         </code>
     </h3>
@@ -349,6 +348,15 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -357,7 +365,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_getAllowWithoutCredential">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 125</div>
         <code>                    bool
     <strong>getAllowWithoutCredential</strong>()
         </code>
@@ -393,8 +401,8 @@ project.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setAllowWithoutCredential">
-        <div class="location">at         line 135</div>
-        <code>                    
+        <div class="location">at         line 142</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAllowWithoutCredential</strong>(bool $var)
         </code>
     </h3>
@@ -422,6 +430,15 @@ project.</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -430,7 +447,7 @@ project.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRequirements">
-        <div class="location">at         line 147</div>
+        <div class="location">at         line 156</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getRequirements</strong>()
         </code>
@@ -460,9 +477,9 @@ project.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setRequirements">
-        <div class="location">at         line 158</div>
-        <code>                    
-    <strong>setRequirements</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 168</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setRequirements</strong>(<a href="../../Google/Api/AuthRequirement.html"><abbr title="Google\Api\AuthRequirement">AuthRequirement</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -476,13 +493,22 @@ project.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/AuthRequirement.html"><abbr title="Google\Api\AuthRequirement">AuthRequirement</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

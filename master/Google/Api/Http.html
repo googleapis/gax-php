@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -98,7 +88,7 @@
             <div class="description">
             <p>Defines the HTTP configuration for a service. It contains a list of
 [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
-to one or more HTTP REST API methods.</p>            <p>Protobuf type <code>Google\Api\Http</code></p>                    </div>
+to one or more HTTP REST API methods.</p>            <p>Generated from protobuf message <code>google.api.Http</code></p>                    </div>
     
     
     
@@ -129,10 +119,10 @@ to one or more HTTP REST API methods.</p>            <p>Protobuf type <code>Goog
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setRules">setRules</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setRules">setRules</a>(<a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>A list of HTTP configuration rules that apply to individual API methods.</p>                </div>
                 <div class="col-md-2"></div>
@@ -196,9 +186,9 @@ to one or more HTTP REST API methods.</p>            <p>Protobuf type <code>Goog
             </div>
                     <div class="method-item">
                     <h3 id="method_setRules">
-        <div class="location">at         line 52</div>
-        <code>                    
-    <strong>setRules</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 53</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setRules</strong>(<a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -214,13 +204,22 @@ to one or more HTTP REST API methods.</p>            <p>Protobuf type <code>Goog
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

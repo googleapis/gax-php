@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -97,7 +87,7 @@
 
             <div class="description">
             <p>A streaming speech recognition result corresponding to a portion of the audio
-that is currently being processed.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\StreamingRecognitionResult</code></p>                    </div>
+that is currently being processed.</p>            <p>Generated from protobuf message <code>google.cloud.speech.v1.StreamingRecognitionResult</code></p>                    </div>
     
     
     
@@ -129,10 +119,10 @@ maximum specified in <code>max_alternatives</code>).</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setAlternatives">setAlternatives</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setAlternatives">setAlternatives</a>(<a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionAlternative.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionAlternative">SpeechRecognitionAlternative</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p><em>Output-only</em> May contain one or more recognition hypotheses (up to the
 maximum specified in <code>max_alternatives</code>).</p>                </div>
@@ -154,7 +144,7 @@ the transcript and corresponding audio.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setIsFinal">setIsFinal</a>(bool $var)
@@ -180,7 +170,7 @@ change its guess about this interim result. Values range from 0.0
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setStability">setStability</a>(float $var)
@@ -248,9 +238,9 @@ maximum specified in <code>max_alternatives</code>).</p>                    <p>G
             </div>
                     <div class="method-item">
                     <h3 id="method_setAlternatives">
-        <div class="location">at         line 71</div>
-        <code>                    
-    <strong>setAlternatives</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 72</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+    <strong>setAlternatives</strong>(<a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionAlternative.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionAlternative">SpeechRecognitionAlternative</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -265,13 +255,22 @@ maximum specified in <code>max_alternatives</code>).</p>                    <p>G
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionAlternative.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionAlternative">SpeechRecognitionAlternative</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -280,7 +279,7 @@ maximum specified in <code>max_alternatives</code>).</p>                    <p>G
             </div>
                     <div class="method-item">
                     <h3 id="method_getIsFinal">
-        <div class="location">at         line 87</div>
+        <div class="location">at         line 90</div>
         <code>                    bool
     <strong>getIsFinal</strong>()
         </code>
@@ -314,8 +313,8 @@ the transcript and corresponding audio.</p>                    <p>Generated from
             </div>
                     <div class="method-item">
                     <h3 id="method_setIsFinal">
-        <div class="location">at         line 102</div>
-        <code>                    
+        <div class="location">at         line 106</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setIsFinal</strong>(bool $var)
         </code>
     </h3>
@@ -341,6 +340,15 @@ the transcript and corresponding audio.</p>                    <p>Generated from
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -349,7 +357,7 @@ the transcript and corresponding audio.</p>                    <p>Generated from
             </div>
                     <div class="method-item">
                     <h3 id="method_getStability">
-        <div class="location">at         line 118</div>
+        <div class="location">at         line 124</div>
         <code>                    float
     <strong>getStability</strong>()
         </code>
@@ -384,8 +392,8 @@ The default of 0.0 is a sentinel value indicating <code>stability</code> was not
             </div>
                     <div class="method-item">
                     <h3 id="method_setStability">
-        <div class="location">at         line 133</div>
-        <code>                    
+        <div class="location">at         line 140</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
     <strong>setStability</strong>(float $var)
         </code>
     </h3>
@@ -412,6 +420,15 @@ The default of 0.0 is a sentinel value indicating <code>stability</code> was not
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

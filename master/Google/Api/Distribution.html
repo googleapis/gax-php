@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -108,7 +98,7 @@ Although it is not forbidden, it is generally a bad idea to include
 non-finite values (infinities or NaNs) in the population of values, as this
 will render the <code>mean</code> and <code>sum_of_squared_deviation</code> fields meaningless.</p>
 
-<p>Protobuf type <code>Google\Api\Distribution</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.Distribution</code></p>                    </div>
     
     
     
@@ -139,7 +129,7 @@ will render the <code>mean</code> and <code>sum_of_squared_deviation</code> fiel
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setCount">setCount</a>(int|string $var)
@@ -160,7 +150,7 @@ then this field must be zero.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setMean">setMean</a>(float $var)
@@ -183,7 +173,7 @@ population.  For values x_i this is:
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setSumOfSquaredDeviation">setSumOfSquaredDeviation</a>(float $var)
@@ -206,7 +196,7 @@ must not be present if the <code>count</code> is zero.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setRange">setRange</a>(<a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a> $var)
@@ -227,7 +217,7 @@ must not be present if the <code>count</code> is zero.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setBucketOptions">setBucketOptions</a>(<a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a> $var)
@@ -249,10 +239,10 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setBucketCounts">setBucketCounts</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setBucketCounts">setBucketCounts</a>(int[]|string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>If <code>bucket_options</code> is given, then the sum of the values in <code>bucket_counts</code>
 must equal the value in <code>count</code>.  If <code>bucket_options</code> is not given, no
@@ -316,8 +306,8 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </div>
                     <div class="method-item">
                     <h3 id="method_setCount">
-        <div class="location">at         line 103</div>
-        <code>                    
+        <div class="location">at         line 104</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setCount</strong>(int|string $var)
         </code>
     </h3>
@@ -339,6 +329,15 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -347,7 +346,7 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </div>
                     <div class="method-item">
                     <h3 id="method_getMean">
-        <div class="location">at         line 116</div>
+        <div class="location">at         line 119</div>
         <code>                    float
     <strong>getMean</strong>()
         </code>
@@ -378,8 +377,8 @@ then this field must be zero.</p>                    <p>Generated from protobuf 
             </div>
                     <div class="method-item">
                     <h3 id="method_setMean">
-        <div class="location">at         line 128</div>
-        <code>                    
+        <div class="location">at         line 132</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMean</strong>(float $var)
         </code>
     </h3>
@@ -402,6 +401,15 @@ then this field must be zero.</p>                    <p>Generated from protobuf 
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -410,7 +418,7 @@ then this field must be zero.</p>                    <p>Generated from protobuf 
             </div>
                     <div class="method-item">
                     <h3 id="method_getSumOfSquaredDeviation">
-        <div class="location">at         line 145</div>
+        <div class="location">at         line 151</div>
         <code>                    float
     <strong>getSumOfSquaredDeviation</strong>()
         </code>
@@ -447,8 +455,8 @@ If <code>count</code> is zero then this field must be zero.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSumOfSquaredDeviation">
-        <div class="location">at         line 161</div>
-        <code>                    
+        <div class="location">at         line 168</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSumOfSquaredDeviation</strong>(float $var)
         </code>
     </h3>
@@ -477,6 +485,15 @@ If <code>count</code> is zero then this field must be zero.</p>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -485,7 +502,7 @@ If <code>count</code> is zero then this field must be zero.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRange">
-        <div class="location">at         line 174</div>
+        <div class="location">at         line 183</div>
         <code>                    <a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a>
     <strong>getRange</strong>()
         </code>
@@ -516,8 +533,8 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_setRange">
-        <div class="location">at         line 186</div>
-        <code>                    
+        <div class="location">at         line 196</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setRange</strong>(<a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a> $var)
         </code>
     </h3>
@@ -540,6 +557,15 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -548,7 +574,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_getBucketOptions">
-        <div class="location">at         line 198</div>
+        <div class="location">at         line 210</div>
         <code>                    <a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a>
     <strong>getBucketOptions</strong>()
         </code>
@@ -578,8 +604,8 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_setBucketOptions">
-        <div class="location">at         line 209</div>
-        <code>                    
+        <div class="location">at         line 222</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setBucketOptions</strong>(<a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a> $var)
         </code>
     </h3>
@@ -601,6 +627,15 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -609,7 +644,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_getBucketCounts">
-        <div class="location">at         line 229</div>
+        <div class="location">at         line 244</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getBucketCounts</strong>()
         </code>
@@ -648,9 +683,9 @@ Any suffix of trailing zero bucket_count fields may be omitted.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setBucketCounts">
-        <div class="location">at         line 248</div>
-        <code>                    
-    <strong>setBucketCounts</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 264</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setBucketCounts</strong>(int[]|string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -673,13 +708,22 @@ Any suffix of trailing zero bucket_count fields may be omitted.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>int[]|string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

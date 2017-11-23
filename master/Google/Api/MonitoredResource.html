@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -107,7 +97,7 @@ Engine VM instance could be represented by the following object, because the
 <code>"instance_id"</code> and <code>"zone"</code>:
     { "type": "gce_instance",
       "labels": { "instance_id": "12345678901234",
-                  "zone": "us-central1-a" }}</p>            <p>Protobuf type <code>Google\Api\MonitoredResource</code></p>                    </div>
+                  "zone": "us-central1-a" }}</p>            <p>Generated from protobuf message <code>google.api.MonitoredResource</code></p>                    </div>
     
     
     
@@ -140,7 +130,7 @@ example, the type of a Cloud SQL database is <code>"cloudsql_database"</code>.</
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setType">setType</a>(string $var)
@@ -152,7 +142,7 @@ example, the type of a Cloud SQL database is <code>"cloudsql_database"</code>.</
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getLabels">getLabels</a>()
@@ -164,10 +154,10 @@ resource descriptor. For example, Cloud SQL databases use the labels
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setLabels">setLabels</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setLabels">setLabels</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
         
                                             <p>Required. Values for all of the labels listed in the associated monitored
 resource descriptor. For example, Cloud SQL databases use the labels
@@ -233,8 +223,8 @@ example, the type of a Cloud SQL database is <code>"cloudsql_database"</code>.</
             </div>
                     <div class="method-item">
                     <h3 id="method_setType">
-        <div class="location">at         line 72</div>
-        <code>                    
+        <div class="location">at         line 73</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setType</strong>(string $var)
         </code>
     </h3>
@@ -258,6 +248,15 @@ example, the type of a Cloud SQL database is <code>"cloudsql_database"</code>.</
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -266,8 +265,8 @@ example, the type of a Cloud SQL database is <code>"cloudsql_database"</code>.</
             </div>
                     <div class="method-item">
                     <h3 id="method_getLabels">
-        <div class="location">at         line 86</div>
-        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+        <div class="location">at         line 89</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
     <strong>getLabels</strong>()
         </code>
     </h3>
@@ -285,7 +284,7 @@ resource descriptor. For example, Cloud SQL databases use the labels
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
             <td></td>
         </tr>
     </table>
@@ -298,9 +297,9 @@ resource descriptor. For example, Cloud SQL databases use the labels
             </div>
                     <div class="method-item">
                     <h3 id="method_setLabels">
-        <div class="location">at         line 99</div>
-        <code>                    
-    <strong>setLabels</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 103</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setLabels</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -316,13 +315,22 @@ resource descriptor. For example, Cloud SQL databases use the labels
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

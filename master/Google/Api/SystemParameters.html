@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -101,7 +91,7 @@
 <p>A system parameter is a special kind of parameter defined by the API
 system, not by an individual API. It is typically mapped to an HTTP header
 and/or a URL query parameter. This configuration specifies which methods
-change the names of the system parameters.</p>            <p>Protobuf type <code>Google\Api\SystemParameters</code></p>                    </div>
+change the names of the system parameters.</p>            <p>Generated from protobuf message <code>google.api.SystemParameters</code></p>                    </div>
     
     
     
@@ -132,10 +122,10 @@ change the names of the system parameters.</p>            <p>Protobuf type <code
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setRules">setRules</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setRules">setRules</a>(<a href="../../Google/Api/SystemParameterRule.html"><abbr title="Google\Api\SystemParameterRule">SystemParameterRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Define system parameters.</p>                </div>
                 <div class="col-md-2"></div>
@@ -219,9 +209,9 @@ Example: define 2 api key names for a specific method.
             </div>
                     <div class="method-item">
                     <h3 id="method_setRules">
-        <div class="location">at         line 114</div>
-        <code>                    
-    <strong>setRules</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 115</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setRules</strong>(<a href="../../Google/Api/SystemParameterRule.html"><abbr title="Google\Api\SystemParameterRule">SystemParameterRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -257,13 +247,22 @@ Example: define 2 api key names for a specific method.
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/SystemParameterRule.html"><abbr title="Google\Api\SystemParameterRule">SystemParameterRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

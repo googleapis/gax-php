@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -96,7 +86,7 @@
     
 
             <div class="description">
-            <p>A speech recognition result corresponding to a portion of the audio.</p>            <p>Protobuf type <code>Google\Cloud\Speech\V1\SpeechRecognitionResult</code></p>                    </div>
+            <p>A speech recognition result corresponding to a portion of the audio.</p>            <p>Generated from protobuf message <code>google.cloud.speech.v1.SpeechRecognitionResult</code></p>                    </div>
     
     
     
@@ -128,10 +118,10 @@ maximum specified in <code>max_alternatives</code>).</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setAlternatives">setAlternatives</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setAlternatives">setAlternatives</a>(<a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionAlternative.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionAlternative">SpeechRecognitionAlternative</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p><em>Output-only</em> May contain one or more recognition hypotheses (up to the
 maximum specified in <code>max_alternatives</code>).</p>                </div>
@@ -145,7 +135,7 @@ maximum specified in <code>max_alternatives</code>).</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 26</div>
+        <div class="location">at         line 28</div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -164,7 +154,7 @@ maximum specified in <code>max_alternatives</code>).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getAlternatives">
-        <div class="location">at         line 38</div>
+        <div class="location">at         line 42</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getAlternatives</strong>()
         </code>
@@ -175,7 +165,10 @@ maximum specified in <code>max_alternatives</code>).</p>                </div>
 
                     <div class="method-description">
                                     <p><em>Output-only</em> May contain one or more recognition hypotheses (up to the
-maximum specified in <code>max_alternatives</code>).</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.speech.v1.SpeechRecognitionAlternative alternatives = 1;</code></p>                            </div>
+maximum specified in <code>max_alternatives</code>).</p>                    <p>These alternatives are ordered in terms of accuracy, with the top (first)
+alternative being the most probable, as ranked by the recognizer.</p>
+
+<p>Generated from protobuf field <code>repeated .google.cloud.speech.v1.SpeechRecognitionAlternative alternatives = 1;</code></p>                            </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -195,9 +188,9 @@ maximum specified in <code>max_alternatives</code>).</p>                    <p>G
             </div>
                     <div class="method-item">
                     <h3 id="method_setAlternatives">
-        <div class="location">at         line 50</div>
-        <code>                    
-    <strong>setAlternatives</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 57</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1\$this">$this</abbr>
+    <strong>setAlternatives</strong>(<a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionAlternative.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionAlternative">SpeechRecognitionAlternative</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -206,19 +199,31 @@ maximum specified in <code>max_alternatives</code>).</p>                    <p>G
 
                     <div class="method-description">
                                     <p><em>Output-only</em> May contain one or more recognition hypotheses (up to the
-maximum specified in <code>max_alternatives</code>).</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.speech.v1.SpeechRecognitionAlternative alternatives = 1;</code></p>                            </div>
+maximum specified in <code>max_alternatives</code>).</p>                    <p>These alternatives are ordered in terms of accuracy, with the top (first)
+alternative being the most probable, as ranked by the recognizer.</p>
+
+<p>Generated from protobuf field <code>repeated .google.cloud.speech.v1.SpeechRecognitionAlternative alternatives = 1;</code></p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../../../Google/Cloud/Speech/V1/SpeechRecognitionAlternative.html"><abbr title="Google\Cloud\Speech\V1\SpeechRecognitionAlternative">SpeechRecognitionAlternative</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

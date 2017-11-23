@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -101,7 +91,7 @@ configuration.</p>            <p>Includes detailed information about a field tha
 applicable advice about potential consequences for the change, such as
 backwards-incompatibility.</p>
 
-<p>Protobuf type <code>Google\Api\ConfigChange</code></p>                    </div>
+<p>Generated from protobuf message <code>google.api.ConfigChange</code></p>                    </div>
     
     
     
@@ -136,7 +126,7 @@ is used.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setElement">setElement</a>(string $var)
@@ -161,7 +151,7 @@ in JSON format. This field will not be populated if ChangeType == ADDED.</p>    
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setOldValue">setOldValue</a>(string $var)
@@ -183,7 +173,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setNewValue">setNewValue</a>(string $var)
@@ -204,7 +194,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_setChangeType">setChangeType</a>(int $var)
@@ -225,10 +215,10 @@ possible impact of this change.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setAdvices">setAdvices</a>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setAdvices">setAdvices</a>(<a href="../../Google/Api/Advice.html"><abbr title="Google\Api\Advice">Advice</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Collection of advice provided for this change, useful for determining the
 possible impact of this change.</p>                </div>
@@ -300,8 +290,8 @@ is used.</p>                    <p>Examples:
             </div>
                     <div class="method-item">
                     <h3 id="method_setElement">
-        <div class="location">at         line 102</div>
-        <code>                    
+        <div class="location">at         line 103</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setElement</strong>(string $var)
         </code>
     </h3>
@@ -332,6 +322,15 @@ is used.</p>                    <p>Examples:
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -340,7 +339,7 @@ is used.</p>                    <p>Examples:
             </div>
                     <div class="method-item">
                     <h3 id="method_getOldValue">
-        <div class="location">at         line 115</div>
+        <div class="location">at         line 118</div>
         <code>                    string
     <strong>getOldValue</strong>()
         </code>
@@ -371,8 +370,8 @@ in JSON format. This field will not be populated if ChangeType == ADDED.</p>    
             </div>
                     <div class="method-item">
                     <h3 id="method_setOldValue">
-        <div class="location">at         line 127</div>
-        <code>                    
+        <div class="location">at         line 131</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setOldValue</strong>(string $var)
         </code>
     </h3>
@@ -395,6 +394,15 @@ in JSON format. This field will not be populated if ChangeType == ADDED.</p>    
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -403,7 +411,7 @@ in JSON format. This field will not be populated if ChangeType == ADDED.</p>    
             </div>
                     <div class="method-item">
                     <h3 id="method_getNewValue">
-        <div class="location">at         line 140</div>
+        <div class="location">at         line 146</div>
         <code>                    string
     <strong>getNewValue</strong>()
         </code>
@@ -434,8 +442,8 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setNewValue">
-        <div class="location">at         line 152</div>
-        <code>                    
+        <div class="location">at         line 159</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setNewValue</strong>(string $var)
         </code>
     </h3>
@@ -458,6 +466,15 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -466,7 +483,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getChangeType">
-        <div class="location">at         line 164</div>
+        <div class="location">at         line 173</div>
         <code>                    int
     <strong>getChangeType</strong>()
         </code>
@@ -496,8 +513,8 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setChangeType">
-        <div class="location">at         line 175</div>
-        <code>                    
+        <div class="location">at         line 185</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setChangeType</strong>(int $var)
         </code>
     </h3>
@@ -519,6 +536,15 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -527,7 +553,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getAdvices">
-        <div class="location">at         line 188</div>
+        <div class="location">at         line 200</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getAdvices</strong>()
         </code>
@@ -558,9 +584,9 @@ possible impact of this change.</p>                    <p>Generated from protobu
             </div>
                     <div class="method-item">
                     <h3 id="method_setAdvices">
-        <div class="location">at         line 200</div>
-        <code>                    
-    <strong>setAdvices</strong>(array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        <div class="location">at         line 213</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setAdvices</strong>(<a href="../../Google/Api/Advice.html"><abbr title="Google\Api\Advice">Advice</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -575,13 +601,22 @@ possible impact of this change.</p>                    <p>Generated from protobu
 
                     <table class="table table-condensed">
                     <tr>
-                <td>array|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/Advice.html"><abbr title="Google\Api\Advice">Advice</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

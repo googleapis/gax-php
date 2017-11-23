@@ -23,16 +23,6 @@
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                    <form action="#" method="GET">
-                <select id="version-switcher" name="version">
-                                            <option value="../../../../../0.20.0/index.html" data-version="0.20.0">0.20.0</option>
-                                            <option value="../../../../../0.20.1/index.html" data-version="0.20.1">0.20.1</option>
-                                            <option value="../../../../../0.21.0/index.html" data-version="0.21.0">0.21.0</option>
-                                            <option value="../../../../../0.21.1/index.html" data-version="0.21.1">0.21.1</option>
-                                            <option value="../../../../../0.21.2/index.html" data-version="0.21.2">0.21.2</option>
-                                            <option value="../../../../../master/index.html" data-version="master">master branch</option>
-                                    </select>
-            </form>
                 <script>
             $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
         </script>
@@ -166,10 +156,20 @@ properties.</p>                </div>
                     
                 </div>
                 <div class="col-md-8 type">
+                    <a href="#method_ClassifyText">ClassifyText</a>(<a href="../../../../Google/Cloud/Language/V1beta2/ClassifyTextRequest.html"><abbr title="Google\Cloud\Language\V1beta2\ClassifyTextRequest">ClassifyTextRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Classifies a document into categories.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_AnnotateText">AnnotateText</a>(<a href="../../../../Google/Cloud/Language/V1beta2/AnnotateTextRequest.html"><abbr title="Google\Cloud\Language\V1beta2\AnnotateTextRequest">AnnotateTextRequest</abbr></a> $argument, array $metadata = [], array $options = [])
         
-                                            <p>A convenience method that provides all syntax, sentiment, and entity
-features in one call.</p>                </div>
+                                            <p>A convenience method that provides all syntax, sentiment, entity, and
+classification features in one call.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -387,8 +387,49 @@ properties.</p>                                                </div>
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_ClassifyText">
+        <div class="location">at         line 103</div>
+        <code>                    
+    <strong>ClassifyText</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/ClassifyTextRequest.html"><abbr title="Google\Cloud\Language\V1beta2\ClassifyTextRequest">ClassifyTextRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Classifies a document into categories.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Language/V1beta2/ClassifyTextRequest.html"><abbr title="Google\Cloud\Language\V1beta2\ClassifyTextRequest">ClassifyTextRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_AnnotateText">
-        <div class="location">at         line 104</div>
+        <div class="location">at         line 118</div>
         <code>                    
     <strong>AnnotateText</strong>(<a href="../../../../Google/Cloud/Language/V1beta2/AnnotateTextRequest.html"><abbr title="Google\Cloud\Language\V1beta2\AnnotateTextRequest">AnnotateTextRequest</abbr></a> $argument, array $metadata = [], array $options = [])
         </code>
@@ -398,8 +439,8 @@ properties.</p>                                                </div>
     
 
                     <div class="method-description">
-                                    <p>A convenience method that provides all syntax, sentiment, and entity
-features in one call.</p>                                                </div>
+                                    <p>A convenience method that provides all syntax, sentiment, entity, and
+classification features in one call.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
