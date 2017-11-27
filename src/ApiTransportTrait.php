@@ -36,7 +36,7 @@ use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
-use Google\GAX\HttpHandler\Guzzle6HttpHandler;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 
 trait ApiTransportTrait
 {
@@ -49,7 +49,7 @@ trait ApiTransportTrait
         $options += [
             'enableCaching' => true,
             'authCache' => new MemoryCacheItemPool(),
-            'authHttpHandler' => new Guzzle6HttpHandler() // @todo use factory
+            'authHttpHandler' => HttpHandlerFactory::build()
         ];
 
         if (empty($options['credentialsLoader'])) {

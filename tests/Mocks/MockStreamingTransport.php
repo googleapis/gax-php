@@ -38,6 +38,7 @@ use Google\GAX\CallStackTrait;
 use Google\GAX\BidiStream;
 use Google\GAX\ClientStream;
 use Google\GAX\ServerStream;
+use Google\Protobuf\Internal\Message;
 
 class MockStreamingTransport implements ApiTransportInterface
 {
@@ -55,7 +56,16 @@ class MockStreamingTransport implements ApiTransportInterface
      * Creates an API request
      * @return callable
      */
-    public function createApiCall($method, CallSettings $settings, $options = [])
+    public function startCall($method,  Message $message, $decodeTo, CallSettings $settings)
+    {
+        throw new \Exception('Use MockTransport');
+    }
+
+    /**
+     * Creates an API request
+     * @return callable
+     */
+    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null)
     {
         $handler = [$this, $method];
         $callable = function () use ($handler) {

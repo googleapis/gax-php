@@ -37,6 +37,7 @@ use Google\GAX\ApiTransportInterface;
 use Google\GAX\CallSettings;
 use Google\GAX\CallStackTrait;
 use Google\GAX\Testing\ReceivedRequest;
+use Google\Protobuf\Internal\Message;
 
 class MockTransport implements ApiTransportInterface
 {
@@ -47,7 +48,7 @@ class MockTransport implements ApiTransportInterface
      * Creates an API request
      * @return callable
      */
-    public function createApiCall($method, CallSettings $settings, $options = [])
+    public function startCall($method, Message $message, $decodeTo, CallSettings $settings)
     {
         $handler = [$this, $method];
         $callable = function () use ($handler) {
@@ -59,6 +60,11 @@ class MockTransport implements ApiTransportInterface
             }
         };
         return $this->createCallStack($callable, $settings, $options);
+    }
+
+    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null)
+    {
+        throw new \Exception('Use MockStreamingTransport');
     }
 
     public function __call($name, $arguments)
