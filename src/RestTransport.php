@@ -32,7 +32,7 @@
 namespace Google\GAX;
 
 use Google\Auth\FetchAuthTokenInterface;
-use Google\GAX\HttpHandler\Guzzle6HttpHandler;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Protobuf\Internal\Message;
 use Psr\Http\Message\ResponseInterface;
 
@@ -73,7 +73,7 @@ class RestTransport implements ApiTransportInterface
     public function __construct($host, array $options = [])
     {
         $options = $this->setCommonDefaults($options + [
-            'httpHandler' => new Guzzle6HttpHandler() // @todo use factory
+            'httpHandler' => HttpHandlerFactory::build()
         ]);
 
         $this->httpHandler = $options['httpHandler'];
@@ -94,7 +94,6 @@ class RestTransport implements ApiTransportInterface
      */
     public function startCall($method, Message $message, $decodeTo, CallSettings $settings)
     {
-        $httpHandler = $this->httpHandler;
         $request = $this->requestBuilder->build(
             $method,
             $message
@@ -103,7 +102,7 @@ class RestTransport implements ApiTransportInterface
             'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
         );
 
-        return $httpHandler($request)->then(
+        return $this->httpHandler->async($request)->then(
             function (ResponseInterface $response) use ($decodeTo) {
                 return (new Serializer)
                     ->decodeMessage(

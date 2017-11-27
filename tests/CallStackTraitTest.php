@@ -68,7 +68,7 @@ class CallStackTraitTest extends TestCase
         $transport = MockTransport::create($response);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall('takeAction', $callSettings);
+        $apiCall = $transport->startCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, $options);
         $this->assertEquals($response, $actualResponse);
 
@@ -99,7 +99,7 @@ class CallStackTraitTest extends TestCase
         $callSettings = new CallSettings([
             'retrySettings' => $retrySettings
         ]);
-        $apiCall = $transport->createApiCall('takeAction', $callSettings);
+        $apiCall = $transport->startCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, []);
 
         $this->assertEquals($response, $actualResponse);
@@ -131,7 +131,7 @@ class CallStackTraitTest extends TestCase
 
         $isExceptionRaised = false;
         try {
-            $apiCall = $transport->createApiCall('takeAction', $callSettings);
+            $apiCall = $transport->startCall('takeAction', $callSettings);
             $response = $apiCall($request, []);
         } catch (\Exception $e) {
             $isExceptionRaised = true;
@@ -167,7 +167,7 @@ class CallStackTraitTest extends TestCase
             'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
         ]);
         $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
-        $apiCall = $transport->createApiCall('takeAction', $callSettings);
+        $apiCall = $transport->startCall('takeAction', $callSettings);
         $actualResponse = $apiCall($request, []);
 
         $this->assertEquals($responseC, $actualResponse);
@@ -217,7 +217,7 @@ class CallStackTraitTest extends TestCase
 
         $raisedException = null;
         try {
-            $apiCall = $transport->createApiCall(
+            $apiCall = $transport->startCall(
                 'takeAction',
                 $callSettings,
                 ['timeFuncMillis' => $timeFuncMillis]
@@ -254,7 +254,7 @@ class CallStackTraitTest extends TestCase
 
         $raisedException = null;
         try {
-            $apiCall = $transport->createApiCall('methodThatSleeps', $callSettings);
+            $apiCall = $transport->startCall('methodThatSleeps', $callSettings);
             $response = $apiCall($request, []);
         } catch (ApiException $e) {
             $raisedException = $e;
@@ -286,7 +286,7 @@ class CallStackTraitTest extends TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -321,7 +321,7 @@ class CallStackTraitTest extends TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -367,7 +367,7 @@ class CallStackTraitTest extends TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -408,7 +408,7 @@ class CallStackTraitTest extends TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -437,7 +437,7 @@ class CallStackTraitTest extends TestCase
         ]);
         $collectionSize = 2;
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -466,7 +466,7 @@ class CallStackTraitTest extends TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -493,7 +493,7 @@ class CallStackTraitTest extends TestCase
             'resourceField' => 'resourcesList'
         ]);
         $callSettings = new CallSettings(['timeout' => 1000]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['pageStreamingDescriptor' => $descriptor]
@@ -521,7 +521,7 @@ class CallStackTraitTest extends TestCase
             'phpVersion' => '5.5.0',
             'grpcVersion' => '1.0.1'
         ]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             new CallSettings(),
             ['headerDescriptor' => $headerDescriptor]
@@ -552,7 +552,7 @@ class CallStackTraitTest extends TestCase
         $callSettings = new CallSettings([
             'userHeaders' => $userHeaders,
         ]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['headerDescriptor' => $headerDescriptor]
@@ -585,7 +585,7 @@ class CallStackTraitTest extends TestCase
         $callSettings = new CallSettings([
             'userHeaders' => $userHeaders,
         ]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['headerDescriptor' => $headerDescriptor]
@@ -656,7 +656,7 @@ class CallStackTraitTest extends TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -733,7 +733,7 @@ class CallStackTraitTest extends TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -802,7 +802,7 @@ class CallStackTraitTest extends TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -869,7 +869,7 @@ class CallStackTraitTest extends TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -954,7 +954,7 @@ class CallStackTraitTest extends TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -1022,7 +1022,7 @@ class CallStackTraitTest extends TestCase
             'metadataReturnType' => '\Google\Rpc\Status',
         ];
         $callSettings = new CallSettings();
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['longRunningDescriptor' => $descriptor]
@@ -1073,7 +1073,7 @@ class CallStackTraitTest extends TestCase
 
         $callSettings = new CallSettings([]);
 
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1116,7 +1116,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1174,7 +1174,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1218,7 +1218,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1257,7 +1257,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             ['grpcStreamingDescriptor' => $descriptor]
@@ -1308,7 +1308,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             $options
@@ -1358,7 +1358,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             $options
@@ -1404,7 +1404,7 @@ class CallStackTraitTest extends TestCase
         $transport->setStreamingDescriptor($descriptor);
 
         $callSettings = new CallSettings([]);
-        $apiCall = $transport->createApiCall(
+        $apiCall = $transport->startCall(
             'takeAction',
             $callSettings,
             $options
