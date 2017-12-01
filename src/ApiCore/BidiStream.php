@@ -33,6 +33,9 @@ namespace Google\ApiCore;
 
 use Google\Rpc\Code;
 
+/**
+ * BidiStream is the response object from a gRPC bidirectional streaming API call.
+ */
 class BidiStream
 {
     private $call;
@@ -47,7 +50,7 @@ class BidiStream
      * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      * @param array $grpcStreamingDescriptor
      */
-    public function __construct(\Grpc\BidiStreamingCall $bidiStreamingCall, $grpcStreamingDescriptor = [])
+    public function __construct($bidiStreamingCall, array $grpcStreamingDescriptor = [])
     {
         $this->call = $bidiStreamingCall;
         if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,36 +30,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\UnitTests\Mocks;
+namespace Google\ApiCore;
 
-class MockRequest
+use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Psr7\Request;
+
+class RequestBuilder
 {
-    private $pageToken;
-    private $pageSize;
-
-    public function __construct($pageToken, $pageSize = null)
+    public function __construct($baseUri, $clientConfigPath)
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
+        $this->baseUri = $baseUri;
+        $this->clientConfig = $this->loadClientConfig($clientConfigPath);
     }
 
-    public function getPageToken()
+    public function build($path, Message $message, array $headers = [])
     {
-        return $this->pageToken;
+        list($interface, $method) = explode('/', $path);
+
+        if (isset($this->clientConfig['interfaces'][$interface]['methods'][$method])) {
+            $call = $this->clientConfig['interfaces'][$interface]['methods'][$method];
+            $template = new PathTemplate(
+                $call['uri']
+            );
+
+            $path = $template->render(['subscription' => $message->getSubscription()]);
+            // @todo need to determine how to fetch the placeholder
+            return new Request(
+                $call['method'],
+                "https://$this->baseUri/$path",
+                ['Content-Type' => 'application/json'] + $headers,
+                isset($call['body']) ? $message->serializeToJsonString() : null
+            );
+        }
+
+        throw new \Exception('Unable to build request.');
     }
 
-    public function getPageSize()
+    private function loadClientConfig($clientConfigPath)
     {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        return json_decode(
+            file_get_contents($clientConfigPath, true),
+            true
+        );
     }
 }

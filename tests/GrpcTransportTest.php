@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests;
+namespace Google\ApiCore\UnitTests;
 
+use Google\ApiCore\GrpcTransport;
 use Google\Auth\FetchAuthTokenInterface;
-use Google\GAX\GrpcTransport;
 use Grpc\ChannelCredentials;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
@@ -56,7 +56,7 @@ class GrpcTransportTest extends TestCase
     }
 
     /**
-     * @expectedException Google\GAX\ValidationException
+     * @expectedException Google\ApiCore\ValidationException
      * @expectedExceptionMessage Missing required argument serviceAddress
      */
     public function testServiceAddressRequired()
@@ -68,7 +68,7 @@ class GrpcTransportTest extends TestCase
     }
 
     /**
-     * @expectedException \Google\GAX\ValidationException
+     * @expectedException \Google\ApiCore\ValidationException
      * @expectedExceptionMessage Missing required argument port
      */
     public function testPortRequired()
@@ -80,7 +80,7 @@ class GrpcTransportTest extends TestCase
     }
 
     /**
-     * @expectedException \Google\GAX\ValidationException
+     * @expectedException \Google\ApiCore\ValidationException
      * @expectedExceptionMessage Missing required argument createGrpcStubFunction
      */
     public function testCreateGrpcStubFunctionRequired()
@@ -93,7 +93,7 @@ class GrpcTransportTest extends TestCase
     }
 
     /**
-     * @expectedException \Google\GAX\ValidationException
+     * @expectedException \Google\ApiCore\ValidationException
      * @expectedExceptionMessage Missing required argument scopes
      */
     public function testScopesRequired()

@@ -30,18 +30,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\GAX\ApiException;
-use Google\GAX\ApiTransportInterface;
-use Google\GAX\CallSettings;
-use Google\GAX\CallStackTrait;
-use Google\GAX\Testing\ReceivedRequest;
+use Google\ApiCore\ApiException;
+use Google\ApiCore\ApiTransportInterface;
+use Google\ApiCore\CallSettings;
+use Google\ApiCore\Testing\ReceivedRequest;
 use Google\Protobuf\Internal\Message;
 
 class MockTransport implements ApiTransportInterface
 {
-    use CallStackTrait;
     use MockStubTrait;
 
     /**

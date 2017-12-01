@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,36 +30,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\UnitTests\Mocks;
+namespace Google\ApiCore;
 
-class MockRequest
+use Google\Protobuf\Internal\Message;
+
+class Call
 {
-    private $pageToken;
-    private $pageSize;
+    private $method;
+    private $decodeType;
+    private $message;
 
-    public function __construct($pageToken, $pageSize = null)
+    public function __construct($method, $decodeType, Message $message = null)
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
+        $this->method = $method;
+        $this->decodeType = $decodeType;
+        $this->message = $message;
     }
 
-    public function getPageToken()
+    public function getMessage()
     {
-        return $this->pageToken;
+        return $this->message;
     }
 
-    public function getPageSize()
+    public function getMethod()
     {
-        return $this->pageSize;
+        return $this->method;
     }
 
-    public function setPageSize($pageSize)
+    public function getDecodeType()
     {
-        $this->pageSize = $pageSize;
+        return $this->decodeType;
     }
 
-    public function setPageToken($pageToken)
+    public function setMessage(Message $message)
     {
-        $this->pageToken = $pageToken;
+        $this->message = $message;
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    public function setDecodeType($decodeType)
+    {
+        $this->decodeType = $decodeType;
     }
 }
