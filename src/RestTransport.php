@@ -104,37 +104,51 @@ class RestTransport implements ApiTransportInterface
 
     private function getCallable(CallSettings $settings)
     {
-        return $this->createCallStack(
-            function (Call $call, CallSettings $settings) {
-                $httpHandler = $this->httpHandler;
+        $callable = function (Call $call, CallSettings $settings) {
+            $httpHandler = $this->httpHandler;
 
-                return $httpHandler->async(
-                    $this->requestBuilder->build(
-                        $call->getMethod(),
-                        $call->getMessage(),
-                        $settings->getUserHeaders()
+            return $httpHandler->async(
+                $this->requestBuilder->build(
+                    $call->getMethod(),
+                    $call->getMessage(),
+                    $settings->getUserHeaders()
+                ),
+                $settings->getRestOptions() ?: []
+            )->then(
+                function (ResponseInterface $response) use ($call) {
+                    $decodeType = $call->getDecodeType();
+
+                    return (new Serializer)
+                        ->decodeMessage(
+                            new $decodeType,
+                            json_decode((string) $response->getBody(), true)
+                        );
+                }
+            )->then(null, function (\Exception $ex) {
+                if ($ex instanceof RequestException && $ex->hasResponse()) {
+                    throw $this->convertToApiException($ex);
+                }
+
+                throw $ex;
+            });
+        };
+
+        return $this->authHeaderMiddleware(
+            $this->agentHeaderMiddleware(
+                $this->retryMiddleware(
+                    $this->timeoutMiddleware(
+                        $callable,
+                        $settings
                     ),
-                    $settings->getRestOptions() ?: []
-                )->then(
-                    function (ResponseInterface $response) use ($call) {
-                        $decodeType = $call->getDecodeType();
-
-                        return (new Serializer)
-                            ->decodeMessage(
-                                new $decodeType,
-                                json_decode((string) $response->getBody(), true)
-                            );
-                    }
-                )->then(null, function (\Exception $ex) {
-                    if ($ex instanceof RequestException && $ex->hasResponse()) {
-                        throw $this->convertToApiException($ex);
-                    }
-
-                    throw $ex;
-                });
-            },
-            $settings
+                    $settings
+                )
+            )
         );
+    }
+
+    private function authHeaderMiddleware(callable $callable)
+    {
+        return new AuthHeaderMiddleware($callable, $this->credentialsLoader);
     }
 
     private function convertToApiException(\Exception $ex)
