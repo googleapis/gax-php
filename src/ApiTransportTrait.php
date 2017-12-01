@@ -113,26 +113,48 @@ trait ApiTransportTrait
      *
      * @return callable
      */
-    private function createCallStack(
+    private function retryMiddleware(
         callable $callable,
         CallSettings $settings
     ) {
         $retrySettings = $settings->getRetrySettings();
-        if ($retrySettings) {
-            if ($retrySettings->retriesEnabled()) {
-                $callable = new Middleware\RetryMiddleware($callable);
-            } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
-            }
+        if ($retrySettings && $retrySettings->retriesEnabled()) {
+            $callable = new Middleware\RetryMiddleware($callable);
         }
 
-        $callable = new Middleware\HeaderMiddleware(
-            $callable,
-            $this->agentHeaderDescriptor,
-            $this->credentialsLoader // @todo middleware specifically for signing requests
-        );
+        return $callable;
+    }
+
+    /**
+     * @param callable $callable A callable to make the API call through.
+     * @param CallSettings $settings The call settings to use for this call.
+     *
+     * @return callable
+     */
+    private function timeoutMiddleware(
+        callable $callable,
+        CallSettings $settings
+    ) {
+        $retrySettings = $settings->getRetrySettings();
+        if ($retrySettings &&
+            $retrySettings->getNoRetriesRpcTimeoutMillis() > 0 &&
+            !$retrySettings->retriesEnabled()
+        ) {
+            $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
+        }
 
         return $callable;
+    }
+
+    /**
+     * @param callable $callable A callable to make the API call through.
+     * @param CallSettings $settings The call settings to use for this call.
+     *
+     * @return callable
+     */
+    private function agentHeaderMiddleware(callable $callable)
+    {
+        return new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
     }
 
     /**

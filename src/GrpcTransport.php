@@ -179,32 +179,39 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
 
     private function getCallable(CallSettings $settings)
     {
-        return $this->createCallStack(
-            function (Call $call, CallSettings $settings) {
-                $call = $this->_simpleRequest(
-                    '/' . $call->getMethod(),
-                    $call->getMessage(),
-                    [$call->getDecodeType(), 'decode'],
-                    $settings->getUserHeaders(),
-                    ['call_credentials_callback' => $this->credentialsCallback]
-                );
+        $callable = function (Call $call, CallSettings $settings) {
+            $call = $this->_simpleRequest(
+                '/' . $call->getMethod(),
+                $call->getMessage(),
+                [$call->getDecodeType(), 'decode'],
+                $settings->getUserHeaders(),
+                ['call_credentials_callback' => $this->credentialsCallback]
+            );
 
-                $promise = new Promise(
-                    function() use ($call, &$promise) {
-                        list($response, $status) = $call->wait();
+            $promise = new Promise(
+                function() use ($call, &$promise) {
+                    list($response, $status) = $call->wait();
 
-                        if ($status->code == Code::OK) {
-                            $promise->resolve($response);
-                        } else {
-                            throw ApiException::createFromStdClass($status);
-                        }
-                   },
-                   [$call, 'cancel']
-                );
+                    if ($status->code == Code::OK) {
+                        $promise->resolve($response);
+                    } else {
+                        throw ApiException::createFromStdClass($status);
+                    }
+               },
+               [$call, 'cancel']
+            );
 
-                return $promise;
-            },
-            $settings
+            return $promise;
+        };
+
+        return $this->agentHeaderMiddleware(
+            $this->retryMiddleware(
+                $this->timeoutMiddleware(
+                    $callable,
+                    $settings
+                ),
+                $settings
+            )
         );
     }
 

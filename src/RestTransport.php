@@ -104,23 +104,51 @@ class RestTransport implements ApiTransportInterface
 
     private function getCallable(CallSettings $settings)
     {
-        $request = $this->requestBuilder->build(
-            $method,
-            $message
-        )->withHeader(
-            'Authorization',
-            'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-        );
+        $callable = function (Call $call, CallSettings $settings) {
+            $httpHandler = $this->httpHandler;
 
-        return $this->httpHandler->async($request)->then(
-            function (ResponseInterface $response) use ($decodeTo) {
-                return (new Serializer)
-                    ->decodeMessage(
-                        new $decodeTo,
-                        json_decode((string) $response->getBody(), true)
-                    );
-            }
+            return $httpHandler->async(
+                $this->requestBuilder->build(
+                    $call->getMethod(),
+                    $call->getMessage(),
+                    $settings->getUserHeaders()
+                ),
+                $settings->getRestOptions() ?: []
+            )->then(
+                function (ResponseInterface $response) use ($call) {
+                    $decodeType = $call->getDecodeType();
+
+                    return (new Serializer)
+                        ->decodeMessage(
+                            new $decodeType,
+                            json_decode((string) $response->getBody(), true)
+                        );
+                }
+            )->then(null, function (\Exception $ex) {
+                if ($ex instanceof RequestException && $ex->hasResponse()) {
+                    throw $this->convertToApiException($ex);
+                }
+
+                throw $ex;
+            });
+        };
+
+        return $this->authHeaderMiddleware(
+            $this->agentHeaderMiddleware(
+                $this->retryMiddleware(
+                    $this->timeoutMiddleware(
+                        $callable,
+                        $settings
+                    ),
+                    $settings
+                )
+            )
         );
+    }
+
+    private function authHeaderMiddleware(callable $callable)
+    {
+        return new AuthHeaderMiddleware($callable, $this->credentialsLoader);
     }
 
     private function convertToApiException(\Exception $ex)
