@@ -133,22 +133,10 @@ class RestTransport implements ApiTransportInterface
             });
         };
 
-        return $this->authHeaderMiddleware(
-            $this->agentHeaderMiddleware(
-                $this->retryMiddleware(
-                    $this->timeoutMiddleware(
-                        $callable,
-                        $settings
-                    ),
-                    $settings
-                )
-            )
+        return new AuthHeaderMiddleware(
+            $this->createCallStack($callable, $settings),
+            $this->credentialsLoader
         );
-    }
-
-    private function authHeaderMiddleware(callable $callable)
-    {
-        return new AuthHeaderMiddleware($callable, $this->credentialsLoader);
     }
 
     private function convertToApiException(\Exception $ex)
