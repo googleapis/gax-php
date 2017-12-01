@@ -34,7 +34,7 @@
  * This file was automatically generated - do not edit!
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\ApiCore\UnitTests\Mocks;
 
 use Google\Longrunning\OperationsGrpcClient;
 

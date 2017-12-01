@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,37 +29,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\ApiCore\UnitTests;
 
-namespace Google\ApiCore\UnitTests\Mocks;
+use PHPUnit\Framework\TestCase;
 
-class MockRequest
+class ProtobufExtensionTest extends TestCase
 {
-    private $pageToken;
-    private $pageSize;
-
-    public function __construct($pageToken, $pageSize = null)
+    public function setUp()
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
+        if (!extension_loaded('protobuf')) {
+            $this->markTestSkipped('Must have the protobuf extension installed to run this test.');
+        }
     }
 
-    public function getPageToken()
+    public function testForProtobufExtension()
     {
-        return $this->pageToken;
-    }
-
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        // This test should always pass - we have it here so that we can determine whether the
+        // protobuf extension is installed, based on whether this test passes or is skipped
+        $this->assertTrue(true);
     }
 }

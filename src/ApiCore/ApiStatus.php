@@ -114,4 +114,16 @@ class ApiStatus
         }
         return ApiStatus::UNRECOGNIZED_STATUS;
     }
+
+    /**
+     * @param string $status
+     * @return int
+     */
+    public static function rpcCodeFromStatus($status)
+    {
+        if (array_key_exists($status, self::$apiStatustoCodeMap)) {
+            return self::$apiStatustoCodeMap[$status];
+        }
+        return Code::UNKNOWN;
+    }
 }

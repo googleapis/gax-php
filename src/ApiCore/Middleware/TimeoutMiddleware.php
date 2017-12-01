@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,36 +30,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\UnitTests\Mocks;
+namespace Google\ApiCore\Middleware;
 
-class MockRequest
+use Google\ApiCore\CallSettings;
+use InvalidArgumentException;
+
+/**
+* Middleware for adding timeouts
+*/
+class TimeoutMiddleware
 {
-    private $pageToken;
-    private $pageSize;
+    const TRANSPORT_METHOD_PARAM_COUNT = 2;
+    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
 
-    public function __construct($pageToken, $pageSize = null)
+    /** @var callable */
+    private $nextHandler;
+
+    /** @var int */
+    private $timeoutMillis;
+
+    public function __construct(callable $nextHandler, $timeoutMillis)
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
+        $this->nextHandler = $nextHandler;
+        $this->timeoutMillis = $timeoutMillis;
     }
 
-    public function getPageToken()
+    public function __invoke(CallSettings $settings)
     {
-        return $this->pageToken;
-    }
-
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        return call_user_func_array($this->nextHandler, [$settings]);
+        // $params = func_get_args();
+        // if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
+        //     !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
+        // ) {
+        //     throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
+        // } else {
+        //     $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
+        // }
+        // return call_user_func_array($this->nextHandler, $params);
     }
 }

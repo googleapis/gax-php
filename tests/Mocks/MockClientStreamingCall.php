@@ -30,9 +30,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\GAX\ApiException;
+use Google\ApiCore\ApiException;
 use Grpc;
 
 /**

@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\GAX\Testing\MockStatus;
-use Google\GAX\UnaryCallInterface;
+use Google\ApiCore\Testing\MockStatus;
+use Google\ApiCore\UnaryCallInterface;
 use Google\Rpc\Code;
 
 /**

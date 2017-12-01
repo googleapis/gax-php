@@ -41,6 +41,8 @@ class CallSettings
 
     private $retrySettings;
     private $userHeaders;
+    private $grpcOptions;
+    private $restOptions;
 
     /**
      * Constructs an array mapping method names to CallSettings.
@@ -178,6 +180,8 @@ class CallSettings
      *           Retry settings to use for CallSettings object.
      *     @type array $userHeaders
      *           An array of headers to be included in the request.
+     *     @type array $grpcOptions
+     *     @type array $restOptions
      * }
      * @return CallSettings
      */
