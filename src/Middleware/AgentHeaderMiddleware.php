@@ -31,15 +31,15 @@
  */
 namespace Google\GAX\Middleware;
 
-use Google\Auth\FetchAuthTokenInterface;
 use Google\GAX\Call;
 use Google\GAX\CallSettings;
+use Google\GAX\AgentHeaderDescriptor;
 use InvalidArgumentException;
 
 /**
 * Middleware which configures headers for the request.
 */
-class HeaderMiddleware
+class AgentHeaderMiddleware
 {
     /** @var callable */
     private $nextHandler;
@@ -47,34 +47,27 @@ class HeaderMiddleware
     /** @var AgentHeaderDescriptor */
     private $headerDescriptor;
 
-    /** @var FetchAuthTokenInterface */
-    private $credentialsLoader;
-
     public function __construct(
         callable $nextHandler,
-        $headerDescriptor,
-        FetchAuthTokenInterface $credentialsLoader = null
+        AgentHeaderDescriptor $headerDescriptor
     ) {
         $this->nextHandler = $nextHandler;
         $this->headerDescriptor = $headerDescriptor;
-        $this->credentialsLoader = $credentialsLoader;
     }
 
     public function __invoke(Call $call, CallSettings $settings)
     {
         $next = $this->nextHandler;
-        $headers = $this->headerDescriptor->getHeader();
-
-        if ($this->credentialsLoader) {
-            $headers += [
-                'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-            ];
-        }
+        $agentHeaders = $this->headerDescriptor->getHeader();
+        $userHeaders = $settings->getUserHeaders();
 
         return $next(
             $call,
             $settings->with([
-                'userHeaders' => $headers
+                'userHeaders' => array_merge(
+                    $agentHeaders,
+                    $userHeaders
+                )
             ])
         );
     }
