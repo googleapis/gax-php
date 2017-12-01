@@ -119,10 +119,8 @@ trait ApiTransportTrait
         CallSettings $settings
     ) {
         $retrySettings = $settings->getRetrySettings();
-        if ($retrySettings) {
-            if ($retrySettings->retriesEnabled()) {
-                $callable = new Middleware\RetryMiddleware($callable);
-            }
+        if ($retrySettings && $retrySettings->retriesEnabled()) {
+            $callable = new Middleware\RetryMiddleware($callable);
         }
 
         return $callable;
@@ -139,10 +137,11 @@ trait ApiTransportTrait
         CallSettings $settings
     ) {
         $retrySettings = $settings->getRetrySettings();
-        if ($retrySettings) {
-            if (!$retrySettings->retriesEnabled() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
-            }
+        if ($retrySettings &&
+            $retrySettings->getNoRetriesRpcTimeoutMillis() > 0 &&
+            !$retrySettings->retriesEnabled()
+        ) {
+            $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
         }
 
         return $callable;
