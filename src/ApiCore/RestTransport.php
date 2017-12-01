@@ -143,6 +143,8 @@ class RestTransport implements ApiTransportInterface
     {
         $res = (string) $ex->getResponse()->getBody();
         $rObj = (object) json_decode($res, true)['error'];
+        // Overwrite the HTTP Status Code with the RPC code, derived from the "status" field.
+        $rOjb->code = ApiStatus::rpcCodeFromStatus($rObj->status);
         $rObj->details = $rObj->message;
 
         return ApiException::createFromStdClass($rObj);
