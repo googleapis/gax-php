@@ -32,7 +32,6 @@
 
 namespace Google\GAX;
 
-use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\Message;
@@ -46,7 +45,6 @@ use GuzzleHttp\Promise\PromiseInterface;
 class GrpcTransport extends BaseStub implements ApiTransportInterface
 {
     use ApiTransportTrait;
-    use CallStackTrait;
     use ValidationTrait;
 
     private $credentialsCallback;
@@ -121,83 +119,93 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     }
 
     /**
-     * @param string $method The method to start a call for.
-     * @param Message $message The message to deliver.
-     * @param string $decodeTo The type to decode the response to.
+     * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
-     *
-     * @return PromiseInterface
-     */
-    public function startCall($method, Message $message, $decodeTo, CallSettings $settings)
-    {
-        // @todo move descriptors to call settings?
-        // @todo get middleware working properly
-        // @todo sign request middleware?
-        $handler = function () use ($method, $message, $decodeTo) {
-            $call = $this->_simpleRequest(
-                "/$method",
-                $message,
-                [$decodeTo, 'decode'],
-                [],
-                ['call_credentials_callback' => $this->credentialsCallback]
-            );
-
-            $promise = new Promise(
-               function() use ($call, &$promise) {
-                    list($response, $status) = $call->wait();
-
-                    if ($status->code == Code::OK) {
-                        $promise->resolve($response);
-                    } else {
-                        throw ApiException::createFromStdClass($status);
-                    }
-               },
-               [$call, 'cancel']
-            );
-
-            return $promise;
-        };
-
-        return $handler();
-    }
-
-    /**
-     * @param string $method The method to start a call for.
-     * @param string $decodeTo The type to decode the response to.
-     * @param CallSettings $settings The call settings to use for this call.
-     * @param Message $message The message to deliver.
+     * @param string $streamingType
+     * @param string $resourcesGetMethod
      *
      * @return StreamingCallInterface
      * @todo interface for streaming calls?
+     * @todo pass along resourceGetMethod
      */
-    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null)
-    {
+    public function startStreamingCall(
+        Call $call,
+        CallSettings $callSettings,
+        $streamingType,
+        $resourcesGetMethod = null
+    ) {
         $this->validateStreamingApiCallSettings($callSettings);
-        $streamingMethod = null;
-        $streamingType = 'ClientStreaming'; // @todo source from call settings?
         list($metadata, $options) = $this->constructGrpcArgs([]); // @todo source from call settings?
 
         switch ($streamingType) {
             case 'ClientStreaming':
                 return new ClientStream(
-                    $this->_clientStreamRequest($method, $decodeTo, $metadata, $options)
+                    $this->_clientStreamRequest(
+                        $call->getMethod(),
+                        $call->getDecodeType(),
+                        $metadata,
+                        $options
+                    )
                 );
             case 'ServerStreaming':
+                $message = $call->getMessage();
+
                 if (!$message) {
                     throw new \Exception('$message is required for ServerStreaming calls.');
                 }
 
                 return new ServerStream(
-                    $this->_serverStreamRequest($method, $message, $decodeTo, $metadata, $options)
+                    $this->_serverStreamRequest(
+                        $call->getMethod(),
+                        $message,
+                        $call->getDecodeType(),
+                        $metadata,
+                        $options
+                    )
                 );
             case 'BidiStreaming':
                 return new BidiStream(
-                    $this->_bidiRequest($method, $decodeTo, $metadat, $options)
+                    $this->_bidiRequest(
+                        $call->getMethod(),
+                        $call->getDecodeType(),
+                        $metadata,
+                        $options
+                    )
                 );
             default:
-                throw new ValidationException('Unexpected gRPC streaming type: ' .
-                    $grpcStreamingDescriptor['grpcStreamingType']);
+                throw new ValidationException("Unexpected gRPC streaming type: $streamingType");
         }
+    }
+
+    private function getCallable(CallSettings $settings)
+    {
+        return $this->createCallStack(
+            function (Call $call, CallSettings $settings) {
+                $call = $this->_simpleRequest(
+                    '/' . $call->getMethod(),
+                    $call->getMessage(),
+                    [$call->getDecodeType(), 'decode'],
+                    $settings->getUserHeaders(),
+                    ['call_credentials_callback' => $this->credentialsCallback]
+                );
+
+                $promise = new Promise(
+                    function() use ($call, &$promise) {
+                        list($response, $status) = $call->wait();
+
+                        if ($status->code == Code::OK) {
+                            $promise->resolve($response);
+                        } else {
+                            throw ApiException::createFromStdClass($status);
+                        }
+                   },
+                   [$call, 'cancel']
+                );
+
+                return $promise;
+            },
+            $settings
+        );
     }
 
     private function validateStreamingApiCallSettings(CallSettings $settings)
@@ -209,18 +217,6 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                 'grpcStreamingDescriptor not compatible with retry settings'
             );
         }
-
-        //@todo move descriptors to call settings?
-        // if (array_key_exists('pageStreamingDescriptor', $options)) {
-        //     throw new ValidationException(
-        //         'grpcStreamingDescriptor not compatible with pageStreamingDescriptor'
-        //     );
-        // }
-        // if (array_key_exists('longRunningDescriptor', $options)) {
-        //     throw new ValidationException(
-        //         'grpcStreamingDescriptor not compatible with longRunningDescriptor'
-        //     );
-        // }
     }
 
     protected function constructGrpcArgs($optionalArgs = [])

@@ -32,30 +32,31 @@
 
 namespace Google\GAX;
 
-use Google\GAX\CallSettings;
-use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
 
 interface ApiTransportInterface
 {
     /**
-     * @param string $method The method to start a call for.
-     * @param Message $message The message to deliver.
-     * @param string $decodeTo The type to decode the response to.
+     * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
      *
      * @return PromiseInterface
      */
-    public function startCall($method, Message $message, $decodeTo, CallSettings $settings);
+    public function startCall(Call $call, CallSettings $settings);
 
     /**
-     * @param string $method The method to start a call for.
-     * @param string $decodeTo The type to decode the response to.
+     * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
-     * @param Message $message The message to deliver.
+     * @param string $streamingType
+     * @param string $resourcesGetMethod
      *
      * @return StreamingCallInterface
      * @todo interface for streaming calls?
      */
-    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null);
+    public function startStreamingCall(
+        Call $call,
+        CallSettings $callSettings,
+        $streamingType,
+        $resourcesGetMethod = null
+    );
 }

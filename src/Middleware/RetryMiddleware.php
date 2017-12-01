@@ -31,81 +31,106 @@
  */
 namespace Google\GAX\Middleware;
 
-use Google\GAX\RetrySettings;
+use Exception;
 use Google\GAX\ApiException;
 use Google\GAX\ApiStatus;
-use Exception;
+use Google\GAX\Call;
+use Google\GAX\CallSettings;
 
 /**
-* Middleware that adds retry functionality
-*/
+ * Middleware that adds retry functionality.
+ */
 class RetryMiddleware
 {
     /** @var callable */
     private $nextHandler;
 
-    /** @var RetrySettings */
-    private $retrySettings;
-
-    /** @var callable */
-    private $timeFuncMillis;
+    /** @var float|null */
+    private $deadlineMs;
 
     public function __construct(
         callable $nextHandler,
-        RetrySettings $retrySettings,
-        $timeFuncMillis = null
+        $deadlineMs = null
     ) {
         $this->nextHandler = $nextHandler;
-        $this->retrySettings = $retrySettings;
-        if (!isset($timeFuncMillis)) {
-            $timeFuncMillis = function () {
-                return microtime(true) * 1000.0;
-            };
-        }
-        $this->timeFuncMillis = $timeFuncMillis;
+        $this->deadlineMs = $deadlineMs;
     }
 
-    public function __invoke()
+    public function __invoke(Call $call, CallSettings $settings)
     {
-        // Initialize retry parameters
-        $delayMult = $this->retrySettings->getRetryDelayMultiplier();
-        $maxDelayMillis = $this->retrySettings->getMaxRetryDelayMillis();
-        $timeoutMult = $this->retrySettings->getRpcTimeoutMultiplier();
-        $maxTimeoutMillis = $this->retrySettings->getMaxRpcTimeoutMillis();
-        $totalTimeoutMillis = $this->retrySettings->getTotalTimeoutMillis();
+        $nextHandler = $this->nextHandler;
 
-        $delayMillis = $this->retrySettings->getInitialRetryDelayMillis();
-        $timeoutMillis = $this->retrySettings->getInitialRpcTimeoutMillis();
-        $currentTimeMillis = call_user_func($this->timeFuncMillis);
-        $deadlineMillis = $currentTimeMillis + $totalTimeoutMillis;
-
-        while ($currentTimeMillis < $deadlineMillis) {
-            $nextHandler = new TimeoutMiddleware($this->nextHandler, $timeoutMillis);
-            try {
-                return call_user_func_array($nextHandler, func_get_args());
-            } catch (ApiException $e) {
-                if (!in_array($e->getStatus(), $this->retrySettings->getRetryableCodes())) {
+        return $nextHandler($call, $settings)
+            ->then(null, function (\Exception $e) use ($call, $settings) {
+                if (!$e instanceof ApiException) {
                     throw $e;
                 }
-            } catch (Exception $e) {
-                throw $e;
-            }
-            // Don't sleep if the failure was a timeout
-            if ($e->getStatus() != ApiStatus::DEADLINE_EXCEEDED) {
-                usleep($delayMillis * 1000);
-            }
-            $currentTimeMillis = call_user_func($this->timeFuncMillis);
-            $delayMillis = min($delayMillis * $delayMult, $maxDelayMillis);
-            $timeoutMillis = min(
-                $timeoutMillis * $timeoutMult,
-                $maxTimeoutMillis,
-                $deadlineMillis - $currentTimeMillis
+
+                if (!in_array($e->getStatus(), $settings->getRetrySettings()->getRetryableCodes())) {
+                    throw $e;
+                }
+
+                return $this->retry($call, $settings, $e->getStatus());
+            });
+    }
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     *
+     * @return PromiseInterface
+     */
+    private function retry(Call $call, CallSettings $settings, $status)
+    {
+        $retrySettings = $settings->getRetrySettings();
+        $delayMult = $retrySettings->getRetryDelayMultiplier();
+        $maxDelayMs = $retrySettings->getMaxRetryDelayMillis();
+        $timeoutMult = $retrySettings->getRpcTimeoutMultiplier();
+        $maxTimeoutMs = $retrySettings->getMaxRpcTimeoutMillis();
+        $totalTimeoutMs = $retrySettings->getTotalTimeoutMillis();
+
+        $delayMs = $retrySettings->getInitialRetryDelayMillis();
+        $timeoutMs = $retrySettings->getInitialRpcTimeoutMillis();
+        $currentTimeMs = $this->getCurrentTimeMs();
+        $deadlineMs = $this->deadlineMs ?: $currentTimeMs + $totalTimeoutMs;
+
+        if ($currentTimeMs >= $deadlineMs) {
+            throw new ApiException(
+                'Retry total timeout exceeded.',
+                \Google\Rpc\Code::DEADLINE_EXCEEDED,
+                ApiStatus::DEADLINE_EXCEEDED
             );
         }
-        throw new ApiException(
-            "Retry total timeout exceeded.",
-            \Google\Rpc\Code::DEADLINE_EXCEEDED,
-            ApiStatus::DEADLINE_EXCEEDED
+
+        // Don't sleep if the failure was a timeout
+        if ($status != ApiStatus::DEADLINE_EXCEEDED) {
+            usleep($delayMs * 1000);
+        }
+        $delayMs = min($delayMs * $delayMult, $maxDelayMs);
+        $timeoutMs = min(
+            $timeoutMs * $timeoutMult,
+            $maxTimeoutMs,
+            $deadlineMs - $this->getCurrentTimeMs()
         );
+
+        $nextHandler = new RetryMiddleware(
+            $this->nextHandler,
+            $deadlineMs
+        );
+
+        return $nextHandler(
+            $call,
+            $settings->with([
+                'retrySettings' => $retrySettings->with([
+                    'initialRpcTimeoutMillis' => $timeoutMs,
+                    'initialRetryDelayMillis' => $delayMs
+                ])
+            ])
+        );
+    }
+
+    protected function getCurrentTimeMs()
+    {
+        return microtime(true) * 1000.0;
     }
 }
