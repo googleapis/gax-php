@@ -94,13 +94,24 @@ trait GapicClientTrait
         return self::$gapicVersion;
     }
 
-    private function configureOptions(array $options)
+    private function configureClient($serviceName, $descriptorsPath, array $options)
     {
-        return $options + [
+        $options += [
             'retryingOverride' => [],
             'libName' => null,
             'libVersion' => self::getGapicVersion()
         ];
+        $clientConfigJsonString = file_get_contents($options['clientConfigPath']);
+        $clientConfig = json_decode($clientConfigJsonString, true);
+        $this->defaultCallSettings = CallSettings::load(
+            $serviceName,
+            $clientConfig,
+            $options['retryingOverride']
+        );
+        $this->descriptors = require($descriptorsPath);
+        $this->transport = $this->getTransport($options);
+
+        return $options;
     }
 
     private function configureOperationsClient(array $options)
@@ -116,27 +127,16 @@ trait GapicClientTrait
         return new OperationsClient($operationsClientOptions);
     }
 
-    private function configureDefaultCallSettings($serviceName, $configPath, array $retryingOverride)
+    private function configureCallSettings($method, array $optionalArgs)
     {
-        $clientConfigJsonString = file_get_contents($configPath);
-        $clientConfig = json_decode($clientConfigJsonString, true);
+        $defaultCallSettings = $this->defaultCallSettings[$method];
+        if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
+            $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
+                $optionalArgs['retrySettings']
+            );
+        }
 
-        return CallSettings::load(
-            $serviceName,
-            $clientConfig,
-            $retryingOverride
-        );
-    }
-
-    private function configureCallSettings(array $defaultSettings, array $optionalArgs)
-    {
-        // $defaultCallSettings = $this->defaultCallSettings['recognize'];
-        // if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
-        //     $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
-        //         $optionalArgs['retrySettings']
-        //     );
-        // }
-        // $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
+        return $defaultCallSettings->merge(new CallSettings($optionalArgs));
     }
 
     /**

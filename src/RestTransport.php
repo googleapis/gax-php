@@ -34,12 +34,12 @@ namespace Google\GAX;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
 class RestTransport implements ApiTransportInterface
 {
     use ApiTransportTrait;
-    use CallStackTrait;
     use ValidationTrait;
 
     /**
@@ -85,45 +85,64 @@ class RestTransport implements ApiTransportInterface
     }
 
     /**
-     * @param string $method The method to start a call for.
-     * @param Message $message The message to deliver.
-     * @param string $decodeTo The type to decode the response to.
+     * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
-     *
-     * @return PromiseInterface
-     */
-    public function startCall($method, Message $message, $decodeTo, CallSettings $settings)
-    {
-        $request = $this->requestBuilder->build(
-            $method,
-            $message
-        )->withHeader(
-            'Authorization',
-            'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-        );
-
-        return $this->httpHandler->async($request)->then(
-            function (ResponseInterface $response) use ($decodeTo) {
-                return (new Serializer)
-                    ->decodeMessage(
-                        new $decodeTo,
-                        json_decode((string) $response->getBody(), true)
-                    );
-            }
-        );
-    }
-
-    /**
-     * @param string $method The method to start a call for.
-     * @param string $decodeTo The type to decode the response to.
-     * @param CallSettings $settings The call settings to use for this call.
-     * @param Message $message The message to deliver.
+     * @param string $streamingType
+     * @param string $resourcesGetMethod
      *
      * @return StreamingCallInterface
      * @todo interface for streaming calls?
      */
-    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null)
-    {
+    public function startStreamingCall(
+        Call $call,
+        CallSettings $callSettings,
+        $streamingType,
+        $resourcesGetMethod = null
+    ) {
         throw new \Exception('Not supported for REST.');
+    }
+
+    private function getCallable(CallSettings $settings)
+    {
+        return $this->createCallStack(
+            function (Call $call, CallSettings $settings) {
+                $httpHandler = $this->httpHandler;
+
+                return $httpHandler->async(
+                    $this->requestBuilder->build(
+                        $call->getMethod(),
+                        $call->getMessage(),
+                        $settings->getUserHeaders()
+                    ),
+                    $settings->getRestOptions() ?: []
+                )->then(
+                    function (ResponseInterface $response) use ($call) {
+                        $decodeType = $call->getDecodeType();
+
+                        return (new Serializer)
+                            ->decodeMessage(
+                                new $decodeType,
+                                json_decode((string) $response->getBody(), true)
+                            );
+                    }
+                )->then(null, function (\Exception $ex) {
+                    if ($ex instanceof RequestException && $ex->hasResponse()) {
+                        throw $this->convertToApiException($ex);
+                    }
+
+                    throw $ex;
+                });
+            },
+            $settings
+        );
+    }
+
+    private function convertToApiException(\Exception $ex)
+    {
+        $res = (string) $ex->getResponse()->getBody();
+        $rObj = (object) json_decode($res, true)['error'];
+        $rObj->details = $rObj->message;
+
+        return ApiException::createFromStdClass($rObj);
     }
 }

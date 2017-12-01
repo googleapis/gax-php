@@ -42,13 +42,15 @@ trait ApiTransportTrait
 {
     use ArrayTrait;
 
-    private $times = 0;
+    private $agentHeaderDescriptor;
+    private $credentialsLoader;
 
     private function setCommonDefaults(array $options)
     {
         $options += [
             'enableCaching' => true,
             'authCache' => new MemoryCacheItemPool(),
+            'authCacheOptions' => null,
             'authHttpHandler' => HttpHandlerFactory::build()
         ];
 
@@ -63,12 +65,75 @@ trait ApiTransportTrait
         if ($options['enableCaching']) {
             $options['credentialsLoader'] = new FetchAuthTokenCache(
                 $options['credentialsLoader'],
-                $this->pluck('authCacheOptions', $options, false),
+                $options['authCacheOptions'],
                 $options['authCache']
             );
         }
 
+        $this->agentHeaderDescriptor = new AgentHeaderDescriptor([
+            'libName' => $options['libName'],
+            'libVersion' => $options['libVersion'],
+            'gapicVersion' => $options['libVersion']
+        ]);
+
         return $options;
+    }
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     *
+     * @return PromiseInterface
+     */
+    public function startCall(Call $call, CallSettings $settings)
+    {
+        $callable = $this->getCallable($settings);
+        return $callable($call, $settings);
+    }
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param PageStreamingDescriptor $descriptor
+     *
+     * @return PromiseInterface
+     */
+    public function getPagedListResponse(Call $call, CallSettings $settings, PageStreamingDescriptor $descriptor)
+    {
+        return new PagedListResponse(
+            $call,
+            $settings,
+            $this->getCallable($settings),
+            $descriptor
+        );
+    }
+
+    /**
+     * @param callable $callable A callable to make the API call through.
+     * @param CallSettings $settings The call settings to use for this call.
+     *
+     * @return callable
+     */
+    private function createCallStack(
+        callable $callable,
+        CallSettings $settings
+    ) {
+        $retrySettings = $settings->getRetrySettings();
+        if ($retrySettings) {
+            if ($retrySettings->retriesEnabled()) {
+                $callable = new Middleware\RetryMiddleware($callable);
+            } elseif ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+                $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
+            }
+        }
+
+        $callable = new Middleware\HeaderMiddleware(
+            $callable,
+            $this->agentHeaderDescriptor,
+            $this->credentialsLoader // @todo middleware specifically for signing requests
+        );
+
+        return $callable;
     }
 
     /**

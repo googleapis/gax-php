@@ -31,7 +31,9 @@
  */
 namespace Google\GAX\Middleware;
 
+use Google\GAX\CallSettings;
 use Google\GAX\PagedListResponse;
+use Google\GAX\PageStreamingDescriptor;
 
 /**
 * Middleware that adds page streaming functionality
@@ -41,11 +43,13 @@ class PageStreamingMiddleware
     /** @var callable */
     private $nextHandler;
 
-    /** @var array */
+    /** @var PageStreamingDescriptor */
     private $pageStreamingDescriptor;
 
-    public function __construct(callable $nextHandler, $pageStreamingDescriptor)
-    {
+    public function __construct(
+        callable $nextHandler,
+        PageStreamingDescriptor $pageStreamingDescriptor
+    ) {
         $this->nextHandler = $nextHandler;
         $this->pageStreamingDescriptor = $pageStreamingDescriptor;
     }

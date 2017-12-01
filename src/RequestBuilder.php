@@ -43,25 +43,23 @@ class RequestBuilder
         $this->clientConfig = $this->loadClientConfig($clientConfigPath);
     }
 
-    public function build($path, Message $message)
+    public function build($path, Message $message, array $headers = [])
     {
         list($interface, $method) = explode('/', $path);
 
         if (isset($this->clientConfig['interfaces'][$interface]['methods'][$method])) {
+            $call = $this->clientConfig['interfaces'][$interface]['methods'][$method];
             $template = new PathTemplate(
-                $this->clientConfig['interfaces'][$interface]['methods'][$method]['uri']
+                $call['uri']
             );
 
+            $path = $template->render(['subscription' => $message->getSubscription()]);
             // @todo need to determine how to fetch the placeholder
             return new Request(
-                $this->clientConfig['interfaces'][$interface]['methods'][$method]['method'],
-                sprintf(
-                    'https://%s/%s',
-                    $this->baseUri,
-                    $template->render([])
-                ),
-                ['Content-Type' => 'application/json'],
-                $message->serializeToJsonString()
+                $call['method'],
+                "https://$this->baseUri/$path",
+                ['Content-Type' => 'application/json'] + $headers,
+                isset($call['body']) ? $message->serializeToJsonString() : null
             );
         }
 

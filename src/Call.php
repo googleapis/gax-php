@@ -30,43 +30,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\Middleware;
+namespace Google\GAX;
 
-use Google\GAX\CallSettings;
-use InvalidArgumentException;
+use Google\Protobuf\Internal\Message;
 
-/**
-* Middleware for adding timeouts
-*/
-class TimeoutMiddleware
+class Call
 {
-    const TRANSPORT_METHOD_PARAM_COUNT = 2;
-    const TRANSPORT_METHOD_OPTIONS_INDEX = 1;
+    private $method;
+    private $decodeType;
+    private $message;
 
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var int */
-    private $timeoutMillis;
-
-    public function __construct(callable $nextHandler, $timeoutMillis)
+    public function __construct($method, $decodeType, Message $message = null)
     {
-        $this->nextHandler = $nextHandler;
-        $this->timeoutMillis = $timeoutMillis;
+        $this->method = $method;
+        $this->decodeType = $decodeType;
+        $this->message = $message;
     }
 
-    public function __invoke(CallSettings $settings)
+    public function getMessage()
     {
-        var_dump('timeout');
-        return call_user_func_array($this->nextHandler, [$settings]);
-        // $params = func_get_args();
-        // if (count($params) != self::TRANSPORT_METHOD_PARAM_COUNT ||
-        //     !is_array($params[self::TRANSPORT_METHOD_OPTIONS_INDEX])
-        // ) {
-        //     throw new InvalidArgumentException('Invalid parameter count or options argument not found.');
-        // } else {
-        //     $params[self::TRANSPORT_METHOD_OPTIONS_INDEX]['timeoutMillis'] = $this->timeoutMillis;
-        // }
-        // return call_user_func_array($this->nextHandler, $params);
+        return $this->message;
+    }
+
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    public function getDecodeType()
+    {
+        return $this->decodeType;
+    }
+
+    public function setMessage(Message $message)
+    {
+        $this->message = $message;
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    public function setDecodeType($decodeType)
+    {
+        $this->decodeType = $decodeType;
     }
 }
