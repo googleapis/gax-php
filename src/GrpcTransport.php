@@ -204,15 +204,7 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             return $promise;
         };
 
-        return $this->agentHeaderMiddleware(
-            $this->retryMiddleware(
-                $this->timeoutMiddleware(
-                    $callable,
-                    $settings
-                ),
-                $settings
-            )
-        );
+        return $this->createCallStack($callable, $settings);
     }
 
     private function validateStreamingApiCallSettings(CallSettings $settings)
