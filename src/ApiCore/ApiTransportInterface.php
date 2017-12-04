@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,36 +30,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\UnitTests\Mocks;
+namespace Google\ApiCore;
 
-class MockRequest
+use GuzzleHttp\Promise\PromiseInterface;
+
+interface ApiTransportInterface
 {
-    private $pageToken;
-    private $pageSize;
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     *
+     * @return PromiseInterface
+     */
+    public function startCall(Call $call, CallSettings $settings);
 
-    public function __construct($pageToken, $pageSize = null)
-    {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
-    }
-
-    public function getPageToken()
-    {
-        return $this->pageToken;
-    }
-
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
-    }
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param string $streamingType
+     * @param string $resourcesGetMethod
+     *
+     * @return StreamingCallInterface
+     * @todo interface for streaming calls?
+     */
+    public function startStreamingCall(
+        Call $call,
+        CallSettings $callSettings,
+        $streamingType,
+        $resourcesGetMethod = null
+    );
 }

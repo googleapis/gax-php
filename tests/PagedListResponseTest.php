@@ -29,37 +29,37 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\ApiCore\UnitTests;
 
-namespace Google\ApiCore\UnitTests\Mocks;
+use Google\ApiCore\PagedListResponse;
+use Google\ApiCore\PageStreamingDescriptor;
+use Google\ApiCore\UnitTests\Mocks\MockRequest;
+use Google\ApiCore\UnitTests\Mocks\MockResponse;
+use PHPUnit\Framework\TestCase;
 
-class MockRequest
+class PagedListResponseTest extends TestCase
 {
-    private $pageToken;
-    private $pageSize;
+    use TestTrait;
 
-    public function __construct($pageToken, $pageSize = null)
+    public function testNextPageToken()
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
-    }
+        $mockRequest = $this->createMockRequest('mockToken');
 
-    public function getPageToken()
-    {
-        return $this->pageToken;
-    }
+        $mockResponse = $this->createMockResponse('nextPageToken1', ['resource1']);
 
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
+        $descriptor = PageStreamingDescriptor::createFromFields([
+            'requestPageTokenField' => 'pageToken',
+            'responsePageTokenField' => 'nextPageToken',
+            'resourceField' => 'resourcesList'
+        ]);
 
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
+        $mockApiCall = function () use ($mockResponse) {
+            return $mockResponse;
+        };
 
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        $pageAccessor = new PagedListResponse([$mockRequest, [], []], $mockApiCall, $descriptor);
+        $page = $pageAccessor->getPage();
+        $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
+        $this->assertEquals(iterator_to_array($page->getIterator()), ['resource1']);
     }
 }

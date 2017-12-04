@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\GAX\ApiException;
-use Google\GAX\Testing\ReceivedRequest;
+use Google\ApiCore\ApiException;
+use Google\ApiCore\Testing\ReceivedRequest;
 use UnderflowException;
 
 /**
