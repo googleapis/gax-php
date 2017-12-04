@@ -33,6 +33,7 @@ namespace Google\ApiCore;
 
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\ApiCore\Middleware\AuthHeaderMiddleware;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -41,6 +42,10 @@ class RestTransport implements ApiTransportInterface
 {
     use ApiTransportTrait;
     use ValidationTrait;
+
+    private $credentialsLoader;
+    private $httpHandler;
+    private $requestBuilder;
 
     /**
      * @param string $host The domain name and port of the API remote host.
@@ -91,15 +96,16 @@ class RestTransport implements ApiTransportInterface
      * @param string $resourcesGetMethod
      *
      * @return StreamingCallInterface
+     * @throws \BadMethodCallException
      * @todo interface for streaming calls?
      */
     public function startStreamingCall(
         Call $call,
-        CallSettings $callSettings,
+        CallSettings $settings,
         $streamingType,
         $resourcesGetMethod = null
     ) {
-        throw new \Exception('Not supported for REST.');
+        throw new \BadMethodCallException('Not supported for REST.');
     }
 
     private function getCallable(CallSettings $settings)
@@ -113,7 +119,7 @@ class RestTransport implements ApiTransportInterface
                     $call->getMessage(),
                     $settings->getUserHeaders()
                 ),
-                $settings->getRestOptions() ?: []
+                $this->getOptions($settings)
             )->then(
                 function (ResponseInterface $response) use ($call) {
                     $decodeType = $call->getDecodeType();
@@ -123,14 +129,15 @@ class RestTransport implements ApiTransportInterface
                             new $decodeType,
                             json_decode((string) $response->getBody(), true)
                         );
-                }
-            )->then(null, function (\Exception $ex) {
-                if ($ex instanceof RequestException && $ex->hasResponse()) {
-                    throw $this->convertToApiException($ex);
-                }
+                },
+                function (\Exception $ex) {
+                    if ($ex instanceof RequestException && $ex->hasResponse()) {
+                        throw $this->convertToApiException($ex);
+                    }
 
-                throw $ex;
-            });
+                    throw $ex;
+                }
+            );
         };
 
         return new AuthHeaderMiddleware(
@@ -139,12 +146,24 @@ class RestTransport implements ApiTransportInterface
         );
     }
 
+    private function getOptions(CallSettings $settings)
+    {
+        $options = $settings->getRestOptions() ?: [];
+        $retrySettings = $settings->getRetrySettings();
+
+        if ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+            $options['timeout'] = $retrySettings->getNoRetriesRpcTimeoutMillis() / 1000;
+        }
+
+        return $options;
+    }
+
     private function convertToApiException(\Exception $ex)
     {
         $res = (string) $ex->getResponse()->getBody();
         $rObj = (object) json_decode($res, true)['error'];
         // Overwrite the HTTP Status Code with the RPC code, derived from the "status" field.
-        $rOjb->code = ApiStatus::rpcCodeFromStatus($rObj->status);
+        $rObj->code = ApiStatus::rpcCodeFromStatus($rObj->status);
         $rObj->details = $rObj->message;
 
         return ApiException::createFromStdClass($rObj);

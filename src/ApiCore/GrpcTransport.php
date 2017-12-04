@@ -130,12 +130,11 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
      */
     public function startStreamingCall(
         Call $call,
-        CallSettings $callSettings,
+        CallSettings $settings,
         $streamingType,
         $resourcesGetMethod = null
     ) {
-        $this->validateStreamingApiCallSettings($callSettings);
-        list($metadata, $options) = $this->constructGrpcArgs([]); // @todo source from call settings?
+        $this->validateStreamingApiCallSettings($settings);
 
         switch ($streamingType) {
             case 'ClientStreaming':
@@ -143,8 +142,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     $this->_clientStreamRequest(
                         $call->getMethod(),
                         $call->getDecodeType(),
-                        $metadata,
-                        $options
+                        $settings->getUserHeaders() ?: [],
+                        $this->getOptions($settings)
                     )
                 );
             case 'ServerStreaming':
@@ -159,8 +158,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                         $call->getMethod(),
                         $message,
                         $call->getDecodeType(),
-                        $metadata,
-                        $options
+                        $settings->getUserHeaders() ?: [],
+                        $this->getOptions($settings)
                     )
                 );
             case 'BidiStreaming':
@@ -168,13 +167,26 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     $this->_bidiRequest(
                         $call->getMethod(),
                         $call->getDecodeType(),
-                        $metadata,
-                        $options
+                        $settings->getUserHeaders() ?: [],
+                        $this->getOptions($settings)
                     )
                 );
             default:
                 throw new ValidationException("Unexpected gRPC streaming type: $streamingType");
         }
+    }
+
+    private function getOptions(CallSettings $settings)
+    {
+        $retrySettings = $settings->getRetrySettings();
+        $options = $settings->getGrpcOptions() ?: []
+            + ['call_credentials_callback' => $this->credentialsCallback];
+
+        if ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+            $options['timeout'] = $retrySettings->getNoRetriesRpcTimeoutMillis() * 1000;
+        }
+
+        return $options;
     }
 
     private function getCallable(CallSettings $settings)
@@ -184,8 +196,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                 '/' . $call->getMethod(),
                 $call->getMessage(),
                 [$call->getDecodeType(), 'decode'],
-                $settings->getUserHeaders(),
-                ['call_credentials_callback' => $this->credentialsCallback]
+                $settings->getUserHeaders() ?: [],
+                $this->getOptions($settings)
             );
 
             $promise = new Promise(
@@ -216,30 +228,6 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                 'grpcStreamingDescriptor not compatible with retry settings'
             );
         }
-    }
-
-    protected function constructGrpcArgs($optionalArgs = [])
-    {
-        $metadata = [];
-        $options = [];
-        if (array_key_exists('timeoutMillis', $optionalArgs)) {
-            $options['timeout'] = $optionalArgs['timeoutMillis'] * 1000;
-        }
-        if (array_key_exists('headers', $optionalArgs)) {
-            $metadata = $optionalArgs['headers'];
-        }
-        if (array_key_exists('credentialsLoader', $optionalArgs)) {
-            $credentialsLoader = $optionalArgs['credentialsLoader'];
-            $callback = function () use ($credentialsLoader) {
-                $token = $credentialsLoader->fetchAuthToken();
-                return ['authorization' => ['Bearer ' . $token['access_token']]];
-            };
-            $options['call_credentials_callback'] = $callback;
-        }
-        if (empty($options['call_credentials_callback'])) {
-            $options['call_credentials_callback'] = $this->credentialsCallback;
-        }
-        return [$metadata, $options];
     }
 
     /**

@@ -43,7 +43,6 @@ trait ApiTransportTrait
     use ArrayTrait;
 
     private $agentHeaderDescriptor;
-    private $credentialsLoader;
 
     private function setCommonDefaults(array $options)
     {
@@ -121,12 +120,8 @@ trait ApiTransportTrait
         $callable = new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
 
         $retrySettings = $settings->getRetrySettings();
-        if ($retrySettings) {
-            if ($retrySettings->retriesEnabled()) {
-                $callable = new Middleware\RetryMiddleware($callable);
-            } else if ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
-            }
+        if ($retrySettings && $retrySettings->retriesEnabled()) {
+            $callable = new Middleware\RetryMiddleware($callable);
         }
 
         return $callable;

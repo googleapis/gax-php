@@ -19,8 +19,6 @@ namespace Google\ApiCore;
 
 use Exception;
 use InvalidArgumentException;
-use Google\ApiCore\AgentHeaderDescriptor;
-use Google\ApiCore\GrpcTransport;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\Cloud\Version;
 
@@ -129,6 +127,13 @@ trait GapicClientTrait
 
     private function configureCallSettings($method, array $optionalArgs)
     {
+        if (array_key_exists('timeoutMillis', $optionalArgs)) {
+            $optionalArgs['retrySettings'] = [
+                'retriesEnabled' => false,
+                'noRetriesRpcTimeoutMillis' => $optionalArgs['timeoutMillis'],
+            ];
+        }
+
         $defaultCallSettings = $this->defaultCallSettings[$method];
         if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
             $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
