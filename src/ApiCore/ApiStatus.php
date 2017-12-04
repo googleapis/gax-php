@@ -121,8 +121,8 @@ class ApiStatus
      */
     public static function rpcCodeFromStatus($status)
     {
-        if (array_key_exists($status, self::$apiStatustoCodeMap)) {
-            return self::$apiStatustoCodeMap[$status];
+        if (array_key_exists($status, self::$apiStatusToCodeMap)) {
+            return self::$apiStatusToCodeMap[$status];
         }
         return Code::UNKNOWN;
     }

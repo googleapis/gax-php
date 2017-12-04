@@ -77,6 +77,7 @@ class RetryMiddleware
     /**
      * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
+     * @param string $status
      *
      * @return PromiseInterface
      */

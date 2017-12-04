@@ -59,7 +59,7 @@ class AgentHeaderMiddleware
     {
         $next = $this->nextHandler;
         $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders();
+        $userHeaders = $settings->getUserHeaders() ?: [];
 
         return $next(
             $call,
