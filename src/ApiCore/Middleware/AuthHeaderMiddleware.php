@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,37 +29,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\ApiCore\Middleware;
 
-namespace Google\ApiCore\UnitTests\Mocks;
+use Google\Auth\FetchAuthTokenInterface;
+use Google\ApiCore\Call;
+use Google\ApiCore\CallSettings;
+use InvalidArgumentException;
 
-class MockRequest
+/**
+* Middleware which adds an Authorization header to the request.
+*/
+class AuthHeaderMiddleware
 {
-    private $pageToken;
-    private $pageSize;
+    /** @var callable */
+    private $nextHandler;
 
-    public function __construct($pageToken, $pageSize = null)
-    {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
+    /** @var FetchAuthTokenInterface */
+    private $credentialsLoader;
+
+    public function __construct(
+        callable $nextHandler,
+        FetchAuthTokenInterface $credentialsLoader
+    ) {
+        $this->nextHandler = $nextHandler;
+        $this->credentialsLoader = $credentialsLoader;
     }
 
-    public function getPageToken()
+    public function __invoke(Call $call, CallSettings $settings)
     {
-        return $this->pageToken;
-    }
+        $next = $this->nextHandler;
+        $headers = $settings->getUserHeaders();
+        $headers = $this->headerDescriptor->getHeader() + [
+            'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
+        ];
 
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        return $next(
+            $call,
+            $settings->with([
+                'userHeaders' => $headers
+            ])
+        );
     }
 }

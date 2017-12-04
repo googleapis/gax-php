@@ -32,34 +32,18 @@
 
 namespace Google\ApiCore\UnitTests\Mocks;
 
-class MockRequest
+use Google\Rpc\Code;
+
+class MockStatus
 {
-    private $pageToken;
-    private $pageSize;
-
-    public function __construct($pageToken, $pageSize = null)
+    /** @var Code $code */
+    public $code;
+    public $details;
+    public $metadata;
+    public function __construct($code, $details = null, $metadata = null)
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
-    }
-
-    public function getPageToken()
-    {
-        return $this->pageToken;
-    }
-
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        $this->code = $code;
+        $this->details = $details;
+        $this->metadata = $metadata;
     }
 }

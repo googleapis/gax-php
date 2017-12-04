@@ -29,37 +29,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\ApiCore\UnitTests;
 
-namespace Google\ApiCore\UnitTests\Mocks;
+use Google\ApiCore\PageStreamingDescriptor;
+use PHPUnit\Framework\TestCase;
 
-class MockRequest
+class PageStreamingDescriptorTest extends TestCase
 {
-    private $pageToken;
-    private $pageSize;
-
-    public function __construct($pageToken, $pageSize = null)
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMissingFields()
     {
-        $this->pageToken = $pageToken;
-        $this->pageSize = $pageSize;
-    }
-
-    public function getPageToken()
-    {
-        return $this->pageToken;
-    }
-
-    public function getPageSize()
-    {
-        return $this->pageSize;
-    }
-
-    public function setPageSize($pageSize)
-    {
-        $this->pageSize = $pageSize;
-    }
-
-    public function setPageToken($pageToken)
-    {
-        $this->pageToken = $pageToken;
+        $descriptor = new PageStreamingDescriptor([
+            'requestPageTokenField' => 'getNextPageToken',
+            // Missing field
+            // 'responsePageTokenField' => 'getNextPageToken',
+            'resourceField' => 'getResourcesList'
+        ]);
     }
 }

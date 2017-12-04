@@ -29,66 +29,85 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace Google\ApiCore;
 
-use Google\Rpc\Code;
-
 /**
- * ServerStream is the response object from a gRPC server streaming API call.
+ * Provides basic array helper methods.
  */
-class ServerStream
+trait ArrayTrait
 {
-    private $call;
-    private $resourcesGetMethod;
-
     /**
-     * ServerStream constructor.
+     * Pluck a value out of an array.
      *
-     * @param \Grpc\ServerStreamingCall $serverStreamingCall The gRPC server streaming call object
-     * @param array $grpcStreamingDescriptor
+     * @param string $key
+     * @param array $arr
+     * @param bool $isRequired
+     * @return string|null
+     * @throws \InvalidArgumentException
      */
-    public function __construct($serverStreamingCall, array $grpcStreamingDescriptor = [])
+    private function pluck($key, array &$arr, $isRequired = true)
     {
-        $this->call = $serverStreamingCall;
-        if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
-            $this->resourcesGetMethod = $grpcStreamingDescriptor['resourcesGetMethod'];
+        if (!array_key_exists($key, $arr)) {
+            if ($isRequired) {
+                throw new \InvalidArgumentException(
+                    "Key $key does not exist in the provided array."
+                );
+            }
+
+            return null;
         }
+
+        $value = $arr[$key];
+        unset($arr[$key]);
+        return $value;
     }
 
     /**
-     * A generator which yields results from the server until the streaming call
-     * completes. Throws an ApiException if the streaming call failed.
+     * Pluck a subset of an array.
      *
-     * @throws ApiException
-     * @return \Generator|mixed
+     * @param string $keys
+     * @param array $arr
+     * @return array
      */
-    public function readAll()
+    private function pluckArray(array $keys, &$arr)
     {
-        $resourcesGetMethod = $this->resourcesGetMethod;
-        if (!is_null($resourcesGetMethod)) {
-            foreach ($this->call->responses() as $response) {
-                foreach ($response->$resourcesGetMethod() as $resource) {
-                    yield $resource;
-                }
-            }
-        } else {
-            foreach ($this->call->responses() as $response) {
-                yield $response;
+        $values = [];
+
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $arr)) {
+                $values[$key] = $this->pluck($key, $arr, false);
             }
         }
-        $status = $this->call->getStatus();
-        if (!($status->code == Code::OK)) {
-            throw ApiException::createFromStdClass($status);
-        }
+
+        return $values;
     }
 
     /**
-     * Return the underlying gRPC call object
+     * Determine whether given array is associative.
      *
-     * @return \Grpc\ServerStreamingCall|mixed
+     * @param array $arr
+     * @return bool
      */
-    public function getServerStreamingCall()
+    private function isAssoc(array $arr)
     {
-        return $this->call;
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
+
+    /**
+     * Just like array_filter(), but preserves falsey values except null.
+     *
+     * @param array $arr
+     * @return array
+     */
+    private function arrayFilterRemoveNull(array $arr)
+    {
+        return array_filter($arr, function ($element) {
+            if (!is_null($element)) {
+                return true;
+            }
+
+            return false;
+        });
     }
 }

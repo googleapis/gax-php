@@ -30,14 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Mocks;
+namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\GAX\ApiTransportInterface;
-use Google\GAX\CallSettings;
-use Google\GAX\CallStackTrait;
-use Google\GAX\BidiStream;
-use Google\GAX\ClientStream;
-use Google\GAX\ServerStream;
+use Google\ApiCore\ApiTransportInterface;
+use Google\ApiCore\CallSettings;
+use Google\ApiCore\CallStackTrait;
+use Google\ApiCore\BidiStream;
+use Google\ApiCore\ClientStream;
+use Google\ApiCore\ServerStream;
 use Google\Protobuf\Internal\Message;
 
 class MockStreamingTransport implements ApiTransportInterface
