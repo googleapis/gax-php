@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,46 +29,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
+namespace Google\ApiCore\Tests\Mocks;
 
-/**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+use Google\Rpc\Code;
+
+class MockStatus
 {
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
-    }
-
-    public function __invoke(Call $call, CallSettings $settings)
+    /** @var Code $code */
+    public $code;
+    public $details;
+    public $metadata;
+    public function __construct($code, $details = null, $metadata = null)
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
-
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+        $this->code = $code;
+        $this->details = $details;
+        $this->metadata = $metadata;
     }
 }

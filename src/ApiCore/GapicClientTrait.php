@@ -19,8 +19,6 @@ namespace Google\ApiCore;
 
 use Exception;
 use InvalidArgumentException;
-use Google\ApiCore\AgentHeaderDescriptor;
-use Google\ApiCore\GrpcTransport;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\Cloud\Version;
 

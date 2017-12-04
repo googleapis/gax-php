@@ -29,46 +29,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
+namespace Google\ApiCore\Tests\Mocks;
+
+use Google\ApiCore\ValidationException;
+use Google\Rpc\Code;
+use stdClass;
 
 /**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+ * Class MockDeadlineExceededUnaryCall simulates a unary call returning DEADLINE_EXCEEDED.
+ *
+ * If $timeoutMicros is set, the call to wait() will sleep before returning.
+ */
+class MockDeadlineExceededUnaryCall
 {
-    /** @var callable */
-    private $nextHandler;
+    private $timeoutMicros;
 
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
+    public function __construct($timeoutMicros = null)
+    {
+        $this->timeoutMicros = $timeoutMicros;
     }
 
-    public function __invoke(Call $call, CallSettings $settings)
+    /**
+     * Wait for $timeoutMicros, then return DEADLINE_EXCEEDED
+     * @return array The null response object and DEADLINE_EXCEEDED status.
+     */
+    public function wait()
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
+        if ($this->timeoutMicros) {
+            usleep($this->timeoutMicros);
+        }
+        $status = new stdClass;
+        $status->code = Code::DEADLINE_EXCEEDED;
+        $status->details = 'Deadline Exceeded';
+        return [null, $status];
+    }
 
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+    public function cancel()
+    {
     }
 }

@@ -60,8 +60,27 @@ class RetryMiddleware
     {
         $nextHandler = $this->nextHandler;
 
-        return $nextHandler($call, $settings)
-            ->then(null, function (\Exception $e) use ($call, $settings) {
+        $retrySettings = $settings->getRetrySettings();
+
+        // Call and return the handler immediately if retry settings are disabled.
+        if (!$retrySettings->retriesEnabled()) {
+            // If no timeout has been explicitly set, use "noRetriesRpcTimeoutMillis" as the timeout.
+            if (!$settings->getTimeoutMillis() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+                $settings = $settings->with([
+                    'timeoutMillis' => $retrySettings->getNoRetriesRpcTimeoutMillis()
+                ]);
+            }
+            return $nextHandler($call, $settings);
+        }
+
+        // If no timeout has been explicitly set, use "initialRpcTimeoutMillis" as the timeout.
+        if (!$settings->getTimeoutMillis() && $retrySettings->getInitialRpcTimeoutMillis() > 0) {
+            $settings = $settings->with([
+                'timeoutMillis' => $retrySettings->getInitialRpcTimeoutMillis()
+            ]);
+        }
+
+        return $nextHandler($call, $settings)->then(null, function (Exception $e) use ($call, $settings) {
                 if (!$e instanceof ApiException) {
                     throw $e;
                 }
@@ -77,6 +96,7 @@ class RetryMiddleware
     /**
      * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
+     * @param string $status
      *
      * @return PromiseInterface
      */
@@ -90,7 +110,7 @@ class RetryMiddleware
         $totalTimeoutMs = $retrySettings->getTotalTimeoutMillis();
 
         $delayMs = $retrySettings->getInitialRetryDelayMillis();
-        $timeoutMs = $retrySettings->getInitialRpcTimeoutMillis();
+        $timeoutMs = $settings->getTimeoutMillis();
         $currentTimeMs = $this->getCurrentTimeMs();
         $deadlineMs = $this->deadlineMs ?: $currentTimeMs + $totalTimeoutMs;
 
@@ -121,9 +141,10 @@ class RetryMiddleware
         return $nextHandler(
             $call,
             $settings->with([
+                'timeoutMillis' => $timeoutMs,
                 'retrySettings' => $retrySettings->with([
+                    'initialRetryDelayMillis' => $delayMs,
                     'initialRpcTimeoutMillis' => $timeoutMs,
-                    'initialRetryDelayMillis' => $delayMs
                 ])
             ])
         );

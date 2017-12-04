@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,46 +29,39 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
+namespace Google\ApiCore\Tests\Mocks;
 
-/**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+use Google\Protobuf\Internal\Message;
+
+class MockRequest extends Message
 {
-    /** @var callable */
-    private $nextHandler;
+    private $pageToken;
+    private $pageSize;
 
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
+    public function __construct($pageToken, $pageSize = null)
+    {
+        $this->pageToken = $pageToken;
+        $this->pageSize = $pageSize;
     }
 
-    public function __invoke(Call $call, CallSettings $settings)
+    public function getPageToken()
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
+        return $this->pageToken;
+    }
 
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+    public function getPageSize()
+    {
+        return $this->pageSize;
+    }
+
+    public function setPageSize($pageSize)
+    {
+        $this->pageSize = $pageSize;
+    }
+
+    public function setPageToken($pageToken)
+    {
+        $this->pageToken = $pageToken;
     }
 }

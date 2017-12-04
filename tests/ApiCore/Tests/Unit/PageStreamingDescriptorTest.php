@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,46 +29,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
+namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
+use Google\ApiCore\PageStreamingDescriptor;
+use Google\Rpc\Code;
+use PHPUnit\Framework\TestCase;
 
-/**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+class ApiTest extends TestCase
 {
-    /** @var callable */
-    private $nextHandler;
+    use TestTrait;
 
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
-    }
-
-    public function __invoke(Call $call, CallSettings $settings)
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMissingFields()
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
-
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+        $descriptor = new PageStreamingDescriptor([
+            'requestPageTokenField' => 'getNextPageToken',
+            // Missing field
+            // 'responsePageTokenField' => 'getNextPageToken',
+            'resourceField' => 'getResourcesList'
+        ]);
     }
 }

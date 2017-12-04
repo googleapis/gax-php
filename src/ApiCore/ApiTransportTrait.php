@@ -41,16 +41,20 @@ use Google\Auth\HttpHandler\HttpHandlerFactory;
 trait ApiTransportTrait
 {
     use ArrayTrait;
+    use ValidationTrait;
 
     private $agentHeaderDescriptor;
-    private $credentialsLoader;
 
     private function setCommonDefaults(array $options)
     {
         $options += [
             'enableCaching' => true,
             'authCache' => new MemoryCacheItemPool(),
-            'authHttpHandler' => HttpHandlerFactory::build()
+            'authCacheOptions' => null,
+            'authHttpHandler' => HttpHandlerFactory::build(),
+            'libName' => null,
+            'libVersion' => null,
+            'gapicVersion' => null,
         ];
 
         if (empty($options['credentialsLoader'])) {
@@ -117,16 +121,11 @@ trait ApiTransportTrait
         callable $callable,
         CallSettings $settings
     ) {
-        $callable = new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-
-        $retrySettings = $settings->getRetrySettings();
-        if ($retrySettings) {
-            if ($retrySettings->retriesEnabled()) {
-                $callable = new Middleware\RetryMiddleware($callable);
-            } else if ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $callable = new Middleware\TimeoutMiddleware($callable, $retrySettings->getNoRetriesRpcTimeoutMillis());
-            }
+        if ($this->agentHeaderDescriptor) {
+            $callable = new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
         }
+
+        $callable = new Middleware\RetryMiddleware($callable);
 
         return $callable;
     }

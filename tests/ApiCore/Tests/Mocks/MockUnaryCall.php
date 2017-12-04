@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,46 +29,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
+namespace Google\ApiCore\Tests\Mocks;
+
+use Google\Rpc\Code;
 
 /**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+ * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
+ *
+ * The MockUnaryCall object is constructed with a response object, an optional deserialize
+ * method, and an optional status. The response object and status are returned immediately from the
+ * wait() method.
+ */
+class MockUnaryCall extends \Grpc\UnaryCall
 {
-    /** @var callable */
-    private $nextHandler;
+    use SerializationTrait;
 
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
+    private $response;
+    private $status;
 
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
+    /**
+     * MockUnaryCall constructor.
+     * @param \Google\Protobuf\Internal\Message $response The response object.
+     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
+     */
+    public function __construct($response, $deserialize = null, $status = null)
+    {
+        $this->response = $response;
+        $this->deserialize = $deserialize;
+        if (is_null($status)) {
+            $status = new MockStatus(Code::OK);
+        }
+        $this->status = $status;
     }
 
-    public function __invoke(Call $call, CallSettings $settings)
+    /**
+     * Immediately return the preset response object and status.
+     * @return array The response object and status.
+     */
+    public function wait()
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
-
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+        return [
+            $this->deserializeMessage($this->response, $this->deserialize),
+            $this->status,
+        ];
     }
 }

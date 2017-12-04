@@ -45,7 +45,6 @@ use GuzzleHttp\Promise\PromiseInterface;
 class GrpcTransport extends BaseStub implements ApiTransportInterface
 {
     use ApiTransportTrait;
-    use ValidationTrait;
 
     private $credentialsCallback;
 
@@ -130,12 +129,11 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
      */
     public function startStreamingCall(
         Call $call,
-        CallSettings $callSettings,
+        CallSettings $settings,
         $streamingType,
         $resourcesGetMethod = null
     ) {
-        $this->validateStreamingApiCallSettings($callSettings);
-        list($metadata, $options) = $this->constructGrpcArgs([]); // @todo source from call settings?
+        $this->validateStreamingApiCallSettings($settings);
 
         switch ($streamingType) {
             case 'ClientStreaming':
@@ -143,8 +141,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     $this->_clientStreamRequest(
                         $call->getMethod(),
                         $call->getDecodeType(),
-                        $metadata,
-                        $options
+                        $settings->getUserHeaders() ?: [],
+                        $this->getOptions($settings)
                     )
                 );
             case 'ServerStreaming':
@@ -159,22 +157,37 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                         $call->getMethod(),
                         $message,
                         $call->getDecodeType(),
-                        $metadata,
-                        $options
-                    )
+                        $settings->getUserHeaders() ?: [],
+                        $this->getOptions($settings)
+                    ),
+                    ['resourcesGetMethod' => $resourcesGetMethod]
                 );
             case 'BidiStreaming':
                 return new BidiStream(
                     $this->_bidiRequest(
                         $call->getMethod(),
                         $call->getDecodeType(),
-                        $metadata,
-                        $options
-                    )
+                        $settings->getUserHeaders() ?: [],
+                        $this->getOptions($settings)
+                    ),
+                    ['resourcesGetMethod' => $resourcesGetMethod]
                 );
             default:
                 throw new ValidationException("Unexpected gRPC streaming type: $streamingType");
         }
+    }
+
+    private function getOptions(CallSettings $settings)
+    {
+        $transportOptions = $settings->getTransportOptions();
+        $options = isset($transportOptions['grpc']) ? $transportOptions['grpc'] : [];
+        $options += ['call_credentials_callback' => $this->credentialsCallback];
+
+        if ($timeout = $settings->getTimeoutMillis()) {
+            $options['timeout'] = $timeout * 1000;
+        }
+
+        return $options;
     }
 
     private function getCallable(CallSettings $settings)
@@ -184,12 +197,12 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                 '/' . $call->getMethod(),
                 $call->getMessage(),
                 [$call->getDecodeType(), 'decode'],
-                $settings->getUserHeaders(),
-                ['call_credentials_callback' => $this->credentialsCallback]
+                $settings->getUserHeaders() ?: [],
+                $this->getOptions($settings)
             );
 
             $promise = new Promise(
-                function() use ($call, &$promise) {
+                function () use ($call, &$promise) {
                     list($response, $status) = $call->wait();
 
                     if ($status->code == Code::OK) {
@@ -197,8 +210,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     } else {
                         throw ApiException::createFromStdClass($status);
                     }
-               },
-               [$call, 'cancel']
+                },
+                [$call, 'cancel']
             );
 
             return $promise;
@@ -216,30 +229,6 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                 'grpcStreamingDescriptor not compatible with retry settings'
             );
         }
-    }
-
-    protected function constructGrpcArgs($optionalArgs = [])
-    {
-        $metadata = [];
-        $options = [];
-        if (array_key_exists('timeoutMillis', $optionalArgs)) {
-            $options['timeout'] = $optionalArgs['timeoutMillis'] * 1000;
-        }
-        if (array_key_exists('headers', $optionalArgs)) {
-            $metadata = $optionalArgs['headers'];
-        }
-        if (array_key_exists('credentialsLoader', $optionalArgs)) {
-            $credentialsLoader = $optionalArgs['credentialsLoader'];
-            $callback = function () use ($credentialsLoader) {
-                $token = $credentialsLoader->fetchAuthToken();
-                return ['authorization' => ['Bearer ' . $token['access_token']]];
-            };
-            $options['call_credentials_callback'] = $callback;
-        }
-        if (empty($options['call_credentials_callback'])) {
-            $options['call_credentials_callback'] = $this->credentialsCallback;
-        }
-        return [$metadata, $options];
     }
 
     /**

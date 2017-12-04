@@ -29,46 +29,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
+namespace Google\ApiCore\Tests\Mocks;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
-
-/**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+trait SerializationTrait
 {
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
-    }
-
-    public function __invoke(Call $call, CallSettings $settings)
+    protected function deserializeMessage($message, $deserialize)
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
+        if ($message === null) {
+            return null;
+        }
 
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+        if ($deserialize === null) {
+            return $message;
+        }
+
+        // Proto3 implementation
+        if (is_array($deserialize)) {
+            list($className, $deserializeFunc) = $deserialize;
+            $obj = new $className();
+            if (method_exists($obj, $deserializeFunc)) {
+                $obj->$deserializeFunc($message);
+            } else {
+                $obj->mergeFromString($message);
+            }
+
+            return $obj;
+        }
+
+        // Protobuf-PHP implementation
+        return call_user_func($deserialize, $message);
     }
 }

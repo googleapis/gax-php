@@ -29,46 +29,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
+namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-/**
-* Middleware which configures headers for the request.
-*/
-class AgentHeaderMiddleware
+class ProtobufExtensionTest extends TestCase
 {
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var AgentHeaderDescriptor */
-    private $headerDescriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        AgentHeaderDescriptor $headerDescriptor
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headerDescriptor = $headerDescriptor;
+    public function setUp()
+    {
+        if (!extension_loaded('protobuf')) {
+            $this->markTestSkipped('Must have the protobuf extension installed to run this test.');
+        }
     }
 
-    public function __invoke(Call $call, CallSettings $settings)
+    public function testForProtobufExtension()
     {
-        $next = $this->nextHandler;
-        $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
-
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
-        );
+        // This test should always pass - we have it here so that we can determine whether the
+        // protobuf extension is installed, based on whether this test passes or is skipped
+        $this->assertTrue(true);
     }
 }
