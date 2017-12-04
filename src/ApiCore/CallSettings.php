@@ -41,8 +41,8 @@ class CallSettings
 
     private $retrySettings;
     private $userHeaders;
-    private $grpcOptions;
-    private $restOptions;
+    private $transportOptions;
+    private $timeoutMillis;
 
     /**
      * Constructs an array mapping method names to CallSettings.
@@ -157,16 +157,15 @@ class CallSettings
      *           Retry settings to use for this method.
      *     @type array $userHeaders
      *           An array of headers to be included in the request.
-     *     @type array $grpcOptions
-     *     @type array $restOptions
+     *     @type array $transportOptions
      * }
      */
     public function __construct(array $settings = [])
     {
         $this->retrySettings = $this->pluck('retrySettings', $settings, false);
         $this->userHeaders = $this->pluck('userHeaders', $settings, false);
-        $this->grpcOptions = $this->pluck('grpcOptions', $settings, false);
-        $this->restOptions = $this->pluck('restOptions', $settings, false);
+        $this->transportOptions = $this->pluck('transportOptions', $settings, false);
+        $this->timeoutMillis = $this->pluck('timeoutMillis', $settings, false);
     }
 
     /**
@@ -180,8 +179,7 @@ class CallSettings
      *           Retry settings to use for CallSettings object.
      *     @type array $userHeaders
      *           An array of headers to be included in the request.
-     *     @type array $grpcOptions
-     *     @type array $restOptions
+     *     @type array $transportOptions
      * }
      * @return CallSettings
      */
@@ -192,10 +190,14 @@ class CallSettings
     }
 
     /**
-     * @return RetrySettings|null Retry settings
+     * @return RetrySettings
      */
     public function getRetrySettings()
     {
+        if (empty($this->retrySettings)) {
+            // always return RetrySettings
+            return self::constructDefaultRetrySettings();
+        }
         return $this->retrySettings;
     }
 
@@ -208,19 +210,19 @@ class CallSettings
     }
 
     /**
-     * @return array User headers
+     * @return array Transport options
      */
-    public function getGrpcOptions()
+    public function getTransportOptions()
     {
-        return $this->grpcOptions;
+        return $this->transportOptions;
     }
 
     /**
-     * @return array User headers
+     * @return array Timeout milliseconds
      */
-    public function getRestOptions()
+    public function getTimeoutMillis()
     {
-        return $this->restOptions;
+        return $this->timeoutMillis;
     }
 
     /**
@@ -245,10 +247,10 @@ class CallSettings
     private function toArray()
     {
         return array_filter([
-            'retrySettings' => $this->getRetrySettings(),
+            'retrySettings' => $this->retrySettings,
             'userHeaders' => $this->getUserHeaders(),
-            'grpcOptions' => $this->getGrpcOptions(),
-            'grpcOptions' => $this->getRestOptions()
+            'transportOptions' => $this->getTransportOptions(),
+            'timeoutMillis' => $this->getTimeoutMillis(),
         ]);
     }
 

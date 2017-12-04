@@ -31,6 +31,8 @@
  */
 namespace Google\ApiCore;
 
+use Google\Rpc\Code;
+
 /**
  * ClientStream is the response object from a gRPC client streaming API call.
  */
@@ -42,9 +44,9 @@ class ClientStream
      * ClientStream constructor.
      *
      * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
+     * @param array $streamingDescriptor
      */
-    public function __construct($clientStreamingCall, array $grpcStreamingDescriptor = [])
+    public function __construct($clientStreamingCall, array $streamingDescriptor = [])
     {
         $this->call = $clientStreamingCall;
     }
@@ -68,7 +70,7 @@ class ClientStream
     public function readResponse()
     {
         list($response, $status) = $this->call->wait();
-        if ($status->code == Grpc\STATUS_OK) {
+        if ($status->code == Code::OK) {
             return $response;
         } else {
             throw ApiException::createFromStdClass($status);

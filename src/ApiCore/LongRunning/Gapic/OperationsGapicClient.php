@@ -261,10 +261,7 @@ class OperationsGapicClient
                 throw new InvalidArgumentException('Invalid transport provided: ' . $transport);
             };
         }
-        $this->operationsTransport = call_user_func_array(
-            $options['createTransportFunction'],
-            [$options, $this->getTransport($options)]
-        );
+        $this->operationsTransport = $this->getTransport($options);
     }
 
     /**
