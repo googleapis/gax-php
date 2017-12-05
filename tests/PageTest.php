@@ -31,11 +31,14 @@
  */
 namespace Google\ApiCore\UnitTests;
 
+use Google\ApiCore\Call;
+use Google\ApiCore\CallSettings;
 use Google\ApiCore\Page;
 use Google\ApiCore\PageStreamingDescriptor;
 use Google\ApiCore\UnitTests\Mocks\MockStatus;
 use Google\ApiCore\UnitTests\Mocks\MockRequest;
 use Google\ApiCore\UnitTests\Mocks\MockResponse;
+use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
 use Grpc;
 
@@ -47,22 +50,26 @@ class PageTest extends TestCase
     {
         $mockRequest = $this->createMockRequest('token');
 
-        $descriptor = PageStreamingDescriptor::createFromFields([
+        $pageStreamingDescriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
             'resourceField' => 'resourcesList'
         ]);
 
-        $call = $this->createCallWithResponseSequence($responseSequence);
-        $mockApiCall = function () use ($call) {
+        $internalCall = $this->createCallWithResponseSequence($responseSequence);
+        $callable = function () use ($internalCall) {
             list($response, $status) = call_user_func_array(
-                array($call, 'takeAction'),
+                array($internalCall, 'takeAction'),
                 func_get_args()
             );
-            return $response;
+            return $promise = new \GuzzleHttp\Promise\Promise(function () use (&$promise, $response) {
+                $promise->resolve($response);
+            });
         };
 
-        return new Page([$mockRequest, [], []], $mockApiCall, $descriptor);
+        $call = new Call('method', [], $mockRequest);
+
+        return new Page($call, new CallSettings, $callable, $pageStreamingDescriptor);
     }
 
     public function testNextPageMethods()

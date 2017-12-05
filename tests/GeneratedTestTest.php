@@ -32,7 +32,6 @@
 namespace Google\ApiCore\UnitTests;
 
 use Google\Api\Monitoring_MonitoringDestination;
-use Google\ApiCore\Testing\GeneratedTest;
 use PHPUnit_Framework_ExpectationFailedException;
 
 class GeneratedTestTest extends GeneratedTest

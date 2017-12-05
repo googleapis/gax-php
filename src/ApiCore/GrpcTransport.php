@@ -182,7 +182,7 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
         $options = $settings->getGrpcOptions() ?: []
             + ['call_credentials_callback' => $this->credentialsCallback];
 
-        if ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+        if ($retrySettings && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
             $options['timeout'] = $retrySettings->getNoRetriesRpcTimeoutMillis() * 1000;
         }
 
@@ -201,7 +201,7 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             );
 
             $promise = new Promise(
-                function() use ($call, &$promise) {
+                function () use ($call, &$promise) {
                     list($response, $status) = $call->wait();
 
                     if ($status->code == Code::OK) {
@@ -209,8 +209,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     } else {
                         throw ApiException::createFromStdClass($status);
                     }
-               },
-               [$call, 'cancel']
+                },
+                [$call, 'cancel']
             );
 
             return $promise;

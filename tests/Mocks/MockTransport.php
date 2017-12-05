@@ -35,7 +35,6 @@ namespace Google\ApiCore\UnitTests\Mocks;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiTransportInterface;
 use Google\ApiCore\CallSettings;
-use Google\ApiCore\Testing\ReceivedRequest;
 use Google\Protobuf\Internal\Message;
 
 class MockTransport implements ApiTransportInterface

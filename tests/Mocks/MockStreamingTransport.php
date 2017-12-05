@@ -56,7 +56,7 @@ class MockStreamingTransport implements ApiTransportInterface
      * Creates an API request
      * @return callable
      */
-    public function startCall($method,  Message $message, $decodeTo, CallSettings $settings)
+    public function startCall($method, Message $message, $decodeTo, CallSettings $settings)
     {
         throw new \Exception('Use MockTransport');
     }

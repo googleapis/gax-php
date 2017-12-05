@@ -50,7 +50,10 @@ trait ApiTransportTrait
             'enableCaching' => true,
             'authCache' => new MemoryCacheItemPool(),
             'authCacheOptions' => null,
-            'authHttpHandler' => HttpHandlerFactory::build()
+            'authHttpHandler' => HttpHandlerFactory::build(),
+            'libName' => null,
+            'libVersion' => null,
+            'gapicVersion' => null,
         ];
 
         if (empty($options['credentialsLoader'])) {
