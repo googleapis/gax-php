@@ -41,7 +41,7 @@ use Google\ApiCore\ApiTransportInterface;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\GrpcTransportTrait;
 use Google\ApiCore\UnitTests\GrpcTestTrait;
-use Google\ApiCore\UnitTests\Mocks\MockOperationsImpl;
+use Google\ApiCore\UnitTests\Mocks\MockOperationsClient;
 use Google\ApiCore\UnitTests\Mocks\MockStubTrait;
 use Google\ApiCore\UnitTests\GeneratedTest;
 use Google\LongRunning\ListOperationsResponse;
@@ -69,12 +69,10 @@ class OperationsClientTest extends GeneratedTest
      */
     private function createClient($options = [])
     {
-        return new OperationsClient($options + [
-            'createGrpcStubFunction' => function ($hostname, $opts) {
-                return new MockOperationsImpl($hostname, $opts);
-            },
+        return new MockOperationsClient($options + [
             'serviceAddress' => 'unknown-service-address',
             'scopes' => ['unknown-service-scopes'],
+            'transport' => 'grpc',
         ]);
     }
 
@@ -84,9 +82,8 @@ class OperationsClientTest extends GeneratedTest
     public function getOperationTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         // Mock response
         $name2 = 'name2-1052831874';
@@ -94,22 +91,23 @@ class OperationsClientTest extends GeneratedTest
         $expectedResponse = new Operation();
         $expectedResponse->setName($name2);
         $expectedResponse->setDone($done);
-        $grpcStub->addResponse($expectedResponse);
+        $client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
 
         $response = $client->getOperation($name);
         $this->assertEquals($expectedResponse, $response);
-        $actualRequests = $grpcStub->popReceivedCalls();
+        $actualRequests = $client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
         $this->assertSame('/google.longrunning.Operations/GetOperation', $actualFuncCall);
 
-        $this->assertProtobufEquals($name, $actualRequestObject->getName());
+        $val = $actualRequestObject->getName();
+        $this->assertProtobufEquals($name, $val);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -118,9 +116,8 @@ class OperationsClientTest extends GeneratedTest
     public function getOperationExceptionTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         $status = new stdClass();
         $status->code = Grpc\STATUS_DATA_LOSS;
@@ -132,7 +129,7 @@ class OperationsClientTest extends GeneratedTest
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $grpcStub->addResponse(null, $status);
+        $client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
@@ -147,8 +144,8 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $grpcStub->popReceivedCalls();
-        $this->assertTrue($grpcStub->isExhausted());
+        $client->popReceivedCalls();
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -157,9 +154,8 @@ class OperationsClientTest extends GeneratedTest
     public function listOperationsTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         // Mock response
         $nextPageToken = '';
@@ -168,7 +164,7 @@ class OperationsClientTest extends GeneratedTest
         $expectedResponse = new ListOperationsResponse();
         $expectedResponse->setNextPageToken($nextPageToken);
         $expectedResponse->setOperations($operations);
-        $grpcStub->addResponse($expectedResponse);
+        $client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
@@ -180,15 +176,17 @@ class OperationsClientTest extends GeneratedTest
         $this->assertSame(1, count($resources));
         $this->assertEquals($expectedResponse->getOperations()[0], $resources[0]);
 
-        $actualRequests = $grpcStub->popReceivedCalls();
+        $actualRequests = $client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
-        $this->assertSame('/google.longrunning.Operations/ListOperations', $actualFuncCall);
+        $this->assertSame('/google.longrunning.Operations/ListOperation', $actualFuncCall);
 
-        $this->assertProtobufEquals($name, $actualRequestObject->getName());
-        $this->assertProtobufEquals($filter, $actualRequestObject->getFilter());
-        $this->assertTrue($grpcStub->isExhausted());
+        $actualName = $actualRequestObject->getName();
+        $this->assertProtobufEquals($name, $actualName);
+        $actualFilter = $actualRequestObject->getFilter();
+        $this->assertProtobufEquals($filter, $actualFilter);
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -197,9 +195,8 @@ class OperationsClientTest extends GeneratedTest
     public function listOperationsExceptionTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         $status = new stdClass();
         $status->code = Grpc\STATUS_DATA_LOSS;
@@ -211,7 +208,7 @@ class OperationsClientTest extends GeneratedTest
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $grpcStub->addResponse(null, $status);
+        $client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
@@ -227,8 +224,8 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $grpcStub->popReceivedCalls();
-        $this->assertTrue($grpcStub->isExhausted());
+        $client->popReceivedCalls();
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -237,27 +234,27 @@ class OperationsClientTest extends GeneratedTest
     public function cancelOperationTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         // Mock response
         $expectedResponse = new GPBEmpty();
-        $grpcStub->addResponse($expectedResponse);
+        $client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
 
         $client->cancelOperation($name);
-        $actualRequests = $grpcStub->popReceivedCalls();
+        $actualRequests = $client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
         $this->assertSame('/google.longrunning.Operations/CancelOperation', $actualFuncCall);
 
-        $this->assertProtobufEquals($name, $actualRequestObject->getName());
+        $actualName = $actualRequestObject->getName();
+        $this->assertProtobufEquals($name, $actualName);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -266,9 +263,8 @@ class OperationsClientTest extends GeneratedTest
     public function cancelOperationExceptionTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         $status = new stdClass();
         $status->code = Grpc\STATUS_DATA_LOSS;
@@ -280,7 +276,7 @@ class OperationsClientTest extends GeneratedTest
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $grpcStub->addResponse(null, $status);
+        $client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
@@ -295,8 +291,8 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $grpcStub->popReceivedCalls();
-        $this->assertTrue($grpcStub->isExhausted());
+        $client->popReceivedCalls();
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -305,27 +301,27 @@ class OperationsClientTest extends GeneratedTest
     public function deleteOperationTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         // Mock response
         $expectedResponse = new GPBEmpty();
-        $grpcStub->addResponse($expectedResponse);
+        $client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
 
         $client->deleteOperation($name);
-        $actualRequests = $grpcStub->popReceivedCalls();
+        $actualRequests = $client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
         $this->assertSame('/google.longrunning.Operations/DeleteOperation', $actualFuncCall);
 
-        $this->assertProtobufEquals($name, $actualRequestObject->getName());
+        $actualName = $actualRequestObject->getName();
+        $this->assertProtobufEquals($name, $actualName);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
     }
 
     /**
@@ -334,9 +330,8 @@ class OperationsClientTest extends GeneratedTest
     public function deleteOperationExceptionTest()
     {
         $client = $this->createClient();
-        $grpcStub = $this->getGrpcStub($client);
 
-        $this->assertTrue($grpcStub->isExhausted());
+        $this->assertTrue($client->isExhausted());
 
         $status = new stdClass();
         $status->code = Grpc\STATUS_DATA_LOSS;
@@ -348,7 +343,7 @@ class OperationsClientTest extends GeneratedTest
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $grpcStub->addResponse(null, $status);
+        $client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
@@ -363,20 +358,7 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $grpcStub->popReceivedCalls();
-        $this->assertTrue($grpcStub->isExhausted());
-    }
-
-    private function getGrpcStub(OperationsClient $client)
-    {
-        $class = new \ReflectionClass($client);
-        $property = $class->getProperty('operationsTransport');
-        $property->setAccessible(true);
-        $transport = $property->getValue($client);
-
-        $class = new \ReflectionClass($transport);
-        $property = $class->getProperty('grpcStub');
-        $property->setAccessible(true);
-        return $property->getValue($transport);
+        $client->popReceivedCalls();
+        $this->assertTrue($client->isExhausted());
     }
 }

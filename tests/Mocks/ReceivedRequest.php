@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Testing;
+namespace Google\ApiCore\UnitTests\Mocks;
 
 /**
  * Class ReceivedRequest used to hold the function name and request object of a call

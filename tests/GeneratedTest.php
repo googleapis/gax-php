@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Testing;
+namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\Serializer;
 use Google\Protobuf\DescriptorPool;
@@ -37,7 +37,7 @@ use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use PHPUnit\Framework\TestCase;
 
-class GeneratedTest extends TestCase
+abstract class GeneratedTest extends TestCase
 {
     public function assertProtobufEquals(&$expected, &$actual)
     {

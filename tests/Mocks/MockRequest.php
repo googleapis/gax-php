@@ -32,7 +32,9 @@
 
 namespace Google\ApiCore\UnitTests\Mocks;
 
-class MockRequest
+use Google\Protobuf\Internal\Message;
+
+class MockRequest extends Message
 {
     private $pageToken;
     private $pageSize;

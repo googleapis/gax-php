@@ -33,10 +33,13 @@
 namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\GrpcTransport;
+use Google\ApiCore\Call;
+use Google\ApiCore\CallSettings;
+use Google\ApiCore\UnitTests\Mocks\MockGrpcTransport;
+use Google\ApiCore\UnitTests\Mocks\MockGrpcChannel;
 use Google\Auth\FetchAuthTokenInterface;
 use Grpc\ChannelCredentials;
 use PHPUnit\Framework\TestCase;
-use ReflectionMethod;
 
 class GrpcTransportTest extends TestCase
 {
@@ -47,49 +50,16 @@ class GrpcTransportTest extends TestCase
         $this->checkAndSkipGrpcTests();
     }
 
-    private function callCredentialsCallback(GrpcTransport $transport)
-    {
-        $method = new ReflectionMethod($transport, 'constructGrpcArgs');
-        $method->setAccessible(true);
-        list($request, $args) = $method->invoke($transport);
-        return call_user_func($args['call_credentials_callback']);
-    }
 
-    /**
-     * @expectedException Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Missing required argument serviceAddress
-     */
-    public function testServiceAddressRequired()
-    {
-        new GrpcTransport([
-            'port' => 8443,
-            'scopes' => ['my-scope'],
-        ]);
-    }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Missing required argument port
-     */
-    public function testPortRequired()
+    private function callCredentialsCallback(MockGrpcTransport $transport)
     {
-        new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'scopes' => ['my-scope'],
-        ]);
-    }
+        $mockCall = new Call('method', [], null);
+        $mockCallSettings = new CallSettings;
+        $call = $transport->startCall($mockCall, $mockCallSettings);
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Missing required argument createGrpcStubFunction
-     */
-    public function testCreateGrpcStubFunctionRequired()
-    {
-        new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'scopes' => ['my-scope'],
-        ]);
+        list($_1, $_2, $_3, $_4, $options) = $call->wait();
+        return call_user_func($options['call_credentials_callback']);
     }
 
     /**
@@ -99,12 +69,7 @@ class GrpcTransportTest extends TestCase
     public function testScopesRequired()
     {
         // NOTE: scopes is only required if credentialsLoader is not provided
-        new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function () {
-            },
-        ]);
+        new GrpcTransport('host', []);
     }
 
     public function testConstructGrpcArgsCustomCredsLoader()
@@ -114,11 +79,7 @@ class GrpcTransportTest extends TestCase
             ->method('fetchAuthToken')
             ->willReturn(['access_token' => 'accessToken']);
 
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function () {
-            },
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'credentialsLoader' => $credentialsLoader,
         ]);
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
@@ -135,11 +96,7 @@ class GrpcTransportTest extends TestCase
                 ['access_token' => 'accessToken2']
             ));
 
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function () {
-            },
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'credentialsLoader' => $credentialsLoader,
             'enableCaching' => false,
         ]);
@@ -159,11 +116,7 @@ class GrpcTransportTest extends TestCase
             ->method('getCacheKey')
             ->willReturn('cacheKey');
 
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function () {
-            },
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'credentialsLoader' => $credentialsLoader,
         ]);
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
@@ -172,89 +125,71 @@ class GrpcTransportTest extends TestCase
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
     }
 
-    public function testCreateStubDefault()
+    public function testCreateWithHostname()
     {
-        $called = false;
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function ($addr, $opts, $channel) use (&$called) {
-                $this->assertEquals('my-service-address:8443', $addr);
-                $this->assertInstanceOf(ChannelCredentials::class, $opts['credentials']);
-                $this->assertEquals(
-                    'my-service-address:8443',
-                    $opts['grpc.ssl_target_name_override']
-                );
-                $this->assertNull($channel);
-                $called = true;
-            },
+        $sslCreds = new \Grpc\ChannelCredentials;
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'scopes' => ['my-scope'],
+            'sslCreds' => $sslCreds,
         ]);
-        $this->assertTrue($called);
+        $this->assertEquals('my-service-address:8443', $grpcTransport->getHostname());
     }
 
-    public function testCreateStubWithExplicitSslCreds()
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage credentials must be a ChannelCredentials object
+     */
+    public function testCreateCStubWithInvalidChannelCredentials()
     {
-        $called = false;
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function ($addr, $opts, $channel) use (&$called) {
-                $this->assertEquals('provided-creds', $opts['credentials']);
-                $called = true;
-            },
+        $invalidCreds = 'invalid-creds';
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'scopes' => ['my-scope'],
-            'sslCreds' => 'provided-creds',
+            'sslCreds' => $invalidCreds,
         ]);
-        $this->assertTrue($called);
+    }
+
+    public function testCreateWithExplicitSslCreds()
+    {
+        $sslCreds = new \Grpc\ChannelCredentials;
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope'],
+            'sslCreds' => $sslCreds,
+        ]);
+        // If no exception is thrown, we're good. It's not a very solid test, but
+        // because Grpc\Channel is part of the C extension, there is no other way
+        // to test this.
     }
 
     public function testCreateStubWithInsecureSslCreds()
     {
-        $called = false;
         $insecureCreds = ChannelCredentials::createInsecure();
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function ($addr, $opts, $channel) use (&$called, $insecureCreds) {
-                $this->assertEquals($insecureCreds, $opts['credentials']);
-                $called = true;
-            },
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'scopes' => ['my-scope'],
             'sslCreds' => $insecureCreds,
         ]);
-        $this->assertTrue($called);
+        // If no exception is thrown, we're good. It's not a very solid test, but
+        // because Grpc\Channel is part of the C extension, there is no other way
+        // to test this.
     }
 
     public function testCreateStubWithChannel()
     {
-        $called = false;
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function ($addr, $opts, $channel) use (&$called) {
-                $this->assertEquals('my-channel', $channel);
-                $called = true;
-            },
+        $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'scopes' => ['my-scope'],
-            'channel' => 'my-channel'
+            'channel' => $channel = $this->getMockBuilder('Grpc\Channel')
+                ->disableOriginalConstructor()
+                ->getMock(),
         ]);
-        $this->assertTrue($called);
+        $this->assertEquals($channel, $grpcTransport->getChannel());
     }
 
     public function testCreateStubWithForceNew()
     {
-        $called = false;
-        $grpcTransport = new GrpcTransport([
-            'serviceAddress' => 'my-service-address',
-            'port' => 8443,
-            'createGrpcStubFunction' => function ($addr, $opts, $channel) use (&$called) {
-                $this->assertTrue($opts['force_new']);
-                $called = true;
-            },
-            'scopes' => ['my-scope'],
-            'forceNewChannel' => true
-        ]);
-        $this->assertTrue($called);
+        // Because Grpc\Channel is part of the C extension, there is no way to
+        // test this.
+
+        // $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
+        //     'forceNewChannel' => true
+        // ]);
     }
 }

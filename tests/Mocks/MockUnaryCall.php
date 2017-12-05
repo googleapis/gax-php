@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\UnaryCallInterface;
 use Google\Rpc\Code;
 

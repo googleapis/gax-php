@@ -29,44 +29,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\UnitTests;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\PagedListResponse;
-use Google\ApiCore\PageStreamingDescriptor;
-use Google\ApiCore\UnitTests\Mocks\MockRequest;
-use Google\ApiCore\UnitTests\Mocks\MockResponse;
-use GuzzleHttp\Promise\Promise;
-use PHPUnit\Framework\TestCase;
+namespace Google\ApiCore\UnitTests\Mocks;
 
-class PagedListResponseTest extends TestCase
+use Google\ApiCore\GrpcTransport;
+use ReflectionClass;
+
+class MockGrpcTransport extends GrpcTransport
 {
-    use TestTrait;
+    protected function _simpleRequest(
+        $method,
+        $arguments,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return new MockUnaryCall(
+            [$method, $arguments, $deserialize, $metadata, $options]
+        );
+    }
 
-    public function testNextPageToken()
+    public function getHostname()
     {
-        $mockRequest = $this->createMockRequest('mockToken');
+        $stub = new ReflectionClass('Grpc\BaseStub');
+        $property = $stub->getProperty('hostname');
+        $property->setAccessible(true);
+        return $property->getValue($this);
+    }
 
-        $mockResponse = $this->createMockResponse('nextPageToken1', ['resource1']);
+    public function getChannel()
+    {
+        $stub = new ReflectionClass('Grpc\BaseStub');
+        $property = $stub->getProperty('channel');
+        $property->setAccessible(true);
+        return $property->getValue($this);
+    }
 
-        $pageStreamingDescriptor = PageStreamingDescriptor::createFromFields([
-            'requestPageTokenField' => 'pageToken',
-            'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resourcesList'
-        ]);
-
-        $callable = function () use ($mockResponse) {
-            return $promise = new \GuzzleHttp\Promise\Promise(function () use (&$promise, $mockResponse) {
-                $promise->resolve($mockResponse);
-            });
-        };
-
-        $call = new Call('method', [], $mockRequest);
-
-        $pageAccessor = new PagedListResponse($call, new CallSettings, $callable, $pageStreamingDescriptor);
-        $page = $pageAccessor->getPage();
-        $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
-        $this->assertEquals(iterator_to_array($page->getIterator()), ['resource1']);
+    public function getUpdateMetadata()
+    {
+        $stub = new ReflectionClass('Grpc\BaseStub');
+        $property = $stub->getProperty('update_metadata');
+        $property->setAccessible(true);
+        return $property->getValue($this);
     }
 }
