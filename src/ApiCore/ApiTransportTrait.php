@@ -96,17 +96,38 @@ trait ApiTransportTrait
     /**
      * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
-     * @param PageStreamingDescriptor $descriptor
+     * @param array $descriptor
      *
      * @return PromiseInterface
      */
-    public function getPagedListResponse(Call $call, CallSettings $settings, PageStreamingDescriptor $descriptor)
+    public function startOperationsCall(Call $call, CallSettings $settings, array $descriptor)
+    {
+        return $this->startCall($call, $settings)
+            ->then(function (Message $response) use ($descriptor) {
+                $name = $response->getName();
+                $client = $this->pluck('operationsClient', $descriptor);
+                $options = $descriptor + [
+                    'lastProtoResponse' => $response
+                ];
+
+                return new OperationResponse($name, $client, $options);
+            });
+    }
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param array $descriptor
+     *
+     * @return PagedListResponse
+     */
+    public function getPagedListResponse(Call $call, CallSettings $settings, array $descriptor)
     {
         return new PagedListResponse(
             $call,
             $settings,
             $this->getCallable($settings),
-            $descriptor
+            new PageStreamingDescriptor($descriptor)
         );
     }
 

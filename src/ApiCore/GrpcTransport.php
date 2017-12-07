@@ -128,12 +128,10 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
      * @todo interface for streaming calls?
      * @todo pass along resourceGetMethod
      */
-    public function startStreamingCall(
-        Call $call,
-        CallSettings $settings,
-        $streamingType,
-        $resourcesGetMethod = null
-    ) {
+    public function startStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    {
+        $streamingType = $this->pluck('streamingType', $descriptor);
+        $resourcesGetMethod = $this->pluck('resourcesGetMethod', $descriptor, false);
         $this->validateStreamingApiCallSettings($settings);
 
         switch ($streamingType) {
