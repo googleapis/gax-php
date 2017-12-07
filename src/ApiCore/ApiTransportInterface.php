@@ -47,16 +47,28 @@ interface ApiTransportInterface
     /**
      * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
-     * @param string $streamingType
-     * @param string $resourcesGetMethod
+     * @param array $descriptor
+     *
+     * @return PromiseInterface
+     */
+    public function startOperationsCall(Call $call, CallSettings $settings, array $descriptor);
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param array $descriptor
+     *
+     * @return PagedListResponse
+     */
+    public function getPagedListResponse(Call $call, CallSettings $settings, array $descriptor);
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings The call settings to use for this call.
+     * @param array $descriptor
      *
      * @return StreamingCallInterface
      * @todo interface for streaming calls?
      */
-    public function startStreamingCall(
-        Call $call,
-        CallSettings $callSettings,
-        $streamingType,
-        $resourcesGetMethod = null
-    );
+    public function startStreamingCall(Call $call, CallSettings $callSettings, array $descriptor);
 }

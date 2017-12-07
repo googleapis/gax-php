@@ -92,19 +92,14 @@ class RestTransport implements ApiTransportInterface
     /**
      * @param Call $call
      * @param CallSettings $settings The call settings to use for this call.
-     * @param string $streamingType
-     * @param string $resourcesGetMethod
+     * @param array $descriptor
      *
      * @return StreamingCallInterface
      * @throws \BadMethodCallException
      * @todo interface for streaming calls?
      */
-    public function startStreamingCall(
-        Call $call,
-        CallSettings $settings,
-        $streamingType,
-        $resourcesGetMethod = null
-    ) {
+    public function startStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    {
         throw new \BadMethodCallException('Not supported for REST.');
     }
 
