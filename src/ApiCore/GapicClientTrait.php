@@ -1,26 +1,41 @@
 <?php
-/**
- * Copyright 2017 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2017, Google Inc.
+ * All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 namespace Google\ApiCore;
 
-use Exception;
-use InvalidArgumentException;
 use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\Transport\ApiTransportInterface;
 use Google\Cloud\Version;
+use Google\Protobuf\Internal\Message;
 
 /**
  * Common functions used to work with various clients.
@@ -28,62 +43,19 @@ use Google\Cloud\Version;
 trait GapicClientTrait
 {
     use ArrayTrait;
+    use ValidationTrait;
 
     private static $gapicVersion;
 
     private $defaultCallSettings;
     private $descriptors;
-    private $scopes;
     private $transport;
-
-    /**
-     * Get either a gRPC or REST transport based on the provided config
-     * and the system dependencies available.
-     *
-     * @param array $config
-     * @return ApiTransportInterface
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
-    private function getTransport(array $config)
-    {
-        $serviceAddress = $this->pluck('serviceAddress', $config);
-        $port = $this->pluck('port', $config);
-        $isGrpcExtensionLoaded = $this->getGrpcDependencyStatus();
-        $defaultTransport = $isGrpcExtensionLoaded
-            ? 'grpc'
-            : 'rest';
-        $transport = isset($config['transport'])
-            ? strtolower($config['transport'])
-            : $defaultTransport;
-
-        if ($transport === 'grpc' && !$isGrpcExtensionLoaded) {
-            throw new Exception(
-                'gRPC support has been requested but required dependencies ' .
-                'have not been found. Please make sure to run the following ' .
-                'from the command line: pecl install grpc'
-            );
-        }
-
-        switch ($transport) {
-            case 'grpc':
-                $transport = GrpcTransport::class;
-                break;
-            case 'rest':
-                $transport = RestTransport::class;
-                break;
-            default:
-                throw new InvalidArgumentException('Unknown transport type.');
-        }
-
-        return new $transport("$serviceAddress:$port", $config);
-    }
 
     private static function getGapicVersion()
     {
         if (!self::$gapicVersion) {
             if (file_exists(__DIR__.'/../VERSION')) {
-                self::$gapicVersion = trim(file_get_contents(__DIR__.'/../VERSION'));
+                self::$gapicVersion = trim(file_get_contents(__DIR__ . '/../VERSION'));
             } elseif (class_exists(Version::class)) {
                 self::$gapicVersion = Version::VERSION;
             }
@@ -92,37 +64,35 @@ trait GapicClientTrait
         return self::$gapicVersion;
     }
 
-    private function configureClient($serviceName, $descriptorsPath, array $options)
+    private function setClientOptions(array $options)
     {
-        $options += [
-            'retryingOverride' => [],
-            'libName' => null,
-            'libVersion' => self::getGapicVersion()
-        ];
-        $clientConfigJsonString = file_get_contents($options['clientConfigPath']);
-        $clientConfig = json_decode($clientConfigJsonString, true);
-        $this->defaultCallSettings = CallSettings::load(
-            $serviceName,
-            $clientConfig,
-            $options['retryingOverride']
-        );
-        $this->descriptors = require($descriptorsPath);
-        $this->transport = $this->getTransport($options);
-
-        return $options;
-    }
-
-    private function configureOperationsClient(array $options)
-    {
-        if (array_key_exists('operationsClient', $options)) {
-            return $options['operationsClient'];
+        $this->validateNotNull($options, [
+            'serviceName',
+            'descriptorsConfigPath',
+            'clientConfigPath'
+        ]);
+        if (!isset($options['gapicVersion'])) {
+            $options['gapicVersion'] = isset($options['libVersion'])
+                ? $options['libVersion']
+                : self::getGapicVersion();
         }
-
-        $operationsClientOptions = $options;
-        unset($operationsClientOptions['retryingOverride']);
-        unset($operationsClientOptions['clientConfigPath']);
-
-        return new OperationsClient($operationsClientOptions);
+        $transport = isset($options['transport'])
+            ? $options['transport']
+            : null;
+        $clientConfig = json_decode(
+            file_get_contents($options['clientConfigPath']),
+            true
+        );
+        $this->defaultCallSettings = CallSettings::load(
+            $options['serviceName'],
+            $clientConfig,
+            $this->pluck('retryingOverride', $options, false)
+        );
+        $descriptors = require($options['descriptorsConfigPath']);
+        $this->descriptors = $descriptors['interfaces'][$options['serviceName']];
+        $this->transport = $transport instanceof ApiTransportInterface
+            ? $transport
+            : TransportFactory::build($options);
     }
 
     private function configureCallSettings($method, array $optionalArgs)
@@ -138,13 +108,55 @@ trait GapicClientTrait
     }
 
     /**
-     * Abstract the checking of the grpc extension for unit testing.
+     * @param Call $call
+     * @param CallSettings $settings
      *
-     * @codeCoverageIgnore
-     * @return bool
+     * @return PromiseInterface
      */
-    protected function getGrpcDependencyStatus()
+    private function startCall(Call $call, CallSettings $settings)
     {
-        return extension_loaded('grpc');
+        $callable = $this->transport->getCallable($settings);
+        return $callable($call, $settings);
+    }
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings
+     * @param OperationsGapicClient $client
+     * @param array $descriptor
+     *
+     * @return PromiseInterface
+     */
+    private function startOperationsCall(
+        Call $call,
+        CallSettings $settings,
+        OperationsClient $client,
+        array $descriptor
+    ) {
+        return $this->startCall($call, $settings)
+            ->then(function (Message $response) use ($client, $descriptor) {
+                $options = $descriptor + [
+                    'lastProtoResponse' => $response
+                ];
+
+                return new OperationResponse($response->getName(), $client, $options);
+            });
+    }
+
+    /**
+     * @param Call $call
+     * @param CallSettings $settings
+     * @param array $descriptor
+     *
+     * @return PagedListResponse
+     */
+    private function getPagedListResponse(Call $call, CallSettings $settings, array $descriptor)
+    {
+        return new PagedListResponse(
+            $call,
+            $settings,
+            $this->transport->getCallable($settings),
+            new PageStreamingDescriptor($descriptor)
+        );
     }
 }

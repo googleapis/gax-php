@@ -29,90 +29,88 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
+namespace Google\ApiCore\Transport;
 
-use Google\Auth\FetchAuthTokenInterface;
-use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\ApiCore\AgentHeaderDescriptor;
+use Google\ApiCore\ApiException;
+use Google\ApiCore\Call;
+use Google\ApiCore\CallSettings;
+use Google\ApiCore\RequestBuilder;
+use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\AuthHeaderMiddleware;
+use Google\ApiCore\Middleware\RetryMiddleware;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * A REST based transport implementation.
+ */
 class RestTransport implements ApiTransportInterface
 {
-    use ApiTransportTrait;
-
+    private $agentHeaderDescriptor;
     private $credentialsLoader;
     private $httpHandler;
     private $requestBuilder;
 
     /**
-     * @param string $host The domain name and port of the API remote host.
-     * @param array $options {
-     *     Optional.
-     *
-     *     @type string[] $scopes
-     *           A list of scopes required for API access. Exactly one of
-     *           $scopes or $credentialsLoader must be provided.
-     *           NOTE: if $credentialsLoader is provided, this argument is
-     *           ignored.
-     *     @type FetchAuthTokenInterface $credentialsLoader
-     *           A user-created CredentialsLoader object. Defaults to using
-     *           ApplicationDefaultCredentials with the provided $scopes argument.
-     *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *     @type boolean $enableCaching
-     *           Enable caching of access tokens. Defaults to true.
-     *     @type CacheItemPoolInterface $authCache
-     *           A cache for storing access tokens. Defaults to a simple in
-     *           memory implementation.
-     *     @type array $authCacheOptions
-     *           Cache configuration options.
-     *     @type callable $httpHandler
-     *           A handler used to deliver Psr7 requests.
-     *     @type callable $authHttpHandler
-     *           A handler used to deliver Psr7 requests specifically for
-     *           authentication.
-     * }
+     * @param RequestBuilder $requestBuilder A builder responsible for creating
+     *        a PSR-7 request from a set of request information.
+     * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
+     *        used to fetch access tokens.
+     * @param AgentHeaderDescriptor $agentHeaderDescriptor A descriptor containing
+     *        the relevant information to build out the user agent header.
+     * @param callable $httpHandler A handler used to deliver PSR-7 requests.
      */
-    public function __construct($host, array $options = [])
-    {
-        $options = $this->setCommonDefaults($options + [
-            'httpHandler' => HttpHandlerFactory::build()
-        ]);
-
-        $this->httpHandler = $options['httpHandler'];
-        $this->credentialsLoader = $options['credentialsLoader'];
-        $this->requestBuilder = new RequestBuilder(
-            $host,
-            $options['restClientConfigPath']
-        );
+    public function __construct(
+        RequestBuilder $requestBuilder,
+        FetchAuthTokenInterface $credentialsLoader,
+        AgentHeaderDescriptor $agentHeaderDescriptor,
+        callable $httpHandler
+    ) {
+        $this->requestBuilder = $requestBuilder;
+        $this->credentialsLoader = $credentialsLoader;
+        $this->agentHeaderDescriptor = $agentHeaderDescriptor;
+        $this->httpHandler = $httpHandler;
     }
 
     /**
-     * @param Call $call
-     * @param CallSettings $settings The call settings to use for this call.
-     * @param string $streamingType
-     * @param string $resourcesGetMethod
-     *
-     * @return StreamingCallInterface
+     * {@inheritdoc}
      * @throws \BadMethodCallException
-     * @todo interface for streaming calls?
      */
-    public function startStreamingCall(
-        Call $call,
-        CallSettings $settings,
-        $streamingType,
-        $resourcesGetMethod = null
-    ) {
-        throw new \BadMethodCallException('Not supported for REST.');
+    public function startClientStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    {
+        $this->throwUnsupportedException();
     }
 
-    private function getCallable(CallSettings $settings)
+    /**
+     * {@inheritdoc}
+     * @throws \BadMethodCallException
+     */
+    public function startServerStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    {
+        $this->throwUnsupportedException();
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \BadMethodCallException
+     */
+    public function startBidiStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    {
+        $this->throwUnsupportedException();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCallable(CallSettings $settings)
     {
         $callable = function (Call $call, CallSettings $settings) {
             $httpHandler = $this->httpHandler;
 
-            return $httpHandler->async(
+            return $httpHandler(
                 $this->requestBuilder->build(
                     $call->getMethod(),
                     $call->getMessage(),
@@ -122,12 +120,12 @@ class RestTransport implements ApiTransportInterface
             )->then(
                 function (ResponseInterface $response) use ($call) {
                     $decodeType = $call->getDecodeType();
+                    $return = new $decodeType;
+                    $return->mergeFromJsonString(
+                        (string) $response->getBody()
+                    );
 
-                    return (new Serializer)
-                        ->decodeMessage(
-                            new $decodeType,
-                            json_decode((string) $response->getBody(), true)
-                        );
+                    return $return;
                 },
                 function (\Exception $ex) {
                     if ($ex instanceof RequestException && $ex->hasResponse()) {
@@ -143,6 +141,19 @@ class RestTransport implements ApiTransportInterface
             $this->createCallStack($callable, $settings),
             $this->credentialsLoader
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function close()
+    {
+        // Nothing to do.
+    }
+
+    private function throwUnsupportedException()
+    {
+        throw new \BadMethodCallException('Streaming calls are not supported while using the REST transport.');
     }
 
     private function getOptions(CallSettings $settings)
@@ -166,5 +177,13 @@ class RestTransport implements ApiTransportInterface
         $rObj->details = $rObj->message;
 
         return ApiException::createFromStdClass($rObj);
+    }
+
+    private function createCallStack(callable $callable, CallSettings $settings)
+    {
+        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+        $callable = new RetryMiddleware($callable);
+
+        return $callable;
     }
 }
