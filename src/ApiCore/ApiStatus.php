@@ -54,6 +54,7 @@ class ApiStatus
     const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
     const UNRECOGNIZED_STATUS = 'UNRECOGNIZED_STATUS';
+    const UNRECOGNIZED_CODE = -1;
 
     private static $apiStatusToCodeMap = [
         ApiStatus::OK => Code::OK,
@@ -124,6 +125,6 @@ class ApiStatus
         if (array_key_exists($status, self::$apiStatusToCodeMap)) {
             return self::$apiStatusToCodeMap[$status];
         }
-        return Code::UNKNOWN;
+        return ApiStatus::UNRECOGNIZED_CODE;
     }
 }

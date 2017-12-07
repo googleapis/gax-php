@@ -30,33 +30,61 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore;
+namespace Google\ApiCore\Transport;
 
+use Google\ApiCore\BidiStream;
+use Google\ApiCore\Call;
+use Google\ApiCore\CallSettings;
+use Google\ApiCore\ClientStream;
+use Google\ApiCore\ServerStream;
 use GuzzleHttp\Promise\PromiseInterface;
 
 interface ApiTransportInterface
 {
     /**
-     * @param Call $call
-     * @param CallSettings $settings The call settings to use for this call.
+     * Starts a bidi streaming call.
      *
-     * @return PromiseInterface
+     * @param Call $call
+     * @param CallSettings $settings
+     * @param array $descriptor
+     *
+     * @return BidiStream
      */
-    public function startCall(Call $call, CallSettings $settings);
+    public function startBidiStreamingCall(Call $call, CallSettings $settings, array $descriptor);
 
     /**
-     * @param Call $call
-     * @param CallSettings $settings The call settings to use for this call.
-     * @param string $streamingType
-     * @param string $resourcesGetMethod
+     * Starts a client streaming call.
      *
-     * @return StreamingCallInterface
-     * @todo interface for streaming calls?
+     * @param Call $call
+     * @param CallSettings $settings
+     * @param array $descriptor
+     *
+     * @return ClientStream
      */
-    public function startStreamingCall(
-        Call $call,
-        CallSettings $callSettings,
-        $streamingType,
-        $resourcesGetMethod = null
-    );
+    public function startClientStreamingCall(Call $call, CallSettings $settings, array $descriptor);
+
+    /**
+     * Starts a server streaming call.
+     *
+     * @param Call $call
+     * @param CallSettings $settings
+     * @param array $descriptor
+     *
+     * @return ServerStream
+     */
+    public function startServerStreamingCall(Call $call, CallSettings $settings, array $descriptor);
+
+    /**
+     * Returns a callable used to execute network requests.
+     *
+     * @param CallSettings $settings
+     *
+     * @return callable
+     */
+    public function getCallable(CallSettings $settings);
+
+    /**
+     * Closes the connection, if one exists.
+     */
+    public function close();
 }
