@@ -36,10 +36,14 @@ use Google\ApiCore\GrpcTransport;
 use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
 use Google\ApiCore\UnitTests\Mocks\MockGrpcTransport;
-use Google\ApiCore\UnitTests\Mocks\MockGrpcChannel;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Protobuf\Internal\Message;
+use Google\Protobuf\Internal\RepeatedField;
+use Google\Protobuf\Internal\GPBType;
+use Google\Rpc\Code;
 use Grpc\ChannelCredentials;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class GrpcTransportTest extends TestCase
 {
@@ -50,16 +54,15 @@ class GrpcTransportTest extends TestCase
         $this->checkAndSkipGrpcTests();
     }
 
-
-
     private function callCredentialsCallback(MockGrpcTransport $transport)
     {
         $mockCall = new Call('method', [], null);
-        $mockCallSettings = new CallSettings;
+        $mockCallSettings = new CallSettings();
         $call = $transport->startCall($mockCall, $mockCallSettings);
 
-        list($_1, $_2, $_3, $_4, $options) = $call->wait();
-        return call_user_func($options['call_credentials_callback']);
+        $call->wait();
+        $args = $transport->getRequestArguments();
+        return call_user_func($args['options']['call_credentials_callback']);
     }
 
     /**
@@ -82,6 +85,7 @@ class GrpcTransportTest extends TestCase
         $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'credentialsLoader' => $credentialsLoader,
         ]);
+        $grpcTransport->setMockCall($this->createMockCall());
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
     }
@@ -100,6 +104,7 @@ class GrpcTransportTest extends TestCase
             'credentialsLoader' => $credentialsLoader,
             'enableCaching' => false,
         ]);
+        $grpcTransport->setMockCall($this->createMockCall());
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
@@ -119,6 +124,7 @@ class GrpcTransportTest extends TestCase
         $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
             'credentialsLoader' => $credentialsLoader,
         ]);
+        $grpcTransport->setMockCall($this->createMockCall());
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
         $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
         $callbackResult = $this->callCredentialsCallback($grpcTransport);
@@ -191,5 +197,362 @@ class GrpcTransportTest extends TestCase
         // $grpcTransport = new MockGrpcTransport('my-service-address:8443', [
         //     'forceNewChannel' => true
         // ]);
+    }
+
+    public function testClientStreamingSuccessObject()
+    {
+        $response = new \Google\Rpc\Status();
+        $response->setCode(\Google\Rpc\Code::OK);
+        $response->setMessage('response');
+
+        $status = new stdClass;
+        $status->code = Code::OK;
+
+        $call = $this->getMockBuilder(\Grpc\ClientStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('write');
+        $call->method('wait')
+            ->will($this->returnValue([$response, $status]));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null);
+
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'ClientStreaming']
+        );
+
+        /* @var $stream \Google\ApiCore\ClientStreamInterface */
+        $actualResponse = $stream->writeAllAndReadResponse([]);
+        $this->assertEquals($response, $actualResponse);
+    }
+
+    /**
+     * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionMessage client streaming failure
+     */
+    public function testClientStreamingFailure()
+    {
+        $request = "request";
+        $response = "response";
+
+        $status = new stdClass;
+        $status->code = Code::INTERNAL;
+        $status->details = 'client streaming failure';
+
+        $call = $this->getMockBuilder(\Grpc\ClientStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('wait')
+            ->will($this->returnValue([$response, $status]));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null);
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'ClientStreaming']
+        );
+
+        $stream->readResponse();
+    }
+
+    public function testServerStreamingSuccess()
+    {
+        $response = "response";
+
+        $status = new stdClass;
+        $status->code = Code::OK;
+
+        $message = $this->getMockBuilder(Message::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $call = $this->getMockBuilder(\Grpc\ServerStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('responses')
+            ->will($this->returnValue([$response]));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null, $message);
+
+        /* @var $stream \Google\ApiCore\ServerStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'ServerStreaming']
+        );
+
+        $actualResponsesArray = [];
+        foreach ($stream->readAll() as $actualResponse) {
+            $actualResponsesArray[] = $actualResponse;
+        }
+        $this->assertEquals([$response], $actualResponsesArray);
+    }
+
+    public function testServerStreamingSuccessResources()
+    {
+        $responses = ['resource1', 'resource2'];
+        $repeatedField = new RepeatedField(GPBType::STRING);
+        foreach ($responses as $response) {
+            $repeatedField[] = $response;
+        }
+
+        $response = $this->createMockResponse('nextPageToken', $repeatedField);
+
+        $status = new stdClass;
+        $status->code = Code::OK;
+
+        $message = $this->getMockBuilder(Message::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $call = $this->getMockBuilder(\Grpc\ServerStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('responses')
+            ->will($this->returnValue([$response]));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null, $message);
+
+        /* @var $stream \Google\ApiCore\ServerStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'ServerStreaming', 'resourcesGetMethod' => 'getResourcesList']
+        );
+
+        $actualResponsesArray = [];
+        foreach ($stream->readAll() as $actualResponse) {
+            $actualResponsesArray[] = $actualResponse;
+        }
+        $this->assertEquals($responses, $actualResponsesArray);
+    }
+
+    /**
+     * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionMessage server streaming failure
+     */
+    public function testServerStreamingFailure()
+    {
+        $status = new stdClass;
+        $status->code = Code::INTERNAL;
+        $status->details = 'server streaming failure';
+
+        $message = $this->getMockBuilder(Message::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $call = $this->getMockBuilder(\Grpc\ServerStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('responses')
+            ->will($this->returnValue(['response1']));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null, $message);
+
+        /* @var $stream \Google\ApiCore\ServerStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'ServerStreaming']
+        );
+
+        foreach ($stream->readAll() as $actualResponse) {
+            // for loop to trigger generator and API exception
+        }
+    }
+
+    public function testBidiStreamingSuccessSimple()
+    {
+        $response = "response";
+        $status = new stdClass;
+        $status->code = Code::OK;
+
+        $call = $this->getMockBuilder(\Grpc\BidiStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('read')
+            ->will($this->onConsecutiveCalls($response, null));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null);
+
+        /* @var $stream \Google\ApiCore\BidiStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'BidiStreaming']
+        );
+
+        $actualResponsesArray = [];
+        foreach ($stream->closeWriteAndReadAll() as $actualResponse) {
+            $actualResponsesArray[] = $actualResponse;
+        }
+        $this->assertEquals([$response], $actualResponsesArray);
+    }
+
+    public function testBidiStreamingSuccessObject()
+    {
+        $response = new \Google\Rpc\Status();
+        $response->setCode(Code::OK);
+        $response->setMessage('response');
+
+        $status = new stdClass;
+        $status->code = Code::OK;
+
+        $call = $this->getMockBuilder(\Grpc\BidiStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('read')
+            ->will($this->onConsecutiveCalls($response, null));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null);
+
+        /* @var $stream \Google\ApiCore\BidiStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'BidiStreaming']
+        );
+
+        $actualResponsesArray = [];
+        foreach ($stream->closeWriteAndReadAll() as $actualResponse) {
+            $actualResponsesArray[] = $actualResponse;
+        }
+        $this->assertEquals([$response], $actualResponsesArray);
+    }
+
+    public function testBidiStreamingSuccessResources()
+    {
+        $responses = ['resource1', 'resource2'];
+        $repeatedField = new RepeatedField(GPBType::STRING);
+        foreach ($responses as $response) {
+            $repeatedField[] = $response;
+        }
+
+        $response = $this->createMockResponse('nextPageToken', $repeatedField);
+
+        $status = new stdClass;
+        $status->code = Code::OK;
+
+        $call = $this->getMockBuilder(\Grpc\BidiStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('read')
+            ->will($this->onConsecutiveCalls($response, null));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null);
+
+        /* @var $stream \Google\ApiCore\BidiStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'BidiStreaming', 'resourcesGetMethod' => 'getResourcesList']
+        );
+
+        $actualResponsesArray = [];
+        foreach ($stream->closeWriteAndReadAll() as $actualResponse) {
+            $actualResponsesArray[] = $actualResponse;
+        }
+        $this->assertEquals($responses, $actualResponsesArray);
+    }
+
+    /**
+     * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionMessage bidi failure
+     */
+    public function testBidiStreamingFailure()
+    {
+        $response = "response";
+        $status = new stdClass;
+        $status->code = Code::INTERNAL;
+        $status->details = 'bidi failure';
+
+        $call = $this->getMockBuilder(\Grpc\BidiStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $call->method('read')
+            ->will($this->onConsecutiveCalls($response, null));
+        $call->method('getStatus')
+            ->will($this->returnValue($status));
+
+        $transport = new MockGrpcTransport('my-service-address:8443', [
+            'scopes' => ['my-scope']
+        ]);
+        $transport->setMockCall($call);
+
+        $callSettings = new CallSettings([]);
+        $call = new Call('takeAction', null);
+
+        /* @var $stream \Google\ApiCore\BidiStream */
+        $stream = $transport->startStreamingCall(
+            $call,
+            $callSettings,
+            ['streamingType' => 'BidiStreaming']
+        );
+
+        foreach ($stream->closeWriteAndReadAll() as $actualResponse) {
+            // for loop to trigger generator and API exception
+        }
     }
 }

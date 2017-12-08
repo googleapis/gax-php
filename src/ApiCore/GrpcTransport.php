@@ -45,7 +45,6 @@ use GuzzleHttp\Promise\PromiseInterface;
 class GrpcTransport extends BaseStub implements ApiTransportInterface
 {
     use ApiTransportTrait;
-    use ValidationTrait;
 
     private $credentialsCallback;
 
@@ -158,7 +157,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                         $call->getDecodeType(),
                         $settings->getUserHeaders() ?: [],
                         $this->getOptions($settings)
-                    )
+                    ),
+                    ['resourcesGetMethod' => $resourcesGetMethod]
                 );
             case 'BidiStreaming':
                 return new BidiStream(
@@ -167,7 +167,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                         $call->getDecodeType(),
                         $settings->getUserHeaders() ?: [],
                         $this->getOptions($settings)
-                    )
+                    ),
+                    ['resourcesGetMethod' => $resourcesGetMethod]
                 );
             default:
                 throw new ValidationException("Unexpected gRPC streaming type: $streamingType");

@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\UnitTests\Mocks;
 
-use Google\ApiCore\ApiException;
 use UnderflowException;
 
 /**
@@ -72,11 +71,6 @@ trait MockStubTrait
         array $metadata = [],
         array $options = []
     ) {
-        if (is_a($argument, '\Google\Protobuf\Internal\Message')) {
-            $newArgument = new $argument();
-            $newArgument->mergeFromString($argument->serializeToString());
-            $argument = $newArgument;
-        }
         $this->receivedFuncCalls[] = new ReceivedRequest($method, $argument, $deserialize, $metadata, $options);
         if (count($this->responses) < 1) {
             throw new UnderflowException("ran out of responses");

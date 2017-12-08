@@ -41,6 +41,7 @@ use Google\Auth\HttpHandler\HttpHandlerFactory;
 trait ApiTransportTrait
 {
     use ArrayTrait;
+    use ValidationTrait;
 
     private $agentHeaderDescriptor;
 
@@ -141,7 +142,9 @@ trait ApiTransportTrait
         callable $callable,
         CallSettings $settings
     ) {
-        $callable = new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+        if ($this->agentHeaderDescriptor) {
+            $callable = new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+        }
 
         $retrySettings = $settings->getRetrySettings();
         if ($retrySettings && $retrySettings->retriesEnabled()) {

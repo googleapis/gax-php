@@ -37,13 +37,8 @@
 namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\ApiTransportInterface;
 use Google\ApiCore\LongRunning\OperationsClient;
-use Google\ApiCore\GrpcTransportTrait;
-use Google\ApiCore\UnitTests\GrpcTestTrait;
 use Google\ApiCore\UnitTests\Mocks\MockOperationsClient;
-use Google\ApiCore\UnitTests\Mocks\MockStubTrait;
-use Google\ApiCore\UnitTests\GeneratedTest;
 use Google\LongRunning\ListOperationsResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;

@@ -36,9 +36,6 @@ use Google\ApiCore\CallSettings;
 use Google\ApiCore\Page;
 use Google\ApiCore\PageStreamingDescriptor;
 use Google\ApiCore\UnitTests\Mocks\MockStatus;
-use Google\ApiCore\UnitTests\Mocks\MockRequest;
-use Google\ApiCore\UnitTests\Mocks\MockResponse;
-use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
 use Grpc;
 

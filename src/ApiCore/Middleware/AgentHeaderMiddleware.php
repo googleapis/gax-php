@@ -65,8 +65,8 @@ class AgentHeaderMiddleware
             $call,
             $settings->with([
                 'userHeaders' => array_merge(
-                    $agentHeaders,
-                    $userHeaders
+                    $userHeaders,
+                    $agentHeaders
                 )
             ])
         );

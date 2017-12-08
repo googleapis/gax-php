@@ -35,9 +35,6 @@ use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
 use Google\ApiCore\PagedListResponse;
 use Google\ApiCore\PageStreamingDescriptor;
-use Google\ApiCore\UnitTests\Mocks\MockRequest;
-use Google\ApiCore\UnitTests\Mocks\MockResponse;
-use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
 
 class PagedListResponseTest extends TestCase

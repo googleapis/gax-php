@@ -33,7 +33,6 @@ namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\CallSettings;
 use Google\ApiCore\RetrySettings;
-use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 class CallSettingsTest extends TestCase

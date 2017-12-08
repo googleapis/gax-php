@@ -45,13 +45,13 @@ class ServerStream
      * ServerStream constructor.
      *
      * @param \Grpc\ServerStreamingCall $serverStreamingCall The gRPC server streaming call object
-     * @param array $grpcStreamingDescriptor
+     * @param array $streamingDescriptor
      */
-    public function __construct($serverStreamingCall, array $grpcStreamingDescriptor = [])
+    public function __construct($serverStreamingCall, array $streamingDescriptor = [])
     {
         $this->call = $serverStreamingCall;
-        if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
-            $this->resourcesGetMethod = $grpcStreamingDescriptor['resourcesGetMethod'];
+        if (array_key_exists('resourcesGetMethod', $streamingDescriptor)) {
+            $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
         }
     }
 
