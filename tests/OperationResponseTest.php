@@ -32,10 +32,8 @@
 namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\OperationResponse;
-use Google\ApiCore\LongRunning\OperationsClient;
 use Google\Longrunning\Operation;
 use Google\Protobuf\Any;
-use Google\Rpc\Status;
 use PHPUnit\Framework\TestCase;
 
 class OperationResponseTest extends TestCase

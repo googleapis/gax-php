@@ -34,7 +34,6 @@ namespace Google\ApiCore\UnitTests;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\UnitTests\Mocks\MockServerStreamingCall;
 use Google\ApiCore\UnitTests\Mocks\MockStatus;
-use Google\ApiCore\UnitTests\TestTrait;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
 use Grpc;

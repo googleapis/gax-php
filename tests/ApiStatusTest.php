@@ -31,11 +31,9 @@
  */
 namespace Google\ApiCore\UnitTests;
 
-use Exception;
 use Google\ApiCore\ApiStatus;
 use Google\Rpc\Code;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 class ApiStatusTest extends TestCase
 {

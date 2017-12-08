@@ -48,13 +48,13 @@ class BidiStream
      * BidiStream constructor.
      *
      * @param \Grpc\BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
-     * @param array $grpcStreamingDescriptor
+     * @param array $streamingDescriptor
      */
-    public function __construct($bidiStreamingCall, array $grpcStreamingDescriptor = [])
+    public function __construct($bidiStreamingCall, array $streamingDescriptor = [])
     {
         $this->call = $bidiStreamingCall;
-        if (array_key_exists('resourcesGetMethod', $grpcStreamingDescriptor)) {
-            $this->resourcesGetMethod = $grpcStreamingDescriptor['resourcesGetMethod'];
+        if (array_key_exists('resourcesGetMethod', $streamingDescriptor)) {
+            $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
         }
     }
 

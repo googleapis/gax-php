@@ -33,7 +33,6 @@
 namespace Google\ApiCore\UnitTests\Mocks;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\UnitTests\Mocks\MockStatus;
 use Google\Rpc\Code;
 use Grpc;
 

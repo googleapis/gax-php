@@ -37,6 +37,9 @@ use ReflectionClass;
 
 class MockGrpcTransport extends GrpcTransport
 {
+    private $requestArguments;
+    private $mockCall;
+
     protected function _simpleRequest(
         $method,
         $arguments,
@@ -44,9 +47,65 @@ class MockGrpcTransport extends GrpcTransport
         array $metadata = [],
         array $options = []
     ) {
-        return new MockUnaryCall(
-            [$method, $arguments, $deserialize, $metadata, $options]
-        );
+        $this->logCall($method, $deserialize, $metadata, $options, $arguments);
+        return $this->mockCall;
+    }
+
+    protected function _clientStreamRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $this->logCall($method, $deserialize, $metadata, $options);
+        return $this->mockCall;
+    }
+
+    protected function _serverStreamRequest(
+        $method,
+        $arguments,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $this->logCall($method, $deserialize, $metadata, $options, $arguments);
+        return $this->mockCall;
+    }
+
+    protected function _bidiRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $this->logCall($method, $deserialize, $metadata, $options);
+        return $this->mockCall;
+    }
+
+    private function logCall(
+        $method,
+        $deserialize,
+        $metadata = [],
+        $options = [],
+        $arguments = null
+    ) {
+        $this->requestArguments = [
+            'method' => $method,
+            'arguments' => $arguments,
+            'deserialize' => $deserialize,
+            'metadata' => $metadata,
+            'options' => $options,
+        ];
+    }
+
+    public function getRequestArguments()
+    {
+        return $this->requestArguments;
+    }
+
+    public function setMockCall($mockCall)
+    {
+        $this->mockCall = $mockCall;
     }
 
     public function getHostname()

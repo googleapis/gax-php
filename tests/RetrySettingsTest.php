@@ -32,7 +32,6 @@
 namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\RetrySettings;
-use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 class RetrySettingsTest extends TestCase

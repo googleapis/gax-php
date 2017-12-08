@@ -31,9 +31,12 @@
  */
 namespace Google\ApiCore\UnitTests;
 
+use Grpc\UnaryCall;
 use Google\ApiCore\UnitTests\Mocks\MockRequest;
+use Google\ApiCore\UnitTests\Mocks\MockStatus;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\Protobuf\Any;
+use Google\Rpc\Code;
 use Google\Rpc\Status;
 
 trait TestTrait
@@ -54,6 +57,19 @@ trait TestTrait
             ->willReturn($resourcesList);
 
         return $mockResponse;
+    }
+
+    public function createMockCall($response = null, $status = null)
+    {
+        $status = $status ?: new MockStatus(Code::OK);
+        $call = $this->getMockBuilder(UnaryCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $call->method('wait')
+            ->will($this->returnValue([$response, $status]));
+
+        return $call;
     }
 
     public function createCallWithResponseSequence($sequence)

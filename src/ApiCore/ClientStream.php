@@ -44,9 +44,9 @@ class ClientStream
      * ClientStream constructor.
      *
      * @param \Grpc\ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
-     * @param array $grpcStreamingDescriptor
+     * @param array $streamingDescriptor
      */
-    public function __construct($clientStreamingCall, array $grpcStreamingDescriptor = [])
+    public function __construct($clientStreamingCall, array $streamingDescriptor = [])
     {
         $this->call = $clientStreamingCall;
     }

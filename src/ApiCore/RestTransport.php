@@ -41,7 +41,6 @@ use Psr\Http\Message\ResponseInterface;
 class RestTransport implements ApiTransportInterface
 {
     use ApiTransportTrait;
-    use ValidationTrait;
 
     private $credentialsLoader;
     private $httpHandler;

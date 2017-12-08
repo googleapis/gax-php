@@ -34,48 +34,103 @@ namespace Google\ApiCore\UnitTests\Mocks;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiTransportInterface;
+use Google\ApiCore\ApiTransportTrait;
+use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
-use Google\Protobuf\Internal\Message;
+use Google\Rpc\Code;
+use GuzzleHttp\Promise\Promise;
 
 class MockTransport implements ApiTransportInterface
 {
     use MockStubTrait;
+    use ApiTransportTrait;
 
-    /**
-     * Creates an API request
-     * @return callable
-     */
-    public function startCall($method, Message $message, $decodeTo, CallSettings $settings)
+    private $agentHeaderDescriptor;
+    private $streamingDescriptor;
+
+    public function setAgentHeaderDescriptor($agentHeaderDescriptor)
+    {
+        $this->agentHeaderDescriptor = $agentHeaderDescriptor;
+    }
+
+    private function getCallable(CallSettings $settings)
+    {
+        $callable = function (Call $call, CallSettings $settings) {
+            $decode = $call->getDecodeType() ? [$call->getDecodeType(), 'decode'] : null;
+            $call = $this->_simpleRequest(
+                '/' . $call->getMethod(),
+                $call->getMessage(),
+                $decode,
+                $settings->getUserHeaders() ?: []
+            );
+
+            $promise = new Promise(
+                function () use ($call, &$promise) {
+                    list($response, $status) = $call->wait();
+
+                    if ($status->code == Code::OK) {
+                        $promise->resolve($response);
+                    } else {
+                        throw ApiException::createFromStdClass($status);
+                    }
+                },
+                [$call, 'cancel']
+            );
+
+            return $promise;
+        };
+
+        return $this->createCallStack($callable, $settings);
+    }
+
+    public function startStreamingCall(Call $call, CallSettings $callSettings, array $streamingDescriptor)
     {
         $handler = [$this, $method];
         $callable = function () use ($handler) {
-            list($response, $status) = call_user_func_array($handler, func_get_args())->wait();
-            if ($status->code == \Google\Rpc\Code::OK) {
-                return $response;
-            } else {
-                throw ApiException::createFromStdClass($status);
-            }
+            return call_user_func_array($handler, func_get_args());
         };
+        $this->streamingDescriptor = $streamingDescriptor;
         return $this->createCallStack($callable, $settings, $options);
-    }
-
-    public function startStreamingCall($method, $decodeTo, CallSettings $callSettings, Message $message = null)
-    {
-        throw new \Exception('Use MockStreamingTransport');
     }
 
     public function __call($name, $arguments)
     {
-        $metadata = [];
-        $options = [];
-        list($request, $optionalArgs) = $arguments;
+        if ($this->streamingDescriptor) {
+            if (array_key_exists('headers', $optionalArgs)) {
+                $metadata = $optionalArgs['headers'];
+            }
 
-        if (array_key_exists('headers', $optionalArgs)) {
-            $metadata = $optionalArgs['headers'];
+            switch ($this->descriptor['streamingType']) {
+                case 'BidiStreaming':
+                    $newArgs = [$name, $this->deserialize, $metadata, $optionalArgs];
+                    $response = call_user_func_array(array($this, '_bidiRequest'), $newArgs);
+                    return new BidiStream($response, $this->descriptor);
+
+                case 'ClientStreaming':
+                    $newArgs = [$name, $this->deserialize, $metadata, $optionalArgs];
+                    $response = call_user_func_array(array($this, '_clientStreamRequest'), $newArgs);
+                    return new ClientStream($response, $this->descriptor);
+
+                case 'ServerStreaming':
+                    $newArgs = [$name, $request, $this->deserialize, $metadata, $optionalArgs];
+                    $response = call_user_func_array(array($this, '_serverStreamRequest'), $newArgs);
+                    return new ServerStream($response, $this->descriptor);
+
+                default:
+                    throw new \Exception('Invalid streaming type');
+            }
         }
 
-        $newArgs = [$name, $request, $this->deserialize, $metadata, $optionalArgs];
-        return call_user_func_array(array($this, '_simpleRequest'), $newArgs);
+        $call = $arguments[0];
+        $settings = $arguments[1];
+        $decode = $call->getDecodeType() ? [$call->getDecodeType(), 'decode'] : null;
+        return $this->_simpleRequest(
+            '/' . $call->getMethod(),
+            $call->getMessage(),
+            $decode,
+            $settings->getUserHeaders() ?: [],
+            []
+        );
     }
 
     public function methodThatSleeps($argument, $options)

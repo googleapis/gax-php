@@ -32,7 +32,6 @@
 namespace Google\ApiCore\UnitTests;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\Serializer;
 use Google\Protobuf\Duration;
 use Google\Rpc\BadRequest;
 use Google\Rpc\DebugInfo;
