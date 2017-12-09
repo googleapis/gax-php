@@ -142,11 +142,11 @@ class RestTransport implements ApiTransportInterface
 
     private function getOptions(CallSettings $settings)
     {
-        $options = $settings->getRestOptions() ?: [];
-        $retrySettings = $settings->getRetrySettings();
+        $transportOptions = $settings->getTransportOptions();
+        $options =  isset($transportOptions['rest']) ? $transportOptions['rest'] : [];
 
-        if ($retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-            $options['timeout'] = $retrySettings->getNoRetriesRpcTimeoutMillis() / 1000;
+        if ($settings->getTimeoutMillis() !== false) {
+            $options['timeout'] = $settings->getTimeoutMillis() / 1000;
         }
 
         return $options;
