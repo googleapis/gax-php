@@ -146,10 +146,7 @@ trait ApiTransportTrait
             $callable = new Middleware\AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
         }
 
-        $retrySettings = $settings->getRetrySettings();
-        if ($retrySettings && $retrySettings->retriesEnabled()) {
-            $callable = new Middleware\RetryMiddleware($callable);
-        }
+        $callable = new Middleware\RetryMiddleware($callable);
 
         return $callable;
     }

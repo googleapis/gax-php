@@ -177,12 +177,12 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
 
     private function getOptions(CallSettings $settings)
     {
-        $retrySettings = $settings->getRetrySettings();
-        $options = $settings->getGrpcOptions() ?: []
-            + ['call_credentials_callback' => $this->credentialsCallback];
+        $transportOptions = $settings->getTransportOptions();
+        $options = isset($transportOptions['grpc']) ? $transportOptions['grpc'] : [];
+        $options += ['call_credentials_callback' => $this->credentialsCallback];
 
-        if ($retrySettings && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-            $options['timeout'] = $retrySettings->getNoRetriesRpcTimeoutMillis() * 1000;
+        if ($timeout = $settings->getTimeoutMillis()) {
+            $options['timeout'] = $timeout * 1000;
         }
 
         return $options;
