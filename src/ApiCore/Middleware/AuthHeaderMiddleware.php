@@ -58,7 +58,7 @@ class AuthHeaderMiddleware
     public function __invoke(Call $call, CallSettings $settings)
     {
         $next = $this->nextHandler;
-        $headers = $settings->getUserHeaders() ?: [] + [
+        $headers = ($settings->getUserHeaders() ?: []) + [
             'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
         ];
 
