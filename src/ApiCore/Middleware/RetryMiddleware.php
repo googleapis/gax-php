@@ -110,7 +110,7 @@ class RetryMiddleware
         $totalTimeoutMs = $retrySettings->getTotalTimeoutMillis();
 
         $delayMs = $retrySettings->getInitialRetryDelayMillis();
-        $timeoutMs = $retrySettings->getInitialRpcTimeoutMillis();
+        $timeoutMs = $settings->getTimeoutMillis();
         $currentTimeMs = $this->getCurrentTimeMs();
         $deadlineMs = $this->deadlineMs ?: $currentTimeMs + $totalTimeoutMs;
 
