@@ -59,26 +59,28 @@ class RetryMiddleware
     public function __invoke(Call $call, CallSettings $settings)
     {
         $nextHandler = $this->nextHandler;
+
         $retrySettings = $settings->getRetrySettings();
 
-        // Handle the case where retry settings are disabled and set the timeout
-        // to "noRetriesRpcTimeoutMillis" if set.
-        if (!$retrySettings->retriesEnabled() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-            return $nextHandler(
-                $call,
-                $settings->with([
+        // Call and return the handler immediately if retry settings are disabled.
+        if (!$retrySettings->retriesEnabled()) {
+            // If no timeout has been explicitly set, use "noRetriesRpcTimeoutMillis" as the timeout.
+            if (!$settings->getTimeoutMillis() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+                $settings = $settings->with([
                     'timeoutMillis' => $retrySettings->getNoRetriesRpcTimeoutMillis()
-                ])
-            );
+                ]);
+            }
+            return $nextHandler($call, $settings);
         }
 
-        $settings = $settings->with([
-            'timeoutMillis' => $retrySettings->getInitialRpcTimeoutMillis()
-        ]);
+        // If no timeout has been explicitly set, use "initialRpcTimeoutMillis" as the timeout.
+        if (!$settings->getTimeoutMillis() && $retrySettings->getInitialRpcTimeoutMillis() > 0) {
+            $settings = $settings->with([
+                'timeoutMillis' => $retrySettings->getInitialRpcTimeoutMillis()
+            ]);
+        }
 
-        // Handle the case where retry settings are enabled
-        return $nextHandler($call, $settings)
-            ->then(null, function (\Exception $e) use ($call, $settings) {
+        return $nextHandler($call, $settings)->then(null, function (Exception $e) use ($call, $settings) {
                 if (!$e instanceof ApiException) {
                     throw $e;
                 }

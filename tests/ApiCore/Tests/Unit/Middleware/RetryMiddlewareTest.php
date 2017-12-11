@@ -33,15 +33,17 @@
 namespace Google\ApiCore\Tests\Unit\Middleware;
 
 use Google\ApiCore\ApiException;
+use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
+use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\RetrySettings;
-use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Tests\Mocks\MockStatus;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Tests\Mocks\MockTransport;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
+use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -221,5 +223,34 @@ class RetryMiddlewareTest extends TestCase
 
         $this->assertNotNull($raisedException);
         $this->assertEquals(Code::DEADLINE_EXCEEDED, $raisedException->getCode());
+    }
+
+    public function testTimeoutMillisCallSettingsOverwrite()
+    {
+        $handlerCalled = false;
+        $timeout = 1000;
+        $handler = function (Call $call, CallSettings $settings) use (&$handlerCalled, $timeout) {
+            $handlerCalled = true;
+            $this->assertEquals($timeout, $settings->getTimeoutMillis());
+            return $this->getMock(Promise::class);
+        };
+        $middleware = new RetryMiddleware($handler);
+        $retrySettings = new RetrySettings([
+            'initialRetryDelayMillis' => 10,
+            'retryDelayMultiplier' => 1,
+            'maxRetryDelayMillis' => 10,
+            'initialRpcTimeoutMillis' => 500,
+            'rpcTimeoutMultiplier' => 1,
+            'maxRpcTimeoutMillis' => 500,
+            'totalTimeoutMillis' => 1000,
+            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
+        ]);
+        $call = new Call('someMethod', null);
+        $settings = new CallSettings([
+            'timeoutMillis' => $timeout,
+            'retrySettings' => $retrySettings
+        ]);
+        $middleware($call, $settings);
+        $this->assertTrue($handlerCalled);
     }
 }

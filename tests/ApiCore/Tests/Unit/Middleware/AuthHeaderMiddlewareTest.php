@@ -62,7 +62,6 @@ class AuthHeaderMiddlewareTest extends TestCase
         $settings = new CallSettings();
         $middleware($call, $settings);
         $this->assertTrue($handlerCalled);
-
     }
 
     public function testAuthHeaderWithUserHeaders()
