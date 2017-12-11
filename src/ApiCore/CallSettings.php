@@ -87,7 +87,10 @@ class CallSettings
                 }
             }
 
-            $callSettings[$phpMethodKey] = new CallSettings(['retrySettings' => $retrySettings]);
+            $callSettings[$phpMethodKey] = new CallSettings([
+                'timeoutMillis' => $methodConfig['timeout_millis'],
+                'retrySettings' => $retrySettings
+            ]);
         }
         return $callSettings;
     }
@@ -96,7 +99,6 @@ class CallSettings
     {
         return new RetrySettings([
             'retriesEnabled' => false,
-            'noRetriesRpcTimeoutMillis' => 30000,
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             'maxRetryDelayMillis' => 60000,
@@ -112,13 +114,9 @@ class CallSettings
         $retryCodes,
         $retryParams
     ) {
-        $timeoutMillis = $methodConfig['timeout_millis'];
-
         if (empty($methodConfig['retry_codes_name']) || empty($methodConfig['retry_params_name'])) {
             // Construct a RetrySettings object with retries disabled
-            return self::constructDefaultRetrySettings()->with([
-                'noRetriesRpcTimeoutMillis' => $timeoutMillis,
-            ]);
+            return self::constructDefaultRetrySettings();
         }
 
         $retryCodesName = $methodConfig['retry_codes_name'];
@@ -141,7 +139,6 @@ class CallSettings
 
         $retrySettings = $retryParameters + [
             'retryableCodes' => $retryCodes[$retryCodesName],
-            'noRetriesRpcTimeoutMillis' => $timeoutMillis,
         ];
 
         return new RetrySettings($retrySettings);

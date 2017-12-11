@@ -62,22 +62,16 @@ class RetryMiddleware
 
         $retrySettings = $settings->getRetrySettings();
 
-        // Call and return the handler immediately if retry settings are disabled.
-        if (!$retrySettings->retriesEnabled()) {
-            // If no timeout has been explicitly set, use "noRetriesRpcTimeoutMillis" as the timeout.
-            if (!$settings->getTimeoutMillis() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $settings = $settings->with([
-                    'timeoutMillis' => $retrySettings->getNoRetriesRpcTimeoutMillis()
-                ]);
-            }
-            return $nextHandler($call, $settings);
-        }
-
         // If no timeout has been explicitly set, use "initialRpcTimeoutMillis" as the timeout.
         if (!$settings->getTimeoutMillis() && $retrySettings->getInitialRpcTimeoutMillis() > 0) {
             $settings = $settings->with([
                 'timeoutMillis' => $retrySettings->getInitialRpcTimeoutMillis()
             ]);
+        }
+
+        // Call and return the handler immediately if retry settings are disabled.
+        if (!$retrySettings->retriesEnabled()) {
+            return $nextHandler($call, $settings);
         }
 
         return $nextHandler($call, $settings)->then(null, function (Exception $e) use ($call, $settings) {
@@ -110,7 +104,7 @@ class RetryMiddleware
         $totalTimeoutMs = $retrySettings->getTotalTimeoutMillis();
 
         $delayMs = $retrySettings->getInitialRetryDelayMillis();
-        $timeoutMs = $retrySettings->getInitialRpcTimeoutMillis();
+        $timeoutMs = $settings->getTimeoutMillis();
         $currentTimeMs = $this->getCurrentTimeMs();
         $deadlineMs = $this->deadlineMs ?: $currentTimeMs + $totalTimeoutMs;
 
