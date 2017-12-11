@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\GAX\UnitTests\Middleware;
+namespace Google\ApiCore\Tests\Unit\Middleware;
 
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\Call;

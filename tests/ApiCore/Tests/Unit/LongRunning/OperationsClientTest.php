@@ -34,7 +34,7 @@
  * This file was automatically generated - do not edit!
  */
 
-namespace Google\ApiCore\LongRunning\Tests\Unit;
+namespace Google\ApiCore\Tests\Unit\LongRunning;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\LongRunning\OperationsClient;
