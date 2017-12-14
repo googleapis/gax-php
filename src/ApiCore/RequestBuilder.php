@@ -35,42 +35,62 @@ namespace Google\ApiCore;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Psr7\Request;
 
+/**
+ * Builds a PSR-7 request from a set of request information.
+ */
 class RequestBuilder
 {
+    use ArrayTrait;
+
+    /**
+     * @param string $baseUri
+     * @param string $clientConfigPath
+     */
     public function __construct($baseUri, $clientConfigPath)
     {
         $this->baseUri = $baseUri;
-        $this->clientConfig = $this->loadClientConfig($clientConfigPath);
+        $this->clientConfig = require($clientConfigPath);
     }
 
+    /**
+     * @param string $path
+     * @param Message $message
+     * @param array $headers
+     */
     public function build($path, Message $message, array $headers = [])
     {
         list($interface, $method) = explode('/', $path);
 
-        if (isset($this->clientConfig['interfaces'][$interface]['methods'][$method])) {
-            $call = $this->clientConfig['interfaces'][$interface]['methods'][$method];
-            $template = new PathTemplate(
-                $call['uri']
-            );
+        if (isset($this->clientConfig['interfaces'][$interface][$method])) {
+            $request = $this->clientConfig['interfaces'][$interface][$method];
+            $template = new PathTemplate($request['uri']);
+            $placeholders = isset($request['placeholders'])
+                ? $request['placeholders']
+                : [];
+            $bindings = [];
 
-            $path = $template->render(['subscription' => $message->getSubscription()]);
-            // @todo need to determine how to fetch the placeholder
+            foreach ($placeholders as $key => &$getters) {
+                $value = $message;
+
+                foreach ($getters as $getter) {
+                    $value = $value->$getter();
+                }
+
+                $bindings[$key] = $value;
+            }
+
+            $path = $template->render($bindings);
+
             return new Request(
-                $call['method'],
+                $request['method'],
                 "https://$this->baseUri/$path",
                 ['Content-Type' => 'application/json'] + $headers,
-                isset($call['body']) ? $message->serializeToJsonString() : null
+                isset($request['body']) ? $message->serializeToJsonString() : null
             );
         }
 
-        throw new \Exception('Unable to build request.');
-    }
-
-    private function loadClientConfig($clientConfigPath)
-    {
-        return json_decode(
-            file_get_contents($clientConfigPath, true),
-            true
+        throw new \RuntimeException(
+            "Failed to build request, as the provided path ($path) was not found in the configuration."
         );
     }
 }
