@@ -90,9 +90,9 @@ namespace Google\ApiCore;
  * method, and setting a custom timeout:
  * ```
  * $result = $client->listGroups($name, [
+ *     'timeoutMillis' => 5000,
  *     'retrySettings' => [
  *         'retriesEnabled' => false,
- *         'noRetriesRpcTimeoutMillis' => 5000,
  *     ]
  * ]);
  * ```
@@ -185,22 +185,17 @@ class RetrySettings
     private $maxRpcTimeoutMillis;
     private $totalTimeoutMillis;
 
-    private $noRetriesRpcTimeoutMillis;
-
     /**
      * Constructs an instance.
      *
      * @param array $settings {
      *     Required. Settings for configuring the retry behavior. All parameters are required except
-     *     $retriesEnabled and $noRetriesRpcTimeoutMillis, which are optional and have defaults
+     *     $retriesEnabled, which are optional and have defaults
      *     determined based on the other settings provided.
      *
      *     @type bool    $retriesEnabled Optional. Enables retries. If not specified, the value is
      *                   determined using the $retryableCodes setting. If $retryableCodes is empty,
      *                   then $retriesEnabled is set to false; otherwise, it is set to true.
-     *     @type int     $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
-     *                   if $retriesEnabled is false, in milliseconds. It not specified, the value
-     *                   of $initialRpcTimeoutMillis is used.
      *     @type array   $retryableCodes The Status codes that are retryable. Each status should be
      *                   either one of the string constants defined on {@see \Google\ApiCore\ApiStatus}
      *                   or an integer constant defined on {@see \Google\Rpc\Code}.
@@ -236,9 +231,6 @@ class RetrySettings
         $this->retriesEnabled = array_key_exists('retriesEnabled', $settings)
             ? $settings['retriesEnabled']
             : (count($this->retryableCodes) > 0);
-        $this->noRetriesRpcTimeoutMillis = array_key_exists('noRetriesRpcTimeoutMillis', $settings)
-            ? $settings['noRetriesRpcTimeoutMillis']
-            : $this->initialRpcTimeoutMillis;
     }
 
     /**
@@ -264,7 +256,6 @@ class RetrySettings
             'totalTimeoutMillis' => $this->getTotalTimeoutMillis(),
             'retryableCodes' => $this->getRetryableCodes(),
             'retriesEnabled' => $this->retriesEnabled(),
-            'noRetriesRpcTimeoutMillis' => $this->getNoRetriesRpcTimeoutMillis(),
         ];
         return new RetrySettings($settings + $existingSettings);
     }
@@ -275,15 +266,6 @@ class RetrySettings
     public function retriesEnabled()
     {
         return $this->retriesEnabled;
-    }
-
-    /**
-     * @return int The timeout of the rpc call to be used if $retriesEnabled is false,
-     *             in milliseconds.
-     */
-    public function getNoRetriesRpcTimeoutMillis()
-    {
-        return $this->noRetriesRpcTimeoutMillis;
     }
 
     /**
@@ -323,8 +305,7 @@ class RetrySettings
 
     /**
      * @return int The initial rpc timeout in milliseconds. If $this->retriesEnabled()
-     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to
-     *             set the timeout in that case.
+     *             is false, this setting is unused.
      */
     public function getInitialRpcTimeoutMillis()
     {
@@ -342,8 +323,7 @@ class RetrySettings
 
     /**
      * @return int The maximum rpc timeout in milliseconds. If $this->retriesEnabled()
-     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to
-     *             set the timeout in that case.
+     *             is false, this setting is unused.
      */
     public function getMaxRpcTimeoutMillis()
     {
@@ -353,8 +333,7 @@ class RetrySettings
     /**
      * @return int The total time in milliseconds to spend on the call, including all
      *             retry attempts and delays between attempts. If $this->retriesEnabled()
-     *             is false, this setting is unused - use noRetriesRpcTimeoutMillis to
-     *             set the timeout in that case.
+     *             is false, this setting is unused.
      */
     public function getTotalTimeoutMillis()
     {

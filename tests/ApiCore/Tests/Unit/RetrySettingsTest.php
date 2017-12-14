@@ -111,10 +111,6 @@ class RetrySettingsTest extends TestCase
             $expectedValues['retriesEnabled'],
             $retrySettings->retriesEnabled()
         );
-        $this->assertSame(
-            $expectedValues['noRetriesRpcTimeoutMillis'],
-            $retrySettings->getNoRetriesRpcTimeoutMillis()
-        );
     }
 
     public function retrySettingsProvider()
@@ -138,17 +134,16 @@ class RetrySettingsTest extends TestCase
             'maxRpcTimeoutMillis' => 600,
             'totalTimeoutMillis' => 2000,
             'retryableCodes' => [1],
-            'noRetriesRpcTimeoutMillis' => 150,
             'retriesEnabled' => true
         ];
         return [
             [
-                // Test with retryableCodes, without retriesEnabled or noRetriesRpcTimeoutMillis
+                // Test with retryableCodes, without retriesEnabled
                 $defaultSettings,
                 $defaultExpectedValues
             ],
             [
-                // Test with empty retryableCodes, without retriesEnabled or noRetriesRpcTimeoutMillis
+                // Test with empty retryableCodes, without retriesEnabled
                 [
                     'retryableCodes' => [],
                 ] + $defaultSettings,
@@ -177,15 +172,6 @@ class RetrySettingsTest extends TestCase
                     'retriesEnabled' => true
                 ] + $defaultExpectedValues
             ],
-            [
-                // Test with noRetriesRpcTimeoutMillis
-                [
-                    'noRetriesRpcTimeoutMillis' => 151,
-                ] + $defaultSettings,
-                [
-                    'noRetriesRpcTimeoutMillis' => 151,
-                ] + $defaultExpectedValues
-            ]
         ];
     }
 
@@ -200,7 +186,6 @@ class RetrySettingsTest extends TestCase
             'maxRpcTimeoutMillis' => 1,
             'totalTimeoutMillis' => 1,
             'retryableCodes' => [1],
-            'noRetriesRpcTimeoutMillis' => 1,
             'retriesEnabled' => true,
         ];
         $defaultExpectedValues = [
@@ -212,7 +197,6 @@ class RetrySettingsTest extends TestCase
             'maxRpcTimeoutMillis' => 1,
             'totalTimeoutMillis' => 1,
             'retryableCodes' => [1],
-            'noRetriesRpcTimeoutMillis' => 1,
             'retriesEnabled' => true,
         ];
         return [
@@ -244,7 +228,6 @@ class RetrySettingsTest extends TestCase
                     'maxRpcTimeoutMillis' => 7,
                     'totalTimeoutMillis' => 8,
                     'retryableCodes' => [9],
-                    'noRetriesRpcTimeoutMillis' => 10,
                     'retriesEnabled' => false,
                 ],
                 [
@@ -256,7 +239,6 @@ class RetrySettingsTest extends TestCase
                     'maxRpcTimeoutMillis' => 7,
                     'totalTimeoutMillis' => 8,
                     'retryableCodes' => [9],
-                    'noRetriesRpcTimeoutMillis' => 10,
                     'retriesEnabled' => false,
                 ]
             ]
