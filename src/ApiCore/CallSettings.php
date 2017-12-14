@@ -153,11 +153,14 @@ class CallSettings
      * @param array $settings {
      *     Optional.
      *
-     *     @type \Google\ApiCore\RetrySettings $retrySettings
+     *     @type RetrySettings $retrySettings
      *           Retry settings to use for this method.
      *     @type array $userHeaders
      *           An array of headers to be included in the request.
      *     @type array $transportOptions
+     *           Transport specific options. A key of `grpc` or `rest` containing
+     *           the approriate options should be supplied.
+     *     @type int $timeoutMillis The timeout for the request.
      * }
      */
     public function __construct(array $settings = [])
@@ -175,11 +178,14 @@ class CallSettings
      * @param array $settings {
      *     Optional.
      *
-     *     @type \Google\ApiCore\RetrySettings $retrySettings
-     *           Retry settings to use for CallSettings object.
+     *     @type RetrySettings $retrySettings
+     *           Retry settings to use for this method.
      *     @type array $userHeaders
      *           An array of headers to be included in the request.
      *     @type array $transportOptions
+     *           Transport specific options. A key of `grpc` or `rest` containing
+     *           the approriate options should be supplied.
+     *     @type int $timeoutMillis The timeout for the request.
      * }
      * @return CallSettings
      */
@@ -218,7 +224,7 @@ class CallSettings
     }
 
     /**
-     * @return array Timeout milliseconds
+     * @return int Timeout milliseconds
      */
     public function getTimeoutMillis()
     {
