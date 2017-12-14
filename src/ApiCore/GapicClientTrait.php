@@ -32,8 +32,6 @@
 
 namespace Google\ApiCore;
 
-use Exception;
-use InvalidArgumentException;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Transport\ApiTransportInterface;
 use Google\Cloud\Version;
