@@ -44,19 +44,17 @@
 
 namespace Google\ApiCore\LongRunning\Gapic;
 
-use Google\ApiCore\AgentHeaderDescriptor;
-use Google\ApiCore\ApiCallable;
-use Google\ApiCore\CallSettings;
+use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
-use Google\ApiCore\GrpcCredentialsHelper;
-use Google\ApiCore\PageStreamingDescriptor;
+use Google\ApiCore\Transport\ApiTransportInterface;
 use Google\ApiCore\ValidationException;
-use Google\Cloud\Version;
 use Google\LongRunning\CancelOperationRequest;
 use Google\LongRunning\DeleteOperationRequest;
 use Google\LongRunning\GetOperationRequest;
 use Google\LongRunning\ListOperationsRequest;
-use InvalidArgumentException;
+use Google\LongRunning\ListOperationsResponse;
+use Google\LongRunning\Operation;
+use Google\Protobuf\GPBEmpty;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -83,7 +81,7 @@ use InvalidArgumentException;
  *         'scopes' => ['my-service-scope'],
  *     ];
  *     $operationsClient = new OperationsClient($options);
- *     $name = "";
+ *     $name = '';
  *     $response = $operationsClient->getOperation($name);
  * } finally {
  *     if (isset($operationsClient)) {
@@ -97,6 +95,11 @@ use InvalidArgumentException;
 class OperationsGapicClient
 {
     use GapicClientTrait;
+
+    /**
+     * The name of the service.
+     */
+    const SERVICE_NAME = 'google.longrunning.Operations';
 
     /**
      * The default port of the service.
@@ -113,46 +116,13 @@ class OperationsGapicClient
      */
     const CODEGEN_VERSION = '0.0.5';
 
-    private static $gapicVersion;
-    private static $gapicVersionLoaded = false;
-
-    protected $operationsTransport;
-    private $scopes;
-    private $defaultCallSettings;
-    private $descriptors;
-
-    private static function getPageStreamingDescriptors()
-    {
-        $listOperationsPageStreamingDescriptor =
-                new PageStreamingDescriptor([
-                    'requestPageTokenGetMethod' => 'getPageToken',
-                    'requestPageTokenSetMethod' => 'setPageToken',
-                    'requestPageSizeGetMethod' => 'getPageSize',
-                    'requestPageSizeSetMethod' => 'setPageSize',
-                    'responsePageTokenGetMethod' => 'getNextPageToken',
-                    'resourcesGetMethod' => 'getOperations',
-                ]);
-
-        $pageStreamingDescriptors = [
-            'listOperations' => $listOperationsPageStreamingDescriptor,
-        ];
-
-        return $pageStreamingDescriptors;
-    }
-
-    private static function getGapicVersion()
-    {
-        if (!self::$gapicVersionLoaded) {
-            if (file_exists(__DIR__.'/../VERSION')) {
-                self::$gapicVersion = trim(file_get_contents(__DIR__.'/../VERSION'));
-            } elseif (class_exists(Version::class)) {
-                self::$gapicVersion = Version::VERSION;
-            }
-            self::$gapicVersionLoaded = true;
-        }
-
-        return self::$gapicVersion;
-    }
+    private static $clientDefaults = [
+        'serviceName' => self::SERVICE_NAME,
+        'port' => self::DEFAULT_SERVICE_PORT,
+        'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
+        'restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php',
+        'descriptorsConfigPath' => __DIR__.'/../resources/operations_descriptor_config.php',
+    ];
 
     /**
      * Constructor.
@@ -164,18 +134,19 @@ class OperationsGapicClient
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
      *     @type \Grpc\Channel $channel
-     *           Optional. A `Channel` object to be used by gRPC. If not specified, a channel will be constructed.
+     *           A `Channel` object. If not specified, a channel will be constructed.
+     *           NOTE: This option is only valid when utilizing the gRPC transport.
      *     @type \Grpc\ChannelCredentials $sslCreds
-     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
+     *           A `ChannelCredentials` object for use with an SSL-enabled channel.
      *           Default: a credentials object returned from
-     *           \Grpc\ChannelCredentials::createSsl()
-     *           NOTE: if the $channel optional argument is specified, then this option is unused.
+     *           \Grpc\ChannelCredentials::createSsl().
+     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
+     *           optional argument is specified, then this argument is unused.
      *     @type bool $forceNewChannel
-     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
+     *           If true, this forces gRPC to create a new channel instead of using a persistent channel.
      *           Defaults to false.
-     *           NOTE: if the $channel optional argument is specified, then this option is unused.
-     *     @type mixed $transport Optional, the string "grpc". Determines the backend transport used
-     *           to make the API call.
+     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
+     *           optional argument is specified, then this option is unused.
      *     @type \Google\Auth\CredentialsLoader $credentialsLoader
      *           A CredentialsLoader object created using the Google\Auth library.
      *     @type array $scopes Required. A string array of scopes to use when acquiring credentials.
@@ -193,6 +164,17 @@ class OperationsGapicClient
      *           for example usage. Passing a value of null is equivalent to a value of
      *           ['retriesEnabled' => false]. Retry settings provided in this setting override the
      *           settings in $clientConfigPath.
+     *     @type callable $authHttpHandler A handler used to deliver PSR-7 requests specifically
+     *           for authentication. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`
+     *           NOTE: This option is only valid when utilizing the REST transport.
+     *     @type callable $httpHandler A handler used to deliver PSR-7 requests. Should match a
+     *           signature of `function (RequestInterface $request, array $options) : PromiseInterface`
+     *           NOTE: This option is only valid when utilizing the REST transport.
+     *     @type string|ApiTransportInterface $transport The transport used for executing network
+     *           requests. May be either the string `rest` or `grpc`. Additionally, it is possible
+     *           to pass in an already instantiated transport. Defaults to `grpc` if gRPC support is
+     *           detected on the system.
      * }
      *
      * @throws ValidationException Throws a ValidationException if required arguments are missing
@@ -201,67 +183,7 @@ class OperationsGapicClient
      */
     public function __construct($options = [])
     {
-        if (!array_key_exists('serviceAddress', $options)) {
-            throw new ValidationException("The 'serviceAddress' option must be provided.");
-        }
-        if (!array_key_exists('scopes', $options)) {
-            throw new ValidationException("The 'scopes' option must be provided.");
-        }
-        $defaultOptions = [
-            'port' => self::DEFAULT_SERVICE_PORT,
-            'retryingOverride' => null,
-            'libName' => null,
-            'libVersion' => null,
-            'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
-        ];
-        $options = array_merge($defaultOptions, $options);
-
-        $gapicVersion = $options['libVersion'] ?: self::getGapicVersion();
-
-        $headerDescriptor = new AgentHeaderDescriptor([
-            'libName' => $options['libName'],
-            'libVersion' => $options['libVersion'],
-            'gapicVersion' => $gapicVersion,
-        ]);
-
-        $defaultDescriptors = ['headerDescriptor' => $headerDescriptor];
-        $this->descriptors = [
-            'getOperation' => $defaultDescriptors,
-            'listOperations' => $defaultDescriptors,
-            'cancelOperation' => $defaultDescriptors,
-            'deleteOperation' => $defaultDescriptors,
-        ];
-        $pageStreamingDescriptors = self::getPageStreamingDescriptors();
-        foreach ($pageStreamingDescriptors as $method => $pageStreamingDescriptor) {
-            $this->descriptors[$method]['pageStreamingDescriptor'] = $pageStreamingDescriptor;
-        }
-
-        $clientConfigJsonString = file_get_contents($options['clientConfigPath']);
-        $clientConfig = json_decode($clientConfigJsonString, true);
-        $this->defaultCallSettings =
-                CallSettings::load(
-                    'google.longrunning.Operations',
-                    $clientConfig,
-                    $options['retryingOverride']
-                );
-
-        $this->scopes = $options['scopes'];
-
-        if (empty($options['createTransportFunction'])) {
-            $options['createTransportFunction'] = function ($options, $transport = null) {
-                switch ($transport) {
-                    case 'grpc':
-                        if (empty($options['createGrpcStubFunction'])) {
-                            $options['createGrpcStubFunction'] = function ($fullAddress, $stubOpts, $channel) {
-                                return new OperationsGrpcClient($fullAddress, $stubOpts, $channel);
-                            };
-                        }
-                        return new \Google\GAX\Grpc\GrpcTransport($options);
-                }
-                throw new InvalidArgumentException('Invalid transport provided: ' . $transport);
-            };
-        }
-        $this->operationsTransport = $this->getTransport($options);
+        $this->setClientOptions($options + self::$clientDefaults);
     }
 
     /**
@@ -277,7 +199,7 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = "";
+     *     $name = '';
      *     $response = $operationsClient->getOperation($name);
      * } finally {
      *     if (isset($operationsClient)) {
@@ -307,21 +229,14 @@ class OperationsGapicClient
         $request = new GetOperationRequest();
         $request->setName($name);
 
-        $defaultCallSettings = $this->defaultCallSettings['getOperation'];
-        if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
-            $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
-                $optionalArgs['retrySettings']
-            );
-        }
-        $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-
-        $callable = $this->operationsTransport->createApiCall(
-            'GetOperation',
-            $mergedSettings,
-            $this->descriptors['getOperation']
-        );
-
-        return $callable($request, []);
+        return $this->startCall(
+            new Call(
+                self::SERVICE_NAME.'/GetOperation',
+                Operation::class,
+                $request
+            ),
+            $this->configureCallSettings('getOperation', $optionalArgs)
+        )->wait();
     }
 
     /**
@@ -339,16 +254,16 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = "";
-     *     $filter = "";
+     *     $name = '';
+     *     $filter = '';
      *     // Iterate through all elements
      *     $pagedResponse = $operationsClient->listOperations($name, $filter);
      *     foreach ($pagedResponse->iterateAllElements() as $element) {
      *         // doSomethingWith($element);
      *     }
      *
-     *     // OR iterate over pages of elements, with the maximum page size set to 5
-     *     $pagedResponse = $operationsClient->listOperations($name, $filter, ['pageSize' => 5]);
+     *     // OR iterate over pages of elements
+     *     $pagedResponse = $operationsClient->listOperations($name, $filter);
      *     foreach ($pagedResponse->iteratePages() as $page) {
      *         foreach ($page as $element) {
      *             // doSomethingWith($element);
@@ -399,20 +314,15 @@ class OperationsGapicClient
             $request->setPageToken($optionalArgs['pageToken']);
         }
 
-        $defaultCallSettings = $this->defaultCallSettings['listOperations'];
-        if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
-            $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
-                $optionalArgs['retrySettings']
-            );
-        }
-        $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = $this->operationsTransport->createApiCall(
-            'ListOperations',
-            $mergedSettings,
-            $this->descriptors['listOperations']
+        return $this->getPagedListResponse(
+            new Call(
+                self::SERVICE_NAME.'/ListOperations',
+                ListOperationsResponse::class,
+                $request
+            ),
+            $this->configureCallSettings('listOperations', $optionalArgs),
+            $this->descriptors['listOperations']['pageStreaming']
         );
-
-        return $callable($request, []);
     }
 
     /**
@@ -424,8 +334,7 @@ class OperationsGapicClient
      * other methods to check whether the cancellation succeeded or whether the
      * operation completed despite cancellation. On successful cancellation,
      * the operation is not deleted; instead, it becomes an operation with
-     * an [Operation.error][google.longrunning.Operation.error] value with a
-     * [google.rpc.Status.code][google.rpc.Status.code] of 1,
+     * an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
      * corresponding to `Code.CANCELLED`.
      *
      * Sample code:
@@ -436,7 +345,7 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = "";
+     *     $name = '';
      *     $operationsClient->cancelOperation($name);
      * } finally {
      *     if (isset($operationsClient)) {
@@ -464,20 +373,14 @@ class OperationsGapicClient
         $request = new CancelOperationRequest();
         $request->setName($name);
 
-        $defaultCallSettings = $this->defaultCallSettings['cancelOperation'];
-        if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
-            $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
-                $optionalArgs['retrySettings']
-            );
-        }
-        $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = $this->operationsTransport->createApiCall(
-            'CancelOperation',
-            $mergedSettings,
-            $this->descriptors['cancelOperation']
-        );
-
-        return $callable($request, []);
+        return $this->startCall(
+            new Call(
+                self::SERVICE_NAME.'/CancelOperation',
+                GPBEmpty::class,
+                $request
+            ),
+            $this->configureCallSettings('cancelOperation', $optionalArgs)
+        )->wait();
     }
 
     /**
@@ -494,7 +397,7 @@ class OperationsGapicClient
      *         'scopes' => ['my-service-scope'],
      *     ];
      *     $operationsClient = new OperationsClient($options);
-     *     $name = "";
+     *     $name = '';
      *     $operationsClient->deleteOperation($name);
      * } finally {
      *     if (isset($operationsClient)) {
@@ -522,20 +425,14 @@ class OperationsGapicClient
         $request = new DeleteOperationRequest();
         $request->setName($name);
 
-        $defaultCallSettings = $this->defaultCallSettings['deleteOperation'];
-        if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
-            $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
-                $optionalArgs['retrySettings']
-            );
-        }
-        $mergedSettings = $defaultCallSettings->merge(new CallSettings($optionalArgs));
-        $callable = $this->operationsTransport->createApiCall(
-            'DeleteOperation',
-            $mergedSettings,
-            $this->descriptors['deleteOperation']
-        );
-
-        return $callable($request, []);
+        return $this->startCall(
+            new Call(
+                self::SERVICE_NAME.'/DeleteOperation',
+                GPBEmpty::class,
+                $request
+            ),
+            $this->configureCallSettings('deleteOperation', $optionalArgs)
+        )->wait();
     }
 
     /**
@@ -546,6 +443,6 @@ class OperationsGapicClient
      */
     public function close()
     {
-        $this->operationsTransport->close();
+        $this->transport->close();
     }
 }
