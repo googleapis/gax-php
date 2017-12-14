@@ -58,7 +58,8 @@ class TransportFactory
         'transport'         => null,
         'authCacheOptions'  => null,
         'gapicVersion'      => null,
-        'httpHandler'       => null
+        'httpHandler'       => null,
+        'transport'         => null
     ];
 
     /**
@@ -125,46 +126,16 @@ class TransportFactory
             'libVersion' => $args['libVersion'],
             'gapicVersion' => $args['gapicVersion']
         ]);
-        $isGrpcExtensionLoaded = self::getGrpcDependencyStatus();
-        $defaultTransport = $isGrpcExtensionLoaded
-            ? 'grpc'
-            : 'rest';
-        $transport = isset($args['transport'])
-            ? strtolower($args['transport'])
-            : $defaultTransport;
+        $args['transport'] = self::handleTransport($args['transport']);
+        $args['credentialsLoader'] = self::handleCredentialsLoader($args);
 
-        if (!isset($args['credentialsLoader'])) {
-            self::validateNotNull($args, ['scopes']);
-
-            if (!isset($args['authHttpHandler'])) {
-                $args['authHttpHandler'] = HttpHandlerFactory::build();
-            }
-
-            $args['credentialsLoader'] = self::getADCCredentials(
-                $args['scopes'],
-                $args['authHttpHandler']
-            );
-        }
-
-        if ($args['enableCaching']) {
-            if (!isset($args['authCache'])) {
-                $args['authCache'] = new MemoryCacheItemPool();
-            }
-
-            $args['credentialsLoader'] = new FetchAuthTokenCache(
-                $args['credentialsLoader'],
-                $args['authCacheOptions'],
-                $args['authCache']
-            );
-        }
-
-        switch ($transport) {
+        switch ($args['transport']) {
             case 'grpc':
-                if (!$isGrpcExtensionLoaded) {
-                    throw new Exception(
+                if (!self::getGrpcDependencyStatus()) {
+                    throw new InvalidArgumentException(
                         'gRPC support has been requested but required dependencies ' .
-                        'have not been found. Please make sure to run the following ' .
-                        'from the command line: pecl install grpc'
+                        'have not been found. For details on how to install the ' .
+                        'gRPC extension please see https://cloud.google.com/php/grpc.'
                     );
                 }
                 $stubOpts = [
@@ -232,5 +203,69 @@ class TransportFactory
     protected static function createSslChannelCredentials()
     {
         return ChannelCredentials::createSsl();
+    }
+
+    /**
+     * @param string|null $transport
+     * @return string
+     */
+    private static function handleTransport($transport)
+    {
+        if ($transport) {
+            return strtolower($transport);
+        }
+
+        $transport = self::getGrpcDependencyStatus()
+            ? 'grpc'
+            : 'rest';
+
+        if ($transport === 'rest') {
+            trigger_error(
+                'For best performance, it is highly recommended to install the ' .
+                'gRPC extension. For details on how to do so, please see ' .
+                'https://cloud.google.com/php/grpc. To disable this notice and ' .
+                'continue without using gRPC please explicitly define your ' .
+                'transport choice as "rest" when configuring your client.',
+                E_USER_NOTICE
+            );
+        }
+
+        return $transport;
+    }
+
+    /**
+     * @param array $args
+     * @return CredentialsLoader
+     */
+    private static function handleCredentialsLoader(array $args)
+    {
+        if (isset($args['credentialsLoader'])) {
+            return $args['credentialsLoader'];
+        }
+
+        self::validateNotNull($args, ['scopes']);
+
+        if (!isset($args['authHttpHandler'])) {
+            $args['authHttpHandler'] = HttpHandlerFactory::build();
+        }
+
+        $loader = self::getADCCredentials(
+            $args['scopes'],
+            $args['authHttpHandler']
+        );
+
+        if ($args['enableCaching']) {
+            if (!isset($args['authCache'])) {
+                $args['authCache'] = new MemoryCacheItemPool();
+            }
+
+            $loader = new FetchAuthTokenCache(
+                $loader,
+                $args['authCacheOptions'],
+                $args['authCache']
+            );
+        }
+
+        return $loader;
     }
 }
