@@ -33,6 +33,7 @@ namespace Google\ApiCore\Transport;
 
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\ApiException;
+use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
 use Google\ApiCore\RequestBuilder;

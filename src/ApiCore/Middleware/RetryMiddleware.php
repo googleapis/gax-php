@@ -81,16 +81,16 @@ class RetryMiddleware
         }
 
         return $nextHandler($call, $settings)->then(null, function (Exception $e) use ($call, $settings) {
-                if (!$e instanceof ApiException) {
-                    throw $e;
-                }
+            if (!$e instanceof ApiException) {
+                throw $e;
+            }
 
-                if (!in_array($e->getStatus(), $settings->getRetrySettings()->getRetryableCodes())) {
-                    throw $e;
-                }
+            if (!in_array($e->getStatus(), $settings->getRetrySettings()->getRetryableCodes())) {
+                throw $e;
+            }
 
-                return $this->retry($call, $settings, $e->getStatus());
-            });
+            return $this->retry($call, $settings, $e->getStatus());
+        });
     }
 
     /**
