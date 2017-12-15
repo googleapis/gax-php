@@ -94,7 +94,7 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     {
         $this->validateStreamingApiCallSettings($settings);
 
-        $callable = new AgentHeaderMiddleware(
+        return $this->createCallStack(
             function (Call $call, CallSettings $settings) use ($descriptor) {
                 return new BidiStream(
                     $this->_bidiRequest(
@@ -106,10 +106,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     $descriptor
                 );
             },
-            $this->agentHeaderDescriptor
+            $settings
         );
-
-        return $callable($call, $settings);
     }
 
     /**
@@ -119,21 +117,20 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     {
         $this->validateStreamingApiCallSettings($settings);
 
-        $callable = new AgentHeaderMiddleware(
-            function () use ($call, $settings) {
+        return $this->createCallStack(
+            function (Call $call, CallSettings $settings) use ($descriptor) {
                 return new ClientStream(
                     $this->_clientStreamRequest(
                         $call->getMethod(),
                         $call->getDecodeType(),
                         $settings->getUserHeaders() ?: [],
                         $this->getOptions($settings)
-                    )
+                    ),
+                    $descriptor
                 );
             },
-            $this->agentHeaderDescriptor
+            $settings
         );
-
-        return $callable($call, $settings);
     }
 
     /**
@@ -148,8 +145,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             throw new \InvalidArgumentException('A message is required for ServerStreaming calls.');
         }
 
-        $callable = new AgentHeaderMiddleware(
-            function () use ($call, $settings, $descriptor) {
+        return $this->createCallStack(
+            function (Call $call, CallSettings $settings) use ($descriptor) {
                 return new ServerStream(
                     $this->_serverStreamRequest(
                         $call->getMethod(),
@@ -161,10 +158,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
                     $descriptor
                 );
             },
-            $this->agentHeaderDescriptor
+            $settings
         );
-
-        return $callable($call, $settings);
     }
 
     /**
