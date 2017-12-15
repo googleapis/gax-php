@@ -33,14 +33,17 @@
 namespace Google\ApiCore;
 
 use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Builds a PSR-7 request from a set of request information.
  */
 class RequestBuilder
 {
-    use ArrayTrait;
+    use UriTrait;
 
     /**
      * @param string $baseUri
@@ -56,41 +59,97 @@ class RequestBuilder
      * @param string $path
      * @param Message $message
      * @param array $headers
+     * @return RequestInterface
+     * @throws \RuntimeException
      */
     public function build($path, Message $message, array $headers = [])
     {
         list($interface, $method) = explode('/', $path);
 
         if (isset($this->clientConfig['interfaces'][$interface][$method])) {
-            $request = $this->clientConfig['interfaces'][$interface][$method];
-            $template = new PathTemplate($request['uri']);
-            $placeholders = isset($request['placeholders'])
-                ? $request['placeholders']
-                : [];
-            $bindings = [];
+            $config = $this->clientConfig['interfaces'][$interface][$method] + [
+                'placeholders' => [],
+                'body' => null
+            ];
+            $uri = $this->buildUri(
+                $config['uri'],
+                $config['placeholders'],
+                $message
+            );
+            $body = null;
 
-            foreach ($placeholders as $key => &$getters) {
-                $value = $message;
+            if ($config['body'] === '*') {
+                $body = $message->serializeToJsonString();
+            } else {
+                $refClass = new \ReflectionClass($message);
+                $messageProps = $refClass->getProperties(\ReflectionProperty::IS_PRIVATE);
+                $queryParams = [];
 
-                foreach ($getters as $getter) {
-                    $value = $value->$getter();
+                foreach ($messageProps as $property) {
+                    $name = $property->getName();
+
+                    if (array_key_exists($name, $config['placeholders'])) {
+                        continue;
+                    }
+
+                    $property->setAccessible(true);
+                    if ($name === $config['body']) {
+                        $body = $property->getValue($message)
+                            ->serializeToJsonString();
+                        continue;
+                    }
+
+                    $queryParams[$name] = $property->getValue($message);
                 }
 
-                $bindings[$key] = $value;
+                if ($queryParams) {
+                    $uri = $this->buildUriWithQuery(
+                        $uri,
+                        $queryParams
+                    );
+                }
             }
 
-            $path = $template->render($bindings);
-
             return new Request(
-                $request['method'],
-                "https://$this->baseUri/$path",
+                $config['method'],
+                $uri,
                 ['Content-Type' => 'application/json'] + $headers,
-                isset($request['body']) ? $message->serializeToJsonString() : null
+                $body
             );
         }
 
         throw new \RuntimeException(
             "Failed to build request, as the provided path ($path) was not found in the configuration."
+        );
+    }
+
+    /**
+     * @param string $uriTemplate
+     * @param array $placeholders
+     * @param Message $message
+     * @return UriInterface
+     */
+    private function buildUri($uriTemplate, array $placeholders, Message $message)
+    {
+        $template = new PathTemplate($uriTemplate);
+        $bindings = [];
+
+        foreach ($placeholders as $placeholder => $getters) {
+            $bindings[$placeholder] = array_reduce(
+                $getters,
+                function (Message $result, $getter) {
+                    return $result->$getter();
+                },
+                $message
+            );
+        }
+
+        return Psr7\uri_for(
+            sprintf(
+                'https://%s/%s',
+                $this->baseUri,
+                $template->render($bindings)
+            )
         );
     }
 }
