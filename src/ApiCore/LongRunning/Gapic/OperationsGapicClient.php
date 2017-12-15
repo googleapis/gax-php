@@ -116,13 +116,16 @@ class OperationsGapicClient
      */
     const CODEGEN_VERSION = '0.0.5';
 
-    private static $clientDefaults = [
-        'serviceName' => self::SERVICE_NAME,
-        'port' => self::DEFAULT_SERVICE_PORT,
-        'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
-        'restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php',
-        'descriptorsConfigPath' => __DIR__.'/../resources/operations_descriptor_config.php',
-    ];
+    private static function getClientDefaults()
+    {
+        return [
+            'serviceName' => self::SERVICE_NAME,
+            'port' => self::DEFAULT_SERVICE_PORT,
+            'clientConfigPath' => __DIR__.'/../resources/operations_client_config.json',
+            'restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php',
+            'descriptorsConfigPath' => __DIR__.'/../resources/operations_descriptor_config.php',
+        ];
+    }
 
     /**
      * Constructor.
@@ -183,7 +186,7 @@ class OperationsGapicClient
      */
     public function __construct($options = [])
     {
-        $this->setClientOptions($options + self::$clientDefaults);
+        $this->setClientOptions($options + self::getClientDefaults());
     }
 
     /**
