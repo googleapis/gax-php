@@ -94,12 +94,12 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     {
         $this->validateStreamingApiCallSettings($settings);
 
-        return $this->createCallStack(
+        $callable = $this->createCallStack(
             function (Call $call, CallSettings $settings) use ($descriptor) {
                 return new BidiStream(
                     $this->_bidiRequest(
-                        $call->getMethod(),
-                        $call->getDecodeType(),
+                        '/' . $call->getMethod(),
+                        [$call->getDecodeType(), 'decode'],
                         $settings->getUserHeaders() ?: [],
                         $this->getOptions($settings)
                     ),
@@ -108,6 +108,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             },
             $settings
         );
+
+        return $callable($call, $settings);
     }
 
     /**
@@ -117,12 +119,12 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     {
         $this->validateStreamingApiCallSettings($settings);
 
-        return $this->createCallStack(
+        $callable = $this->createCallStack(
             function (Call $call, CallSettings $settings) use ($descriptor) {
                 return new ClientStream(
                     $this->_clientStreamRequest(
-                        $call->getMethod(),
-                        $call->getDecodeType(),
+                        '/' . $call->getMethod(),
+                        [$call->getDecodeType(), 'decode'],
                         $settings->getUserHeaders() ?: [],
                         $this->getOptions($settings)
                     ),
@@ -131,6 +133,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             },
             $settings
         );
+
+        return $callable($call, $settings);
     }
 
     /**
@@ -145,13 +149,13 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             throw new \InvalidArgumentException('A message is required for ServerStreaming calls.');
         }
 
-        return $this->createCallStack(
+        $callable = $this->createCallStack(
             function (Call $call, CallSettings $settings) use ($descriptor) {
                 return new ServerStream(
                     $this->_serverStreamRequest(
-                        $call->getMethod(),
+                        '/' . $call->getMethod(),
                         $message,
-                        $call->getDecodeType(),
+                        [$call->getDecodeType(), 'decode'],
                         $settings->getUserHeaders() ?: [],
                         $this->getOptions($settings)
                     ),
@@ -160,6 +164,8 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
             },
             $settings
         );
+
+        return $callable($call, $settings);
     }
 
     /**
