@@ -137,7 +137,7 @@ class RequestBuilder
         foreach ($placeholders as $placeholder => $getters) {
             $bindings[$placeholder] = array_reduce(
                 $getters,
-                function ($result, $getter) {
+                function (Message $result, $getter) {
                     return $result->$getter();
                 },
                 $message
