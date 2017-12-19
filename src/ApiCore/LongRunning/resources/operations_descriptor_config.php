@@ -3,7 +3,7 @@
 return [
     'interfaces' => [
         'google.longrunning.Operations' => [
-            'listOperations' => [
+            'ListOperations' => [
                 'pageStreaming' => [
                     'requestPageTokenGetMethod' => 'getPageToken',
                     'requestPageTokenSetMethod' => 'setPageToken',

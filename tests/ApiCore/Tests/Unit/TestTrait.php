@@ -90,7 +90,7 @@ trait TestTrait
 
     public function createOperationsClient($transport = null)
     {
-        $this->checkAndSkipGrpcTests();
+        $this->requiresGrpcExtension();
 
         $client = new OperationsClient([
             'createTransportFunction' => function ($hostname, $opts) use ($transport) {
@@ -127,7 +127,7 @@ trait TestTrait
         return $any;
     }
 
-    public static function checkAndSkipGrpcTests()
+    public static function requiresGrpcExtension()
     {
         if (!extension_loaded('grpc')) {
             self::markTestSkipped('Must have the grpc extension installed to run this test.');

@@ -60,8 +60,9 @@ class PagedListResponseTest extends TestCase
         };
 
         $call = new Call('method', [], $mockRequest);
+        $options = [];
 
-        $pageAccessor = new PagedListResponse($call, new CallSettings, $callable, $pageStreamingDescriptor);
+        $pageAccessor = new PagedListResponse($call, $options, $callable, $pageStreamingDescriptor);
         $page = $pageAccessor->getPage();
         $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
         $this->assertEquals(iterator_to_array($page->getIterator()), ['resource1']);

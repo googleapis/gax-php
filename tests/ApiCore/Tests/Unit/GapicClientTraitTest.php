@@ -30,42 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Tests\Unit\Middleware;
+namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\Call;
-use Google\ApiCore\Middleware\AgentHeaderMiddleware;
+use Google\ApiCore\GapicClientTrait;
+use Google\ApiCore\RetrySettings;
+use Google\ApiCore\Transport\TransportInterface;
 use PHPUnit\Framework\TestCase;
 
-class AgentHeaderMiddlewareTest extends TestCase
+class GapicClientTraitTest extends TestCase
 {
-    public function testCustomHeader()
+    public function testHeadersOverwriteBehavior()
     {
-        $call = $this->getMock(Call::class, [], [], '', false);
-        $headerDescriptor = new AgentHeaderDescriptor([
-            'libName' => 'gccl',
-            'libVersion' => '0.0.0',
-            'gapicVersion' => '0.9.0',
-            'apiCoreVersion' => '1.0.0',
-            'phpVersion' => '5.5.0',
-            'grpcVersion' => '1.0.1'
-        ]);
-        $expectedHeaders = [
-            'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1']
-        ];
-        $handlerCalled = false;
-        $callable = function(Call $call, $options) use ($expectedHeaders, &$handlerCalled) {
-            $this->assertEquals($expectedHeaders, $options['headers']);
-            $handlerCalled = true;
-        };
-        $middleware = new AgentHeaderMiddleware($callable, $headerDescriptor);
-        $middleware($call, []);
-        $this->assertTrue($handlerCalled);
-    }
-
-    public function testHeaders()
-    {
-        $call = $this->getMock(Call::class, [], [], '', false);
         $headerDescriptor = new AgentHeaderDescriptor([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
@@ -75,19 +52,50 @@ class AgentHeaderMiddlewareTest extends TestCase
             'grpcVersion' => '1.0.1'
         ]);
         $headers = [
-            'google-cloud-resource-prefix' => ['my-database'],
+            'x-goog-api-client' => ['this-should-not-be-used'],
+            'new-header' => ['this-should-be-used']
         ];
         $expectedHeaders = [
             'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1'],
-            'google-cloud-resource-prefix' => ['my-database'],
+            'new-header' => ['this-should-be-used'],
         ];
-        $handlerCalled = false;
-        $callable = function(Call $call, $options) use ($expectedHeaders, &$handlerCalled) {
-            $this->assertEquals($expectedHeaders, $options['headers']);
-            $handlerCalled = true;
-        };
-        $middleware = new AgentHeaderMiddleware($callable, $headerDescriptor);
-        $middleware($call, ['headers' => $headers]);
-        $this->assertTrue($handlerCalled);
+        $transport = $this->getMock(TransportInterface::class);
+        $transport->expects($this->once())
+             ->method('startUnaryCall')
+             ->with(
+                $this->isInstanceOf(Call::class),
+                $this->equalTo([
+                    'headers' => $expectedHeaders
+                ])
+            );
+        $client = new GapicClientTraitStub();
+        $client->set('agentHeaderDescriptor', $headerDescriptor);
+        $client->set('retrySettings', [
+            'method' => $this->getMockBuilder(RetrySettings::class)
+                ->disableOriginalConstructor()
+                ->getMock()
+            ]
+        );
+        $client->set('transport', $transport);
+        $client->call('startCall', [
+            'method',
+            'decodeType',
+            ['headers' => $headers]
+        ]);
+    }
+}
+
+class GapicClientTraitStub
+{
+    use GapicClientTrait;
+
+    public function call($fn, array $args)
+    {
+        return call_user_func_array([$this, $fn], $args);
+    }
+
+    public function set($name, $val)
+    {
+        $this->$name = $val;
     }
 }

@@ -39,13 +39,12 @@ namespace Google\ApiCore\Tests\Unit\LongRunning;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Testing\GeneratedTest;
-use Google\ApiCore\Tests\Mocks\MockOperationsClient;
-use Google\ApiCore\Tests\Unit\TestTrait;
+use Google\ApiCore\Tests\Mocks\MockTransport;
 use Google\LongRunning\ListOperationsResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
 use Google\Protobuf\GPBEmpty;
-use Grpc;
+use Google\Rpc\Code;
 use stdClass;
 
 /**
@@ -54,23 +53,9 @@ use stdClass;
  */
 class OperationsClientTest extends GeneratedTest
 {
-    use TestTrait;
-
-    public function setUp()
+    public function setUp($options = [])
     {
-        $this->checkAndSkipGrpcTests();
-    }
-
-    /**
-     * @return OperationsClient
-     */
-    private function createClient($options = [])
-    {
-        return new MockOperationsClient($options + [
-            'serviceAddress' => 'unknown-service-address',
-            'scopes' => ['unknown-service-scopes'],
-            'transport' => 'grpc',
-        ]);
+        $this->client = new MockOperationsClient();
     }
 
     /**
@@ -78,9 +63,7 @@ class OperationsClientTest extends GeneratedTest
      */
     public function getOperationTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         // Mock response
         $name2 = 'name2-1052831874';
@@ -88,14 +71,14 @@ class OperationsClientTest extends GeneratedTest
         $expectedResponse = new Operation();
         $expectedResponse->setName($name2);
         $expectedResponse->setDone($done);
-        $client->addResponse($expectedResponse);
+        $this->client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
 
-        $response = $client->getOperation($name);
+        $response = $this->client->getOperation($name);
         $this->assertEquals($expectedResponse, $response);
-        $actualRequests = $client->popReceivedCalls();
+        $actualRequests = $this->client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
@@ -104,7 +87,7 @@ class OperationsClientTest extends GeneratedTest
         $val = $actualRequestObject->getName();
         $this->assertProtobufEquals($name, $val);
 
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -112,28 +95,26 @@ class OperationsClientTest extends GeneratedTest
      */
     public function getOperationExceptionTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $client->addResponse(null, $status);
+        $this->client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
 
         try {
-            $client->getOperation($name);
-            // If the $client method call did not throw, fail the test
+            $this->client->getOperation($name);
+            // If the $this->client method call did not throw, fail the test
             $this->fail('Expected an ApiException, but no exception was thrown.');
         } catch (ApiException $ex) {
             $this->assertEquals($status->code, $ex->getCode());
@@ -141,8 +122,8 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $client->popReceivedCalls();
-        $this->assertTrue($client->isExhausted());
+        $this->client->popReceivedCalls();
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -150,9 +131,7 @@ class OperationsClientTest extends GeneratedTest
      */
     public function listOperationsTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         // Mock response
         $nextPageToken = '';
@@ -161,29 +140,29 @@ class OperationsClientTest extends GeneratedTest
         $expectedResponse = new ListOperationsResponse();
         $expectedResponse->setNextPageToken($nextPageToken);
         $expectedResponse->setOperations($operations);
-        $client->addResponse($expectedResponse);
+        $this->client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
         $filter = 'filter-1274492040';
 
-        $response = $client->listOperations($name, $filter);
+        $response = $this->client->listOperations($name, $filter);
         $this->assertEquals($expectedResponse, $response->getPage()->getResponseObject());
         $resources = iterator_to_array($response->iterateAllElements());
         $this->assertSame(1, count($resources));
         $this->assertEquals($expectedResponse->getOperations()[0], $resources[0]);
 
-        $actualRequests = $client->popReceivedCalls();
+        $actualRequests = $this->client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
-        $this->assertSame('/google.longrunning.Operations/ListOperation', $actualFuncCall);
+        $this->assertSame('/google.longrunning.Operations/ListOperations', $actualFuncCall);
 
         $actualName = $actualRequestObject->getName();
         $this->assertProtobufEquals($name, $actualName);
         $actualFilter = $actualRequestObject->getFilter();
         $this->assertProtobufEquals($filter, $actualFilter);
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -191,29 +170,27 @@ class OperationsClientTest extends GeneratedTest
      */
     public function listOperationsExceptionTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $client->addResponse(null, $status);
+        $this->client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
         $filter = 'filter-1274492040';
 
         try {
-            $client->listOperations($name, $filter);
-            // If the $client method call did not throw, fail the test
+            $this->client->listOperations($name, $filter);
+            // If the $this->client method call did not throw, fail the test
             $this->fail('Expected an ApiException, but no exception was thrown.');
         } catch (ApiException $ex) {
             $this->assertEquals($status->code, $ex->getCode());
@@ -221,8 +198,8 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $client->popReceivedCalls();
-        $this->assertTrue($client->isExhausted());
+        $this->client->popReceivedCalls();
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -230,19 +207,17 @@ class OperationsClientTest extends GeneratedTest
      */
     public function cancelOperationTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         // Mock response
         $expectedResponse = new GPBEmpty();
-        $client->addResponse($expectedResponse);
+        $this->client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
 
-        $client->cancelOperation($name);
-        $actualRequests = $client->popReceivedCalls();
+        $this->client->cancelOperation($name);
+        $actualRequests = $this->client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
@@ -251,7 +226,7 @@ class OperationsClientTest extends GeneratedTest
         $actualName = $actualRequestObject->getName();
         $this->assertProtobufEquals($name, $actualName);
 
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -259,28 +234,26 @@ class OperationsClientTest extends GeneratedTest
      */
     public function cancelOperationExceptionTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $client->addResponse(null, $status);
+        $this->client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
 
         try {
-            $client->cancelOperation($name);
-            // If the $client method call did not throw, fail the test
+            $this->client->cancelOperation($name);
+            // If the $this->client method call did not throw, fail the test
             $this->fail('Expected an ApiException, but no exception was thrown.');
         } catch (ApiException $ex) {
             $this->assertEquals($status->code, $ex->getCode());
@@ -288,8 +261,8 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $client->popReceivedCalls();
-        $this->assertTrue($client->isExhausted());
+        $this->client->popReceivedCalls();
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -297,19 +270,17 @@ class OperationsClientTest extends GeneratedTest
      */
     public function deleteOperationTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         // Mock response
         $expectedResponse = new GPBEmpty();
-        $client->addResponse($expectedResponse);
+        $this->client->addResponse($expectedResponse);
 
         // Mock request
         $name = 'name3373707';
 
-        $client->deleteOperation($name);
-        $actualRequests = $client->popReceivedCalls();
+        $this->client->deleteOperation($name);
+        $actualRequests = $this->client->popReceivedCalls();
         $this->assertSame(1, count($actualRequests));
         $actualFuncCall = $actualRequests[0]->getFuncCall();
         $actualRequestObject = $actualRequests[0]->getRequestObject();
@@ -318,7 +289,7 @@ class OperationsClientTest extends GeneratedTest
         $actualName = $actualRequestObject->getName();
         $this->assertProtobufEquals($name, $actualName);
 
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
     }
 
     /**
@@ -326,28 +297,26 @@ class OperationsClientTest extends GeneratedTest
      */
     public function deleteOperationExceptionTest()
     {
-        $client = $this->createClient();
-
-        $this->assertTrue($client->isExhausted());
+        $this->assertTrue($this->client->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
-        $client->addResponse(null, $status);
+        $this->client->addResponse(null, $status);
 
         // Mock request
         $name = 'name3373707';
 
         try {
-            $client->deleteOperation($name);
-            // If the $client method call did not throw, fail the test
+            $this->client->deleteOperation($name);
+            // If the $this->client method call did not throw, fail the test
             $this->fail('Expected an ApiException, but no exception was thrown.');
         } catch (ApiException $ex) {
             $this->assertEquals($status->code, $ex->getCode());
@@ -355,7 +324,35 @@ class OperationsClientTest extends GeneratedTest
         }
 
         // Call popReceivedCalls to ensure the stub is exhausted
-        $client->popReceivedCalls();
-        $this->assertTrue($client->isExhausted());
+        $this->client->popReceivedCalls();
+        $this->assertTrue($this->client->isExhausted());
     }
 }
+
+class MockOperationsClient extends OperationsClient
+{
+    private $transport;
+
+    public function __construct($args = [])
+    {
+        $args['transport'] = new MockTransport;
+        $this->transport = $args['transport'];
+        parent::__construct($args);
+    }
+
+    public function isExhausted()
+    {
+        return $this->transport->isExhausted();
+    }
+
+    public function addResponse($response, $status = null)
+    {
+        return $this->transport->addResponse($response, $status);
+    }
+
+    public function popReceivedCalls()
+    {
+        return $this->transport->popReceivedCalls();
+    }
+}
+

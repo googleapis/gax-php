@@ -63,7 +63,14 @@ class Parser
         try {
             Segment::resetSegmentCount();
             Segment::resetBindingCount();
-            $segments = $this->parser->parse($data);
+            if ($data === "") {
+                // create an empty string literal segment
+                $segments = [
+                    new Segment(Segment::TERMINAL, "")
+                ];
+            } else {
+                $segments = $this->parser->parse($data);
+            }
             $this->segmentCount = Segment::getSegmentCount();
             // Validation step: checks that there are no nested bindings.
             $pathWildcard = false;

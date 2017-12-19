@@ -40,12 +40,15 @@ use PHPUnit\Framework\TestCase;
 
 class InstantiateClassesTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @dataProvider classesProvider
      */
     public function testInstantiateProtobufClass($class)
     {
         if (strpos($class, 'GrpcClient') !== false) {
+            $this->requiresGrpcExtension();
             $instance = new $class('dummyhostname', ['credentials' => null]);
         } else {
             $instance = new $class();

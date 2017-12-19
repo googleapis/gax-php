@@ -36,17 +36,12 @@ use Google\ApiCore\Tests\Mocks\MockServerStreamingCall;
 use Google\ApiCore\Tests\Mocks\MockStatus;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
-use Grpc;
+use Google\Rpc\Code;
 use PHPUnit_Framework_TestCase;
 
 class ServerStreamTest extends PHPUnit_Framework_TestCase
 {
     use TestTrait;
-
-    public function setUp()
-    {
-        $this->checkAndSkipGrpcTests();
-    }
 
     public function testEmptySuccess()
     {
@@ -63,7 +58,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
      */
     public function testEmptyFailure()
     {
-        $call = new MockServerStreamingCall([], null, new MockStatus(Grpc\STATUS_INTERNAL, 'empty failure'));
+        $call = new MockServerStreamingCall([], null, new MockStatus(Code::INTERNAL, 'empty failure'));
         $stream = new ServerStream($call);
 
         $this->assertSame($call, $stream->getServerStreamingCall());
@@ -90,7 +85,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
         $call = new MockServerStreamingCall(
             $responses,
             null,
-            new MockStatus(Grpc\STATUS_INTERNAL, 'strings failure')
+            new MockStatus(Code::INTERNAL, 'strings failure')
         );
         $stream = new ServerStream($call);
 
@@ -109,8 +104,8 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
     public function testObjectsSuccess()
     {
         $responses = [
-            $this->createStatus(Grpc\STATUS_OK, 'response1'),
-            $this->createStatus(Grpc\STATUS_OK, 'response2')
+            $this->createStatus(Code::OK, 'response1'),
+            $this->createStatus(Code::OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -130,8 +125,8 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
     public function testObjectsFailure()
     {
         $responses = [
-            $this->createStatus(Grpc\STATUS_OK, 'response1'),
-            $this->createStatus(Grpc\STATUS_OK, 'response2')
+            $this->createStatus(Code::OK, 'response1'),
+            $this->createStatus(Code::OK, 'response2')
         ];
         $serializedResponses = [];
         foreach ($responses as $response) {
@@ -140,7 +135,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
         $call = new MockServerStreamingCall(
             $serializedResponses,
             ['\Google\Rpc\Status', 'mergeFromString'],
-            new MockStatus(Grpc\STATUS_INTERNAL, 'objects failure')
+            new MockStatus(Code::INTERNAL, 'objects failure')
         );
         $stream = new ServerStream($call);
 
@@ -191,7 +186,7 @@ class ServerStreamTest extends PHPUnit_Framework_TestCase
         $call = new MockServerStreamingCall(
             $responses,
             null,
-            new MockStatus(Grpc\STATUS_INTERNAL, 'resources failure')
+            new MockStatus(Code::INTERNAL, 'resources failure')
         );
         $stream = new ServerStream($call, [
             'resourcesGetMethod' => 'getResourcesList'
