@@ -42,17 +42,19 @@ class Call
     private $method;
     private $decodeType;
     private $message;
+    private $descriptor;
 
     /**
      * @param string $method
      * @param string $decodeType
      * @param Message $message
      */
-    public function __construct($method, $decodeType, Message $message = null)
+    public function __construct($method, $decodeType, Message $message = null, $descriptor = null)
     {
         $this->method = $method;
         $this->decodeType = $decodeType;
         $this->message = $message;
+        $this->descriptor = $descriptor;
     }
 
     /**
@@ -77,6 +79,14 @@ class Call
     public function getDecodeType()
     {
         return $this->decodeType;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDescriptor()
+    {
+        return $this->descriptor;
     }
 
     /**

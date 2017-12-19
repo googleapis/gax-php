@@ -32,7 +32,6 @@
 namespace Google\ApiCore;
 
 use Generator;
-use InvalidArgumentException;
 use IteratorAggregate;
 
 /**
@@ -45,7 +44,7 @@ class Page implements IteratorAggregate
 
     private $call;
     private $callable;
-    private $settings;
+    private $options;
     private $pageStreamingDescriptor;
 
     private $pageToken;
@@ -56,18 +55,18 @@ class Page implements IteratorAggregate
      * Page constructor.
      *
      * @param Call $call
-     * @param CallSettings $settings
+     * @param array $options
      * @param callable $callable
      * @param PageStreamingDescriptor $pageStreamingDescriptor
      */
     public function __construct(
         Call $call,
-        CallSettings $settings,
+        array $options,
         callable $callable,
         PageStreamingDescriptor $pageStreamingDescriptor
     ) {
         $this->call = $call;
-        $this->settings = $settings;
+        $this->options = $options;
         $this->callable = $callable;
         $this->pageStreamingDescriptor = $pageStreamingDescriptor;
 
@@ -77,7 +76,7 @@ class Page implements IteratorAggregate
         // Make API call eagerly
         $this->response = call_user_func_array(
             $this->callable,
-            [$this->call, $this->settings]
+            [$this->call, $this->options]
         )->wait();
     }
 
@@ -139,7 +138,7 @@ class Page implements IteratorAggregate
 
         return new Page(
             $this->call,
-            $this->settings,
+            $this->options,
             $this->callable,
             $this->pageStreamingDescriptor
         );

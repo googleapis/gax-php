@@ -33,7 +33,9 @@
 namespace Google\ApiCore;
 
 use Google\ApiCore\LongRunning\OperationsClient;
-use Google\ApiCore\Transport\ApiTransportInterface;
+use Google\ApiCore\Middleware\AgentHeaderMiddleware;
+use Google\ApiCore\Middleware\RetryMiddleware;
+use Google\ApiCore\Transport\TransportInterface;
 use Google\Cloud\Version;
 use Google\Protobuf\Internal\Message;
 
@@ -47,7 +49,8 @@ trait GapicClientTrait
 
     private static $gapicVersion;
 
-    private $defaultCallSettings;
+    private $retrySettings;
+    private $agentHeaderDescriptor;
     private $descriptors;
     private $transport;
 
@@ -64,6 +67,20 @@ trait GapicClientTrait
         return self::$gapicVersion;
     }
 
+
+    /**
+     * Configures the GAPIC client based on an array of options.
+     *
+     * @param array $options {
+     *     Required. An array of required and optional arguments.
+     *
+     *     @type string $libName
+     *           Optional. The name of the client application.
+     *     @type string $libVersion
+     *           Optional. The version of the client application.
+     *     @type string $gapicVersion
+     *           Optional. The code generator version of the GAPIC library.
+     */
     private function setClientOptions(array $options)
     {
         $this->validateNotNull($options, [
@@ -83,45 +100,74 @@ trait GapicClientTrait
             file_get_contents($options['clientConfigPath']),
             true
         );
-        $this->defaultCallSettings = CallSettings::load(
+        $this->retrySettings = RetrySettings::load(
             $options['serviceName'],
             $clientConfig,
             $this->pluck('retryingOverride', $options, false)
         );
+        $this->agentHeaderDescriptor = new AgentHeaderDescriptor([
+            'libName' => $this->pluck('libName', $options, false)
+            'libVersion' => $this->pluck('libVersion', $options, false)
+            'gapicVersion' => $options['gapicVersion']
+        ]);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$options['serviceName']];
-        $this->transport = $transport instanceof ApiTransportInterface
+        $this->transport = $transport instanceof TransportInterface
             ? $transport
             : TransportFactory::build($options);
     }
 
-    private function configureCallSettings($method, array $optionalArgs)
-    {
-        $defaultCallSettings = $this->defaultCallSettings[$method];
-        if (isset($optionalArgs['retrySettings']) && is_array($optionalArgs['retrySettings'])) {
-            $optionalArgs['retrySettings'] = $defaultCallSettings->getRetrySettings()->with(
-                $optionalArgs['retrySettings']
-            );
-        }
-
-        return $defaultCallSettings->merge(new CallSettings($optionalArgs));
-    }
-
     /**
-     * @param Call $call
-     * @param CallSettings $settings
+     * @param string $method
      *
-     * @return PromiseInterface
+     * @return callable
      */
-    private function startCall(Call $call, CallSettings $settings)
+    private function getUnaryCallable($method)
     {
-        $callable = $this->transport->getCallable($settings);
-        return $callable($call, $settings);
+        $callable = function (Call $call, array $options) {
+            return $this->transport->startUnaryCall($call, $options);
+        }
+        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+
+        return new RetryMiddleware($callable, $this->retrySettings[$method]);
+    }
+
+    /**
+     * @return callable
+     */
+    private function getBidiStreamingCallable()
+    {
+        $callable = function (Call $call, array $options) use ($type) {
+            return $this->transport->startBidiStreamingCall($call, $options);
+        };
+        return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+    }
+
+    /**
+     * @return callable
+     */
+    private function getClientStreamingCallable()
+    {
+        $callable = function (Call $call, array $options) use ($type) {
+            return $this->transport->startClientStreamingCall($call, $options);
+        };
+        return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+    }
+
+    /**
+     * @return callable
+     */
+    private function getServerStreamingCallable()
+    {
+        $callable = function (Call $call, array $options) use ($type) {
+            return $this->transport->startServerStreamingCall($call, $options);
+        };
+        return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
     }
 
     /**
      * @param Call $call
-     * @param CallSettings $settings
+     * @param array $options
      * @param OperationsGapicClient $client
      * @param array $descriptor
      *
@@ -129,11 +175,12 @@ trait GapicClientTrait
      */
     private function startOperationsCall(
         Call $call,
-        CallSettings $settings,
+        array $options,
         OperationsClient $client,
         array $descriptor
     ) {
-        return $this->startCall($call, $settings)
+        $callable = $this->getUnaryCallable($call->getMethod());
+        return $callable($call, $options)
             ->then(function (Message $response) use ($client, $descriptor) {
                 $options = $descriptor + [
                     'lastProtoResponse' => $response
@@ -145,17 +192,17 @@ trait GapicClientTrait
 
     /**
      * @param Call $call
-     * @param CallSettings $settings
+     * @param array $options
      * @param array $descriptor
      *
      * @return PagedListResponse
      */
-    private function getPagedListResponse(Call $call, CallSettings $settings, array $descriptor)
+    private function getPagedListResponse(Call $call, array $options, array $descriptor)
     {
         return new PagedListResponse(
             $call,
-            $settings,
-            $this->transport->getCallable($settings),
+            $options,
+            $this->getUnaryCallable($call->getMethod()),
             new PageStreamingDescriptor($descriptor)
         );
     }
