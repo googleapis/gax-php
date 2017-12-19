@@ -263,7 +263,10 @@ class RetrySettings
         $serviceRetrySettings = [];
 
         $serviceConfig = $clientConfig['interfaces'][$serviceName];
+        $retryCodes = $serviceConfig['retry_codes'];
+        $retryParams =$serviceConfig['retry_params'];
         foreach ($serviceConfig['methods'] as $methodName => $methodConfig) {
+            $phpMethodKey = lcfirst($methodName);
             $timeoutMillis = $methodConfig['timeout_millis'];
 
             if (empty($methodConfig['retry_codes_name']) || empty($methodConfig['retry_params_name'])) {

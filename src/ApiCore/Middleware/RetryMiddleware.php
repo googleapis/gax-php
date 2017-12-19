@@ -36,6 +36,7 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
+use Google\ApiCore\RetrySettings;
 
 /**
  * Middleware that adds retry functionality.
@@ -64,13 +65,6 @@ class RetryMiddleware
     public function __invoke(Call $call, array $options)
     {
         $nextHandler = $this->nextHandler;
-
-        // Allow for retry settings to be changed at call time
-        if (isset($options['retrySettings'])) {
-            $this->retrySettings = $this->retrySettings->with(
-               $options['retrySettings']
-            );
-        }
 
         // Call and return the handler immediately if retry settings are disabled.
         if (!$this->retrySettings->retriesEnabled()) {
@@ -142,7 +136,7 @@ class RetryMiddleware
             $this->nextHandler,
             $this->retrySettings->with([
                 'initialRetryDelayMillis' => $delayMs,
-            ])
+            ]),
             $deadlineMs
         );
 

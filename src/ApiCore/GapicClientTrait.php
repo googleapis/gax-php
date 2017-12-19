@@ -80,6 +80,7 @@ trait GapicClientTrait
      *           Optional. The version of the client application.
      *     @type string $gapicVersion
      *           Optional. The code generator version of the GAPIC library.
+     * }
      */
     private function setClientOptions(array $options)
     {
@@ -106,9 +107,9 @@ trait GapicClientTrait
             $this->pluck('retryingOverride', $options, false)
         );
         $this->agentHeaderDescriptor = new AgentHeaderDescriptor([
-            'libName' => $this->pluck('libName', $options, false)
-            'libVersion' => $this->pluck('libVersion', $options, false)
-            'gapicVersion' => $options['gapicVersion']
+            'libName' => $this->pluck('libName', $options, false),
+            'libVersion' => $this->pluck('libVersion', $options, false),
+            'gapicVersion' => $options['gapicVersion'],
         ]);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$options['serviceName']];
@@ -118,56 +119,209 @@ trait GapicClientTrait
     }
 
     /**
-     * @param string $method
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
      *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
      * @return callable
      */
-    private function getUnaryCallable($method)
+    private function getUnaryCallStack(array $callConstructionOptions)
     {
-        $callable = function (Call $call, array $options) {
-            return $this->transport->startUnaryCall($call, $options);
-        }
-        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-
-        return new RetryMiddleware($callable, $this->retrySettings[$method]);
-    }
-
-    /**
-     * @return callable
-     */
-    private function getBidiStreamingCallable()
-    {
-        $callable = function (Call $call, array $options) {
-            return $this->transport->startBidiStreamingCall($call, $options);
-        };
-        return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-    }
-
-    /**
-     * @return callable
-     */
-    private function getClientStreamingCallable()
-    {
-        $callable = function (Call $call, array $options) {
-            return $this->transport->startClientStreamingCall($call, $options);
-        };
-        return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-    }
-
-    /**
-     * @return callable
-     */
-    private function getServerStreamingCallable()
-    {
-        $callable = function (Call $call, array $options) {
-            return $this->transport->startServerStreamingCall($call, $options);
-        };
-        return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+        return $this->createCallStack(
+            function (Call $call, array $options) {
+                return $this->transport->startUnaryCall($call, $options);
+            },
+            $callConstructionOptions
+        );
     }
 
     /**
      * @param Call $call
-     * @param array $options
+     * @param array $options {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     * }
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     * @return Promise
+     */
+    private function startCall(Call $call, array $options, array $callConstructionOptions)
+    {
+        $callStack = $this->getUnaryCallStack($callConstructionOptions);
+        return $callStack($call, $options);
+    }
+
+    /**
+     * @param Call $call
+     * @param array $options {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     * }
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     * @return BidiStream
+     */
+    private function startBidiStreamingCall(Call $call, array $options, array $callConstructionOptions)
+    {
+        $callStack = $this->createCallStack(
+            function (Call $call, array $options) {
+                return $this->transport->startBidiStreamingCall($call, $options);
+            },
+            $callConstructionOptions
+        );
+        return $callStack($call, $options);
+    }
+
+    /**
+     * @param Call $call
+     * @param array $options {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     * }
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     * @return ClientStream
+     */
+    private function startClientStreamingCall(Call $call, array $options, array $callConstructionOptions)
+    {
+        $callStack = $this->createCallStack(
+            function (Call $call, array $options) {
+                return $this->transport->startClientStreamingCall($call, $options);
+            },
+            $callConstructionOptions
+        );
+        return $callStack($call, $options);
+    }
+
+    /**
+     * @param Call $call
+     * @param array $options {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     * }
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     * @return ServerStream
+     */
+    private function startServerStreamingCall(Call $call, array $options, array $callConstructionOptions)
+    {
+        return $this->createCallStack(
+            function (Call $call, array $options) {
+                return $this->transport->startServerStreamingCall($call, $options);
+            },
+            $callConstructionOptions
+        );
+    }
+
+    /**
+     * @param callable $callable
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     * @return callable
+     */
+    private function createCallStack(callable $callable, array $callConstructionOptions)
+    {
+        return new RetryMiddleware(
+            new AgentHeaderMiddleware(
+                $callable,
+                $this->agentHeaderDescriptor
+            ),
+            $callConstructionOptions['retrySettings']
+        );
+    }
+
+    /**
+     * @param array $optionalArgs {
+     *     Optional arguments
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     * }
+     * @return array
+     */
+    private function configureCallOptions(array $optionalArgs)
+    {
+        return $this->pluckArray([
+            'headers',
+            'timeoutMillis',
+            'transportOptions',
+        ], $optionalArgs);
+    }
+
+    /**
+     * @param string $method
+     * @param array $optionalArgs {
+     *     Optional arguments
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     * @return array
+     */
+    private function configureCallConstructionOptions($method, array $optionalArgs)
+    {
+        $retrySettings = $this->retrySettings[$method];
+        // Allow for retry settings to be changed at call time
+        if (isset($optionalArgs['retrySettings'])) {
+            $retrySettings = $retrySettings->with(
+               $optionalArgs['retrySettings']
+            );
+        }
+        return [
+            'retrySettings' => $retrySettings,
+        ];
+    }
+
+    /**
+     * @param Call $call
+     * @param array $options {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     * }
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
      * @param OperationsGapicClient $client
      * @param array $descriptor
      *
@@ -176,18 +330,21 @@ trait GapicClientTrait
     private function startOperationsCall(
         Call $call,
         array $options,
+        array $callConstructionOptions,
         OperationsClient $client,
         array $descriptor
     ) {
-        $callable = $this->getUnaryCallable($call->getMethod());
-        return $callable($call, $options)
-            ->then(function (Message $response) use ($client, $descriptor) {
-                $options = $descriptor + [
-                    'lastProtoResponse' => $response
-                ];
+        return $this->startCall(
+            $call,
+            $options,
+            $callConstructionOptions
+        )->then(function (Message $response) use ($client, $descriptor) {
+            $options = $descriptor + [
+                'lastProtoResponse' => $response
+            ];
 
-                return new OperationResponse($response->getName(), $client, $options);
-            });
+            return new OperationResponse($response->getName(), $client, $options);
+        });
     }
 
     /**
@@ -197,12 +354,14 @@ trait GapicClientTrait
      *
      * @return PagedListResponse
      */
-    private function getPagedListResponse(Call $call, array $options, array $descriptor)
+    private function getPagedListResponse(Call $call, array $optionalArgs, array $descriptor)
     {
         return new PagedListResponse(
             $call,
-            $options,
-            $this->getUnaryCallable($call->getMethod()),
+            $this->configureCallOptions($optionalArgs),
+            $this->getUnaryCallStack(
+                $this->configureCallConstructionOptions($optionalArgs)
+            ),
             new PageStreamingDescriptor($descriptor)
         );
     }
