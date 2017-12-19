@@ -32,9 +32,7 @@
 namespace Google\ApiCore\Middleware;
 
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\AgentHeaderDescriptor;
-use InvalidArgumentException;
 
 /**
 * Middleware which configures headers for the request.
@@ -55,20 +53,20 @@ class AgentHeaderMiddleware
         $this->headerDescriptor = $headerDescriptor;
     }
 
-    public function __invoke(Call $call, CallSettings $settings)
+    public function __invoke(Call $call, array $options)
     {
         $next = $this->nextHandler;
         $agentHeaders = $this->headerDescriptor->getHeader();
-        $userHeaders = $settings->getUserHeaders() ?: [];
+        $userHeaders = isset($options['headers']) ? $options['headers'] : [];
+
+        $options['headers'] = array_merge(
+            $userHeaders,
+            $agentHeaders
+        );
 
         return $next(
             $call,
-            $settings->with([
-                'userHeaders' => array_merge(
-                    $userHeaders,
-                    $agentHeaders
-                )
-            ])
+            $options
         );
     }
 }

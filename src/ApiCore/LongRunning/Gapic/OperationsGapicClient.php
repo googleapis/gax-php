@@ -46,7 +46,7 @@ namespace Google\ApiCore\LongRunning\Gapic;
 
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
-use Google\ApiCore\Transport\ApiTransportInterface;
+use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
 use Google\LongRunning\CancelOperationRequest;
 use Google\LongRunning\DeleteOperationRequest;
@@ -174,7 +174,7 @@ class OperationsGapicClient
      *     @type callable $httpHandler A handler used to deliver PSR-7 requests. Should match a
      *           signature of `function (RequestInterface $request, array $options) : PromiseInterface`
      *           NOTE: This option is only valid when utilizing the REST transport.
-     *     @type string|ApiTransportInterface $transport The transport used for executing network
+     *     @type string|TransportInterface $transport The transport used for executing network
      *           requests. May be either the string `rest` or `grpc`. Additionally, it is possible
      *           to pass in an already instantiated transport. Defaults to `grpc` if gRPC support is
      *           detected on the system.

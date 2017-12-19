@@ -242,6 +242,96 @@ class RetrySettings
     }
 
     /**
+     * Constructs an array mapping method names to CallSettings.
+     *
+     * @param string $serviceName
+     *     The fully-qualified name of this service, used as a key into
+     *     the client config file.
+     * @param array $clientConfig
+     *     An array parsed from the standard API client config file.
+     * @param array $retryingOverrides
+     *     A dictionary of method names to RetrySettings that
+     *     override those specified in $clientConfig.
+     * @throws ValidationException
+     * @return RetrySettings[] $retrySettings
+     */
+    public static function load(
+        $serviceName,
+        $clientConfig,
+        $retryingOverrides
+    ) {
+        $serviceRetrySettings = [];
+
+        $serviceConfig = $clientConfig['interfaces'][$serviceName];
+        foreach ($serviceConfig['methods'] as $methodName => $methodConfig) {
+            $timeoutMillis = $methodConfig['timeout_millis'];
+
+            if (empty($methodConfig['retry_codes_name']) || empty($methodConfig['retry_params_name'])) {
+                // Construct a RetrySettings object with retries disabled
+                $retrySettings = self::constructDefault()->with([
+                    'noRetriesRpcTimeoutMillis' => $timeoutMillis,
+                ]);
+            } else {
+                $retryCodesName = $methodConfig['retry_codes_name'];
+                $retryParamsName = $methodConfig['retry_params_name'];
+
+                if (!array_key_exists($retryCodesName, $retryCodes)) {
+                    throw new ValidationException("Invalid retry_codes_name setting: '$retryCodesName'");
+                }
+                if (!array_key_exists($retryParamsName, $retryParams)) {
+                    throw new ValidationException("Invalid retry_params_name setting: '$retryParamsName'");
+                }
+
+                foreach ($retryCodes[$retryCodesName] as $status) {
+                    if (!ApiStatus::isValidStatus($status)) {
+                        throw new ValidationException("Invalid status code: '$status'");
+                    }
+                }
+
+                $retryParameters = self::convertArrayFromSnakeCase($retryParams[$retryParamsName]);
+
+                $retrySettings = $retryParameters + [
+                    'retryableCodes' => $retryCodes[$retryCodesName],
+                    'noRetriesRpcTimeoutMillis' => $timeoutMillis,
+                ];
+
+                if (isset($retryingOverrides[$phpMethodKey])) {
+                    $retrySettingsOverride = $retryingOverrides[$phpMethodKey];
+                    if (is_array($retrySettingsOverride)) {
+                        $retrySettings = $retrySettings->with($retrySettingsOverride);
+                    } elseif ($retrySettingsOverride instanceof RetrySettings) {
+                        $retrySettings = $retrySettingsOverride;
+                    } else {
+                        throw new ValidationException(
+                            "Unexpected value in retryingOverrides for method " .
+                            "$phpMethodKey: $retrySettingsOverride"
+                        );
+                    }
+                }
+            }
+
+            $serviceRetrySettings[$phpMethodKey] = new RetrySettings($retrySettings);
+        }
+
+        return $serviceRetrySettings;
+    }
+
+    private static function constructDefault()
+    {
+        return new RetrySettings([
+            'retriesEnabled' => false,
+            'noRetriesRpcTimeoutMillis' => 30000,
+            'initialRetryDelayMillis' => 100,
+            'retryDelayMultiplier' => 1.3,
+            'maxRetryDelayMillis' => 60000,
+            'initialRpcTimeoutMillis' => 20000,
+            'rpcTimeoutMultiplier' => 1,
+            'maxRpcTimeoutMillis' => 20000,
+            'totalTimeoutMillis' => 600000,
+            'retryableCodes' => []]);
+    }
+
+    /**
      * Creates a new instance of RetrySettings that updates the settings in the existing instance
      * with the settings specified in the $settings parameter.
      *
@@ -359,5 +449,15 @@ class RetrySettings
     public function getTotalTimeoutMillis()
     {
         return $this->totalTimeoutMillis;
+    }
+
+    private static function convertArrayFromSnakeCase($settings)
+    {
+        $camelCaseSettings = [];
+        foreach ($settings as $key => $value) {
+            $camelCaseKey = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            $camelCaseSettings[lcfirst($camelCaseKey)] = $value;
+        }
+        return $camelCaseSettings;
     }
 }

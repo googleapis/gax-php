@@ -32,7 +32,6 @@
 namespace Google\ApiCore;
 
 use Generator;
-use InvalidArgumentException;
 
 /**
  * Response object for paged results from a list API method
@@ -54,7 +53,7 @@ class PagedListResponse
     private $call;
     private $callable;
     private $pageStreamingDescriptor;
-    private $settings;
+    private $options;
 
     private $firstPage;
 
@@ -62,19 +61,19 @@ class PagedListResponse
      * PagedListResponse constructor.
      *
      * @param Call $call
-     * @param CallSettings $settings
+     * @param array $options
      * @param callable $callable the callable object that makes the API method calls.
      * @param PageStreamingDescriptor $pageStreamingDescriptor the descriptor that
      *     contains the field names related to page-streaming.
      */
     public function __construct(
         Call $call,
-        CallSettings $settings,
+        array $options,
         callable $callable,
         PageStreamingDescriptor $pageStreamingDescriptor
     ) {
         $this->call = $call;
-        $this->settings = $settings;
+        $this->options = $options;
         $this->callable = $callable;
         $this->pageStreamingDescriptor = $pageStreamingDescriptor;
 
@@ -109,7 +108,7 @@ class PagedListResponse
         if (!isset($this->firstPage)) {
             $this->firstPage = new Page(
                 $this->call,
-                $this->settings,
+                $this->options,
                 $this->callable,
                 $this->pageStreamingDescriptor
             );
