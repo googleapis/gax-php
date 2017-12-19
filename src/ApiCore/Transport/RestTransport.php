@@ -44,6 +44,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestTransport implements TransportInterface
 {
+    private $createCallStackFunc;
     private $credentialsLoader;
     private $httpHandler;
     private $requestBuilder;
@@ -97,38 +98,48 @@ class RestTransport implements TransportInterface
      */
     public function startUnaryCall(Call $call, array $options)
     {
-        // Add an auth header to the request
-        $headers = (isset($options['headers']) ? $options['headers'] : []) + [
-            'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-        ];
+        $createCallStackFunc = $this->createCallStackFunc;
+        $callStack = $createCallStackFunc(function (Call $call, array $options) {
+            // Add an auth header to the request
+            $headers = (isset($options['headers']) ? $options['headers'] : []) + [
+                'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
+            ];
 
-        // call the HTTP handler
-        $httpHandler = $this->httpHandler;
-        return $httpHandler(
-            $this->requestBuilder->build(
-                $call->getMethod(),
-                $call->getMessage(),
-                $headers
-            ),
-            $this->getOptions($options)
-        )->then(
-            function (ResponseInterface $response) use ($call) {
-                $decodeType = $call->getDecodeType();
-                $return = new $decodeType;
-                $return->mergeFromJsonString(
-                    (string) $response->getBody()
-                );
+            // call the HTTP handler
+            $httpHandler = $this->httpHandler;
+            return $httpHandler(
+                $this->requestBuilder->build(
+                    $call->getMethod(),
+                    $call->getMessage(),
+                    $headers
+                ),
+                $this->getOptions($options)
+            )->then(
+                function (ResponseInterface $response) use ($call) {
+                    $decodeType = $call->getDecodeType();
+                    $return = new $decodeType;
+                    $return->mergeFromJsonString(
+                        (string) $response->getBody()
+                    );
 
-                return $return;
-            },
-            function (\Exception $ex) {
-                if ($ex instanceof RequestException && $ex->hasResponse()) {
-                    throw $this->convertToApiException($ex);
+                    return $return;
+                },
+                function (\Exception $ex) {
+                    if ($ex instanceof RequestException && $ex->hasResponse()) {
+                        throw $this->convertToApiException($ex);
+                    }
+
+                    throw $ex;
                 }
+            );
+        });
 
-                throw $ex;
-            }
-        );
+        return $callStack($call, $options);
+    }
+
+    public function setCreateCallStackFunction(callable $createCallStackFunc)
+    {
+        $this->createCallStackFunc = $createCallStackFunc;
     }
 
     /**

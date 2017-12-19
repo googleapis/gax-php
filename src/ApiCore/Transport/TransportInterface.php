@@ -82,6 +82,8 @@ interface TransportInterface
      */
     public function startUnaryCall(Call $call, array $options);
 
+    public function setCreateCallStackFunction(callable $createCallStackCallable);
+
     /**
      * Closes the connection, if one exists.
      */
