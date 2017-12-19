@@ -31,26 +31,19 @@
  */
 namespace Google\ApiCore\Transport;
 
-use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\RequestBuilder;
-use Google\ApiCore\Middleware\AgentHeaderMiddleware;
-use Google\ApiCore\Middleware\AuthHeaderMiddleware;
-use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\Auth\FetchAuthTokenInterface;
-use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * A REST based transport implementation.
  */
-class RestTransport implements ApiTransportInterface
+class RestTransport implements TransportInterface
 {
-    private $agentHeaderDescriptor;
     private $credentialsLoader;
     private $httpHandler;
     private $requestBuilder;
@@ -60,19 +53,15 @@ class RestTransport implements ApiTransportInterface
      *        a PSR-7 request from a set of request information.
      * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
      *        used to fetch access tokens.
-     * @param AgentHeaderDescriptor $agentHeaderDescriptor A descriptor containing
-     *        the relevant information to build out the user agent header.
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
      */
     public function __construct(
         RequestBuilder $requestBuilder,
         FetchAuthTokenInterface $credentialsLoader,
-        AgentHeaderDescriptor $agentHeaderDescriptor,
         callable $httpHandler
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->credentialsLoader = $credentialsLoader;
-        $this->agentHeaderDescriptor = $agentHeaderDescriptor;
         $this->httpHandler = $httpHandler;
     }
 
@@ -80,7 +69,7 @@ class RestTransport implements ApiTransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startClientStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    public function startClientStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -89,7 +78,7 @@ class RestTransport implements ApiTransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startServerStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    public function startServerStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -98,7 +87,7 @@ class RestTransport implements ApiTransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startBidiStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    public function startBidiStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -106,41 +95,39 @@ class RestTransport implements ApiTransportInterface
     /**
      * {@inheritdoc}
      */
-    public function getCallable(CallSettings $settings)
+    public function startUnaryCall(Call $call, array $options)
     {
-        $callable = function (Call $call, CallSettings $settings) {
-            $httpHandler = $this->httpHandler;
+        // Add an auth header to the request
+        $headers = (isset($options['headers']) ? $options['headers'] : []) + [
+            'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
+        ];
 
-            return $httpHandler(
-                $this->requestBuilder->build(
-                    $call->getMethod(),
-                    $call->getMessage(),
-                    $settings->getUserHeaders()
-                ),
-                $this->getOptions($settings)
-            )->then(
-                function (ResponseInterface $response) use ($call) {
-                    $decodeType = $call->getDecodeType();
-                    $return = new $decodeType;
-                    $return->mergeFromJsonString(
-                        (string) $response->getBody()
-                    );
+        // call the HTTP handler
+        $httpHandler = $this->httpHandler;
+        return $httpHandler(
+            $this->requestBuilder->build(
+                $call->getMethod(),
+                $call->getMessage(),
+                $headers
+            ),
+            $this->getOptions($options)
+        )->then(
+            function (ResponseInterface $response) use ($call) {
+                $decodeType = $call->getDecodeType();
+                $return = new $decodeType;
+                $return->mergeFromJsonString(
+                    (string) $response->getBody()
+                );
 
-                    return $return;
-                },
-                function (\Exception $ex) {
-                    if ($ex instanceof RequestException && $ex->hasResponse()) {
-                        throw $this->convertToApiException($ex);
-                    }
-
-                    throw $ex;
+                return $return;
+            },
+            function (\Exception $ex) {
+                if ($ex instanceof RequestException && $ex->hasResponse()) {
+                    throw $this->convertToApiException($ex);
                 }
-            );
-        };
 
-        return new AuthHeaderMiddleware(
-            $this->createCallStack($callable, $settings),
-            $this->credentialsLoader
+                throw $ex;
+            }
         );
     }
 
@@ -157,16 +144,16 @@ class RestTransport implements ApiTransportInterface
         throw new \BadMethodCallException('Streaming calls are not supported while using the REST transport.');
     }
 
-    private function getOptions(CallSettings $settings)
+    private function getOptions(array $options)
     {
-        $transportOptions = $settings->getTransportOptions();
-        $options =  isset($transportOptions['rest']) ? $transportOptions['rest'] : [];
+        $callOptions = isset($options['transportOptions']['restOptions']) ?
+            $options['transportOptions']['restOptions'] : [];
 
-        if ($settings->getTimeoutMillis() !== false) {
-            $options['timeout'] = $settings->getTimeoutMillis() / 1000;
+        if (isset($options['timeoutMillis'])) {
+            $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
         }
 
-        return $options;
+        return $callOptions;
     }
 
     private function convertToApiException(\Exception $ex)
@@ -178,13 +165,5 @@ class RestTransport implements ApiTransportInterface
         $rObj->details = $rObj->message;
 
         return ApiException::createFromStdClass($rObj);
-    }
-
-    private function createCallStack(callable $callable, CallSettings $settings)
-    {
-        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-        $callable = new RetryMiddleware($callable);
-
-        return $callable;
     }
 }

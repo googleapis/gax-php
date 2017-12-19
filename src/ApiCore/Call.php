@@ -39,28 +39,36 @@ use Google\Protobuf\Internal\Message;
  */
 class Call
 {
+    const UNARY_CALL = 0;
+    const BIDI_STREAMING_CALL = 1;
+    const CLIENT_STREAMING_CALL = 2;
+    const SERVER_STREAMING_CALL = 3;
+
     private $method;
+    private $type;
     private $decodeType;
     private $message;
+    private $descriptor;
 
     /**
      * @param string $method
+     * @param int $type
      * @param string $decodeType
      * @param Message $message
+     * @param array $descriptor
      */
-    public function __construct($method, $decodeType, Message $message = null)
-    {
+    public function __construct(
+        $method,
+        $decodeType,
+        Message $message = null,
+        $descriptor = [],
+        $type = Call::UNARY_CALL
+    ) {
         $this->method = $method;
         $this->decodeType = $decodeType;
         $this->message = $message;
-    }
-
-    /**
-     * @return Message
-     */
-    public function getMessage()
-    {
-        return $this->message;
+        $this->descriptor = $descriptor;
+        $this->type = $type;
     }
 
     /**
@@ -72,6 +80,14 @@ class Call
     }
 
     /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * @return string
      */
     public function getDecodeType()
@@ -80,26 +96,33 @@ class Call
     }
 
     /**
+     * @return Message
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDescriptor()
+    {
+        return $this->descriptor;
+    }
+
+    /**
      * @param Message $message
+     * @return Call
      */
-    public function setMessage(Message $message)
+    public function withMessage(Message $message)
     {
-        $this->message = $message;
-    }
-
-    /**
-     * @param string $method
-     */
-    public function setMethod($method)
-    {
-        $this->method = $method;
-    }
-
-    /**
-     * @param string $decodeType
-     */
-    public function setDecodeType($decodeType)
-    {
-        $this->decodeType = $decodeType;
+        return new static(
+            $this->method,
+            $this->decodeType,
+            $message,
+            $this->descriptor,
+            $this->type
+        );
     }
 }

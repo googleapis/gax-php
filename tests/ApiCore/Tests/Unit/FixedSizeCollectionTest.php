@@ -37,8 +37,8 @@ use Google\ApiCore\Page;
 use Google\ApiCore\FixedSizeCollection;
 use Google\ApiCore\PageStreamingDescriptor;
 use Google\ApiCore\Tests\Mocks\MockStatus;
+use Google\Rpc\Code;
 use PHPUnit\Framework\TestCase;
-use Grpc;
 
 class FixedSizeCollectionTest extends TestCase
 {
@@ -67,9 +67,10 @@ class FixedSizeCollectionTest extends TestCase
             });
         };
 
-        $call = new Call('method', [], $mockRequest);
+        $call = new Call('method', 'decodeType', $mockRequest);
+        $options = [];
 
-        return new Page($call, new CallSettings, $callable, $pageStreamingDescriptor);
+        return new Page($call, $options, $callable, $pageStreamingDescriptor);
     }
 
     public function testFixedCollectionMethods()
@@ -91,10 +92,10 @@ class FixedSizeCollectionTest extends TestCase
             ['resource8', 'resource9']
         );
         $page = $this->createPage([
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseC, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseD, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+            [$responseC, new MockStatus(Code::OK, '')],
+            [$responseD, new MockStatus(Code::OK, '')],
         ]);
 
         $fixedSizeCollection = new FixedSizeCollection($page, 5);

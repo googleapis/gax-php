@@ -36,6 +36,8 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
+use Google\ApiCore\RetrySettings;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Middleware that adds retry functionality.
@@ -45,72 +47,76 @@ class RetryMiddleware
     /** @var callable */
     private $nextHandler;
 
+    /** @var RetrySettings */
+    private $retrySettings;
+
     /** @var float|null */
     private $deadlineMs;
 
     public function __construct(
         callable $nextHandler,
+        RetrySettings $retrySettings,
         $deadlineMs = null
     ) {
         $this->nextHandler = $nextHandler;
+        $this->retrySettings = $retrySettings;
         $this->deadlineMs = $deadlineMs;
     }
 
-    public function __invoke(Call $call, CallSettings $settings)
+    /**
+     * @param Call $call
+     * @param array $options
+     *
+     * @return PromiseInterface
+     */
+    public function __invoke(Call $call, array $options)
     {
         $nextHandler = $this->nextHandler;
 
-        $retrySettings = $settings->getRetrySettings();
-
-        // Call and return the handler immediately if retry settings are disabled.
-        if (!$retrySettings->retriesEnabled()) {
-            // If no timeout has been explicitly set, use "noRetriesRpcTimeoutMillis" as the timeout.
-            if (!$settings->getTimeoutMillis() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $settings = $settings->with([
-                    'timeoutMillis' => $retrySettings->getNoRetriesRpcTimeoutMillis()
-                ]);
+        if (!isset($options['timeoutMillis'])) {
+            // default to "noRetriesRpcTimeoutMillis" when retries are disabled, otherwise use "initialRpcTimeoutMillis"
+            if (!$this->retrySettings->retriesEnabled() && $this->retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+                $options['timeoutMillis'] = $this->retrySettings->getNoRetriesRpcTimeoutMillis();
+            } elseif ($this->retrySettings->getInitialRpcTimeoutMillis() > 0) {
+                $options['timeoutMillis'] = $this->retrySettings->getInitialRpcTimeoutMillis();
             }
-            return $nextHandler($call, $settings);
         }
 
-        // If no timeout has been explicitly set, use "initialRpcTimeoutMillis" as the timeout.
-        if (!$settings->getTimeoutMillis() && $retrySettings->getInitialRpcTimeoutMillis() > 0) {
-            $settings = $settings->with([
-                'timeoutMillis' => $retrySettings->getInitialRpcTimeoutMillis()
-            ]);
+        // Call the handler immediately if retry settings are disabled.
+        if (!$this->retrySettings->retriesEnabled()) {
+            return $nextHandler($call, $options);
         }
 
-        return $nextHandler($call, $settings)->then(null, function (Exception $e) use ($call, $settings) {
+        return $nextHandler($call, $options)->then(null, function (Exception $e) use ($call, $options) {
             if (!$e instanceof ApiException) {
                 throw $e;
             }
 
-            if (!in_array($e->getStatus(), $settings->getRetrySettings()->getRetryableCodes())) {
+            if (!in_array($e->getStatus(), $this->retrySettings->getRetryableCodes())) {
                 throw $e;
             }
 
-            return $this->retry($call, $settings, $e->getStatus());
+            return $this->retry($call, $options, $e->getStatus());
         });
     }
 
     /**
      * @param Call $call
-     * @param CallSettings $settings The call settings to use for this call.
+     * @param array $options
      * @param string $status
      *
      * @return PromiseInterface
      */
-    private function retry(Call $call, CallSettings $settings, $status)
+    private function retry(Call $call, array $options, $status)
     {
-        $retrySettings = $settings->getRetrySettings();
-        $delayMult = $retrySettings->getRetryDelayMultiplier();
-        $maxDelayMs = $retrySettings->getMaxRetryDelayMillis();
-        $timeoutMult = $retrySettings->getRpcTimeoutMultiplier();
-        $maxTimeoutMs = $retrySettings->getMaxRpcTimeoutMillis();
-        $totalTimeoutMs = $retrySettings->getTotalTimeoutMillis();
+        $delayMult = $this->retrySettings->getRetryDelayMultiplier();
+        $maxDelayMs = $this->retrySettings->getMaxRetryDelayMillis();
+        $timeoutMult = $this->retrySettings->getRpcTimeoutMultiplier();
+        $maxTimeoutMs = $this->retrySettings->getMaxRpcTimeoutMillis();
+        $totalTimeoutMs = $this->retrySettings->getTotalTimeoutMillis();
 
-        $delayMs = $retrySettings->getInitialRetryDelayMillis();
-        $timeoutMs = $settings->getTimeoutMillis();
+        $delayMs = $this->retrySettings->getInitialRetryDelayMillis();
+        $timeoutMs = $options['timeoutMillis'];
         $currentTimeMs = $this->getCurrentTimeMs();
         $deadlineMs = $this->deadlineMs ?: $currentTimeMs + $totalTimeoutMs;
 
@@ -135,18 +141,18 @@ class RetryMiddleware
 
         $nextHandler = new RetryMiddleware(
             $this->nextHandler,
+            $this->retrySettings->with([
+                'initialRetryDelayMillis' => $delayMs,
+            ]),
             $deadlineMs
         );
 
+        // Set the timeout for the call
+        $options['timeoutMillis'] = $timeoutMs;
+
         return $nextHandler(
             $call,
-            $settings->with([
-                'timeoutMillis' => $timeoutMs,
-                'retrySettings' => $retrySettings->with([
-                    'initialRetryDelayMillis' => $delayMs,
-                    'initialRpcTimeoutMillis' => $timeoutMs,
-                ])
-            ])
+            $options
         );
     }
 

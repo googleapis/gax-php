@@ -32,7 +32,7 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\Transport\ApiTransportInterface;
+use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\Auth\ApplicationDefaultCredentials;
@@ -40,7 +40,6 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
-use Google\Protobuf\Internal\Message;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use InvalidArgumentException;
@@ -53,11 +52,8 @@ class TransportFactory
         'forceNewChannel'   => false,
         'enableCaching'     => true,
         'channel'           => null,
-        'libName'           => null,
-        'libVersion'        => null,
         'transport'         => null,
         'authCacheOptions'  => null,
-        'gapicVersion'      => null,
         'httpHandler'       => null,
         'transport'         => null
     ];
@@ -96,18 +92,12 @@ class TransportFactory
      *           optional argument is specified, then this option is unused.
      *     @type bool $enableCaching
      *           Optional. Enable caching of access tokens. Defaults to true.
-     *     @type string $libName
-     *           Optional. The name of the client application.
-     *     @type string $libVersion
-     *           Optional. The version of the client application.
-     *     @type string $gapicVersion
-     *           Optional. The code generator version of the GAPIC library.
      *     @type CacheItemPoolInterface $authCache
      *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
      *     @type array $authCacheOptions
      *           Optional. Cache configuration options.
      * }
-     * @return ApiTransportInterface
+     * @return TransportInterface
      */
     public static function build(array $args)
     {
@@ -121,11 +111,6 @@ class TransportFactory
             $args['serviceAddress'],
             $args['port']
         );
-        $agentHeaderDescriptor = new AgentHeaderDescriptor([
-            'libName' => $args['libName'],
-            'libVersion' => $args['libVersion'],
-            'gapicVersion' => $args['gapicVersion']
-        ]);
         $args['transport'] = self::handleTransport($args['transport']);
         $args['credentialsLoader'] = self::handleCredentialsLoader($args);
 
@@ -151,7 +136,6 @@ class TransportFactory
                 return new GrpcTransport(
                     $host,
                     $args['credentialsLoader'],
-                    $agentHeaderDescriptor,
                     $stubOpts,
                     $args['channel']
                 );
@@ -164,7 +148,6 @@ class TransportFactory
                         $args['restClientConfigPath']
                     ),
                     $args['credentialsLoader'],
-                    $agentHeaderDescriptor,
                     $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async']
                 );
             default:

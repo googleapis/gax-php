@@ -64,11 +64,33 @@ class Parser
             throw new ValidationException('Cannot parse empty $data parameter');
         }
 
-        Segment::resetSegmentCount();
-        Segment::resetBindingCount();
-
         try {
-            $segments = $this->parser->parse($data);
+            Segment::resetSegmentCount();
+            Segment::resetBindingCount();
+            if ($data === "") {
+                // create an empty string literal segment
+                $segments = [
+                    new Segment(Segment::TERMINAL, "")
+                ];
+            } else {
+                $segments = $this->parser->parse($data);
+            }
+            $this->segmentCount = Segment::getSegmentCount();
+            // Validation step: checks that there are no nested bindings.
+            $pathWildcard = false;
+            foreach ($segments as $segment) {
+                if ($segment->kind == Segment::TERMINAL &&
+                        $segment->literal == '**') {
+                    if ($pathWildcard) {
+                        throw new ValidationException(
+                            'validation error: path template cannot contain '.
+                            'more than one path wildcard'
+                        );
+                    }
+                    $pathWildcard = true;
+                }
+            }
+            return $segments;
         } catch (Exception $e) {
             throw new ValidationException('Exception in parser', 0, $e);
         }

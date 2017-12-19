@@ -29,44 +29,59 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
 
-use Google\Auth\FetchAuthTokenInterface;
+namespace Google\ApiCore\Transport;
+
+use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use InvalidArgumentException;
+use Google\ApiCore\ClientStream;
+use Google\ApiCore\ServerStream;
+use GuzzleHttp\Promise\PromiseInterface;
 
-/**
-* Middleware which adds an Authorization header to the request.
-*/
-class AuthHeaderMiddleware
+interface TransportInterface
 {
-    /** @var callable */
-    private $nextHandler;
+    /**
+     * Starts a bidi streaming call.
+     *
+     * @param Call $call
+     * @param CallSettings $options
+     *
+     * @return BidiStream
+     */
+    public function startBidiStreamingCall(Call $call, array $options);
 
-    /** @var FetchAuthTokenInterface */
-    private $credentialsLoader;
+    /**
+     * Starts a client streaming call.
+     *
+     * @param Call $call
+     * @param array $options
+     *
+     * @return ClientStream
+     */
+    public function startClientStreamingCall(Call $call, array $options);
 
-    public function __construct(
-        callable $nextHandler,
-        FetchAuthTokenInterface $credentialsLoader
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->credentialsLoader = $credentialsLoader;
-    }
+    /**
+     * Starts a server streaming call.
+     *
+     * @param Call $call
+     * @param array $options
+     *
+     * @return ServerStream
+     */
+    public function startServerStreamingCall(Call $call, array $options);
 
-    public function __invoke(Call $call, CallSettings $settings)
-    {
-        $next = $this->nextHandler;
-        $headers = ($settings->getUserHeaders() ?: []) + [
-            'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-        ];
+    /**
+     * Returns a promise used to execute network requests.
+     *
+     * @param Call $call
+     * @param array $options
+     *
+     * @return PromiseInterface
+     */
+    public function startUnaryCall(Call $call, array $options);
 
-        return $next(
-            $call,
-            $settings->with([
-                'userHeaders' => $headers
-            ])
-        );
-    }
+    /**
+     * Closes the connection, if one exists.
+     */
+    public function close();
 }

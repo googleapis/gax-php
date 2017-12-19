@@ -35,12 +35,8 @@ namespace Google\ApiCore\Tests\Unit\Middleware;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\RetrySettings;
-use Google\ApiCore\Tests\Mocks\MockStatus;
-use Google\ApiCore\Tests\Unit\TestTrait;
-use Google\ApiCore\Tests\Mocks\MockTransport;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use GuzzleHttp\Promise\Promise;
@@ -49,208 +45,133 @@ use stdClass;
 
 class RetryMiddlewareTest extends TestCase
 {
-    use TestTrait;
-
+    /**
+     * @expectedException Google\ApiCore\ApiException
+     * @expectedExceptionMessage Call Count: 1
+     */
     public function testRetryNoRetryableCode()
     {
-        $response = "response";
-        $request = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $status = new stdClass;
-        $status->code = Code::DEADLINE_EXCEEDED;
-        $status->details = 'Deadline Exceeded';
-
-        $transport = MockTransport::createWithResponseSequence([[$response, $status]]);
-        $retrySettings = new RetrySettings([
-            'initialRetryDelayMillis' => 100,
-            'retryDelayMultiplier' => 1.3,
-            'maxRetryDelayMillis' => 400,
-            'initialRpcTimeoutMillis' => 150,
-            'rpcTimeoutMultiplier' => 2,
-            'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 2000,
-            'retryableCodes' => [],
-        ]);
-        $isExceptionRaised = false;
-        $call = new Call('takeAction', null, $request);
-        $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
-        try {
-            $response = $transport->startCall(
-                $call,
-                $callSettings
-            )->wait();
-        } catch (ApiException $e) {
-            $isExceptionRaised = true;
-        }
-
-        $actualCalls = $transport->popReceivedCalls();
-        $this->assertEquals(1, count($actualCalls));
-        $this->assertEquals($request, $actualCalls[0]->getRequestObject());
-
-        $this->assertTrue($isExceptionRaised);
+        $call = $this->getMock(Call::class, [], [], '', false);
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => false,
+                'retryableCodes' => []
+            ]);
+        $callCount = 0;
+        $handler = function(Call $call, $options) use (&$callCount) {
+            return new Promise(function () use (&$callCount) {
+                throw new ApiException('Call Count: ' . $callCount += 1, 0, '');
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+        $response = $middleware(
+            $call,
+            []
+        )->wait();
     }
 
     public function testRetryBackoff()
     {
-        $request = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $statusDeadlineExceeded = new stdClass;
-        $statusDeadlineExceeded->code = Code::DEADLINE_EXCEEDED;
-        $statusDeadlineExceeded->details = 'Deadline Exceeded';
-        $statusOk = new stdClass;
-        $statusOk->code = Code::OK;
-        $responseSequence = [
-            ['responseA', $statusDeadlineExceeded],
-            ['responseB', $statusDeadlineExceeded],
-            ['responseC', $statusOk]
-        ];
-        $transport = MockTransport::createWithResponseSequence($responseSequence);
-        $retrySettings = new RetrySettings([
-            'initialRetryDelayMillis' => 100,
-            'retryDelayMultiplier' => 1.3,
-            'maxRetryDelayMillis' => 400,
-            'initialRpcTimeoutMillis' => 150,
-            'rpcTimeoutMultiplier' => 2,
-            'maxRpcTimeoutMillis' => 500,
-            'totalTimeoutMillis' => 2000,
-            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
-        ]);
-        $call = new Call('takeAction', null, $request);
-        $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
-        $actualResponse = $transport->startCall(
+        $call = $this->getMock(Call::class, [], [], '', false);
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+            ]);
+        $callCount = 0;
+        $handler = function(Call $call, $options) use (&$callCount) {
+            $callCount += 1;
+            return $promise = new Promise(function () use (&$promise, $callCount) {
+                if ($callCount < 3) {
+                    throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
+                }
+                $promise->resolve('Ok!');
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+        $response = $middleware(
             $call,
-            $callSettings
+            []
         )->wait();
 
-        $this->assertEquals('responseC', $actualResponse);
-
-        $actualCalls = $transport->popReceivedCalls();
-        $this->assertEquals(3, count($actualCalls));
-
-        $this->assertEquals($request, $actualCalls[0]->getRequestObject());
-        $this->assertEquals(['timeout' => 150], $actualCalls[0]->getOptions());
-
-        $this->assertEquals($request, $actualCalls[1]->getRequestObject());
-        $this->assertEquals(['timeout' => 300], $actualCalls[1]->getOptions());
-
-        $this->assertEquals($request, $actualCalls[2]->getRequestObject());
-        $this->assertEquals(['timeout' => 500], $actualCalls[2]->getOptions());
+        $this->assertEquals('Ok!', $response);
+        $this->assertEquals(3, $callCount);
     }
 
+    /**
+     * @expectedException Google\ApiCore\ApiException
+     * @expectedExceptionMessage Retry total timeout exceeded.
+     */
     public function testRetryTimeoutExceedsMaxTimeout()
     {
-        $request = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $response = 'response';
-        $status = new stdClass;
-        $status->code = Code::DEADLINE_EXCEEDED;
-        $status->details = 'Deadline Exceeded';
-        $transport = MockTransport::createWithResponseSequence([
-            [$response, $status],
-            [$response, $status],
-            [$response, $status]
-        ]);
-        $retrySettings = new RetrySettings([
-            'initialRetryDelayMillis' => 1000,
-            'retryDelayMultiplier' => 1.3,
-            'maxRetryDelayMillis' => 4000,
-            'initialRpcTimeoutMillis' => 150,
-            'rpcTimeoutMultiplier' => 2,
-            'maxRpcTimeoutMillis' => 600,
-            'totalTimeoutMillis' => 0,
-            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
-        ]);
-        $raisedException = null;
-        $call = new Call('takeAction', null, $request);
-        $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
-        try {
-            $transport->startCall(
-                $call,
-                $callSettings
-            )->wait();
-        } catch (ApiException $e) {
-            $raisedException = $e;
-        }
-
-        $actualCalls = $transport->popReceivedCalls();
-        $this->assertEquals(1, count($actualCalls));
-        $this->assertEquals($request, $actualCalls[0]->getRequestObject());
-
-        $this->assertNotNull($raisedException);
-        $this->assertEquals(Code::DEADLINE_EXCEEDED, $raisedException->getCode());
+        $call = $this->getMock(Call::class, [], [], '', false);
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+                'totalTimeoutMillis' => 0,
+            ]);
+        $handler = function(Call $call, $options) {
+            return new Promise(function () {
+                throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+        $response = $middleware(
+            $call,
+            []
+        )->wait();
     }
 
+    /**
+     * @expectedException Google\ApiCore\ApiException
+     * @expectedExceptionMessage Retry total timeout exceeded.
+     */
     public function testRetryTimeoutExceedsRealTime()
     {
-        $request = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $response = "response";
-        $status = new stdClass;
-        $status->code = Code::DEADLINE_EXCEEDED;
-        $status->details = 'Deadline Exceeded';
-        $transport = MockTransport::createWithResponseSequence([
-            [$response, $status]
-        ]);
-        $retrySettings = new RetrySettings([
-            'initialRetryDelayMillis' => 10,
-            'retryDelayMultiplier' => 1,
-            'maxRetryDelayMillis' => 10,
-            'initialRpcTimeoutMillis' => 500,
-            'rpcTimeoutMultiplier' => 1,
-            'maxRpcTimeoutMillis' => 500,
-            'totalTimeoutMillis' => 1000,
-            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
-        ]);
-        $raisedException = null;
-        $call = new Call('methodThatSleeps', null, $request);
-        $callSettings = new CallSettings(['retrySettings' => $retrySettings]);
-        try {
-            $response = $transport->startCall(
-                $call,
-                $callSettings
-            )->wait();
-        } catch (ApiException $e) {
-            $raisedException = $e;
-        }
-
-        $actualCalls = $transport->popReceivedCalls();
-        $this->assertEquals(3, count($actualCalls));
-        $this->assertEquals($request, $actualCalls[0]->getRequestObject());
-
-        $this->assertNotNull($raisedException);
-        $this->assertEquals(Code::DEADLINE_EXCEEDED, $raisedException->getCode());
+        $call = $this->getMock(Call::class, [], [], '', false);
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+                'initialRpcTimeoutMillis' => 500,
+                'totalTimeoutMillis' => 1000,
+            ]);
+        $handler = function(Call $call, $options) {
+            return new Promise(function () use ($options) {
+                // sleep for the duration of the timeout
+                if (isset($options['timeoutMillis'])) {
+                    usleep($options['timeoutMillis'] * 1000);
+                }
+                throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+        $response = $middleware(
+            $call,
+            []
+        )->wait();
     }
 
     public function testTimeoutMillisCallSettingsOverwrite()
     {
         $handlerCalled = false;
-        $timeout = 1000;
-        $handler = function (Call $call, CallSettings $settings) use (&$handlerCalled, $timeout) {
+        $timeout = 1234;
+        $handler = function (Call $call, array $options) use (&$handlerCalled, $timeout) {
             $handlerCalled = true;
-            $this->assertEquals($timeout, $settings->getTimeoutMillis());
+            $this->assertEquals($timeout, $options['timeoutMillis']);
             return $this->getMock(Promise::class);
         };
-        $middleware = new RetryMiddleware($handler);
-        $retrySettings = new RetrySettings([
-            'initialRetryDelayMillis' => 10,
-            'retryDelayMultiplier' => 1,
-            'maxRetryDelayMillis' => 10,
-            'initialRpcTimeoutMillis' => 500,
-            'rpcTimeoutMultiplier' => 1,
-            'maxRpcTimeoutMillis' => 500,
-            'totalTimeoutMillis' => 1000,
-            'retryableCodes' => [ApiStatus::DEADLINE_EXCEEDED],
-        ]);
-        $call = new Call('someMethod', null);
-        $settings = new CallSettings([
-            'timeoutMillis' => $timeout,
-            'retrySettings' => $retrySettings
-        ]);
-        $middleware($call, $settings);
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+            ]);
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+
+        $call = $this->getMock(Call::class, [], [], '', false);
+        $options = ['timeoutMillis' => $timeout];
+        $middleware($call, $options);
         $this->assertTrue($handlerCalled);
     }
 }

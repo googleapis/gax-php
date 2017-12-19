@@ -32,13 +32,23 @@
 
 namespace Google\ApiCore\Tests\Mocks;
 
-use Google\ApiCore\GrpcTransport;
+use Google\ApiCore\Transport\GrpcTransport;
+use Google\Auth\ApplicationDefaultCredentials;
+use Grpc\ChannelCredentials;
 use ReflectionClass;
 
 class MockGrpcTransport extends GrpcTransport
 {
     private $requestArguments;
     private $mockCall;
+
+    public function __construct($mockCall = null, $credentialsLoader = null)
+    {
+        $this->mockCall = $mockCall;
+        $credentialsLoader = $credentialsLoader ?: ApplicationDefaultCredentials::getCredentials();
+        $opts = ['credentials' => ChannelCredentials::createSsl()];
+        parent::__construct('', $credentialsLoader, $opts);
+    }
 
     protected function _simpleRequest(
         $method,
@@ -101,34 +111,5 @@ class MockGrpcTransport extends GrpcTransport
     public function getRequestArguments()
     {
         return $this->requestArguments;
-    }
-
-    public function setMockCall($mockCall)
-    {
-        $this->mockCall = $mockCall;
-    }
-
-    public function getHostname()
-    {
-        $stub = new ReflectionClass('Grpc\BaseStub');
-        $property = $stub->getProperty('hostname');
-        $property->setAccessible(true);
-        return $property->getValue($this);
-    }
-
-    public function getChannel()
-    {
-        $stub = new ReflectionClass('Grpc\BaseStub');
-        $property = $stub->getProperty('channel');
-        $property->setAccessible(true);
-        return $property->getValue($this);
-    }
-
-    public function getUpdateMetadata()
-    {
-        $stub = new ReflectionClass('Grpc\BaseStub');
-        $property = $stub->getProperty('update_metadata');
-        $property->setAccessible(true);
-        return $property->getValue($this);
     }
 }

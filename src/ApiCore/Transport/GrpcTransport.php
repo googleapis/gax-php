@@ -32,15 +32,11 @@
 
 namespace Google\ApiCore\Transport;
 
-use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\ServerStream;
-use Google\ApiCore\Middleware\AgentHeaderMiddleware;
-use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
@@ -52,17 +48,14 @@ use GuzzleHttp\Promise\PromiseInterface;
 /**
  * A gRPC based transport implementation.
  */
-class GrpcTransport extends BaseStub implements ApiTransportInterface
+class GrpcTransport extends BaseStub implements TransportInterface
 {
-    private $agentHeaderDescriptor;
     private $credentialsCallback;
 
     /**
      * @param string $host The domain name and port of the API remote host.
      * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
      *        used to fetch access tokens.
-     * @param AgentHeaderDescriptor $agentHeaderDescriptor A descriptor containing
-     *        the relevant information to build out the user agent header.
      * @param array $stubOpts An array of options used when creating a BaseStub.
      * @param Channel $channel An already instantiated channel to be used during
      *        creation of the BaseStub.
@@ -70,11 +63,9 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     public function __construct(
         $host,
         FetchAuthTokenInterface $credentialsLoader,
-        AgentHeaderDescriptor $agentHeaderDescriptor,
         array $stubOpts,
         Channel $channel = null
     ) {
-        $this->agentHeaderDescriptor = $agentHeaderDescriptor;
         $this->credentialsCallback = function () use ($credentialsLoader) {
             $token = $credentialsLoader->fetchAuthToken();
             return ['authorization' => ['Bearer ' . $token['access_token']]];
@@ -90,146 +81,98 @@ class GrpcTransport extends BaseStub implements ApiTransportInterface
     /**
      * {@inheritdoc}
      */
-    public function startBidiStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    public function startBidiStreamingCall(Call $call, array $options)
     {
-        $this->validateStreamingApiCallSettings($settings);
-
-        $callable = $this->createCallStack(
-            function (Call $call, CallSettings $settings) use ($descriptor) {
-                return new BidiStream(
-                    $this->_bidiRequest(
-                        '/' . $call->getMethod(),
-                        [$call->getDecodeType(), 'decode'],
-                        $settings->getUserHeaders() ?: [],
-                        $this->getOptions($settings)
-                    ),
-                    $descriptor
-                );
-            },
-            $settings
+        return new BidiStream(
+            $this->_bidiRequest(
+                '/' . $call->getMethod(),
+                [$call->getDecodeType(), 'decode'],
+                isset($options['headers']) ? $options['headers'] : [],
+                $this->getOptions($options)
+            ),
+            $call->getDescriptor()
         );
-
-        return $callable($call, $settings);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function startClientStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    public function startClientStreamingCall(Call $call, array $options)
     {
-        $this->validateStreamingApiCallSettings($settings);
-
-        $callable = $this->createCallStack(
-            function (Call $call, CallSettings $settings) use ($descriptor) {
-                return new ClientStream(
-                    $this->_clientStreamRequest(
-                        '/' . $call->getMethod(),
-                        [$call->getDecodeType(), 'decode'],
-                        $settings->getUserHeaders() ?: [],
-                        $this->getOptions($settings)
-                    ),
-                    $descriptor
-                );
-            },
-            $settings
+        return new ClientStream(
+            $this->_clientStreamRequest(
+                '/' . $call->getMethod(),
+                [$call->getDecodeType(), 'decode'],
+                isset($options['headers']) ? $options['headers'] : [],
+                $this->getOptions($options)
+            ),
+            $call->getDescriptor()
         );
-
-        return $callable($call, $settings);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function startServerStreamingCall(Call $call, CallSettings $settings, array $descriptor)
+    public function startServerStreamingCall(Call $call, array $options)
     {
-        $this->validateStreamingApiCallSettings($settings);
         $message = $call->getMessage();
 
         if (!$message) {
             throw new \InvalidArgumentException('A message is required for ServerStreaming calls.');
         }
 
-        $callable = $this->createCallStack(
-            function (Call $call, CallSettings $settings) use ($descriptor) {
-                return new ServerStream(
-                    $this->_serverStreamRequest(
-                        '/' . $call->getMethod(),
-                        $message,
-                        [$call->getDecodeType(), 'decode'],
-                        $settings->getUserHeaders() ?: [],
-                        $this->getOptions($settings)
-                    ),
-                    $descriptor
-                );
-            },
-            $settings
+        return new ServerStream(
+            $this->_serverStreamRequest(
+                '/' . $call->getMethod(),
+                $message,
+                [$call->getDecodeType(), 'decode'],
+                isset($options['headers']) ? $options['headers'] : [],
+                $this->getOptions($options)
+            ),
+            $call->getDescriptor()
         );
-
-        return $callable($call, $settings);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCallable(CallSettings $settings)
+    public function startUnaryCall(Call $call, array $options)
     {
-        $callable = function (Call $call, CallSettings $settings) {
-            $call = $this->_simpleRequest(
-                '/' . $call->getMethod(),
-                $call->getMessage(),
-                [$call->getDecodeType(), 'decode'],
-                $settings->getUserHeaders() ?: [],
-                $this->getOptions($settings)
-            );
+        $call = $this->_simpleRequest(
+            '/' . $call->getMethod(),
+            $call->getMessage(),
+            [$call->getDecodeType(), 'decode'],
+            isset($options['headers']) ? $options['headers'] : [],
+            $this->getOptions($options)
+        );
 
-            $promise = new Promise(
-                function () use ($call, &$promise) {
-                    list($response, $status) = $call->wait();
+        $promise = new Promise(
+            function () use ($call, &$promise) {
+                list($response, $status) = $call->wait();
 
-                    if ($status->code == Code::OK) {
-                        $promise->resolve($response);
-                    } else {
-                        throw ApiException::createFromStdClass($status);
-                    }
-                },
-                [$call, 'cancel']
-            );
+                if ($status->code == Code::OK) {
+                    $promise->resolve($response);
+                } else {
+                    throw ApiException::createFromStdClass($status);
+                }
+            },
+            [$call, 'cancel']
+        );
 
-            return $promise;
-        };
-
-        return $this->createCallStack($callable, $settings);
+        return $promise;
     }
 
-    private function getOptions(CallSettings $settings)
+    private function getOptions(array $options)
     {
-        $transportOptions = $settings->getTransportOptions();
-        $options = isset($transportOptions['grpc']) ? $transportOptions['grpc'] : [];
-        $options += ['call_credentials_callback' => $this->credentialsCallback];
+        $callOptions = isset($options['transportOptions']['grpcOptions']) ?
+            $options['transportOptions']['grpcOptions'] : [];
 
-        if ($timeout = $settings->getTimeoutMillis()) {
-            $options['timeout'] = $timeout * 1000;
+        $callOptions += ['call_credentials_callback' => $this->credentialsCallback];
+
+        if (isset($options['timeoutMillis'])) {
+            $callOptions['timeout'] = $options['timeoutMillis'] * 1000;
         }
 
-        return $options;
-    }
-
-    private function validateStreamingApiCallSettings(CallSettings $settings)
-    {
-        $retrySettings = $settings->getRetrySettings();
-
-        if (!is_null($retrySettings) && $retrySettings->retriesEnabled()) {
-            throw new ValidationException(
-                'grpcStreamingDescriptor not compatible with retry settings'
-            );
-        }
-    }
-
-    private function createCallStack(callable $callable, CallSettings $settings)
-    {
-        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-        $callable = new RetryMiddleware($callable);
-
-        return $callable;
+        return $callOptions;
     }
 }

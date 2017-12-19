@@ -32,12 +32,11 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\Page;
 use Google\ApiCore\PageStreamingDescriptor;
 use Google\ApiCore\Tests\Mocks\MockStatus;
+use Google\Rpc\Code;
 use PHPUnit\Framework\TestCase;
-use Grpc;
 
 class PageTest extends TestCase
 {
@@ -65,8 +64,9 @@ class PageTest extends TestCase
         };
 
         $call = new Call('method', [], $mockRequest);
+        $options = [];
 
-        return new Page($call, new CallSettings, $callable, $pageStreamingDescriptor);
+        return new Page($call, $options, $callable, $pageStreamingDescriptor);
     }
 
     public function testNextPageMethods()
@@ -75,8 +75,8 @@ class PageTest extends TestCase
         $responseB = $this->createMockResponse('', ['resource2']);
 
         $page = $this->createPage([
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ]);
 
         $this->assertEquals($page->hasNextPage(), true);
@@ -96,7 +96,7 @@ class PageTest extends TestCase
     {
         $responseA = $this->createMockResponse('', ['resource1']);
         $page = $this->createPage([
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
         ]);
 
         $this->assertEquals($page->hasNextPage(), false);
@@ -112,8 +112,8 @@ class PageTest extends TestCase
         $responseA = $this->createMockResponse('nextPageToken1', ['resource1']);
         $responseB = $this->createMockResponse('', ['resource2']);
         $page = $this->createPage([
-            [$responseA, new MockStatus(Grpc\STATUS_OK, '')],
-            [$responseB, new MockStatus(Grpc\STATUS_OK, '')],
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
         ]);
 
         $page->getNextPage(3);
@@ -126,7 +126,7 @@ class PageTest extends TestCase
             ['resource1', 'resource2', 'resource3']
         );
         $page = $this->createPage([
-            [$response, new MockStatus(Grpc\STATUS_OK, '')],
+            [$response, new MockStatus(Code::OK, '')],
         ]);
 
         $this->assertEquals($page->getPageElementCount(), 3);
