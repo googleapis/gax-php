@@ -156,17 +156,19 @@ trait GapicClientTrait
                $optionalArgs['retrySettings']
             );
         }
-        $createCallStackFunc = function(callable $callable) use ($retrySettings) {
-            return new RetryMiddleware(
-                new AgentHeaderMiddleware(
-                    $callable,
-                    $this->agentHeaderDescriptor
-                ),
-                $retrySettings
-            );
-        };
+        $callStack = new CallStack(
+            function(callable $transportCall) use ($retrySettings) {
+                return new RetryMiddleware(
+                    new AgentHeaderMiddleware(
+                        $transportCall,
+                        $this->agentHeaderDescriptor
+                    ),
+                    $retrySettings
+                );
+            }
+        );
 
-        $this->transport->setCreateCallStackFunction($createCallStackFunc);
+        $this->transport->setCallStack($callStack);
     }
 
     /**

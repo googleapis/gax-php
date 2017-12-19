@@ -44,7 +44,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestTransport implements TransportInterface
 {
-    private $createCallStackFunc;
+    use TransportTrait;
+
     private $credentialsLoader;
     private $httpHandler;
     private $requestBuilder;
@@ -70,7 +71,7 @@ class RestTransport implements TransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startClientStreamingCall(Call $call, array $options, array $descriptor)
+    public function startClientStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -79,7 +80,7 @@ class RestTransport implements TransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startServerStreamingCall(Call $call, array $options, array $descriptor)
+    public function startServerStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -88,58 +89,45 @@ class RestTransport implements TransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startBidiStreamingCall(Call $call, array $options, array $descriptor)
+    public function startBidiStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function startUnaryCall(Call $call, array $options)
+    private function doUnaryCall(Call $call, array $options)
     {
-        $createCallStackFunc = $this->createCallStackFunc;
-        $callStack = $createCallStackFunc(function (Call $call, array $options) {
-            // Add an auth header to the request
-            $headers = (isset($options['headers']) ? $options['headers'] : []) + [
-                'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-            ];
+        // Add an auth header to the request
+        $headers = (isset($options['headers']) ? $options['headers'] : []) + [
+            'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
+        ];
 
-            // call the HTTP handler
-            $httpHandler = $this->httpHandler;
-            return $httpHandler(
-                $this->requestBuilder->build(
-                    $call->getMethod(),
-                    $call->getMessage(),
-                    $headers
-                ),
-                $this->getOptions($options)
-            )->then(
-                function (ResponseInterface $response) use ($call) {
-                    $decodeType = $call->getDecodeType();
-                    $return = new $decodeType;
-                    $return->mergeFromJsonString(
-                        (string) $response->getBody()
-                    );
+        // call the HTTP handler
+        $httpHandler = $this->httpHandler;
+        return $httpHandler(
+            $this->requestBuilder->build(
+                $call->getMethod(),
+                $call->getMessage(),
+                $headers
+            ),
+            $this->getOptions($options)
+        )->then(
+            function (ResponseInterface $response) use ($call) {
+                $decodeType = $call->getDecodeType();
+                $return = new $decodeType;
+                $return->mergeFromJsonString(
+                    (string) $response->getBody()
+                );
 
-                    return $return;
-                },
-                function (\Exception $ex) {
-                    if ($ex instanceof RequestException && $ex->hasResponse()) {
-                        throw $this->convertToApiException($ex);
-                    }
-
-                    throw $ex;
+                return $return;
+            },
+            function (\Exception $ex) {
+                if ($ex instanceof RequestException && $ex->hasResponse()) {
+                    throw $this->convertToApiException($ex);
                 }
-            );
-        });
 
-        return $callStack($call, $options);
-    }
-
-    public function setCreateCallStackFunction(callable $createCallStackFunc)
-    {
-        $this->createCallStackFunc = $createCallStackFunc;
+                throw $ex;
+            }
+        );
     }
 
     /**
@@ -177,4 +165,5 @@ class RestTransport implements TransportInterface
 
         return ApiException::createFromStdClass($rObj);
     }
+
 }

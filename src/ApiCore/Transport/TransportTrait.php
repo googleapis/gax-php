@@ -29,64 +29,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 namespace Google\ApiCore\Transport;
 
-use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\CallStack;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
 
-interface TransportInterface
+/**
+ * Common functions for Transport classes
+ */
+trait TransportTrait
 {
-    /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param CallSettings $options
-     * @param array $descriptor
-     *
-     * @return BidiStream
-     */
-    public function startBidiStreamingCall(Call $call, array $options);
+    private $callStack;
 
     /**
-     * Starts a client streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     * @param array $descriptor
-     *
-     * @return ClientStream
+     * {@inheritdoc}
      */
-    public function startClientStreamingCall(Call $call, array $options);
+    public function startUnaryCall(Call $call, array $options)
+    {
+        return $this->invokeCallStack(
+            function (Call $call, array $options) {
+                return $this->doUnaryCall($call, $options);
+            },
+            $call,
+            $options
+        );
+    }
 
-    /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     * @param array $descriptor
-     *
-     * @return ServerStream
-     */
-    public function startServerStreamingCall(Call $call, array $options);
+    public function setCallStack(CallStack $callStack)
+    {
+        $this->callStack = $callStack;
+    }
 
-    /**
-     * Returns a callable used to execute network requests.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return callable
-     */
-    public function startUnaryCall(Call $call, array $options);
+    private function invokeCallStack(callable $callable, Call $call, array $options)
+    {
+        $callStack = $this->callStack;
+        return $callStack($callable, $call, $options);
+    }
 
-    public function setCallStack(CallStack $callStack);
-
-    /**
-     * Closes the connection, if one exists.
-     */
-    public function close();
+    private function doUnaryCall(Call $call, array $options)
+    {
+        throw new \BadMethodCallException('doUnaryCall or startUnaryCall must be implemented in the Transport class');
+    }
 }
