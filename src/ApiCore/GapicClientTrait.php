@@ -137,7 +137,7 @@ trait GapicClientTrait
      */
     private function getBidiStreamingCallable()
     {
-        $callable = function (Call $call, array $options) use ($type) {
+        $callable = function (Call $call, array $options) {
             return $this->transport->startBidiStreamingCall($call, $options);
         };
         return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
@@ -148,7 +148,7 @@ trait GapicClientTrait
      */
     private function getClientStreamingCallable()
     {
-        $callable = function (Call $call, array $options) use ($type) {
+        $callable = function (Call $call, array $options) {
             return $this->transport->startClientStreamingCall($call, $options);
         };
         return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
@@ -159,7 +159,7 @@ trait GapicClientTrait
      */
     private function getServerStreamingCallable()
     {
-        $callable = function (Call $call, array $options) use ($type) {
+        $callable = function (Call $call, array $options) {
             return $this->transport->startServerStreamingCall($call, $options);
         };
         return new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);

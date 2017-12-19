@@ -65,6 +65,13 @@ class RetryMiddleware
     {
         $nextHandler = $this->nextHandler;
 
+        // Allow for retry settings to be changed at call time
+        if (isset($options['retrySettings'])) {
+            $this->retrySettings = $this->retrySettings->with(
+               $options['retrySettings']
+            );
+        }
+
         // Call and return the handler immediately if retry settings are disabled.
         if (!$this->retrySettings->retriesEnabled()) {
             // If no timeout has been explicitly set, use "noRetriesRpcTimeoutMillis" as the timeout.
