@@ -36,6 +36,7 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\ServerStream;
+use GuzzleHttp\Promise\Promise;
 
 interface TransportInterface
 {
@@ -78,7 +79,7 @@ interface TransportInterface
      * @param Call $call
      * @param array $options
      *
-     * @return callable
+     * @return Promise
      */
     public function startUnaryCall(Call $call, array $options);
 
