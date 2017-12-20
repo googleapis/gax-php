@@ -99,19 +99,15 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     public function doBidiStreamingCall(Call $call, array $options)
     {
-        $callStack = new CallStack(function ($call, $options) {
-            return new BidiStream(
-                $this->_bidiRequest(
-                    '/' . $call->getMethod(),
-                    [$call->getDecodeType(), 'decode'],
-                    $options->getUserHeaders() ?: [],
-                    $this->getOptions($options)
-                ),
-                $call->getDescriptor()
-            );
-        });
-
-        return $callStack($call, $options);
+        return new BidiStream(
+            $this->_bidiRequest(
+                '/' . $call->getMethod(),
+                [$call->getDecodeType(), 'decode'],
+                $options->getUserHeaders() ?: [],
+                $this->getOptions($options)
+            ),
+            $call->getDescriptor()
+        );
     }
 
     /**
