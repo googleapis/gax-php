@@ -44,6 +44,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestTransport implements TransportInterface
 {
+    use TransportTrait;
+
     private $credentialsLoader;
     private $httpHandler;
     private $requestBuilder;
@@ -69,7 +71,7 @@ class RestTransport implements TransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startClientStreamingCall(Call $call, array $options, array $descriptor)
+    public function startClientStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -78,7 +80,7 @@ class RestTransport implements TransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startServerStreamingCall(Call $call, array $options, array $descriptor)
+    public function startServerStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
@@ -87,15 +89,12 @@ class RestTransport implements TransportInterface
      * {@inheritdoc}
      * @throws \BadMethodCallException
      */
-    public function startBidiStreamingCall(Call $call, array $options, array $descriptor)
+    public function startBidiStreamingCall(Call $call, array $options)
     {
         $this->throwUnsupportedException();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function startUnaryCall(Call $call, array $options)
+    private function doUnaryCall(Call $call, array $options)
     {
         // Add an auth header to the request
         $headers = (isset($options['headers']) ? $options['headers'] : []) + [
@@ -166,4 +165,5 @@ class RestTransport implements TransportInterface
 
         return ApiException::createFromStdClass($rObj);
     }
+
 }

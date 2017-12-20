@@ -50,6 +50,8 @@ use GuzzleHttp\Promise\PromiseInterface;
  */
 class GrpcTransport extends BaseStub implements TransportInterface
 {
+    use TransportTrait;
+
     private $credentialsCallback;
 
     /**
@@ -83,6 +85,20 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     public function startBidiStreamingCall(Call $call, array $options)
     {
+        return $this->invokeCallStack(
+            function (Call $call, array $options) {
+                return $this->doBidiStreamingCall($call, $options);
+            },
+            $call,
+            $options
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doBidiStreamingCall(Call $call, array $options)
+    {
         return new BidiStream(
             $this->_bidiRequest(
                 '/' . $call->getMethod(),
@@ -99,12 +115,23 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     public function startClientStreamingCall(Call $call, array $options)
     {
+        return $this->invokeCallStack(
+            function (Call $call, array $options) {
+                return $this->doClientStreamingCall($call, $options);
+            },
+            $call,
+            $options
+        );
+    }
+
+    public function doClientStreamingCall(Call $call, array $options)
+    {
         return new ClientStream(
             $this->_clientStreamRequest(
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 $options->getUserHeaders() ?: [],
-                $this->getOptions($options),
+                $this->getOptions($options)
             ),
             $call->getDescriptor()
         );
@@ -114,6 +141,17 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * {@inheritdoc}
      */
     public function startServerStreamingCall(Call $call, array $options)
+    {
+        return $this->invokeCallStack(
+            function (Call $call, array $options) {
+                return $this->doServerStreamingCall($call, $options);
+            },
+            $call,
+            $options
+        );
+    }
+
+    private function doServerStreamingCall(Call $call, array $options)
     {
         $message = $call->getMessage();
 
@@ -126,7 +164,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 '/' . $call->getMethod(),
                 $message,
                 [$call->getDecodeType(), 'decode'],
-                isset($options['headers']) ? $options['headers'] ?: [],
+                isset($options['headers']) ? $options['headers'] : [],
                 $this->getOptions($options)
             ),
             $call->getDescriptor()
@@ -136,13 +174,13 @@ class GrpcTransport extends BaseStub implements TransportInterface
     /**
      * {@inheritdoc}
      */
-    public function startUnaryCall(Call $call, array $options)
+    private function doUnaryCall(Call $call, array $options)
     {
         $call = $this->_simpleRequest(
             '/' . $call->getMethod(),
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
-            $options->getUserHeaders() ?: [],
+            isset($options['headers']) ? $options['headers'] : [],
             $this->getOptions($options)
         );
 

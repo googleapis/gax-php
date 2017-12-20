@@ -30,63 +30,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport;
+namespace Google\ApiCore;
 
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\CallStack;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
-
-interface TransportInterface
+/**
+ * Invokes the middlewares and handlers for the call stack.
+ */
+class CallStack
 {
-    /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param CallSettings $options
-     * @param array $descriptor
-     *
-     * @return BidiStream
-     */
-    public function startBidiStreamingCall(Call $call, array $options);
+    private $createCallStackFunction;
 
     /**
-     * Starts a client streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     * @param array $descriptor
-     *
-     * @return ClientStream
+     * @param string $method
+     * @param string $decodeType
+     * @param Message $message
      */
-    public function startClientStreamingCall(Call $call, array $options);
+    public function __construct(callable $createCallStackFunction)
+    {
+        $this->createCallStackFunction = $createCallStackFunction;
+    }
 
     /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     * @param array $descriptor
-     *
-     * @return ServerStream
+     * @return mixed
      */
-    public function startServerStreamingCall(Call $call, array $options);
-
-    /**
-     * Returns a callable used to execute network requests.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return callable
-     */
-    public function startUnaryCall(Call $call, array $options);
-
-    public function setCallStack(CallStack $callStack);
-
-    /**
-     * Closes the connection, if one exists.
-     */
-    public function close();
+    public function __invoke(callable $transportCall, Call $call, array $options)
+    {
+        $createCallStackFunction = $this->createCallStackFunction;
+        $callStack = $createCallStackFunction($transportCall);
+        return $transportCall($call, $options);
+    }
 }
