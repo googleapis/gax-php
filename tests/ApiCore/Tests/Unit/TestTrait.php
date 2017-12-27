@@ -43,7 +43,14 @@ trait TestTrait
 {
     public function createMockRequest($token = null, $pageSize = null)
     {
-        return new MockRequest($token, $pageSize);
+        $request = new MockRequest();
+        if ($token) {
+            $request->setPageToken($token);
+        }
+        if ($pageSize) {
+            $request->setPageSize($pageSize);
+        }
+        return $request;
     }
 
     public function createMockResponse($pageToken = null, $resourcesList = [])
