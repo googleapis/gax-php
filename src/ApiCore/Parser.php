@@ -92,7 +92,6 @@ class Parser
             }
         }
         return $segments;
-
     }
 
     /**
