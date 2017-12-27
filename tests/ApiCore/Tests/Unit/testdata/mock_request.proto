@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package google.apiCore.tests.mocks;
+
+message MockRequest {
+  // The value of the uninterpreted option, in whatever type the tokenizer
+  // identified it as during parsing. Exactly one of these should be set.
+  string page_token = 1;
+  uint64 page_size = 2;
+}

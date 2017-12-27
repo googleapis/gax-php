@@ -37,6 +37,7 @@ use Google\ApiCore\Call;
 use Google\ApiCore\CallSettings;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Tests\Mocks\MockGrpcTransport;
+use Google\ApiCore\Tests\Mocks\MockRequest;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -141,9 +142,7 @@ class GrpcTransportTest extends TestCase
         $status = new stdClass;
         $status->code = Code::OK;
 
-        $message = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $message = $this->createMockRequest();
 
         $serverStreamingCall = $this->getMockBuilder(\Grpc\ServerStreamingCall::class)
             ->disableOriginalConstructor()
@@ -165,6 +164,7 @@ class GrpcTransportTest extends TestCase
         foreach ($stream->readAll() as $actualResponse) {
             $actualResponsesArray[] = $actualResponse;
         }
+
         $this->assertEquals([$response], $actualResponsesArray);
     }
 
@@ -181,9 +181,7 @@ class GrpcTransportTest extends TestCase
         $status = new stdClass;
         $status->code = Code::OK;
 
-        $message = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $message = $this->createMockRequest();
 
         $call = $this->getMockBuilder(\Grpc\ServerStreamingCall::class)
             ->disableOriginalConstructor()
@@ -225,9 +223,7 @@ class GrpcTransportTest extends TestCase
         $status->code = Code::INTERNAL;
         $status->details = 'server streaming failure';
 
-        $message = $this->getMockBuilder(Message::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $message = $this->createMockRequest();
 
         $serverStreamingCall = $this->getMockBuilder(\Grpc\ServerStreamingCall::class)
             ->disableOriginalConstructor()
