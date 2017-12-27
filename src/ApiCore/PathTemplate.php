@@ -52,9 +52,16 @@ class PathTemplate implements Countable
      * PathTemplate constructor.
      *
      * @param string $data A path template string
+     * @throws ValidationException When $data cannot be parsed into a valid PathTemplate
      */
     public function __construct($data)
     {
+        if (is_null($data)) {
+            throw new ValidationException('Cannot construct PathTemplate from null string');
+        }
+        if ($data === "") {
+            throw new ValidationException('Cannot construct PathTemplate from empty string');
+        }
         $parser = new Parser();
         $this->segments = $parser->parse($data);
         $this->segmentCount = $parser->getSegmentCount();
