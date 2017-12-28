@@ -20,9 +20,6 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\UriTrait;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group core
- */
 class UriTraitTest extends TestCase
 {
     private $implementation;

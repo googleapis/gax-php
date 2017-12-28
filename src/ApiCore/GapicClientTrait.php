@@ -251,7 +251,7 @@ trait GapicClientTrait
      *     @type RetrySettings $retrySettings [optional] A retry settings override
      *           For the call.
      * }
-     * @param OperationsGapicClient $client
+     * @param OperationsClient $client
      * @param array $descriptor
      *
      * @return PromiseInterface
@@ -260,7 +260,7 @@ trait GapicClientTrait
         $methodName,
         array $optionalArgs,
         Message $request,
-        OperationsGapicClient $client
+        OperationsClient $client
     ) {
         $descriptor = $this->descriptors[$methodName]['longRunning'];
         return $this->startCall(

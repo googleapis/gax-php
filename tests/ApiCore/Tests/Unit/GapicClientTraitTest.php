@@ -35,8 +35,11 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
+use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\RetrySettings;
+use Google\ApiCore\Tests\Mocks\MockRequest;
 use Google\ApiCore\Transport\TransportInterface;
+use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 
 class GapicClientTraitTest extends TestCase
@@ -83,19 +86,63 @@ class GapicClientTraitTest extends TestCase
             ['headers' => $headers]
         ]);
     }
+
+    public function testStartOperationsCall()
+    {
+        $agentHeaderDescriptor = $this->getMockBuilder(AgentHeaderDescriptor::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $agentHeaderDescriptor->expects($this->once())
+            ->method('getHeader')
+            ->will($this->returnValue([]));
+        $retrySettings = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $expectedPromise = $this->getMock(PromiseInterface::class);
+        $transport = $this->getMock(TransportInterface::class);
+        $transport->expects($this->once())
+             ->method('startUnaryCall')
+             ->will($this->returnValue($expectedPromise));
+        $client = new GapicClientTraitStub();
+        $client->set('transport', $transport);
+        $client->set('agentHeaderDescriptor', $agentHeaderDescriptor);
+        $client->set('retrySettings', ['method' => $retrySettings]);
+        $message = new MockRequest();
+        $operationsClient = $this->getMockBuilder(OperationsClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $client->call('startOperationsCall', [
+            'method',
+            [],
+            $message,
+            $operationsClient
+        ]);
+    }
+
+    public function testGetGapicVersion()
+    {
+        $version = '1.2.3-dev';
+        $client = new GapicClientTraitStub();
+        $client->set('gapicVersion', $version, true);
+        $this->assertEquals($version, $client->call('getGapicVersion'));
+    }
 }
 
 class GapicClientTraitStub
 {
     use GapicClientTrait;
 
-    public function call($fn, array $args)
+    public function call($fn, array $args = [])
     {
         return call_user_func_array([$this, $fn], $args);
     }
 
-    public function set($name, $val)
+    public function set($name, $val, $static = false)
     {
-        $this->$name = $val;
+        if ($static) {
+            $this::$$name = $val;
+        } else {
+            $this->$name = $val;
+        }
     }
 }
