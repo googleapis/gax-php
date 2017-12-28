@@ -120,4 +120,86 @@ class FixedSizeCollectionTest extends TestCase
             ['resource6', 'resource7', 'resource8', 'resource9']
         );
     }
+
+    public function testIterateCollections()
+    {
+        $responseA = $this->createMockResponse(
+            'nextPageToken1',
+            ['resource1', 'resource2']
+        );
+        $responseB = $this->createMockResponse(
+            '',
+            ['resource3', 'resource4']
+        );
+        $page = $this->createPage([
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+        ]);
+
+        $collection = new FixedSizeCollection($page, 2);
+
+        $results = [];
+        $iterations = 0;
+        foreach ($collection->iterateCollections() as $nextCollection) {
+            $results = array_merge($results, iterator_to_array($nextCollection));
+            $iterations++;
+        }
+        $this->assertEquals(
+            $results,
+            ['resource1', 'resource2', 'resource3', 'resource4']
+        );
+        $this->assertEquals(2, $iterations);
+    }
+
+    /**
+     * @expectedException LengthException
+     * @expectedExceptionMessage API returned a number of elements exceeding the specified page size limit
+     */
+    public function testApiReturningMoreElementsThanPageSize()
+    {
+        $responseA = $this->createMockResponse(
+            'nextPageToken1',
+            ['resource1', 'resource2']
+        );
+        $responseB = $this->createMockResponse(
+            'nextPageToken2',
+            ['resource3', 'resource4', 'resource5']
+        );
+        $page = $this->createPage([
+            [$responseA, new MockStatus(Code::OK, '')],
+            [$responseB, new MockStatus(Code::OK, '')],
+        ]);
+
+        $collection = new FixedSizeCollection($page, 3);
+        $collection->getNextCollection();
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage collectionSize must be > 0.
+     */
+    public function testEmptyCollectionThrowsException()
+    {
+        $collectionSize = 0;
+        $page = $this->getMockBuilder(Page::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        new FixedSizeCollection($page, $collectionSize);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage collectionSize must be greater than or equal to the number of elements in initialPage
+     */
+    public function testInvalidPageCount()
+    {
+        $collectionSize = 1;
+        $page = $this->getMockBuilder(Page::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $page->expects($this->exactly(2))
+            ->method('getPageElementCount')
+            ->will($this->returnValue(2));
+        new FixedSizeCollection($page, $collectionSize);
+    }
 }

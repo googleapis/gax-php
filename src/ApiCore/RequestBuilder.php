@@ -33,6 +33,7 @@
 namespace Google\ApiCore;
 
 use Google\Protobuf\Internal\Message;
+use Google\Protobuf\Internal\RepeatedField;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
@@ -99,7 +100,11 @@ class RequestBuilder
                         continue;
                     }
 
-                    $queryParams[$name] = $property->getValue($message);
+                    $value = $property->getValue($message);
+                    if ($value instanceof RepeatedField) {
+                        $value = iterator_to_array($value);
+                    }
+                    $queryParams[$name] = $value;
                 }
 
                 if ($queryParams) {
