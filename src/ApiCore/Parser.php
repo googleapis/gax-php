@@ -60,10 +60,7 @@ class Parser
      */
     public function parse($data)
     {
-        if (is_null($data)) {
-            throw new ValidationException('Cannot parse null $data parameter');
-        }
-        if ($data === "") {
+        if (empty($data)) {
             throw new ValidationException('Cannot parse empty $data parameter');
         }
 

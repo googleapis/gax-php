@@ -112,7 +112,7 @@ class PathTemplateTest extends TestCase
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Cannot construct PathTemplate from null string
+     * @expectedExceptionMessage Cannot construct PathTemplate from empty string
      */
     public function testFailNullString()
     {
