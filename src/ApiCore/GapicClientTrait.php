@@ -36,7 +36,6 @@ use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Transport\TransportInterface;
-use Google\Cloud\Version;
 use Google\Protobuf\Internal\Message;
 
 /**
@@ -60,19 +59,22 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
 
-    private static function getGapicVersion()
+    private static function getGapicVersion(array $options)
     {
         if (!self::$gapicVersion) {
-            if (file_exists(__DIR__.'/../VERSION')) {
-                self::$gapicVersion = trim(file_get_contents(__DIR__ . '/../VERSION'));
-            } elseif (class_exists(Version::class)) {
-                self::$gapicVersion = Version::VERSION;
+            if (isset($options['versionFile'])) {
+                if (file_exists($versionFile)) {
+                    self::$gapicVersion = trim(file_get_contents(
+                        $options['versionFile']
+                    ));
+                }
+            } elseif (isset($options['libVersion'])) {
+                $options['gapicVersion'] = $options['libVersion'];
             }
         }
 
         return self::$gapicVersion;
     }
-
 
     /**
      * Configures the GAPIC client based on an array of options.
@@ -95,11 +97,6 @@ trait GapicClientTrait
             'descriptorsConfigPath',
             'clientConfigPath'
         ]);
-        if (!isset($options['gapicVersion'])) {
-            $options['gapicVersion'] = isset($options['libVersion'])
-                ? $options['libVersion']
-                : self::getGapicVersion();
-        }
         $transport = isset($options['transport'])
             ? $options['transport']
             : null;
@@ -113,6 +110,9 @@ trait GapicClientTrait
             $clientConfig,
             $this->pluck('retryingOverride', $options, false)
         );
+        if (!isset($options['gapicVersion'])) {
+            $options['gapicVersion'] = self::getGapicVersion($options);
+        }
         $this->agentHeaderDescriptor = new AgentHeaderDescriptor([
             'libName' => $this->pluck('libName', $options, false),
             'libVersion' => $this->pluck('libVersion', $options, false),
