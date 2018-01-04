@@ -69,7 +69,7 @@ trait GapicClientTrait
                     ));
                 }
             } elseif (isset($options['libVersion'])) {
-                $options['gapicVersion'] = $options['libVersion'];
+                self::$gapicVersion = $options['libVersion'];
             }
         }
 
