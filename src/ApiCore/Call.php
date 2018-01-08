@@ -45,30 +45,30 @@ class Call
     const SERVER_STREAMING_CALL = 3;
 
     private $method;
-    private $type;
+    private $callType;
     private $decodeType;
     private $message;
     private $descriptor;
 
     /**
      * @param string $method
-     * @param int $type
      * @param string $decodeType
      * @param Message $message
      * @param array $descriptor
+     * @param int $callType
      */
     public function __construct(
         $method,
         $decodeType,
         Message $message = null,
         $descriptor = [],
-        $type = Call::UNARY_CALL
+        $callType = Call::UNARY_CALL
     ) {
         $this->method = $method;
         $this->decodeType = $decodeType;
         $this->message = $message;
         $this->descriptor = $descriptor;
-        $this->type = $type;
+        $this->callType = $callType;
     }
 
     /**
@@ -82,9 +82,9 @@ class Call
     /**
      * @return int
      */
-    public function getType()
+    public function getCallType()
     {
-        return $this->type;
+        return $this->callType;
     }
 
     /**
@@ -122,7 +122,7 @@ class Call
             $this->decodeType,
             $message,
             $this->descriptor,
-            $this->type
+            $this->callType
         );
     }
 }

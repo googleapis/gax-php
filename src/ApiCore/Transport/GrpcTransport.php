@@ -56,6 +56,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * @param string $host The domain name and port of the API remote host.
      * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
      *        used to fetch access tokens.
+     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
+     *        specifically for authentication. Should match a signature of
+     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
      * @param array $stubOpts An array of options used when creating a BaseStub.
      * @param Channel $channel An already instantiated channel to be used during
      *        creation of the BaseStub.
@@ -63,11 +66,12 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public function __construct(
         $host,
         FetchAuthTokenInterface $credentialsLoader,
+        callable $authHttpHandler,
         array $stubOpts,
         Channel $channel = null
     ) {
-        $this->credentialsCallback = function () use ($credentialsLoader) {
-            $token = $credentialsLoader->fetchAuthToken();
+        $this->credentialsCallback = function () use ($credentialsLoader, $authHttpHandler) {
+            $token = $credentialsLoader->fetchAuthToken($authHttpHandler);
             return ['authorization' => ['Bearer ' . $token['access_token']]];
         };
 
@@ -88,7 +92,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
-                $this->getOptions($options)
+                $this->getCallOptions($options)
             ),
             $call->getDescriptor()
         );
@@ -104,7 +108,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
-                $this->getOptions($options)
+                $this->getCallOptions($options)
             ),
             $call->getDescriptor()
         );
@@ -127,7 +131,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 $message,
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
-                $this->getOptions($options)
+                $this->getCallOptions($options)
             ),
             $call->getDescriptor()
         );
@@ -143,7 +147,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
             isset($options['headers']) ? $options['headers'] : [],
-            $this->getOptions($options)
+            $this->getCallOptions($options)
         );
 
         $promise = new Promise(
@@ -162,10 +166,11 @@ class GrpcTransport extends BaseStub implements TransportInterface
         return $promise;
     }
 
-    private function getOptions(array $options)
+    private function getCallOptions(array $options)
     {
-        $callOptions = isset($options['transportOptions']['grpcOptions']) ?
-            $options['transportOptions']['grpcOptions'] : [];
+        $callOptions = isset($options['transportOptions']['grpcOptions'])
+            ? $options['transportOptions']['grpcOptions']
+            : [];
 
         $callOptions += ['call_credentials_callback' => $this->credentialsCallback];
 

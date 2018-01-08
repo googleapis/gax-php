@@ -44,6 +44,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestTransport implements TransportInterface
 {
+    private $authHttpHandler;
     private $credentialsLoader;
     private $httpHandler;
     private $requestBuilder;
@@ -54,15 +55,20 @@ class RestTransport implements TransportInterface
      * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
      *        used to fetch access tokens.
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
+     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
+     *        specifically for authentication. Should match a signature of
+     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
      */
     public function __construct(
         RequestBuilder $requestBuilder,
         FetchAuthTokenInterface $credentialsLoader,
-        callable $httpHandler
+        callable $httpHandler,
+        callable $authHttpHandler
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->credentialsLoader = $credentialsLoader;
         $this->httpHandler = $httpHandler;
+        $this->authHttpHandler = $authHttpHandler;
     }
 
     /**
@@ -97,10 +103,15 @@ class RestTransport implements TransportInterface
      */
     public function startUnaryCall(Call $call, array $options)
     {
-        // Add an auth header to the request
-        $headers = (isset($options['headers']) ? $options['headers'] : []) + [
-            'Authorization' => 'Bearer ' . $this->credentialsLoader->fetchAuthToken()['access_token']
-        ];
+        $headers = isset($options['headers'])
+            ? $options['headers']
+            : [];
+
+        // If not already set, add an auth header to the request
+        if (!isset($headers['Authorization'])) {
+            $token = $this->credentialsLoader->fetchAuthToken($this->authHttpHandler)['access_token'];
+            $headers['Authorization'] = 'Bearer ' . $token;
+        }
 
         // call the HTTP handler
         $httpHandler = $this->httpHandler;
@@ -110,7 +121,7 @@ class RestTransport implements TransportInterface
                 $call->getMessage(),
                 $headers
             ),
-            $this->getOptions($options)
+            $this->getCallOptions($options)
         )->then(
             function (ResponseInterface $response) use ($call) {
                 $decodeType = $call->getDecodeType();
@@ -144,10 +155,11 @@ class RestTransport implements TransportInterface
         throw new \BadMethodCallException('Streaming calls are not supported while using the REST transport.');
     }
 
-    private function getOptions(array $options)
+    private function getCallOptions(array $options)
     {
-        $callOptions = isset($options['transportOptions']['restOptions']) ?
-            $options['transportOptions']['restOptions'] : [];
+        $callOptions = isset($options['transportOptions']['restOptions'])
+            ? $options['transportOptions']['restOptions']
+            : [];
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;

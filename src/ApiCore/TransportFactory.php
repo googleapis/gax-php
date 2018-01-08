@@ -55,6 +55,7 @@ class TransportFactory
         'transport'         => null,
         'authCacheOptions'  => null,
         'httpHandler'       => null,
+        'authHttpHandler'   => null,
         'transport'         => null
     ];
 
@@ -96,6 +97,17 @@ class TransportFactory
      *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
      *     @type array $authCacheOptions
      *           Optional. Cache configuration options.
+     *     @type callable $authHttpHandler
+     *           A handler used to deliver PSR-7 requests specifically for
+     *           authentication. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
+     *     @type callable $httpHandler
+     *           A handler used to deliver PSR-7 requests. Should match a
+     *           signature of
+     *           `function (RequestInterface $request, array $options) : PromiseInterface`.
+     *           NOTE: This option is only valid when utilizing the REST transport.
+     *     @type string $transport
+     *           The type of transport to build.
      * }
      * @return TransportInterface
      */
@@ -111,6 +123,11 @@ class TransportFactory
             $args['serviceAddress'],
             $args['port']
         );
+
+        if (!$args['authHttpHandler']) {
+            $args['authHttpHandler'] = HttpHandlerFactory::build();
+        }
+
         $args['transport'] = self::handleTransport($args['transport']);
         $args['credentialsLoader'] = self::handleCredentialsLoader($args);
 
@@ -136,6 +153,7 @@ class TransportFactory
                 return new GrpcTransport(
                     $host,
                     $args['credentialsLoader'],
+                    $args['authHttpHandler'],
                     $stubOpts,
                     $args['channel']
                 );
@@ -148,7 +166,8 @@ class TransportFactory
                         $args['restClientConfigPath']
                     ),
                     $args['credentialsLoader'],
-                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async']
+                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'],
+                    $args['authHttpHandler']
                 );
             default:
                 throw new InvalidArgumentException('Unknown transport type.');
@@ -227,10 +246,6 @@ class TransportFactory
         }
 
         self::validateNotNull($args, ['scopes']);
-
-        if (!isset($args['authHttpHandler'])) {
-            $args['authHttpHandler'] = HttpHandlerFactory::build();
-        }
 
         $loader = self::getADCCredentials(
             $args['scopes'],

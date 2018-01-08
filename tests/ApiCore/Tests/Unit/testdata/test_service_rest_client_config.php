@@ -5,41 +5,49 @@ return [
         'test.interface.v1.api' => [
             'MethodWithUrlPlaceholder' => [
                 'method' => 'get',
-                'uri' => '/v1/{name=message/**}',
+                'uriTemplate' => '/v1/{name=message/**}',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName'
+                        ]
                     ],
                 ],
             ],
             'MethodWithBody' => [
                 'method' => 'post',
-                'uri' => '/v1/{name=message/**}',
+                'uriTemplate' => '/v1/{name=message/**}',
                 'body' => '*',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName'
+                        ]
                     ],
                 ],
             ],
             'MethodWithNestedMessageAsBody' => [
                 'method' => 'post',
-                'uri' => '/v1/{name=message/**}',
+                'uriTemplate' => '/v1/{name=message/**}',
                 'body' => 'nested_message',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName'
+                        ]
                     ],
                 ],
             ],
             'MethodWithNestedUrlPlaceholder' => [
                 'method' => 'get',
-                'uri' => '/v1/{nested_message=nested/**}',
+                'uriTemplate' => '/v1/{nested_message=nested/**}',
                 'body' => '*',
                 'placeholders' => [
                     'nested_message' => [
-                        'getNestedMessage',
-                        'getName',
+                        'getters' => [
+                            'getNestedMessage',
+                            'getName'
+                        ]
                     ]
                 ],
             ],
