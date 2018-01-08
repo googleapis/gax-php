@@ -35,6 +35,8 @@ namespace Google\ApiCore\Tests\Mocks;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\Auth\ApplicationDefaultCredentials;
 use Grpc\ChannelCredentials;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use ReflectionClass;
 
 class MockGrpcTransport extends GrpcTransport
@@ -46,8 +48,11 @@ class MockGrpcTransport extends GrpcTransport
     {
         $this->mockCall = $mockCall;
         $credentialsLoader = $credentialsLoader ?: ApplicationDefaultCredentials::getCredentials();
+        $authHttpHandler = function (RequestInterface $request, array $options) {
+            return new Response(200);
+        };
         $opts = ['credentials' => ChannelCredentials::createSsl()];
-        parent::__construct('', $credentialsLoader, $opts);
+        parent::__construct('', $credentialsLoader, $authHttpHandler, $opts);
     }
 
     protected function _simpleRequest(

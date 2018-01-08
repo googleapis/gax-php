@@ -46,14 +46,17 @@ class RequestBuilder
 {
     use UriTrait;
 
+    private $baseUri;
+    private $restConfig;
+
     /**
      * @param string $baseUri
-     * @param string $clientConfigPath
+     * @param string $restConfigPath
      */
-    public function __construct($baseUri, $clientConfigPath)
+    public function __construct($baseUri, $restConfigPath)
     {
         $this->baseUri = $baseUri;
-        $this->clientConfig = require($clientConfigPath);
+        $this->restConfig = require($restConfigPath);
     }
 
     /**
@@ -67,13 +70,13 @@ class RequestBuilder
     {
         list($interface, $method) = explode('/', $path);
 
-        if (isset($this->clientConfig['interfaces'][$interface][$method])) {
-            $config = $this->clientConfig['interfaces'][$interface][$method] + [
+        if (isset($this->restConfig['interfaces'][$interface][$method])) {
+            $config = $this->restConfig['interfaces'][$interface][$method] + [
                 'placeholders' => [],
                 'body' => null
             ];
             $uri = $this->buildUri(
-                $config['uri'],
+                $config['uriTemplate'],
                 $config['placeholders'],
                 $message
             );
@@ -139,14 +142,21 @@ class RequestBuilder
         $template = new PathTemplate($uriTemplate);
         $bindings = [];
 
-        foreach ($placeholders as $placeholder => $getters) {
-            $bindings[$placeholder] = array_reduce(
-                $getters,
+        foreach ($placeholders as $placeholder => $metadata) {
+            $value = array_reduce(
+                $metadata['getters'],
                 function (Message $result, $getter) {
                     return $result->$getter();
                 },
                 $message
             );
+
+            if (isset($metadata['format'])) {
+                $formatTemplate = new PathTemplate($metadata['format']);
+                $value = $formatTemplate->render([$placeholder => $value]);
+            }
+
+            $bindings[$placeholder] = $value;
         }
 
         return Psr7\uri_for(
