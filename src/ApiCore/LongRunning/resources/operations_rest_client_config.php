@@ -5,38 +5,50 @@ return [
         'google.longrunning.Operations' => [
             'GetOperation' => [
                 'method' => 'get',
-                'uri' => '/v1/{name=operations/**}',
+                'uriTemplate' => '/v1/{name=operations/**}',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName',
+                        ],
+                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
             'ListOperations' => [
                 'method' => 'get',
-                'uri' => '/v1/{name=operations}',
+                'uriTemplate' => '/v1/{name=operations}',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName',
+                        ],
+                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
             'CancelOperation' => [
                 'method' => 'post',
-                'uri' => '/v1/{name=operations/**}:cancel',
+                'uriTemplate' => '/v1/{name=operations/**}:cancel',
                 'body' => '*',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName',
+                        ],
+                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
             'DeleteOperation' => [
                 'method' => 'delete',
-                'uri' => '/v1/{name=operations/**}',
+                'uriTemplate' => '/v1/{name=operations/**}',
                 'placeholders' => [
                     'name' => [
-                        'getName',
+                        'getters' => [
+                            'getName',
+                        ],
+                        'format' => 'operations/{name}',
                     ],
                 ],
             ],

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google LLC All rights reserved.
+ * Copyright 2017 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,10 +44,12 @@
 
 namespace Google\ApiCore\LongRunning\Gapic;
 
-use Google\ApiCore\Call;
+use Google\ApiCore\ApiException;
 use Google\ApiCore\GapicClientTrait;
+use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\CredentialsLoader;
 use Google\LongRunning\CancelOperationRequest;
 use Google\LongRunning\DeleteOperationRequest;
 use Google\LongRunning\GetOperationRequest;
@@ -55,6 +57,8 @@ use Google\LongRunning\ListOperationsRequest;
 use Google\LongRunning\ListOperationsResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\GPBEmpty;
+use Grpc\Channel;
+use Grpc\ChannelCredentials;
 
 /**
  * Service Description: Manages long-running operations with an API service.
@@ -75,12 +79,12 @@ use Google\Protobuf\GPBEmpty;
  * calls that map to API methods. Sample code to get started:
  *
  * ```
+ * $options = [
+ *     'serviceAddress' => 'my-service-address',
+ *     'scopes' => ['my-service-scope'],
+ * ];
+ * $operationsClient = new OperationsClient($options);
  * try {
- *     $options = [
- *         'serviceAddress' => 'my-service-address',
- *         'scopes' => ['my-service-scope'],
- *     ];
- *     $operationsClient = new OperationsClient($options);
  *     $name = '';
  *     $response = $operationsClient->getOperation($name);
  * } finally {
@@ -136,10 +140,10 @@ class OperationsGapicClient
      *
      *     @type string $serviceAddress Required. The domain name of the API remote host.
      *     @type mixed $port The port on which to connect to the remote host. Default 443.
-     *     @type \Grpc\Channel $channel
+     *     @type Channel $channel
      *           A `Channel` object. If not specified, a channel will be constructed.
      *           NOTE: This option is only valid when utilizing the gRPC transport.
-     *     @type \Grpc\ChannelCredentials $sslCreds
+     *     @type ChannelCredentials $sslCreds
      *           A `ChannelCredentials` object for use with an SSL-enabled channel.
      *           Default: a credentials object returned from
      *           \Grpc\ChannelCredentials::createSsl().
@@ -150,9 +154,9 @@ class OperationsGapicClient
      *           Defaults to false.
      *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
      *           optional argument is specified, then this option is unused.
-     *     @type \Google\Auth\CredentialsLoader $credentialsLoader
+     *     @type CredentialsLoader $credentialsLoader
      *           A CredentialsLoader object created using the Google\Auth library.
-     *     @type array $scopes Required. A string array of scopes to use when acquiring credentials.
+     *     @type string[] $scopes Required. A string array of scopes to use when acquiring credentials.
      *     @type string $clientConfigPath
      *           Path to a JSON file containing client method configuration, including retry settings.
      *           Specify this setting to specify the retry behavior of all methods on the client.
@@ -169,10 +173,9 @@ class OperationsGapicClient
      *           settings in $clientConfigPath.
      *     @type callable $authHttpHandler A handler used to deliver PSR-7 requests specifically
      *           for authentication. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : ResponseInterface`
-     *           NOTE: This option is only valid when utilizing the REST transport.
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
      *     @type callable $httpHandler A handler used to deliver PSR-7 requests. Should match a
-     *           signature of `function (RequestInterface $request, array $options) : PromiseInterface`
+     *           signature of `function (RequestInterface $request, array $options) : PromiseInterface`.
      *           NOTE: This option is only valid when utilizing the REST transport.
      *     @type string|TransportInterface $transport The transport used for executing network
      *           requests. May be either the string `rest` or `grpc`. Additionally, it is possible
@@ -196,12 +199,12 @@ class OperationsGapicClient
      *
      * Sample code:
      * ```
+     * $options = [
+     *     'serviceAddress' => 'my-service-address',
+     *     'scopes' => ['my-service-scope'],
+     * ];
+     * $operationsClient = new OperationsClient($options);
      * try {
-     *     $options = [
-     *         'serviceAddress' => 'my-service-address',
-     *         'scopes' => ['my-service-scope'],
-     *     ];
-     *     $operationsClient = new OperationsClient($options);
      *     $name = '';
      *     $response = $operationsClient->getOperation($name);
      * } finally {
@@ -215,7 +218,7 @@ class OperationsGapicClient
      * @param array  $optionalArgs {
      *                             Optional.
      *
-     *     @type \Google\ApiCore\RetrySettings|array $retrySettings
+     *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
      *          of retry settings parameters. See the documentation on
@@ -224,7 +227,7 @@ class OperationsGapicClient
      *
      * @return \Google\LongRunning\Operation
      *
-     * @throws \Google\ApiCore\ApiException if the remote call fails
+     * @throws ApiException if the remote call fails
      * @experimental
      */
     public function getOperation($name, $optionalArgs = [])
@@ -249,12 +252,12 @@ class OperationsGapicClient
      *
      * Sample code:
      * ```
+     * $options = [
+     *     'serviceAddress' => 'my-service-address',
+     *     'scopes' => ['my-service-scope'],
+     * ];
+     * $operationsClient = new OperationsClient($options);
      * try {
-     *     $options = [
-     *         'serviceAddress' => 'my-service-address',
-     *         'scopes' => ['my-service-scope'],
-     *     ];
-     *     $operationsClient = new OperationsClient($options);
      *     $name = '';
      *     $filter = '';
      *     // Iterate through all elements
@@ -291,7 +294,7 @@ class OperationsGapicClient
      *          If no page token is specified (the default), the first page
      *          of values will be returned. Any page token used here must have
      *          been generated by a previous call to the API.
-     *     @type \Google\ApiCore\RetrySettings|array $retrySettings
+     *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
      *          of retry settings parameters. See the documentation on
@@ -300,7 +303,7 @@ class OperationsGapicClient
      *
      * @return \Google\ApiCore\PagedListResponse
      *
-     * @throws \Google\ApiCore\ApiException if the remote call fails
+     * @throws ApiException if the remote call fails
      * @experimental
      */
     public function listOperations($name, $filter, $optionalArgs = [])
@@ -337,12 +340,12 @@ class OperationsGapicClient
      *
      * Sample code:
      * ```
+     * $options = [
+     *     'serviceAddress' => 'my-service-address',
+     *     'scopes' => ['my-service-scope'],
+     * ];
+     * $operationsClient = new OperationsClient($options);
      * try {
-     *     $options = [
-     *         'serviceAddress' => 'my-service-address',
-     *         'scopes' => ['my-service-scope'],
-     *     ];
-     *     $operationsClient = new OperationsClient($options);
      *     $name = '';
      *     $operationsClient->cancelOperation($name);
      * } finally {
@@ -356,14 +359,14 @@ class OperationsGapicClient
      * @param array  $optionalArgs {
      *                             Optional.
      *
-     *     @type \Google\ApiCore\RetrySettings|array $retrySettings
+     *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
      *          of retry settings parameters. See the documentation on
      *          {@see Google\ApiCore\RetrySettings} for example usage.
      * }
      *
-     * @throws \Google\ApiCore\ApiException if the remote call fails
+     * @throws ApiException if the remote call fails
      * @experimental
      */
     public function cancelOperation($name, $optionalArgs = [])
@@ -387,12 +390,12 @@ class OperationsGapicClient
      *
      * Sample code:
      * ```
+     * $options = [
+     *     'serviceAddress' => 'my-service-address',
+     *     'scopes' => ['my-service-scope'],
+     * ];
+     * $operationsClient = new OperationsClient($options);
      * try {
-     *     $options = [
-     *         'serviceAddress' => 'my-service-address',
-     *         'scopes' => ['my-service-scope'],
-     *     ];
-     *     $operationsClient = new OperationsClient($options);
      *     $name = '';
      *     $operationsClient->deleteOperation($name);
      * } finally {
@@ -406,14 +409,14 @@ class OperationsGapicClient
      * @param array  $optionalArgs {
      *                             Optional.
      *
-     *     @type \Google\ApiCore\RetrySettings|array $retrySettings
+     *     @type RetrySettings|array $retrySettings
      *          Retry settings to use for this call. Can be a
      *          {@see Google\ApiCore\RetrySettings} object, or an associative array
      *          of retry settings parameters. See the documentation on
      *          {@see Google\ApiCore\RetrySettings} for example usage.
      * }
      *
-     * @throws \Google\ApiCore\ApiException if the remote call fails
+     * @throws ApiException if the remote call fails
      * @experimental
      */
     public function deleteOperation($name, $optionalArgs = [])
@@ -427,16 +430,5 @@ class OperationsGapicClient
             $optionalArgs,
             $request
         )->wait();
-    }
-
-    /**
-     * Initiates an orderly shutdown in which preexisting calls continue but new
-     * calls are immediately cancelled.
-     *
-     * @experimental
-     */
-    public function close()
-    {
-        $this->transport->close();
     }
 }
