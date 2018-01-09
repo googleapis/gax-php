@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>google.apiCore.tests.mocks.MockRequest</code>
+ * Generated from protobuf message <code>google.apicore.tests.mocks.MockRequest</code>
  */
 class MockRequest extends \Google\Protobuf\Internal\Message
 {
