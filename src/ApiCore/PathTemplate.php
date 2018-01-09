@@ -104,10 +104,15 @@ class PathTemplate implements Countable
                         )
                     );
                 }
-                $out = array_merge(
-                    $out,
-                    (new self($bindings[$segment->literal]))->segments
-                );
+                if ($bindings[$segment->literal]) {
+                    $out = array_merge(
+                        $out,
+                        (new self($bindings[$segment->literal]))->segments
+                    );
+                } else {
+                    $out[] = new Segment(Segment::TERMINAL, '');
+                }
+
                 $binding = true;
             } elseif ($segment->kind == Segment::END_BINDING) {
                 $binding = false;
@@ -141,7 +146,7 @@ class PathTemplate implements Countable
         $pathIndex = 0;
         foreach ($segments as $segment) {
             if ($segment->kind == Segment::TERMINAL) {
-                if (':' == $segment->literal[0]) {
+                if (':' == substr($segment->literal, 0, 1)) {
                     $binding = $bindings[$currentVar];
                     $bindingLength = strrpos($binding, $segment->literal);
                     if ($bindingLength !== false
@@ -202,7 +207,7 @@ class PathTemplate implements Countable
         $slash = true;
         foreach ($segments as $segment) {
             if ($segment->kind == Segment::TERMINAL) {
-                if ($slash && ':' !== $segment->literal[0]) {
+                if ($slash && ':' !== substr($segment->literal, 0, 1)) {
                     $template .= '/';
                 }
                 $template .= $segment->literal;
