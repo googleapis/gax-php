@@ -85,25 +85,20 @@ class RequestBuilder
             if ($config['body'] === '*') {
                 $body = $message->serializeToJsonString();
             } else {
-                $refClass = new \ReflectionClass($message);
-                $messageProps = $refClass->getProperties(\ReflectionProperty::IS_PRIVATE);
                 $queryParams = [];
 
-                foreach ($messageProps as $property) {
-                    $name = $property->getName();
-
+                foreach ($this->getAllProperties($message) as $name => $value) {
                     if (array_key_exists($name, $config['placeholders'])) {
                         continue;
                     }
 
-                    $property->setAccessible(true);
                     if ($name === $config['body']) {
-                        $body = $property->getValue($message)
+                        $body = $this->getPrivatePropertyValue($message, $name)
                             ->serializeToJsonString();
                         continue;
                     }
 
-                    $value = $property->getValue($message);
+                    $value = $this->getPrivatePropertyValue($message, $name);
                     if ($value instanceof RepeatedField) {
                         $value = iterator_to_array($value);
                     }
@@ -166,5 +161,19 @@ class RequestBuilder
                 $template->render($bindings)
             )
         );
+    }
+
+    private function getAllProperties(Message $message)
+    {
+        return \Closure::bind(function (Message $message) {
+            return get_class_vars(get_class($message));
+        }, null, $message)($message);
+    }
+
+    private function getPrivatePropertyValue(Message $message, $propertyName)
+    {
+        return \Closure::bind(function (Message $message, $propertyName) {
+            return $message->$propertyName;
+        }, null, $message)($message, $propertyName);
     }
 }
