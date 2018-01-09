@@ -62,7 +62,10 @@ class RequestBuilderTest extends TestCase
 
         $this->assertEquals('/v1/message/foo', $uri->getPath());
         $this->assertEquals('', $uri->getQuery());
-        $this->assertEquals('{"name":"message\/foo","nestedMessage":{"name":"nested\/foo"}}', (string) $request->getBody());
+        $this->assertEquals(
+            ['name' => 'message/foo', 'nestedMessage' => ['name' => 'nested/foo']],
+            json_decode($request->getBody(), true)
+        );
     }
 
     public function testMethodWithNestedMessageAsBody()
@@ -78,7 +81,10 @@ class RequestBuilderTest extends TestCase
 
         $this->assertEquals('/v1/message/foo', $uri->getPath());
         $this->assertEquals('number=0', $uri->getQuery());
-        $this->assertEquals('{"name":"nested\/foo"}', (string) $request->getBody());
+        $this->assertEquals(
+            ['name' => 'nested/foo'],
+            json_decode($request->getBody(), true)
+        );
     }
 
     public function testMethodWithNestedUrlPlaceholder()
@@ -94,7 +100,10 @@ class RequestBuilderTest extends TestCase
 
         $this->assertEquals('/v1/nested/foo', $uri->getPath());
         $this->assertEquals('', $uri->getQuery());
-        $this->assertEquals('{"name":"message\/foo","nestedMessage":{"name":"nested\/foo"}}', (string) $request->getBody());
+        $this->assertEquals(
+            ['name' => 'message/foo', 'nestedMessage' => ['name' => 'nested/foo']],
+            json_decode($request->getBody(), true)
+        );
     }
 
     public function testMethodWithUrlRepeatedField()
