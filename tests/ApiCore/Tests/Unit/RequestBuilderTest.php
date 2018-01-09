@@ -135,6 +135,47 @@ class RequestBuilderTest extends TestCase
         $this->assertEquals('application/json', $request->getHeaderLine('Content-Type'));
     }
 
+    public function testMethodWithColon()
+    {
+        $message = new MockRequestBody();
+        $message->setName('message/foo');
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithColonInUrl', $message);
+        $uri = $request->getUri();
+
+        $this->assertEquals('/v1/message/foo:action', $uri->getPath());
+        $this->assertEquals('number=0', $uri->getQuery());
+    }
+
+    public function testMethodWithMultipleWildcardsAndColonInUrl()
+    {
+        $message = new MockRequestBody();
+        $message->setName('message/foo');
+
+        $request = $this->builder->build(
+            self::SERVICE_NAME . '/MethodWithMultipleWildcardsAndColonInUrl',
+            $message
+        );
+        $uri = $request->getUri();
+
+        $this->assertEquals('/v1/message/foo/number/0:action', $uri->getPath());
+        $this->assertEquals('', $uri->getQuery());
+    }
+
+    public function testMethodWithSimplePlaceholder()
+    {
+        $message = new MockRequestBody();
+        $message->setName('message-name');
+
+        $request = $this->builder->build(
+            self::SERVICE_NAME . '/MethodWithSimplePlaceholder',
+            $message
+        );
+        $uri = $request->getUri();
+
+        $this->assertEquals('/v1/message-name', $uri->getPath());
+    }
+
     /**
      * @expectedException RuntimeException
      * @expectedExceptionMessage Failed to build request, as the provided path (myResource/doesntExist) was not found in the configuration.

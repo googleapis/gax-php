@@ -135,10 +135,22 @@ class PathTemplate implements Countable
         $segmentCount = $this->segmentCount;
         $pathIndex = 0;
         foreach ($segments as $segment) {
-            if ($pathIndex >= count($pathList)) {
-                break;
-            }
             if ($segment->kind == Segment::TERMINAL) {
+                if (':' == $segment->literal[0]) {
+                    $binding = $bindings[$currentVar];
+                    $bindingLength = strrpos($binding, $segment->literal);
+                    if ($bindingLength !== false
+                        && $bindingLength + strlen($segment->literal) == strlen($binding)
+                    ) {
+                        $bindings[$currentVar] = substr($binding, 0, $bindingLength);
+                    } else {
+                        $pathIndex += 1;
+                    }
+                    continue;
+                }
+                if ($pathIndex >= count($pathList)) {
+                    break;
+                }
                 $pathItem = $pathList[$pathIndex];
                 if ($segment->literal == '*') {
                     $bindings[$currentVar] = $pathItem;
@@ -185,7 +197,7 @@ class PathTemplate implements Countable
         $slash = true;
         foreach ($segments as $segment) {
             if ($segment->kind == Segment::TERMINAL) {
-                if ($slash) {
+                if ($slash && ':' !== $segment->literal[0]) {
                     $template .= '/';
                 }
                 $template .= $segment->literal;

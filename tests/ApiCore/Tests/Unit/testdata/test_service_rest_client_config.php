@@ -51,6 +51,44 @@ return [
                     ]
                 ],
             ],
+            'MethodWithColonInUrl' => [
+                'method' => 'get',
+                'uriTemplate' => '/v1/{name=message/*}:action',
+                'placeholders' => [
+                    'name' => [
+                        'getters' => [
+                            'getName',
+                        ],
+                    ]
+                ],
+            ],
+            'MethodWithMultipleWildcardsAndColonInUrl' => [
+                'method' => 'get',
+                'uriTemplate' => '/v1/{name=message/*}/number/{number=*}:action',
+                'placeholders' => [
+                    'name' => [
+                        'getters' => [
+                            'getName',
+                        ]
+                    ],
+                    'number' => [
+                        'getters' => [
+                            'getNumber',
+                        ]
+                    ]
+                ],
+            ],
+            'MethodWithSimplePlaceholder' => [
+                'method' => 'get',
+                'uriTemplate' => '/v1/{name}',
+                'placeholders' => [
+                    'name' => [
+                        'getters' => [
+                            'getName',
+                        ],
+                    ]
+                ],
+            ],
         ],
     ],
 ];
