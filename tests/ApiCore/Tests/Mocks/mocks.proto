@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-package google.apiCore.tests.mocks;
+package google.apicore.tests.mocks;
+
+option php_namespace = "Google\\ApiCore\\Tests\\Mocks";
 
 message MockRequest {
   // The value of the uninterpreted option, in whatever type the tokenizer

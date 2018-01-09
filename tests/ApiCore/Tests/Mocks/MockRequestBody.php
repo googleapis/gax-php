@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>google.apiCore.tests.mocks.MockRequestBody</code>
+ * Generated from protobuf message <code>google.apicore.tests.mocks.MockRequestBody</code>
  */
 class MockRequestBody extends \Google\Protobuf\Internal\Message
 {
@@ -29,7 +29,7 @@ class MockRequestBody extends \Google\Protobuf\Internal\Message
      */
     private $repeated_field;
     /**
-     * Generated from protobuf field <code>.google.apiCore.tests.mocks.MockRequestBody nested_message = 4;</code>
+     * Generated from protobuf field <code>.google.apicore.tests.mocks.MockRequestBody nested_message = 4;</code>
      */
     private $nested_message = null;
 
@@ -111,7 +111,7 @@ class MockRequestBody extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.google.apiCore.tests.mocks.MockRequestBody nested_message = 4;</code>
+     * Generated from protobuf field <code>.google.apicore.tests.mocks.MockRequestBody nested_message = 4;</code>
      * @return \Google\ApiCore\Tests\Mocks\MockRequestBody
      */
     public function getNestedMessage()
@@ -120,7 +120,7 @@ class MockRequestBody extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.google.apiCore.tests.mocks.MockRequestBody nested_message = 4;</code>
+     * Generated from protobuf field <code>.google.apicore.tests.mocks.MockRequestBody nested_message = 4;</code>
      * @param \Google\ApiCore\Tests\Mocks\MockRequestBody $var
      * @return $this
      */
