@@ -102,6 +102,7 @@ class RequestBuilder
                     if ($value instanceof RepeatedField) {
                         $value = iterator_to_array($value);
                     }
+
                     $queryParams[$name] = $value;
                 }
 
@@ -163,17 +164,21 @@ class RequestBuilder
         );
     }
 
-    private function getAllProperties(Message $message)
-    {
-        return \Closure::bind(function (Message $message) {
-            return get_class_vars(get_class($message));
-        }, null, $message)($message);
-    }
-
     private function getPrivatePropertyValue(Message $message, $propertyName)
     {
-        return \Closure::bind(function (Message $message, $propertyName) {
+        $privatePropertyValueFunc = \Closure::bind(function (Message $message, $propertyName) {
             return $message->$propertyName;
-        }, null, $message)($message, $propertyName);
+        }, null, $message);
+
+        return $privatePropertyValueFunc($message, $propertyName);
+    }
+
+    private function getAllProperties(Message $message)
+    {
+        $privatePropertiesFunc = \Closure::bind(function (Message $message) {
+            return get_class_vars(get_class($message));
+        }, null, $message);
+
+        return $privatePropertiesFunc($message);
     }
 }
