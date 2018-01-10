@@ -59,6 +59,8 @@ class TransportFactory
         'transport'         => null
     ];
 
+    private static $triggerRestPerformanceNotice = true;
+
     /**
      * Builds a transport given an array of arguments.
      *
@@ -221,7 +223,7 @@ class TransportFactory
             ? 'grpc'
             : 'rest';
 
-        if ($transport === 'rest') {
+        if ($transport === 'rest' && self::$triggerRestPerformanceNotice) {
             trigger_error(
                 'For best performance, it is highly recommended to install the ' .
                 'gRPC extension. For details on how to do so, please see ' .
@@ -265,5 +267,10 @@ class TransportFactory
         }
 
         return $loader;
+    }
+
+    public static function disableRestPerformanceNotice()
+    {
+        self::$triggerRestPerformanceNotice = false;
     }
 }
