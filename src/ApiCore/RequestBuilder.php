@@ -73,13 +73,33 @@ class RequestBuilder
         if (isset($this->restConfig['interfaces'][$interface][$method])) {
             $config = $this->restConfig['interfaces'][$interface][$method] + [
                 'placeholders' => [],
-                'body' => null
+                'body' => null,
+                'additionalBindings' => null,
             ];
             $uri = $this->buildUri(
                 $config['uriTemplate'],
                 $config['placeholders'],
                 $message
             );
+
+            if (!$uri && $config['additionalBindings']) {
+                foreach ($config['additionalBindings'] as $additionalBinding) {
+                    $additionalBindingConfig = $additionalBinding + $config;
+                    $uri = $this->buildUri(
+                        $additionalBindingConfig['uriTemplate'],
+                        $additionalBindingConfig['placeholders'],
+                        $message
+                    );
+                    if ($uri) {
+                        break;
+                    }
+                }
+            }
+
+            if (!$uri) {
+                throw new ValidationException("Failed to build the provided path ($path) with the supplied message.");
+            }
+
             $body = null;
 
             if ($config['body'] === '*') {
@@ -141,25 +161,28 @@ class RequestBuilder
         foreach ($placeholders as $placeholder => $metadata) {
             $value = array_reduce(
                 $metadata['getters'],
-                function (Message $result, $getter) {
-                    return $result->$getter();
+                function (Message $result = null, $getter) {
+                    if ($result) {
+                        return $result->$getter();
+                    }
                 },
                 $message
             );
 
-            if (isset($metadata['format'])) {
-                $formatTemplate = new PathTemplate($metadata['format']);
-                $value = $formatTemplate->render([$placeholder => $value]);
-            }
-
             $bindings[$placeholder] = $value;
+        }
+
+        try {
+            $path = $template->render($bindings);
+        } catch (ValidationException $e) {
+            return null;
         }
 
         return Psr7\uri_for(
             sprintf(
                 'https://%s/%s',
                 $this->baseUri,
-                $template->render($bindings)
+                $path
             )
         );
     }

@@ -151,6 +151,7 @@ class RequestBuilderTest extends TestCase
     {
         $message = new MockRequestBody();
         $message->setName('message/foo');
+        $message->setNumber(10);
 
         $request = $this->builder->build(
             self::SERVICE_NAME . '/MethodWithMultipleWildcardsAndColonInUrl',
@@ -158,7 +159,7 @@ class RequestBuilderTest extends TestCase
         );
         $uri = $request->getUri();
 
-        $this->assertEquals('/v1/message/foo/number/0:action', $uri->getPath());
+        $this->assertEquals('/v1/message/foo/number/10:action', $uri->getPath());
         $this->assertEquals('', $uri->getQuery());
     }
 
@@ -174,6 +175,38 @@ class RequestBuilderTest extends TestCase
         $uri = $request->getUri();
 
         $this->assertEquals('/v1/message-name', $uri->getPath());
+    }
+
+    public function testMethodWithAdditionalBindings()
+    {
+        $message = new MockRequestBody();
+        $message->setName('message/foo');
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithAdditionalBindings', $message);
+
+        $this->assertEquals('/v1/message/foo/additional/bindings', $request->getUri()->getPath());
+
+        $message->setName('different/format/foo');
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithAdditionalBindings', $message);
+
+        $this->assertEquals('/v1/different/format/foo/additional/bindings', $request->getUri()->getPath());
+
+        $nestedMessage = new MockRequestBody();
+        $nestedMessage->setName('nested/foo');
+        $message->setNestedMessage($nestedMessage);
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithAdditionalBindings', $message);
+
+        $this->assertEquals('/v2/nested/foo/additional/bindings', $request->getUri()->getPath());
+    }
+
+    /**
+     * @expectedException Google\ApiCore\ValidationException
+     * @expectedExceptionMessage Failed to build the provided path (test.interface.v1.api/MethodWithAdditionalBindings) with the supplied message.
+     */
+    public function testThrowsExceptionWithNonMatchingFormat()
+    {
+        $message = new MockRequestBody();
+        $message->setName('invalid/name/format');
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithAdditionalBindings', $message);
     }
 
     /**
