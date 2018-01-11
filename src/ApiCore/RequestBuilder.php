@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore;
 
+use Google\Protobuf\Internal\GPBUtil;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use GuzzleHttp\Psr7;
@@ -112,18 +113,20 @@ class RequestBuilder
                         continue;
                     }
 
+                    $propertyValue = $this->getPrivatePropertyValue($message, $name);
                     if ($name === $config['body']) {
-                        $body = $this->getPrivatePropertyValue($message, $name)
-                            ->serializeToJsonString();
+                        $body = $propertyValue->serializeToJsonString();
                         continue;
                     }
 
-                    $value = $this->getPrivatePropertyValue($message, $name);
-                    if ($value instanceof RepeatedField) {
-                        $value = iterator_to_array($value);
+                    $value = $this->getQuerystringValue($propertyValue);
+                    if ($propertyValue instanceof Message) {
+                        foreach ($value as $key => $value2) {
+                            $queryParams[$name . '.' . $key] = $value2;
+                        }
+                    } else {
+                        $queryParams[$name] = $value;
                     }
-
-                    $queryParams[$name] = $value;
                 }
 
                 if ($queryParams) {
@@ -203,5 +206,29 @@ class RequestBuilder
         }, null, $message);
 
         return $privatePropertiesFunc($message);
+    }
+
+    private function getQuerystringValue($propertyValue)
+    {
+        if ($propertyValue instanceof Message) {
+            return $this->messageToArray($propertyValue);
+        }
+        if ($propertyValue instanceof RepeatedField) {
+            return iterator_to_array($propertyValue);
+        }
+        return $propertyValue;
+    }
+
+    private function messageToArray(Message $message)
+    {
+        if (GPBUtil::hasSpecialJsonMapping($message)) {
+            return json_decode($message->serializeToJsonString(), true);
+        }
+        $messageArray = [];
+        foreach ($this->getAllProperties($message) as $name => $value) {
+            $propertyValue = $this->getPrivatePropertyValue($message, $name);
+            $messageArray[$name] = $this->getQuerystringValue($propertyValue);
+        }
+        return $messageArray;
     }
 }
