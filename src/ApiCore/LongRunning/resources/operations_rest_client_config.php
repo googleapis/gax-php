@@ -11,7 +11,6 @@ return [
                         'getters' => [
                             'getName',
                         ],
-                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
@@ -23,7 +22,6 @@ return [
                         'getters' => [
                             'getName',
                         ],
-                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
@@ -36,7 +34,6 @@ return [
                         'getters' => [
                             'getName',
                         ],
-                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
@@ -48,7 +45,6 @@ return [
                         'getters' => [
                             'getName',
                         ],
-                        'format' => 'operations/{name}',
                     ],
                 ],
             ],
