@@ -211,6 +211,7 @@ trait GapicClientTrait
      * }
      * @param Message $request
      * @param int $callType
+     * @param string $interfaceName
      *
      * @return PromiseInterface
      */
@@ -219,7 +220,8 @@ trait GapicClientTrait
         $decodeType,
         array $optionalArgs = [],
         Message $request = null,
-        $callType = Call::UNARY_CALL
+        $callType = Call::UNARY_CALL,
+        $interfaceName = null
     ) {
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
@@ -230,7 +232,7 @@ trait GapicClientTrait
             : null;
 
         $call = new Call(
-            $this->serviceName . '/' . $methodName,
+            $this->buildMethod($interfaceName, $methodName),
             $decodeType,
             $request,
             $descriptor,
@@ -322,6 +324,7 @@ trait GapicClientTrait
      * }
      * @param Message $request
      * @param OperationsClient $client
+     * @param string $interfaceName
      *
      * @return PromiseInterface
      */
@@ -329,14 +332,17 @@ trait GapicClientTrait
         $methodName,
         array $optionalArgs,
         Message $request,
-        OperationsClient $client
+        OperationsClient $client,
+        $interfaceName = null
     ) {
         $descriptor = $this->descriptors[$methodName]['longRunning'];
         return $this->startCall(
             $methodName,
             Operation::class,
             $optionalArgs,
-            $request
+            $request,
+            Call::UNARY_CALL,
+            $interfaceName
         )->then(function (Message $response) use ($client, $descriptor) {
             $options = $descriptor + [
                 'lastProtoResponse' => $response
@@ -351,13 +357,19 @@ trait GapicClientTrait
      * @param array $optionalArgs
      * @param string $decodeType
      * @param Message $request
+     * @param string $interfaceName
      *
      * @return PagedListResponse
      */
-    private function getPagedListResponse($methodName, array $optionalArgs, $decodeType, Message $request)
-    {
+    private function getPagedListResponse(
+        $methodName,
+        array $optionalArgs,
+        $decodeType,
+        Message $request,
+        $interfaceName = null
+    ) {
         $call = new Call(
-            $this->serviceName . '/' . $methodName,
+            $this->buildMethod($interfaceName, $methodName),
             $decodeType,
             $request
         );
@@ -370,6 +382,21 @@ trait GapicClientTrait
             new PageStreamingDescriptor(
                 $this->descriptors[$methodName]['pageStreaming']
             )
+        );
+    }
+
+    /**
+     * @param string $interfaceName
+     * @param string $methodName
+     *
+     * @return string
+     */
+    private function buildMethod($interfaceName, $methodName)
+    {
+        return sprintf(
+            '%s/%s',
+            $interfaceName ?: $this->serviceName,
+            $methodName
         );
     }
 }
