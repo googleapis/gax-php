@@ -213,7 +213,7 @@ trait GapicClientTrait
      * @param int $callType
      * @param string $interfaceName
      *
-     * @return PromiseInterface
+     * @return PromiseInterface|BidiStream|ClientStream|ServerStream
      */
     private function startCall(
         $methodName,
