@@ -37,7 +37,7 @@ use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\RetrySettings;
-use Google\ApiCore\Tests\Mocks\MockRequest;
+use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Transport\TransportInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;

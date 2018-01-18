@@ -30,35 +30,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Tests\Mocks;
+namespace Google\ApiCore\Testing;
 
-use Google\ApiCore\ApiException;
-use Grpc;
+use Google\Rpc\Code;
 
 /**
- * The MockClientStreamingCall class is used to mock out the \Grpc\ClientStreamingCall class
- * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/ClientStreamingCall.php)
+ * The MockUnaryCall class is used to mock out the \Grpc\UnaryCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/UnaryCall.php)
  *
- * The MockClientStreamingCall object is constructed with a response object, an optional deserialize
+ * The MockUnaryCall object is constructed with a response object, an optional deserialize
  * method, and an optional status. The response object and status are returned immediately from the
- * wait() method. It also provides a write() method that accepts request objects, and a
- * getAllRequests() method that returns all request objects passed to write(), and clears them.
+ * wait() method.
  */
-class MockClientStreamingCall extends \Grpc\ClientStreamingCall
+class MockUnaryCall extends \Grpc\UnaryCall
 {
-    private $mockUnaryCall;
-    private $waitCalled = false;
-    private $receivedWrites = [];
+    use SerializationTrait;
+
+    private $response;
+    private $status;
 
     /**
-     * MockClientStreamingCall constructor.
-     * @param $response The response object.
+     * MockUnaryCall constructor.
+     * @param \Google\Protobuf\Internal\Message $response The response object.
      * @param callable|null $deserialize An optional deserialize method for the response object.
      * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
      */
     public function __construct($response, $deserialize = null, $status = null)
     {
-        $this->mockUnaryCall = new MockUnaryCall($response, $deserialize, $status);
+        $this->response = $response;
+        $this->deserialize = $deserialize;
+        if (is_null($status)) {
+            $status = new MockStatus(Code::OK);
+        }
+        $this->status = $status;
     }
 
     /**
@@ -67,37 +71,9 @@ class MockClientStreamingCall extends \Grpc\ClientStreamingCall
      */
     public function wait()
     {
-        $this->waitCalled = true;
-        return $this->mockUnaryCall->wait();
-    }
-
-    /**
-     * Save the request object, to be retrieved via getReceivedCalls()
-     * @param \Google\Protobuf\Internal\Message|mixed $request The request object
-     * @throws ApiException
-     */
-    public function write($request, array $options = [])
-    {
-        if ($this->waitCalled) {
-            throw new ApiException("Cannot call write() after wait()", Grpc\STATUS_INTERNAL);
-        }
-        if (is_a($request, '\Google\Protobuf\Internal\Message')) {
-            $newRequest = new $request();
-            $newRequest->mergeFromString($request->serializeToString());
-            $request = $newRequest;
-        }
-        $this->receivedWrites[] = $request;
-    }
-
-    /**
-     * Return a list of calls made to write(), and clear $receivedFuncCalls.
-     *
-     * @return mixed[] An array of received requests
-     */
-    public function popReceivedCalls()
-    {
-        $receivedFuncCallsTemp = $this->receivedWrites;
-        $this->receivedWrites = [];
-        return $receivedFuncCallsTemp;
+        return [
+            $this->deserializeMessage($this->response, $this->deserialize),
+            $this->status,
+        ];
     }
 }

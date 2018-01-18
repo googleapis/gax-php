@@ -29,49 +29,57 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Mocks;
+
+namespace Google\ApiCore\Testing;
+
+use Google\ApiCore\ApiException;
+use Google\Rpc\Code;
+use Grpc;
 
 /**
- * Class ReceivedRequest used to hold the function name and request object of a call
- * make to a mock gRPC stub.
+ * The MockServerStreamingCall class is used to mock out the \Grpc\ServerStreamingCall class
+ * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/ServerStreamingCall.php)
  */
-class ReceivedRequest
+class MockServerStreamingCall extends \Grpc\ServerStreamingCall
 {
-    private $actualCall;
+    use SerializationTrait;
 
-    public function __construct($funcCall, $requestObject, $deserialize = null, $metadata = [], $options = [])
+    private $responses;
+    private $status;
+
+    /**
+     * MockServerStreamingCall constructor.
+     * @param mixed[] $responses A list of response objects.
+     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
+     */
+    public function __construct($responses, $deserialize = null, $status = null)
     {
-        $this->actualCall = [
-            'funcCall' => $funcCall,
-            'request' => $requestObject,
-            'deserialize' => $deserialize,
-            'metadata' => $metadata,
-            'options' => $options,
-        ];
+        $this->responses = $responses;
+        $this->deserialize = $deserialize;
+        if (is_null($status)) {
+            $status = new MockStatus(Code::OK);
+        }
+        $this->status = $status;
     }
 
-    public function getArray()
+    public function responses()
     {
-        return $this->actualCall;
+        while (count($this->responses) > 0) {
+            $resp = array_shift($this->responses);
+            $obj = $this->deserializeMessage($resp, $this->deserialize);
+            yield $obj;
+        }
     }
 
-    public function getFuncCall()
+    public function getStatus()
     {
-        return $this->actualCall['funcCall'];
-    }
-
-    public function getRequestObject()
-    {
-        return $this->actualCall['request'];
-    }
-
-    public function getMetadata()
-    {
-        return $this->actualCall['metadata'];
-    }
-
-    public function getOptions()
-    {
-        return $this->actualCall['options'];
+        if (count($this->responses) > 0) {
+            throw new ApiException(
+                "Calls to getStatus() will block if all responses are not read",
+                Grpc\STATUS_INTERNAL
+            );
+        }
+        return $this->status;
     }
 }

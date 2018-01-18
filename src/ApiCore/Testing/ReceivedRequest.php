@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,34 +29,49 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Mocks;
+namespace Google\ApiCore\Testing;
 
-trait SerializationTrait
+/**
+ * Class ReceivedRequest used to hold the function name and request object of a call
+ * make to a mock gRPC stub.
+ */
+class ReceivedRequest
 {
-    protected function deserializeMessage($message, $deserialize)
+    private $actualCall;
+
+    public function __construct($funcCall, $requestObject, $deserialize = null, $metadata = [], $options = [])
     {
-        if ($message === null) {
-            return null;
-        }
+        $this->actualCall = [
+            'funcCall' => $funcCall,
+            'request' => $requestObject,
+            'deserialize' => $deserialize,
+            'metadata' => $metadata,
+            'options' => $options,
+        ];
+    }
 
-        if ($deserialize === null) {
-            return $message;
-        }
+    public function getArray()
+    {
+        return $this->actualCall;
+    }
 
-        // Proto3 implementation
-        if (is_array($deserialize)) {
-            list($className, $deserializeFunc) = $deserialize;
-            $obj = new $className();
-            if (method_exists($obj, $deserializeFunc)) {
-                $obj->$deserializeFunc($message);
-            } elseif (is_string($message)) {
-                $obj->mergeFromString($message);
-            }
+    public function getFuncCall()
+    {
+        return $this->actualCall['funcCall'];
+    }
 
-            return $obj;
-        }
+    public function getRequestObject()
+    {
+        return $this->actualCall['request'];
+    }
 
-        // Protobuf-PHP implementation
-        return call_user_func($deserialize, $message);
+    public function getMetadata()
+    {
+        return $this->actualCall['metadata'];
+    }
+
+    public function getOptions()
+    {
+        return $this->actualCall['options'];
     }
 }

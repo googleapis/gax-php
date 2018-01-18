@@ -51,9 +51,13 @@ abstract class GeneratedTest extends TestCase
             }
 
             $this->assertSame(count($expected), count($actual));
-            for ($i = 0; $i < count($expected); $i++) {
-                $expectedElement = $expected[$i];
-                $actualElement = $actual[$i];
+
+            $expectedValues = array_values($expected);
+            $actualValues = array_values(iterator_to_array($actual));
+
+            for ($i = 0; $i < count($expectedValues); $i++) {
+                $expectedElement = $expectedValues[$i];
+                $actualElement = $actualValues[$i];
                 $this->assertProtobufEquals($expectedElement, $actualElement);
             }
         } else {

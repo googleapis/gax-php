@@ -18,7 +18,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\RequestBuilder;
-use Google\ApiCore\Tests\Mocks\MockRequestBody;
+use Google\ApiCore\Testing\MockRequestBody;
 use PHPUnit\Framework\TestCase;
 
 /**

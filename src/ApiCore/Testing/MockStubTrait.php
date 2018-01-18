@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Tests\Mocks;
+namespace Google\ApiCore\Testing;
 
 use UnderflowException;
 
@@ -193,6 +193,10 @@ trait MockStubTrait
      */
     public function addResponse($response, $status = null)
     {
+        if (!$this->deserialize) {
+            $this->deserialize = [get_class($response), 'decode'];
+        }
+
         if (is_a($response, '\Google\Protobuf\Internal\Message')) {
             $response = $response->serializeToString();
         }

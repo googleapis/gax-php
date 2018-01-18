@@ -39,7 +39,7 @@ namespace Google\ApiCore\Tests\Unit\LongRunning;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Testing\GeneratedTest;
-use Google\ApiCore\Tests\Mocks\MockTransport;
+use Google\ApiCore\Testing\MockTransport;
 use Google\LongRunning\ListOperationsResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;

@@ -32,8 +32,8 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Grpc\UnaryCall;
-use Google\ApiCore\Tests\Mocks\MockRequest;
-use Google\ApiCore\Tests\Mocks\MockStatus;
+use Google\ApiCore\Testing\MockRequest;
+use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\Protobuf\Any;
 use Google\Rpc\Code;

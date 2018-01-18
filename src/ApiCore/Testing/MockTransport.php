@@ -30,11 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Tests\Mocks;
+namespace Google\ApiCore\Testing;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\Transport\TransportInterface;
+use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
+use Google\ApiCore\ClientStream;
+use Google\ApiCore\ServerStream;
+use Google\ApiCore\Transport\TransportInterface;
 use Google\Rpc\Code;
 use GuzzleHttp\Promise\Promise;
 
@@ -43,7 +46,6 @@ class MockTransport implements TransportInterface
     use MockStubTrait;
 
     private $agentHeaderDescriptor;
-    private $streamingDescriptor;
 
     public function setAgentHeaderDescriptor($agentHeaderDescriptor)
     {
@@ -69,23 +71,23 @@ class MockTransport implements TransportInterface
 
     public function startBidiStreamingCall(Call $call, array $options)
     {
-        $newArgs = [$name, $this->deserialize, $metadata, $optionalArgs];
+        $newArgs = ['/' . $call->getMethod(), $this->deserialize, $options, $options];
         $response = call_user_func_array(array($this, '_bidiRequest'), $newArgs);
-        return new BidiStream($response, $this->descriptor);
+        return new BidiStream($response, $call->getDescriptor());
     }
 
     public function startClientStreamingCall(Call $call, array $options)
     {
-        $newArgs = [$name, $this->deserialize, $metadata, $optionalArgs];
+        $newArgs = ['/' . $call->getMethod(), $this->deserialize, $options, $options];
         $response = call_user_func_array(array($this, '_clientStreamRequest'), $newArgs);
-        return new ClientStream($response, $this->descriptor);
+        return new ClientStream($response, $call->getDescriptor());
     }
 
     public function startServerStreamingCall(Call $call, array $options)
     {
-        $newArgs = [$name, $request, $this->deserialize, $metadata, $optionalArgs];
+        $newArgs = ['/' . $call->getMethod(), $call->getMessage(), $this->deserialize, $options, $options];
         $response = call_user_func_array(array($this, '_serverStreamRequest'), $newArgs);
-        return new ServerStream($response, $this->descriptor);
+        return new ServerStream($response, $call->getDescriptor());
     }
 
     public function __call($name, $arguments)

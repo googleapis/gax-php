@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Tests\Mocks;
+namespace Google\ApiCore\Testing;
 
 use Google\Rpc\Code;
 

@@ -34,7 +34,7 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\Call;
 use Google\ApiCore\Page;
 use Google\ApiCore\PageStreamingDescriptor;
-use Google\ApiCore\Tests\Mocks\MockStatus;
+use Google\ApiCore\Testing\MockStatus;
 use Google\Rpc\Code;
 use PHPUnit\Framework\TestCase;
 

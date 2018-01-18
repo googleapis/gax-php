@@ -33,7 +33,7 @@
     "autoload-dev": {
         "psr-4": {
             "Google\\": "tests",
-            "GPBMetadata\\": "tests\\metadata"
+            "GPBMetadata\\": "metadata"
         }
     }
 }

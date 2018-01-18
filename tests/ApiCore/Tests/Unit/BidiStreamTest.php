@@ -32,8 +32,8 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\BidiStream;
-use Google\ApiCore\Tests\Mocks\MockStatus;
-use Google\ApiCore\Tests\Mocks\MockBidiStreamingCall;
+use Google\ApiCore\Testing\MockStatus;
+use Google\ApiCore\Testing\MockBidiStreamingCall;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Rpc\Code;
