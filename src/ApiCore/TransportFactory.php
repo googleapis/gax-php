@@ -59,8 +59,6 @@ class TransportFactory
         'transport'         => null
     ];
 
-    private static $triggerRestPerformanceNotice = true;
-
     /**
      * Builds a transport given an array of arguments.
      *
@@ -223,17 +221,6 @@ class TransportFactory
             ? 'grpc'
             : 'rest';
 
-        if ($transport === 'rest' && self::$triggerRestPerformanceNotice) {
-            trigger_error(
-                'For best performance, it is highly recommended to install the ' .
-                'gRPC extension. For details on how to do so, please see ' .
-                'https://cloud.google.com/php/grpc. To disable this notice and ' .
-                'continue without using gRPC please explicitly define your ' .
-                'transport choice as "rest" when configuring your client.',
-                E_USER_NOTICE
-            );
-        }
-
         return $transport;
     }
 
@@ -267,10 +254,5 @@ class TransportFactory
         }
 
         return $loader;
-    }
-
-    public static function disableRestPerformanceNotice()
-    {
-        self::$triggerRestPerformanceNotice = false;
     }
 }
