@@ -52,8 +52,8 @@ abstract class GeneratedTest extends TestCase
 
             $this->assertSame(count($expected), count($actual));
 
-            $expectedValues = array_values($expected);
-            $actualValues = array_values(iterator_to_array($actual));
+            $expectedValues = $this->getValues($expected);
+            $actualValues = $this->getValues($actual);
 
             for ($i = 0; $i < count($expectedValues); $i++) {
                 $expectedElement = $expectedValues[$i];
@@ -76,5 +76,14 @@ abstract class GeneratedTest extends TestCase
                 }
             }
         }
+    }
+
+    private function getValues($field)
+    {
+        return array_values(
+            is_array($field)
+                ? $field
+                : iterator_to_array($field)
+        );
     }
 }
