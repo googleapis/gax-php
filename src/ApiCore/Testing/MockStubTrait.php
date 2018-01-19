@@ -193,7 +193,7 @@ trait MockStubTrait
      */
     public function addResponse($response, $status = null)
     {
-        if (!$this->deserialize) {
+        if (!$this->deserialize && $response) {
             $this->deserialize = [get_class($response), 'decode'];
         }
 
