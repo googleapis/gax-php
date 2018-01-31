@@ -230,7 +230,6 @@ class TransportFactory
         if (isset($args['credentialsLoader'])) {
             $fetchAuthTokenInterface = $args['credentialsLoader'];
         } else {
-
             self::validateNotNull($args, ['scopes']);
 
             $fetchAuthTokenInterface = self::getADCCredentials(
