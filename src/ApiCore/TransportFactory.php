@@ -40,6 +40,7 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use GPBMetadata\Google\Api\Auth;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use InvalidArgumentException;
@@ -56,7 +57,6 @@ class TransportFactory
         'authCacheOptions'  => null,
         'httpHandler'       => null,
         'authHttpHandler'   => null,
-        'transport'         => null
     ];
 
     /**
@@ -124,12 +124,9 @@ class TransportFactory
             $args['port']
         );
 
-        if (!$args['authHttpHandler']) {
-            $args['authHttpHandler'] = HttpHandlerFactory::build();
-        }
-
         $args['transport'] = self::handleTransport($args['transport']);
-        $args['credentialsLoader'] = self::handleCredentialsLoader($args);
+
+        $authWrapper = self::buildAuthWrapper($args);
 
         switch ($args['transport']) {
             case 'grpc':
@@ -152,8 +149,7 @@ class TransportFactory
 
                 return new GrpcTransport(
                     $host,
-                    $args['credentialsLoader'],
-                    $args['authHttpHandler'],
+                    $authWrapper,
                     $stubOpts,
                     $args['channel']
                 );
@@ -165,9 +161,8 @@ class TransportFactory
                         $host,
                         $args['restClientConfigPath']
                     ),
-                    $args['credentialsLoader'],
-                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'],
-                    $args['authHttpHandler']
+                    $authWrapper,
+                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async']
                 );
             default:
                 throw new InvalidArgumentException('Unknown transport type.');
@@ -226,33 +221,36 @@ class TransportFactory
 
     /**
      * @param array $args
-     * @return CredentialsLoader
+     * @return AuthWrapper
      */
-    private static function handleCredentialsLoader(array $args)
+    private static function buildAuthWrapper(array $args)
     {
+        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+
         if (isset($args['credentialsLoader'])) {
-            return $args['credentialsLoader'];
-        }
+            $fetchAuthTokenInterface = $args['credentialsLoader'];
+        } else {
 
-        self::validateNotNull($args, ['scopes']);
+            self::validateNotNull($args, ['scopes']);
 
-        $loader = self::getADCCredentials(
-            $args['scopes'],
-            $args['authHttpHandler']
-        );
-
-        if ($args['enableCaching']) {
-            if (!isset($args['authCache'])) {
-                $args['authCache'] = new MemoryCacheItemPool();
-            }
-
-            $loader = new FetchAuthTokenCache(
-                $loader,
-                $args['authCacheOptions'],
-                $args['authCache']
+            $fetchAuthTokenInterface = self::getADCCredentials(
+                $args['scopes'],
+                $authHttpHandler
             );
+
+            if ($args['enableCaching']) {
+                if (!isset($args['authCache'])) {
+                    $args['authCache'] = new MemoryCacheItemPool();
+                }
+
+                $fetchAuthTokenInterface = new FetchAuthTokenCache(
+                    $fetchAuthTokenInterface,
+                    $args['authCacheOptions'],
+                    $args['authCache']
+                );
+            }
         }
 
-        return $loader;
+        return new AuthWrapper($fetchAuthTokenInterface, $authHttpHandler);
     }
 }

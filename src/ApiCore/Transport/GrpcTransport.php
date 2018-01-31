@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Transport;
 
 use Google\ApiCore\ApiException;
+use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
@@ -40,6 +41,7 @@ use Google\ApiCore\ServerStream;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
+use GPBMetadata\Google\Api\Auth;
 use Grpc\BaseStub;
 use Grpc\Channel;
 use GuzzleHttp\Promise\Promise;
@@ -54,25 +56,19 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
     /**
      * @param string $host The domain name and port of the API remote host.
-     * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
-     *        used to fetch access tokens.
-     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
-     *        specifically for authentication. Should match a signature of
-     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
+     * @param AuthWrapper $authWrapper An AuthWrapper object.
      * @param array $stubOpts An array of options used when creating a BaseStub.
      * @param Channel $channel An already instantiated channel to be used during
      *        creation of the BaseStub.
      */
     public function __construct(
         $host,
-        FetchAuthTokenInterface $credentialsLoader,
-        callable $authHttpHandler,
+        AuthWrapper $authWrapper,
         array $stubOpts,
         Channel $channel = null
     ) {
-        $this->credentialsCallback = function () use ($credentialsLoader, $authHttpHandler) {
-            $token = $credentialsLoader->fetchAuthToken($authHttpHandler);
-            return ['authorization' => ['Bearer ' . $token['access_token']]];
+        $this->credentialsCallback = function () use ($authWrapper) {
+            return ['authorization' => [$authWrapper->getBearerString()]];
         };
 
         parent::__construct(
