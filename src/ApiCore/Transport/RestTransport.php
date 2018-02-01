@@ -36,7 +36,6 @@ use Google\ApiCore\ApiStatus;
 use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\RequestBuilder;
-use Google\Auth\FetchAuthTokenInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 

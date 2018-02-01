@@ -38,14 +38,10 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\ServerStream;
-use Google\Auth\FetchAuthTokenInterface;
-use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
-use GPBMetadata\Google\Api\Auth;
 use Grpc\BaseStub;
 use Grpc\Channel;
 use GuzzleHttp\Promise\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * A gRPC based transport implementation.

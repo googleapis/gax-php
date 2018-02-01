@@ -40,7 +40,6 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
-use GPBMetadata\Google\Api\Auth;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use InvalidArgumentException;
@@ -228,11 +227,11 @@ class TransportFactory
         $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
 
         if (isset($args['credentialsLoader'])) {
-            $fetchAuthTokenInterface = $args['credentialsLoader'];
+            $credentialsLoader = $args['credentialsLoader'];
         } else {
             self::validateNotNull($args, ['scopes']);
 
-            $fetchAuthTokenInterface = self::getADCCredentials(
+            $credentialsLoader = self::getADCCredentials(
                 $args['scopes'],
                 $authHttpHandler
             );
@@ -242,14 +241,14 @@ class TransportFactory
                     $args['authCache'] = new MemoryCacheItemPool();
                 }
 
-                $fetchAuthTokenInterface = new FetchAuthTokenCache(
-                    $fetchAuthTokenInterface,
+                $credentialsLoader = new FetchAuthTokenCache(
+                    $credentialsLoader,
                     $args['authCacheOptions'],
                     $args['authCache']
                 );
             }
         }
 
-        return new AuthWrapper($fetchAuthTokenInterface, $authHttpHandler);
+        return new AuthWrapper($credentialsLoader, $authHttpHandler);
     }
 }
