@@ -55,20 +55,16 @@ class TransportFactory
         'transport'         => null,
         'authCacheOptions'  => null,
         'httpHandler'       => null,
-        'authHttpHandler'   => null,
-        'transport'         => null
+        'authHttpHandler'   => null
     ];
 
     /**
      * Builds a transport given an array of arguments.
      *
-     * @param array $args {
+     * @param string $transport The type of transport to build.
+     * @param string $serviceAddress The address of the API remote host.
+     * @param array  $args {
      *     Required. An array of required and optional arguments.
-     *
-     *     @type string $serviceAddress
-     *           Required. The domain name of the API remote host.
-     *     @type mixed $port
-     *           Required. The port on which to connect to the remote host.
      *     @type string[] $scopes
      *           Optional. A list of scopes required for API access.
      *           Exactly one of $scopes or $credentialsLoader must be provided.
@@ -106,32 +102,22 @@ class TransportFactory
      *           signature of
      *           `function (RequestInterface $request, array $options) : PromiseInterface`.
      *           NOTE: This option is only valid when utilizing the REST transport.
-     *     @type string $transport
-     *           The type of transport to build.
      * }
      * @return TransportInterface
+     * @throws \Exception
      */
-    public static function build(array $args)
+    public static function build($transport, $serviceAddress, array $args)
     {
-        self::validateNotNull($args, [
-            'serviceAddress',
-            'port'
-        ]);
         $args += self::$defaults;
-        $host = sprintf(
-            '%s:%s',
-            $args['serviceAddress'],
-            $args['port']
-        );
 
         if (!$args['authHttpHandler']) {
             $args['authHttpHandler'] = HttpHandlerFactory::build();
         }
 
-        $args['transport'] = self::handleTransport($args['transport']);
+        $transport = self::handleTransport($transport);
         $args['credentialsLoader'] = self::handleCredentialsLoader($args);
 
-        switch ($args['transport']) {
+        switch ($transport) {
             case 'grpc':
                 if (!self::getGrpcDependencyStatus()) {
                     throw new InvalidArgumentException(
@@ -151,7 +137,7 @@ class TransportFactory
                 }
 
                 return new GrpcTransport(
-                    $host,
+                    $serviceAddress,
                     $args['credentialsLoader'],
                     $args['authHttpHandler'],
                     $stubOpts,
@@ -162,7 +148,7 @@ class TransportFactory
 
                 return new RestTransport(
                     new RequestBuilder(
-                        $host,
+                        $serviceAddress,
                         $args['restClientConfigPath']
                     ),
                     $args['credentialsLoader'],
