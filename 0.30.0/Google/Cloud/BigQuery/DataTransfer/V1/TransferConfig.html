@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\BigQuery\DataTransfer\V1\TransferConfig | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../css/sami.css">
+        <script src="../../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../../js/typeahead.min.js"></script>
+        <script src="../../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_BigQuery_DataTransfer_V1_TransferConfig" data-root-path="../../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../../../../0.29.0/index.html" data-version="0.29.0">0.29.0</option>
+                                            <option value="../../../../../../0.30.0/index.html" data-version="0.30.0">0.30.0</option>
+                                            <option value="../../../../../../master/index.html" data-version="master">master branch</option>
+                                    </select>
+            </form>
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud/BigQuery.html">BigQuery</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud/BigQuery/DataTransfer.html">DataTransfer</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud/BigQuery/DataTransfer/V1.html">V1</a></li><li class="backslash">\</li><li>TransferConfig</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            TransferConfig
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>TransferConfig</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Represents a data transfer configuration. A transfer configuration
+contains all metadata needed to perform a data transfer. For example,
+<code>destination_dataset_id</code> specifies where data should be stored.</p>            <p>When a new transfer configuration is created, the specified
+<code>destination_dataset_id</code> is created when needed and shared with the
+appropriate data source service account.
+Next id: 20</p>
+
+<p>Generated from protobuf message <code>google.cloud.bigquery.datatransfer.v1.TransferConfig</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>The resource name of the transfer config.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>The resource name of the transfer config.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDestinationDatasetId">getDestinationDatasetId</a>()
+        
+                                            <p>The BigQuery target dataset id.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDestinationDatasetId">setDestinationDatasetId</a>(string $var)
+        
+                                            <p>The BigQuery target dataset id.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisplayName">getDisplayName</a>()
+        
+                                            <p>User specified display name for the data transfer.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisplayName">setDisplayName</a>(string $var)
+        
+                                            <p>User specified display name for the data transfer.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDataSourceId">getDataSourceId</a>()
+        
+                                            <p>Data source id. Cannot be changed once data transfer is created.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDataSourceId">setDataSourceId</a>(string $var)
+        
+                                            <p>Data source id. Cannot be changed once data transfer is created.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Struct">Struct</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getParams">getParams</a>()
+        
+                                            <p>Data transfer specific parameters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setParams">setParams</a>(<abbr title="Google\Protobuf\Struct">Struct</abbr> $var)
+        
+                                            <p>Data transfer specific parameters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSchedule">getSchedule</a>()
+        
+                                            <p>Data transfer schedule.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSchedule">setSchedule</a>(string $var)
+        
+                                            <p>Data transfer schedule.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDataRefreshWindowDays">getDataRefreshWindowDays</a>()
+        
+                                            <p>The number of days to look back to automatically refresh the data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDataRefreshWindowDays">setDataRefreshWindowDays</a>(int $var)
+        
+                                            <p>The number of days to look back to automatically refresh the data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisabled">getDisabled</a>()
+        
+                                            <p>Is this config disabled. When set to true, no runs are scheduled
+for a given transfer.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisabled">setDisabled</a>(bool $var)
+        
+                                            <p>Is this config disabled. When set to true, no runs are scheduled
+for a given transfer.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUpdateTime">getUpdateTime</a>()
+        
+                                            <p>Output only. Data transfer modification time. Ignored by server on input.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUpdateTime">setUpdateTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>Output only. Data transfer modification time. Ignored by server on input.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNextRunTime">getNextRunTime</a>()
+        
+                                            <p>Output only. Next time when data transfer will run.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setNextRunTime">setNextRunTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>Output only. Next time when data transfer will run.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getState">getState</a>()
+        
+                                            <p>Output only. State of the most recently updated transfer run.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setState">setState</a>(int $var)
+        
+                                            <p>Output only. State of the most recently updated transfer run.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int|string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUserId">getUserId</a>()
+        
+                                            <p>Output only. Unique ID of the user on whose behalf transfer is done.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUserId">setUserId</a>(int|string $var)
+        
+                                            <p>Output only. Unique ID of the user on whose behalf transfer is done.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDatasetRegion">getDatasetRegion</a>()
+        
+                                            <p>Output only. Region in which BigQuery dataset is located.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDatasetRegion">setDatasetRegion</a>(string $var)
+        
+                                            <p>Output only. Region in which BigQuery dataset is located.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 129</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 145</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The resource name of the transfer config.</p>                    <p>Transfer config names have the form
+<code>projects/{project_id}/transferConfigs/{config_id}</code>.
+Where <code>config_id</code> is usually a uuid, even though it is not
+guaranteed or required. The name is ignored when creating a transfer
+config.</p>
+
+<p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 162</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The resource name of the transfer config.</p>                    <p>Transfer config names have the form
+<code>projects/{project_id}/transferConfigs/{config_id}</code>.
+Where <code>config_id</code> is usually a uuid, even though it is not
+guaranteed or required. The name is ignored when creating a transfer
+config.</p>
+
+<p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDestinationDatasetId">
+        <div class="location">at         line 176</div>
+        <code>                    string
+    <strong>getDestinationDatasetId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The BigQuery target dataset id.</p>                    <p>Generated from protobuf field <code>string destination_dataset_id = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDestinationDatasetId">
+        <div class="location">at         line 188</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setDestinationDatasetId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The BigQuery target dataset id.</p>                    <p>Generated from protobuf field <code>string destination_dataset_id = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisplayName">
+        <div class="location">at         line 202</div>
+        <code>                    string
+    <strong>getDisplayName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>User specified display name for the data transfer.</p>                    <p>Generated from protobuf field <code>string display_name = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisplayName">
+        <div class="location">at         line 214</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setDisplayName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>User specified display name for the data transfer.</p>                    <p>Generated from protobuf field <code>string display_name = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDataSourceId">
+        <div class="location">at         line 228</div>
+        <code>                    string
+    <strong>getDataSourceId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Data source id. Cannot be changed once data transfer is created.</p>                    <p>Generated from protobuf field <code>string data_source_id = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDataSourceId">
+        <div class="location">at         line 240</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setDataSourceId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Data source id. Cannot be changed once data transfer is created.</p>                    <p>Generated from protobuf field <code>string data_source_id = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getParams">
+        <div class="location">at         line 254</div>
+        <code>                    <abbr title="Google\Protobuf\Struct">Struct</abbr>
+    <strong>getParams</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Data transfer specific parameters.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Struct params = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Struct">Struct</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setParams">
+        <div class="location">at         line 266</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setParams</strong>(<abbr title="Google\Protobuf\Struct">Struct</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Data transfer specific parameters.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Struct params = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Struct">Struct</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSchedule">
+        <div class="location">at         line 291</div>
+        <code>                    string
+    <strong>getSchedule</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Data transfer schedule.</p>                    <p>If the data source does not support a custom schedule, this should be
+empty. If it is empty, the default value for the data source will be
+used.
+The specified times are in UTC.
+Examples of valid format:
+<code>1st,3rd monday of month 15:30</code>,
+<code>every wed,fri of jan,jun 13:15</code>, and
+<code>first sunday of quarter 00:00</code>.
+See more explanation about the format here:
+https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
+NOTE: the granularity should be at least 8 hours, or less frequent.</p>
+
+<p>Generated from protobuf field <code>string schedule = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSchedule">
+        <div class="location">at         line 314</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setSchedule</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Data transfer schedule.</p>                    <p>If the data source does not support a custom schedule, this should be
+empty. If it is empty, the default value for the data source will be
+used.
+The specified times are in UTC.
+Examples of valid format:
+<code>1st,3rd monday of month 15:30</code>,
+<code>every wed,fri of jan,jun 13:15</code>, and
+<code>first sunday of quarter 00:00</code>.
+See more explanation about the format here:
+https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
+NOTE: the granularity should be at least 8 hours, or less frequent.</p>
+
+<p>Generated from protobuf field <code>string schedule = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDataRefreshWindowDays">
+        <div class="location">at         line 333</div>
+        <code>                    int
+    <strong>getDataRefreshWindowDays</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number of days to look back to automatically refresh the data.</p>                    <p>For example, if <code>data_refresh_window_days = 10</code>, then every day
+BigQuery reingests data for [today-10, today-1], rather than ingesting data
+for just [today-1].
+Only valid if the data source supports the feature. Set the value to  0
+to use the default value.</p>
+
+<p>Generated from protobuf field <code>int32 data_refresh_window_days = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDataRefreshWindowDays">
+        <div class="location">at         line 350</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setDataRefreshWindowDays</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number of days to look back to automatically refresh the data.</p>                    <p>For example, if <code>data_refresh_window_days = 10</code>, then every day
+BigQuery reingests data for [today-10, today-1], rather than ingesting data
+for just [today-1].
+Only valid if the data source supports the feature. Set the value to  0
+to use the default value.</p>
+
+<p>Generated from protobuf field <code>int32 data_refresh_window_days = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisabled">
+        <div class="location">at         line 365</div>
+        <code>                    bool
+    <strong>getDisabled</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Is this config disabled. When set to true, no runs are scheduled
+for a given transfer.</p>                    <p>Generated from protobuf field <code>bool disabled = 13;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisabled">
+        <div class="location">at         line 378</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setDisabled</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Is this config disabled. When set to true, no runs are scheduled
+for a given transfer.</p>                    <p>Generated from protobuf field <code>bool disabled = 13;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUpdateTime">
+        <div class="location">at         line 392</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getUpdateTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Data transfer modification time. Ignored by server on input.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp update_time = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUpdateTime">
+        <div class="location">at         line 404</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setUpdateTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Data transfer modification time. Ignored by server on input.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp update_time = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNextRunTime">
+        <div class="location">at         line 418</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getNextRunTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Next time when data transfer will run.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp next_run_time = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setNextRunTime">
+        <div class="location">at         line 430</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setNextRunTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Next time when data transfer will run.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp next_run_time = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getState">
+        <div class="location">at         line 444</div>
+        <code>                    int
+    <strong>getState</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. State of the most recently updated transfer run.</p>                    <p>Generated from protobuf field <code>.google.cloud.bigquery.datatransfer.v1.TransferState state = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setState">
+        <div class="location">at         line 456</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setState</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. State of the most recently updated transfer run.</p>                    <p>Generated from protobuf field <code>.google.cloud.bigquery.datatransfer.v1.TransferState state = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUserId">
+        <div class="location">at         line 474</div>
+        <code>                    int|string
+    <strong>getUserId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Unique ID of the user on whose behalf transfer is done.</p>                    <p>Applicable only to data sources that do not support service accounts.
+When set to 0, the data source service account credentials are used.
+May be negative. Note, that this identifier is not stable.
+It may change over time even for the same user.</p>
+
+<p>Generated from protobuf field <code>int64 user_id = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUserId">
+        <div class="location">at         line 490</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setUserId</strong>(int|string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Unique ID of the user on whose behalf transfer is done.</p>                    <p>Applicable only to data sources that do not support service accounts.
+When set to 0, the data source service account credentials are used.
+May be negative. Note, that this identifier is not stable.
+It may change over time even for the same user.</p>
+
+<p>Generated from protobuf field <code>int64 user_id = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int|string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDatasetRegion">
+        <div class="location">at         line 504</div>
+        <code>                    string
+    <strong>getDatasetRegion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Region in which BigQuery dataset is located.</p>                    <p>Generated from protobuf field <code>string dataset_region = 14;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDatasetRegion">
+        <div class="location">at         line 516</div>
+        <code>                    <abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr>
+    <strong>setDatasetRegion</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Region in which BigQuery dataset is located.</p>                    <p>Generated from protobuf field <code>string dataset_region = 14;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

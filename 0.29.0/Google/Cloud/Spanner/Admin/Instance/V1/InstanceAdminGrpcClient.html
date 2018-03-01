@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Spanner\Admin\Instance\V1\InstanceAdminGrpcClient | Google GAX and Proto Client PHP</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../../css/sami.css">
+        <script src="../../../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../../../js/typeahead.min.js"></script>
+        <script src="../../../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Spanner_Admin_Instance_V1_InstanceAdminGrpcClient" data-root-path="../../../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../../../../../../0.29.0/index.html" data-version="0.29.0">0.29.0</option>
+                                            <option value="../../../../../../../0.30.0/index.html" data-version="0.30.0">0.30.0</option>
+                                            <option value="../../../../../../../master/index.html" data-version="master">master branch</option>
+                                    </select>
+            </form>
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../../../index.html">Google GAX and Proto Client PHP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner.html">Spanner</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner/Admin.html">Admin</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance.html">Instance</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1.html">V1</a></li><li class="backslash">\</li><li>InstanceAdminGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            InstanceAdminGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>InstanceAdminGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Cloud Spanner Instance Admin API</p>            <p>The Cloud Spanner Instance Admin API can be used to create, delete,
+modify and list instances. Instances are dedicated Cloud Spanner serving
+and storage resources to be used by Cloud Spanner databases.</p>
+
+<p>Each instance has a "configuration", which dictates where the
+serving resources for the Cloud Spanner instance are located (e.g.,
+US-central, Europe). Configurations are created by Google based on
+resource availability.</p>
+
+<p>Cloud Spanner billing is based on the instances that exist and their
+sizes. After an instance exists, there are no additional
+per-database or per-operation charges for use of the instance
+(though there may be additional network bandwidth charges).
+Instances offer isolation: problems with databases in one instance
+will not affect other instances. However, within an instance
+databases can affect each other. For example, if one database in an
+instance receives a lot of requests and consumes most of the
+instance resources, fewer resources are available for other
+databases in that instance, and their performance may suffer.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListInstanceConfigs">ListInstanceConfigs</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/ListInstanceConfigsRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\ListInstanceConfigsRequest">ListInstanceConfigsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the supported instance configurations for a given project.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetInstanceConfig">GetInstanceConfig</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/GetInstanceConfigRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\GetInstanceConfigRequest">GetInstanceConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets information about a particular instance configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListInstances">ListInstances</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/ListInstancesRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\ListInstancesRequest">ListInstancesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all instances in the given project.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetInstance">GetInstance</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/GetInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\GetInstanceRequest">GetInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets information about a particular instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateInstance">CreateInstance</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/CreateInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\CreateInstanceRequest">CreateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates an instance and begins preparing it to begin serving. The
+returned [long-running operation][google.longrunning.Operation]
+can be used to track the progress of preparing the new
+instance. The instance name is assigned by the caller. If the
+named instance already exists, <code>CreateInstance</code> returns
+<code>ALREADY_EXISTS</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateInstance">UpdateInstance</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/UpdateInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\UpdateInstanceRequest">UpdateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates an instance, and begins allocating or releasing resources
+as requested. The returned [long-running
+operation][google.longrunning.Operation] can be used to track the
+progress of updating the instance. If the named instance does not
+exist, returns <code>NOT_FOUND</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteInstance">DeleteInstance</a>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/DeleteInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\DeleteInstanceRequest">DeleteInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes an instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetIamPolicy">SetIamPolicy</a>(<a href="../../../../../../Google/Cloud/Iam/V1/SetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\SetIamPolicyRequest">SetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the access control policy on an instance resource. Replaces any
+existing policy.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetIamPolicy">GetIamPolicy</a>(<a href="../../../../../../Google/Cloud/Iam/V1/GetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\GetIamPolicyRequest">GetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets the access control policy for an instance resource. Returns an empty
+policy if an instance exists but does not have a policy set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_TestIamPermissions">TestIamPermissions</a>(<a href="../../../../../../Google/Cloud/Iam/V1/TestIamPermissionsRequest.html"><abbr title="Google\Cloud\Iam\V1\TestIamPermissionsRequest">TestIamPermissionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Returns permissions that the caller has on the specified instance resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 51</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListInstanceConfigs">
+        <div class="location">at         line 61</div>
+        <code>                    
+    <strong>ListInstanceConfigs</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/ListInstanceConfigsRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\ListInstanceConfigsRequest">ListInstanceConfigsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the supported instance configurations for a given project.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/ListInstanceConfigsRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\ListInstanceConfigsRequest">ListInstanceConfigsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetInstanceConfig">
+        <div class="location">at         line 75</div>
+        <code>                    
+    <strong>GetInstanceConfig</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/GetInstanceConfigRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\GetInstanceConfigRequest">GetInstanceConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets information about a particular instance configuration.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/GetInstanceConfigRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\GetInstanceConfigRequest">GetInstanceConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListInstances">
+        <div class="location">at         line 89</div>
+        <code>                    
+    <strong>ListInstances</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/ListInstancesRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\ListInstancesRequest">ListInstancesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all instances in the given project.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/ListInstancesRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\ListInstancesRequest">ListInstancesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetInstance">
+        <div class="location">at         line 103</div>
+        <code>                    
+    <strong>GetInstance</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/GetInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\GetInstanceRequest">GetInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets information about a particular instance.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/GetInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\GetInstanceRequest">GetInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateInstance">
+        <div class="location">at         line 150</div>
+        <code>                    
+    <strong>CreateInstance</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/CreateInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\CreateInstanceRequest">CreateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates an instance and begins preparing it to begin serving. The
+returned [long-running operation][google.longrunning.Operation]
+can be used to track the progress of preparing the new
+instance. The instance name is assigned by the caller. If the
+named instance already exists, <code>CreateInstance</code> returns
+<code>ALREADY_EXISTS</code>.</p>                    <p>Immediately upon completion of this request:</p>
+
+<ul>
+<li>The instance is readable via the API, with all requested attributes
+but no allocated resources. Its state is <code>CREATING</code>.</li>
+</ul>
+
+<p>Until completion of the returned operation:</p>
+
+<ul>
+<li>Cancelling the operation renders the instance immediately unreadable
+via the API.</li>
+<li>The instance can be deleted.</li>
+<li>All other attempts to modify the instance are rejected.</li>
+</ul>
+
+<p>Upon completion of the returned operation:</p>
+
+<ul>
+<li>Billing for all successfully-allocated resources begins (some types
+may have lower than the requested levels).</li>
+<li>Databases can be created in the instance.</li>
+<li>The instance's allocated resource levels are readable via the API.</li>
+<li>The instance's state becomes <code>READY</code>.</li>
+</ul>
+
+<p>The returned [long-running operation][google.longrunning.Operation] will
+have a name of the format <code>&lt;instance_name&gt;/operations/&lt;operation_id&gt;</code> and
+can be used to track creation of the instance.  The
+[metadata][google.longrunning.Operation.metadata] field type is
+[CreateInstanceMetadata][google.spanner.admin.instance.v1.CreateInstanceMetadata].
+The [response][google.longrunning.Operation.response] field type is
+[Instance][google.spanner.admin.instance.v1.Instance], if successful.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/CreateInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\CreateInstanceRequest">CreateInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateInstance">
+        <div class="location">at         line 203</div>
+        <code>                    
+    <strong>UpdateInstance</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/UpdateInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\UpdateInstanceRequest">UpdateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates an instance, and begins allocating or releasing resources
+as requested. The returned [long-running
+operation][google.longrunning.Operation] can be used to track the
+progress of updating the instance. If the named instance does not
+exist, returns <code>NOT_FOUND</code>.</p>                    <p>Immediately upon completion of this request:</p>
+
+<ul>
+<li>For resource types for which a decrease in the instance's allocation
+has been requested, billing is based on the newly-requested level.</li>
+</ul>
+
+<p>Until completion of the returned operation:</p>
+
+<ul>
+<li>Cancelling the operation sets its metadata's
+[cancel_time][google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time], and begins
+restoring resources to their pre-request values. The operation
+is guaranteed to succeed at undoing all resource changes,
+after which point it terminates with a <code>CANCELLED</code> status.</li>
+<li>All other attempts to modify the instance are rejected.</li>
+<li>Reading the instance via the API continues to give the pre-request
+resource levels.</li>
+</ul>
+
+<p>Upon completion of the returned operation:</p>
+
+<ul>
+<li>Billing begins for all successfully-allocated resources (some types
+may have lower than the requested levels).</li>
+<li>All newly-reserved resources are available for serving the instance's
+tables.</li>
+<li>The instance's new resource levels are readable via the API.</li>
+</ul>
+
+<p>The returned [long-running operation][google.longrunning.Operation] will
+have a name of the format <code>&lt;instance_name&gt;/operations/&lt;operation_id&gt;</code> and
+can be used to track the instance modification.  The
+[metadata][google.longrunning.Operation.metadata] field type is
+[UpdateInstanceMetadata][google.spanner.admin.instance.v1.UpdateInstanceMetadata].
+The [response][google.longrunning.Operation.response] field type is
+[Instance][google.spanner.admin.instance.v1.Instance], if successful.</p>
+
+<p>Authorization requires <code>spanner.instances.update</code> permission on
+resource [name][google.spanner.admin.instance.v1.Instance.name].</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/UpdateInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\UpdateInstanceRequest">UpdateInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteInstance">
+        <div class="location">at         line 227</div>
+        <code>                    
+    <strong>DeleteInstance</strong>(<a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/DeleteInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\DeleteInstanceRequest">DeleteInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes an instance.</p>                    <p>Immediately upon completion of the request:</p>
+
+<ul>
+<li>Billing ceases for all of the instance's reserved resources.</li>
+</ul>
+
+<p>Soon afterward:</p>
+
+<ul>
+<li>The instance and <em>all of its databases</em> immediately and
+irrevocably disappear from the API. All data in the databases
+is permanently deleted.</li>
+</ul>
+</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Spanner/Admin/Instance/V1/DeleteInstanceRequest.html"><abbr title="Google\Cloud\Spanner\Admin\Instance\V1\DeleteInstanceRequest">DeleteInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetIamPolicy">
+        <div class="location">at         line 245</div>
+        <code>                    
+    <strong>SetIamPolicy</strong>(<a href="../../../../../../Google/Cloud/Iam/V1/SetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\SetIamPolicyRequest">SetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the access control policy on an instance resource. Replaces any
+existing policy.</p>                    <p>Authorization requires <code>spanner.instances.setIamPolicy</code> on
+[resource][google.iam.v1.SetIamPolicyRequest.resource].</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Iam/V1/SetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\SetIamPolicyRequest">SetIamPolicyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetIamPolicy">
+        <div class="location">at         line 263</div>
+        <code>                    
+    <strong>GetIamPolicy</strong>(<a href="../../../../../../Google/Cloud/Iam/V1/GetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\GetIamPolicyRequest">GetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the access control policy for an instance resource. Returns an empty
+policy if an instance exists but does not have a policy set.</p>                    <p>Authorization requires <code>spanner.instances.getIamPolicy</code> on
+[resource][google.iam.v1.GetIamPolicyRequest.resource].</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Iam/V1/GetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\GetIamPolicyRequest">GetIamPolicyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_TestIamPermissions">
+        <div class="location">at         line 282</div>
+        <code>                    
+    <strong>TestIamPermissions</strong>(<a href="../../../../../../Google/Cloud/Iam/V1/TestIamPermissionsRequest.html"><abbr title="Google\Cloud\Iam\V1\TestIamPermissionsRequest">TestIamPermissionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns permissions that the caller has on the specified instance resource.</p>                    <p>Attempting this RPC on a non-existent Cloud Spanner instance resource will
+result in a NOT_FOUND error if the user has <code>spanner.instances.list</code>
+permission on the containing Google Cloud Project. Otherwise returns an
+empty set of permissions.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../../Google/Cloud/Iam/V1/TestIamPermissionsRequest.html"><abbr title="Google\Cloud\Iam\V1\TestIamPermissionsRequest">TestIamPermissionsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
