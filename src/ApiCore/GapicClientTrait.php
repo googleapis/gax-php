@@ -98,15 +98,27 @@ trait GapicClientTrait
      *           client.
      *     @type string $descriptorsConfigPath
      *           The path to a descriptor configuration file.
+     *     @type string $serviceName
+     *           The name of the service.
      *     @type string $serviceAddress
      *           The address of the API remote host.
+     *     @type array $keyFile
+     *           The contents of the service account credentials .json file retrieved from the
+     *           Google Developer's Console.
+     *           Ex: `json_decode(file_get_contents($path), true)`.
+     *     @type string $keyFilePath
+     *           The full path to your service account credentials .json file retrieved from the
+     *           Google Developers Console.
      *     @type string $clientConfig
-     *           Array containing client method configuration, including retry settings. Method
-     *           configurations specified in this option will override settings specified via
-     *           $clientConfigPath.
+     *           Array containing client method configuration, including retry settings. If this argument
+     *           is specified, the value of the $clientConfigPath option will be ignored.
      *     @type string $clientConfigPath
      *           Path to a JSON file containing client method configuration, including retry settings.
      *           Specify this setting to specify the retry behavior of all methods on the client.
+     *           If the $clientConfig option is specified, this will be ignored.
+     *     @type bool $disableRetries
+     *           Determines whether or not retries defined by the client configuration should be
+     *           disabled. Defaults to `false`.
      *     @type string|TransportInterface $transport
      *           The transport used for executing network requests. May be either
      *           the string `rest` or `grpc`. Additionally, it is possible
@@ -123,45 +135,108 @@ trait GapicClientTrait
      *           The code generator version of the GAPIC library.
      * }
      * @throws ValidationException
-     * @throws \Exception
      */
     private function setClientOptions(array $options)
     {
         $this->validateNotNull($options, [
+            'serviceName',
             'serviceAddress',
             'descriptorsConfigPath',
-            'clientConfigPath'
+            'clientConfigPath',
         ]);
-        $transport = isset($options['transport'])
-            ? $options['transport']
-            : null;
-        $clientConfig = json_decode(
-            file_get_contents($options['clientConfigPath']),
-            true
-        );
-        $this->serviceName = substr($options['serviceAddress'], 0, strrpos($options['serviceAddress'], ':'));
-        $this->retrySettings = RetrySettings::load(
-            $this->serviceName,
+
+        $this->setServiceNameAndDescriptors($options);
+        $this->setRetrySettings($options);
+        $this->setAgentHeaderDescriptor($options);
+        $this->setTransport($options);
+    }
+
+    /**
+     * @param array $options
+     */
+    private function setServiceNameAndDescriptors($options)
+    {
+        $serviceName = $options['serviceName'];
+        $descriptors = require($options['descriptorsConfigPath']);
+
+        $this->serviceName = $serviceName;
+        $this->descriptors = $descriptors['interfaces'][$serviceName];
+    }
+
+    /**
+     * @param string $serviceName
+     * @param array $options
+     * @throws ValidationException
+     */
+    private function setRetrySettings($options)
+    {
+        $clientConfig = isset($options['clientConfig'])
+            ? $options['clientConfig']
+            : json_decode(file_get_contents($options['clientConfigPath']), true);
+
+        $retrySettings = RetrySettings::load(
+            $options['serviceName'],
             $clientConfig,
             null
         );
-        if (!isset($options['gapicVersion'])) {
-            $options['gapicVersion'] = self::getGapicVersion($options);
+        if (isset($options['disableRetries']) && $options['disableRetries']) {
+
+            $updatedRetrySettings = [];
+            foreach ($retrySettings as $retrySettingsItem) {
+                $updatedRetrySettings[] = $retrySettingsItem->with([
+                    'retriesEnabled' => false
+                ]);
+            }
+            $retrySettings = $updatedRetrySettings;
         }
+
+        $this->retrySettings = $retrySettings;
+    }
+
+    /**
+     * @param array $options
+     */
+    private function setAgentHeaderDescriptor($options)
+    {
+        $gapicVersion = isset($options['gapicVersion'])
+            ? $options['gapicVersion']
+            : self::getGapicVersion($options);
         $this->agentHeaderDescriptor = new AgentHeaderDescriptor([
             'libName' => $this->pluck('libName', $options, false),
             'libVersion' => $this->pluck('libVersion', $options, false),
-            'gapicVersion' => $options['gapicVersion'],
+            'gapicVersion' => $gapicVersion,
         ]);
+    }
 
-        $descriptors = require($options['descriptorsConfigPath']);
-        $this->descriptors = $descriptors['interfaces'][$this->serviceName];
+    /**
+     * @param array $options
+     */
+    private function setTransport($options)
+    {
+        $transport = isset($options['transport'])
+            ? $options['transport']
+            : null;
+
+        if ($transport instanceof TransportInterface) {
+            $this->transport = $transport;
+            return;
+        }
+
         $transportConstructionOptions = isset($options['transportConstructionOptions'])
             ? $options['transportConstructionOptions']
-            : null;
-        $this->transport = $transport instanceof TransportInterface
-            ? $transport
-            : TransportFactory::build($transport, $options['serviceAddress'], $transportConstructionOptions);
+            : [];
+
+        if (isset($options['keyFile'])) {
+            $transportConstructionOptions += ['keyFile' => $options['keyFile']];
+        } elseif (isset($options['keyFilePath'])) {
+            $transportConstructionOptions += ['keyFile' => $options['keyFilePath']];
+        }
+
+        if (isset($options['scopes'])) {
+            $transportConstructionOptions += ['scopes' => $options['scopes']];
+        }
+
+        $this->transport = TransportFactory::build($transport, $options['serviceAddress'], $transportConstructionOptions);
     }
 
     /**

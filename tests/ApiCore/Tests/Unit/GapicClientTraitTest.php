@@ -142,6 +142,111 @@ class GapicClientTraitTest extends TestCase
             $options
         ]));
     }
+
+    public function testSetServiceNameAndDescriptors()
+    {
+        $serviceName = 'test.interface.v1.api';
+        $descriptorsFile = __DIR__ . '/testdata/test_service_descriptor_config.php';
+        $options = [
+            'serviceName' => $serviceName,
+            'descriptorsConfigPath' => $descriptorsFile,
+        ];
+
+        $client = new GapicClientTraitStub();
+        $client->call('setServiceNameAndDescriptors', [
+            $options
+        ]);
+
+        $this->assertSame($serviceName, $client->get('serviceName'));
+        $expectedDescriptors = require $descriptorsFile;
+        $this->assertSame($expectedDescriptors['interfaces'][$serviceName], $client->get('descriptors'));
+    }
+
+    /**
+     * @dataProvider setRetrySettingsDataProvider
+     */
+    public function testSetRetrySettings($options, $expectedRetrySettings)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('setRetrySettings', [
+            $options
+        ]);
+
+        $this->assertEquals($expectedRetrySettings, $client->get('retrySettings'));
+    }
+
+    public function setRetrySettingsDataProvider()
+    {
+        $serviceName = 'test.interface.v1.api';
+        $clientConfigFile = __DIR__ . '/testdata/test_service_client_config.json';
+
+        $manualClientConfig = [
+            "interfaces" => [
+                "test.interface.v1.api" => [
+                    "retry_codes" => [
+                        "idempotent" => [
+                            "DEADLINE_EXCEEDED",
+                            "UNAVAILABLE"
+                        ]
+                    ],
+                    "retry_params" => [
+                        "default" => [
+                            "initial_retry_delay_millis" => 100,
+                            "retry_delay_multiplier" => 1.2,
+                            "max_retry_delay_millis" => 1000,
+                            "initial_rpc_timeout_millis" => 300,
+                            "rpc_timeout_multiplier" => 1.3,
+                            "max_rpc_timeout_millis" => 3000,
+                            "total_timeout_millis" => 30000,
+                        ]
+                    ],
+                    "methods" => [
+                        "ManualConfigMethod" => [
+                            "timeout_millis" => 40000,
+                            "retry_codes_name" => "idempotent",
+                            "retry_params_name" => "default"
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $retrySettingsFromFile = RetrySettings::load($serviceName, json_decode(file_get_contents($clientConfigFile), true), []);
+        $manualLoadedRetrySettings = RetrySettings::load($serviceName, $manualClientConfig, []);
+        $manualLoadedRetrySettingsDisabled = [];
+        foreach ($manualLoadedRetrySettings as $retrySetting) {
+            $manualLoadedRetrySettingsDisabled[] = $retrySetting->with([
+                'retriesEnabled' => false
+            ]);
+        }
+
+        return [
+            [
+                [
+                    'serviceName' => $serviceName,
+                    'clientConfigPath' => $clientConfigFile
+                ],
+                $retrySettingsFromFile,
+            ],
+            [
+                [
+                    'serviceName' => $serviceName,
+                    'clientConfig' => $manualClientConfig,
+                    'clientConfigPath' => $clientConfigFile,
+                ],
+                $manualLoadedRetrySettings,
+            ],
+            [
+                [
+                    'serviceName' => $serviceName,
+                    'clientConfig' => $manualClientConfig,
+                    'clientConfigPath' => $clientConfigFile,
+                    'disableRetries' => true,
+                ],
+                $manualLoadedRetrySettingsDisabled,
+            ],
+        ];
+    }
 }
 
 class GapicClientTraitStub
@@ -160,5 +265,10 @@ class GapicClientTraitStub
         } else {
             $this->$name = $val;
         }
+    }
+
+    public function get($name)
+    {
+        return $this->$name;
     }
 }

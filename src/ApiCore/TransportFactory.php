@@ -37,6 +37,7 @@ use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -73,6 +74,8 @@ class TransportFactory
      *           Optional. A user-created CredentialsLoader object. Defaults to using
      *           ApplicationDefaultCredentials with the provided $scopes argument.
      *           Exactly one of $scopes or $credentialsLoader must be provided.
+     *     @type string|array $keyFile
+     *           A JSON credential file path or JSON credentials as an associative array
      *     @type Channel $channel
      *           Optional. A `Channel` object. If not specified, a channel will be constructed.
      *           NOTE: This option is only valid when utilizing the gRPC transport.
@@ -184,6 +187,16 @@ class TransportFactory
     }
 
     /**
+     * @param array $scopes
+     * @param string $keyFile
+     * @return ServiceAccountCredentials
+     */
+    protected static function getServiceAccountCredentials(array $scopes, $keyFile)
+    {
+        return new ServiceAccountCredentials($scopes, $keyFile);
+    }
+
+    /**
      * Construct ssl channel credentials. This exists to allow overriding in unit tests.
      *
      * @return ChannelCredentials
@@ -222,10 +235,14 @@ class TransportFactory
 
         self::validateNotNull($args, ['scopes']);
 
-        $loader = self::getADCCredentials(
-            $args['scopes'],
-            $args['authHttpHandler']
-        );
+        if (isset($args['keyFile'])) {
+            $loader = self::getServiceAccountCredentials($args['scopes'], $args['keyFile']);
+        } else {
+            $loader = self::getADCCredentials(
+                $args['scopes'],
+                $args['authHttpHandler']
+            );
+        }
 
         if ($args['enableCaching']) {
             if (!isset($args['authCache'])) {
