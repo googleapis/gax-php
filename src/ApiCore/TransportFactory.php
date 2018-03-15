@@ -62,10 +62,12 @@ class TransportFactory
     /**
      * Builds a transport given an array of arguments.
      *
-     * @param string $transport The type of transport to build.
      * @param string $serviceAddress The address of the API remote host.
      * @param array  $args {
      *     Required. An array of required and optional arguments.
+     *
+     *     @type string $transport
+     *           The type of transport to build.
      *     @type string[] $scopes
      *           Optional. A list of scopes required for API access.
      *           Exactly one of $scopes or $credentialsLoader must be provided.
@@ -109,7 +111,7 @@ class TransportFactory
      * @return TransportInterface
      * @throws \Exception
      */
-    public static function build($transport, $serviceAddress, array $args)
+    public static function build($serviceAddress, array $args)
     {
         $args += self::$defaults;
 
@@ -117,7 +119,7 @@ class TransportFactory
             $args['authHttpHandler'] = HttpHandlerFactory::build();
         }
 
-        $transport = self::handleTransport($transport);
+        $transport = self::handleTransport($args['transport']);
         $args['credentialsLoader'] = self::handleCredentialsLoader($args);
 
         switch ($transport) {

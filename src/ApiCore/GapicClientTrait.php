@@ -101,7 +101,8 @@ trait GapicClientTrait
      *     @type string $serviceName
      *           The name of the service.
      *     @type string $serviceAddress
-     *           The address of the API remote host.
+     *           The address of the API remote host. Formatted as <endpoint>:<port>, for example:
+     *           "example.googleapis.com:443"
      *     @type array $keyFile
      *           The contents of the service account credentials .json file retrieved from the
      *           Google Developer's Console.
@@ -164,7 +165,6 @@ trait GapicClientTrait
     }
 
     /**
-     * @param string $serviceName
      * @param array $options
      * @throws ValidationException
      */
