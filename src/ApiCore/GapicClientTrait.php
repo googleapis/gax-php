@@ -180,7 +180,6 @@ trait GapicClientTrait
             null
         );
         if (isset($options['disableRetries']) && $options['disableRetries']) {
-
             $updatedRetrySettings = [];
             foreach ($retrySettings as $retrySettingsItem) {
                 $updatedRetrySettings[] = $retrySettingsItem->with([
