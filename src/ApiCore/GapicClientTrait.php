@@ -236,7 +236,7 @@ trait GapicClientTrait
             $transportConstructionOptions += ['scopes' => $options['scopes']];
         }
 
-        $this->transport = TransportFactory::build($transport, $options['serviceAddress'], $transportConstructionOptions);
+        $this->transport = TransportFactory::build($options['serviceAddress'], $transportConstructionOptions);
     }
 
     /**
