@@ -226,10 +226,10 @@ class FakeOperationResponse extends OperationResponse
         return $this->sleeps;
     }
 
-    public function sleepSeconds($seconds)
+    public function sleepMillis($millis)
     {
-        $this->currentTime += $seconds;
-        $this->sleeps[] = $seconds;
+        $this->currentTime += $millis;
+        $this->sleeps[] = $millis;
     }
 
     public function setTimes($times)
@@ -237,7 +237,7 @@ class FakeOperationResponse extends OperationResponse
         $this->times = $times;
     }
 
-    public function getCurrentTimeSeconds()
+    public function getCurrentTimeMillis()
     {
         return $this->currentTime;
     }

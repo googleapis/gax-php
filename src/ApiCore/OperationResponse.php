@@ -190,16 +190,16 @@ class OperationResponse
         $totalPollTimeoutMillis = $pollSettings['totalPollTimeoutMillis'];
 
         $hasTotalPollTimeout = $totalPollTimeoutMillis > 0.0;
-        $endTime = $this->getCurrentTimeSeconds() + $totalPollTimeoutMillis;
+        $endTime = $this->getCurrentTimeMillis() + $totalPollTimeoutMillis;
 
         while (true) {
             if ($this->isDone()) {
                 return true;
             }
-            if ($hasTotalPollTimeout && $this->getCurrentTimeSeconds() > $endTime) {
+            if ($hasTotalPollTimeout && $this->getCurrentTimeMillis() > $endTime) {
                 return $this->isDone();
             }
-            $this->sleepSeconds($currentPollDelayMillis);
+            $this->sleepMillis($currentPollDelayMillis);
             $this->reload();
             $currentPollDelayMillis = min([
                 $currentPollDelayMillis * $pollDelayMultiplier,
@@ -211,21 +211,21 @@ class OperationResponse
     /**
      * Protected to allow overriding for tests
      *
-     * @return float Current time in seconds
+     * @return float Current time in milliseconds
      */
-    protected function getCurrentTimeSeconds()
+    protected function getCurrentTimeMillis()
     {
-        return microtime(true);
+        return microtime(true) * 1000.0;
     }
 
     /**
      * Protected to allow overriding for tests
      *
-     * @param float $seconds
+     * @param float $millis
      */
-    protected function sleepSeconds($seconds)
+    protected function sleepMillis($millis)
     {
-        usleep($seconds * 1000000);
+        usleep($millis * 1000);
     }
 
     /**
