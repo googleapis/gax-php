@@ -122,6 +122,7 @@ return [
             'MethodWithSpecialJsonMapping' => [
                 'method' => 'get',
                 'uriTemplate' => '/v1/special/mapping',
+                'placeholders' => []
             ],
         ],
     ],

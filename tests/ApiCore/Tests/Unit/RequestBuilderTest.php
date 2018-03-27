@@ -202,6 +202,10 @@ class RequestBuilderTest extends TestCase
 
     public function testMethodWithSpecialJsonMapping()
     {
+        if (extension_loaded('protobuf')) {
+            $this->markTestSkipped('This is currently broken for the protobuf extension');
+        }
+
         $stringValue = (new StringValue)
             ->setValue('some-value');
 
