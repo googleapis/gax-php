@@ -63,8 +63,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $stubOpts,
         Channel $channel = null
     ) {
-        $this->credentialsCallback = function () use ($authWrapper) {
-            return ['authorization' => [$authWrapper->getBearerString()]];
+        $bearerString = $authWrapper->getBearerString();
+        $this->credentialsCallback = function () use ($bearerString) {
+            return ['authorization' => [$bearerString]];
         };
 
         parent::__construct(
