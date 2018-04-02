@@ -38,8 +38,8 @@ use Google\Auth\FetchAuthTokenInterface;
  */
 class AuthWrapper
 {
-    public $fetchAuthTokenInterface;
-    public $authHttpHandler;
+    private $fetchAuthTokenInterface;
+    private $authHttpHandler;
 
     /**
      * AuthWrapper constructor.
@@ -60,32 +60,44 @@ class AuthWrapper
      */
     public function getBearerString()
     {
-        return 'Bearer ' . $this->getToken();
+        return 'Bearer ' . self::getToken($this->fetchAuthTokenInterface, $this->authHttpHandler);
     }
 
-    private function getToken()
+    /**
+     * @return callable Callable function that returns an authorization header.
+     */
+    public function getAuthorizationHeaderCallback()
     {
-        $token = $this->fetchAuthTokenInterface->getLastReceivedToken();
-        if ($this->isExpired($token)) {
-            $token = $this->fetchAuthTokenInterface->fetchAuthToken($this->authHttpHandler);
+        $fetchAuthTokenInterface = $this->fetchAuthTokenInterface;
+        $authHttpHandler = $this->authHttpHandler;
+        return function () use ($fetchAuthTokenInterface, $authHttpHandler) {
+            return ['authorization' => ['Bearer ' . self::getToken($fetchAuthTokenInterface, $authHttpHandler)]];
+        };
+    }
+
+    private static function getToken($fetchAuthTokenInterface, $authHttpHandler)
+    {
+        $token = $fetchAuthTokenInterface->getLastReceivedToken();
+        if (self::isExpired($token)) {
+            $token = $fetchAuthTokenInterface->fetchAuthToken($authHttpHandler);
         }
-        if ($this->isValid($token)) {
+        if (self::isValid($token)) {
             return $token['access_token'];
         } else {
             return '';
         }
     }
 
-    private function isValid($token)
+    private static function isValid($token)
     {
         return !is_null($token)
             && is_array($token)
             && array_key_exists('access_token', $token);
     }
 
-    private function isExpired($token)
+    private static function isExpired($token)
     {
-        return !($this->isValid($token)
+        return !(self::isValid($token)
             && array_key_exists('expires_at', $token)
             && $token['expires_at'] > time());
     }

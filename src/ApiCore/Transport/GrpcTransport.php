@@ -161,11 +161,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ? $options['transportOptions']['grpcOptions']
             : [];
 
-        $authWrapper = $this->authWrapper;
-        $callOptions += ['call_credentials_callback' => function () use ($authWrapper) {
-            return ['authorization' => [$authWrapper->getBearerToken()]];
-        }];
-
+        $callOptions += ['call_credentials_callback' => $this->authWrapper->getAuthorizationHeaderCallback()];
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] * 1000;
