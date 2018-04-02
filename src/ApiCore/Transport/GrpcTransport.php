@@ -67,6 +67,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         $handler = $authWrapper->authHttpHandler;
 
         $this->credentialsCallback = function () use ($fetch, $handler) {
+            time();
             $tk = $fetch->fetchAuthToken($handler)['access_token'];
             return ['authorization' => ['Bearer ' . $tk]];
         };
