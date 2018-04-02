@@ -63,9 +63,27 @@ class AuthWrapper
     private function getToken()
     {
         $token = $this->fetchAuthTokenInterface->getLastReceivedToken();
-        if (is_null($token) || time() > $token['expires_at']) {
+        if ($this->isExpired($token)) {
             $token = $this->fetchAuthTokenInterface->fetchAuthToken($this->authHttpHandler);
         }
-        return $token['access_token'];
+        if ($this->isValid($token)) {
+            return $token['access_token'];
+        } else {
+            return '';
+        }
+    }
+
+    private function isValid($token)
+    {
+        return !is_null($token)
+            && is_array($token)
+            && array_key_exists('access_token', $token);
+    }
+
+    private function isExpired($token)
+    {
+        return !($this->isValid($token)
+            && array_key_exists('expires_at', $token)
+            && $token['expires_at'] > time());
     }
 }
