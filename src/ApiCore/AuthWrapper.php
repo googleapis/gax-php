@@ -70,6 +70,10 @@ class AuthWrapper
     {
         $fetchAuthTokenInterface = $this->fetchAuthTokenInterface;
         $authHttpHandler = $this->authHttpHandler;
+
+        // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
+        // be passed into the gRPC c extension, and changes have the potential to trigger very
+        // difficult-to-diagnose segmentation faults.
         return function () use ($fetchAuthTokenInterface, $authHttpHandler) {
             return ['authorization' => ['Bearer ' . self::getToken($fetchAuthTokenInterface, $authHttpHandler)]];
         };
