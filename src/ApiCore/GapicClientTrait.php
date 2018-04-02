@@ -235,6 +235,10 @@ trait GapicClientTrait
             $transportConstructionOptions += ['scopes' => $options['scopes']];
         }
 
+        if (isset($options['restClientConfigPath'])) {
+            $transportConstructionOptions += ['restClientConfigPath' => $options['restClientConfigPath']];
+        }
+
         $this->transport = TransportFactory::build($options['serviceAddress'], $transportConstructionOptions);
     }
 
