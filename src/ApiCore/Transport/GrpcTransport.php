@@ -48,7 +48,7 @@ use GuzzleHttp\Promise\Promise;
  */
 class GrpcTransport extends BaseStub implements TransportInterface
 {
-    private $credentialsCallback;
+    private $authWrapper;
 
     /**
      * @param string $host The domain name and port of the API remote host.
@@ -63,13 +63,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $stubOpts,
         Channel $channel = null
     ) {
-        $this->credentialsCallback = function () use ($authWrapper) {
-            $fetch = $authWrapper->fetchAuthTokenInterface;
-            $handler = $authWrapper->authHttpHandler;
-            $tk = $fetch->fetchAuthToken($handler)['access_token'];
-            return ['authorization' => ['Bearer ' . $tk]];
-        };
-
+        $this->authWrapper = $authWrapper;
         parent::__construct(
             $host,
             $stubOpts,
@@ -167,7 +161,11 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ? $options['transportOptions']['grpcOptions']
             : [];
 
-        $callOptions += ['call_credentials_callback' => $this->credentialsCallback];
+        $authWrapper = $this->authWrapper;
+        $callOptions += ['call_credentials_callback' => function () use ($authWrapper) {
+            return ['authorization' => [$authWrapper->getBearerToken()]];
+        };
+
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] * 1000;
