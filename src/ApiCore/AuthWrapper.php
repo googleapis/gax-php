@@ -33,6 +33,9 @@ namespace Google\ApiCore;
 
 use Google\Auth\FetchAuthTokenInterface;
 
+/**
+ * The AuthWrapper object provides a wrapper around a FetchAuthTokenInterface.
+ */
 class AuthWrapper
 {
     private $fetchAuthTokenInterface;
