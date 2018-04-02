@@ -38,8 +38,8 @@ use Google\Auth\FetchAuthTokenInterface;
  */
 class AuthWrapper
 {
-    private $fetchAuthTokenInterface;
-    private $authHttpHandler;
+    public $fetchAuthTokenInterface;
+    public $authHttpHandler;
 
     /**
      * AuthWrapper constructor.
