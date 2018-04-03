@@ -84,12 +84,11 @@ class AuthWrapper
         $token = $fetchAuthTokenInterface->getLastReceivedToken();
         if (self::isExpired($token)) {
             $token = $fetchAuthTokenInterface->fetchAuthToken($authHttpHandler);
+            if (!self::isValid($token)) {
+                return '';
+            }
         }
-        if (self::isValid($token)) {
-            return $token['access_token'];
-        } else {
-            return '';
-        }
+        return $token['access_token'];
     }
 
     private static function isValid($token)
