@@ -94,8 +94,7 @@ class AuthWrapper
 
     private static function isValid($token)
     {
-        return !is_null($token)
-            && is_array($token)
+        return is_array($token)
             && array_key_exists('access_token', $token);
     }
 
