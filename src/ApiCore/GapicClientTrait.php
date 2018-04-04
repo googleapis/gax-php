@@ -139,6 +139,20 @@ trait GapicClientTrait
      */
     private function setClientOptions(array $options)
     {
+        $this->validateOptions($options);
+
+        $this->setServiceNameAndDescriptors($options);
+        $this->setRetrySettings($options);
+        $this->setAgentHeaderDescriptor($options);
+        $this->setTransport($options);
+    }
+
+    /**
+     * @param array $options
+     * @throws ValidationException
+     */
+    private function validateOptions(array $options)
+    {
         $this->validateNotNull($options, [
             'serviceName',
             'serviceAddress',
@@ -146,10 +160,16 @@ trait GapicClientTrait
             'clientConfigPath',
         ]);
 
-        $this->setServiceNameAndDescriptors($options);
-        $this->setRetrySettings($options);
-        $this->setAgentHeaderDescriptor($options);
-        $this->setTransport($options);
+        if (isset($options['transport'])) {
+            $transport = $options['transport'];
+            if (!($transport instanceof TransportInterface) && !is_string($transport)) {
+                throw new ValidationException(
+                    "Options 'transport' must be either a string " .
+                    "or an instance of TransportInterface, instead got:" .
+                    print_r($transport, true)
+                );
+            }
+        }
     }
 
     /**
