@@ -214,8 +214,8 @@ class GapicClientTraitTest extends TestCase
         $retrySettingsFromFile = RetrySettings::load($serviceName, json_decode(file_get_contents($clientConfigFile), true), []);
         $manualLoadedRetrySettings = RetrySettings::load($serviceName, $manualClientConfig, []);
         $manualLoadedRetrySettingsDisabled = [];
-        foreach ($manualLoadedRetrySettings as $retrySetting) {
-            $manualLoadedRetrySettingsDisabled[] = $retrySetting->with([
+        foreach ($manualLoadedRetrySettings as $method => $retrySetting) {
+            $manualLoadedRetrySettingsDisabled[$method] = $retrySetting->with([
                 'retriesEnabled' => false
             ]);
         }
