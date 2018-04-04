@@ -212,34 +212,24 @@ trait GapicClientTrait
      */
     private function setTransport($options)
     {
-        $transport = isset($options['transport'])
-            ? $options['transport']
-            : null;
-
-        if ($transport instanceof TransportInterface) {
-            $this->transport = $transport;
+        if (isset($options['transport']) && $options['transport'] instanceof TransportInterface) {
+            $this->transport = $options['transport'];
             return;
         }
 
-        $transportConstructionOptions = isset($options['transportConstructionOptions'])
-            ? $options['transportConstructionOptions']
-            : [];
-
-        if (isset($options['keyFile'])) {
-            $transportConstructionOptions += ['keyFile' => $options['keyFile']];
-        } elseif (isset($options['keyFilePath'])) {
-            $transportConstructionOptions += ['keyFile' => $options['keyFilePath']];
+        $optionKeys = [
+            'transport',
+            'scopes',
+            'restClientConfigPath',
+            'keyFile',
+            'keyFilePath',
+        ];
+        $transportOptions = $this->subsetArray($optionKeys, $options);
+        if (isset($options['transportConstructionOptions'])) {
+            $transportOptions += $options['transportConstructionOptions'];
         }
 
-        if (isset($options['scopes'])) {
-            $transportConstructionOptions += ['scopes' => $options['scopes']];
-        }
-
-        if (isset($options['restClientConfigPath'])) {
-            $transportConstructionOptions += ['restClientConfigPath' => $options['restClientConfigPath']];
-        }
-
-        $this->transport = TransportFactory::build($options['serviceAddress'], $transportConstructionOptions);
+        $this->transport = TransportFactory::build($options['serviceAddress'], $transportOptions);
     }
 
     /**

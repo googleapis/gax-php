@@ -237,13 +237,15 @@ class TransportFactory
 
         self::validateNotNull($args, ['scopes']);
 
-        if (isset($args['keyFile'])) {
-            $loader = self::getServiceAccountCredentials($args['scopes'], $args['keyFile']);
-        } else {
+        $keyFile = self::getKeyFile($args);
+
+        if (is_null($keyFile)) {
             $loader = self::getADCCredentials(
                 $args['scopes'],
                 $args['authHttpHandler']
             );
+        } else {
+            $loader = self::getServiceAccountCredentials($args['scopes'], $keyFile);
         }
 
         if ($args['enableCaching']) {
@@ -259,5 +261,20 @@ class TransportFactory
         }
 
         return $loader;
+    }
+
+    /**
+     * @param array $args
+     * @return string|array|null
+     */
+    private static function getKeyFile($args)
+    {
+        if (isset($args['keyFile'])) {
+            return $args['keyFile'];
+        } elseif (isset($args['keyFilePath'])) {
+            return $args['keyFilePath'];
+        } else {
+            return null;
+        }
     }
 }
