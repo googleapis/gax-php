@@ -38,7 +38,10 @@ use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\Testing\MockRequest;
+use Google\ApiCore\Transport\GrpcTransport;
+use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\ApiCore\ValidationException;
 use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -245,6 +248,104 @@ class GapicClientTraitTest extends TestCase
                 ],
                 $manualLoadedRetrySettingsDisabled,
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider setAgentHeaderDescriptorData
+     */
+    public function testSetAgentHeaderDescriptor($options, $expectedHeaderContent)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('setAgentHeaderDescriptor', [
+            $options
+        ]);
+
+        $agentHeaderDescriptor = $client->get('agentHeaderDescriptor');
+        $actualHeader = $agentHeaderDescriptor->getHeader();
+        $actualHeaderContent = $actualHeader[AgentHeaderDescriptor::AGENT_HEADER_KEY];
+        $this->assertEquals($expectedHeaderContent, $actualHeaderContent);
+    }
+
+    public function setAgentHeaderDescriptorData()
+    {
+        $phpVersion = phpversion();
+        $apiCoreVersion = AgentHeaderDescriptor::API_CORE_VERSION;
+        $grpcVersion = phpversion('grpc');
+        return [
+            [[], ["gl-php/$phpVersion gapic/ gax/$apiCoreVersion grpc/$grpcVersion"]],
+            [[
+                'phpVersion' => 'testPhpVersion',
+                'libName' => 'testLibName',
+                'libVersion' => 'testLibVersion',
+                'gapicVersion' => 'testGapicVersion',
+                'apiCoreVersion' => 'testApiCoreVersion',
+                'grpcVersion' => 'testGrpcVersion',
+            ], ['gl-php/testPhpVersion testLibName/testLibVersion gapic/testGapicVersion gax/testApiCoreVersion grpc/testGrpcVersion']],
+        ];
+    }
+
+    /**
+     * @dataProvider setTransportData
+     */
+    public function testSetTransport($options, $expectedTransportClass)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('validateOptions', [
+            $options
+        ]);
+        $client->call('setTransport', [
+            $options
+        ]);
+
+        $transport = $client->get('transport');
+        $this->assertEquals($expectedTransportClass, get_class($transport));
+    }
+
+    public function setTransportData()
+    {
+        $mockTransport = $this->prophesize(TransportInterface::class)->reveal();
+        $defaultTransportClass = extension_loaded('grpc')
+            ? GrpcTransport::class
+            : RestTransport::class;
+        $minimalOptions = [
+            'serviceAddress' => 'address:443',
+            'scopes' => [],
+            'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+        ];
+        return [
+            [$minimalOptions, $defaultTransportClass],
+            [$minimalOptions + ['transport' => 'grpc'], GrpcTransport::class],
+            [$minimalOptions + ['transport' => 'rest'], RestTransport::class],
+            [$minimalOptions + ['transport' => $mockTransport], get_class($mockTransport)],
+        ];
+    }
+
+    /**
+     * @dataProvider setTransportDataInvalid
+     * @expectedException \Google\ApiCore\ValidationException
+     */
+    public function testSetTransportInvalid($options)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('validateOptions', [
+            $options
+        ]);
+        $client->call('setTransport', [
+            $options
+        ]);
+    }
+
+    public function setTransportDataInvalid()
+    {
+        $minimalOptions = [
+            'serviceAddress' => 'address:443',
+            'scopes' => [],
+            'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+        ];
+        return [
+            [$minimalOptions + ['transport' => 'weirdstring']],
+            [$minimalOptions + ['transport' => new \stdClass()]],
         ];
     }
 }

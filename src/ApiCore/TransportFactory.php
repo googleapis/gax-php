@@ -76,8 +76,10 @@ class TransportFactory
      *           Optional. A user-created CredentialsLoader object. Defaults to using
      *           ApplicationDefaultCredentials with the provided $scopes argument.
      *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *     @type string|array $keyFile
-     *           A JSON credential file path or JSON credentials as an associative array
+     *     @type string $keyFile
+     *           JSON credentials as an associative array.
+     *     @type string $keyFilePath
+     *           A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
      *     @type Channel $channel
      *           Optional. A `Channel` object. If not specified, a channel will be constructed.
      *           NOTE: This option is only valid when utilizing the gRPC transport.
@@ -103,8 +105,7 @@ class TransportFactory
      *           authentication. Should match a signature of
      *           `function (RequestInterface $request, array $options) : ResponseInterface`.
      *     @type callable $httpHandler
-     *           A handler used to deliver PSR-7 requests. Should match a
-     *           signature of
+     *           A handler used to deliver PSR-7 requests. Should match a signature of
      *           `function (RequestInterface $request, array $options) : PromiseInterface`.
      *           NOTE: This option is only valid when utilizing the REST transport.
      * }
@@ -115,54 +116,78 @@ class TransportFactory
     {
         $args += self::$defaults;
 
-        if (!$args['authHttpHandler']) {
-            $args['authHttpHandler'] = HttpHandlerFactory::build();
-        }
-
         $transport = self::handleTransport($args['transport']);
-        $args['credentialsLoader'] = self::handleCredentialsLoader($args);
 
         switch ($transport) {
             case 'grpc':
-                if (!self::getGrpcDependencyStatus()) {
-                    throw new InvalidArgumentException(
-                        'gRPC support has been requested but required dependencies ' .
-                        'have not been found. For details on how to install the ' .
-                        'gRPC extension please see https://cloud.google.com/php/grpc.'
-                    );
-                }
-                $stubOpts = [
-                    'force_new' => $args['forceNewChannel']
-                ];
-                // We need to use array_key_exists here because null is a valid value
-                if (!array_key_exists('sslCreds', $args)) {
-                    $stubOpts['credentials'] = self::createSslChannelCredentials();
-                } else {
-                    $stubOpts['credentials'] = $args['sslCreds'];
-                }
-
-                return new GrpcTransport(
-                    $serviceAddress,
-                    $args['credentialsLoader'],
-                    $args['authHttpHandler'],
-                    $stubOpts,
-                    $args['channel']
-                );
+                return self::buildGrpc($serviceAddress, $args);
             case 'rest':
-                self::validateNotNull($args, ['restClientConfigPath']);
-
-                return new RestTransport(
-                    new RequestBuilder(
-                        $serviceAddress,
-                        $args['restClientConfigPath']
-                    ),
-                    $args['credentialsLoader'],
-                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'],
-                    $args['authHttpHandler']
-                );
+                return self::buildRest($serviceAddress, $args);
             default:
-                throw new InvalidArgumentException('Unknown transport type.');
+                throw new ValidationException("Unknown transport type: $transport");
         }
+    }
+
+    /**
+     * @param string $serviceAddress
+     * @param array $args
+     * @return GrpcTransport
+     * @throws \Exception
+     */
+    private static function buildGrpc($serviceAddress, $args)
+    {
+        if (!self::getGrpcDependencyStatus()) {
+            throw new InvalidArgumentException(
+                'gRPC support has been requested but required dependencies ' .
+                'have not been found. For details on how to install the ' .
+                'gRPC extension please see https://cloud.google.com/php/grpc.'
+            );
+        }
+
+        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+        $credentialsLoader = self::handleCredentialsLoader($args);
+
+        $stubOpts = [
+            'force_new' => $args['forceNewChannel']
+        ];
+        // We need to use array_key_exists here because null is a valid value
+        if (!array_key_exists('sslCreds', $args)) {
+            $stubOpts['credentials'] = self::createSslChannelCredentials();
+        } else {
+            $stubOpts['credentials'] = $args['sslCreds'];
+        }
+
+        return new GrpcTransport(
+            $serviceAddress,
+            $credentialsLoader,
+            $authHttpHandler,
+            $stubOpts,
+            $args['channel']
+        );
+    }
+
+    /**
+     * @param string $serviceAddress
+     * @param array $args
+     * @return RestTransport
+     * @throws \Exception
+     */
+    private static function buildRest($serviceAddress, $args)
+    {
+        self::validateNotNull($args, ['restClientConfigPath']);
+
+        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+        $credentialsLoader = self::handleCredentialsLoader($args);
+
+        return new RestTransport(
+            new RequestBuilder(
+                $serviceAddress,
+                $args['restClientConfigPath']
+            ),
+            $credentialsLoader,
+            $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'],
+            $authHttpHandler
+        );
     }
 
     /**

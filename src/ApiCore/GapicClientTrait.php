@@ -224,6 +224,9 @@ trait GapicClientTrait
             'libName' => $this->pluck('libName', $options, false),
             'libVersion' => $this->pluck('libVersion', $options, false),
             'gapicVersion' => $gapicVersion,
+            'phpVersion' => $this->pluck('phpVersion', $options, false),
+            'apiCoreVersion' => $this->pluck('apiCoreVersion', $options, false),
+            'grpcVersion' => $this->pluck('grpcVersion', $options, false),
         ]);
     }
 

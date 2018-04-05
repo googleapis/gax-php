@@ -32,18 +32,15 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
-use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
-use Google\ApiCore\Testing\MockRequest;
 use Google\Auth\FetchAuthTokenInterface;
-use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBType;
 use Google\Rpc\Code;
-use Grpc\ChannelCredentials;
+use Google\Rpc\Status;
+use Grpc\ClientStreamingCall;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -58,7 +55,7 @@ class GrpcTransportTest extends TestCase
 
     private function callCredentialsCallback(MockGrpcTransport $transport)
     {
-        $mockCall = new Call('method', [], null);
+        $mockCall = new Call('method', '', null);
         $options = [];
 
         $response = $transport->startUnaryCall($mockCall, $options)->wait();
@@ -80,14 +77,14 @@ class GrpcTransportTest extends TestCase
 
     public function testClientStreamingSuccessObject()
     {
-        $response = new \Google\Rpc\Status();
-        $response->setCode(\Google\Rpc\Code::OK);
+        $response = new Status();
+        $response->setCode(Code::OK);
         $response->setMessage('response');
 
         $status = new stdClass;
         $status->code = Code::OK;
 
-        $clientStreamingCall = $this->getMockBuilder(\Grpc\ClientStreamingCall::class)
+        $clientStreamingCall = $this->getMockBuilder(ClientStreamingCall::class)
             ->disableOriginalConstructor()
             ->getMock();
         $clientStreamingCall->method('write');
@@ -101,7 +98,7 @@ class GrpcTransportTest extends TestCase
             []
         );
 
-        /* @var $stream \Google\ApiCore\ClientStreamInterface */
+        /* @var $stream \Google\ApiCore\ClientStream */
         $actualResponse = $stream->writeAllAndReadResponse([]);
         $this->assertEquals($response, $actualResponse);
     }
@@ -119,7 +116,7 @@ class GrpcTransportTest extends TestCase
         $status->code = Code::INTERNAL;
         $status->details = 'client streaming failure';
 
-        $clientStreamingCall = $this->getMockBuilder(\Grpc\ClientStreamingCall::class)
+        $clientStreamingCall = $this->getMockBuilder(ClientStreamingCall::class)
             ->disableOriginalConstructor()
             ->getMock();
         $clientStreamingCall->method('wait')
@@ -277,7 +274,7 @@ class GrpcTransportTest extends TestCase
 
     public function testBidiStreamingSuccessObject()
     {
-        $response = new \Google\Rpc\Status();
+        $response = new Status();
         $response->setCode(Code::OK);
         $response->setMessage('response');
 
