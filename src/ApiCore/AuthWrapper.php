@@ -31,7 +31,13 @@
  */
 namespace Google\ApiCore;
 
+use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\Auth\Credentials\ServiceAccountCredentials;
+use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The AuthWrapper object provides a wrapper around a FetchAuthTokenInterface.
@@ -53,6 +59,47 @@ class AuthWrapper
     {
         $this->fetchAuthTokenInterface = $fetchAuthTokenInterface;
         $this->authHttpHandler = $authHttpHandler;
+    }
+
+    /**
+     * @param string[] $scopes The scopes required by this AuthWrapper.
+     * @param array $args {
+     *     @type string $keyFile
+     *           Optional. JSON credentials as an associative array.
+     *     @type string $keyFilePath
+     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
+     *     @type CacheItemPoolInterface $authCache
+     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     * }
+     * @return AuthWrapper
+     * @throws \Exception
+     */
+    public static function createWithScopes(array $scopes, array $args = [])
+    {
+        $args += [
+            'keyFile' => null,
+            'keyFilePath' => null,
+            'authCache' => null,
+        ];
+
+        $keyFile = $args['keyFile'] ?: $args['keyFilePath'];
+        $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
+
+        $authHttpHandler = HttpHandlerFactory::build();
+
+        if (is_null($keyFile)) {
+            $loader = ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler);
+        } else {
+            $loader = new ServiceAccountCredentials($scopes, $keyFile);
+        }
+
+        $loader = new FetchAuthTokenCache(
+            $loader,
+            [],
+            $authCache
+        );
+
+        return new AuthWrapper($loader, $authHttpHandler);
     }
 
     /**

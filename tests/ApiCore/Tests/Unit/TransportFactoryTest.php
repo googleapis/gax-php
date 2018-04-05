@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeaderDescriptor;
+use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
@@ -45,6 +46,7 @@ use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\TransportFactory;
 use Google\ApiCore\ValidationException;
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -53,9 +55,9 @@ class TransportFactoryTest extends TestCase
     /**
      * @dataProvider buildData
      */
-    public function testBuild($serviceAddress, $args, $expectedTransport)
+    public function testBuild($serviceAddress, $authWrapper, $args, $expectedTransport)
     {
-        $actualTransport = TransportFactory::build($serviceAddress, $args);
+        $actualTransport = TransportFactory::build($serviceAddress, $authWrapper, $args);
         $this->assertEquals($expectedTransport, $actualTransport);
     }
 
@@ -65,37 +67,31 @@ class TransportFactoryTest extends TestCase
         $serviceAddress = "$uri:443";
         $restConfigPath = __DIR__ . '/testdata/test_service_rest_client_config.php';
         $requestBuilder = new RequestBuilder($uri, $restConfigPath);
-        $credentialsLoader = ApplicationDefaultCredentials::getCredentials(['customscope'], null);
-        $httpHandler = function () {};
-        $authHttpHandler = function () {};
+        $scopes = ['customscope'];
+        $authWrapper = AuthWrapper::createWithScopes($scopes);
+        $httpHandler = [HttpHandlerFactory::build(), 'async'];
         return [
             [
                 $serviceAddress,
+                $authWrapper,
                 [
                     'transport' => 'rest',
                     'restClientConfigPath' => $restConfigPath,
-                    'credentialsLoader' => $credentialsLoader,
-                    'httpHandler' => $httpHandler,
-                    'authHttpHandler' => $authHttpHandler,
                 ],
-                new RestTransport($requestBuilder, $credentialsLoader, $httpHandler, $authHttpHandler)
+                new RestTransport($requestBuilder, $authWrapper, $httpHandler)
             ],
             [
                 $serviceAddress,
+                $authWrapper,
                 [
                     'transport' => 'grpc',
                     'restClientConfigPath' => $restConfigPath,
-                    'credentialsLoader' => $credentialsLoader,
-                    'httpHandler' => $httpHandler,
-                    'authHttpHandler' => $authHttpHandler,
                 ],
                 new GrpcTransport(
                     $serviceAddress,
-                    $credentialsLoader,
-                    $authHttpHandler,
+                    $authWrapper,
                     [
                         'credentials' => null,
-                        'force_new' => false
                     ],
                     null),
             ],

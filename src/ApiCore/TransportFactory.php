@@ -35,75 +35,37 @@ namespace Google\ApiCore;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
-use Google\Auth\ApplicationDefaultCredentials;
-use Google\Auth\Cache\MemoryCacheItemPool;
-use Google\Auth\Credentials\ServiceAccountCredentials;
-use Google\Auth\CredentialsLoader;
-use Google\Auth\FetchAuthTokenCache;
-use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
-use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use InvalidArgumentException;
-use Psr\Cache\CacheItemPoolInterface;
 
 class TransportFactory
 {
     use ValidationTrait;
 
-    private static $defaults = [
-        'forceNewChannel'   => false,
-        'enableCaching'     => true,
-        'channel'           => null,
-        'transport'         => null,
-        'authCacheOptions'  => null,
-        'httpHandler'       => null,
-        'authHttpHandler'   => null,
-    ];
-
     /**
      * Builds a transport given an array of arguments.
      *
+     *
+     * @param string $serviceAddress The address of the API remote host.
+     * @param AuthWrapper $authWrapper AuthWrapper to manage auth tokens.
      * @param array  $args {
-     *     Required. An array of required and optional arguments.
-     *     @type string $serviceAddress
-     *           Required. The address of the API remote host.
-     *     @type string[] $scopes
-     *           Required. A list of scopes required for API access.
      *     @type string $transport
      *           Optional. The type of transport to build. Defaults to
      *           'grpc' when available. Supported values: ['grpc', 'rest'].
-     *     @type string $keyFile
-     *           Optional. JSON credentials as an associative array.
-     *     @type string $keyFilePath
-     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
-     *     @type CacheItemPoolInterface $authCache
-     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *     @type string $restClientConfigPath Path to rest client config.
+     *           Required for 'rest' transport only.
      * }
      * @return TransportInterface
-     * @throws \Exception
+     * @throws ValidationException
      */
-    public static function build(array $args)
+    public static function build($serviceAddress, $authWrapper, array $args)
     {
-        self::validateNotNull($args, [
-            'serviceAddress',
-            'port'
-        ]);
-        $args += self::$defaults;
-        $host = sprintf(
-            '%s:%s',
-            $args['serviceAddress'],
-            $args['port']
-        );
-
-        $args['transport'] = self::handleTransport($args['transport']);
-
-        $authWrapper = self::buildAuthWrapper($args);
-
         $args += [
             'transport' => self::defaultTransport(),
         ];
         $transport = $args['transport'];
+
         switch ($transport) {
             case 'grpc':
                 if (!self::getGrpcDependencyStatus()) {
@@ -114,100 +76,32 @@ class TransportFactory
                     );
                 }
 
-                self::validateNotNull($args, ['serviceAddress', 'scopes']);
-
-                $credentialsLoader = self::handleCredentialsLoader($args);
                 $stubOpts = ['credentials'=> self::createSslChannelCredentials()];
 
                 return new GrpcTransport(
-                    $args['serviceAddress'],
-                    $credentialsLoader,
-                    $args['authHttpHandler'],
+                    $serviceAddress,
+                    $authWrapper,
                     $stubOpts
                 );
             case 'rest':
-                return self::buildRest($args);
-                    $host,
-                    $authWrapper,
-                    $stubOpts,
-                    $args['channel']
-                );
-
                 self::validateNotNull($args, ['restClientConfigPath']);
 
+                $baseUri = explode(':', $serviceAddress)[0];
+                $requestBuilder = new RequestBuilder(
+                    $baseUri,
+                    $args['restClientConfigPath']
+                );
+                $httpHandler = [HttpHandlerFactory::build(), 'async'];
+
                 return new RestTransport(
-                    new RequestBuilder(
-                        $host,
-                        $args['restClientConfigPath']
-                    ),
+                    $requestBuilder,
                     $authWrapper,
-                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async']
+                    $httpHandler
                 );
 
             default:
                 throw new ValidationException("Unknown transport type: $transport");
         }
-    }
-
-    /**
-     * @param string $serviceAddress
-     * @param array $args
-     * @return GrpcTransport
-     * @throws \Exception
-     */
-    private static function buildGrpc($serviceAddress, $args)
-    {
-        if (!self::getGrpcDependencyStatus()) {
-            throw new InvalidArgumentException(
-                'gRPC support has been requested but required dependencies ' .
-                'have not been found. For details on how to install the ' .
-                'gRPC extension please see https://cloud.google.com/php/grpc.'
-            );
-        }
-
-        $credentialsLoader = self::handleCredentialsLoader($args);
-
-        $stubOpts = [
-            'force_new' => $args['forceNewChannel']
-        ];
-        // We need to use array_key_exists here because null is a valid value
-        if (!array_key_exists('sslCreds', $args)) {
-            $stubOpts['credentials'] = self::createSslChannelCredentials();
-        } else {
-            $stubOpts['credentials'] = $args['sslCreds'];
-        }
-
-        return new GrpcTransport(
-            $serviceAddress,
-            $credentialsLoader,
-            $args['authHttpHandler'],
-            $stubOpts,
-            $args['channel']
-        );
-    }
-
-    /**
-     * @param string $serviceAddress
-     * @param array $args
-     * @return RestTransport
-     * @throws \Exception
-     */
-    private static function buildRest($serviceAddress, $args)
-    {
-        self::validateNotNull($args, ['restClientConfigPath']);
-
-        $credentialsLoader = self::handleCredentialsLoader($args);
-        $baseUri = explode(':', $serviceAddress)[0];
-
-        return new RestTransport(
-            new RequestBuilder(
-                $baseUri,
-                $args['restClientConfigPath']
-            ),
-            $credentialsLoader,
-            $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'],
-            $args['authHttpHandler']
-        );
     }
 
     /**
@@ -222,28 +116,6 @@ class TransportFactory
     }
 
     /**
-     * Gets credentials from ADC. This exists to allow overriding in unit tests.
-     *
-     * @param string[] $scopes
-     * @param callable $httpHandler
-     * @return CredentialsLoader
-     */
-    protected static function getADCCredentials(array $scopes, callable $httpHandler)
-    {
-        return ApplicationDefaultCredentials::getCredentials($scopes, $httpHandler);
-    }
-
-    /**
-     * @param array $scopes
-     * @param string $keyFile
-     * @return ServiceAccountCredentials
-     */
-    protected static function getServiceAccountCredentials(array $scopes, $keyFile)
-    {
-        return new ServiceAccountCredentials($scopes, $keyFile);
-    }
-
-    /**
      * Construct ssl channel credentials. This exists to allow overriding in unit tests.
      *
      * @return ChannelCredentials
@@ -253,187 +125,10 @@ class TransportFactory
         return ChannelCredentials::createSsl();
     }
 
-    /**
-     * @param string|null $transport
-     * @return string
-     */
-    private static function handleTransport($transport)
-    {
-        if ($transport) {
-            return strtolower($transport);
-        }
-
-        $transport = self::getGrpcDependencyStatus()
-            ? 'grpc'
-            : 'rest';
-
-        return $transport;
-    }
-
     private static function defaultTransport()
     {
         return self::getGrpcDependencyStatus()
             ? 'grpc'
             : 'rest';
-    }
-
-
-    /**
-     *
-     * @param array $args {
-     *     @type string[] $scopes
-     *           Required. A list of scopes required for API access.
-     *     @type string $keyFile
-     *           Optional. JSON credentials as an associative array.
-     *     @type string $keyFilePath
-     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
-     *     @type bool $enableCaching
-     *           Optional. Enable caching of access tokens. Defaults to true.
-     *     @type CacheItemPoolInterface $authCache
-     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
-     *     @type array $authCacheOptions
-     *           Optional. Cache configuration options.
-     *     @type callable $authHttpHandler
-     *           A handler used to deliver PSR-7 requests specifically for
-     *           authentication. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
-     * }
-     * @return FetchAuthTokenInterface
-     * @throws \Exception
-     */
-    public static function createFetchAuthTokenInterface(array $args)
-    {
-        $args += [
-            'enableCaching' => true,
-            'authCache' => null,
-            'authCacheOptions' => null,
-            'authHttpHandler' => null
-        ];
-
-        $keyFile = self::getKeyFile($args);
-
-        if (is_null($keyFile)) {
-            $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
-            $loader = self::getADCCredentials($args['scopes'], $authHttpHandler);
-        } else {
-            $loader = self::getServiceAccountCredentials($args['scopes'], $keyFile);
-        }
-
-        if ($args['enableCaching']) {
-            $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
-            $loader = new FetchAuthTokenCache(
-                $loader,
-                $args['authCacheOptions'],
-                $authCache
-            );
-        }
-        return $loader;
-    }
-
-    /**
-     * @param array $args
-     * @return AuthWrapper
-     */
-    private static function buildAuthWrapper(array $args)
-    {
-        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
-
-        if (isset($args['credentialsLoader'])) {
-            $credentialsLoader = $args['credentialsLoader'];
-        } else {
-            self::validateNotNull($args, ['scopes']);
-
-            $credentialsLoader = self::getADCCredentials(
-                $args['scopes'],
-                $authHttpHandler
-            );
-
-            if ($args['enableCaching']) {
-                if (!isset($args['authCache'])) {
-                    $args['authCache'] = new MemoryCacheItemPool();
-                }
-
-                $credentialsLoader = new FetchAuthTokenCache(
-                    $credentialsLoader,
-                    $args['authCacheOptions'],
-                    $args['authCache']
-                );
-            }
-        }
-
-        return new AuthWrapper($credentialsLoader, $authHttpHandler);
-    }
-
-    /**
-     * Builds a transport given an array of arguments.
-     *
-     * @param string $serviceAddress The address of the API remote host.
-     * @param array  $args {
-     *     Required. An array of required and optional arguments.
-     *
-     *     @type string $transport
-     *           The type of transport to build.
-     *     @type string[] $scopes
-     *           Optional. A list of scopes required for API access.
-     *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *           NOTE: if $credentialsLoader is provided, this argument is ignored.
-     *     @type CredentialsLoader $credentialsLoader
-     *           Optional. A user-created CredentialsLoader object. Defaults to using
-     *           ApplicationDefaultCredentials with the provided $scopes argument.
-     *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *     @type string $keyFile
-     *           Optional. JSON credentials as an associative array.
-     *     @type string $keyFilePath
-     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
-     *     @type Channel $channel
-     *           Optional. A `Channel` object. If not specified, a channel will be constructed.
-     *           NOTE: This option is only valid when utilizing the gRPC transport.
-     *     @type ChannelCredentials $sslCreds
-     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
-     *           Default: a credentials object returned from
-     *           \Grpc\ChannelCredentials::createSsl()
-     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
-     *           optional argument is specified, then this argument is unused.
-     *     @type bool $forceNewChannel
-     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
-     *           Defaults to false.
-     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
-     *           optional argument is specified, then this option is unused.
-     *     @type bool $enableCaching
-     *           Optional. Enable caching of access tokens. Defaults to true.
-     *     @type CacheItemPoolInterface $authCache
-     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
-     *     @type array $authCacheOptions
-     *           Optional. Cache configuration options.
-     *     @type callable $authHttpHandler
-     *           A handler used to deliver PSR-7 requests specifically for
-     *           authentication. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
-     *     @type callable $httpHandler
-     *           A handler used to deliver PSR-7 requests. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : PromiseInterface`.
-     *           NOTE: This option is only valid when utilizing the REST transport.
-     * }
-     * @return TransportInterface
-     * @throws \Exception
-     */
-    public static function complexBuild()
-    {
-
-    }
-
-    /**
-     * @param array $args
-     * @return string|array|null
-     */
-    private static function getKeyFile($args)
-    {
-        if (isset($args['keyFile'])) {
-            return $args['keyFile'];
-        } elseif (isset($args['keyFilePath'])) {
-            return $args['keyFilePath'];
-        } else {
-            return null;
-        }
     }
 }
