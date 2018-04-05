@@ -235,9 +235,21 @@ trait GapicClientTrait
      */
     private function setTransport($options)
     {
+        $transport =
         if (isset($options['transport']) && $options['transport'] instanceof TransportInterface) {
             $this->transport = $options['transport'];
             return;
+        }
+
+        $this->transport = TransportFactory::build($options);
+
+        switch ($transport) {
+            case 'grpc':
+                return self::buildGrpc($serviceAddress, $args);
+            case 'rest':
+                return self::buildRest($serviceAddress, $args);
+            default:
+                throw new ValidationException("Unknown transport type: $transport");
         }
 
         $optionKeys = [
@@ -253,6 +265,26 @@ trait GapicClientTrait
         }
 
         $this->transport = TransportFactory::build($options['serviceAddress'], $transportOptions);
+    }
+
+    /**
+     * @param array $options
+     * @return string
+     */
+    private static function resolveTransport($options)
+    {
+        if (!isset($options['transport'])) {
+            return self::getGrpcDependencyStatus()
+                ? 'grpc'
+                : 'rest';;
+        }
+        if ($transport) {
+            return strtolower($transport);
+        }
+
+        $transport =
+
+        return $transport;
     }
 
     /**

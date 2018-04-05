@@ -40,10 +40,12 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use InvalidArgumentException;
+use Psr\Cache\CacheItemPoolInterface;
 
 class TransportFactory
 {
@@ -62,84 +64,59 @@ class TransportFactory
     /**
      * Builds a transport given an array of arguments.
      *
-     * @param string $serviceAddress The address of the API remote host.
      * @param array  $args {
      *     Required. An array of required and optional arguments.
-     *
-     *     @type string $transport
-     *           The type of transport to build.
+     *     @type string $serviceAddress
+     *           Required. The address of the API remote host.
      *     @type string[] $scopes
-     *           Optional. A list of scopes required for API access.
-     *           Exactly one of $scopes or $credentialsLoader must be provided.
-     *           NOTE: if $credentialsLoader is provided, this argument is ignored.
-     *     @type CredentialsLoader $credentialsLoader
-     *           Optional. A user-created CredentialsLoader object. Defaults to using
-     *           ApplicationDefaultCredentials with the provided $scopes argument.
-     *           Exactly one of $scopes or $credentialsLoader must be provided.
+     *           Required. A list of scopes required for API access.
+     *     @type string $transport
+     *           Optional. The type of transport to build. Defaults to
+     *           'grpc' when available. Supported values: ['grpc', 'rest'].
      *     @type string $keyFile
-     *           JSON credentials as an associative array.
+     *           Optional. JSON credentials as an associative array.
      *     @type string $keyFilePath
-     *           A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
-     *     @type Channel $channel
-     *           Optional. A `Channel` object. If not specified, a channel will be constructed.
-     *           NOTE: This option is only valid when utilizing the gRPC transport.
-     *     @type ChannelCredentials $sslCreds
-     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
-     *           Default: a credentials object returned from
-     *           \Grpc\ChannelCredentials::createSsl()
-     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
-     *           optional argument is specified, then this argument is unused.
-     *     @type bool $forceNewChannel
-     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
-     *           Defaults to false.
-     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
-     *           optional argument is specified, then this option is unused.
-     *     @type bool $enableCaching
-     *           Optional. Enable caching of access tokens. Defaults to true.
+     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
      *     @type CacheItemPoolInterface $authCache
      *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
-     *     @type array $authCacheOptions
-     *           Optional. Cache configuration options.
-     *     @type callable $authHttpHandler
-     *           A handler used to deliver PSR-7 requests specifically for
-     *           authentication. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
-     *     @type callable $httpHandler
-     *           A handler used to deliver PSR-7 requests. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : PromiseInterface`.
-     *           NOTE: This option is only valid when utilizing the REST transport.
      * }
      * @return TransportInterface
      * @throws \Exception
      */
-    public static function build($serviceAddress, array $args)
+    public static function build(array $args)
     {
-        $args = self::buildArgs($args);
+        self::validateNotNull($args, ['serviceAddress', 'scopes']);
 
-        $transport = self::handleTransport($args['transport']);
-
+        $args += [
+            'transport' => self::defaultTransport(),
+        ];
+        $transport = $args['transport'];
         switch ($transport) {
             case 'grpc':
-                return self::buildGrpc($serviceAddress, $args);
+                if (!self::getGrpcDependencyStatus()) {
+                    throw new InvalidArgumentException(
+                        'gRPC support has been requested but required dependencies ' .
+                        'have not been found. For details on how to install the ' .
+                        'gRPC extension please see https://cloud.google.com/php/grpc.'
+                    );
+                }
+
+                self::validateNotNull($args, ['serviceAddress', 'scopes']);
+
+                $credentialsLoader = self::handleCredentialsLoader($args);
+                $stubOpts = ['credentials'=> self::createSslChannelCredentials()];
+
+                return new GrpcTransport(
+                    $args['serviceAddress'],
+                    $credentialsLoader,
+                    $args['authHttpHandler'],
+                    $stubOpts
+                );
             case 'rest':
-                return self::buildRest($serviceAddress, $args);
+                return self::buildRest($args);
             default:
                 throw new ValidationException("Unknown transport type: $transport");
         }
-    }
-
-    /**
-     * @param array $args
-     * @return array
-     * @throws \Exception
-     */
-    private static function buildArgs(array $args)
-    {
-        $args += self::$defaults;
-        if (!$args['authHttpHandler']) {
-            $args['authHttpHandler'] = HttpHandlerFactory::build();
-        }
-        return $args;
     }
 
     /**
@@ -190,10 +167,11 @@ class TransportFactory
         self::validateNotNull($args, ['restClientConfigPath']);
 
         $credentialsLoader = self::handleCredentialsLoader($args);
+        $baseUri = explode(':', $serviceAddress)[0];
 
         return new RestTransport(
             new RequestBuilder(
-                $serviceAddress,
+                $baseUri,
                 $args['restClientConfigPath']
             ),
             $credentialsLoader,
@@ -262,42 +240,123 @@ class TransportFactory
         return $transport;
     }
 
-    /**
-     * @param array $args
-     * @return CredentialsLoader
-     */
-    private static function handleCredentialsLoader(array $args)
+    private static function defaultTransport()
     {
-        if (isset($args['credentialsLoader'])) {
-            return $args['credentialsLoader'];
-        }
+        return self::getGrpcDependencyStatus()
+            ? 'grpc'
+            : 'rest';
+    }
 
-        self::validateNotNull($args, ['scopes']);
+
+    /**
+     *
+     * @param array $args {
+     *     @type string[] $scopes
+     *           Required. A list of scopes required for API access.
+     *     @type string $keyFile
+     *           Optional. JSON credentials as an associative array.
+     *     @type string $keyFilePath
+     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
+     *     @type bool $enableCaching
+     *           Optional. Enable caching of access tokens. Defaults to true.
+     *     @type CacheItemPoolInterface $authCache
+     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *     @type array $authCacheOptions
+     *           Optional. Cache configuration options.
+     *     @type callable $authHttpHandler
+     *           A handler used to deliver PSR-7 requests specifically for
+     *           authentication. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
+     * }
+     * @return FetchAuthTokenInterface
+     * @throws \Exception
+     */
+    public static function createFetchAuthTokenInterface(array $args)
+    {
+        $args += [
+            'enableCaching'     => true,
+            'authCache'         => null,
+            'authCacheOptions'  => null,
+            'authHttpHandler'   => null
+        ];
 
         $keyFile = self::getKeyFile($args);
 
         if (is_null($keyFile)) {
-            $loader = self::getADCCredentials(
-                $args['scopes'],
-                $args['authHttpHandler']
-            );
+            $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+            $loader = self::getADCCredentials($args['scopes'], $authHttpHandler);
         } else {
             $loader = self::getServiceAccountCredentials($args['scopes'], $keyFile);
         }
 
         if ($args['enableCaching']) {
-            if (!isset($args['authCache'])) {
-                $args['authCache'] = new MemoryCacheItemPool();
-            }
-
+            $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
             $loader = new FetchAuthTokenCache(
                 $loader,
                 $args['authCacheOptions'],
-                $args['authCache']
+                $authCache
             );
         }
 
         return $loader;
+    }
+
+    /**
+     * Builds a transport given an array of arguments.
+     *
+     * @param string $serviceAddress The address of the API remote host.
+     * @param array  $args {
+     *     Required. An array of required and optional arguments.
+     *
+     *     @type string $transport
+     *           The type of transport to build.
+     *     @type string[] $scopes
+     *           Optional. A list of scopes required for API access.
+     *           Exactly one of $scopes or $credentialsLoader must be provided.
+     *           NOTE: if $credentialsLoader is provided, this argument is ignored.
+     *     @type CredentialsLoader $credentialsLoader
+     *           Optional. A user-created CredentialsLoader object. Defaults to using
+     *           ApplicationDefaultCredentials with the provided $scopes argument.
+     *           Exactly one of $scopes or $credentialsLoader must be provided.
+     *     @type string $keyFile
+     *           Optional. JSON credentials as an associative array.
+     *     @type string $keyFilePath
+     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
+     *     @type Channel $channel
+     *           Optional. A `Channel` object. If not specified, a channel will be constructed.
+     *           NOTE: This option is only valid when utilizing the gRPC transport.
+     *     @type ChannelCredentials $sslCreds
+     *           Optional. A `ChannelCredentials` object for use with an SSL-enabled channel.
+     *           Default: a credentials object returned from
+     *           \Grpc\ChannelCredentials::createSsl()
+     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
+     *           optional argument is specified, then this argument is unused.
+     *     @type bool $forceNewChannel
+     *           Optional. If true, this forces gRPC to create a new channel instead of using a persistent channel.
+     *           Defaults to false.
+     *           NOTE: This option is only valid when utilizing the gRPC transport. Also, if the $channel
+     *           optional argument is specified, then this option is unused.
+     *     @type bool $enableCaching
+     *           Optional. Enable caching of access tokens. Defaults to true.
+     *     @type CacheItemPoolInterface $authCache
+     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *     @type array $authCacheOptions
+     *           Optional. Cache configuration options.
+     *     @type callable $authHttpHandler
+     *           A handler used to deliver PSR-7 requests specifically for
+     *           authentication. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
+     *     @type callable $httpHandler
+     *           A handler used to deliver PSR-7 requests. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : PromiseInterface`.
+     *           NOTE: This option is only valid when utilizing the REST transport.
+     * }
+     * @return TransportInterface
+     * @throws \Exception
+     */
+    public static function complexBuild()
+    {
+
     }
 
     /**
