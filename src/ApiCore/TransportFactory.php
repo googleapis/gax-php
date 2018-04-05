@@ -58,7 +58,7 @@ class TransportFactory
         'transport'         => null,
         'authCacheOptions'  => null,
         'httpHandler'       => null,
-        'authHttpHandler'   => null
+        'authHttpHandler'   => null,
     ];
 
     /**
@@ -85,7 +85,20 @@ class TransportFactory
      */
     public static function build(array $args)
     {
-        self::validateNotNull($args, ['serviceAddress', 'scopes']);
+        self::validateNotNull($args, [
+            'serviceAddress',
+            'port'
+        ]);
+        $args += self::$defaults;
+        $host = sprintf(
+            '%s:%s',
+            $args['serviceAddress'],
+            $args['port']
+        );
+
+        $args['transport'] = self::handleTransport($args['transport']);
+
+        $authWrapper = self::buildAuthWrapper($args);
 
         $args += [
             'transport' => self::defaultTransport(),
@@ -114,6 +127,23 @@ class TransportFactory
                 );
             case 'rest':
                 return self::buildRest($args);
+                    $host,
+                    $authWrapper,
+                    $stubOpts,
+                    $args['channel']
+                );
+
+                self::validateNotNull($args, ['restClientConfigPath']);
+
+                return new RestTransport(
+                    new RequestBuilder(
+                        $host,
+                        $args['restClientConfigPath']
+                    ),
+                    $authWrapper,
+                    $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async']
+                );
+
             default:
                 throw new ValidationException("Unknown transport type: $transport");
         }
@@ -274,10 +304,10 @@ class TransportFactory
     public static function createFetchAuthTokenInterface(array $args)
     {
         $args += [
-            'enableCaching'     => true,
-            'authCache'         => null,
-            'authCacheOptions'  => null,
-            'authHttpHandler'   => null
+            'enableCaching' => true,
+            'authCache' => null,
+            'authCacheOptions' => null,
+            'authHttpHandler' => null
         ];
 
         $keyFile = self::getKeyFile($args);
@@ -297,8 +327,41 @@ class TransportFactory
                 $authCache
             );
         }
-
         return $loader;
+    }
+
+    /**
+     * @param array $args
+     * @return AuthWrapper
+     */
+    private static function buildAuthWrapper(array $args)
+    {
+        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+
+        if (isset($args['credentialsLoader'])) {
+            $credentialsLoader = $args['credentialsLoader'];
+        } else {
+            self::validateNotNull($args, ['scopes']);
+
+            $credentialsLoader = self::getADCCredentials(
+                $args['scopes'],
+                $authHttpHandler
+            );
+
+            if ($args['enableCaching']) {
+                if (!isset($args['authCache'])) {
+                    $args['authCache'] = new MemoryCacheItemPool();
+                }
+
+                $credentialsLoader = new FetchAuthTokenCache(
+                    $credentialsLoader,
+                    $args['authCacheOptions'],
+                    $args['authCache']
+                );
+            }
+        }
+
+        return new AuthWrapper($credentialsLoader, $authHttpHandler);
     }
 
     /**
