@@ -114,7 +114,7 @@ class TransportFactory
      */
     public static function build($serviceAddress, array $args)
     {
-        $args += self::$defaults;
+        $args = self::buildArgs($args);
 
         $transport = self::handleTransport($args['transport']);
 
@@ -126,6 +126,20 @@ class TransportFactory
             default:
                 throw new ValidationException("Unknown transport type: $transport");
         }
+    }
+
+    /**
+     * @param array $args
+     * @return array
+     * @throws \Exception
+     */
+    private static function buildArgs(array $args)
+    {
+        $args += self::$defaults;
+        if (!$args['authHttpHandler']) {
+            $args['authHttpHandler'] = HttpHandlerFactory::build();
+        }
+        return $args;
     }
 
     /**
@@ -144,7 +158,6 @@ class TransportFactory
             );
         }
 
-        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
         $credentialsLoader = self::handleCredentialsLoader($args);
 
         $stubOpts = [
@@ -160,7 +173,7 @@ class TransportFactory
         return new GrpcTransport(
             $serviceAddress,
             $credentialsLoader,
-            $authHttpHandler,
+            $args['authHttpHandler'],
             $stubOpts,
             $args['channel']
         );
@@ -176,7 +189,6 @@ class TransportFactory
     {
         self::validateNotNull($args, ['restClientConfigPath']);
 
-        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
         $credentialsLoader = self::handleCredentialsLoader($args);
 
         return new RestTransport(
@@ -186,7 +198,7 @@ class TransportFactory
             ),
             $credentialsLoader,
             $args['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'],
-            $authHttpHandler
+            $args['authHttpHandler']
         );
     }
 

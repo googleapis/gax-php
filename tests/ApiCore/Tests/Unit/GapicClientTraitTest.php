@@ -47,6 +47,13 @@ use PHPUnit\Framework\TestCase;
 
 class GapicClientTraitTest extends TestCase
 {
+    public function tearDown()
+    {
+        // Reset the static gapicVersion field between tests
+        $client = new GapicClientTraitStub();
+        $client->set('gapicVersion', null, true);
+    }
+
     public function testHeadersOverwriteBehavior()
     {
         $headerDescriptor = new AgentHeaderDescriptor([
@@ -309,8 +316,11 @@ class GapicClientTraitTest extends TestCase
             ? GrpcTransport::class
             : RestTransport::class;
         $minimalOptions = [
+            'serviceName' => 'servicename',
             'serviceAddress' => 'address:443',
             'scopes' => [],
+            'descriptorsConfigPath' => __DIR__ . '/testdata/test_service_descriptor_config.php',
+            'clientConfigPath' => __DIR__ . '/testdata/test_service_client_config.json',
             'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
         ];
         return [
