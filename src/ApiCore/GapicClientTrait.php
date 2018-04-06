@@ -39,6 +39,7 @@ use Google\ApiCore\Transport\TransportInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Common functions used to work with various clients.
@@ -125,9 +126,8 @@ trait GapicClientTrait
      *           the string `rest` or `grpc`. Additionally, it is possible
      *           to pass in an already instantiated transport. Defaults to `grpc`
      *           if gRPC support is detected on the system.
-     *     @type array $transportConstructionOptions An array of options to be passed to
-     *           TransportFactory::build. If the $transport option specifies an existing
-     *           TransportInterface object, then this argument will be ignored.
+     *     @type CacheItemPoolInterface $authCache A cache for storing access
+     *           tokens. Defaults to a simple in memory implementation.
      *     @type string $libName
      *           The name of the client application.
      *     @type string $libVersion
@@ -232,6 +232,7 @@ trait GapicClientTrait
 
     /**
      * @param array $options
+     * @throws ValidationException
      */
     private function setTransport($options)
     {

@@ -91,7 +91,12 @@ class TransportFactory
                     $baseUri,
                     $args['restClientConfigPath']
                 );
-                $httpHandler = [HttpHandlerFactory::build(), 'async'];
+
+                try {
+                    $httpHandler = [HttpHandlerFactory::build(), 'async'];
+                } catch (\Exception $ex) {
+                    throw new ValidationException("Failed to create httpHandler", $ex->getCode(), $ex);
+                }
 
                 return new RestTransport(
                     $requestBuilder,

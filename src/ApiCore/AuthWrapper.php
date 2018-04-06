@@ -62,6 +62,9 @@ class AuthWrapper
     }
 
     /**
+     * Factory method to create an AuthWrapper for a given set of scopes. If no credentials are
+     * provided in $keyFile or $keyFilePath, then ApplicationDefaultCredentials will be used.
+     *
      * @param string[] $scopes The scopes required by this AuthWrapper.
      * @param array $args {
      *     @type string $keyFile
@@ -72,7 +75,7 @@ class AuthWrapper
      *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
      * }
      * @return AuthWrapper
-     * @throws \Exception
+     * @throws ValidationException
      */
     public static function createWithScopes(array $scopes, array $args = [])
     {
@@ -85,7 +88,11 @@ class AuthWrapper
         $keyFile = $args['keyFile'] ?: $args['keyFilePath'];
         $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
 
-        $authHttpHandler = HttpHandlerFactory::build();
+        try {
+            $authHttpHandler = HttpHandlerFactory::build();
+        } catch (\Exception $ex) {
+            throw new ValidationException("Failed to create authHttpHandler", $ex->getCode(), $ex);
+        }
 
         if (is_null($keyFile)) {
             $loader = ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler);
