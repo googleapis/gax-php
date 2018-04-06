@@ -111,6 +111,8 @@ trait GapicClientTrait
      *     @type string $keyFilePath
      *           The full path to your service account credentials .json file retrieved from the
      *           Google Developers Console.
+     *     @type array $scopes
+     *           A string array of scopes to use when acquiring credentials.
      *     @type string $clientConfig
      *           Array containing client method configuration, including retry settings. If this argument
      *           is specified, the value of the $clientConfigPath option will be ignored.
@@ -158,6 +160,7 @@ trait GapicClientTrait
             'serviceAddress',
             'descriptorsConfigPath',
             'clientConfigPath',
+            'scopes',
         ]);
 
         if (isset($options['transport'])) {

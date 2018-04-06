@@ -47,7 +47,8 @@ class TransportFactory
      * Builds a transport given an array of arguments.
      *
      *
-     * @param string $serviceAddress The address of the API remote host.
+     * @param string $serviceAddress The address of the API remote host. Must be formatted as
+     *                               "<address>:port", e.g. "my.service.com:443"
      * @param AuthWrapper $authWrapper AuthWrapper to manage auth tokens.
      * @param array  $args {
      *     @type string $transport
@@ -61,6 +62,7 @@ class TransportFactory
      */
     public static function build($serviceAddress, $authWrapper, array $args)
     {
+        list($uri, $port) = self::validateServiceAddress($serviceAddress);
         $args += [
             'transport' => self::defaultTransport(),
         ];
@@ -86,9 +88,8 @@ class TransportFactory
             case 'rest':
                 self::validateNotNull($args, ['restClientConfigPath']);
 
-                $baseUri = explode(':', $serviceAddress)[0];
                 $requestBuilder = new RequestBuilder(
-                    $baseUri,
+                    $uri,
                     $args['restClientConfigPath']
                 );
 
@@ -135,5 +136,20 @@ class TransportFactory
         return self::getGrpcDependencyStatus()
             ? 'grpc'
             : 'rest';
+    }
+
+    /**
+     * @param $serviceAddress
+     * @return array
+     * @throws ValidationException
+     */
+    private static function validateServiceAddress($serviceAddress)
+    {
+        $components = explode(':', $serviceAddress);
+        if (count($components) !== 2) {
+            throw new ValidationException(
+                'Invalid serviceAddress. Expected format "<address>:<port>", got ' . $serviceAddress);
+        }
+        return $components;
     }
 }

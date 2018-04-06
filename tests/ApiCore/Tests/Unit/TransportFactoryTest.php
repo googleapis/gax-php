@@ -85,7 +85,6 @@ class TransportFactoryTest extends TestCase
                 $authWrapper,
                 [
                     'transport' => 'grpc',
-                    'restClientConfigPath' => $restConfigPath,
                 ],
                 new GrpcTransport(
                     $serviceAddress,
@@ -94,6 +93,33 @@ class TransportFactoryTest extends TestCase
                         'credentials' => null,
                     ],
                     null),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider buildInvalidData
+     * @expectedException \Google\ApiCore\ValidationException
+     */
+    public function testBuildInvalid($serviceAddress, $authWrapper, $args)
+    {
+        TransportFactory::build($serviceAddress, $authWrapper, $args);
+    }
+
+    public function buildInvalidData()
+    {
+        $scopes = ['customscope'];
+        $authWrapper = AuthWrapper::createWithScopes($scopes);
+        return [
+            [
+                "addresswithnoport",
+                $authWrapper,
+                [],
+            ],
+            [
+                "addresswithtoo:many:segments",
+                $authWrapper,
+                [],
             ],
         ];
     }
