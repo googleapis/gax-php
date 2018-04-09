@@ -31,13 +31,21 @@
  */
 namespace Google\ApiCore;
 
+use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\Auth\CredentialsLoader;
+use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The AuthWrapper object provides a wrapper around a FetchAuthTokenInterface.
  */
 class AuthWrapper
 {
+    use ValidationTrait;
+
     private $fetchAuthTokenInterface;
     private $authHttpHandler;
 
@@ -53,6 +61,63 @@ class AuthWrapper
     {
         $this->fetchAuthTokenInterface = $fetchAuthTokenInterface;
         $this->authHttpHandler = $authHttpHandler;
+    }
+
+    /**
+     * @param array $args {
+     *     An array of required and optional arguments.
+     *
+     *     @type CredentialsLoader $credentialsLoader
+     *           A CredentialsLoader object created using the Google\Auth library.
+     *     @type array $scopes
+     *           A string array of scopes to use when acquiring credentials.
+     *     @type callable $authHttpHandler A handler used to deliver PSR-7
+     *           requests specifically for authentication. Should match a
+     *           signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
+     *     @type bool $enableCaching
+     *           Optional. Enable caching of access tokens. Defaults to true.
+     *     @type CacheItemPoolInterface $authCache
+     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *     @type array $authCacheOptions
+     *           Optional. Cache configuration options.
+     * }
+     * @return AuthWrapper
+     * @throws \Exception
+     */
+    public static function build(array $args)
+    {
+        $args += [
+            'enableCaching'     => true,
+            'authCacheOptions'  => null,
+            'authHttpHandler'   => null,
+        ];
+        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+
+        if (isset($args['credentialsLoader'])) {
+            $credentialsLoader = $args['credentialsLoader'];
+        } else {
+            self::validateNotNull($args, ['scopes']);
+
+            $credentialsLoader = ApplicationDefaultCredentials::getCredentials(
+                $args['scopes'],
+                $authHttpHandler
+            );
+
+            if ($args['enableCaching']) {
+                if (!isset($args['authCache'])) {
+                    $args['authCache'] = new MemoryCacheItemPool();
+                }
+
+                $credentialsLoader = new FetchAuthTokenCache(
+                    $credentialsLoader,
+                    $args['authCacheOptions'],
+                    $args['authCache']
+                );
+            }
+        }
+
+        return new AuthWrapper($credentialsLoader, $authHttpHandler);
     }
 
     /**
