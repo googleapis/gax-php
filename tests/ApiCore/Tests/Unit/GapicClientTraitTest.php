@@ -78,7 +78,8 @@ class GapicClientTraitTest extends TestCase
              ->with(
                 $this->isInstanceOf(Call::class),
                 $this->equalTo([
-                    'headers' => $expectedHeaders
+                    'headers' => $expectedHeaders,
+                    'authWrapper' => null,
                 ])
             );
         $client = new GapicClientTraitStub();

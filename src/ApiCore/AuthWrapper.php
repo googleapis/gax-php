@@ -45,6 +45,8 @@ use Psr\Cache\CacheItemPoolInterface;
  */
 class AuthWrapper
 {
+    use ValidationTrait;
+
     private $fetchAuthTokenInterface;
     private $authHttpHandler;
 
@@ -80,6 +82,8 @@ class AuthWrapper
      *           Optional. Enable caching of access tokens. Defaults to true.
      *     @type CacheItemPoolInterface $authCache
      *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *     @type array $authCacheOptions
+     *           Optional. Cache configuration options.
      * }
      * @return AuthWrapper
      * @throws ValidationException

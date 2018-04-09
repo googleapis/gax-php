@@ -63,21 +63,6 @@ class GrpcTransportTest extends TestCase
         return call_user_func($args['options']['call_credentials_callback']);
     }
 
-    public function testCustomCredsLoader()
-    {
-        $credentialsLoader = $this->getMock(FetchAuthTokenInterface::class);
-        $credentialsLoader->expects($this->once())
-            ->method('fetchAuthToken')
-            ->willReturn(['access_token' => 'accessToken']);
-        $credentialsLoader->expects($this->once())
-            ->method('getLastReceivedToken')
-            ->willReturn(null);
-
-        $transport = new MockGrpcTransport($this->createMockCall(), $credentialsLoader);
-        $callbackResult = $this->callCredentialsCallback($transport);
-        $this->assertEquals(['Bearer accessToken'], $callbackResult['authorization']);
-    }
-
     public function testClientStreamingSuccessObject()
     {
         $response = new Status();
