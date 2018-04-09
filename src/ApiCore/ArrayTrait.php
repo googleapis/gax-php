@@ -118,16 +118,11 @@ trait ArrayTrait
      * @param array $arr
      * @return array
      */
-    private function subsetArray(array $keys, &$arr)
+    private function subsetArray(array $keys, $arr)
     {
-        $values = [];
-
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $arr)) {
-                $values[$key] = $arr[$key];
-            }
-        }
-
-        return $values;
+        return array_intersect_key(
+            $arr,
+            array_flip($keys)
+        );
     }
 }

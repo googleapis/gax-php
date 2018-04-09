@@ -36,6 +36,7 @@ use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -88,12 +89,46 @@ trait GapicClientTrait
         return self::$gapicVersion;
     }
 
+    private static function getClientDefaults()
+    {
+        return [
+            'transport' => null,
+            'auth' => null,
+            'disableRetries' => false,
+        ];
+    }
+
+    public static function buildGrpcTransport(array $options)
+    {
+        $options += self::getClientDefaults();
+
+    }
+
     /**
      * Configures the GAPIC client based on an array of options.
      *
      * @param array $options {
      *     An array of required and optional arguments.
      *
+     *     @type bool $disableRetries Determines whether or not retries defined
+     *           by the client configuration should be disabled. Defaults to `false`.
+     *     @type string|array $clientConfig
+     *           Client method configuration, including retry settings. This option can be either a
+     *           path to a JSON file, or a PHP array containing the decoded JSON data.
+     *           By default this settings points to the default client config file, which is provided
+     *           in the resources folder.
+     *     @type mixed $auth
+     *           This option is used to configure auth for the client object, and accepts any of
+     *           the following as input:
+     *           - decoded credentials file as a PHP array
+     *           - path to a credentials file as a string
+     *           - a \Google\Auth\FetchAuthTokenInterface object
+     *           - a \Google\Auth\CredentialsLoader object
+     *           - an AuthWrapper object
+     *     @type string|TransportInterface $transport The transport used for executing network
+     *           requests. May be either the string `rest` or `grpc`. Additionally, it is possible
+     *           to pass in an already instantiated transport. Defaults to `grpc` if gRPC support is
+     *           detected on the system.
      *     @type string $versionFile
      *           The path to a file which contains the current version of the
      *           client.
@@ -104,32 +139,8 @@ trait GapicClientTrait
      *     @type string $serviceAddress
      *           The address of the API remote host. Formatted as <endpoint>:<port>, for example:
      *           "example.googleapis.com:443"
-     *     @type array $keyFile
-     *           The contents of the service account credentials .json file retrieved from the
-     *           Google Developer's Console.
-     *           Ex: `json_decode(file_get_contents($path), true)`.
-     *     @type string $keyFilePath
-     *           The full path to your service account credentials .json file retrieved from the
-     *           Google Developers Console.
      *     @type array $scopes
      *           A string array of scopes to use when acquiring credentials.
-     *     @type string $clientConfig
-     *           Array containing client method configuration, including retry settings. If this argument
-     *           is specified, the value of the $clientConfigPath option will be ignored.
-     *     @type string $clientConfigPath
-     *           Path to a JSON file containing client method configuration, including retry settings.
-     *           Specify this setting to specify the retry behavior of all methods on the client.
-     *           If the $clientConfig option is specified, this will be ignored.
-     *     @type bool $disableRetries
-     *           Determines whether or not retries defined by the client configuration should be
-     *           disabled. Defaults to `false`.
-     *     @type string|TransportInterface $transport
-     *           The transport used for executing network requests. May be either
-     *           the string `rest` or `grpc`. Additionally, it is possible
-     *           to pass in an already instantiated transport. Defaults to `grpc`
-     *           if gRPC support is detected on the system.
-     *     @type CacheItemPoolInterface $authCache A cache for storing access
-     *           tokens. Defaults to a simple in memory implementation.
      *     @type string $libName
      *           The name of the client application.
      *     @type string $libVersion
@@ -141,11 +152,14 @@ trait GapicClientTrait
      */
     protected function setClientOptions(array $options)
     {
+        $options += self::getClientDefaults();
+
         $this->validateOptions($options);
 
         $this->setServiceNameAndDescriptors($options);
         $this->setRetrySettings($options);
         $this->setAgentHeaderDescriptor($options);
+        $this->setAuthWrapper($options);
         $this->setTransport($options);
     }
 
@@ -159,8 +173,7 @@ trait GapicClientTrait
             'serviceName',
             'serviceAddress',
             'descriptorsConfigPath',
-            'clientConfigPath',
-            'scopes',
+            'clientConfig',
         ]);
 
         if (isset($options['transport'])) {
@@ -193,16 +206,17 @@ trait GapicClientTrait
      */
     private function setRetrySettings($options)
     {
-        $clientConfig = isset($options['clientConfig'])
-            ? $options['clientConfig']
-            : json_decode(file_get_contents($options['clientConfigPath']), true);
+        $clientConfig = $options['clientConfig'];
+        if (is_string($clientConfig)) {
+            $clientConfig = json_decode(file_get_contents($clientConfig), true);
+        }
 
         $retrySettings = RetrySettings::load(
             $options['serviceName'],
             $clientConfig,
             null
         );
-        if (isset($options['disableRetries']) && $options['disableRetries']) {
+        if ($options['disableRetries']) {
             $updatedRetrySettings = [];
             foreach ($retrySettings as $method => $retrySettingsItem) {
                 $updatedRetrySettings[$method] = $retrySettingsItem->with([
@@ -233,6 +247,30 @@ trait GapicClientTrait
         ]);
     }
 
+    private function setAuthWrapper($options)
+    {
+        $auth = $options['auth'];
+        if (is_null($auth)) {
+            $scopes = $options['scopes'];
+            $this->authWrapper = AuthWrapper::build($scopes, $options);
+        } elseif ($auth instanceof FetchAuthTokenInterface) {
+            $authHttpHandler = isset($options['authHttpHandler']) ? $options['authHttpHandler'] : null;
+            $this->authWrapper = new AuthWrapper($auth, $authHttpHandler);
+        } else {
+            
+        }
+
+        if (isset($options['credentialsLoader'])) {
+            $authHttpHandler = isset($options['authHttpHandler']) ? $options['authHttpHandler'] : null;
+            $this->authWrapper = new AuthWrapper($options['credentialsLoader'], $authHttpHandler);
+        } else {
+            $this->validateNotNull($options, [
+                'scopes'
+            ]);
+            $this->authWrapper = AuthWrapper::build($options['scopes'], $options);
+        }
+    }
+
     /**
      * @param array $options
      * @throws ValidationException
@@ -244,18 +282,22 @@ trait GapicClientTrait
             return;
         }
 
-        $authWrapperOptions = $this->subsetArray([
-            'keyFile',
-            'keyFilePath',
-            'authCache',
-        ], $options);
-        $authWrapper = AuthWrapper::createWithScopes($options['scopes'],$authWrapperOptions);
+
 
         $transportOptions = $this->subsetArray([
             'transport',
             'restClientConfigPath',
         ], $options);
         $this->transport = TransportFactory::build($options['serviceAddress'], $authWrapper, $transportOptions);
+
+        $descriptors = require($options['descriptorsConfigPath']);
+        $this->descriptors = $descriptors['interfaces'][$this->serviceName];
+
+
+
+        $this->transport = $transport instanceof TransportInterface
+            ? $transport
+            : TransportFactory::build($options);
     }
 
     /**

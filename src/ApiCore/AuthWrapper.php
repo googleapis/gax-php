@@ -34,6 +34,7 @@ namespace Google\ApiCore;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Credentials\ServiceAccountCredentials;
+use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -58,7 +59,7 @@ class AuthWrapper
     public function __construct(FetchAuthTokenInterface $fetchAuthTokenInterface, callable $authHttpHandler = null)
     {
         $this->fetchAuthTokenInterface = $fetchAuthTokenInterface;
-        $this->authHttpHandler = $authHttpHandler;
+        $this->authHttpHandler = $authHttpHandler ?: HttpHandlerFactory::build();
     }
 
     /**
@@ -71,28 +72,31 @@ class AuthWrapper
      *           Optional. JSON credentials as an associative array.
      *     @type string $keyFilePath
      *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
+     *     @type callable $authHttpHandler
+     *           Optional. A handler used to deliver PSR-7 requests specifically
+     *           for authentication. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
+     *     @type bool $enableCaching
+     *           Optional. Enable caching of access tokens. Defaults to true.
      *     @type CacheItemPoolInterface $authCache
      *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
      * }
      * @return AuthWrapper
      * @throws ValidationException
      */
-    public static function createWithScopes(array $scopes, array $args = [])
+    public static function build(array $scopes, array $args)
     {
         $args += [
-            'keyFile' => null,
-            'keyFilePath' => null,
-            'authCache' => null,
+            'keyFile'           => null,
+            'keyFilePath'       => null,
+            'enableCaching'     => true,
+            'authCache'         => null,
+            'authCacheOptions'  => [],
+            'authHttpHandler'   => null,
         ];
 
         $keyFile = $args['keyFile'] ?: $args['keyFilePath'];
-        $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
-
-        try {
-            $authHttpHandler = HttpHandlerFactory::build();
-        } catch (\Exception $ex) {
-            throw new ValidationException("Failed to create authHttpHandler", $ex->getCode(), $ex);
-        }
+        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
 
         if (is_null($keyFile)) {
             $loader = ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler);
@@ -100,11 +104,14 @@ class AuthWrapper
             $loader = new ServiceAccountCredentials($scopes, $keyFile);
         }
 
-        $loader = new FetchAuthTokenCache(
-            $loader,
-            [],
-            $authCache
-        );
+        if ($args['enableCaching']) {
+            $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
+            $loader = new FetchAuthTokenCache(
+                $loader,
+                $args['authCacheOptions'],
+                $authCache
+            );
+        }
 
         return new AuthWrapper($loader, $authHttpHandler);
     }
