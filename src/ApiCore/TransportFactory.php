@@ -176,18 +176,6 @@ class TransportFactory
     }
 
     /**
-     * Gets credentials from ADC. This exists to allow overriding in unit tests.
-     *
-     * @param string[] $scopes
-     * @param callable $httpHandler
-     * @return CredentialsLoader
-     */
-    protected static function getADCCredentials(array $scopes, callable $httpHandler)
-    {
-        return ApplicationDefaultCredentials::getCredentials($scopes, $httpHandler);
-    }
-
-    /**
      * Construct ssl channel credentials. This exists to allow overriding in unit tests.
      *
      * @return ChannelCredentials
