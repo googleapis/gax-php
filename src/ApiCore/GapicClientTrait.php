@@ -197,7 +197,17 @@ trait GapicClientTrait
 
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
-        $this->authWrapper = AuthWrapper::build($options);
+
+        if (isset($options['credentialsLoader'])) {
+            $authHttpHandler = isset($options['authHttpHandler']) ? $options['authHttpHandler'] : null;
+            $this->authWrapper = new AuthWrapper($options['credentialsLoader'], $authHttpHandler);
+        } else {
+            $this->validateNotNull($options, [
+                'scopes'
+            ]);
+            $this->authWrapper = AuthWrapper::build($options['scopes'], $options);
+        }
+
         $this->transport = $transport instanceof TransportInterface
             ? $transport
             : TransportFactory::build($options);
