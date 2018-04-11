@@ -84,9 +84,9 @@ class OperationResponse
      *
      *     @type string $operationReturnType The return type of the longrunning operation.
      *     @type string $metadataReturnType The type of the metadata returned in the Operation response.
-     *     @type int $initialPollDelayMillis    The initial polling interval to use, in seconds.
+     *     @type int $initialPollDelayMillis    The initial polling interval to use, in milliseconds.
      *     @type int $pollDelayMultiplier Multiplier applied to the polling interval on each retry.
-     *     @type int $maxPollDelayMillis The maximum polling interval to use, in seconds.
+     *     @type int $maxPollDelayMillis The maximum polling interval to use, in milliseconds.
      *     @type int $totalPollTimeoutMillis The maximum amount of time to continue polling.
      *     @type Operation $lastProtoResponse A response already received from the server.
      * }
@@ -166,7 +166,7 @@ class OperationResponse
      * Poll the server in a loop until the operation is complete.
      *
      * Return true if the operation completed, otherwise return false. If the
-     * $options['totalPollTimeoutMillis'] setting is not set (or set <= 0.0) then
+     * $options['totalPollTimeoutMillis'] setting is not set (or set <= 0) then
      * pollUntilComplete will continue polling until the operation completes,
      * and therefore will always return true.
      *
