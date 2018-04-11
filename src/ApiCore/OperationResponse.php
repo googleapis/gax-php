@@ -54,10 +54,10 @@ class OperationResponse
 {
     use PollingTrait;
 
-    const DEFAULT_POLLING_INTERVAL = 1000.0;
-    const DEFAULT_POLLING_MULTIPLIER = 2.0;
-    const DEFAULT_MAX_POLLING_INTERVAL = 60000.0;
-    const DEFAULT_MAX_POLLING_DURATION = 0.0;
+    const DEFAULT_POLLING_INTERVAL = 1000;
+    const DEFAULT_POLLING_MULTIPLIER = 2;
+    const DEFAULT_MAX_POLLING_INTERVAL = 60000;
+    const DEFAULT_MAX_POLLING_DURATION = 0;
 
     private $operationName;
     private $operationsClient;
@@ -84,10 +84,10 @@ class OperationResponse
      *
      *     @type string $operationReturnType The return type of the longrunning operation.
      *     @type string $metadataReturnType The type of the metadata returned in the Operation response.
-     *     @type float $initialPollDelayMillis    The initial polling interval to use, in seconds.
-     *     @type float $pollDelayMultiplier Multiplier applied to the polling interval on each retry.
-     *     @type float $maxPollDelayMillis The maximum polling interval to use, in seconds.
-     *     @type float $totalPollTimeoutMillis The maximum amount of time to continue polling.
+     *     @type int $initialPollDelayMillis    The initial polling interval to use, in seconds.
+     *     @type int $pollDelayMultiplier Multiplier applied to the polling interval on each retry.
+     *     @type int $maxPollDelayMillis The maximum polling interval to use, in seconds.
+     *     @type int $totalPollTimeoutMillis The maximum amount of time to continue polling.
      *     @type Operation $lastProtoResponse A response already received from the server.
      * }
      */
