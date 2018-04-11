@@ -52,6 +52,8 @@ use Google\Rpc\Status;
  */
 class OperationResponse
 {
+    use PollingTrait;
+
     const DEFAULT_POLLING_INTERVAL = 1000.0;
     const DEFAULT_POLLING_MULTIPLIER = 2.0;
     const DEFAULT_MAX_POLLING_INTERVAL = 60000.0;
@@ -182,49 +184,15 @@ class OperationResponse
      */
     public function pollUntilComplete($options = [])
     {
-        $pollSettings = array_merge($this->defaultPollSettings, $options);
-
-        $currentPollDelayMillis = $pollSettings['initialPollDelayMillis'];
-        $pollDelayMultiplier = $pollSettings['pollDelayMultiplier'];
-        $maxPollDelayMillis = $pollSettings['maxPollDelayMillis'];
-        $totalPollTimeoutMillis = $pollSettings['totalPollTimeoutMillis'];
-
-        $hasTotalPollTimeout = $totalPollTimeoutMillis > 0.0;
-        $endTime = $this->getCurrentTimeMillis() + $totalPollTimeoutMillis;
-
-        while (true) {
-            if ($this->isDone()) {
-                return true;
-            } elseif ($hasTotalPollTimeout && $this->getCurrentTimeMillis() > $endTime) {
-                return false;
-            }
-            $this->sleepMillis($currentPollDelayMillis);
-            $this->reload();
-            $currentPollDelayMillis = min([
-                $currentPollDelayMillis * $pollDelayMultiplier,
-                $maxPollDelayMillis
-            ]);
+        if ($this->isDone()) {
+            return true;
         }
-    }
 
-    /**
-     * Protected to allow overriding for tests
-     *
-     * @return float Current time in milliseconds
-     */
-    protected function getCurrentTimeMillis()
-    {
-        return microtime(true) * 1000.0;
-    }
-
-    /**
-     * Protected to allow overriding for tests
-     *
-     * @param float $millis
-     */
-    protected function sleepMillis($millis)
-    {
-        usleep($millis * 1000);
+        $pollSettings = array_merge($this->defaultPollSettings, $options);
+        return $this->poll(function () {
+            $this->reload();
+            return $this->isDone();
+        }, $pollSettings);
     }
 
     /**
