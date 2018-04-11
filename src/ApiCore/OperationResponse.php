@@ -171,10 +171,10 @@ class OperationResponse
      * @param array $options {
      *                       Options for configuring the polling behaviour.
      *
-     *     @type float $initialPollDelayMillis The initial polling interval to use, in seconds.
-     *     @type float $pollDelayMultiplier    Multiplier applied to the polling interval on each retry.
-     *     @type float $maxPollDelayMillis     The maximum polling interval to use, in seconds.
-     *     @type float $totalPollTimeoutMillis The maximum amount of time to continue polling.
+     *     @type int $initialPollDelayMillis The initial polling interval to use, in milliseconds.
+     *     @type int $pollDelayMultiplier    Multiplier applied to the polling interval on each retry.
+     *     @type int $maxPollDelayMillis     The maximum polling interval to use, in milliseconds.
+     *     @type int $totalPollTimeoutMillis The maximum amount of time to continue polling, in milliseconds.
      * }
      * @throws ApiException If an API call fails.
      * @throws ValidationException
@@ -195,9 +195,8 @@ class OperationResponse
         while (true) {
             if ($this->isDone()) {
                 return true;
-            }
-            if ($hasTotalPollTimeout && $this->getCurrentTimeMillis() > $endTime) {
-                return $this->isDone();
+            } elseif ($hasTotalPollTimeout && $this->getCurrentTimeMillis() > $endTime) {
+                return false;
             }
             $this->sleepMillis($currentPollDelayMillis);
             $this->reload();
