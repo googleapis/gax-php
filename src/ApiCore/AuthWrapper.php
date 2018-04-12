@@ -65,15 +65,10 @@ class AuthWrapper
     }
 
     /**
-     * Factory method to create an AuthWrapper for a given set of scopes. If no credentials are
-     * provided in $keyFile or $keyFilePath, then ApplicationDefaultCredentials will be used.
+     * Factory method to create an AuthWrapper from an authConfig array.
      *
-     * @param string[] $scopes The scopes required by this AuthWrapper.
-     * @param array $args {
-     *     @type string $keyFile
-     *           Optional. JSON credentials as an associative array.
-     *     @type string $keyFilePath
-     *           Optional. A JSON credential file path. If $keyFile is specified, $keyFilePath is ignored.
+     * @param array $authConfig {
+     *     @type string[] $scopes The scopes required by this AuthWrapper.
      *     @type callable $authHttpHandler
      *           Optional. A handler used to deliver PSR-7 requests specifically
      *           for authentication. Should match a signature of
@@ -86,38 +81,74 @@ class AuthWrapper
      *           Optional. Cache configuration options.
      * }
      * @return AuthWrapper
-     * @throws ValidationException
+     * @throws \Exception
      */
-    public static function build(array $scopes, array $args)
+    public static function from(array $authConfig)
     {
-        $args += [
-            'keyFile'           => null,
-            'keyFilePath'       => null,
+        $authConfig += [
+            'scopes'            => null,
             'enableCaching'     => true,
             'authCache'         => null,
             'authCacheOptions'  => [],
             'authHttpHandler'   => null,
         ];
 
-        $keyFile = $args['keyFile'] ?: $args['keyFilePath'];
-        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
+        $authHttpHandler = $authConfig['authHttpHandler'] ?: HttpHandlerFactory::build();
+        $loader = ApplicationDefaultCredentials::getCredentials($authConfig['scopes'], $authHttpHandler);
 
-        if (is_null($keyFile)) {
-            $loader = ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler);
-        } else {
-            $loader = new ServiceAccountCredentials($scopes, $keyFile);
-        }
-
-        if ($args['enableCaching']) {
-            $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
+        if ($authConfig['enableCaching']) {
+            $authCache = $authConfig['authCache'] ?: new MemoryCacheItemPool();
             $loader = new FetchAuthTokenCache(
                 $loader,
-                $args['authCacheOptions'],
+                $authConfig['authCacheOptions'],
                 $authCache
             );
         }
 
         return new AuthWrapper($loader, $authHttpHandler);
+    }
+
+    /**
+     * Factory method to create an AuthWrapper from an authConfig array.
+     *
+     * @param string|array $keyFile
+     *     Credentials to be used. Accepts either a path to a credentials file, or a decoded
+     *     credentials file as a PHP array.
+     * @param array $authConfig {
+     *     @type string[] $scopes The scopes required by this AuthWrapper.
+     *     @type callable $authHttpHandler
+     *           Optional. A handler used to deliver PSR-7 requests specifically
+     *           for authentication. Should match a signature of
+     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
+     *     @type bool $enableCaching
+     *           Optional. Enable caching of access tokens. Defaults to true.
+     *     @type CacheItemPoolInterface $authCache
+     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     * }
+     * @return AuthWrapper
+     */
+    public static function fromKeyFile($keyFile, array $authConfig)
+    {
+        $authConfig += [
+            'scopes'            => null,
+            'enableCaching'     => true,
+            'authCache'         => null,
+            'authCacheOptions'  => [],
+            'authHttpHandler'   => null,
+        ];
+
+        $loader = CredentialsLoader::makeCredentials($authConfig['scopes'], $keyFile);
+
+        if ($authConfig['enableCaching']) {
+            $authCache = $authConfig['authCache'] ?: new MemoryCacheItemPool();
+            $loader = new FetchAuthTokenCache(
+                $loader,
+                $authConfig['authCacheOptions'],
+                $authCache
+            );
+        }
+
+        return new AuthWrapper($loader, $authConfig['authHttpHandler']);
     }
 
     /**

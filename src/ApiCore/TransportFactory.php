@@ -32,124 +32,108 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
-use Grpc\ChannelCredentials;
-use InvalidArgumentException;
 
 class TransportFactory
 {
     use ValidationTrait;
 
+    const GRPC_DEFAULT_PORT = 443;
+
     /**
-     * Builds a transport given an array of arguments.
+     * Builds a GrpcTransport.
      *
      *
-     * @param string $serviceAddress The address of the API remote host. Must be formatted as
-     *                               "<address>:port", e.g. "my.service.com:443"
-     * @param AuthWrapper $authWrapper AuthWrapper to manage auth tokens.
-     * @param array  $args {
-     *     @type string $transport
-     *           Optional. The type of transport to build. Defaults to
-     *           'grpc' when available. Supported values: ['grpc', 'rest'].
-     *     @type string $restClientConfigPath Path to rest client config.
-     *           Required for 'rest' transport only.
-     * }
-     * @return TransportInterface
+     * @param string $serviceAddress
+     *        The address of the API remote host, for example "example.googleapis.com. May also
+     *        include the port, for example "example.googleapis.com:443"
+     * @param array $config
+     *        Config options used to construct the gRPC transport. Supported options are 'stubOpts'
+     *        and 'channel'.
+     * @return GrpcTransport
      * @throws ValidationException
      */
-    public static function build($serviceAddress, $authWrapper, array $args)
+    public static function buildGrpcTransport($serviceAddress, $config = [])
     {
-        list($uri, $port) = self::validateServiceAddress($serviceAddress);
-        $args += [
-            'transport' => self::defaultTransport(),
+        $config += [
+            'stubOpts' => [],
+            'channel'  => null,
         ];
-        $transport = $args['transport'];
-
-        switch ($transport) {
-            case 'grpc':
-                if (!self::getGrpcDependencyStatus()) {
-                    throw new InvalidArgumentException(
-                        'gRPC support has been requested but required dependencies ' .
-                        'have not been found. For details on how to install the ' .
-                        'gRPC extension please see https://cloud.google.com/php/grpc.'
-                    );
-                }
-
-                $stubOpts = ['credentials'=> self::createSslChannelCredentials()];
-
-                return new GrpcTransport(
-                    $serviceAddress,
-                    $authWrapper,
-                    $stubOpts
-                );
-            case 'rest':
-                self::validateNotNull($args, ['restClientConfigPath']);
-
-                $requestBuilder = new RequestBuilder(
-                    $uri,
-                    $args['restClientConfigPath']
-                );
-
-                try {
-                    $httpHandler = [HttpHandlerFactory::build(), 'async'];
-                } catch (\Exception $ex) {
-                    throw new ValidationException("Failed to create httpHandler", $ex->getCode(), $ex);
-                }
-
-                return new RestTransport(
-                    $requestBuilder,
-                    $authWrapper,
-                    $httpHandler
-                );
-
-            default:
-                throw new ValidationException("Unknown transport type: $transport");
-        }
+        $host = self::formatGrpcHost($serviceAddress);
+        $stubOpts = $config['stubOpts'];
+        $channel = $config['channel'];
+        return new GrpcTransport($host, $stubOpts, $channel);
     }
 
     /**
-     * Abstract the checking of the grpc extension for unit testing.
+     * Builds a RestTransport.
      *
-     * @codeCoverageIgnore
-     * @return bool
+     * @param string $serviceAddress
+     *        The address of the API remote host, for example "example.googleapis.com. May also
+     *        include the port, for example "example.googleapis.com:443"
+     * @param array $config
+     *        Config options used to construct the gRPC transport. Supported options are
+     *        'restConfigPath' (required) and 'httpHandler' (optional).
+     * @return RestTransport
+     * @throws ValidationException
+     * @throws \Exception
      */
-    protected static function getGrpcDependencyStatus()
+    public static function buildRestTransport($serviceAddress, $config)
     {
-        return extension_loaded('grpc');
+        self::validateNotNull($config, [
+            'restConfigPath',
+        ]);
+
+        $config += [
+            'httpHandler'  => null,
+        ];
+        $baseUri = self::formatRestBaseUri($serviceAddress);
+        $restConfigPath = $config['restConfigPath'];
+        $requestBuilder = new RequestBuilder($baseUri, $restConfigPath);
+        $httpHandler = $config['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'];
+        return new RestTransport($requestBuilder, $httpHandler);
     }
 
     /**
-     * Construct ssl channel credentials. This exists to allow overriding in unit tests.
-     *
-     * @return ChannelCredentials
+     * @param string $serviceAddress
+     * @return string
+     * @throws ValidationException
      */
-    protected static function createSslChannelCredentials()
+    private static function formatGrpcHost($serviceAddress)
     {
-        return ChannelCredentials::createSsl();
-    }
-
-    private static function defaultTransport()
-    {
-        return self::getGrpcDependencyStatus()
-            ? 'grpc'
-            : 'rest';
+        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
+        return "$addr:$port";
     }
 
     /**
-     * @param $serviceAddress
+     * @param string $serviceAddress
+     * @return string
+     * @throws ValidationException
+     */
+    private static function formatRestBaseUri($serviceAddress)
+    {
+        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
+        return $addr;
+    }
+
+    /**
+     * @param string $serviceAddress
      * @return array
      * @throws ValidationException
      */
-    private static function validateServiceAddress($serviceAddress)
+    private static function normalizeServiceAddress($serviceAddress)
     {
         $components = explode(':', $serviceAddress);
-        if (count($components) !== 2) {
-            throw new ValidationException(
-                'Invalid serviceAddress. Expected format "<address>:<port>", got ' . $serviceAddress);
+        if (count($components) == 2) {
+            // Port is included in service address
+            return [$components[0], $components[1]];
+        } elseif (count($components) == 1) {
+            // Port is not included - append default port
+            return [$components[0], self::GRPC_DEFAULT_PORT];
+        } else {
+            throw new ValidationException("Invalid serviceAddress: $serviceAddress");
         }
-        return $components;
     }
 }
