@@ -33,14 +33,16 @@
 namespace Google\ApiCore\Transport;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
+use Google\ApiCore\GapicHelpersTrait;
 use Google\ApiCore\ServerStream;
+use Google\ApiCore\ValidationException;
+use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
 use Grpc\BaseStub;
-use Grpc\Channel;
+use Grpc\ChannelCredentials;
 use GuzzleHttp\Promise\Promise;
 
 /**
@@ -48,22 +50,39 @@ use GuzzleHttp\Promise\Promise;
  */
 class GrpcTransport extends BaseStub implements TransportInterface
 {
+    use ValidationTrait;
+    use GapicHelpersTrait;
+
     /**
-     * @param string $host The domain name and port of the API remote host.
-     * @param array $stubOpts An array of options used when creating a BaseStub.
-     * @param Channel $channel An already instantiated channel to be used during
-     *        creation of the BaseStub.
+     * Builds a GrpcTransport.
+     *
+     * @param string $serviceAddress
+     *        The address of the API remote host, for example "example.googleapis.com. May also
+     *        include the port, for example "example.googleapis.com:443"
+     * @param array $config
+     *        Config options used to construct the gRPC transport. Supported options are 'stubOpts'
+     *        and 'channel'.
+     * @return GrpcTransport
+     * @throws ValidationException
+     * @throws \Exception
      */
-    public function __construct(
-        $host,
-        array $stubOpts,
-        Channel $channel = null
-    ) {
-        parent::__construct(
-            $host,
-            $stubOpts,
-            $channel
-        );
+    public static function build($serviceAddress, $config = [])
+    {
+        self::validateGrpcSupport();
+        $config += [
+            'stubOpts' => [],
+            'channel'  => null,
+        ];
+        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
+        $host = "$addr:$port";
+        $stubOpts = $config['stubOpts'];
+        // Set the required 'credentials' key in stubOpts if it is not already set. Use
+        // array_key_exists because null is a valid value.
+        if (!array_key_exists('credentials', $stubOpts)) {
+            $stubOpts['credentials'] = ChannelCredentials::createSsl();
+        }
+        $channel = $config['channel'];
+        return new GrpcTransport($host, $stubOpts, $channel);
     }
 
     /**

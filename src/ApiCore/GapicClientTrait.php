@@ -36,6 +36,8 @@ use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\AuthWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
+use Google\ApiCore\Transport\GrpcTransport;
+use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
@@ -49,6 +51,7 @@ trait GapicClientTrait
 {
     use ArrayTrait;
     use ValidationTrait;
+    use GapicHelpersTrait;
 
     protected $transport;
     private static $gapicVersion;
@@ -172,6 +175,7 @@ trait GapicClientTrait
 
     /**
      * @param array $options
+     * @throws ValidationException
      */
     private function setServiceNameAndDescriptors($options)
     {
@@ -179,6 +183,7 @@ trait GapicClientTrait
             'serviceName',
             'descriptorsConfigPath',
         ]);
+        self::validateFileExists($options['descriptorsConfigPath']);
 
         $serviceName = $options['serviceName'];
         $descriptors = require($options['descriptorsConfigPath']);
@@ -270,6 +275,7 @@ trait GapicClientTrait
     /**
      * @param array $options
      * @throws ValidationException
+     * @throws \Exception
      */
     private function setTransport($options)
     {
@@ -290,10 +296,17 @@ trait GapicClientTrait
                 : [];
             switch ($transport) {
                 case 'grpc':
-                    $this->transport = TransportFactory::buildGrpcTransport($serviceAddress, $configForSpecifiedTransport);
+                    self::validateGrpcSupport();
+                    $this->transport = GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
                     break;
                 case 'rest':
-                    $this->transport = TransportFactory::buildRestTransport($serviceAddress, $configForSpecifiedTransport);
+                    if (!isset($configForSpecifiedTransport['restConfigPath'])) {
+                        throw new ValidationException(
+                            "The 'restConfigPath' config is required for 'rest' transport."
+                        );
+                    }
+                    $restConfigPath = $configForSpecifiedTransport['restConfigPath'];
+                    $this->transport = RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
                     break;
                 default:
                     throw new ValidationException(
@@ -308,14 +321,6 @@ trait GapicClientTrait
                 print_r($transport, true)
             );
         }
-    }
-
-    /**
-     * @return bool
-     */
-    private static function getGrpcDependencyStatus()
-    {
-        return extension_loaded('grpc');
     }
 
     /**

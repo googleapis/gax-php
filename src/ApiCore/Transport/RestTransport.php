@@ -35,7 +35,11 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
+use Google\ApiCore\GapicHelpersTrait;
 use Google\ApiCore\RequestBuilder;
+use Google\ApiCore\ValidationException;
+use Google\ApiCore\ValidationTrait;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -44,6 +48,9 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestTransport implements TransportInterface
 {
+    use ValidationTrait;
+    use GapicHelpersTrait;
+
     private $requestBuilder;
     private $httpHandler;
 
@@ -58,6 +65,31 @@ class RestTransport implements TransportInterface
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->httpHandler = $httpHandler;
+    }
+
+    /**
+     * Builds a RestTransport.
+     *
+     * @param string $serviceAddress
+     *        The address of the API remote host, for example "example.googleapis.com".
+     * @param string $restConfigPath
+     *        Path to rest config file.
+     * @param array $config
+     *        Config options used to construct the gRPC transport. Supported options are
+     *        'httpHandler'.
+     * @return RestTransport
+     * @throws ValidationException
+     * @throws \Exception
+     */
+    public static function build($serviceAddress, $restConfigPath, $config)
+    {
+        $config += [
+            'httpHandler'  => null,
+        ];
+        list($baseUri, $port) = self::normalizeServiceAddress($serviceAddress);
+        $requestBuilder = new RequestBuilder($baseUri, $restConfigPath);
+        $httpHandler = $config['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'];
+        return new RestTransport($requestBuilder, $httpHandler);
     }
 
     /**

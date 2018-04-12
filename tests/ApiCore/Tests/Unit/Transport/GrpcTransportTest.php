@@ -35,6 +35,7 @@ namespace Google\ApiCore\Tests\Unit\Transport;
 use Google\ApiCore\Call;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
+use Google\ApiCore\Transport\GrpcTransport;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBType;
@@ -365,5 +366,62 @@ class GrpcTransportTest extends TestCase
         foreach ($stream->closeWriteAndReadAll() as $actualResponse) {
             // for loop to trigger generator and API exception
         }
+    }
+
+    /**
+     * @dataProvider buildDataGrpc
+     */
+    public function testBuildGrpc($serviceAddress, $config, $expectedTransport)
+    {
+        $actualTransport = GrpcTransport::build($serviceAddress, $config);
+        $this->assertEquals($expectedTransport, $actualTransport);
+    }
+
+    public function buildDataGrpc()
+    {
+        $uri = "address.com";
+        $serviceAddress = "$uri:447";
+        $serviceAddressDefaultPort = "$uri:443";
+        return [
+            [
+                $serviceAddress,
+                [],
+                new GrpcTransport(
+                    $serviceAddress,
+                    [
+                        'credentials' => null,
+                    ],
+                    null),
+            ],
+            [
+                $uri,
+                [],
+                new GrpcTransport(
+                    $serviceAddressDefaultPort,
+                    [
+                        'credentials' => null,
+                    ],
+                    null),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider buildInvalidData
+     * @expectedException \Google\ApiCore\ValidationException
+     */
+    public function testBuildInvalid($serviceAddress, $args)
+    {
+        GrpcTransport::build($serviceAddress, $args);
+    }
+
+    public function buildInvalidData()
+    {
+        return [
+            [
+                "addresswithtoo:many:segments",
+                [],
+            ],
+        ];
     }
 }

@@ -235,7 +235,8 @@ class GapicClientTraitTest extends TestCase
             [
                 [
                     'serviceName' => $serviceName,
-                    'clientConfigPath' => $clientConfigFile
+                    'clientConfig' => $clientConfigFile,
+                    'disableRetries' => false,
                 ],
                 $retrySettingsFromFile,
             ],
@@ -243,7 +244,7 @@ class GapicClientTraitTest extends TestCase
                 [
                     'serviceName' => $serviceName,
                     'clientConfig' => $manualClientConfig,
-                    'clientConfigPath' => $clientConfigFile,
+                    'disableRetries' => false,
                 ],
                 $manualLoadedRetrySettings,
             ],
@@ -251,7 +252,6 @@ class GapicClientTraitTest extends TestCase
                 [
                     'serviceName' => $serviceName,
                     'clientConfig' => $manualClientConfig,
-                    'clientConfigPath' => $clientConfigFile,
                     'disableRetries' => true,
                 ],
                 $manualLoadedRetrySettingsDisabled,
@@ -283,13 +283,10 @@ class GapicClientTraitTest extends TestCase
         return [
             [[], ["gl-php/$phpVersion gapic/ gax/$apiCoreVersion grpc/$grpcVersion"]],
             [[
-                'phpVersion' => 'testPhpVersion',
                 'libName' => 'testLibName',
                 'libVersion' => 'testLibVersion',
                 'gapicVersion' => 'testGapicVersion',
-                'apiCoreVersion' => 'testApiCoreVersion',
-                'grpcVersion' => 'testGrpcVersion',
-            ], ['gl-php/testPhpVersion testLibName/testLibVersion gapic/testGapicVersion gax/testApiCoreVersion grpc/testGrpcVersion']],
+            ], ["gl-php/$phpVersion testLibName/testLibVersion gapic/testGapicVersion gax/$apiCoreVersion grpc/$grpcVersion"]],
         ];
     }
 
@@ -299,9 +296,6 @@ class GapicClientTraitTest extends TestCase
     public function testSetTransport($options, $expectedTransportClass)
     {
         $client = new GapicClientTraitStub();
-        $client->call('validateOptions', [
-            $options
-        ]);
         $client->call('setTransport', [
             $options
         ]);
@@ -317,18 +311,19 @@ class GapicClientTraitTest extends TestCase
             ? GrpcTransport::class
             : RestTransport::class;
         $minimalOptions = [
-            'serviceName' => 'servicename',
             'serviceAddress' => 'address:443',
-            'scopes' => [],
-            'descriptorsConfigPath' => __DIR__ . '/testdata/test_service_descriptor_config.php',
-            'clientConfigPath' => __DIR__ . '/testdata/test_service_client_config.json',
-            'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+            'transport' => null,
+            'transportConfig' => [
+                'rest' => [
+                    'restConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+                ],
+            ],
         ];
         return [
             [$minimalOptions, $defaultTransportClass],
-            [$minimalOptions + ['transport' => 'grpc'], GrpcTransport::class],
-            [$minimalOptions + ['transport' => 'rest'], RestTransport::class],
-            [$minimalOptions + ['transport' => $mockTransport], get_class($mockTransport)],
+            [['transport' => 'grpc'] + $minimalOptions, GrpcTransport::class],
+            [['transport' => 'rest'] + $minimalOptions, RestTransport::class],
+            [['transport' => $mockTransport] + $minimalOptions, get_class($mockTransport)],
         ];
     }
 
@@ -339,9 +334,6 @@ class GapicClientTraitTest extends TestCase
     public function testSetTransportInvalid($options)
     {
         $client = new GapicClientTraitStub();
-        $client->call('validateOptions', [
-            $options
-        ]);
         $client->call('setTransport', [
             $options
         ]);
@@ -351,12 +343,13 @@ class GapicClientTraitTest extends TestCase
     {
         $minimalOptions = [
             'serviceAddress' => 'address:443',
-            'scopes' => [],
-            'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+            'transport' => null,
+            'transportConfig' => null,
         ];
         return [
-            [$minimalOptions + ['transport' => 'weirdstring']],
-            [$minimalOptions + ['transport' => new \stdClass()]],
+            [[]],
+            [['transport' => 'weirdstring'] + $minimalOptions],
+            [['transport' => new \stdClass()] + $minimalOptions],
         ];
     }
 }
@@ -364,6 +357,16 @@ class GapicClientTraitTest extends TestCase
 class GapicClientTraitStub
 {
     use GapicClientTrait;
+
+    private static function getClientDefaults()
+    {
+        return [
+            'serviceAddress' => 'test.address.com:443',
+            'clientConfig' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+            'disableRetries' => false,
+
+        ];
+    }
 
     public function call($fn, array $args = [])
     {
