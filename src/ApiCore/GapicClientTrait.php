@@ -177,7 +177,7 @@ trait GapicClientTrait
      * @param array $options
      * @throws ValidationException
      */
-    private function setServiceNameAndDescriptors($options)
+    private function setServiceNameAndDescriptors(array $options)
     {
         $this->validateNotNull($options, [
             'serviceName',
@@ -196,7 +196,7 @@ trait GapicClientTrait
      * @param array $options
      * @throws ValidationException
      */
-    private function setRetrySettings($options)
+    private function setRetrySettings(array $options)
     {
         $this->validateNotNull($options, [
             'serviceName',
@@ -230,7 +230,7 @@ trait GapicClientTrait
     /**
      * @param array $options
      */
-    private function setAgentHeaderDescriptor($options)
+    private function setAgentHeaderDescriptor(array $options)
     {
         $gapicVersion = isset($options['gapicVersion'])
             ? $options['gapicVersion']
@@ -247,7 +247,7 @@ trait GapicClientTrait
      * @throws ValidationException
      * @throws \Exception
      */
-    private function setAuthWrapper($options)
+    private function setAuthWrapper(array $options)
     {
         $this->validate($options, [
             'auth',
@@ -277,7 +277,7 @@ trait GapicClientTrait
      * @throws ValidationException
      * @throws \Exception
      */
-    private function setTransport($options)
+    private function setTransport(array $options)
     {
         $this->validate($options, [
             'serviceAddress',

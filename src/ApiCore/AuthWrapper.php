@@ -57,6 +57,7 @@ class AuthWrapper
      * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
      *        specifically for authentication. Should match a signature of
      *        `function (RequestInterface $request, array $options) : ResponseInterface`.
+     * @throws \Exception
      */
     public function __construct(FetchAuthTokenInterface $fetchAuthTokenInterface, callable $authHttpHandler = null)
     {
