@@ -49,21 +49,21 @@ class AuthWrapper
 {
     use ValidationTrait;
 
-    private $fetchAuthTokenInterface;
+    private $credentialsFetcher;
     private $authHttpHandler;
 
     /**
      * AuthWrapper constructor.
-     * @param FetchAuthTokenInterface $fetchAuthTokenInterface A credentials loader
+     * @param FetchAuthTokenInterface $credentialsFetcher A credentials loader
      *        used to fetch access tokens.
      * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
      *        specifically for authentication. Should match a signature of
      *        `function (RequestInterface $request, array $options) : ResponseInterface`.
      * @throws ValidationException
      */
-    public function __construct(FetchAuthTokenInterface $fetchAuthTokenInterface, callable $authHttpHandler = null)
+    public function __construct(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler = null)
     {
-        $this->fetchAuthTokenInterface = $fetchAuthTokenInterface;
+        $this->credentialsFetcher = $credentialsFetcher;
         $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
     }
 
@@ -119,7 +119,7 @@ class AuthWrapper
      */
     public function getBearerString()
     {
-        return 'Bearer ' . self::getToken($this->fetchAuthTokenInterface, $this->authHttpHandler);
+        return 'Bearer ' . self::getToken($this->credentialsFetcher, $this->authHttpHandler);
     }
 
     /**
@@ -127,14 +127,14 @@ class AuthWrapper
      */
     public function getAuthorizationHeaderCallback()
     {
-        $fetchAuthTokenInterface = $this->fetchAuthTokenInterface;
+        $credentialsFetcher = $this->credentialsFetcher;
         $authHttpHandler = $this->authHttpHandler;
 
         // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
-        return function () use ($fetchAuthTokenInterface, $authHttpHandler) {
-            return ['authorization' => ['Bearer ' . self::getToken($fetchAuthTokenInterface, $authHttpHandler)]];
+        return function () use ($credentialsFetcher, $authHttpHandler) {
+            return ['authorization' => ['Bearer ' . self::getToken($credentialsFetcher, $authHttpHandler)]];
         };
     }
 
@@ -177,11 +177,11 @@ class AuthWrapper
         }
     }
 
-    private static function getToken($fetchAuthTokenInterface, $authHttpHandler)
+    private static function getToken($credentialsFetcher, $authHttpHandler)
     {
-        $token = $fetchAuthTokenInterface->getLastReceivedToken();
+        $token = $credentialsFetcher->getLastReceivedToken();
         if (self::isExpired($token)) {
-            $token = $fetchAuthTokenInterface->fetchAuthToken($authHttpHandler);
+            $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
             if (!self::isValid($token)) {
                 return '';
             }
