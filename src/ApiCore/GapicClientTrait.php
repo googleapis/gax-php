@@ -37,9 +37,6 @@ use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\AuthWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Transport\TransportInterface;
-use Google\Auth\Cache\MemoryCacheItemPool;
-use Google\Auth\FetchAuthTokenCache;
-use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -165,6 +162,7 @@ trait GapicClientTrait
      *     @type string $gapicVersion
      *           The code generator version of the GAPIC library.
      * }
+     * @throws ValidationException
      */
     protected function setClientOptions(array $options)
     {
@@ -202,10 +200,7 @@ trait GapicClientTrait
             $authHttpHandler = isset($options['authHttpHandler']) ? $options['authHttpHandler'] : null;
             $this->authWrapper = new AuthWrapper($options['credentialsLoader'], $authHttpHandler);
         } else {
-            $this->validateNotNull($options, [
-                'scopes'
-            ]);
-            $this->authWrapper = AuthWrapper::build($options['scopes'], $options);
+            $this->authWrapper = AuthWrapper::build($options);
         }
 
         $this->transport = $transport instanceof TransportInterface

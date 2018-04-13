@@ -31,10 +31,14 @@
  */
 namespace Google\ApiCore;
 
+use DomainException;
+use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\HttpHandler\Guzzle5HttpHandler;
+use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -55,55 +59,57 @@ class AuthWrapper
      * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
      *        specifically for authentication. Should match a signature of
      *        `function (RequestInterface $request, array $options) : ResponseInterface`.
+     * @throws ValidationException
      */
     public function __construct(FetchAuthTokenInterface $fetchAuthTokenInterface, callable $authHttpHandler = null)
     {
         $this->fetchAuthTokenInterface = $fetchAuthTokenInterface;
-        $this->authHttpHandler = $authHttpHandler ?: HttpHandlerFactory::build();
+        $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
     }
 
     /**
-     * @param array $scopes A string array of scopes to use when acquiring credentials.
      * @param array $args {
      *     An array of optional arguments.
      *
+     *     @type string[] $scopes
+     *           A string array of scopes to use when acquiring credentials.
      *     @type callable $authHttpHandler
-     *           Optional. A handler used to deliver PSR-7 requests specifically
+     *           A handler used to deliver PSR-7 requests specifically
      *           for authentication. Should match a signature of
      *           `function (RequestInterface $request, array $options) : ResponseInterface`.
      *     @type bool $enableCaching
-     *           Optional. Enable caching of access tokens. Defaults to true.
+     *           Enable caching of access tokens. Defaults to true.
      *     @type CacheItemPoolInterface $authCache
-     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *           A cache for storing access tokens. Defaults to a simple in memory implementation.
      *     @type array $authCacheOptions
-     *           Optional. Cache configuration options.
+     *           Cache configuration options.
      * }
      * @return AuthWrapper
-     * @throws \Exception
+     * @throws ValidationException
      */
-    public static function build(array $scopes, array $args)
+    public static function build(array $args)
     {
         $args += [
+            'scopes'            => null,
+            'authHttpHandler'   => null,
             'enableCaching'     => true,
             'authCache'         => null,
             'authCacheOptions'  => null,
-            'authHttpHandler'   => null,
         ];
-        $authHttpHandler = $args['authHttpHandler'] ?: HttpHandlerFactory::build();
-
-        $credentialsLoader = ApplicationDefaultCredentials::getCredentials(
-            $scopes,
-            $authHttpHandler
-        );
-
+        $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
+        $authCacheOptions = $args['authCacheOptions'];
         if ($args['enableCaching']) {
             $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
-            $credentialsLoader = new FetchAuthTokenCache(
-                $credentialsLoader,
-                $args['authCacheOptions'],
-                $authCache
-            );
+        } else {
+            $authCache = null;
         }
+
+        $credentialsLoader = self::buildApplicationDefaultCredentials(
+            $args['scopes'],
+            $authHttpHandler,
+            $authCacheOptions,
+            $authCache
+        );
 
         return new AuthWrapper($credentialsLoader, $authHttpHandler);
     }
@@ -130,6 +136,41 @@ class AuthWrapper
         return function () use ($fetchAuthTokenInterface, $authHttpHandler) {
             return ['authorization' => ['Bearer ' . self::getToken($fetchAuthTokenInterface, $authHttpHandler)]];
         };
+    }
+
+    /**
+     * @return Guzzle5HttpHandler|Guzzle6HttpHandler
+     * @throws ValidationException
+     */
+    private static function buildHttpHandlerFactory()
+    {
+        try {
+            return HttpHandlerFactory::build();
+        } catch (Exception $ex) {
+            throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
+        }
+    }
+
+    /**
+     * @param $scopes
+     * @param $authHttpHandler
+     * @param $authCacheOptions
+     * @param $authCache
+     * @return \Google\Auth\CredentialsLoader
+     * @throws ValidationException
+     */
+    private static function buildApplicationDefaultCredentials($scopes, $authHttpHandler, $authCacheOptions, $authCache)
+    {
+        try {
+            return ApplicationDefaultCredentials::getCredentials(
+                $scopes,
+                $authHttpHandler,
+                $authCacheOptions,
+                $authCache
+            );
+        } catch (DomainException $ex) {
+            throw new ValidationException("Could not construct ApplicationDefaultCredentials", $ex->getCode(), $ex);
+        }
     }
 
     private static function getToken($fetchAuthTokenInterface, $authHttpHandler)

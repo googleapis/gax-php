@@ -47,7 +47,7 @@ class AuthWrapperMiddleware
 
     public function __construct(
         callable $nextHandler,
-        $authWrapper
+        AuthWrapper $authWrapper
     ) {
         $this->nextHandler = $nextHandler;
         $this->authWrapper = $authWrapper;
