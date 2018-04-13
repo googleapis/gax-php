@@ -35,7 +35,7 @@ use DomainException;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
-use Google\Auth\FetchAuthTokenCache;
+use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
@@ -87,7 +87,7 @@ class AuthWrapper
      * @return AuthWrapper
      * @throws ValidationException
      */
-    public static function build(array $args)
+    public static function build(array $args = [])
     {
         $args += [
             'scopes'            => null,
@@ -152,15 +152,19 @@ class AuthWrapper
     }
 
     /**
-     * @param $scopes
-     * @param $authHttpHandler
-     * @param $authCacheOptions
-     * @param $authCache
-     * @return \Google\Auth\CredentialsLoader
+     * @param array $scopes
+     * @param callable $authHttpHandler
+     * @param array $authCacheOptions
+     * @param CacheItemPoolInterface $authCache
+     * @return CredentialsLoader
      * @throws ValidationException
      */
-    private static function buildApplicationDefaultCredentials($scopes, $authHttpHandler, $authCacheOptions, $authCache)
-    {
+    private static function buildApplicationDefaultCredentials(
+        array $scopes = null,
+        callable $authHttpHandler = null,
+        array $authCacheOptions = null,
+        CacheItemPoolInterface $authCache = null
+    ) {
         try {
             return ApplicationDefaultCredentials::getCredentials(
                 $scopes,
