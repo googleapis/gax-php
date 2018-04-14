@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeaderDescriptor;
+use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
@@ -73,13 +74,14 @@ class GapicClientTraitTest extends TestCase
             'new-header' => ['this-should-be-used'],
         ];
         $transport = $this->getMock(TransportInterface::class);
+        $authWrapper = AuthWrapper::build([]);
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->with(
                 $this->isInstanceOf(Call::class),
                 $this->equalTo([
                     'headers' => $expectedHeaders,
-                    'authWrapper' => null,
+                    'authWrapper' => $authWrapper,
                 ])
             );
         $client = new GapicClientTraitStub();
@@ -91,6 +93,7 @@ class GapicClientTraitTest extends TestCase
             ]
         );
         $client->set('transport', $transport);
+        $client->set('authWrapper', $authWrapper);
         $client->call('startCall', [
             'method',
             'decodeType',
@@ -114,8 +117,10 @@ class GapicClientTraitTest extends TestCase
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->will($this->returnValue($expectedPromise));
+        $authWrapper = AuthWrapper::build([]);
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
+        $client->set('authWrapper', $authWrapper);
         $client->set('agentHeaderDescriptor', $agentHeaderDescriptor);
         $client->set('retrySettings', ['method' => $retrySettings]);
         $message = new MockRequest();

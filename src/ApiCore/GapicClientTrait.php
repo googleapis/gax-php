@@ -160,7 +160,6 @@ trait GapicClientTrait
      *           The code generator version of the GAPIC library.
      * }
      * @throws ValidationException
-     * @throws \Exception
      */
     protected function setClientOptions(array $options)
     {
@@ -257,7 +256,7 @@ trait GapicClientTrait
         $authConfig = $options['authConfig'] ?: [];
 
         if (is_null($auth)) {
-            $this->authWrapper = AuthWrapper::from($authConfig);
+            $this->authWrapper = AuthWrapper::build($authConfig);
         } elseif (is_string($auth) || is_array($auth)) {
             $this->authWrapper = AuthWrapper::fromKeyFile($auth, $authConfig);
         } elseif ($auth instanceof FetchAuthTokenInterface) {
@@ -266,7 +265,7 @@ trait GapicClientTrait
             $this->authWrapper = $auth;
         } else {
             throw new ValidationException(
-                "Unexpected value in \$auth option, got: " .
+                'Unexpected value in $auth option, got: ' .
                 print_r($auth, true)
             );
         }
