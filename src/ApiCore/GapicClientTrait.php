@@ -213,23 +213,38 @@ trait GapicClientTrait
 
         $auth = $options['auth'];
         $authConfig = $options['authConfig'] ?: [];
+        $this->authWrapper = $this->createAuthWrapper($auth, $authConfig);
 
+        $this->transport = $transport instanceof TransportInterface
+            ? $transport
+            : $this->createTransport($this->serviceAddress, $transport, $transportConfig);
+    }
+
+    /**
+     * @param mixed $auth
+     * @param array $authConfig
+     * @return AuthWrapper
+     * @throws ValidationException
+     */
+    private function createAuthWrapper($auth, array $authConfig)
+    {
         if (is_null($auth)) {
-            $this->authWrapper = AuthWrapper::build($authConfig);
+            return AuthWrapper::build($authConfig);
         } elseif (is_string($auth) || is_array($auth)) {
-            $this->authWrapper = AuthWrapper::fromKeyFile($auth, $authConfig);
+            return AuthWrapper::fromKeyFile($auth, $authConfig);
         } elseif ($auth instanceof FetchAuthTokenInterface) {
-            $this->authWrapper = new AuthWrapper($auth, $options['authHttpHandler']);
+            $authHttpHandler = isset($authConfig['authHttpHandler'])
+                ? $authConfig['authHttpHandler']
+                : null;
+            return new AuthWrapper($auth, $authHttpHandler);
         } elseif ($auth instanceof AuthWrapper) {
-            $this->authWrapper = $auth;
+            return $auth;
         } else {
             throw new ValidationException(
                 'Unexpected value in $auth option, got: ' .
                 print_r($auth, true)
             );
         }
-
-        $this->transport = $this->createTransport($this->serviceAddress, $transport, $transportConfig);
     }
 
     /**
@@ -242,36 +257,33 @@ trait GapicClientTrait
      */
     private function createTransport($serviceAddress, $transport, array $transportConfig)
     {
-        if ($transport instanceof TransportInterface) {
-            return $transport;
-        } elseif (is_string($transport)) {
-            $configForSpecifiedTransport = isset($transportConfig[$transport])
-                ? $transportConfig[$transport]
-                : [];
-            switch ($transport) {
-                case 'grpc':
-                    self::validateGrpcSupport();
-                    return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
-                case 'rest':
-                    if (!isset($configForSpecifiedTransport['restConfigPath'])) {
-                        throw new ValidationException(
-                            "The 'restConfigPath' config is required for 'rest' transport."
-                        );
-                    }
-                    $restConfigPath = $configForSpecifiedTransport['restConfigPath'];
-                    return RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
-                default:
-                    throw new ValidationException(
-                        "Unexpected 'transport' option: $transport. " .
-                        "Supported values: ['grpc', 'rest']"
-                    );
-            }
-        } else {
+        if (!is_string($transport)) {
             throw new ValidationException(
                 "'transport' must be either a string " .
                 "or an instance of TransportInterface, instead got:" .
                 print_r($transport, true)
             );
+        }
+        $configForSpecifiedTransport = isset($transportConfig[$transport])
+            ? $transportConfig[$transport]
+            : [];
+        switch ($transport) {
+            case 'grpc':
+                self::validateGrpcSupport();
+                return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
+            case 'rest':
+                if (!isset($configForSpecifiedTransport['restConfigPath'])) {
+                    throw new ValidationException(
+                        "The 'restConfigPath' config is required for 'rest' transport."
+                    );
+                }
+                $restConfigPath = $configForSpecifiedTransport['restConfigPath'];
+                return RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
+            default:
+                throw new ValidationException(
+                    "Unexpected 'transport' option: $transport. " .
+                    "Supported values: ['grpc', 'rest']"
+                );
         }
     }
 
