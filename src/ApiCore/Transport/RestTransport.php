@@ -36,7 +36,6 @@ use Google\ApiCore\ApiStatus;
 use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\RequestBuilder;
-use Google\ApiCore\Serializer;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -168,41 +167,11 @@ class RestTransport implements TransportInterface
         if ($error = json_decode($body, true)['error']) {
             // Overwrite the HTTP Status Code with the RPC code if it exists.
             $basicMessage = $error['message'];
-            $status = $error['status'];
+            $code = ApiStatus::rpcCodeFromStatus($error['status']);
             $metadata = isset($error['details']) ? $error['details'] : null;
-        } else {
-            // Only map HTTP status codes from Google\Rpc\Code which do not map
-            // to multiple gRPC codes (e.g. excluding 400, 409, and 500).
-            $httpToRpcCodes = [
-                401 => ApiStatus::UNAUTHENTICATED,
-                403 => ApiStatus::PERMISSION_DENIED,
-                404 => ApiStatus::NOT_FOUND,
-                429 => ApiStatus::RESOURCE_EXHAUSTED,
-                499 => ApiStatus::CANCELLED,
-                501 => ApiStatus::UNIMPLEMENTED,
-                503 => ApiStatus::UNAVAILABLE,
-                504 => ApiStatus::DEADLINE_EXCEEDED,
-            ];
-            $status = isset($httpToRpcCodes[$res->getStatusCode()])
-                ? $httpToRpcCodes[$res->getStatusCode()]
-                : ApiStatus::UNKNOWN;
-            $basicMessage = $body;
-            $metadata = null;
+            return ApiException::createFromApiResponse($basicMessage, $code, $metadata);
         }
-
-        $code = ApiStatus::rpcCodeFromStatus($status);
-        $messageData = [
-            'message' => $basicMessage,
-            'status' => $status,
-            'code' => $code,
-            'details' => Serializer::decodeMetadata($metadata)
-        ];
-
-        $message = json_encode($messageData, JSON_PRETTY_PRINT);
-
-        return new ApiException($message, $code, $status, [
-            'metadata' => $metadata,
-            'basicMessage' => $basicMessage,
-        ]);
+        $code = ApiStatus::rpcCodeFromHttpStatusCode($res->getStatusCode());
+        return ApiException::createFromApiResponse($body, $code);
     }
 }
