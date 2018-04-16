@@ -70,6 +70,8 @@ class AuthWrapper
     }
 
     /**
+     * Factory method to create an AuthWrapper from an array of options.
+     *
      * @param array $args {
      *     An array of optional arguments.
      *
@@ -117,7 +119,7 @@ class AuthWrapper
     }
 
     /**
-     * Factory method to create an AuthWrapper from an authConfig array.
+     * Factory method to create an AuthWrapper from a credentials keyfile and an array of options.
      *
      * @param string|array $keyFile
      *     Credentials to be used. Accepts either a path to a credentials file, or a decoded

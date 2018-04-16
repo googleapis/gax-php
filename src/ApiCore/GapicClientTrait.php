@@ -94,27 +94,6 @@ trait GapicClientTrait
     }
 
     /**
-     * Classes that use this trait are expected to implement their own getClientDefaults method,
-     * which will be used via late static binding. The following settings are expected to be
-     * provided by the client:
-     * - serviceName
-     * - descriptorsConfigPath
-     * - clientConfig
-     * - transportConfig['rest']['restConfigPath']
-     * @return array
-     */
-    private static function getClientDefaults()
-    {
-        return [
-            'disableRetries' => false,
-            'auth' => null,
-            'authConfig' => null,
-            'transport' => null,
-            'transportConfig' => null,
-        ];
-    }
-
-    /**
      * Configures the GAPIC client based on an array of options.
      *
      * @param array $options {
@@ -156,7 +135,7 @@ trait GapicClientTrait
      *               'grpc' => [...],
      *               'rest' => [...]
      *           ];
-     *           See the GapicClientTrait::buildGrpcTransport and GapicClientTrait::buildRestTransport
+     *           See the GrpcTransport::build and RestTransport::build
      *           methods for the supported options.
      * @type string $versionFile
      *           The path to a file which contains the current version of the client.
@@ -175,8 +154,6 @@ trait GapicClientTrait
      */
     protected function setClientOptions(array $options)
     {
-        $options += self::getClientDefaults();
-
         $this->validateNotNull($options, [
             'serviceAddress',
             'serviceName',

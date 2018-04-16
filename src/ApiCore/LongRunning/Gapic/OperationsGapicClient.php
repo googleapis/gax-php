@@ -189,7 +189,7 @@ class OperationsGapicClient
      */
     public function __construct($options = [])
     {
-        $this->setClientOptions($options);
+        $this->setClientOptions($options + self::getClientDefaults());
     }
 
     /**
