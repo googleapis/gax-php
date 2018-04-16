@@ -226,7 +226,7 @@ class GapicClientTraitTest extends TestCase
     {
         $client = new GapicClientTraitStub();
         $client->call('setClientOptions', [
-            $options
+            $options + GapicClientTraitStub::getClientDefaults(),
         ]);
         foreach ($expectedProperties as $propertyName => $expectedValue) {
             $actualValue = $client->get($propertyName);
@@ -239,7 +239,6 @@ class GapicClientTraitTest extends TestCase
         $expectedProperties = [
             'serviceName' => 'test.interface.v1.api',
             'agentHeaderDescriptor' => new AgentHeaderDescriptor([]),
-
         ];
         return [
             [[], $expectedProperties],
@@ -251,7 +250,7 @@ class GapicClientTraitStub
 {
     use GapicClientTrait;
 
-    private static function getClientDefaults()
+    public static function getClientDefaults()
     {
         return [
             'serviceAddress' => 'test.address.com:443',
