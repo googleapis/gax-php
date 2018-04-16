@@ -165,51 +165,26 @@ trait GapicClientTrait
     {
         $options += self::getClientDefaults();
 
-        $this->setServiceNameAndDescriptors($options);
-        $this->setRetrySettings($options);
-        $this->setAgentHeaderDescriptor($options);
-        $this->setAuthWrapper($options);
-        $this->setTransport($options);
-    }
-
-    /**
-     * @param array $options
-     * @throws ValidationException
-     */
-    private function setServiceNameAndDescriptors(array $options)
-    {
         $this->validateNotNull($options, [
             'serviceName',
             'descriptorsConfigPath',
-        ]);
-        self::validateFileExists($options['descriptorsConfigPath']);
-
-        $serviceName = $options['serviceName'];
-        $descriptors = require($options['descriptorsConfigPath']);
-
-        $this->serviceName = $serviceName;
-        $this->descriptors = $descriptors['interfaces'][$serviceName];
-    }
-
-    /**
-     * @param array $options
-     * @throws ValidationException
-     */
-    private function setRetrySettings(array $options)
-    {
-        $this->validateNotNull($options, [
-            'serviceName',
             'clientConfig',
             'disableRetries',
+            'auth',
+            'authConfig',
+            'transport',
+            'transportConfig',
         ]);
 
+        $transport = $options['transport'] ?: self::defaultTransport();
+        $transportConfig = $options['transportConfig'] ?: [];
         $clientConfig = $options['clientConfig'];
         if (is_string($clientConfig)) {
             $clientConfig = json_decode(file_get_contents($clientConfig), true);
         }
-
+        $this->serviceName = $options['serviceName'];
         $retrySettings = RetrySettings::load(
-            $options['serviceName'],
+            $this->serviceName,
             $clientConfig,
             null
         );
@@ -222,15 +197,7 @@ trait GapicClientTrait
             }
             $retrySettings = $updatedRetrySettings;
         }
-
         $this->retrySettings = $retrySettings;
-    }
-
-    /**
-     * @param array $options
-     */
-    private function setAgentHeaderDescriptor(array $options)
-    {
         $gapicVersion = isset($options['gapicVersion'])
             ? $options['gapicVersion']
             : self::getGapicVersion($options);
@@ -239,19 +206,11 @@ trait GapicClientTrait
             'libVersion' => $this->pluck('libVersion', $options, false),
             'gapicVersion' => $gapicVersion,
         ]);
-    }
 
-    /**
-     * @param $options
-     * @throws ValidationException
-     * @throws \Exception
-     */
-    private function setAuthWrapper(array $options)
-    {
-        $this->validate($options, [
-            'auth',
-            'authConfig',
-        ]);
+        self::validateFileExists($options['descriptorsConfigPath']);
+        $descriptors = require($options['descriptorsConfigPath']);
+        $this->descriptors = $descriptors['interfaces'][$this->serviceName];
+
         $auth = $options['auth'];
         $authConfig = $options['authConfig'] ?: [];
 
@@ -269,26 +228,22 @@ trait GapicClientTrait
                 print_r($auth, true)
             );
         }
+
+        $this->transport = $this->createTransport($this->serviceAddress, $transport, $transportConfig);
     }
 
     /**
-     * @param array $options
+     * @param string $serviceAddress
+     * @param mixed $transport
+     * @param array $transportConfig
+     * @return TransportInterface
      * @throws ValidationException
      * @throws \Exception
      */
-    private function setTransport(array $options)
+    private function createTransport($serviceAddress, $transport, array $transportConfig)
     {
-        $this->validate($options, [
-            'serviceAddress',
-            'transport',
-            'transportConfig',
-        ]);
-        $serviceAddress = $options['serviceAddress'];
-        $transport = $options['transport'] ?: self::defaultTransport();
-        $transportConfig = $options['transportConfig'] ?: [];
-
         if ($transport instanceof TransportInterface) {
-            $this->transport = $transport;
+            return $transport;
         } elseif (is_string($transport)) {
             $configForSpecifiedTransport = isset($transportConfig[$transport])
                 ? $transportConfig[$transport]
@@ -296,8 +251,7 @@ trait GapicClientTrait
             switch ($transport) {
                 case 'grpc':
                     self::validateGrpcSupport();
-                    $this->transport = GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
-                    break;
+                    return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
                 case 'rest':
                     if (!isset($configForSpecifiedTransport['restConfigPath'])) {
                         throw new ValidationException(
@@ -305,8 +259,7 @@ trait GapicClientTrait
                         );
                     }
                     $restConfigPath = $configForSpecifiedTransport['restConfigPath'];
-                    $this->transport = RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
-                    break;
+                    return RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
                 default:
                     throw new ValidationException(
                         "Unexpected 'transport' option: $transport. " .
