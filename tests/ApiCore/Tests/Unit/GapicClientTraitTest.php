@@ -159,202 +159,90 @@ class GapicClientTraitTest extends TestCase
         ]));
     }
 
-    public function testSetServiceNameAndDescriptors()
-    {
-        $serviceName = 'test.interface.v1.api';
-        $descriptorsFile = __DIR__ . '/testdata/test_service_descriptor_config.php';
-        $options = [
-            'serviceName' => $serviceName,
-            'descriptorsConfigPath' => $descriptorsFile,
-        ];
-
-        $client = new GapicClientTraitStub();
-        $client->call('setServiceNameAndDescriptors', [
-            $options
-        ]);
-
-        $this->assertSame($serviceName, $client->get('serviceName'));
-        $expectedDescriptors = require $descriptorsFile;
-        $this->assertSame($expectedDescriptors['interfaces'][$serviceName], $client->get('descriptors'));
-    }
-
     /**
-     * @dataProvider setRetrySettingsDataProvider
+     * @dataProvider createTransportData
      */
-    public function testSetRetrySettings($options, $expectedRetrySettings)
+    public function testCreateTransport($serviceAddress, $transport, $transportConfig, $expectedTransportClass)
     {
         $client = new GapicClientTraitStub();
-        $client->call('setRetrySettings', [
-            $options
+        $transport = $client->call('createTransport', [
+            $serviceAddress,
+            $transport,
+            $transportConfig
         ]);
 
-        $this->assertEquals($expectedRetrySettings, $client->get('retrySettings'));
-    }
-
-    public function setRetrySettingsDataProvider()
-    {
-        $serviceName = 'test.interface.v1.api';
-        $clientConfigFile = __DIR__ . '/testdata/test_service_client_config.json';
-
-        $manualClientConfig = [
-            "interfaces" => [
-                "test.interface.v1.api" => [
-                    "retry_codes" => [
-                        "idempotent" => [
-                            "DEADLINE_EXCEEDED",
-                            "UNAVAILABLE"
-                        ]
-                    ],
-                    "retry_params" => [
-                        "default" => [
-                            "initial_retry_delay_millis" => 100,
-                            "retry_delay_multiplier" => 1.2,
-                            "max_retry_delay_millis" => 1000,
-                            "initial_rpc_timeout_millis" => 300,
-                            "rpc_timeout_multiplier" => 1.3,
-                            "max_rpc_timeout_millis" => 3000,
-                            "total_timeout_millis" => 30000,
-                        ]
-                    ],
-                    "methods" => [
-                        "ManualConfigMethod" => [
-                            "timeout_millis" => 40000,
-                            "retry_codes_name" => "idempotent",
-                            "retry_params_name" => "default"
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-        $retrySettingsFromFile = RetrySettings::load($serviceName, json_decode(file_get_contents($clientConfigFile), true), []);
-        $manualLoadedRetrySettings = RetrySettings::load($serviceName, $manualClientConfig, []);
-        $manualLoadedRetrySettingsDisabled = [];
-        foreach ($manualLoadedRetrySettings as $method => $retrySetting) {
-            $manualLoadedRetrySettingsDisabled[$method] = $retrySetting->with([
-                'retriesEnabled' => false
-            ]);
-        }
-
-        return [
-            [
-                [
-                    'serviceName' => $serviceName,
-                    'clientConfig' => $clientConfigFile,
-                    'disableRetries' => false,
-                ],
-                $retrySettingsFromFile,
-            ],
-            [
-                [
-                    'serviceName' => $serviceName,
-                    'clientConfig' => $manualClientConfig,
-                    'disableRetries' => false,
-                ],
-                $manualLoadedRetrySettings,
-            ],
-            [
-                [
-                    'serviceName' => $serviceName,
-                    'clientConfig' => $manualClientConfig,
-                    'disableRetries' => true,
-                ],
-                $manualLoadedRetrySettingsDisabled,
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider setAgentHeaderDescriptorData
-     */
-    public function testSetAgentHeaderDescriptor($options, $expectedHeaderContent)
-    {
-        $client = new GapicClientTraitStub();
-        $client->call('setAgentHeaderDescriptor', [
-            $options
-        ]);
-
-        $agentHeaderDescriptor = $client->get('agentHeaderDescriptor');
-        $actualHeader = $agentHeaderDescriptor->getHeader();
-        $actualHeaderContent = $actualHeader[AgentHeaderDescriptor::AGENT_HEADER_KEY];
-        $this->assertEquals($expectedHeaderContent, $actualHeaderContent);
-    }
-
-    public function setAgentHeaderDescriptorData()
-    {
-        $phpVersion = phpversion();
-        $apiCoreVersion = AgentHeaderDescriptor::API_CORE_VERSION;
-        $grpcVersion = phpversion('grpc');
-        return [
-            [[], ["gl-php/$phpVersion gapic/ gax/$apiCoreVersion grpc/$grpcVersion"]],
-            [[
-                'libName' => 'testLibName',
-                'libVersion' => 'testLibVersion',
-                'gapicVersion' => 'testGapicVersion',
-            ], ["gl-php/$phpVersion testLibName/testLibVersion gapic/testGapicVersion gax/$apiCoreVersion grpc/$grpcVersion"]],
-        ];
-    }
-
-    /**
-     * @dataProvider setTransportData
-     */
-    public function testSetTransport($options, $expectedTransportClass)
-    {
-        $client = new GapicClientTraitStub();
-        $client->call('setTransport', [
-            $options
-        ]);
-
-        $transport = $client->get('transport');
         $this->assertEquals($expectedTransportClass, get_class($transport));
     }
 
-    public function setTransportData()
+    public function createTransportData()
     {
-        $mockTransport = $this->prophesize(TransportInterface::class)->reveal();
         $defaultTransportClass = extension_loaded('grpc')
             ? GrpcTransport::class
             : RestTransport::class;
-        $minimalOptions = [
-            'serviceAddress' => 'address:443',
-            'transport' => null,
-            'transportConfig' => [
-                'rest' => [
-                    'restConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
-                ],
+        $serviceAddress = 'address:443';
+        $transport = extension_loaded('grpc')
+            ? 'grpc'
+            : 'rest';
+        $transportConfig = [
+            'rest' => [
+                'restConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
             ],
         ];
         return [
-            [$minimalOptions, $defaultTransportClass],
-            [['transport' => 'grpc'] + $minimalOptions, GrpcTransport::class],
-            [['transport' => 'rest'] + $minimalOptions, RestTransport::class],
-            [['transport' => $mockTransport] + $minimalOptions, get_class($mockTransport)],
+            [$serviceAddress, $transport, $transportConfig, $defaultTransportClass],
+            [$serviceAddress, 'grpc', $transportConfig, GrpcTransport::class],
+            [$serviceAddress, 'rest', $transportConfig, RestTransport::class],
         ];
     }
 
     /**
-     * @dataProvider setTransportDataInvalid
+     * @dataProvider createTransportDataInvalid
      * @expectedException \Google\ApiCore\ValidationException
      */
-    public function testSetTransportInvalid($options)
+    public function testCreateTransportInvalid($serviceAddress, $transport, $transportConfig)
     {
         $client = new GapicClientTraitStub();
-        $client->call('setTransport', [
-            $options
+        $client->call('createTransport', [
+            $serviceAddress,
+            $transport,
+            $transportConfig
         ]);
     }
 
-    public function setTransportDataInvalid()
+    public function createTransportDataInvalid()
     {
-        $minimalOptions = [
-            'serviceAddress' => 'address:443',
-            'transport' => null,
-            'transportConfig' => null,
+        $serviceAddress = 'address:443';
+        return [
+            [$serviceAddress, null, []],
+            [$serviceAddress, ['transport' => 'weirdstring'], []],
+            [$serviceAddress, ['transport' => new \stdClass()], []],
+        ];
+    }
+
+    /**
+     * @dataProvider setClientOptionsData
+     */
+    public function testSetClientOptions($options, $expectedProperties)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('setClientOptions', [
+            $options
+        ]);
+        foreach ($expectedProperties as $propertyName => $expectedValue) {
+            $actualValue = $client->get($propertyName);
+            $this->assertEquals($expectedValue, $actualValue);
+        }
+    }
+
+    public function setClientOptionsData()
+    {
+        $expectedProperties = [
+            'serviceName' => 'test.interface.v1.api',
+            'agentHeaderDescriptor' => new AgentHeaderDescriptor([]),
+
         ];
         return [
-            [[]],
-            [['transport' => 'weirdstring'] + $minimalOptions],
-            [['transport' => new \stdClass()] + $minimalOptions],
+            [[], $expectedProperties],
         ];
     }
 }
@@ -367,9 +255,18 @@ class GapicClientTraitStub
     {
         return [
             'serviceAddress' => 'test.address.com:443',
-            'clientConfig' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
             'disableRetries' => false,
-
+            'auth' => null,
+            'authConfig' => null,
+            'transport' => null,
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
         ];
     }
 

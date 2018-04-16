@@ -94,13 +94,24 @@ trait GapicClientTrait
     }
 
     /**
-     * Placeholder function - classes that use this trait are expected to implement their
-     * own getClientDefaults method, which will be used via late static binding.
+     * Classes that use this trait are expected to implement their own getClientDefaults method,
+     * which will be used via late static binding. The following settings are expected to be
+     * provided by the client:
+     * - serviceName
+     * - descriptorsConfigPath
+     * - clientConfig
+     * - transportConfig['rest']['restConfigPath']
      * @return array
      */
     private static function getClientDefaults()
     {
-        return [];
+        return [
+            'disableRetries' => false,
+            'auth' => null,
+            'authConfig' => null,
+            'transport' => null,
+            'transportConfig' => null,
+        ];
     }
 
     /**
@@ -129,7 +140,8 @@ trait GapicClientTrait
      *           $authConfig will be ignored.
      * @type array $authConfig
      *           Options used to configure auth, including auth token caching, for the client. For
-     *           a full list of supporting configuration options, see \Google\ApiCore\Auth::build.
+     *           a full list of supporting configuration options, see
+     *           \Google\ApiCore\AuthWrapper::build.
      * @type string $transport The transport used for executing network
      *           requests. May be either the string `rest` or `grpc`. Defaults to `grpc` if gRPC
      *           support is detected on the system.
@@ -166,10 +178,13 @@ trait GapicClientTrait
         $options += self::getClientDefaults();
 
         $this->validateNotNull($options, [
+            'serviceAddress',
             'serviceName',
             'descriptorsConfigPath',
             'clientConfig',
             'disableRetries',
+        ]);
+        $this->validate($options, [
             'auth',
             'authConfig',
             'transport',
@@ -186,7 +201,7 @@ trait GapicClientTrait
         $retrySettings = RetrySettings::load(
             $this->serviceName,
             $clientConfig,
-            null
+            []
         );
         if ($options['disableRetries']) {
             $updatedRetrySettings = [];
@@ -211,13 +226,14 @@ trait GapicClientTrait
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
+        $serviceAddress = $options['serviceAddress'];
         $auth = $options['auth'];
         $authConfig = $options['authConfig'] ?: [];
         $this->authWrapper = $this->createAuthWrapper($auth, $authConfig);
 
         $this->transport = $transport instanceof TransportInterface
             ? $transport
-            : $this->createTransport($this->serviceAddress, $transport, $transportConfig);
+            : $this->createTransport($serviceAddress, $transport, $transportConfig);
     }
 
     /**
@@ -249,18 +265,16 @@ trait GapicClientTrait
 
     /**
      * @param string $serviceAddress
-     * @param mixed $transport
+     * @param string $transport
      * @param array $transportConfig
      * @return TransportInterface
      * @throws ValidationException
-     * @throws \Exception
      */
     private function createTransport($serviceAddress, $transport, array $transportConfig)
     {
         if (!is_string($transport)) {
             throw new ValidationException(
-                "'transport' must be either a string " .
-                "or an instance of TransportInterface, instead got:" .
+                "'transport' must be a string, instead got:" .
                 print_r($transport, true)
             );
         }

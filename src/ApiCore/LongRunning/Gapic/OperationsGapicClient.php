@@ -124,8 +124,10 @@ class OperationsGapicClient
     private static function getClientDefaults()
     {
         return [
-            'disableRetries' => false,
+            'serviceName' => self::SERVICE_NAME,
+            'descriptorsConfigPath' => __DIR__.'/../resources/operations_descriptor_config.php',
             'clientConfig' => __DIR__.'/../resources/operations_client_config.json',
+            'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,
             'transport' => null,
@@ -134,8 +136,6 @@ class OperationsGapicClient
                     'restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php',
                 ]
             ],
-            'serviceName' => self::SERVICE_NAME,
-            'descriptorsConfigPath' => __DIR__.'/../resources/operations_descriptor_config.php',
         ];
     }
 

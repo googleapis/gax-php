@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore\Transport;
 
+use Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
@@ -64,7 +65,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *        and 'channel'.
      * @return GrpcTransport
      * @throws ValidationException
-     * @throws \Exception
      */
     public static function build($serviceAddress, $config = [])
     {
@@ -82,7 +82,15 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $stubOpts['credentials'] = ChannelCredentials::createSsl();
         }
         $channel = $config['channel'];
-        return new GrpcTransport($host, $stubOpts, $channel);
+        try {
+            return new GrpcTransport($host, $stubOpts, $channel);
+        } catch (Exception $ex) {
+            throw new ValidationException(
+                "Failed to build GrpcTransport: " . $ex->getMessage(),
+                $ex->getCode(),
+                $ex
+            );
+        }
     }
 
     /**

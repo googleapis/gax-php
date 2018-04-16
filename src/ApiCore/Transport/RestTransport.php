@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore\Transport;
 
+use Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\AuthWrapper;
@@ -79,7 +80,6 @@ class RestTransport implements TransportInterface
      *        'httpHandler'.
      * @return RestTransport
      * @throws ValidationException
-     * @throws \Exception
      */
     public static function build($serviceAddress, $restConfigPath, $config)
     {
@@ -88,7 +88,7 @@ class RestTransport implements TransportInterface
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($serviceAddress);
         $requestBuilder = new RequestBuilder($baseUri, $restConfigPath);
-        $httpHandler = $config['httpHandler'] ?: [HttpHandlerFactory::build(), 'async'];
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         return new RestTransport($requestBuilder, $httpHandler);
     }
 
@@ -198,5 +198,18 @@ class RestTransport implements TransportInterface
         $rObj->details = $rObj->message;
 
         return ApiException::createFromStdClass($rObj);
+    }
+
+    /**
+     * @return callable
+     * @throws ValidationException
+     */
+    private static function buildHttpHandlerAsync()
+    {
+        try {
+            return [HttpHandlerFactory::build(), 'async'];
+        } catch (Exception $ex) {
+            throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
+        }
     }
 }
