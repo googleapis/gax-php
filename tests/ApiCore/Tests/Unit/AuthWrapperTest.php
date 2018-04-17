@@ -73,7 +73,7 @@ class AuthWrapperTest extends TestCase
             ],
             [
                 ['scopes' => $scopes, 'authHttpHandler' => $authHttpHandler],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler, null, $defaultAuthCache), $authHttpHandler),
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, null, null, $defaultAuthCache), $authHttpHandler),
             ],
             [
                 ['enableCaching' => false],
