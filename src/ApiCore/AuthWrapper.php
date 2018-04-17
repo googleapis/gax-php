@@ -148,6 +148,10 @@ class AuthWrapper
             'authHttpHandler'   => null,
         ];
 
+        if (is_string($keyFile)) {
+            $keyFile = json_decode(file_get_contents($keyFile), true);
+        }
+
         $loader = CredentialsLoader::makeCredentials($authConfig['scopes'], $keyFile);
 
         if ($authConfig['enableCaching']) {

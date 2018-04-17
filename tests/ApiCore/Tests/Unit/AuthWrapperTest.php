@@ -32,20 +32,199 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\Call;
-use Google\ApiCore\Tests\Unit\TestTrait;
-use Google\ApiCore\Testing\MockGrpcTransport;
-use Google\ApiCore\Transport\GrpcTransport;
+use Google\ApiCore\AuthWrapper;
+use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\Auth\Cache\SysVCacheItemPool;
+use Google\Auth\CredentialsLoader;
+use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
-use Google\Protobuf\Internal\RepeatedField;
-use Google\Protobuf\Internal\GPBType;
-use Google\Rpc\Code;
-use Google\Rpc\Status;
-use Grpc\ClientStreamingCall;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
+use GPBMetadata\Google\Api\Auth;
 use PHPUnit\Framework\TestCase;
-use stdClass;
+use Prophecy\Argument;
 
 class AuthWrapperTest extends TestCase
 {
-    public function testBuild
+    /**
+     * @dataProvider buildData
+     */
+    public function testBuild($args, $expectedAuthWrapper)
+    {
+        $actualAuthWrapper = AuthWrapper::build($args);
+        $this->assertEquals($expectedAuthWrapper, $actualAuthWrapper);
+    }
+
+    public function buildData()
+    {
+        $scopes = ['myscope'];
+        $authHttpHandler = function () {};
+        $defaultAuthCache = new MemoryCacheItemPool();
+        $authCache = new SysVCacheItemPool();
+        $authCacheOptions = ['lifetime' => 600];
+        return [
+            [
+                [],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, null, $defaultAuthCache)),
+            ],
+            [
+                ['scopes' => $scopes],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, null, null, $defaultAuthCache)),
+            ],
+            [
+                ['scopes' => $scopes, 'authHttpHandler' => $authHttpHandler],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler, null, $defaultAuthCache), $authHttpHandler),
+            ],
+            [
+                ['enableCaching' => false],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, null, null)),
+            ],
+            [
+                ['authCacheOptions' => $authCacheOptions],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, $authCacheOptions, $defaultAuthCache)),
+            ],
+            [
+                ['authCache' => $authCache],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, null, $authCache)),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider fromKeyFileData
+     */
+    public function testFromKeyFile($keyFile, $args, $expectedAuthWrapper)
+    {
+        $actualAuthWrapper = AuthWrapper::fromKeyFile($keyFile, $args);
+        $this->assertEquals($expectedAuthWrapper, $actualAuthWrapper);
+    }
+
+    public function fromKeyFileData()
+    {
+        $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
+        $keyFile = json_decode(file_get_contents($keyFilePath), true);
+
+        $scopes = ['myscope'];
+        $authHttpHandler = function () {};
+        $defaultAuthCache = new MemoryCacheItemPool();
+        $authCache = new SysVCacheItemPool();
+        $authCacheOptions = ['lifetime' => 600];
+        return [
+            [
+                $keyFile,
+                [],
+                $this->makeExpectedKeyFileCreds($keyFile, null, $defaultAuthCache, null, null),
+            ],
+            [
+                $keyFilePath,
+                [],
+                $this->makeExpectedKeyFileCreds($keyFile, null, $defaultAuthCache, null, null),
+            ],
+            [
+                $keyFile,
+                ['scopes' => $scopes],
+                $this->makeExpectedKeyFileCreds($keyFile, $scopes, $defaultAuthCache, null, null),
+            ],
+            [
+                $keyFile,
+                ['scopes' => $scopes, 'authHttpHandler' => $authHttpHandler],
+                $this->makeExpectedKeyFileCreds($keyFile, $scopes, $defaultAuthCache, null, $authHttpHandler),
+            ],
+            [
+                $keyFile,
+                ['enableCaching' => false],
+                $this->makeExpectedKeyFileCreds($keyFile, null, null, null, null),
+            ],
+            [
+                $keyFile,
+                ['authCacheOptions' => $authCacheOptions],
+                $this->makeExpectedKeyFileCreds($keyFile, null, $defaultAuthCache, $authCacheOptions, null),
+            ],
+            [
+                $keyFile,
+                ['authCache' => $authCache],
+                $this->makeExpectedKeyFileCreds($keyFile, null, $authCache, null, null),
+            ],
+        ];
+    }
+
+    private function makeExpectedKeyFileCreds($keyFile, $scopes, $cache, $cacheConfig, $httpHandler)
+    {
+        $loader = CredentialsLoader::makeCredentials($scopes, $keyFile);
+        if ($cache) {
+            $loader = new FetchAuthTokenCache($loader, $cacheConfig, $cache);
+        }
+        return new AuthWrapper($loader, $httpHandler);
+    }
+
+    /**
+     * @dataProvider getBearerStringData
+     */
+    public function testGetBearerString($fetcher, $expectedBearerString)
+    {
+        $authWrapper = new AuthWrapper($fetcher);
+        $bearerString = $authWrapper->getBearerString();
+        $this->assertSame($expectedBearerString, $bearerString);
+    }
+
+    public function getBearerStringData()
+    {
+        $expiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredFetcher->getLastReceivedToken()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() - 1
+            ]);
+        $expiredFetcher->fetchAuthToken(Argument::any())
+            ->willReturn([
+                'access_token' => 456,
+                'expires_at' => time() + 1000
+            ]);
+        $unexpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $unexpiredFetcher->getLastReceivedToken()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() + 100,
+            ]);
+        return [
+            [$expiredFetcher->reveal(), 'Bearer 456'],
+            [$unexpiredFetcher->reveal(), 'Bearer 123'],
+        ];
+    }
+
+    /**
+     * @dataProvider getAuthorizationHeaderCallbackData
+     */
+    public function testGetAuthorizationHeaderCallback($fetcher, $expectedCallbackResponse)
+    {
+        $authWrapper = new AuthWrapper($fetcher);
+        $callback = $authWrapper->getAuthorizationHeaderCallback();
+        $actualResponse = $callback();
+        $this->assertSame($expectedCallbackResponse, $actualResponse);
+    }
+
+    public function getAuthorizationHeaderCallbackData()
+    {
+        $expiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredFetcher->getLastReceivedToken()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() - 1
+            ]);
+        $expiredFetcher->fetchAuthToken(Argument::any())
+            ->willReturn([
+                'access_token' => 456,
+                'expires_at' => time() + 1000
+            ]);
+        $unexpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $unexpiredFetcher->getLastReceivedToken()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() + 100,
+            ]);
+        return [
+            [$expiredFetcher->reveal(), ['authorization' => ['Bearer 456']]],
+            [$unexpiredFetcher->reveal(), ['authorization' => ['Bearer 123']]],
+        ];
+    }
 }
