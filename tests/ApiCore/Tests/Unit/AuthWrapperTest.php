@@ -58,7 +58,10 @@ class AuthWrapperTest extends TestCase
     public function buildData()
     {
         $scopes = ['myscope'];
-        $authHttpHandler = function () {};
+        $httpHandler = HttpHandlerFactory::build();
+        $authHttpHandler = function ($request, $options) use ($httpHandler) {
+            return $httpHandler->async($request, $options)->wait();
+        };
         $defaultAuthCache = new MemoryCacheItemPool();
         $authCache = new SysVCacheItemPool();
         $authCacheOptions = ['lifetime' => 600];
