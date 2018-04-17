@@ -43,6 +43,8 @@ use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
+use GPBMetadata\Google\Api\Auth;
 use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -160,6 +162,76 @@ class GapicClientTraitTest extends TestCase
     }
 
     /**
+     * @dataProvider createAuthWrapperData
+     */
+    public function testCreateAuthWrapper($auth, $authConfig, $expectedAuthWrapper)
+    {
+        $client = new GapicClientTraitStub();
+        $actualAuthWrapper = $client->call('createAuthWrapper', [
+            $auth,
+            $authConfig,
+        ]);
+
+        $this->assertEquals($expectedAuthWrapper, $actualAuthWrapper);
+    }
+
+    public function createAuthWrapperData()
+    {
+        $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
+        $keyFile = json_decode(file_get_contents($keyFilePath), true);
+        $fetcher = $this->prophesize(FetchAuthTokenInterface::class)->reveal();
+        $authWrapper = new AuthWrapper($fetcher);
+        return [
+            [null, [], AuthWrapper::build()],
+            [$keyFilePath, [], AuthWrapper::fromKeyFile($keyFile)],
+            [$keyFile, [], AuthWrapper::fromKeyFile($keyFile)],
+            [$fetcher, [], new AuthWrapper($fetcher)],
+            [$authWrapper, [], $authWrapper],
+        ];
+    }
+
+    /**
+     * @dataProvider createAuthWrapperValidationExceptionData
+     * @expectedException \Google\ApiCore\ValidationException
+     */
+    public function testCreateAuthWrapperValidationException($auth, $authConfig)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('createAuthWrapper', [
+            $auth,
+            $authConfig,
+        ]);
+    }
+
+    public function createAuthWrapperValidationExceptionData()
+    {
+        return [
+            ['not a json string', []],
+            [new \stdClass(), []],
+        ];
+    }
+
+    /**
+     * @dataProvider createAuthWrapperInvalidArgumentExceptionData
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCreateAuthWrapperInvalidArgumentException($auth, $authConfig)
+    {
+        $client = new GapicClientTraitStub();
+        $client->call('createAuthWrapper', [
+            $auth,
+            $authConfig,
+        ]);
+    }
+
+    public function createAuthWrapperInvalidArgumentExceptionData()
+    {
+        return [
+            [['array' => 'without right keys'], []],
+        ];
+    }
+
+    /**
      * @dataProvider createTransportData
      */
     public function testCreateTransport($serviceAddress, $transport, $transportConfig, $expectedTransportClass)
@@ -212,10 +284,16 @@ class GapicClientTraitTest extends TestCase
     public function createTransportDataInvalid()
     {
         $serviceAddress = 'address:443';
+        $transportConfig = [
+            'rest' => [
+                'restConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+            ],
+        ];
         return [
-            [$serviceAddress, null, []],
-            [$serviceAddress, ['transport' => 'weirdstring'], []],
-            [$serviceAddress, ['transport' => new \stdClass()], []],
+            [$serviceAddress, null, $transportConfig],
+            [$serviceAddress, ['transport' => 'weirdstring'], $transportConfig],
+            [$serviceAddress, ['transport' => new \stdClass()], $transportConfig],
+            [$serviceAddress, ['transport' => 'rest'], []],
         ];
     }
 
@@ -236,12 +314,26 @@ class GapicClientTraitTest extends TestCase
 
     public function setClientOptionsData()
     {
+        $clientDefaults = GapicClientTraitStub::getClientDefaults();
+        $expectedRetrySettings = RetrySettings::load(
+            $clientDefaults['serviceName'],
+            json_decode(file_get_contents($clientDefaults['clientConfig']), true),
+            []
+        );
+        $disabledRetrySettings = [];
+        foreach ($expectedRetrySettings as $method => $retrySettingsItem) {
+            $disabledRetrySettings[$method] = $retrySettingsItem->with([
+                'retriesEnabled' => false
+            ]);
+        }
         $expectedProperties = [
             'serviceName' => 'test.interface.v1.api',
             'agentHeaderDescriptor' => new AgentHeaderDescriptor([]),
+            'retrySettings' => $expectedRetrySettings,
         ];
         return [
             [[], $expectedProperties],
+            [['disableRetries' => true], ['retrySettings' => $disabledRetrySettings] + $expectedProperties],
         ];
     }
 }

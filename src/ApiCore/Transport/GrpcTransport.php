@@ -45,6 +45,7 @@ use Google\Rpc\Code;
 use Grpc\BaseStub;
 use Grpc\ChannelCredentials;
 use GuzzleHttp\Promise\Promise;
+use Throwable;
 
 /**
  * A gRPC based transport implementation.
@@ -84,7 +85,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         $channel = $config['channel'];
         try {
             return new GrpcTransport($host, $stubOpts, $channel);
-        } catch (Exception $ex) {
+        } catch (Throwable $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
                 $ex->getCode(),

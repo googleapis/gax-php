@@ -149,6 +149,9 @@ class AuthWrapper
         ];
 
         if (is_string($keyFile)) {
+            if (!file_exists($keyFile)) {
+                throw new ValidationException("Could not find keyfile: $keyFile");
+            }
             $keyFile = json_decode(file_get_contents($keyFile), true);
         }
 

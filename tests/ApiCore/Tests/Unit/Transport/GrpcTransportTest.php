@@ -422,6 +422,12 @@ class GrpcTransportTest extends TestCase
                 "addresswithtoo:many:segments",
                 [],
             ],
+            [
+                'serviceaddress.com',
+                [
+                    'channel' => 'not a channel',
+                ]
+            ]
         ];
     }
 }
