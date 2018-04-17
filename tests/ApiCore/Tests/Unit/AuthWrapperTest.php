@@ -58,9 +58,10 @@ class AuthWrapperTest extends TestCase
     public function buildData()
     {
         $scopes = ['myscope'];
-        $httpHandler = HttpHandlerFactory::build();
-        $authHttpHandler = function ($request, $options) use ($httpHandler) {
-            return $httpHandler->async($request, $options)->wait();
+        $defaultAuthHttpHandler = HttpHandlerFactory::build();
+        $authHttpHandler = HttpHandlerFactory::build();
+        $asyncAuthHttpHandler = function ($request, $options) use ($authHttpHandler) {
+            return $authHttpHandler->async($request, $options)->wait();
         };
         $defaultAuthCache = new MemoryCacheItemPool();
         $authCache = new SysVCacheItemPool();
@@ -68,27 +69,27 @@ class AuthWrapperTest extends TestCase
         return [
             [
                 [],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, null, $defaultAuthCache)),
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache), $defaultAuthHttpHandler),
             ],
             [
                 ['scopes' => $scopes],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, null, null, $defaultAuthCache)),
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $defaultAuthHttpHandler, null, $defaultAuthCache), $defaultAuthHttpHandler),
             ],
             [
-                ['scopes' => $scopes, 'authHttpHandler' => $authHttpHandler],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, null, null, $defaultAuthCache), $authHttpHandler),
+                ['scopes' => $scopes, 'authHttpHandler' => $asyncAuthHttpHandler],
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $asyncAuthHttpHandler, null, $defaultAuthCache), $asyncAuthHttpHandler),
             ],
             [
                 ['enableCaching' => false],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, null, null)),
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, null), $defaultAuthHttpHandler),
             ],
             [
                 ['authCacheOptions' => $authCacheOptions],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, $authCacheOptions, $defaultAuthCache)),
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, $authCacheOptions, $defaultAuthCache), $defaultAuthHttpHandler),
             ],
             [
                 ['authCache' => $authCache],
-                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, null, null, $authCache)),
+                new AuthWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $authCache), $defaultAuthHttpHandler),
             ],
         ];
     }
