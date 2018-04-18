@@ -43,6 +43,7 @@ use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
 use Grpc\BaseStub;
+use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use GuzzleHttp\Promise\Promise;
 use Throwable;
@@ -83,9 +84,15 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $stubOpts['credentials'] = ChannelCredentials::createSsl();
         }
         $channel = $config['channel'];
+        if (!is_null($channel) && !($channel instanceof Channel)) {
+            throw new ValidationException(
+                "Channel argument to GrpcTransport must be of type \Grpc\Channel, " .
+                "instead got: " . print_r($channel, true)
+            );
+        }
         try {
             return new GrpcTransport($host, $stubOpts, $channel);
-        } catch (Throwable $ex) {
+        } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
                 $ex->getCode(),
