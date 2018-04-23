@@ -33,33 +33,11 @@
 namespace Google\ApiCore;
 
 /**
- * Provides Gapic-related helper methods.
+ * Provides helper methods for service address handling.
  */
-trait GapicHelpersTrait
+trait ServiceAddressTrait
 {
     private static $defaultPort = 443;
-
-    /**
-     * @return bool
-     */
-    private static function getGrpcDependencyStatus()
-    {
-        return extension_loaded('grpc');
-    }
-
-    /**
-     * @throws ValidationException
-     */
-    private static function validateGrpcSupport()
-    {
-        if (!self::getGrpcDependencyStatus()) {
-            throw new ValidationException(
-                'gRPC support has been requested but required dependencies ' .
-                'have not been found. For details on how to install the ' .
-                'gRPC extension please see https://cloud.google.com/php/grpc.'
-            );
-        }
-    }
 
     /**
      * @param string $serviceAddress

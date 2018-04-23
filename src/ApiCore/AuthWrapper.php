@@ -35,7 +35,6 @@ use DomainException;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
-use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
@@ -125,15 +124,18 @@ class AuthWrapper
      *     Credentials to be used. Accepts either a path to a credentials file, or a decoded
      *     credentials file as a PHP array.
      * @param array $authConfig {
-     *     @type string[] $scopes The scopes required by this AuthWrapper.
+     *     @type string[] $scopes
+     *           A string array of scopes to use when acquiring credentials.
      *     @type callable $authHttpHandler
-     *           Optional. A handler used to deliver PSR-7 requests specifically
+     *           A handler used to deliver PSR-7 requests specifically
      *           for authentication. Should match a signature of
      *           `function (RequestInterface $request, array $options) : ResponseInterface`.
      *     @type bool $enableCaching
-     *           Optional. Enable caching of access tokens. Defaults to true.
+     *           Enable caching of access tokens. Defaults to true.
      *     @type CacheItemPoolInterface $authCache
-     *           Optional. A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *           A cache for storing access tokens. Defaults to a simple in memory implementation.
+     *     @type array $authCacheOptions
+     *           Cache configuration options.
      * }
      * @return AuthWrapper
      * @throws ValidationException

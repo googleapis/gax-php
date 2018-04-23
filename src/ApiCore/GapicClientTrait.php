@@ -51,7 +51,7 @@ trait GapicClientTrait
 {
     use ArrayTrait;
     use ValidationTrait;
-    use GapicHelpersTrait;
+    use GrpcSupportTrait;
 
     protected $transport;
     private static $gapicVersion;
@@ -99,17 +99,18 @@ trait GapicClientTrait
      * @param array $options {
      *     An array of required and optional arguments.
      *
-     * @type string $serviceAddress
+     *     @type string $serviceAddress
      *           The address of the API remote host, for example "example.googleapis.com. May also
      *           include the port, for example "example.googleapis.com:443"
-     * @type bool $disableRetries Determines whether or not retries defined
-     *           by the client configuration should be disabled. Defaults to `false`.
-     * @type string|array $clientConfig
+     *     @type bool $disableRetries
+     *           Determines whether or not retries defined by the client configuration should be
+     *           disabled. Defaults to `false`.
+     *     @type string|array $clientConfig
      *           Client method configuration, including retry settings. This option can be either a
      *           path to a JSON file, or a PHP array containing the decoded JSON data.
      *           By default this settings points to the default client config file, which is provided
      *           in the resources folder.
-     * @type string|array $auth
+     *     @type string|array|FetchAuthTokenInterface|AuthWrapper $auth
      *           The credentials to be used by the client to authorize API calls. This option
      *           accepts either a path to a credentials file, or a decoded credentials file as a
      *           PHP array.
@@ -117,17 +118,17 @@ trait GapicClientTrait
      *           \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\AuthWrapper
      *           object. Note that when one of these objects are provided, any settings in
      *           $authConfig will be ignored.
-     * @type array $authConfig
+     *     @type array $authConfig
      *           Options used to configure auth, including auth token caching, for the client. For
      *           a full list of supporting configuration options, see
      *           \Google\ApiCore\AuthWrapper::build.
-     * @type string $transport The transport used for executing network
-     *           requests. May be either the string `rest` or `grpc`. Defaults to `grpc` if gRPC
-     *           support is detected on the system.
+     *     @type string|TransportInterface $transport
+     *           The transport used for executing network requests. May be either the string `rest`
+     *           or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
      *           *Advanced usage*: Additionally, it is possible to pass in an already instantiated
      *           TransportInterface object. Note that when this objects is provided, any settings in
      *           $transportConfig, and any $serviceAddress setting, will be ignored.
-     * @type array $transportConfig
+     *     @type array $transportConfig
      *           Configuration options that will be used to construct the transport. Options for
      *           each supported transport type should be passed in a key for that transport. For
      *           example:
@@ -137,17 +138,17 @@ trait GapicClientTrait
      *           ];
      *           See the GrpcTransport::build and RestTransport::build
      *           methods for the supported options.
-     * @type string $versionFile
+     *     @type string $versionFile
      *           The path to a file which contains the current version of the client.
-     * @type string $descriptorsConfigPath
+     *     @type string $descriptorsConfigPath
      *           The path to a descriptor configuration file.
-     * @type string $serviceName
+     *     @type string $serviceName
      *           The name of the service.
-     * @type string $libName
+     *     @type string $libName
      *           The name of the client application.
-     * @type string $libVersion
+     *     @type string $libVersion
      *           The version of the client application.
-     * @type string $gapicVersion
+     *     @type string $gapicVersion
      *           The code generator version of the GAPIC library.
      * }
      * @throws ValidationException
@@ -175,21 +176,11 @@ trait GapicClientTrait
             $clientConfig = json_decode(file_get_contents($clientConfig), true);
         }
         $this->serviceName = $options['serviceName'];
-        $retrySettings = RetrySettings::load(
+        $this->retrySettings = RetrySettings::load(
             $this->serviceName,
             $clientConfig,
-            []
+            $options['disableRetries']
         );
-        if ($options['disableRetries']) {
-            $updatedRetrySettings = [];
-            foreach ($retrySettings as $method => $retrySettingsItem) {
-                $updatedRetrySettings[$method] = $retrySettingsItem->with([
-                    'retriesEnabled' => false
-                ]);
-            }
-            $retrySettings = $updatedRetrySettings;
-        }
-        $this->retrySettings = $retrySettings;
         $gapicVersion = isset($options['gapicVersion'])
             ? $options['gapicVersion']
             : self::getGapicVersion($options);
@@ -203,14 +194,12 @@ trait GapicClientTrait
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
-        $serviceAddress = $options['serviceAddress'];
-        $auth = $options['auth'];
         $authConfig = $options['authConfig'] ?: [];
-        $this->authWrapper = $this->createAuthWrapper($auth, $authConfig);
+        $this->authWrapper = $this->createAuthWrapper($options['auth'], $authConfig);
 
         $this->transport = $transport instanceof TransportInterface
             ? $transport
-            : $this->createTransport($serviceAddress, $transport, $transportConfig);
+            : $this->createTransport($options['serviceAddress'], $transport, $transportConfig);
     }
 
     /**
@@ -260,7 +249,6 @@ trait GapicClientTrait
             : [];
         switch ($transport) {
             case 'grpc':
-                self::validateGrpcSupport();
                 return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restConfigPath'])) {

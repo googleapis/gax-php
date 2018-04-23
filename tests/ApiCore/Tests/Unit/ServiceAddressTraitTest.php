@@ -17,39 +17,12 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\GapicHelpersTrait;
-use Google\ApiCore\ValidationException;
+use Google\ApiCore\ServiceAddressTrait;
 use PHPUnit\Framework\TestCase;
 
-class GapicHelpersTraitTest extends TestCase
+class ServiceAddressTraitTest extends TestCase
 {
-    use GapicHelpersTrait;
-
-    private static $hasGrpc;
-
-    public function testValidateGrpcSupportSuccess()
-    {
-        self::$hasGrpc = true;
-        self::validateGrpcSupport();
-    }
-
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage gRPC support has been requested
-     */
-    public function testValidateGrpcSupportFailure()
-    {
-        self::$hasGrpc = false;
-        self::validateGrpcSupport();
-    }
-
-    /**
-     * "Override" existing trait method using late static binding
-     */
-    private static function getGrpcDependencyStatus()
-    {
-        return self::$hasGrpc;
-    }
+    use ServiceAddressTrait;
 
     /**
      * @dataProvider normalizeServiceAddressData

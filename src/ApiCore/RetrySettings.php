@@ -249,16 +249,15 @@ class RetrySettings
      *     the client config file.
      * @param array $clientConfig
      *     An array parsed from the standard API client config file.
-     * @param array $retryingOverrides
-     *     A dictionary of method names to RetrySettings that
-     *     override those specified in $clientConfig.
+     * @param bool $disableRetries
+     *     Disable retries in all loaded RetrySettings objects. Defaults to false.
      * @throws ValidationException
      * @return RetrySettings[] $retrySettings
      */
     public static function load(
         $serviceName,
         $clientConfig,
-        $retryingOverrides
+        $disableRetries = false
     ) {
         $serviceRetrySettings = [];
 
@@ -294,22 +293,11 @@ class RetrySettings
                     'retryableCodes' => $retryCodes[$retryCodesName],
                     'noRetriesRpcTimeoutMillis' => $timeoutMillis,
                 ];
+                if ($disableRetries) {
+                    $retryParameters['retriesEnabled'] = false;
+                }
 
                 $retrySettings = new RetrySettings($retryParameters);
-            }
-
-            if (isset($retryingOverrides[$methodName])) {
-                $retrySettingsOverride = $retryingOverrides[$methodName];
-                if (is_array($retrySettingsOverride)) {
-                    $retrySettings = $retrySettings->with($retrySettingsOverride);
-                } elseif ($retrySettingsOverride instanceof RetrySettings) {
-                    $retrySettings = $retrySettingsOverride;
-                } else {
-                    throw new ValidationException(
-                        "Unexpected value in retryingOverrides for method " .
-                        "$methodName: $retrySettingsOverride"
-                    );
-                }
             }
 
             $serviceRetrySettings[$methodName] = $retrySettings;

@@ -36,8 +36,9 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
-use Google\ApiCore\GapicHelpersTrait;
+use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\RequestBuilder;
+use Google\ApiCore\ServiceAddressTrait;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -50,7 +51,7 @@ use Psr\Http\Message\ResponseInterface;
 class RestTransport implements TransportInterface
 {
     use ValidationTrait;
-    use GapicHelpersTrait;
+    use ServiceAddressTrait;
 
     private $requestBuilder;
     private $httpHandler;
@@ -75,13 +76,15 @@ class RestTransport implements TransportInterface
      *        The address of the API remote host, for example "example.googleapis.com".
      * @param string $restConfigPath
      *        Path to rest config file.
-     * @param array $config
-     *        Config options used to construct the gRPC transport. Supported options are
-     *        'httpHandler'.
+     * @param array $config {
+     *    Config options used to construct the gRPC transport.
+     *
+     *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
+     * }
      * @return RestTransport
      * @throws ValidationException
      */
-    public static function build($serviceAddress, $restConfigPath, $config)
+    public static function build($serviceAddress, $restConfigPath, array $config = [])
     {
         $config += [
             'httpHandler'  => null,

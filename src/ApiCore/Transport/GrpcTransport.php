@@ -37,8 +37,9 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
-use Google\ApiCore\GapicHelpersTrait;
+use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
+use Google\ApiCore\ServiceAddressTrait;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
@@ -46,7 +47,6 @@ use Grpc\BaseStub;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use GuzzleHttp\Promise\Promise;
-use Throwable;
 
 /**
  * A gRPC based transport implementation.
@@ -54,7 +54,8 @@ use Throwable;
 class GrpcTransport extends BaseStub implements TransportInterface
 {
     use ValidationTrait;
-    use GapicHelpersTrait;
+    use GrpcSupportTrait;
+    use ServiceAddressTrait;
 
     /**
      * Builds a GrpcTransport.
@@ -62,13 +63,16 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * @param string $serviceAddress
      *        The address of the API remote host, for example "example.googleapis.com. May also
      *        include the port, for example "example.googleapis.com:443"
-     * @param array $config
-     *        Config options used to construct the gRPC transport. Supported options are 'stubOpts'
-     *        and 'channel'.
+     * @param array $config {
+     *    Config options used to construct the gRPC transport.
+     *
+     *    @type array $stubOpts Options used to construct the gRPC stub.
+     *    @type Channel $channel Grpc channel to be used.
+     * }
      * @return GrpcTransport
      * @throws ValidationException
      */
-    public static function build($serviceAddress, $config = [])
+    public static function build($serviceAddress, array $config = [])
     {
         self::validateGrpcSupport();
         $config += [
