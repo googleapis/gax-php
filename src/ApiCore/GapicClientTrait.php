@@ -213,7 +213,7 @@ trait GapicClientTrait
         if (is_null($auth)) {
             return AuthWrapper::build($authConfig);
         } elseif (is_string($auth) || is_array($auth)) {
-            return AuthWrapper::fromKeyFile($auth, $authConfig);
+            return AuthWrapper::build(['keyFile' => $auth] + $authConfig);
         } elseif ($auth instanceof FetchAuthTokenInterface) {
             $authHttpHandler = isset($authConfig['authHttpHandler'])
                 ? $authConfig['authHttpHandler']

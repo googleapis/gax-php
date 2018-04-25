@@ -74,6 +74,10 @@ class AuthWrapper
      * @param array $args {
      *     An array of optional arguments.
      *
+     *     @type string|array $keyFile
+     *           Credentials to be used. Accepts either a path to a credentials file, or a decoded
+     *           credentials file as a PHP array. If this is not specified, application default
+     *           credentials will be used.
      *     @type string[] $scopes
      *           A string array of scopes to use when acquiring credentials.
      *     @type callable $authHttpHandler
@@ -93,82 +97,42 @@ class AuthWrapper
     public static function build(array $args = [])
     {
         $args += [
+            'keyFile'           => null,
             'scopes'            => null,
             'authHttpHandler'   => null,
-            'enableCaching'     => true,
-            'authCache'         => null,
-            'authCacheOptions'  => null,
-        ];
-        $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
-        $authCacheOptions = $args['authCacheOptions'];
-        if ($args['enableCaching']) {
-            $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
-        } else {
-            $authCache = null;
-        }
-
-        $credentialsLoader = self::buildApplicationDefaultCredentials(
-            $args['scopes'],
-            $authHttpHandler,
-            $authCacheOptions,
-            $authCache
-        );
-
-        return new AuthWrapper($credentialsLoader, $authHttpHandler);
-    }
-
-    /**
-     * Factory method to create an AuthWrapper from a credentials keyfile and an array of options.
-     *
-     * @param string|array $keyFile
-     *     Credentials to be used. Accepts either a path to a credentials file, or a decoded
-     *     credentials file as a PHP array.
-     * @param array $authConfig {
-     *     @type string[] $scopes
-     *           A string array of scopes to use when acquiring credentials.
-     *     @type callable $authHttpHandler
-     *           A handler used to deliver PSR-7 requests specifically
-     *           for authentication. Should match a signature of
-     *           `function (RequestInterface $request, array $options) : ResponseInterface`.
-     *     @type bool $enableCaching
-     *           Enable caching of access tokens. Defaults to true.
-     *     @type CacheItemPoolInterface $authCache
-     *           A cache for storing access tokens. Defaults to a simple in memory implementation.
-     *     @type array $authCacheOptions
-     *           Cache configuration options.
-     * }
-     * @return AuthWrapper
-     * @throws ValidationException
-     */
-    public static function fromKeyFile($keyFile, array $authConfig = [])
-    {
-        $authConfig += [
-            'scopes'            => null,
             'enableCaching'     => true,
             'authCache'         => null,
             'authCacheOptions'  => [],
-            'authHttpHandler'   => null,
         ];
+        $keyFile = $args['keyFile'];
+        $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
 
-        if (is_string($keyFile)) {
-            if (!file_exists($keyFile)) {
-                throw new ValidationException("Could not find keyfile: $keyFile");
+        if (is_null($keyFile)) {
+            $loader = self::buildApplicationDefaultCredentials(
+                $args['scopes'],
+                $authHttpHandler
+            );
+        } else {
+            if (is_string($keyFile)) {
+                if (!file_exists($keyFile)) {
+                    throw new ValidationException("Could not find keyfile: $keyFile");
+                }
+                $keyFile = json_decode(file_get_contents($keyFile), true);
             }
-            $keyFile = json_decode(file_get_contents($keyFile), true);
+
+            $loader = CredentialsLoader::makeCredentials($args['scopes'], $keyFile);
         }
 
-        $loader = CredentialsLoader::makeCredentials($authConfig['scopes'], $keyFile);
-
-        if ($authConfig['enableCaching']) {
-            $authCache = $authConfig['authCache'] ?: new MemoryCacheItemPool();
+        if ($args['enableCaching']) {
+            $authCache = $args['authCache'] ?: new MemoryCacheItemPool();
             $loader = new FetchAuthTokenCache(
                 $loader,
-                $authConfig['authCacheOptions'],
+                $args['authCacheOptions'],
                 $authCache
             );
         }
 
-        return new AuthWrapper($loader, $authConfig['authHttpHandler']);
+        return new AuthWrapper($loader, $authHttpHandler);
     }
 
     /**

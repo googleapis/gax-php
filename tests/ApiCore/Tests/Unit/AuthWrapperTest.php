@@ -57,6 +57,11 @@ class AuthWrapperTest extends TestCase
 
     public function buildData()
     {
+        return $this->buildDataWithoutKeyFile() + $this->buildDataWithKeyFile();
+    }
+
+    private function buildDataWithoutKeyFile()
+    {
         $scopes = ['myscope'];
         $defaultAuthHttpHandler = HttpHandlerFactory::build();
         $authHttpHandler = HttpHandlerFactory::build();
@@ -94,16 +99,7 @@ class AuthWrapperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider fromKeyFileData
-     */
-    public function testFromKeyFile($keyFile, $args, $expectedAuthWrapper)
-    {
-        $actualAuthWrapper = AuthWrapper::fromKeyFile($keyFile, $args);
-        $this->assertEquals($expectedAuthWrapper, $actualAuthWrapper);
-    }
-
-    public function fromKeyFileData()
+    private function buildDataWithKeyFile()
     {
         $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
         $keyFile = json_decode(file_get_contents($keyFilePath), true);
@@ -115,38 +111,31 @@ class AuthWrapperTest extends TestCase
         $authCacheOptions = ['lifetime' => 600];
         return [
             [
-                $keyFile,
-                [],
+                ['keyFile' => $keyFile],
                 $this->makeExpectedKeyFileCreds($keyFile, null, $defaultAuthCache, null, null),
             ],
             [
-                $keyFilePath,
-                [],
+                ['keyFile' => $keyFilePath],
                 $this->makeExpectedKeyFileCreds($keyFile, null, $defaultAuthCache, null, null),
             ],
             [
-                $keyFile,
-                ['scopes' => $scopes],
+                ['keyFile' => $keyFile, 'scopes' => $scopes],
                 $this->makeExpectedKeyFileCreds($keyFile, $scopes, $defaultAuthCache, null, null),
             ],
             [
-                $keyFile,
-                ['scopes' => $scopes, 'authHttpHandler' => $authHttpHandler],
+                ['keyFile' => $keyFile, 'scopes' => $scopes, 'authHttpHandler' => $authHttpHandler],
                 $this->makeExpectedKeyFileCreds($keyFile, $scopes, $defaultAuthCache, null, $authHttpHandler),
             ],
             [
-                $keyFile,
-                ['enableCaching' => false],
+                ['keyFile' => $keyFile, 'enableCaching' => false],
                 $this->makeExpectedKeyFileCreds($keyFile, null, null, null, null),
             ],
             [
-                $keyFile,
-                ['authCacheOptions' => $authCacheOptions],
+                ['keyFile' => $keyFile, 'authCacheOptions' => $authCacheOptions],
                 $this->makeExpectedKeyFileCreds($keyFile, null, $defaultAuthCache, $authCacheOptions, null),
             ],
             [
-                $keyFile,
-                ['authCache' => $authCache],
+                ['keyFile' => $keyFile, 'authCache' => $authCache],
                 $this->makeExpectedKeyFileCreds($keyFile, null, $authCache, null, null),
             ],
         ];

@@ -183,8 +183,8 @@ class GapicClientTraitTest extends TestCase
         $authWrapper = new AuthWrapper($fetcher);
         return [
             [null, [], AuthWrapper::build()],
-            [$keyFilePath, [], AuthWrapper::fromKeyFile($keyFile)],
-            [$keyFile, [], AuthWrapper::fromKeyFile($keyFile)],
+            [$keyFilePath, [], AuthWrapper::build(['keyFile' => $keyFile])],
+            [$keyFile, [], AuthWrapper::build(['keyFile' => $keyFile])],
             [$fetcher, [], new AuthWrapper($fetcher)],
             [$authWrapper, [], $authWrapper],
         ];

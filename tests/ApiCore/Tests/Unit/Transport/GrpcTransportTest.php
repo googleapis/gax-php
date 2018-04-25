@@ -391,7 +391,8 @@ class GrpcTransportTest extends TestCase
                     [
                         'credentials' => null,
                     ],
-                    null),
+                    null
+                ),
             ],
             [
                 $uri,
@@ -401,7 +402,8 @@ class GrpcTransportTest extends TestCase
                     [
                         'credentials' => null,
                     ],
-                    null),
+                    null
+                ),
             ],
         ];
     }
