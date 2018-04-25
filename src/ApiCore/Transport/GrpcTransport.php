@@ -32,54 +32,77 @@
 
 namespace Google\ApiCore\Transport;
 
+use Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
+use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
-use Google\Auth\FetchAuthTokenInterface;
-use Google\Protobuf\Internal\Message;
+use Google\ApiCore\ServiceAddressTrait;
+use Google\ApiCore\ValidationException;
+use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
 use Grpc\BaseStub;
 use Grpc\Channel;
+use Grpc\ChannelCredentials;
 use GuzzleHttp\Promise\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * A gRPC based transport implementation.
  */
 class GrpcTransport extends BaseStub implements TransportInterface
 {
-    private $credentialsCallback;
+    use ValidationTrait;
+    use GrpcSupportTrait;
+    use ServiceAddressTrait;
 
     /**
-     * @param string $host The domain name and port of the API remote host.
-     * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
-     *        used to fetch access tokens.
-     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
-     *        specifically for authentication. Should match a signature of
-     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
-     * @param array $stubOpts An array of options used when creating a BaseStub.
-     * @param Channel $channel An already instantiated channel to be used during
-     *        creation of the BaseStub.
+     * Builds a GrpcTransport.
+     *
+     * @param string $serviceAddress
+     *        The address of the API remote host, for example "example.googleapis.com. May also
+     *        include the port, for example "example.googleapis.com:443"
+     * @param array $config {
+     *    Config options used to construct the gRPC transport.
+     *
+     *    @type array $stubOpts Options used to construct the gRPC stub.
+     *    @type Channel $channel Grpc channel to be used.
+     * }
+     * @return GrpcTransport
+     * @throws ValidationException
      */
-    public function __construct(
-        $host,
-        FetchAuthTokenInterface $credentialsLoader,
-        callable $authHttpHandler,
-        array $stubOpts,
-        Channel $channel = null
-    ) {
-        $this->credentialsCallback = function () use ($credentialsLoader, $authHttpHandler) {
-            $token = $credentialsLoader->fetchAuthToken($authHttpHandler);
-            return ['authorization' => ['Bearer ' . $token['access_token']]];
-        };
-
-        parent::__construct(
-            $host,
-            $stubOpts,
-            $channel
-        );
+    public static function build($serviceAddress, array $config = [])
+    {
+        self::validateGrpcSupport();
+        $config += [
+            'stubOpts' => [],
+            'channel'  => null,
+        ];
+        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
+        $host = "$addr:$port";
+        $stubOpts = $config['stubOpts'];
+        // Set the required 'credentials' key in stubOpts if it is not already set. Use
+        // array_key_exists because null is a valid value.
+        if (!array_key_exists('credentials', $stubOpts)) {
+            $stubOpts['credentials'] = ChannelCredentials::createSsl();
+        }
+        $channel = $config['channel'];
+        if (!is_null($channel) && !($channel instanceof Channel)) {
+            throw new ValidationException(
+                "Channel argument to GrpcTransport must be of type \Grpc\Channel, " .
+                "instead got: " . print_r($channel, true)
+            );
+        }
+        try {
+            return new GrpcTransport($host, $stubOpts, $channel);
+        } catch (Exception $ex) {
+            throw new ValidationException(
+                "Failed to build GrpcTransport: " . $ex->getMessage(),
+                $ex->getCode(),
+                $ex
+            );
+        }
     }
 
     /**
@@ -172,7 +195,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ? $options['transportOptions']['grpcOptions']
             : [];
 
-        $callOptions += ['call_credentials_callback' => $this->credentialsCallback];
+        if (isset($options['authWrapper'])) {
+            $callOptions['call_credentials_callback'] = $options['authWrapper']->getAuthorizationHeaderCallback();
+        }
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] * 1000;

@@ -32,12 +32,14 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
+use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Testing\MockResponse;
 use Google\ApiCore\Transport\RestTransport;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
@@ -73,11 +75,7 @@ class RestTransportTest extends TestCase
 
         return new RestTransport(
             $requestBuilder,
-            $credentialsLoader,
-            $httpHandler,
-            function (RequestInterface $request, array $options = []) {
-                return null;
-            }
+            $httpHandler
         );
     }
 
@@ -119,7 +117,7 @@ class RestTransportTest extends TestCase
     }
 
     /**
-     * @expectedException Google\ApiCore\ApiException
+     * @expectedException \Google\ApiCore\ApiException
      */
     public function testStartUnaryCallThrowsRequestException()
     {
@@ -136,6 +134,89 @@ class RestTransportTest extends TestCase
                                 'message' => 'Ruh-roh.'
                             ]
                         ])
+                    )
+                )
+            );
+        };
+
+        $this->getTransport($httpHandler)
+            ->startUnaryCall($this->call, [])
+            ->wait();
+    }
+
+    /**
+     * @dataProvider buildDataRest
+     */
+    public function testBuildRest($serviceAddress, $restConfigPath, $config, $expectedTransport)
+    {
+        $actualTransport = RestTransport::build($serviceAddress, $restConfigPath, $config);
+        $this->assertEquals($expectedTransport, $actualTransport);
+    }
+
+    public function buildDataRest()
+    {
+        $uri = "address.com";
+        $serviceAddress = "$uri:443";
+        $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
+        $requestBuilder = new RequestBuilder($uri, $restConfigPath);
+        $httpHandler = [HttpHandlerFactory::build(), 'async'];
+        return [
+            [
+                $serviceAddress,
+                $restConfigPath,
+                ['httpHandler' => $httpHandler],
+                new RestTransport($requestBuilder, $httpHandler)
+            ],
+            [
+                $serviceAddress,
+                $restConfigPath,
+                [],
+                new RestTransport($requestBuilder, $httpHandler),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider buildInvalidData
+     * @expectedException \Google\ApiCore\ValidationException
+     */
+    public function testBuildInvalid($serviceAddress, $restConfigPath, $args)
+    {
+        RestTransport::build($serviceAddress, $restConfigPath, $args);
+    }
+
+    public function buildInvalidData()
+    {
+        $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
+        return [
+            [
+                "addresswithtoo:many:segments",
+                $restConfigPath,
+                [],
+            ],
+            [
+                "address.com",
+                "badpath",
+                [],
+            ],
+        ];
+    }
+
+    /**
+     * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionMessage <html><body>This is an HTML response<\/body><\/html>
+     * @expectedExceptionCode 5
+     */
+    public function testNonJsonResponseException()
+    {
+        $httpHandler = function (RequestInterface $request, array $options = []) {
+            return Promise\rejection_for(
+                RequestException::create(
+                    new Request('POST', 'http://www.example.com'),
+                    new Response(
+                        404,
+                        [],
+                        "<html><body>This is an HTML response</body></html>"
                     )
                 )
             );

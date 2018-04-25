@@ -31,11 +31,17 @@
  */
 namespace Google\ApiCore\Transport;
 
+use Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
+use Google\ApiCore\AuthWrapper;
 use Google\ApiCore\Call;
+use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\RequestBuilder;
-use Google\Auth\FetchAuthTokenInterface;
+use Google\ApiCore\ServiceAddressTrait;
+use Google\ApiCore\ValidationException;
+use Google\ApiCore\ValidationTrait;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -44,31 +50,49 @@ use Psr\Http\Message\ResponseInterface;
  */
 class RestTransport implements TransportInterface
 {
-    private $authHttpHandler;
-    private $credentialsLoader;
-    private $httpHandler;
+    use ValidationTrait;
+    use ServiceAddressTrait;
+
     private $requestBuilder;
+    private $httpHandler;
 
     /**
      * @param RequestBuilder $requestBuilder A builder responsible for creating
      *        a PSR-7 request from a set of request information.
-     * @param FetchAuthTokenInterface $credentialsLoader A credentials loader
-     *        used to fetch access tokens.
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
-     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
-     *        specifically for authentication. Should match a signature of
-     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
      */
     public function __construct(
         RequestBuilder $requestBuilder,
-        FetchAuthTokenInterface $credentialsLoader,
-        callable $httpHandler,
-        callable $authHttpHandler
+        callable $httpHandler
     ) {
         $this->requestBuilder = $requestBuilder;
-        $this->credentialsLoader = $credentialsLoader;
         $this->httpHandler = $httpHandler;
-        $this->authHttpHandler = $authHttpHandler;
+    }
+
+    /**
+     * Builds a RestTransport.
+     *
+     * @param string $serviceAddress
+     *        The address of the API remote host, for example "example.googleapis.com".
+     * @param string $restConfigPath
+     *        Path to rest config file.
+     * @param array $config {
+     *    Config options used to construct the gRPC transport.
+     *
+     *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
+     * }
+     * @return RestTransport
+     * @throws ValidationException
+     */
+    public static function build($serviceAddress, $restConfigPath, array $config = [])
+    {
+        $config += [
+            'httpHandler'  => null,
+        ];
+        list($baseUri, $port) = self::normalizeServiceAddress($serviceAddress);
+        $requestBuilder = new RequestBuilder($baseUri, $restConfigPath);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
+        return new RestTransport($requestBuilder, $httpHandler);
     }
 
     /**
@@ -108,9 +132,8 @@ class RestTransport implements TransportInterface
             : [];
 
         // If not already set, add an auth header to the request
-        if (!isset($headers['Authorization'])) {
-            $token = $this->credentialsLoader->fetchAuthToken($this->authHttpHandler)['access_token'];
-            $headers['Authorization'] = 'Bearer ' . $token;
+        if (!isset($headers['Authorization']) && isset($options['authWrapper'])) {
+            $headers['Authorization'] = $options['authWrapper']->getBearerString();
         }
 
         // call the HTTP handler
@@ -168,15 +191,35 @@ class RestTransport implements TransportInterface
         return $callOptions;
     }
 
+    /**
+     * @param \Exception $ex
+     * @return ApiException
+     */
     private function convertToApiException(\Exception $ex)
     {
-        $res = (string) $ex->getResponse()->getBody();
-        $rObj = (object) json_decode($res, true)['error'];
-        // Overwrite the HTTP Status Code with the RPC code, derived from the "status" field.
-        $rObj->code = ApiStatus::rpcCodeFromStatus($rObj->status);
-        $rObj->metadata = property_exists($rObj, 'details') ? $rObj->details : null;
-        $rObj->details = $rObj->message;
+        $res = $ex->getResponse();
+        $body = (string) $res->getBody();
+        if ($error = json_decode($body, true)['error']) {
+            $basicMessage = $error['message'];
+            $code = ApiStatus::rpcCodeFromStatus($error['status']);
+            $metadata = isset($error['details']) ? $error['details'] : null;
+            return ApiException::createFromApiResponse($basicMessage, $code, $metadata);
+        }
+        // Use the RPC code instead of the HTTP Status Code.
+        $code = ApiStatus::rpcCodeFromHttpStatusCode($res->getStatusCode());
+        return ApiException::createFromApiResponse($body, $code);
+    }
 
-        return ApiException::createFromStdClass($rObj);
+    /**
+     * @return callable
+     * @throws ValidationException
+     */
+    private static function buildHttpHandlerAsync()
+    {
+        try {
+            return [HttpHandlerFactory::build(), 'async'];
+        } catch (Exception $ex) {
+            throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
+        }
     }
 }
