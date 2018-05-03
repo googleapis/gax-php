@@ -146,12 +146,17 @@ class RestTransport implements TransportInterface
             ),
             $this->getCallOptions($options)
         )->then(
-            function (ResponseInterface $response) use ($call) {
+            function (ResponseInterface $response) use ($call, $options) {
                 $decodeType = $call->getDecodeType();
                 $return = new $decodeType;
                 $return->mergeFromJsonString(
                     (string) $response->getBody()
                 );
+
+                if (isset($options['metadataCallback'])) {
+                    $metadataCallback = $options['metadataCallback'];
+                    $metadataCallback($response->getHeaders());
+                }
 
                 return $return;
             },

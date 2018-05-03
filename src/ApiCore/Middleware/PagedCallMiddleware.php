@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2018, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,46 +29,52 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit;
+namespace Google\ApiCore\Middleware;
 
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
 use Google\ApiCore\Page;
 use Google\ApiCore\PagedListResponse;
 use Google\ApiCore\PageStreamingDescriptor;
-use PHPUnit\Framework\TestCase;
+use Google\Protobuf\Internal\Message;
 
-class PagedListResponseTest extends TestCase
+/**
+* Middleware which wraps the response in an PagedListResponses object.
+*/
+class PagedCallMiddleware
 {
-    use TestTrait;
+    /** @var callable */
+    private $nextHandler;
 
-    public function testNextPageToken()
+    /** @var PageStreamingDescriptor */
+    private $descriptor;
+
+    /**
+     * @param callable $nextHandler
+     * @param PageStreamingDescriptor $descriptor
+     */
+    public function __construct(
+        callable $nextHandler,
+        PageStreamingDescriptor $descriptor
+    ) {
+        $this->nextHandler = $nextHandler;
+        $this->descriptor = $descriptor;
+    }
+
+    public function __invoke(Call $call, array $options)
     {
-        $mockRequest = $this->createMockRequest('mockToken');
-
-        $mockResponse = $this->createMockResponse('nextPageToken1', ['resource1']);
-
-        $pageStreamingDescriptor = PageStreamingDescriptor::createFromFields([
-            'requestPageTokenField' => 'pageToken',
-            'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resourcesList'
-        ]);
-
-        $callable = function () use ($mockResponse) {
-            return $promise = new \GuzzleHttp\Promise\Promise(function () use (&$promise, $mockResponse) {
-                $promise->resolve($mockResponse);
-            });
-        };
-
-        $call = new Call('method', [], $mockRequest);
-        $options = [];
-
-        $response = $callable($call, $options)->wait();
-
-        $page = new Page($call, $options, $callable, $pageStreamingDescriptor, $response);
-        $pageAccessor = new PagedListResponse($page);
-        $page = $pageAccessor->getPage();
-        $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
-        $this->assertEquals(iterator_to_array($page->getIterator()), ['resource1']);
+        $next = $this->nextHandler;
+        $descriptor = $this->descriptor;
+        return $next($call, $options)->then(
+            function (Message $response) use ($call, $next, $options, $descriptor) {
+                $page = new Page(
+                    $call,
+                    $options,
+                    $next,
+                    $descriptor,
+                    $response
+                );
+                return new PagedListResponse($page);
+            }
+        );
     }
 }

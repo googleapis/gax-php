@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2018, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,46 +29,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit;
+namespace Google\ApiCore\Middleware;
 
 use Google\ApiCore\Call;
-use Google\ApiCore\CallSettings;
-use Google\ApiCore\Page;
-use Google\ApiCore\PagedListResponse;
-use Google\ApiCore\PageStreamingDescriptor;
-use PHPUnit\Framework\TestCase;
+use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 
-class PagedListResponseTest extends TestCase
+/**
+ * Middleware which transforms $response into [$response, $metadata]
+ */
+class MetadataMiddleware
 {
-    use TestTrait;
+    /** @var callable */
+    private $nextHandler;
 
-    public function testNextPageToken()
+    /**
+     * @param callable $nextHandler
+     */
+    public function __construct(callable $nextHandler)
     {
-        $mockRequest = $this->createMockRequest('mockToken');
+        $this->nextHandler = $nextHandler;
+    }
 
-        $mockResponse = $this->createMockResponse('nextPageToken1', ['resource1']);
-
-        $pageStreamingDescriptor = PageStreamingDescriptor::createFromFields([
-            'requestPageTokenField' => 'pageToken',
-            'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resourcesList'
-        ]);
-
-        $callable = function () use ($mockResponse) {
-            return $promise = new \GuzzleHttp\Promise\Promise(function () use (&$promise, $mockResponse) {
-                $promise->resolve($mockResponse);
-            });
+    public function __invoke(Call $call, array $options)
+    {
+        $metadataReceiver = new Promise();
+        $options['metadataCallback'] = function($metadata) use ($metadataReceiver) {
+            $metadataReceiver->resolve($metadata);
         };
-
-        $call = new Call('method', [], $mockRequest);
-        $options = [];
-
-        $response = $callable($call, $options)->wait();
-
-        $page = new Page($call, $options, $callable, $pageStreamingDescriptor, $response);
-        $pageAccessor = new PagedListResponse($page);
-        $page = $pageAccessor->getPage();
-        $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
-        $this->assertEquals(iterator_to_array($page->getIterator()), ['resource1']);
+        $next = $this->nextHandler;
+        return $next($call, $options)->then(
+            function (Message $response) use ($metadataReceiver) {
+                if ($metadataReceiver->getState() == PromiseInterface::FULFILLED) {
+                    return [$response, $metadataReceiver->wait()];
+                } else {
+                    return [$response, []];
+                }
+            }
+        );
     }
 }
