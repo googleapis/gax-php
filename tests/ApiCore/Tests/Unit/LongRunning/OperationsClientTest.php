@@ -34,7 +34,7 @@
  * This file was automatically generated - do not edit!
  */
 
-namespace Google\ApiCore\LongRunning\Tests\Unit;
+namespace Google\ApiCore\Tests\Unit\LongRunning;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\LongRunning\OperationsClient;
@@ -44,7 +44,7 @@ use Google\LongRunning\ListOperationsResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
 use Google\Protobuf\GPBEmpty;
-use Grpc;
+use Google\Rpc\Code;
 use stdClass;
 
 /**
@@ -119,12 +119,12 @@ class OperationsClientTest extends GeneratedTest
         $this->assertTrue($transport->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
@@ -202,12 +202,12 @@ class OperationsClientTest extends GeneratedTest
         $this->assertTrue($transport->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
@@ -273,12 +273,12 @@ class OperationsClientTest extends GeneratedTest
         $this->assertTrue($transport->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
@@ -343,12 +343,12 @@ class OperationsClientTest extends GeneratedTest
         $this->assertTrue($transport->isExhausted());
 
         $status = new stdClass();
-        $status->code = Grpc\STATUS_DATA_LOSS;
+        $status->code = Code::DATA_LOSS;
         $status->details = 'internal error';
 
         $expectedExceptionMessage = json_encode([
            'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
+           'code' => Code::DATA_LOSS,
            'status' => 'DATA_LOSS',
            'details' => [],
         ], JSON_PRETTY_PRINT);
