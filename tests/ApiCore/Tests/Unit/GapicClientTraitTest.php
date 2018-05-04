@@ -257,7 +257,7 @@ class GapicClientTraitTest extends TestCase
             : 'rest';
         $transportConfig = [
             'rest' => [
-                'restConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
+                'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
             ],
         ];
         return [

@@ -288,12 +288,12 @@ trait GapicClientTrait
             case 'grpc':
                 return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
             case 'rest':
-                if (!isset($configForSpecifiedTransport['restConfigPath'])) {
+                if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
-                        "The 'restConfigPath' config is required for 'rest' transport."
+                        "The 'restClientConfigPath' config is required for 'rest' transport."
                     );
                 }
-                $restConfigPath = $configForSpecifiedTransport['restConfigPath'];
+                $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
                 return RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
             default:
                 throw new ValidationException(
@@ -301,6 +301,22 @@ trait GapicClientTrait
                     "Supported values: ['grpc', 'rest']"
                 );
         }
+    }
+
+    /**
+     * @param array $options
+     * @return OperationsClient
+     */
+    private function createOperationsClient(array $options)
+    {
+        $this->pluckArray([
+            'serviceName',
+            'clientConfig',
+            'descriptorsConfigPath',
+        ], $options);
+
+        return $this->pluck('operationsClient', $operationsClientOptions, false)
+            ?: new OperationsClient($operationsClientOptions);
     }
 
     /**
