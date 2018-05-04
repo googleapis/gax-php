@@ -33,7 +33,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeaderDescriptor;
-use Google\ApiCore\AuthWrapper;
+use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
@@ -76,7 +76,7 @@ class GapicClientTraitTest extends TestCase
             'new-header' => ['this-should-be-used'],
         ];
         $transport = $this->getMock(TransportInterface::class);
-        $authWrapper = AuthWrapper::build([]);
+        $authWrapper = CredentialsWrapper::build([]);
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->with(
@@ -119,7 +119,7 @@ class GapicClientTraitTest extends TestCase
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->will($this->returnValue($expectedPromise));
-        $authWrapper = AuthWrapper::build([]);
+        $authWrapper = CredentialsWrapper::build([]);
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
         $client->set('authWrapper', $authWrapper);
@@ -162,48 +162,48 @@ class GapicClientTraitTest extends TestCase
     }
 
     /**
-     * @dataProvider createAuthWrapperData
+     * @dataProvider createCredentialsWrapperData
      */
-    public function testCreateAuthWrapper($auth, $authConfig, $expectedAuthWrapper)
+    public function testCreateCredentialsWrapper($auth, $authConfig, $expectedCredentialsWrapper)
     {
         $client = new GapicClientTraitStub();
-        $actualAuthWrapper = $client->call('createAuthWrapper', [
+        $actualCredentialsWrapper = $client->call('createCredentialsWrapper', [
             $auth,
             $authConfig,
         ]);
 
-        $this->assertEquals($expectedAuthWrapper, $actualAuthWrapper);
+        $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
     }
 
-    public function createAuthWrapperData()
+    public function createCredentialsWrapperData()
     {
         $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
         $keyFile = json_decode(file_get_contents($keyFilePath), true);
         $fetcher = $this->prophesize(FetchAuthTokenInterface::class)->reveal();
-        $authWrapper = new AuthWrapper($fetcher);
+        $authWrapper = new CredentialsWrapper($fetcher);
         return [
-            [null, [], AuthWrapper::build()],
-            [$keyFilePath, [], AuthWrapper::build(['keyFile' => $keyFile])],
-            [$keyFile, [], AuthWrapper::build(['keyFile' => $keyFile])],
-            [$fetcher, [], new AuthWrapper($fetcher)],
+            [null, [], CredentialsWrapper::build()],
+            [$keyFilePath, [], CredentialsWrapper::build(['keyFile' => $keyFile])],
+            [$keyFile, [], CredentialsWrapper::build(['keyFile' => $keyFile])],
+            [$fetcher, [], new CredentialsWrapper($fetcher)],
             [$authWrapper, [], $authWrapper],
         ];
     }
 
     /**
-     * @dataProvider createAuthWrapperValidationExceptionData
+     * @dataProvider createCredentialsWrapperValidationExceptionData
      * @expectedException \Google\ApiCore\ValidationException
      */
-    public function testCreateAuthWrapperValidationException($auth, $authConfig)
+    public function testCreateCredentialsWrapperValidationException($auth, $authConfig)
     {
         $client = new GapicClientTraitStub();
-        $client->call('createAuthWrapper', [
+        $client->call('createCredentialsWrapper', [
             $auth,
             $authConfig,
         ]);
     }
 
-    public function createAuthWrapperValidationExceptionData()
+    public function createCredentialsWrapperValidationExceptionData()
     {
         return [
             ['not a json string', []],
@@ -212,19 +212,19 @@ class GapicClientTraitTest extends TestCase
     }
 
     /**
-     * @dataProvider createAuthWrapperInvalidArgumentExceptionData
+     * @dataProvider createCredentialsWrapperInvalidArgumentExceptionData
      * @expectedException \InvalidArgumentException
      */
-    public function testCreateAuthWrapperInvalidArgumentException($auth, $authConfig)
+    public function testCreateCredentialsWrapperInvalidArgumentException($auth, $authConfig)
     {
         $client = new GapicClientTraitStub();
-        $client->call('createAuthWrapper', [
+        $client->call('createCredentialsWrapper', [
             $auth,
             $authConfig,
         ]);
     }
 
-    public function createAuthWrapperInvalidArgumentExceptionData()
+    public function createCredentialsWrapperInvalidArgumentExceptionData()
     {
         return [
             [['array' => 'without right keys'], []],
@@ -303,9 +303,8 @@ class GapicClientTraitTest extends TestCase
     public function testSetClientOptions($options, $expectedProperties)
     {
         $client = new GapicClientTraitStub();
-        $client->call('setClientOptions', [
-            $options + GapicClientTraitStub::getClientDefaults(),
-        ]);
+        $updatedOptions = $client->call('buildClientOptions', [$options]);
+        $client->call('setClientOptions', [$updatedOptions]);
         foreach ($expectedProperties as $propertyName => $expectedValue) {
             $actualValue = $client->get($propertyName);
             $this->assertEquals($expectedValue, $actualValue);

@@ -34,7 +34,7 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
-use Google\ApiCore\Middleware\AuthWrapperMiddleware;
+use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
@@ -94,6 +94,45 @@ trait GapicClientTrait
     }
 
     /**
+     * Get default options. This function should be "overridden" by clients using late static
+     * binding to provide default options to the client.
+     *
+     * @return array
+     */
+    private static function getClientDefaults()
+    {
+        return [];
+    }
+
+    protected function buildClientOptions(array $options)
+    {
+        $defaultOptions = self::getClientDefaults() + [
+                'disableRetries' => false,
+                'credentials' => null,
+                'credentialsConfig' => [],
+                'transport' => null,
+                'transportConfig' => [],
+                'gapicVersion' => null,
+                'libName' => null,
+                'libVersion' => null,
+            ];
+        $defaultOptions['transportConfig'] += [
+            'grpc' => [],
+            'rest' => [],
+        ];
+
+        $options += $defaultOptions;
+
+        // For nested arrays, we want to preserve keys in $defaultOptions that are not specified
+        // in $options
+        $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];
+        $options['transportConfig']['grpc']  += $defaultOptions['transportConfig']['grpc'];
+        $options['transportConfig']['rest']  += $defaultOptions['transportConfig']['rest'];
+
+        return $options;
+    }
+
+    /**
      * Configures the GAPIC client based on an array of options.
      *
      * @param array $options {
@@ -110,18 +149,18 @@ trait GapicClientTrait
      *           path to a JSON file, or a PHP array containing the decoded JSON data.
      *           By default this settings points to the default client config file, which is provided
      *           in the resources folder.
-     *     @type string|array|FetchAuthTokenInterface|AuthWrapper $auth
+     *     @type string|array|FetchAuthTokenInterface|CredentialsWrapper $credentials
      *           The credentials to be used by the client to authorize API calls. This option
      *           accepts either a path to a credentials file, or a decoded credentials file as a
      *           PHP array.
      *           *Advanced usage*: In addition, this option can also accept a pre-constructed
-     *           \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\AuthWrapper
+     *           \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\CredentialsWrapper
      *           object. Note that when one of these objects are provided, any settings in
      *           $authConfig will be ignored.
-     *     @type array $authConfig
-     *           Options used to configure auth, including auth token caching, for the client. For
-     *           a full list of supporting configuration options, see
-     *           \Google\ApiCore\AuthWrapper::build.
+     *     @type array $credentialsConfig
+     *           Options used to configure credentials, including auth token caching, for the client.
+     *           For a full list of supporting configuration options, see
+     *           \Google\ApiCore\CredentialsWrapper::build.
      *     @type string|TransportInterface $transport
      *           The transport used for executing network requests. May be either the string `rest`
      *           or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
@@ -161,16 +200,17 @@ trait GapicClientTrait
             'descriptorsConfigPath',
             'clientConfig',
             'disableRetries',
-        ]);
-        $this->validate($options, [
-            'auth',
-            'authConfig',
-            'transport',
+            'credentialsConfig',
             'transportConfig',
         ]);
+        $this->validate($options, [
+            'credentials',
+            'transport',
+            'gapicVersion',
+            'libName',
+            'libVersion',
+        ]);
 
-        $transport = $options['transport'] ?: self::defaultTransport();
-        $transportConfig = $options['transportConfig'] ?: [];
         $clientConfig = $options['clientConfig'];
         if (is_string($clientConfig)) {
             $clientConfig = json_decode(file_get_contents($clientConfig), true);
@@ -181,45 +221,42 @@ trait GapicClientTrait
             $clientConfig,
             $options['disableRetries']
         );
-        $gapicVersion = isset($options['gapicVersion'])
-            ? $options['gapicVersion']
-            : self::getGapicVersion($options);
         $this->agentHeaderDescriptor = new AgentHeaderDescriptor([
-            'libName' => $this->pluck('libName', $options, false),
-            'libVersion' => $this->pluck('libVersion', $options, false),
-            'gapicVersion' => $gapicVersion,
+            'libName' => $options['libName'],
+            'libVersion' => $options['libVersion'],
+            'gapicVersion' => $options['gapicVersion'] ?: self::getGapicVersion($options),
         ]);
 
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
-        $authConfig = $options['authConfig'] ?: [];
-        $this->authWrapper = $this->createAuthWrapper($options['auth'], $authConfig);
+        $this->authWrapper = $this->createCredentialsWrapper($options['credentials'], $options['credentialsConfig']);
 
+        $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
-            : $this->createTransport($options['serviceAddress'], $transport, $transportConfig);
+            : $this->createTransport($options['serviceAddress'], $transport, $options['transportConfig']);
     }
 
     /**
      * @param mixed $auth
      * @param array $authConfig
-     * @return AuthWrapper
+     * @return CredentialsWrapper
      * @throws ValidationException
      */
-    private function createAuthWrapper($auth, array $authConfig)
+    private function createCredentialsWrapper($auth, array $authConfig)
     {
         if (is_null($auth)) {
-            return AuthWrapper::build($authConfig);
+            return CredentialsWrapper::build($authConfig);
         } elseif (is_string($auth) || is_array($auth)) {
-            return AuthWrapper::build(['keyFile' => $auth] + $authConfig);
+            return CredentialsWrapper::build(['keyFile' => $auth] + $authConfig);
         } elseif ($auth instanceof FetchAuthTokenInterface) {
             $authHttpHandler = isset($authConfig['authHttpHandler'])
                 ? $authConfig['authHttpHandler']
                 : null;
-            return new AuthWrapper($auth, $authHttpHandler);
-        } elseif ($auth instanceof AuthWrapper) {
+            return new CredentialsWrapper($auth, $authHttpHandler);
+        } elseif ($auth instanceof CredentialsWrapper) {
             return $auth;
         } else {
             throw new ValidationException(
@@ -337,7 +374,7 @@ trait GapicClientTrait
     {
         return new RetryMiddleware(
             new AgentHeaderMiddleware(
-                new AuthWrapperMiddleware(
+                new CredentialsWrapperMiddleware(
                     function (Call $call, array $options) {
                         $startCallMethod = $this->transportCallMethods[$call->getCallType()];
                         return $this->transport->$startCallMethod($call, $options);
@@ -427,8 +464,8 @@ trait GapicClientTrait
             $interfaceName
         )->then(function (Message $response) use ($client, $descriptor) {
             $options = $descriptor + [
-                'lastProtoResponse' => $response
-            ];
+                    'lastProtoResponse' => $response
+                ];
 
             return new OperationResponse($response->getName(), $client, $options);
         });
