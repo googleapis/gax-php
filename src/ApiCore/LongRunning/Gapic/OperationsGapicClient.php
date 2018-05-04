@@ -137,18 +137,18 @@ class OperationsGapicClient
      *     @type string $serviceAddress
      *           Required. The address of the API remote host. May optionally include the port,
      *           formatted as "<uri>:<port>".
-     *     @type string|array $auth
+     *     @type string|array $credentials
      *           The credentials to be used by the client to authorize API calls. This option
      *           accepts either a path to a credentials file, or a decoded credentials file as a
      *           PHP array.
      *           *Advanced usage*: In addition, this option can also accept a pre-constructed
-     *           \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\AuthWrapper
+     *           \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\CredentialsWrapper
      *           object. Note that when one of these objects are provided, any settings in
-     *           $authConfig will be ignored.
-     *     @type array $authConfig
-     *           Options used to configure auth, including auth token caching, for the client. For
+     *           $credentialsConfig will be ignored.
+     *     @type array $credentialsConfig
+     *           Options used to configure credentials, including auth token caching, for the client. For
      *           a full list of supporting configuration options, see
-     *           \Google\ApiCore\AuthWrapper::build.
+     *           \Google\ApiCore\CredentialsWrapper::build.
      *     @type bool $disableRetries
      *           Determines whether or not retries defined by the client configuration should be
      *           disabled. Defaults to `false`.
