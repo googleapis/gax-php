@@ -315,8 +315,8 @@ trait GapicClientTrait
             'descriptorsConfigPath',
         ], $options);
 
-        return $this->pluck('operationsClient', $operationsClientOptions, false)
-            ?: new OperationsClient($operationsClientOptions);
+        return $this->pluck('operationsClient', $options, false)
+            ?: new OperationsClient($options);
     }
 
     /**
