@@ -67,8 +67,8 @@ class OperationsClientTest extends GeneratedTest
     private function createClient(array $options = [])
     {
         return new OperationsClient($options + [
-        'serviceAddress' => '',
-        'scopes' => [],
+            'serviceAddress' => '',
+            'scopes' => [],
         ]);
     }
 

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2018 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -52,5 +52,5 @@ use Google\ApiCore\LongRunning\Gapic\OperationsGapicClient;
 class OperationsClient extends OperationsGapicClient
 {
     // This class is intentionally empty, and is intended to hold manual
-    // additions to the generated {@see OperationsClientImpl} class.
+    // additions to the generated {@see OperationsGapicClient} class.
 }

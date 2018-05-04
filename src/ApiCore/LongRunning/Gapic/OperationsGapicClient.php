@@ -96,6 +96,7 @@ use Google\Protobuf\GPBEmpty;
 class OperationsGapicClient
 {
     use GapicClientTrait;
+
     /**
      * The name of the service.
      */
@@ -117,11 +118,12 @@ class OperationsGapicClient
             'serviceName' => self::SERVICE_NAME,
             'clientConfig' => __DIR__.'/../resources/operations_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/../resources/operations_descriptor_config.php',
-            'authConfig' => [
+            'credentialsConfig' => [
             ],
             'transportConfig' => [
-                'rest' => ['restConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php'],
+                'rest' => ['restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php'],
             ],
+            'versionFile' => __DIR__.'/../../../VERSION',
         ];
     }
 
