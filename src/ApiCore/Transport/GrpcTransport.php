@@ -174,7 +174,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         );
 
         $promise = new Promise(
-            function () use ($unaryCall, $options) {
+            function () use ($unaryCall, $options, &$promise) {
                 list($response, $status) = $unaryCall->wait();
 
                 if ($status->code == Code::OK) {
@@ -182,12 +182,12 @@ class GrpcTransport extends BaseStub implements TransportInterface
                         $metadataCallback = $options['metadataCallback'];
                         $metadataCallback($unaryCall->getMetadata());
                     }
-                    return $response;
+                    return $promise->resolve($response);
                 } else {
                     throw ApiException::createFromStdClass($status);
                 }
             },
-            [$call, 'cancel']
+            [$unaryCall, 'cancel']
         );
 
         return $promise;
