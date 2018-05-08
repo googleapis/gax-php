@@ -308,6 +308,7 @@ trait GapicClientTrait
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
+
         $descriptor = isset($this->descriptors[$methodName]['grpcStreaming'])
             ? $this->descriptors[$methodName]['grpcStreaming']
             : null;
@@ -390,7 +391,7 @@ trait GapicClientTrait
      */
     protected function createCallStack(array $callConstructionOptions)
     {
-        $callStack = new RetryMiddleware(
+        return new RetryMiddleware(
             new AgentHeaderMiddleware(
                 new AuthWrapperMiddleware(
                     function (Call $call, array $options) {
@@ -403,15 +404,6 @@ trait GapicClientTrait
             ),
             $callConstructionOptions['retrySettings']
         );
-
-        if (isset($callConstructionOptions['pageStreaming'])) {
-            $callStack = new PagedCallMiddleware(
-                $callStack,
-                new PageStreamingDescriptor($callConstructionOptions['pageStreaming'])
-            );
-        }
-
-        return $callStack;
     }
 
     /**

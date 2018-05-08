@@ -50,6 +50,8 @@ use PHPUnit\Framework\TestCase;
 
 class GapicClientTraitTest extends TestCase
 {
+    use TestTrait;
+
     public function tearDown()
     {
         // Reset the static gapicVersion field between tests
@@ -244,6 +246,9 @@ class GapicClientTraitTest extends TestCase
      */
     public function testCreateTransport($serviceAddress, $transport, $transportConfig, $expectedTransportClass)
     {
+        if ($expectedTransportClass == GrpcTransport::class) {
+            $this->requiresGrpcExtension();
+        }
         $client = new GapicClientTraitStub();
         $transport = $client->call('createTransport', [
             $serviceAddress,
