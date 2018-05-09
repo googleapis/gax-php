@@ -106,28 +106,33 @@ trait GapicClientTrait
 
     protected function buildClientOptions(array $options)
     {
-        $defaultOptions = self::getClientDefaults() + [
-                'disableRetries' => false,
-                'credentials' => null,
-                'credentialsConfig' => [],
-                'transport' => null,
-                'transportConfig' => [],
-                'gapicVersion' => null,
-                'libName' => null,
-                'libVersion' => null,
-            ];
+        // Build $defaultOptions starting from top level
+        // variables, then going into deeper nesting, so that
+        // we will not encounter missing keys
+        $defaultOptions = self::getClientDefaults();
+        $defaultOptions += [
+            'disableRetries' => false,
+            'credentials' => null,
+            'credentialsConfig' => [],
+            'transport' => null,
+            'transportConfig' => [],
+            'gapicVersion' => null,
+            'libName' => null,
+            'libVersion' => null,
+        ];
         $defaultOptions['transportConfig'] += [
             'grpc' => [],
             'rest' => [],
         ];
 
+        // Merge defaults into $options starting from top level
+        // variables, then going into deeper nesting, so that
+        // we will not encounter missing keys
         $options += $defaultOptions;
-
-        // For nested arrays, we want to preserve keys in $defaultOptions that are not specified
-        // in $options
         $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];
-        $options['transportConfig']['grpc']  += $defaultOptions['transportConfig']['grpc'];
-        $options['transportConfig']['rest']  += $defaultOptions['transportConfig']['rest'];
+        $options['transportConfig'] += $defaultOptions['transportConfig'];
+        $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
+        $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
 
         return $options;
     }

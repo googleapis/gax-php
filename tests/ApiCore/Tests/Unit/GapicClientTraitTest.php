@@ -335,6 +335,72 @@ class GapicClientTraitTest extends TestCase
             [['disableRetries' => true], ['retrySettings' => $disabledRetrySettings] + $expectedProperties],
         ];
     }
+
+    /**
+     * @dataProvider buildClientOptionsProvider
+     */
+    public function testBuildClientOptions($options, $expectedUpdatedOptions)
+    {
+        $client = new GapicClientTraitStub();
+        $updatedOptions = $client->call('buildClientOptions', [$options]);
+        $this->assertEquals($expectedUpdatedOptions, $updatedOptions);
+    }
+
+    public function buildClientOptionsProvider()
+    {
+        $defaultOptions = [
+            'serviceAddress' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'disableRetries' => false,
+            'auth' => null,
+            'authConfig' => null,
+            'transport' => null,
+            'transportConfig' => [
+                'grpc' => [],
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+            'credentials' => null,
+            'credentialsConfig' => [],
+            'gapicVersion' => null,
+            'libName' => null,
+            'libVersion' => null,
+        ];
+
+        $restConfigOptions = $defaultOptions;
+        $restConfigOptions['transportConfig']['rest'] = [
+            'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+            'customRestConfig' => 'value'
+        ];
+        $grpcConfigOptions = $defaultOptions;
+        $grpcConfigOptions['transportConfig']['grpc'] = [
+            'customGrpcConfig' => 'value'
+        ];
+        return [
+            [[], $defaultOptions],
+            [
+                [
+                    'transportConfig' => [
+                        'rest' => [
+                            'customRestConfig' => 'value'
+                        ]
+                    ]
+                ], $restConfigOptions
+            ],
+            [
+                [
+                    'transportConfig' => [
+                        'grpc' => [
+                            'customGrpcConfig' => 'value'
+                        ]
+                    ]
+                ], $grpcConfigOptions
+            ],
+        ];
+    }
 }
 
 class GapicClientTraitStub

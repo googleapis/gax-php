@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2017 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -121,9 +121,10 @@ class OperationsGapicClient
             'credentialsConfig' => [
             ],
             'transportConfig' => [
-                'rest' => ['restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php'],
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/../resources/operations_rest_client_config.php'
+                ],
             ],
-            'versionFile' => __DIR__.'/../../../VERSION',
         ];
     }
 
