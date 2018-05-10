@@ -86,8 +86,8 @@ class GapicClientTraitTest extends TestCase
         $transport = $this->getMock(TransportInterface::class);
         $credentialsWrapper = CredentialsWrapper::build([]);
         $transport->expects($this->once())
-             ->method('startUnaryCall')
-             ->with(
+            ->method('startUnaryCall')
+            ->with(
                 $this->isInstanceOf(Call::class),
                 $this->equalTo([
                     'headers' => $expectedHeaders,

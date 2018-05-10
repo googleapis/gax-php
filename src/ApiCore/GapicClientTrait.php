@@ -242,7 +242,10 @@ trait GapicClientTrait
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
-        $this->credentialsWrapper = $this->createCredentialsWrapper($options['credentials'], $options['credentialsConfig']);
+        $this->credentialsWrapper = $this->createCredentialsWrapper(
+            $options['credentials'],
+            $options['credentialsConfig']
+        );
 
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
