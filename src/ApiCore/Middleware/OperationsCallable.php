@@ -32,41 +32,48 @@
 namespace Google\ApiCore\Middleware;
 
 use Google\ApiCore\Call;
+use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\OperationResponse;
 use Google\Protobuf\Internal\Message;
-use GuzzleHttp\Promise\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
- * Middleware which transforms $response into [$response, $metadata]
+ * Callable which wraps the response in an OperationResponse object.
  */
-class MetadataMiddleware
+class OperationsCallable
 {
     /** @var callable */
     private $nextHandler;
 
-    /**
-     * @param callable $nextHandler
-     */
-    public function __construct(callable $nextHandler)
-    {
+    /** @var OperationsClient */
+    private $client;
+
+    /** @var array */
+    private $descriptor;
+
+    public function __construct(
+        callable $nextHandler,
+        OperationsClient $client,
+        array $descriptor
+    ) {
         $this->nextHandler = $nextHandler;
+        $this->client = $client;
+        $this->descriptor = $descriptor;
     }
 
     public function __invoke(Call $call, array $options)
     {
-        $metadataReceiver = new Promise();
-        $options['metadataCallback'] = function ($metadata) use ($metadataReceiver) {
-            $metadataReceiver->resolve($metadata);
-        };
         $next = $this->nextHandler;
-        return $next($call, $options)->then(
-            function (Message $response) use ($metadataReceiver) {
-                if ($metadataReceiver->getState() == PromiseInterface::FULFILLED) {
-                    return [$response, $metadataReceiver->wait()];
-                } else {
-                    return [$response, []];
-                }
-            }
-        );
+        $client = $this->client;
+        $descriptor = $this->descriptor;
+        return $next(
+            $call,
+            $options
+        )->then(function (Message $response) use ($client, $descriptor) {
+            $options = $descriptor + [
+                    'lastProtoResponse' => $response
+                ];
+
+            return new OperationResponse($response->getName(), $client, $options);
+        });
     }
 }

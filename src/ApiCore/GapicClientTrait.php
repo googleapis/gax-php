@@ -34,9 +34,8 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
-use Google\ApiCore\Middleware\MetadataMiddleware;
-use Google\ApiCore\Middleware\OperationsCallMiddleware;
-use Google\ApiCore\Middleware\PagedCallMiddleware;
+use Google\ApiCore\Middleware\OperationsCallable;
+use Google\ApiCore\Middleware\PagedCallable;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Transport\GrpcTransport;
@@ -56,7 +55,9 @@ trait GapicClientTrait
     use ValidationTrait;
     use GrpcSupportTrait;
 
+    /** @access private */
     protected $transport;
+
     private static $gapicVersion;
     private $retrySettings;
     private $serviceName;
@@ -101,13 +102,14 @@ trait GapicClientTrait
      * binding to provide default options to the client.
      *
      * @return array
+     * @access private
      */
     private static function getClientDefaults()
     {
         return [];
     }
 
-    protected function buildClientOptions(array $options)
+    private function buildClientOptions(array $options)
     {
         // Build $defaultOptions starting from top level
         // variables, then going into deeper nesting, so that
@@ -137,7 +139,19 @@ trait GapicClientTrait
         $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
         $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
 
+        $this->modifyClientOptions($options);
         return $options;
+    }
+
+    /**
+     * Modify options passed to the client before calling setClientOptions.
+     * 
+     * @param array $options
+     * @access private
+     */
+    protected function modifyClientOptions(array &$options)
+    {
+        // Do nothing - this method exists to allow option modification by partial veneers.
     }
 
     /**
@@ -200,7 +214,7 @@ trait GapicClientTrait
      * }
      * @throws ValidationException
      */
-    protected function setClientOptions(array $options)
+    private function setClientOptions(array $options)
     {
         $this->validateNotNull($options, [
             'serviceAddress',
@@ -245,6 +259,19 @@ trait GapicClientTrait
         $this->transport = $transport instanceof TransportInterface
             ? $transport
             : $this->createTransport($options['serviceAddress'], $transport, $options['transportConfig']);
+
+        $this->setCustomClientOptions($options);
+    }
+
+    /**
+     * Set custom options on the client.
+     * 
+     * @param array $options
+     * @access private
+     */
+    protected function setCustomClientOptions($options)
+    {
+        // Do nothing - this method exists to allow setting custom options by partial veneers.
     }
 
     /**
@@ -355,7 +382,7 @@ trait GapicClientTrait
      *
      * @return PromiseInterface|BidiStream|ClientStream|ServerStream
      */
-    protected function startCall(
+    private function startCall(
         $methodName,
         $decodeType,
         array $optionalArgs = [],
@@ -389,7 +416,9 @@ trait GapicClientTrait
     }
 
     /**
-     * @param callable $callStack
+     * Start the unary call.
+     * 
+     * @param callable $callable
      * @param Call $call
      * @param array $optionalArgs {
      *     Call Options
@@ -402,20 +431,20 @@ trait GapicClientTrait
      * }
      *
      * @return PromiseInterface
+     * @access private
      */
     protected function startUnaryCall(
-        $callStack,
+        $callable,
         $call,
         array $optionalArgs
     ) {
-        if (isset($optionalArgs['withMetadata']) && $optionalArgs['withMetadata']) {
-            $callStack = new MetadataMiddleware($callStack);
-        }
-        return $callStack($call, $optionalArgs);
+        return $callable($call, $optionalArgs);
     }
 
     /**
-     * @param callable $callStack
+     * Start the streaming call.
+     * 
+     * @param callable $callable
      * @param Call $call
      * @param array $optionalArgs {
      *     Call Options
@@ -430,11 +459,11 @@ trait GapicClientTrait
      * @return BidiStream|ClientStream|ServerStream
      */
     protected function startStreamingCall(
-        $callStack,
+        $callable,
         $call,
         array $optionalArgs
     ) {
-        return $callStack($call, $optionalArgs);
+        return $callable($call, $optionalArgs);
     }
 
     /**
@@ -447,7 +476,7 @@ trait GapicClientTrait
      *
      * @return callable
      */
-    protected function createCallStack(array $callConstructionOptions)
+    private function createCallStack(array $callConstructionOptions)
     {
         return new RetryMiddleware(
             new AgentHeaderMiddleware(
@@ -465,26 +494,6 @@ trait GapicClientTrait
     }
 
     /**
-     * @param array $optionalArgs {
-     *     Optional arguments
-     *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     * }
-     *
-     * @return array
-     */
-    protected function configureCallOptions(array $optionalArgs)
-    {
-        return $this->pluckArray([
-            'headers',
-            'timeoutMillis',
-            'transportOptions',
-        ], $optionalArgs);
-    }
-
-    /**
      * @param string $methodName
      * @param array $optionalArgs {
      *     Optional arguments
@@ -495,7 +504,7 @@ trait GapicClientTrait
      *
      * @return array
      */
-    protected function configureCallConstructionOptions($methodName, array $optionalArgs)
+    private function configureCallConstructionOptions($methodName, array $optionalArgs)
     {
         $retrySettings = $this->retrySettings[$methodName];
         // Allow for retry settings to be changed at call time
@@ -524,18 +533,18 @@ trait GapicClientTrait
      *
      * @return PromiseInterface
      */
-    protected function startOperationsCall(
+    private function startOperationsCall(
         $methodName,
         array $optionalArgs,
         Message $request,
         OperationsClient $client,
         $interfaceName = null
     ) {
-        $callStack = $this->createCallStack(
+        $callable = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
         $descriptor = $this->descriptors[$methodName]['longRunning'];
-        $callStack = new OperationsCallMiddleware($callStack, $client, $descriptor);
+        $callable = new OperationsCallable($callable, $client, $descriptor);
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
@@ -545,7 +554,7 @@ trait GapicClientTrait
             Call::UNARY_CALL
         );
 
-        return $this->startUnaryCall($callStack, $call, $optionalArgs);
+        return $this->startUnaryCall($callable, $call, $optionalArgs);
     }
 
     /**
@@ -557,20 +566,20 @@ trait GapicClientTrait
      *
      * @return PagedListResponse
      */
-    protected function getPagedListResponse(
+    private function getPagedListResponse(
         $methodName,
         array $optionalArgs,
         $decodeType,
         Message $request,
         $interfaceName = null
     ) {
-        $callStack = $this->createCallStack(
+        $callable = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
         $descriptor = new PageStreamingDescriptor(
             $this->descriptors[$methodName]['pageStreaming']
         );
-        $callStack = new PagedCallMiddleware($callStack, $descriptor);
+        $callable = new PagedCallable($callable, $descriptor);
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
@@ -579,7 +588,7 @@ trait GapicClientTrait
             [],
             Call::UNARY_CALL
         );
-        return $this->startUnaryCall($callStack, $call, $optionalArgs)->wait();
+        return $this->startUnaryCall($callable, $call, $optionalArgs)->wait();
     }
 
     /**
@@ -588,7 +597,7 @@ trait GapicClientTrait
      *
      * @return string
      */
-    protected function buildMethod($interfaceName, $methodName)
+    private function buildMethod($interfaceName, $methodName)
     {
         return sprintf(
             '%s/%s',
