@@ -132,8 +132,8 @@ class RestTransport implements TransportInterface
             : [];
 
         // If not already set, add an auth header to the request
-        if (!isset($headers['Authorization']) && isset($options['authWrapper'])) {
-            $headers['Authorization'] = $options['authWrapper']->getBearerString();
+        if (!isset($headers['Authorization']) && isset($options['credentialsWrapper'])) {
+            $headers['Authorization'] = $options['credentialsWrapper']->getBearerString();
         }
 
         // call the HTTP handler

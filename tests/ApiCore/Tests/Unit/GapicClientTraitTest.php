@@ -33,20 +33,26 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeaderDescriptor;
+use Google\ApiCore\BidiStream;
+use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\RetrySettings;
+use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\LongRunning\Operation;
 use GPBMetadata\Google\Api\Auth;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\FulfilledPromise;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 
 class GapicClientTraitTest extends TestCase
 {
@@ -78,14 +84,14 @@ class GapicClientTraitTest extends TestCase
             'new-header' => ['this-should-be-used'],
         ];
         $transport = $this->getMock(TransportInterface::class);
-        $authWrapper = CredentialsWrapper::build([]);
+        $credentialsWrapper = CredentialsWrapper::build([]);
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->with(
                 $this->isInstanceOf(Call::class),
                 $this->equalTo([
                     'headers' => $expectedHeaders,
-                    'authWrapper' => $authWrapper,
+                    'credentialsWrapper' => $credentialsWrapper,
                 ])
             );
         $client = new GapicClientTraitStub();
@@ -97,7 +103,7 @@ class GapicClientTraitTest extends TestCase
             ]
         );
         $client->set('transport', $transport);
-        $client->set('authWrapper', $authWrapper);
+        $client->set('credentialsWrapper', $credentialsWrapper);
         $client->call('startCall', [
             'method',
             'decodeType',
@@ -128,10 +134,10 @@ class GapicClientTraitTest extends TestCase
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->will($this->returnValue($expectedPromise));
-        $authWrapper = CredentialsWrapper::build([]);
+        $credentialsWrapper = CredentialsWrapper::build([]);
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
-        $client->set('authWrapper', $authWrapper);
+        $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeaderDescriptor', $agentHeaderDescriptor);
         $client->set('retrySettings', ['method' => $retrySettings]);
         $client->set('descriptors', ['method' => $longRunningDescriptors]);
@@ -190,13 +196,13 @@ class GapicClientTraitTest extends TestCase
         $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
         $keyFile = json_decode(file_get_contents($keyFilePath), true);
         $fetcher = $this->prophesize(FetchAuthTokenInterface::class)->reveal();
-        $authWrapper = new CredentialsWrapper($fetcher);
+        $credentialsWrapper = new CredentialsWrapper($fetcher);
         return [
             [null, [], CredentialsWrapper::build()],
             [$keyFilePath, [], CredentialsWrapper::build(['keyFile' => $keyFile])],
             [$keyFile, [], CredentialsWrapper::build(['keyFile' => $keyFile])],
             [$fetcher, [], new CredentialsWrapper($fetcher)],
-            [$authWrapper, [], $authWrapper],
+            [$credentialsWrapper, [], $credentialsWrapper],
         ];
     }
 
@@ -414,6 +420,187 @@ class GapicClientTraitTest extends TestCase
             ],
         ];
     }
+
+    public function testModifyClientOptions()
+    {
+        $options = [];
+        $client = new GapicClientTraitStubExtension();
+        $updatedOptions = $client->call('buildClientOptions', [$options]);
+
+        $this->assertArrayHasKey('addNewOption', $updatedOptions);
+        $this->assertSame(true, $updatedOptions['disableRetries']);
+    }
+
+    private function buildClientToTestModifyCallMethods()
+    {
+        $agentHeaderDescriptor = $this->getMockBuilder(AgentHeaderDescriptor::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $agentHeaderDescriptor->expects($this->once())
+            ->method('getHeader')
+            ->will($this->returnValue([]));
+        $retrySettings = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $longRunningDescriptors = [
+            'longRunning' => [
+                'operationReturnType' => 'operationType',
+                'metadataReturnType' => 'metadataType',
+            ]
+        ];
+        $pageStreamingDescriptors = [
+            'pageStreaming' => [
+                'requestPageTokenGetMethod' => 'getPageToken',
+                'requestPageTokenSetMethod' => 'setPageToken',
+                'requestPageSizeGetMethod' => 'getPageSize',
+                'requestPageSizeSetMethod' => 'setPageSize',
+                'responsePageTokenGetMethod' => 'getNextPageToken',
+                'resourcesGetMethod' => 'getResources',
+            ],
+        ];
+        $transport = $this->getMock(TransportInterface::class);
+        $credentialsWrapper = CredentialsWrapper::build([]);
+        $client = new GapicClientTraitStubExtension();
+        $client->set('transport', $transport);
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeaderDescriptor', $agentHeaderDescriptor);
+        $client->set('retrySettings', [
+            'simpleMethod' => $retrySettings,
+            'longRunningMethod' => $retrySettings,
+            'pagedMethod' => $retrySettings,
+            'bidiStreamingMethod' => $retrySettings,
+            'clientStreamingMethod' => $retrySettings,
+            'serverStreamingMethod' => $retrySettings,
+        ]);
+        $client->set('descriptors', [
+            'longRunningMethod' => $longRunningDescriptors,
+            'pagedMethod' => $pageStreamingDescriptors,
+        ]);
+        return [$client, $transport];
+    }
+
+    public function testModifyUnaryCallFromStartCall()
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods();
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->arrayHasKey("addModifyUnaryCallableOption")
+            )
+            ->willReturn(new FulfilledPromise(new Operation()));
+        $client->call('startCall', [
+            'simpleMethod',
+            'decodeType',
+            [],
+            new MockRequest(),
+        ])->wait();
+    }
+
+    public function testModifyUnaryCallFromOperationsCall()
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods();
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->arrayHasKey("addModifyUnaryCallableOption")
+            )
+            ->willReturn(new FulfilledPromise(new Operation()));
+        $operationsClient = $this->getMockBuilder(OperationsClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $client->call('startOperationsCall', [
+            'longRunningMethod',
+            [],
+            new MockRequest(),
+            $operationsClient
+        ])->wait();
+    }
+
+    public function testModifyUnaryCallFromGetPagedListResponse()
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods();
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->arrayHasKey("addModifyUnaryCallableOption")
+            )
+            ->willReturn(new FulfilledPromise(new Operation()));
+        $client->call('getPagedListResponse', [
+            'pagedMethod',
+            [],
+            'decodeType',
+            new MockRequest(),
+        ]);
+    }
+
+    /**
+     * @dataProvider modifyStreamingCallFromStartCallData
+     */
+    public function testModifyStreamingCallFromStartCall($callArgs, $expectedMethod, $expectedResponse)
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods();
+        $transport->expects($this->once())
+            ->method($expectedMethod)
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->arrayHasKey("addModifyStreamingCallable")
+            )
+            ->willReturn($expectedResponse);
+        $message = new MockRequest();
+        $operationsClient = $this->getMockBuilder(OperationsClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $client->call('startCall', $callArgs);
+    }
+
+    public function modifyStreamingCallFromStartCallData()
+    {
+        return [
+            [
+                [
+                    'bidiStreamingMethod',
+                    '',
+                    [],
+                    null,
+                    Call::BIDI_STREAMING_CALL
+                ],
+                'startBidiStreamingCall',
+                $this->getMockBuilder(BidiStream::class)
+                    ->disableOriginalConstructor()
+                    ->getMock()
+            ],
+            [
+                [
+                    'clientStreamingMethod',
+                    '',
+                    [],
+                    null,
+                    Call::CLIENT_STREAMING_CALL
+                ],
+                'startClientStreamingCall',
+                $this->getMockBuilder(ClientStream::class)
+                    ->disableOriginalConstructor()
+                    ->getMock()
+            ],
+            [
+                [
+                    'serverStreamingMethod',
+                    '',
+                    [],
+                    new MockRequest(),
+                    Call::SERVER_STREAMING_CALL
+                ],
+                'startServerStreamingCall',
+                $this->getMockBuilder(ServerStream::class)
+                    ->disableOriginalConstructor()
+                    ->getMock()
+            ],
+        ];
+    }
 }
 
 class GapicClientTraitStub
@@ -446,6 +633,9 @@ class GapicClientTraitStub
 
     public function set($name, $val, $static = false)
     {
+        if (!property_exists($this, $name)) {
+            throw new \InvalidArgumentException("Property not found: $name");
+        }
         if ($static) {
             $this::$$name = $val;
         } else {
@@ -455,6 +645,36 @@ class GapicClientTraitStub
 
     public function get($name)
     {
+        if (!property_exists($this, $name)) {
+            throw new \InvalidArgumentException("Property not found: $name");
+        }
         return $this->$name;
+    }
+}
+
+class GapicClientTraitStubExtension extends GapicClientTraitStub
+{
+    protected function modifyClientOptions(array &$options)
+    {
+        $options['disableRetries'] = true;
+        $options['addNewOption'] = true;
+    }
+
+    protected function modifyUnaryCallable(&$callable)
+    {
+        $originalCallable = $callable;
+        $callable = function ($call, $options) use ($originalCallable) {
+            $options['addModifyUnaryCallableOption'] = true;
+            return $originalCallable($call, $options);
+        };
+    }
+
+    protected function modifyStreamingCallable(&$callable)
+    {
+        $originalCallable = $callable;
+        $callable = function ($call, $options) use ($originalCallable) {
+            $options['addModifyStreamingCallable'] = true;
+            return $originalCallable($call, $options);
+        };
     }
 }

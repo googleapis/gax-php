@@ -182,7 +182,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                         $metadataCallback = $options['metadataCallback'];
                         $metadataCallback($unaryCall->getMetadata());
                     }
-                    return $promise->resolve($response);
+                    $promise->resolve($response);
                 } else {
                     throw ApiException::createFromStdClass($status);
                 }
@@ -199,8 +199,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ? $options['transportOptions']['grpcOptions']
             : [];
 
-        if (isset($options['authWrapper'])) {
-            $callOptions['call_credentials_callback'] = $options['authWrapper']->getAuthorizationHeaderCallback();
+        if (isset($options['credentialsWrapper'])) {
+            $callOptions['call_credentials_callback'] = $options['credentialsWrapper']->getAuthorizationHeaderCallback();
         }
 
         if (isset($options['timeoutMillis'])) {

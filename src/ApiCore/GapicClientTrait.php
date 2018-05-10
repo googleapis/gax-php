@@ -54,7 +54,6 @@ trait GapicClientTrait
     use ArrayTrait;
     use ValidationTrait;
     use GrpcSupportTrait;
-    use GapicClientExtensionPointsTrait;
 
     /** @access private */
     protected $transport;
@@ -63,7 +62,7 @@ trait GapicClientTrait
     private $retrySettings;
     private $serviceName;
     private $agentHeaderDescriptor;
-    private $authWrapper;
+    private $credentialsWrapper;
     private $descriptors;
     private $transportCallMethods = [
         Call::UNARY_CALL => 'startUnaryCall',
@@ -243,14 +242,12 @@ trait GapicClientTrait
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
-        $this->authWrapper = $this->createCredentialsWrapper($options['credentials'], $options['credentialsConfig']);
+        $this->credentialsWrapper = $this->createCredentialsWrapper($options['credentials'], $options['credentialsConfig']);
 
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
             : $this->createTransport($options['serviceAddress'], $transport, $options['transportConfig']);
-
-        $this->setCustomClientOptions($options);
     }
 
     /**
@@ -387,12 +384,14 @@ trait GapicClientTrait
         switch ($callType) {
             case Call::UNARY_CALL:
                 $this->modifyUnaryCallable($callStack);
-                
+                break;
             case Call::BIDI_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
             case Call::SERVER_STREAMING_CALL:
                 $this->modifyStreamingCallable($callStack);
+                break;
         }
+        
         return $callStack($call, $optionalArgs);
     }
 
@@ -415,7 +414,7 @@ trait GapicClientTrait
                         $startCallMethod = $this->transportCallMethods[$call->getCallType()];
                         return $this->transport->$startCallMethod($call, $options);
                     },
-                    $this->authWrapper
+                    $this->credentialsWrapper
                 ),
                 $this->agentHeaderDescriptor
             ),
@@ -537,5 +536,43 @@ trait GapicClientTrait
             $interfaceName ?: $this->serviceName,
             $methodName
         );
+    }
+
+    // Gapic Client Extension Points
+    // The methods below provide extension points that can be used to customize client
+    // functionality. These extension points are currently considered
+    // private and may change at any time.
+
+    /**
+     * Modify options passed to the client before calling setClientOptions.
+     *
+     * @param array $options
+     * @access private
+     */
+    protected function modifyClientOptions(array &$options)
+    {
+        // Do nothing - this method exists to allow option modification by partial veneers.
+    }
+
+    /**
+     * Modify the unary callable.
+     *
+     * @param callable $callable
+     * @access private
+     */
+    protected function modifyUnaryCallable(&$callable)
+    {
+        // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * Modify the streaming callable.
+     *
+     * @param callable $callable
+     * @access private
+     */
+    protected function modifyStreamingCallable(&$callable)
+    {
+        // Do nothing - this method exists to allow callable modification by partial veneers.
     }
 }

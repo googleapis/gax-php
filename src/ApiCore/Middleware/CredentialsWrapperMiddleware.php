@@ -35,7 +35,7 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
 
 /**
-* Middleware which adds an AuthWrapper object to the call options.
+* Middleware which adds a CredentialsWrapper object to the call options.
 */
 class CredentialsWrapperMiddleware
 {
@@ -43,14 +43,14 @@ class CredentialsWrapperMiddleware
     private $nextHandler;
 
     /** @var CredentialsWrapper */
-    private $authWrapper;
+    private $credentialsWrapper;
 
     public function __construct(
         callable $nextHandler,
-        CredentialsWrapper $authWrapper
+        CredentialsWrapper $credentialsWrapper
     ) {
         $this->nextHandler = $nextHandler;
-        $this->authWrapper = $authWrapper;
+        $this->credentialsWrapper = $credentialsWrapper;
     }
 
     public function __invoke(Call $call, array $options)
@@ -58,7 +58,7 @@ class CredentialsWrapperMiddleware
         $next = $this->nextHandler;
         return $next(
             $call,
-            $options + ['authWrapper' => $this->authWrapper]
+            $options + ['credentialsWrapper' => $this->credentialsWrapper]
         );
     }
 }
