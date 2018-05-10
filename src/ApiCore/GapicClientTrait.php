@@ -54,6 +54,7 @@ trait GapicClientTrait
     use ArrayTrait;
     use ValidationTrait;
     use GrpcSupportTrait;
+    use GapicClientExtensionPointsTrait;
 
     /** @access private */
     protected $transport;
@@ -141,17 +142,6 @@ trait GapicClientTrait
 
         $this->modifyClientOptions($options);
         return $options;
-    }
-
-    /**
-     * Modify options passed to the client before calling setClientOptions.
-     * 
-     * @param array $options
-     * @access private
-     */
-    protected function modifyClientOptions(array &$options)
-    {
-        // Do nothing - this method exists to allow option modification by partial veneers.
     }
 
     /**
@@ -261,17 +251,6 @@ trait GapicClientTrait
             : $this->createTransport($options['serviceAddress'], $transport, $options['transportConfig']);
 
         $this->setCustomClientOptions($options);
-    }
-
-    /**
-     * Set custom options on the client.
-     * 
-     * @param array $options
-     * @access private
-     */
-    protected function setCustomClientOptions($options)
-    {
-        // Do nothing - this method exists to allow setting custom options by partial veneers.
     }
 
     /**
@@ -407,63 +386,14 @@ trait GapicClientTrait
         );
         switch ($callType) {
             case Call::UNARY_CALL:
-                return $this->startUnaryCall($callStack, $call, $optionalArgs);
+                $this->modifyUnaryCallable($callStack);
+                
             case Call::BIDI_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
             case Call::SERVER_STREAMING_CALL:
-                return $this->startStreamingCall($callStack, $call, $optionalArgs);
+                $this->modifyStreamingCallable($callStack);
         }
-    }
-
-    /**
-     * Start the unary call.
-     * 
-     * @param callable $callable
-     * @param Call $call
-     * @param array $optionalArgs {
-     *     Call Options
-     *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings $retrySettings [optional] A retry settings override
-     *           For the call.
-     * }
-     *
-     * @return PromiseInterface
-     * @access private
-     */
-    protected function startUnaryCall(
-        $callable,
-        $call,
-        array $optionalArgs
-    ) {
-        return $callable($call, $optionalArgs);
-    }
-
-    /**
-     * Start the streaming call.
-     * 
-     * @param callable $callable
-     * @param Call $call
-     * @param array $optionalArgs {
-     *     Call Options
-     *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings $retrySettings [optional] A retry settings override
-     *           For the call.
-     * }
-     *
-     * @return BidiStream|ClientStream|ServerStream
-     */
-    protected function startStreamingCall(
-        $callable,
-        $call,
-        array $optionalArgs
-    ) {
-        return $callable($call, $optionalArgs);
+        return $callStack($call, $optionalArgs);
     }
 
     /**
@@ -554,7 +484,8 @@ trait GapicClientTrait
             Call::UNARY_CALL
         );
 
-        return $this->startUnaryCall($callable, $call, $optionalArgs);
+        $this->modifyUnaryCallable($callable);
+        return $callable($call, $optionalArgs);
     }
 
     /**
@@ -588,7 +519,9 @@ trait GapicClientTrait
             [],
             Call::UNARY_CALL
         );
-        return $this->startUnaryCall($callable, $call, $optionalArgs)->wait();
+        
+        $this->modifyUnaryCallable($callable);
+        return $callable($call, $optionalArgs)->wait();
     }
 
     /**
