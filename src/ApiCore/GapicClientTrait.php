@@ -34,9 +34,9 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
-use Google\ApiCore\Middleware\OperationsCallable;
+use Google\ApiCore\Middleware\OperationsMiddleware;
 use Google\ApiCore\Middleware\OptionsFilterMiddleware;
-use Google\ApiCore\Middleware\PagedCallable;
+use Google\ApiCore\Middleware\PagedMiddleware;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Transport\GrpcTransport;
@@ -370,7 +370,7 @@ trait GapicClientTrait
         $callType = Call::UNARY_CALL,
         $interfaceName = null
     ) {
-        $callStack = $this->createCallStack(
+        $callable = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
 
@@ -387,16 +387,16 @@ trait GapicClientTrait
         );
         switch ($callType) {
             case Call::UNARY_CALL:
-                $this->modifyUnaryCallable($callStack);
+                $this->modifyUnaryCallable($callable);
                 break;
             case Call::BIDI_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
             case Call::SERVER_STREAMING_CALL:
-                $this->modifyStreamingCallable($callStack);
+                $this->modifyStreamingCallable($callable);
                 break;
         }
         
-        return $callStack($call, $optionalArgs);
+        return $callable($call, $optionalArgs);
     }
 
     /**
@@ -479,7 +479,7 @@ trait GapicClientTrait
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
         $descriptor = $this->descriptors[$methodName]['longRunning'];
-        $callable = new OperationsCallable($callable, $client, $descriptor);
+        $callable = new OperationsMiddleware($callable, $client, $descriptor);
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
@@ -515,7 +515,7 @@ trait GapicClientTrait
         $descriptor = new PageStreamingDescriptor(
             $this->descriptors[$methodName]['pageStreaming']
         );
-        $callable = new PagedCallable($callable, $descriptor);
+        $callable = new PagedMiddleware($callable, $descriptor);
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),

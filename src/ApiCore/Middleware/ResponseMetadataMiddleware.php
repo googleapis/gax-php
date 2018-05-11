@@ -32,45 +32,41 @@
 namespace Google\ApiCore\Middleware;
 
 use Google\ApiCore\Call;
-use Google\ApiCore\LongRunning\OperationsClient;
-use Google\ApiCore\OperationResponse;
 use Google\Protobuf\Internal\Message;
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
- * Callable which wraps the response in an OperationResponse object.
+ * Middleware which transforms $response into [$response, $metadata]
  */
-class OperationsCallable
+class ResponseMetadataMiddleware
 {
     /** @var callable */
     private $nextHandler;
 
-    /** @var OperationsClient */
-    private $client;
-
-    /** @var array */
-    private $descriptor;
-
-    public function __construct(
-        callable $nextHandler,
-        OperationsClient $client,
-        array $descriptor
-    ) {
+    /**
+     * @param callable $nextHandler
+     */
+    public function __construct(callable $nextHandler)
+    {
         $this->nextHandler = $nextHandler;
-        $this->client = $client;
-        $this->descriptor = $descriptor;
     }
 
     public function __invoke(Call $call, array $options)
     {
+        $metadataReceiver = new Promise();
+        $options['metadataCallback'] = function ($metadata) use ($metadataReceiver) {
+            $metadataReceiver->resolve($metadata);
+        };
         $next = $this->nextHandler;
-        return $next(
-            $call,
-            $options
-        )->then(function (Message $response) {
-            $options = $this->descriptor + [
-                'lastProtoResponse' => $response
-            ];
-            return new OperationResponse($response->getName(), $this->client, $options);
-        });
+        return $next($call, $options)->then(
+            function (Message $response) use ($metadataReceiver) {
+                if ($metadataReceiver->getState() === PromiseInterface::FULFILLED) {
+                    return [$response, $metadataReceiver->wait()];
+                } else {
+                    return [$response, []];
+                }
+            }
+        );
     }
 }

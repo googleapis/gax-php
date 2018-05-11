@@ -38,9 +38,9 @@ use Google\ApiCore\PageStreamingDescriptor;
 use Google\Protobuf\Internal\Message;
 
 /**
-* Callable which wraps the response in an PagedListResponses object.
+* Middleware which wraps the response in an PagedListResponses object.
 */
-class PagedCallable
+class PagedMiddleware
 {
     /** @var callable */
     private $nextHandler;
