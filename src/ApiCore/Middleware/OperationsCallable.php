@@ -63,16 +63,14 @@ class OperationsCallable
     public function __invoke(Call $call, array $options)
     {
         $next = $this->nextHandler;
-        $client = $this->client;
-        $descriptor = $this->descriptor;
         return $next(
             $call,
             $options
-        )->then(function (Message $response) use ($client, $descriptor) {
-            $options = $descriptor + [
+        )->then(function (Message $response) {
+            $options = $this->descriptor + [
                 'lastProtoResponse' => $response
             ];
-            return new OperationResponse($response->getName(), $client, $options);
+            return new OperationResponse($response->getName(), $this->client, $options);
         });
     }
 }

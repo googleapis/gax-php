@@ -39,6 +39,7 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\OperationResponse;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockRequest;
@@ -127,9 +128,13 @@ class GapicClientTraitTest extends TestCase
             'longRunning' => [
                 'operationReturnType' => 'operationType',
                 'metadataReturnType' => 'metadataType',
+                'initialPollDelayMillis' => 100,
+                'pollDelayMultiplier' => 1.0,
+                'maxPollDelayMillis' => 200,
+                'totalPollTimeoutMillis' => 300,
             ]
         ];
-        $expectedPromise = $this->getMock(PromiseInterface::class);
+        $expectedPromise = new FulfilledPromise(new Operation());
         $transport = $this->getMock(TransportInterface::class);
         $transport->expects($this->once())
              ->method('startUnaryCall')
@@ -145,12 +150,20 @@ class GapicClientTraitTest extends TestCase
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $client->call('startOperationsCall', [
+        $response = $client->call('startOperationsCall', [
             'method',
             [],
             $message,
             $operationsClient
-        ]);
+        ])->wait();
+
+        $expectedResponse = new OperationResponse(
+            '',
+            $operationsClient,
+            $longRunningDescriptors['longRunning'] + ['lastProtoResponse' => new Operation()]
+        );
+
+        $this->assertEquals($expectedResponse, $response);
     }
 
     public function testGetGapicVersionWithVersionFile()
