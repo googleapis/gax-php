@@ -55,7 +55,8 @@ trait TestTrait
 
     public function createMockResponse($pageToken = null, $resourcesList = [])
     {
-        $mockResponse = $this->getMockBuilder(MockResponse::class)
+        $mockResponse = $this->getMockBuilder(\Google\ApiCore\Testing\MockResponse::class)
+            ->disableOriginalConstructor()
             ->setMethods(['getResourcesList', 'getNextPageToken'])
             ->getMock();
         $mockResponse->method('getNextPageToken')

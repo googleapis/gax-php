@@ -66,7 +66,7 @@ class Page implements IteratorAggregate
         array $options,
         callable $callable,
         PageStreamingDescriptor $pageStreamingDescriptor,
-        $response
+        Message $response
     ) {
         $this->call = $call;
         $this->options = $options;

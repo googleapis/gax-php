@@ -680,7 +680,7 @@ class GapicClientTraitStubExtension extends GapicClientTraitStub
         $options['addNewOption'] = true;
     }
 
-    protected function modifyUnaryCallable(&$callable)
+    protected function modifyUnaryCallable(callable &$callable)
     {
         $originalCallable = $callable;
         $callable = function ($call, $options) use ($originalCallable) {
@@ -691,7 +691,7 @@ class GapicClientTraitStubExtension extends GapicClientTraitStub
         };
     }
 
-    protected function modifyStreamingCallable(&$callable)
+    protected function modifyStreamingCallable(callable &$callable)
     {
         $originalCallable = $callable;
         $callable = function ($call, $options) use ($originalCallable) {

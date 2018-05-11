@@ -566,7 +566,7 @@ trait GapicClientTrait
      * @param callable $callable
      * @access private
      */
-    protected function modifyUnaryCallable(&$callable)
+    protected function modifyUnaryCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
     }
@@ -577,7 +577,7 @@ trait GapicClientTrait
      * @param callable $callable
      * @access private
      */
-    protected function modifyStreamingCallable(&$callable)
+    protected function modifyStreamingCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
     }

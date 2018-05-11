@@ -70,9 +70,8 @@ class OperationsCallable
             $options
         )->then(function (Message $response) use ($client, $descriptor) {
             $options = $descriptor + [
-                    'lastProtoResponse' => $response
-                ];
-
+                'lastProtoResponse' => $response
+            ];
             return new OperationResponse($response->getName(), $client, $options);
         });
     }
