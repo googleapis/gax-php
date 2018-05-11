@@ -35,6 +35,7 @@ namespace Google\ApiCore;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\OperationsCallable;
+use Google\ApiCore\Middleware\OptionsFilterMiddleware;
 use Google\ApiCore\Middleware\PagedCallable;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
@@ -410,19 +411,21 @@ trait GapicClientTrait
      */
     private function createCallStack(array $callConstructionOptions)
     {
-        return new RetryMiddleware(
-            new AgentHeaderMiddleware(
-                new CredentialsWrapperMiddleware(
-                    function (Call $call, array $options) {
-                        $startCallMethod = $this->transportCallMethods[$call->getCallType()];
-                        return $this->transport->$startCallMethod($call, $options);
-                    },
-                    $this->credentialsWrapper
-                ),
-                $this->agentHeaderDescriptor
-            ),
-            $callConstructionOptions['retrySettings']
-        );
+        $callable = function (Call $call, array $options) {
+            $startCallMethod = $this->transportCallMethods[$call->getCallType()];
+            return $this->transport->$startCallMethod($call, $options);
+        };
+        $callable = new CredentialsWrapperMiddleware($callable, $this->credentialsWrapper);
+        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
+        $callable = new RetryMiddleware($callable, $callConstructionOptions['retrySettings']);
+        $callable = new OptionsFilterMiddleware($callable, [
+            'headers',
+            'timeoutMillis',
+            'transportOptions',
+            'metadataCallback',
+        ]);
+
+        return $callable;
     }
 
     /**

@@ -487,7 +487,13 @@ class GapicClientTraitTest extends TestCase
             ->method('startUnaryCall')
             ->with(
                 $this->isInstanceOf(Call::class),
-                $this->arrayHasKey("addModifyUnaryCallableOption")
+                $this->equalTo([
+                    'transportOptions' => [
+                        'custom' => ['addModifyUnaryCallableOption' => true]
+                    ],
+                    'headers' => [],
+                    'credentialsWrapper' => CredentialsWrapper::build([])
+                ])
             )
             ->willReturn(new FulfilledPromise(new Operation()));
         $client->call('startCall', [
@@ -505,7 +511,13 @@ class GapicClientTraitTest extends TestCase
             ->method('startUnaryCall')
             ->with(
                 $this->isInstanceOf(Call::class),
-                $this->arrayHasKey("addModifyUnaryCallableOption")
+                $this->equalTo([
+                    'transportOptions' => [
+                        'custom' => ['addModifyUnaryCallableOption' => true]
+                    ],
+                    'headers' => [],
+                    'credentialsWrapper' => CredentialsWrapper::build([])
+                ])
             )
             ->willReturn(new FulfilledPromise(new Operation()));
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
@@ -526,7 +538,13 @@ class GapicClientTraitTest extends TestCase
             ->method('startUnaryCall')
             ->with(
                 $this->isInstanceOf(Call::class),
-                $this->arrayHasKey("addModifyUnaryCallableOption")
+                $this->equalTo([
+                    'transportOptions' => [
+                        'custom' => ['addModifyUnaryCallableOption' => true]
+                    ],
+                    'headers' => [],
+                    'credentialsWrapper' => CredentialsWrapper::build([])
+                ])
             )
             ->willReturn(new FulfilledPromise(new Operation()));
         $client->call('getPagedListResponse', [
@@ -547,13 +565,15 @@ class GapicClientTraitTest extends TestCase
             ->method($expectedMethod)
             ->with(
                 $this->isInstanceOf(Call::class),
-                $this->arrayHasKey("addModifyStreamingCallable")
+                $this->equalTo([
+                    'transportOptions' => [
+                        'custom' => ['addModifyStreamingCallable' => true]
+                    ],
+                    'headers' => [],
+                    'credentialsWrapper' => CredentialsWrapper::build([])
+                ])
             )
             ->willReturn($expectedResponse);
-        $message = new MockRequest();
-        $operationsClient = $this->getMockBuilder(OperationsClient::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $client->call('startCall', $callArgs);
     }
 
@@ -664,7 +684,9 @@ class GapicClientTraitStubExtension extends GapicClientTraitStub
     {
         $originalCallable = $callable;
         $callable = function ($call, $options) use ($originalCallable) {
-            $options['addModifyUnaryCallableOption'] = true;
+            $options['transportOptions'] = [
+                'custom' => ['addModifyUnaryCallableOption' => true]
+            ];
             return $originalCallable($call, $options);
         };
     }
@@ -673,7 +695,9 @@ class GapicClientTraitStubExtension extends GapicClientTraitStub
     {
         $originalCallable = $callable;
         $callable = function ($call, $options) use ($originalCallable) {
-            $options['addModifyStreamingCallable'] = true;
+            $options['transportOptions'] = [
+                'custom' => ['addModifyStreamingCallable' => true]
+            ];
             return $originalCallable($call, $options);
         };
     }
