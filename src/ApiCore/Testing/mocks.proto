@@ -15,11 +15,8 @@ message MockRequest {
 message MockResponse {
   string name = 1;
   uint64 number = 2;
-}
-
-message MockPagedResponse {
-  repeated string resources_list = 1;
-  string next_page_token = 2;
+  repeated string resources_list = 3;
+  string next_page_token = 4;
 }
 
 message MockRequestBody {
