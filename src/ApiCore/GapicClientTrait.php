@@ -411,21 +411,21 @@ trait GapicClientTrait
      */
     private function createCallStack(array $callConstructionOptions)
     {
-        $callable = function (Call $call, array $options) {
+        $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
         };
-        $callable = new CredentialsWrapperMiddleware($callable, $this->credentialsWrapper);
-        $callable = new AgentHeaderMiddleware($callable, $this->agentHeaderDescriptor);
-        $callable = new RetryMiddleware($callable, $callConstructionOptions['retrySettings']);
-        $callable = new OptionsFilterMiddleware($callable, [
+        $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
+        $callStack = new AgentHeaderMiddleware($callStack, $this->agentHeaderDescriptor);
+        $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
+        $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
             'timeoutMillis',
             'transportOptions',
             'metadataCallback',
         ]);
 
-        return $callable;
+        return $callStack;
     }
 
     /**
@@ -475,11 +475,11 @@ trait GapicClientTrait
         OperationsClient $client,
         $interfaceName = null
     ) {
-        $callable = $this->createCallStack(
+        $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
         $descriptor = $this->descriptors[$methodName]['longRunning'];
-        $callable = new OperationsMiddleware($callable, $client, $descriptor);
+        $callStack = new OperationsMiddleware($callStack, $client, $descriptor);
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
@@ -489,8 +489,8 @@ trait GapicClientTrait
             Call::UNARY_CALL
         );
 
-        $this->modifyUnaryCallable($callable);
-        return $callable($call, $optionalArgs);
+        $this->modifyUnaryCallable($callStack);
+        return $callStack($call, $optionalArgs);
     }
 
     /**
@@ -509,13 +509,13 @@ trait GapicClientTrait
         Message $request,
         $interfaceName = null
     ) {
-        $callable = $this->createCallStack(
+        $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
         $descriptor = new PageStreamingDescriptor(
             $this->descriptors[$methodName]['pageStreaming']
         );
-        $callable = new PagedMiddleware($callable, $descriptor);
+        $callStack = new PagedMiddleware($callStack, $descriptor);
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
@@ -525,8 +525,8 @@ trait GapicClientTrait
             Call::UNARY_CALL
         );
         
-        $this->modifyUnaryCallable($callable);
-        return $callable($call, $optionalArgs)->wait();
+        $this->modifyUnaryCallable($callStack);
+        return $callStack($call, $optionalArgs)->wait();
     }
 
     /**
