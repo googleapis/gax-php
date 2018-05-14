@@ -60,7 +60,7 @@ class ResponseMetadataMiddleware
         };
         $next = $this->nextHandler;
         return $next($call, $options)->then(
-            function (Message $response) use ($metadataReceiver) {
+            function ($response) use ($metadataReceiver) {
                 if ($metadataReceiver->getState() === PromiseInterface::FULFILLED) {
                     return [$response, $metadataReceiver->wait()];
                 } else {

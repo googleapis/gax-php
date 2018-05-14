@@ -76,19 +76,19 @@ class FixedSizeCollectionTest extends TestCase
 
     public function testFixedCollectionMethods()
     {
-        $responseA = $this->createMockPagedResponse(
+        $responseA = $this->createMockResponse(
             'nextPageToken1',
             ['resource1', 'resource2']
         );
-        $responseB = $this->createMockPagedResponse(
+        $responseB = $this->createMockResponse(
             'nextPageToken2',
             ['resource3', 'resource4', 'resource5']
         );
-        $responseC = $this->createMockPagedResponse(
+        $responseC = $this->createMockResponse(
             'nextPageToken3',
             ['resource6', 'resource7']
         );
-        $responseD = $this->createMockPagedResponse(
+        $responseD = $this->createMockResponse(
             '',
             ['resource8', 'resource9']
         );
