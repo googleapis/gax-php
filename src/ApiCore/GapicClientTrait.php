@@ -370,7 +370,7 @@ trait GapicClientTrait
         $callType = Call::UNARY_CALL,
         $interfaceName = null
     ) {
-        $callable = $this->createCallStack(
+        $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
 
@@ -387,16 +387,16 @@ trait GapicClientTrait
         );
         switch ($callType) {
             case Call::UNARY_CALL:
-                $this->modifyUnaryCallable($callable);
+                $this->modifyUnaryCallable($callStack);
                 break;
             case Call::BIDI_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
             case Call::SERVER_STREAMING_CALL:
-                $this->modifyStreamingCallable($callable);
+                $this->modifyStreamingCallable($callStack);
                 break;
         }
         
-        return $callable($call, $optionalArgs);
+        return $callStack($call, $optionalArgs);
     }
 
     /**
