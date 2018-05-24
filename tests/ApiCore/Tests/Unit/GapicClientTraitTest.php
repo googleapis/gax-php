@@ -174,6 +174,12 @@ class GapicClientTraitTest extends TestCase
         $this->assertEquals($version, $client->call('getGapicVersion', [[]]));
     }
 
+    public function testGetGapicVersionWithNoAvailableVersion()
+    {
+        $client = new GapicClientTraitStub();
+        $this->assertNull($client->call('getGapicVersion', [[]]));
+    }
+
     public function testGetGapicVersionWithLibVersion()
     {
         $version = '1.2.3-dev';

@@ -100,7 +100,7 @@ trait GapicClientTrait
         $versionFile = substr(
             $clientFile,
             0,
-            strrpos($clientFile, '/src/') ?: strrpos($clientFile, '\\src\\')
+            strrpos($clientFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
         ) . DIRECTORY_SEPARATOR . 'VERSION';
 
         return @file_get_contents($versionFile) ?: null;
