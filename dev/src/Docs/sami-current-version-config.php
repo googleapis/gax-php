@@ -32,11 +32,6 @@
 
 namespace Google\ApiCore\Dev\Docs;
 
-use Sami\Sami;
-use Sami\Version\GitVersionCollection;
-use Symfony\Component\Finder\Finder;
-
-use Google\ApiCore\Dev\Docs\SamiConfigBuilder;
 use Google\ApiCore\Version;
 
 
