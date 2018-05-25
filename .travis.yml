@@ -21,7 +21,7 @@ install:
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
   - vendor/bin/phpcs --standard=./ruleset.xml
-  - ./dev/sh/build-docs.sh
+  - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then ./dev/sh/build-docs.sh; fi
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - ./dev/sh/push-docs.sh
