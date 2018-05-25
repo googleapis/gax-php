@@ -21,6 +21,8 @@ if [ -d "${PROTO_CLIENT_PHP_DIR}" ]; then
   exit 1
 fi
 
+git clone https://github.com/googleapis/proto-client-php.git ${PROTO_CLIENT_PHP_DIR}
+
 if [[ ! -z ${TRAVIS_TAG} ]]; then
   VERSION_FILE_CONTENTS="$(cat ${VERSION_FILE})"
   if [ ${VERSION_FILE_CONTENTS} != ${TRAVIS_TAG} ]; then
@@ -29,14 +31,13 @@ if [[ ! -z ${TRAVIS_TAG} ]]; then
     echo VERSION file: ${VERSION_FILE_CONTENTS}
     exit 1
   fi
-  cat ${UPDATED_INDEX_FILE} > ${INDEX_FILE}
   SAMI_CONFIG=${ROOT_DIR}/dev/src/Docs/sami-current-version-config.php
+  php ${SAMI_EXECUTABLE} update ${SAMI_CONFIG} -v
+  cat ${UPDATED_INDEX_FILE} > ${INDEX_FILE}
 else
   SAMI_CONFIG=${ROOT_DIR}/dev/src/Docs/sami-master-config.php
+  php ${SAMI_EXECUTABLE} update ${SAMI_CONFIG} -v
 fi
-
-git clone https://github.com/googleapis/proto-client-php.git ${PROTO_CLIENT_PHP_DIR}
-php ${SAMI_EXECUTABLE} update ${SAMI_CONFIG} -v
 
 # Clean up after doc gen completes
 rm -rf ${PROTO_CLIENT_PHP_DIR}
