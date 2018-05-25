@@ -29,29 +29,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore;
 
-class Version
+namespace Google\ApiCore\Tests\Unit;
+
+use Google\ApiCore\Version;
+use PHPUnit\Framework\TestCase;
+
+class VersionTest extends TestCase
 {
-    private static $version = null;
-
-    /**
-     * @return string The version of the ApiCore library.
-     */
-    public static function getApiCoreVersion()
+    public function testGetApiCoreVersion()
     {
-        if (is_null(self::$version)) {
-            $versionFile = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'VERSION']);
-            $versionString = @file_get_contents($versionFile) ?: "";
-            self::$version = trim($versionString);
-        }
-        return self::$version;
-    }
-
-    /**
-     * Private constructor.
-     */
-    private function __construct()
-    {
+        $actualVersion = Version::getApiCoreVersion();
+        $this->assertStringMatchesFormat("%d.%d.%d", $actualVersion);
     }
 }
