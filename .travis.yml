@@ -1,23 +1,19 @@
 language: php
-php:
-  - '5.5.38'
-  - '5.6.25'
-  - '7.0'
-  - '7.1'
-  - '7.2'
-env:
-  - PROTOBUF_C_EXT=true
-  - PROTOBUF_C_EXT=false
-matrix:
-  exclude:
-    - php: '5.5.38'
-      env: PROTOBUF_C_EXT=true
-    - php: '7.0'
-      env: PROTOBUF_C_EXT=true
-    - php: '7.1'
-      env: PROTOBUF_C_EXT=true
 sudo: required
 dist: trusty
+
+matrix:
+  include:
+    - php: '5.5.38'
+    - php: '5.6.25'
+    - php: '5.6.25'
+      env: PROTOBUF_C_EXT=true
+    - php: '7.0'
+    - php: '7.1'
+    - php: '7.2'
+    - php: '7.2'
+      env: PROTOBUF_C_EXT=true
+
 install:
   - travis_retry pecl install grpc
   - if [[ $PROTOBUF_C_EXT =~ ^true ]]; then travis_retry pecl install protobuf-3.5.1; fi
@@ -25,5 +21,8 @@ install:
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
   - vendor/bin/phpcs --standard=./ruleset.xml
+  - if [[ $TRAVIS_PHP_VERSION =~ ^7 ]]; then ./dev/sh/build-docs.sh; fi
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - ./dev/sh/push-docs.sh
+
