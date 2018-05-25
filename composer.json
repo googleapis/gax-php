@@ -33,6 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Google\\ApiCore\\Dev\\": "dev/src",
             "Google\\": "tests",
             "GPBMetadata\\": "metadata"
         }

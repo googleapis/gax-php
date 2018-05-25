@@ -30,52 +30,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+namespace Google\ApiCore\Dev\Docs;
+
+use RuntimeException;
 use Sami\Sami;
 use Sami\Version\GitVersionCollection;
 use Symfony\Component\Finder\Finder;
 
-// Before continuing, verify that we are running PHP 7 or above
-if (version_compare(phpversion(), '7', '<')) {
-    throw new RuntimeException("PHP must be >= 7.0 to build docs, found version " . phpversion());
+
+class SamiConfigBuilder
+{
+    public static function checkPhpVersion()
+    {
+        // Verify that we are running PHP 7 or above
+        if (version_compare(phpversion(), '7', '<')) {
+            throw new RuntimeException("PHP must be >= 7.0 to build docs, found version " . phpversion());
+        }
+    }
+
+    public static function buildConfigForVersion($version)
+    {
+        $gaxRootDir = realpath(__DIR__ . '/../../..');
+        $iterator = Finder::create()
+            ->files()
+            ->name('*.php')
+            ->exclude('GPBMetadata')
+            ->in($dir = "$gaxRootDir/src")
+            ->in("$gaxRootDir/proto-client-php/src")
+        ;
+
+        return new Sami($iterator, array(
+            'title'                => "Google ApiCore - $version",
+            'build_dir'            => "$gaxRootDir/tmp_gh-pages/%version%",
+            'cache_dir'            => "$gaxRootDir/cache/%version%",
+            'default_opened_level' => 1,
+        ));
+    }
 }
-
-$gaxRootDir = realpath(__DIR__ . '/../..');
-$iterator = Finder::create()
-    ->files()
-    ->name('*.php')
-    ->exclude('GPBMetadata')
-    ->in($dir = "$gaxRootDir/src")
-    ->in("$gaxRootDir/proto-client-php/src")
-;
-
-$versions = GitVersionCollection::create($dir)
-    ->addFromTags("0.20.0")
-    ->addFromTags("0.20.1")
-    ->addFromTags("0.21.0")
-    ->addFromTags("0.21.1")
-    ->addFromTags("0.21.2")
-    ->addFromTags("0.22.0")
-    ->addFromTags("0.22.1")
-    ->addFromTags("0.23.0")
-    ->addFromTags("0.24.0")
-    ->addFromTags("0.25.0")
-    ->addFromTags("0.26.0")
-    ->addFromTags("0.27.0")
-    ->addFromTags("0.28.0")
-    ->addFromTags("0.29.0")
-    ->addFromTags("0.30.0")
-    ->addFromTags("0.31.0")
-    ->addFromTags("0.31.1")
-    ->addFromTags("0.31.3")
-    ->addFromTags("0.32.0")
-    ->addFromTags("0.33.0")
-    ->add('master', 'master branch')
-;
-
-return new Sami($iterator, array(
-    'title'                => 'Google ApiCore and Proto Client PHP',
-    'versions'             => $versions,
-    'build_dir'            => "$gaxRootDir/tmp_gh-pages/%version%",
-    'cache_dir'            => "$gaxRootDir/cache/%version%",
-    'default_opened_level' => 1,
-));

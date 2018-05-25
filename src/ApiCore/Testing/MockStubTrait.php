@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore\Testing;
 
+use Google\Rpc\Status;
 use UnderflowException;
 
 /**
@@ -255,7 +256,8 @@ trait MockStubTrait
     /**
      * @param mixed $responseObject
      * @param $status
-     * @return MockTransport
+     * @param callable $deserialize
+     * @return MockStubTrait
      */
     public static function create($responseObject, $status = null, $deserialize = null)
     {
@@ -268,7 +270,8 @@ trait MockStubTrait
      * Creates a sequence such that the responses are returned in order.
      * @param mixed[] $sequence
      * @param callable $deserialize
-     * @return MockTransport
+     * @param Status $finalStatus
+     * @return MockStubTrait
      */
     public static function createWithResponseSequence($sequence, $deserialize = null, $finalStatus = null)
     {
