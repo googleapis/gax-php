@@ -22,8 +22,8 @@ function pushDocs () {
   fi
 }
 
-if [[ ! -z $TRAVIS_TAG ]]; then
-  pushDocs $TRAVIS_TAG
+if [[ ! -z ${TRAVIS_TAG} ]]; then
+  pushDocs ${TRAVIS_TAG}
 elif [ "${TRAVIS_BRANCH}" == "master" ] && [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-  pushDocs $TRAVIS_BRANCH
+  pushDocs ${TRAVIS_BRANCH}
 fi

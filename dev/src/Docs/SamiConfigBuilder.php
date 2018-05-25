@@ -61,6 +61,7 @@ class SamiConfigBuilder
 
         return new Sami($iterator, array(
             'title'                => "Google ApiCore - $version",
+            'version'              => $version,
             'build_dir'            => "$gaxRootDir/tmp_gh-pages/%version%",
             'cache_dir'            => "$gaxRootDir/cache/%version%",
             'default_opened_level' => 1,
