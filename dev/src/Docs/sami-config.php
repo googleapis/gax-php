@@ -32,11 +32,9 @@
 
 namespace Google\ApiCore\Dev\Docs;
 
-use Google\ApiCore\Version;
-
 
 SamiConfigBuilder::checkPhpVersion();
 
-$currentVersion = Version::getApiCoreVersion();
+$currentVersion = getenv('API_CORE_DOCS_VERSION');
 
 return SamiConfigBuilder::buildConfigForVersion($currentVersion);
