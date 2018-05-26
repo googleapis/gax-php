@@ -12,7 +12,7 @@ PROTO_CLIENT_PHP_DIR=${ROOT_DIR}/proto-client-php
 SAMI_EXECUTABLE=${ROOT_DIR}/vendor/sami/sami/sami.php
 
 UPDATED_INDEX_FILE=$(cat << EndOfMessage
-"<html><head><script>window.location.replace('/gax-php/${TRAVIS_TAG}/' + location.hash.substring(1))</script></head><body></body></html>"
+<html><head><script>window.location.replace('/gax-php/${TRAVIS_TAG}/' + location.hash.substring(1))</script></head><body></body></html>
 EndOfMessage
 )
 
@@ -33,7 +33,7 @@ if [[ ! -z ${TRAVIS_TAG} ]]; then
   fi
   SAMI_CONFIG=${ROOT_DIR}/dev/src/Docs/sami-current-version-config.php
   php ${SAMI_EXECUTABLE} update ${SAMI_CONFIG} -v
-  cat ${UPDATED_INDEX_FILE} > ${INDEX_FILE}
+  echo ${UPDATED_INDEX_FILE} > ${INDEX_FILE}
 else
   SAMI_CONFIG=${ROOT_DIR}/dev/src/Docs/sami-master-config.php
   php ${SAMI_EXECUTABLE} update ${SAMI_CONFIG} -v
