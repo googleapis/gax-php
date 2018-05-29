@@ -257,7 +257,7 @@ trait MockStubTrait
      * @param mixed $responseObject
      * @param $status
      * @param callable $deserialize
-     * @return MockStubTrait
+     * @return static An instance of the current class type.
      */
     public static function create($responseObject, $status = null, $deserialize = null)
     {
@@ -271,7 +271,7 @@ trait MockStubTrait
      * @param mixed[] $sequence
      * @param callable $deserialize
      * @param Status $finalStatus
-     * @return MockStubTrait
+     * @return static An instance of the current class type.
      */
     public static function createWithResponseSequence($sequence, $deserialize = null, $finalStatus = null)
     {
