@@ -30,58 +30,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport;
+namespace Google\ApiCore\Transport\Grpc;
 
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
-use GuzzleHttp\Promise\PromiseInterface;
-
-interface TransportInterface
+/**
+ * Class ForwardingUnaryCall wraps a \Grpc\UnaryCall.
+ */
+class ForwardingUnaryCall extends ForwardingCall
 {
     /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return BidiStream
+     * {@inheritdoc}
      */
-    public function startBidiStreamingCall(Call $call, array $options);
-
-    /**
-     * Starts a client streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ClientStream
-     */
-    public function startClientStreamingCall(Call $call, array $options);
-
-    /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ServerStream
-     */
-    public function startServerStreamingCall(Call $call, array $options);
-
-    /**
-     * Returns a promise used to execute network requests.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return PromiseInterface
-     */
-    public function startUnaryCall(Call $call, array $options);
-
-    /**
-     * Closes the connection, if one exists.
-     */
-    public function close();
+    public function wait()
+    {
+        return $this->innerCall->wait();
+    }
 }

@@ -30,58 +30,82 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport;
+namespace Google\ApiCore\Transport\Grpc;
 
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
-use GuzzleHttp\Promise\PromiseInterface;
+use Grpc\UnaryCall;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
-interface TransportInterface
+abstract class UnaryCallLogger
 {
-    /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return BidiStream
-     */
-    public function startBidiStreamingCall(Call $call, array $options);
+    private $logger;
+    private $logLevel;
+    private $context;
+
+    public function __construct(LoggerInterface $logger, $logLevel = LogLevel::INFO, $context = [])
+    {
+        $this->logger = $logger;
+        $this->logLevel = $logLevel;
+        $this->context = $context;
+    }
 
     /**
-     * Starts a client streaming call.
-     *
-     * @param Call $call
+     * @param $method
+     * @param $argument
+     * @param array $metadata
      * @param array $options
-     *
-     * @return ClientStream
      */
-    public function startClientStreamingCall(Call $call, array $options);
+    public function logRequest(
+        $method,
+        $argument,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $this->logger->log(
+            $this->logLevel,
+            $this->formatRequest($method, $argument, $metadata, $options),
+            $this->context
+        );
+    }
 
     /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ServerStream
+     * @param $response
+     * @param $status
+     * @param UnaryCall|LoggingUnaryCall $unaryCall
      */
-    public function startServerStreamingCall(Call $call, array $options);
+    public function logResponse(
+        $response,
+        $status,
+        $unaryCall
+    ) {
+        $this->logger->log(
+            $this->logLevel,
+            $this->formatResponse($response, $status, $unaryCall),
+            $this->context
+        );
+    }
 
     /**
-     * Returns a promise used to execute network requests.
-     *
-     * @param Call $call
+     * @param $method
+     * @param $argument
+     * @param array $metadata
      * @param array $options
-     *
-     * @return PromiseInterface
+     * @return string
      */
-    public function startUnaryCall(Call $call, array $options);
+    protected abstract function formatRequest(
+        $method,
+        $argument,
+        array $metadata = [],
+        array $options = []);
 
     /**
-     * Closes the connection, if one exists.
+     * @param $response
+     * @param $status
+     * @param UnaryCall $unaryCall
+     * @return string
      */
-    public function close();
+    protected abstract function formatResponse(
+        $response,
+        $status,
+        $unaryCall);
 }

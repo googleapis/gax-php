@@ -30,58 +30,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport;
+namespace Google\ApiCore\Transport\Grpc;
 
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
-use GuzzleHttp\Promise\PromiseInterface;
-
-interface TransportInterface
+class LoggingInterceptor implements UnaryInterceptor
 {
-    /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return BidiStream
-     */
-    public function startBidiStreamingCall(Call $call, array $options);
+    private $unaryCallLogger;
 
-    /**
-     * Starts a client streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ClientStream
-     */
-    public function startClientStreamingCall(Call $call, array $options);
+    public function __construct(UnaryCallLogger $unaryCallLogger)
+    {
+        $this->unaryCallLogger = $unaryCallLogger;
+    }
 
-    /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ServerStream
-     */
-    public function startServerStreamingCall(Call $call, array $options);
-
-    /**
-     * Returns a promise used to execute network requests.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return PromiseInterface
-     */
-    public function startUnaryCall(Call $call, array $options);
-
-    /**
-     * Closes the connection, if one exists.
-     */
-    public function close();
+    public function interceptUnaryUnary(
+        $method,
+        $argument,
+        array $metadata = [],
+        array $options = [],
+        $continuation
+    )
+    {
+        $this->unaryCallLogger->logRequest($method, $argument, $metadata, $options);
+        return new LoggingUnaryCall(
+            $continuation($method, $argument, $metadata, $options),
+            $this->unaryCallLogger
+        );
+    }
 }

@@ -40,6 +40,8 @@ use Google\ApiCore\ClientStream;
 use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
+use Google\ApiCore\Transport\Grpc\GapicInterceptor;
+use Google\ApiCore\Transport\Grpc\UnaryInterceptor;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
@@ -57,6 +59,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
     use GrpcSupportTrait;
     use ServiceAddressTrait;
 
+    // Interceptors, ordered so that the first in the list is the inner-most interceptor.
+    private $interceptors = [];
+
     /**
      * Builds a GrpcTransport.
      *
@@ -68,6 +73,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *
      *    @type array $stubOpts Options used to construct the gRPC stub.
      *    @type Channel $channel Grpc channel to be used.
+     *    @type UnaryInterceptor[] $interceptors *INTERNAL* Interceptor support, required until
+     *                                           gRPC interceptors are available.
      * }
      * @return GrpcTransport
      * @throws ValidationException
@@ -75,27 +82,18 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public static function build($serviceAddress, array $config = [])
     {
         self::validateGrpcSupport();
+
+        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
+        $host = "$addr:$port";
         $config += [
             'stubOpts' => [],
             'channel'  => null,
         ];
-        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
-        $host = "$addr:$port";
-        $stubOpts = $config['stubOpts'];
-        // Set the required 'credentials' key in stubOpts if it is not already set. Use
-        // array_key_exists because null is a valid value.
-        if (!array_key_exists('credentials', $stubOpts)) {
-            $stubOpts['credentials'] = ChannelCredentials::createSsl();
-        }
-        $channel = $config['channel'];
-        if (!is_null($channel) && !($channel instanceof Channel)) {
-            throw new ValidationException(
-                "Channel argument to GrpcTransport must be of type \Grpc\Channel, " .
-                "instead got: " . print_r($channel, true)
-            );
-        }
+        $channel = self::buildChannel($host, $config);
         try {
-            return new GrpcTransport($host, $stubOpts, $channel);
+            $transport = new GrpcTransport($host, $config['stubOpts'], $channel);
+            $transport->interceptors = self::getInterceptors($config);
+            return $transport;
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
@@ -103,6 +101,17 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 $ex
             );
         }
+    }
+
+    private static function getInterceptors($config)
+    {
+        $interceptors = [
+            new GapicInterceptor()
+        ];
+        if (isset($config['interceptors'])) {
+            $interceptors += $config['interceptors'];
+        }
+        return $interceptors;
     }
 
     /**
@@ -160,16 +169,47 @@ class GrpcTransport extends BaseStub implements TransportInterface
         );
     }
 
+    private function wrapExecuteWithInterceptor($execute, $interceptor)
+    {
+        return function (
+                $method,
+                $argument,
+                array $metadata = [],
+                array $options = []) use ($execute, $interceptor) {
+            return $interceptor->interceptUnaryUnary($method, $argument, $metadata, $options, $execute);
+        };
+    }
+
     /**
      * {@inheritdoc}
      */
     public function startUnaryCall(Call $call, array $options)
     {
-        $unaryCall = $this->_simpleRequest(
-            '/' . $call->getMethod(),
+        $options += [
+            'headers' => [],
+        ];
+        $deserialize = [$call->getDecodeType(), 'decode'];
+        $execute = function (
+                $method,
+                $argument,
+                array $metadata = [],
+                array $options = []) use ($deserialize) {
+            return $this->_simpleRequest(
+                $method,
+                $argument,
+                $deserialize,
+                $metadata,
+                $options
+            );
+        };
+        foreach ($this->interceptors as $interceptor) {
+            $execute  = $this->wrapExecuteWithInterceptor($execute, $interceptor);
+        }
+
+        $unaryCall = $execute(
+        '/' . $call->getMethod(),
             $call->getMessage(),
-            [$call->getDecodeType(), 'decode'],
-            isset($options['headers']) ? $options['headers'] : [],
+            $options['headers'],
             $this->getCallOptions($options)
         );
 
@@ -178,10 +218,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 list($response, $status) = $unaryCall->wait();
 
                 if ($status->code == Code::OK) {
-                    if (isset($options['metadataCallback'])) {
-                        $metadataCallback = $options['metadataCallback'];
-                        $metadataCallback($unaryCall->getMetadata());
-                    }
                     $promise->resolve($response);
                 } else {
                     throw ApiException::createFromStdClass($status);

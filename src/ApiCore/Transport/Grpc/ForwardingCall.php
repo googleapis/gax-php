@@ -30,58 +30,55 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport;
+namespace Google\ApiCore\Transport\Grpc;
 
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
-use GuzzleHttp\Promise\PromiseInterface;
+use Grpc\AbstractCall;
 
-interface TransportInterface
+/**
+ * Class ForwardingCall wraps a \Grpc\AbstractCall.
+ */
+abstract class ForwardingCall
 {
-    /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return BidiStream
-     */
-    public function startBidiStreamingCall(Call $call, array $options);
+    /** @var AbstractCall */
+    protected $innerCall;
 
     /**
-     * Starts a client streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ClientStream
+     * {@inheritdoc}
      */
-    public function startClientStreamingCall(Call $call, array $options);
+    public function __construct($innerCall)
+    {
+        $this->innerCall = $innerCall;
+    }
 
     /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ServerStream
+     * {@inheritdoc}
      */
-    public function startServerStreamingCall(Call $call, array $options);
+    public function getMetadata()
+    {
+        return $this->innerCall->getMetadata();
+    }
 
     /**
-     * Returns a promise used to execute network requests.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return PromiseInterface
+     * {@inheritdoc}
      */
-    public function startUnaryCall(Call $call, array $options);
+    public function getTrailingMetadata()
+    {
+        return $this->innerCall->getTrailingMetadata();
+    }
 
     /**
-     * Closes the connection, if one exists.
+     * {@inheritdoc}
      */
-    public function close();
+    public function getPeer()
+    {
+        return $this->innerCall->getPeer();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cancel()
+    {
+        $this->innerCall->cancel();
+    }
 }

@@ -30,58 +30,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport;
+namespace Google\ApiCore\Transport\Grpc;
 
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\ServerStream;
-use GuzzleHttp\Promise\PromiseInterface;
+use Google\Rpc\Code;
 
-interface TransportInterface
+class GapicUnaryCall extends ForwardingUnaryCall
 {
-    /**
-     * Starts a bidi streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return BidiStream
-     */
-    public function startBidiStreamingCall(Call $call, array $options);
+    private $gapicOptions;
+
+    public function __construct($innerCall, callable $gapicOptions)
+    {
+        parent::__construct($innerCall);
+        $this->gapicOptions = $gapicOptions;
+    }
 
     /**
-     * Starts a client streaming call.
+     * Wait for the server to respond with data and a status.
      *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ClientStream
+     * @return array [response data, status]
      */
-    public function startClientStreamingCall(Call $call, array $options);
+    public function wait()
+    {
+        list($response, $status) = parent::wait();
 
-    /**
-     * Starts a server streaming call.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return ServerStream
-     */
-    public function startServerStreamingCall(Call $call, array $options);
+        if ($status->code == Code::OK && isset($this->gapicOptions['metadataCallback'])) {
+            $metadataCallback = $this->gapicOptions['metadataCallback'];
+            $metadataCallback($this->getMetadata());
+        }
 
-    /**
-     * Returns a promise used to execute network requests.
-     *
-     * @param Call $call
-     * @param array $options
-     *
-     * @return PromiseInterface
-     */
-    public function startUnaryCall(Call $call, array $options);
-
-    /**
-     * Closes the connection, if one exists.
-     */
-    public function close();
+        return [$response, $status];
+    }
 }
