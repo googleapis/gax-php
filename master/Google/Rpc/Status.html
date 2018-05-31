@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Rpc\Status | Google ApiCore - master</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Rpc_Status" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - master</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Rpc.html">Rpc</a></li><li class="backslash">\</li><li>Status</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Status
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Status</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The <code>Status</code> type defines a logical error model that is suitable for different
+programming environments, including REST APIs and RPC APIs. It is used by
+<a href="https://github.com/grpc">gRPC</a>. The error model is designed to be:
+- Simple to use and understand for most users
+- Flexible enough to meet unexpected needs</p>
+
+<h1>Overview</h1>
+
+<p>The <code>Status</code> message contains three pieces of data: error code, error message,
+and error details. The error code should be an enum value of
+[google.rpc.Code][google.rpc.Code], but it may accept additional error codes if needed.  The
+error message should be a developer-facing English message that helps
+developers <em>understand</em> and <em>resolve</em> the error. If a localized user-facing
+error message is needed, put the localized message in the error details or
+localize it in the client. The optional error details may contain arbitrary
+information about the error. There is a predefined set of error detail types
+in the package <code>google.rpc</code> that can be used for common error conditions.</p>            <p><h1>Language mapping</h1>
+
+<p>The <code>Status</code> message is the logical representation of the error model, but it
+is not necessarily the actual wire format. When the <code>Status</code> message is
+exposed in different client libraries and different wire protocols, it can be
+mapped differently. For example, it will likely be mapped to some exceptions
+in Java, but more likely mapped to some error codes in C.</p>
+
+<h1>Other uses</h1>
+
+<p>The error model and the <code>Status</code> message can be used in a variety of
+environments, either with or without APIs, to provide a
+consistent developer experience across different environments.
+Example uses of this error model include:
+- Partial errors. If a service needs to return partial errors to the client,
+    it may embed the <code>Status</code> in the normal response to indicate the partial
+    errors.
+- Workflow errors. A typical workflow has multiple steps. Each step may
+    have a <code>Status</code> message for error reporting.
+- Batch operations. If a client uses batch request and batch response, the
+    <code>Status</code> message should be used directly inside batch response, one for
+    each error sub-response.
+- Asynchronous operations. If an API call embeds asynchronous operation
+    results in its response, the status of those operations should be
+    represented directly using the <code>Status</code> message.
+- Logging. If some API errors are stored in logs, the message <code>Status</code> could
+    be used directly after any stripping needed for security/privacy reasons.</p>
+
+<p>Generated from protobuf message <code>google.rpc.Status</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCode">getCode</a>()
+        
+                                            <p>The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Rpc\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCode">setCode</a>(int $var)
+        
+                                            <p>The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMessage">getMessage</a>()
+        
+                                            <p>A developer-facing error message, which should be in English. Any
+user-facing error message should be localized and sent in the
+[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Rpc\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMessage">setMessage</a>(string $var)
+        
+                                            <p>A developer-facing error message, which should be in English. Any
+user-facing error message should be localized and sent in the
+[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDetails">getDetails</a>()
+        
+                                            <p>A list of messages that carry the error details.  There is a common set of
+message types for APIs to use.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Rpc\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDetails">setDetails</a>(<abbr title="Google\Protobuf\Any">Any</abbr>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>A list of messages that carry the error details.  There is a common set of
+message types for APIs to use.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 78</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCode">
+        <div class="location">at         line 89</div>
+        <code>                    int
+    <strong>getCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].</p>                    <p>Generated from protobuf field <code>int32 code = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCode">
+        <div class="location">at         line 101</div>
+        <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
+    <strong>setCode</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].</p>                    <p>Generated from protobuf field <code>int32 code = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Rpc\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMessage">
+        <div class="location">at         line 117</div>
+        <code>                    string
+    <strong>getMessage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A developer-facing error message, which should be in English. Any
+user-facing error message should be localized and sent in the
+[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.</p>                    <p>Generated from protobuf field <code>string message = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMessage">
+        <div class="location">at         line 131</div>
+        <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
+    <strong>setMessage</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A developer-facing error message, which should be in English. Any
+user-facing error message should be localized and sent in the
+[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.</p>                    <p>Generated from protobuf field <code>string message = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Rpc\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDetails">
+        <div class="location">at         line 146</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getDetails</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of messages that carry the error details.  There is a common set of
+message types for APIs to use.</p>                    <p>Generated from protobuf field <code>repeated .google.protobuf.Any details = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDetails">
+        <div class="location">at         line 159</div>
+        <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
+    <strong>setDetails</strong>(<abbr title="Google\Protobuf\Any">Any</abbr>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of messages that carry the error details.  There is a common set of
+message types for APIs to use.</p>                    <p>Generated from protobuf field <code>repeated .google.protobuf.Any details = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Any">Any</abbr>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Rpc\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

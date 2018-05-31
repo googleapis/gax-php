@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\PubSub\V1\StreamingPullRequest | Google ApiCore - master</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_PubSub_V1_StreamingPullRequest" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - master</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/PubSub.html">PubSub</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/PubSub/V1.html">V1</a></li><li class="backslash">\</li><li>StreamingPullRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            StreamingPullRequest
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>StreamingPullRequest</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Request for the <code>StreamingPull</code> streaming RPC method. This request is used to
+establish the initial stream as well as to stream acknowledgements and ack
+deadline modifications from the client to the server.</p>            <p>Generated from protobuf message <code>google.pubsub.v1.StreamingPullRequest</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSubscription">getSubscription</a>()
+        
+                                            <p>The subscription for which to initialize the new stream. This must be
+provided in the first request on the stream, and must not be set in
+subsequent requests from client to server.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSubscription">setSubscription</a>(string $var)
+        
+                                            <p>The subscription for which to initialize the new stream. This must be
+provided in the first request on the stream, and must not be set in
+subsequent requests from client to server.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAckIds">getAckIds</a>()
+        
+                                            <p>List of acknowledgement IDs for acknowledging previously received messages
+(received on this stream or a different stream). If an ack ID has expired,
+the corresponding message may be redelivered later. Acknowledging a message
+more than once will not result in an error. If the acknowledgement ID is
+malformed, the stream will be aborted with status <code>INVALID_ARGUMENT</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAckIds">setAckIds</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>List of acknowledgement IDs for acknowledging previously received messages
+(received on this stream or a different stream). If an ack ID has expired,
+the corresponding message may be redelivered later. Acknowledging a message
+more than once will not result in an error. If the acknowledgement ID is
+malformed, the stream will be aborted with status <code>INVALID_ARGUMENT</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModifyDeadlineSeconds">getModifyDeadlineSeconds</a>()
+        
+                                            <p>The list of new ack deadlines for the IDs listed in
+<code>modify_deadline_ack_ids</code>. The size of this list must be the same as the
+size of <code>modify_deadline_ack_ids</code>. If it differs the stream will be aborted
+with <code>INVALID_ARGUMENT</code>. Each element in this list is applied to the
+element in the same position in <code>modify_deadline_ack_ids</code>. The new ack
+deadline is with respect to the time this request was sent to the Pub/Sub
+system. Must be >= 0. For example, if the value is 10, the new ack deadline
+will expire 10 seconds after this request is received. If the value is 0,
+the message is immediately made available for another streaming or
+non-streaming pull request. If the value is &lt; 0 (an error), the stream will
+be aborted with status <code>INVALID_ARGUMENT</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setModifyDeadlineSeconds">setModifyDeadlineSeconds</a>(int[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>The list of new ack deadlines for the IDs listed in
+<code>modify_deadline_ack_ids</code>. The size of this list must be the same as the
+size of <code>modify_deadline_ack_ids</code>. If it differs the stream will be aborted
+with <code>INVALID_ARGUMENT</code>. Each element in this list is applied to the
+element in the same position in <code>modify_deadline_ack_ids</code>. The new ack
+deadline is with respect to the time this request was sent to the Pub/Sub
+system. Must be >= 0. For example, if the value is 10, the new ack deadline
+will expire 10 seconds after this request is received. If the value is 0,
+the message is immediately made available for another streaming or
+non-streaming pull request. If the value is &lt; 0 (an error), the stream will
+be aborted with status <code>INVALID_ARGUMENT</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModifyDeadlineAckIds">getModifyDeadlineAckIds</a>()
+        
+                                            <p>List of acknowledgement IDs whose deadline will be modified based on the
+corresponding element in <code>modify_deadline_seconds</code>. This field can be used
+to indicate that more time is needed to process a message by the
+subscriber, or to make the message available for redelivery if the
+processing was interrupted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setModifyDeadlineAckIds">setModifyDeadlineAckIds</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>List of acknowledgement IDs whose deadline will be modified based on the
+corresponding element in <code>modify_deadline_seconds</code>. This field can be used
+to indicate that more time is needed to process a message by the
+subscriber, or to make the message available for redelivery if the
+processing was interrupted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStreamAckDeadlineSeconds">getStreamAckDeadlineSeconds</a>()
+        
+                                            <p>The ack deadline to use for the stream. This must be provided in the
+first request on the stream, but it can also be updated on subsequent
+requests from client to server. The minimum deadline you can specify is 10
+seconds. The maximum deadline you can specify is 600 seconds (10 minutes).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStreamAckDeadlineSeconds">setStreamAckDeadlineSeconds</a>(int $var)
+        
+                                            <p>The ack deadline to use for the stream. This must be provided in the
+first request on the stream, but it can also be updated on subsequent
+requests from client to server. The minimum deadline you can specify is 10
+seconds. The maximum deadline you can specify is 600 seconds (10 minutes).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 75</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSubscription">
+        <div class="location">at         line 89</div>
+        <code>                    string
+    <strong>getSubscription</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The subscription for which to initialize the new stream. This must be
+provided in the first request on the stream, and must not be set in
+subsequent requests from client to server.</p>                    <p>Format is <code>projects/{project}/subscriptions/{sub}</code>.</p>
+
+<p>Generated from protobuf field <code>string subscription = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSubscription">
+        <div class="location">at         line 104</div>
+        <code>                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+    <strong>setSubscription</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The subscription for which to initialize the new stream. This must be
+provided in the first request on the stream, and must not be set in
+subsequent requests from client to server.</p>                    <p>Format is <code>projects/{project}/subscriptions/{sub}</code>.</p>
+
+<p>Generated from protobuf field <code>string subscription = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAckIds">
+        <div class="location">at         line 122</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAckIds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of acknowledgement IDs for acknowledging previously received messages
+(received on this stream or a different stream). If an ack ID has expired,
+the corresponding message may be redelivered later. Acknowledging a message
+more than once will not result in an error. If the acknowledgement ID is
+malformed, the stream will be aborted with status <code>INVALID_ARGUMENT</code>.</p>                    <p>Generated from protobuf field <code>repeated string ack_ids = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAckIds">
+        <div class="location">at         line 138</div>
+        <code>                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+    <strong>setAckIds</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of acknowledgement IDs for acknowledging previously received messages
+(received on this stream or a different stream). If an ack ID has expired,
+the corresponding message may be redelivered later. Acknowledging a message
+more than once will not result in an error. If the acknowledgement ID is
+malformed, the stream will be aborted with status <code>INVALID_ARGUMENT</code>.</p>                    <p>Generated from protobuf field <code>repeated string ack_ids = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getModifyDeadlineSeconds">
+        <div class="location">at         line 162</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getModifyDeadlineSeconds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The list of new ack deadlines for the IDs listed in
+<code>modify_deadline_ack_ids</code>. The size of this list must be the same as the
+size of <code>modify_deadline_ack_ids</code>. If it differs the stream will be aborted
+with <code>INVALID_ARGUMENT</code>. Each element in this list is applied to the
+element in the same position in <code>modify_deadline_ack_ids</code>. The new ack
+deadline is with respect to the time this request was sent to the Pub/Sub
+system. Must be >= 0. For example, if the value is 10, the new ack deadline
+will expire 10 seconds after this request is received. If the value is 0,
+the message is immediately made available for another streaming or
+non-streaming pull request. If the value is &lt; 0 (an error), the stream will
+be aborted with status <code>INVALID_ARGUMENT</code>.</p>                    <p>Generated from protobuf field <code>repeated int32 modify_deadline_seconds = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setModifyDeadlineSeconds">
+        <div class="location">at         line 184</div>
+        <code>                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+    <strong>setModifyDeadlineSeconds</strong>(int[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The list of new ack deadlines for the IDs listed in
+<code>modify_deadline_ack_ids</code>. The size of this list must be the same as the
+size of <code>modify_deadline_ack_ids</code>. If it differs the stream will be aborted
+with <code>INVALID_ARGUMENT</code>. Each element in this list is applied to the
+element in the same position in <code>modify_deadline_ack_ids</code>. The new ack
+deadline is with respect to the time this request was sent to the Pub/Sub
+system. Must be >= 0. For example, if the value is 10, the new ack deadline
+will expire 10 seconds after this request is received. If the value is 0,
+the message is immediately made available for another streaming or
+non-streaming pull request. If the value is &lt; 0 (an error), the stream will
+be aborted with status <code>INVALID_ARGUMENT</code>.</p>                    <p>Generated from protobuf field <code>repeated int32 modify_deadline_seconds = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getModifyDeadlineAckIds">
+        <div class="location">at         line 202</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getModifyDeadlineAckIds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of acknowledgement IDs whose deadline will be modified based on the
+corresponding element in <code>modify_deadline_seconds</code>. This field can be used
+to indicate that more time is needed to process a message by the
+subscriber, or to make the message available for redelivery if the
+processing was interrupted.</p>                    <p>Generated from protobuf field <code>repeated string modify_deadline_ack_ids = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setModifyDeadlineAckIds">
+        <div class="location">at         line 218</div>
+        <code>                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+    <strong>setModifyDeadlineAckIds</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of acknowledgement IDs whose deadline will be modified based on the
+corresponding element in <code>modify_deadline_seconds</code>. This field can be used
+to indicate that more time is needed to process a message by the
+subscriber, or to make the message available for redelivery if the
+processing was interrupted.</p>                    <p>Generated from protobuf field <code>repeated string modify_deadline_ack_ids = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStreamAckDeadlineSeconds">
+        <div class="location">at         line 235</div>
+        <code>                    int
+    <strong>getStreamAckDeadlineSeconds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The ack deadline to use for the stream. This must be provided in the
+first request on the stream, but it can also be updated on subsequent
+requests from client to server. The minimum deadline you can specify is 10
+seconds. The maximum deadline you can specify is 600 seconds (10 minutes).</p>                    <p>Generated from protobuf field <code>int32 stream_ack_deadline_seconds = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStreamAckDeadlineSeconds">
+        <div class="location">at         line 250</div>
+        <code>                    <abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr>
+    <strong>setStreamAckDeadlineSeconds</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The ack deadline to use for the stream. This must be provided in the
+first request on the stream, but it can also be updated on subsequent
+requests from client to server. The minimum deadline you can specify is 10
+seconds. The maximum deadline you can specify is 600 seconds (10 minutes).</p>                    <p>Generated from protobuf field <code>int32 stream_ack_deadline_seconds = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\PubSub\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

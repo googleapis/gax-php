@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\AlertPolicy | Google ApiCore - master</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_AlertPolicy" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - master</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>AlertPolicy</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AlertPolicy
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AlertPolicy</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A description of the conditions under which some aspect of your system is
+considered to be "unhealthy" and the ways to notify people or services about
+this state. For an overview of alert policies, see
+<a href="/monitoring/alerts/">Introduction to Alerting</a>.</p>            <p>Generated from protobuf message <code>google.monitoring.v3.AlertPolicy</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>Required if the policy exists. The resource name for this policy. The
+syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
+<code>[ALERT_POLICY_ID]</code> is assigned by Stackdriver Monitoring when the policy
+is created.  When calling the
+[alertPolicies.create][google.monitoring.v3.AlertPolicyService.CreateAlertPolicy]
+method, do not include the <code>name</code> field in the alerting policy passed as
+part of the request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>Required if the policy exists. The resource name for this policy. The
+syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
+<code>[ALERT_POLICY_ID]</code> is assigned by Stackdriver Monitoring when the policy
+is created.  When calling the
+[alertPolicies.create][google.monitoring.v3.AlertPolicyService.CreateAlertPolicy]
+method, do not include the <code>name</code> field in the alerting policy passed as
+part of the request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisplayName">getDisplayName</a>()
+        
+                                            <p>A short name or phrase used to identify the policy in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple policies in the same project. The name is
+limited to 512 Unicode characters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisplayName">setDisplayName</a>(string $var)
+        
+                                            <p>A short name or phrase used to identify the policy in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple policies in the same project. The name is
+limited to 512 Unicode characters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocumentation">getDocumentation</a>()
+        
+                                            <p>Documentation that is included with notifications and incidents related to
+this policy. Best practice is for the documentation to include information
+to help responders understand, mitigate, escalate, and correct the
+underlying problems detected by the alerting policy. Notification channels
+that have limited capacity might not show this documentation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDocumentation">setDocumentation</a>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a> $var)
+        
+                                            <p>Documentation that is included with notifications and incidents related to
+this policy. Best practice is for the documentation to include information
+to help responders understand, mitigate, escalate, and correct the
+underlying problems detected by the alerting policy. Notification channels
+that have limited capacity might not show this documentation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUserLabels">getUserLabels</a>()
+        
+                                            <p>User-supplied key/value data to be used for organizing and
+identifying the <code>AlertPolicy</code> objects.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUserLabels">setUserLabels</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        
+                                            <p>User-supplied key/value data to be used for organizing and
+identifying the <code>AlertPolicy</code> objects.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConditions">getConditions</a>()
+        
+                                            <p>A list of conditions for the policy. The conditions are combined by AND or
+OR according to the <code>combiner</code> field. If the combined conditions evaluate
+to true, then an incident is created. A policy can have from one to six
+conditions.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setConditions">setConditions</a>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition">AlertPolicy_Condition</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>A list of conditions for the policy. The conditions are combined by AND or
+OR according to the <code>combiner</code> field. If the combined conditions evaluate
+to true, then an incident is created. A policy can have from one to six
+conditions.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCombiner">getCombiner</a>()
+        
+                                            <p>How to combine the results of multiple conditions
+to determine if an incident should be opened.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCombiner">setCombiner</a>(int $var)
+        
+                                            <p>How to combine the results of multiple conditions
+to determine if an incident should be opened.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\BoolValue">BoolValue</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnabled">getEnabled</a>()
+        
+                                            <p>Whether or not the policy is enabled. On write, the default interpretation
+if unset is that the policy is enabled. On read, clients should not make
+any assumption about the state if it has not been populated. The
+field should always be populated on List and Get operations, unless
+a field projection has been specified that strips it out.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnabled">setEnabled</a>(<abbr title="Google\Protobuf\BoolValue">BoolValue</abbr> $var)
+        
+                                            <p>Whether or not the policy is enabled. On write, the default interpretation
+if unset is that the policy is enabled. On read, clients should not make
+any assumption about the state if it has not been populated. The
+field should always be populated on List and Get operations, unless
+a field projection has been specified that strips it out.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNotificationChannels">getNotificationChannels</a>()
+        
+                                            <p>Identifies the notification channels to which notifications should be sent
+when incidents are opened or closed or when new violations occur on
+an already opened incident. Each element of this array corresponds to
+the <code>name</code> field in each of the
+[<code>NotificationChannel</code>][google.monitoring.v3.NotificationChannel]
+objects that are returned from the [<code>ListNotificationChannels</code>]
+[google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+method. The syntax of the entries in this field is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setNotificationChannels">setNotificationChannels</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Identifies the notification channels to which notifications should be sent
+when incidents are opened or closed or when new violations occur on
+an already opened incident. Each element of this array corresponds to
+the <code>name</code> field in each of the
+[<code>NotificationChannel</code>][google.monitoring.v3.NotificationChannel]
+objects that are returned from the [<code>ListNotificationChannels</code>]
+[google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+method. The syntax of the entries in this field is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCreationRecord">getCreationRecord</a>()
+        
+                                            <p>A read-only record of the creation of the alerting policy. If provided
+in a call to create or update, this field will be ignored.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCreationRecord">setCreationRecord</a>(<a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a> $var)
+        
+                                            <p>A read-only record of the creation of the alerting policy. If provided
+in a call to create or update, this field will be ignored.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMutationRecord">getMutationRecord</a>()
+        
+                                            <p>A read-only record of the most recent change to the alerting policy. If
+provided in a call to create or update, this field will be ignored.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMutationRecord">setMutationRecord</a>(<a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a> $var)
+        
+                                            <p>A read-only record of the most recent change to the alerting policy. If
+provided in a call to create or update, this field will be ignored.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 119</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 137</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required if the policy exists. The resource name for this policy. The
+syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
+<code>[ALERT_POLICY_ID]</code> is assigned by Stackdriver Monitoring when the policy
+is created.  When calling the
+[alertPolicies.create][google.monitoring.v3.AlertPolicyService.CreateAlertPolicy]
+method, do not include the <code>name</code> field in the alerting policy passed as
+part of the request.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 156</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required if the policy exists. The resource name for this policy. The
+syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[ALERT_POLICY_ID]
+<code>[ALERT_POLICY_ID]</code> is assigned by Stackdriver Monitoring when the policy
+is created.  When calling the
+[alertPolicies.create][google.monitoring.v3.AlertPolicyService.CreateAlertPolicy]
+method, do not include the <code>name</code> field in the alerting policy passed as
+part of the request.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisplayName">
+        <div class="location">at         line 173</div>
+        <code>                    string
+    <strong>getDisplayName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A short name or phrase used to identify the policy in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple policies in the same project. The name is
+limited to 512 Unicode characters.</p>                    <p>Generated from protobuf field <code>string display_name = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisplayName">
+        <div class="location">at         line 188</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDisplayName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A short name or phrase used to identify the policy in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple policies in the same project. The name is
+limited to 512 Unicode characters.</p>                    <p>Generated from protobuf field <code>string display_name = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocumentation">
+        <div class="location">at         line 206</div>
+        <code>                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a>
+    <strong>getDocumentation</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Documentation that is included with notifications and incidents related to
+this policy. Best practice is for the documentation to include information
+to help responders understand, mitigate, escalate, and correct the
+underlying problems detected by the alerting policy. Notification channels
+that have limited capacity might not show this documentation.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Documentation documentation = 13;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDocumentation">
+        <div class="location">at         line 222</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDocumentation</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Documentation that is included with notifications and incidents related to
+this policy. Best practice is for the documentation to include information
+to help responders understand, mitigate, escalate, and correct the
+underlying problems detected by the alerting policy. Notification channels
+that have limited capacity might not show this documentation.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Documentation documentation = 13;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUserLabels">
+        <div class="location">at         line 241</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+    <strong>getUserLabels</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>User-supplied key/value data to be used for organizing and
+identifying the <code>AlertPolicy</code> objects.</p>                    <p>The field can contain up to 64 entries. Each key and value is limited to
+63 Unicode characters or 128 bytes, whichever is smaller. Labels and
+values can contain only lowercase letters, numerals, underscores, and
+dashes. Keys must begin with a letter.</p>
+
+<p>Generated from protobuf field <code>map&lt;string, string> user_labels = 16;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUserLabels">
+        <div class="location">at         line 258</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setUserLabels</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>User-supplied key/value data to be used for organizing and
+identifying the <code>AlertPolicy</code> objects.</p>                    <p>The field can contain up to 64 entries. Each key and value is limited to
+63 Unicode characters or 128 bytes, whichever is smaller. Labels and
+values can contain only lowercase letters, numerals, underscores, and
+dashes. Keys must begin with a letter.</p>
+
+<p>Generated from protobuf field <code>map&lt;string, string> user_labels = 16;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConditions">
+        <div class="location">at         line 275</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getConditions</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of conditions for the policy. The conditions are combined by AND or
+OR according to the <code>combiner</code> field. If the combined conditions evaluate
+to true, then an incident is created. A policy can have from one to six
+conditions.</p>                    <p>Generated from protobuf field <code>repeated .google.monitoring.v3.AlertPolicy.Condition conditions = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setConditions">
+        <div class="location">at         line 290</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setConditions</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition">AlertPolicy_Condition</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of conditions for the policy. The conditions are combined by AND or
+OR according to the <code>combiner</code> field. If the combined conditions evaluate
+to true, then an incident is created. A policy can have from one to six
+conditions.</p>                    <p>Generated from protobuf field <code>repeated .google.monitoring.v3.AlertPolicy.Condition conditions = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition">AlertPolicy_Condition</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCombiner">
+        <div class="location">at         line 305</div>
+        <code>                    int
+    <strong>getCombiner</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>How to combine the results of multiple conditions
+to determine if an incident should be opened.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.ConditionCombinerType combiner = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCombiner">
+        <div class="location">at         line 318</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setCombiner</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>How to combine the results of multiple conditions
+to determine if an incident should be opened.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.ConditionCombinerType combiner = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnabled">
+        <div class="location">at         line 336</div>
+        <code>                    <abbr title="Google\Protobuf\BoolValue">BoolValue</abbr>
+    <strong>getEnabled</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Whether or not the policy is enabled. On write, the default interpretation
+if unset is that the policy is enabled. On read, clients should not make
+any assumption about the state if it has not been populated. The
+field should always be populated on List and Get operations, unless
+a field projection has been specified that strips it out.</p>                    <p>Generated from protobuf field <code>.google.protobuf.BoolValue enabled = 17;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\BoolValue">BoolValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnabled">
+        <div class="location">at         line 352</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setEnabled</strong>(<abbr title="Google\Protobuf\BoolValue">BoolValue</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Whether or not the policy is enabled. On write, the default interpretation
+if unset is that the policy is enabled. On read, clients should not make
+any assumption about the state if it has not been populated. The
+field should always be populated on List and Get operations, unless
+a field projection has been specified that strips it out.</p>                    <p>Generated from protobuf field <code>.google.protobuf.BoolValue enabled = 17;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\BoolValue">BoolValue</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNotificationChannels">
+        <div class="location">at         line 374</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getNotificationChannels</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Identifies the notification channels to which notifications should be sent
+when incidents are opened or closed or when new violations occur on
+an already opened incident. Each element of this array corresponds to
+the <code>name</code> field in each of the
+[<code>NotificationChannel</code>][google.monitoring.v3.NotificationChannel]
+objects that are returned from the [<code>ListNotificationChannels</code>]
+[google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+method. The syntax of the entries in this field is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]</p>                    <p>Generated from protobuf field <code>repeated string notification_channels = 14;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setNotificationChannels">
+        <div class="location">at         line 394</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setNotificationChannels</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Identifies the notification channels to which notifications should be sent
+when incidents are opened or closed or when new violations occur on
+an already opened incident. Each element of this array corresponds to
+the <code>name</code> field in each of the
+[<code>NotificationChannel</code>][google.monitoring.v3.NotificationChannel]
+objects that are returned from the [<code>ListNotificationChannels</code>]
+[google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+method. The syntax of the entries in this field is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]</p>                    <p>Generated from protobuf field <code>repeated string notification_channels = 14;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCreationRecord">
+        <div class="location">at         line 409</div>
+        <code>                    <a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a>
+    <strong>getCreationRecord</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A read-only record of the creation of the alerting policy. If provided
+in a call to create or update, this field will be ignored.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.MutationRecord creation_record = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCreationRecord">
+        <div class="location">at         line 422</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setCreationRecord</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A read-only record of the creation of the alerting policy. If provided
+in a call to create or update, this field will be ignored.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.MutationRecord creation_record = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMutationRecord">
+        <div class="location">at         line 437</div>
+        <code>                    <a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a>
+    <strong>getMutationRecord</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A read-only record of the most recent change to the alerting policy. If
+provided in a call to create or update, this field will be ignored.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.MutationRecord mutation_record = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMutationRecord">
+        <div class="location">at         line 450</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setMutationRecord</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A read-only record of the most recent change to the alerting policy. If
+provided in a call to create or update, this field will be ignored.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.MutationRecord mutation_record = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

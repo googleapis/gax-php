@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Speech\V1p1beta1\StreamingRecognizeResponse | Google ApiCore - master</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Speech_V1p1beta1_StreamingRecognizeResponse" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - master</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Speech.html">Speech</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Speech/V1p1beta1.html">V1p1beta1</a></li><li class="backslash">\</li><li>StreamingRecognizeResponse</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            StreamingRecognizeResponse
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>StreamingRecognizeResponse</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p><code>StreamingRecognizeResponse</code> is the only message returned to the client by
+<code>StreamingRecognize</code>. A series of zero or more <code>StreamingRecognizeResponse</code>
+messages are streamed back to the client. If there is no recognizable
+audio, and <code>single_utterance</code> is set to false, then no messages are streamed
+back to the client.</p>            <p>Here's an example of a series of ten <code>StreamingRecognizeResponse</code>s that might
+be returned while processing audio:
+1. results { alternatives { transcript: "tube" } stability: 0.01 }
+2. results { alternatives { transcript: "to be a" } stability: 0.01 }
+3. results { alternatives { transcript: "to be" } stability: 0.9 }
+   results { alternatives { transcript: " or not to be" } stability: 0.01 }
+4. results { alternatives { transcript: "to be or not to be"
+                            confidence: 0.92 }
+             alternatives { transcript: "to bee or not to bee" }
+             is_final: true }
+5. results { alternatives { transcript: " that's" } stability: 0.01 }
+6. results { alternatives { transcript: " that is" } stability: 0.9 }
+   results { alternatives { transcript: " the question" } stability: 0.01 }
+7. results { alternatives { transcript: " that is the question"
+                            confidence: 0.98 }
+             alternatives { transcript: " that was the question" }
+             is_final: true }
+Notes:
+- Only two of the above responses #4 and #7 contain final results; they are
+  indicated by <code>is_final: true</code>. Concatenating these together generates the
+  full transcript: "to be or not to be that is the question".
+- The others contain interim <code>results</code>. #3 and #6 contain two interim
+  <code>results</code>: the first portion has a high stability and is less likely to
+  change; the second portion has a low stability and is very likely to
+  change. A UI designer might choose to show only high stability <code>results</code>.
+- The specific <code>stability</code> and <code>confidence</code> values shown above are only for
+  illustrative purposes. Actual values may vary.
+- In each response, only one of these fields will be set:
+    <code>error</code>,
+    <code>speech_event_type</code>, or
+    one or more (repeated) <code>results</code>.</p>
+
+<p>Generated from protobuf message <code>google.cloud.speech.v1p1beta1.StreamingRecognizeResponse</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getError">getError</a>()
+        
+                                            <p>Output only. If set, returns a [google.rpc.Status][google.rpc.Status] message that
+specifies the error for the operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setError">setError</a>(<a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
+        
+                                            <p>Output only. If set, returns a [google.rpc.Status][google.rpc.Status] message that
+specifies the error for the operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResults">getResults</a>()
+        
+                                            <p>Output only. This repeated list contains zero or more results that
+correspond to consecutive portions of the audio currently being processed.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setResults">setResults</a>(<a href="../../../../Google/Cloud/Speech/V1p1beta1/StreamingRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1p1beta1\StreamingRecognitionResult">StreamingRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Output only. This repeated list contains zero or more results that
+correspond to consecutive portions of the audio currently being processed.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSpeechEventType">getSpeechEventType</a>()
+        
+                                            <p>Output only. Indicates the type of speech event.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSpeechEventType">setSpeechEventType</a>(int $var)
+        
+                                            <p>Output only. Indicates the type of speech event.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 76</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getError">
+        <div class="location">at         line 88</div>
+        <code>                    <a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a>
+    <strong>getError</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. If set, returns a [google.rpc.Status][google.rpc.Status] message that
+specifies the error for the operation.</p>                    <p>Generated from protobuf field <code>.google.rpc.Status error = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setError">
+        <div class="location">at         line 101</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setError</strong>(<a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. If set, returns a [google.rpc.Status][google.rpc.Status] message that
+specifies the error for the operation.</p>                    <p>Generated from protobuf field <code>.google.rpc.Status error = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResults">
+        <div class="location">at         line 118</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getResults</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. This repeated list contains zero or more results that
+correspond to consecutive portions of the audio currently being processed.</p>                    <p>It contains zero or one <code>is_final=true</code> result (the newly settled portion),
+followed by zero or more <code>is_final=false</code> results (the interim results).</p>
+
+<p>Generated from protobuf field <code>repeated .google.cloud.speech.v1p1beta1.StreamingRecognitionResult results = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setResults">
+        <div class="location">at         line 133</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setResults</strong>(<a href="../../../../Google/Cloud/Speech/V1p1beta1/StreamingRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1p1beta1\StreamingRecognitionResult">StreamingRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. This repeated list contains zero or more results that
+correspond to consecutive portions of the audio currently being processed.</p>                    <p>It contains zero or one <code>is_final=true</code> result (the newly settled portion),
+followed by zero or more <code>is_final=false</code> results (the interim results).</p>
+
+<p>Generated from protobuf field <code>repeated .google.cloud.speech.v1p1beta1.StreamingRecognitionResult results = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Speech/V1p1beta1/StreamingRecognitionResult.html"><abbr title="Google\Cloud\Speech\V1p1beta1\StreamingRecognitionResult">StreamingRecognitionResult</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSpeechEventType">
+        <div class="location">at         line 147</div>
+        <code>                    int
+    <strong>getSpeechEventType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Indicates the type of speech event.</p>                    <p>Generated from protobuf field <code>.google.cloud.speech.v1p1beta1.StreamingRecognizeResponse.SpeechEventType speech_event_type = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSpeechEventType">
+        <div class="location">at         line 159</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setSpeechEventType</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Indicates the type of speech event.</p>                    <p>Generated from protobuf field <code>.google.cloud.speech.v1p1beta1.StreamingRecognizeResponse.SpeechEventType speech_event_type = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
