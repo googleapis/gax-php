@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Bigtable\Admin\V2\BigtableTableAdminGrpcClient | Google ApiCore - 0.31.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../css/sami.css">
+        <script src="../../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../../js/typeahead.min.js"></script>
+        <script src="../../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Bigtable_Admin_V2_BigtableTableAdminGrpcClient" data-root-path="../../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../../index.html">Google ApiCore - 0.31.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud/Bigtable.html">Bigtable</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud/Bigtable/Admin.html">Admin</a></li><li class="backslash">\</li><li><a href="../../../../../Google/Cloud/Bigtable/Admin/V2.html">V2</a></li><li class="backslash">\</li><li>BigtableTableAdminGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            BigtableTableAdminGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>BigtableTableAdminGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Service for creating, configuring, and deleting Cloud Bigtable tables.</p>            <p>Provides access to the table schemas only, not the data stored within
+the tables.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateTable">CreateTable</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CreateTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CreateTableRequest">CreateTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new table in the specified instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateTableFromSnapshot">CreateTableFromSnapshot</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CreateTableFromSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CreateTableFromSnapshotRequest">CreateTableFromSnapshotRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new table from the specified snapshot. The target table must
+not exist. The snapshot and the table must be in the same instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListTables">ListTables</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ListTablesRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ListTablesRequest">ListTablesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all tables served from a specified instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetTable">GetTable</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GetTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GetTableRequest">GetTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets metadata information about the specified table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteTable">DeleteTable</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DeleteTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DeleteTableRequest">DeleteTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Permanently deletes a specified table and all of its data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ModifyColumnFamilies">ModifyColumnFamilies</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ModifyColumnFamiliesRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ModifyColumnFamiliesRequest">ModifyColumnFamiliesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Performs a series of column family modifications on the specified table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DropRowRange">DropRowRange</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DropRowRangeRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DropRowRangeRequest">DropRowRangeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Permanently drop/delete a row range from a specified table. The request can
+specify whether to delete all rows in a table, or only those that match a
+particular prefix.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GenerateConsistencyToken">GenerateConsistencyToken</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GenerateConsistencyTokenRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GenerateConsistencyTokenRequest">GenerateConsistencyTokenRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Generates a consistency token for a Table, which can be used in
+CheckConsistency to check whether mutations to the table that finished
+before this call started have been replicated. The tokens will be available
+for 90 days.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CheckConsistency">CheckConsistency</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CheckConsistencyRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CheckConsistencyRequest">CheckConsistencyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Checks replication consistency based on a consistency token, that is, if
+replication has caught up based on the conditions specified in the token
+and the check request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SnapshotTable">SnapshotTable</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/SnapshotTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\SnapshotTableRequest">SnapshotTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new snapshot in the specified cluster from the specified
+source table. The cluster and the table must be in the same instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetSnapshot">GetSnapshot</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GetSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GetSnapshotRequest">GetSnapshotRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets metadata information about the specified snapshot.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListSnapshots">ListSnapshots</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ListSnapshotsRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ListSnapshotsRequest">ListSnapshotsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all snapshots associated with the specified cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteSnapshot">DeleteSnapshot</a>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DeleteSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DeleteSnapshotRequest">DeleteSnapshotRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Permanently deletes the specified snapshot.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 35</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateTable">
+        <div class="location">at         line 47</div>
+        <code>                    
+    <strong>CreateTable</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CreateTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CreateTableRequest">CreateTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new table in the specified instance.</p>                    <p>The table can be created with a full set of initial column families,
+specified in the request.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CreateTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CreateTableRequest">CreateTableRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateTableFromSnapshot">
+        <div class="location">at         line 68</div>
+        <code>                    
+    <strong>CreateTableFromSnapshot</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CreateTableFromSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CreateTableFromSnapshotRequest">CreateTableFromSnapshotRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new table from the specified snapshot. The target table must
+not exist. The snapshot and the table must be in the same instance.</p>                    <p>Note: This is a private alpha release of Cloud Bigtable snapshots. This
+feature is not currently available to most Cloud Bigtable customers. This
+feature might be changed in backward-incompatible ways and is not
+recommended for production use. It is not subject to any SLA or deprecation
+policy.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CreateTableFromSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CreateTableFromSnapshotRequest">CreateTableFromSnapshotRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListTables">
+        <div class="location">at         line 82</div>
+        <code>                    
+    <strong>ListTables</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ListTablesRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ListTablesRequest">ListTablesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all tables served from a specified instance.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ListTablesRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ListTablesRequest">ListTablesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetTable">
+        <div class="location">at         line 96</div>
+        <code>                    
+    <strong>GetTable</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GetTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GetTableRequest">GetTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets metadata information about the specified table.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GetTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GetTableRequest">GetTableRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteTable">
+        <div class="location">at         line 110</div>
+        <code>                    
+    <strong>DeleteTable</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DeleteTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DeleteTableRequest">DeleteTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Permanently deletes a specified table and all of its data.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DeleteTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DeleteTableRequest">DeleteTableRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ModifyColumnFamilies">
+        <div class="location">at         line 127</div>
+        <code>                    
+    <strong>ModifyColumnFamilies</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ModifyColumnFamiliesRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ModifyColumnFamiliesRequest">ModifyColumnFamiliesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Performs a series of column family modifications on the specified table.</p>                    <p>Either all or none of the modifications will occur before this method
+returns, but data requests received prior to that point may see a table
+where only some modifications have taken effect.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ModifyColumnFamiliesRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ModifyColumnFamiliesRequest">ModifyColumnFamiliesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DropRowRange">
+        <div class="location">at         line 143</div>
+        <code>                    
+    <strong>DropRowRange</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DropRowRangeRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DropRowRangeRequest">DropRowRangeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Permanently drop/delete a row range from a specified table. The request can
+specify whether to delete all rows in a table, or only those that match a
+particular prefix.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DropRowRangeRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DropRowRangeRequest">DropRowRangeRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GenerateConsistencyToken">
+        <div class="location">at         line 160</div>
+        <code>                    
+    <strong>GenerateConsistencyToken</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GenerateConsistencyTokenRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GenerateConsistencyTokenRequest">GenerateConsistencyTokenRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates a consistency token for a Table, which can be used in
+CheckConsistency to check whether mutations to the table that finished
+before this call started have been replicated. The tokens will be available
+for 90 days.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GenerateConsistencyTokenRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GenerateConsistencyTokenRequest">GenerateConsistencyTokenRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CheckConsistency">
+        <div class="location">at         line 176</div>
+        <code>                    
+    <strong>CheckConsistency</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CheckConsistencyRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CheckConsistencyRequest">CheckConsistencyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Checks replication consistency based on a consistency token, that is, if
+replication has caught up based on the conditions specified in the token
+and the check request.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/CheckConsistencyRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\CheckConsistencyRequest">CheckConsistencyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SnapshotTable">
+        <div class="location">at         line 197</div>
+        <code>                    
+    <strong>SnapshotTable</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/SnapshotTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\SnapshotTableRequest">SnapshotTableRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new snapshot in the specified cluster from the specified
+source table. The cluster and the table must be in the same instance.</p>                    <p>Note: This is a private alpha release of Cloud Bigtable snapshots. This
+feature is not currently available to most Cloud Bigtable customers. This
+feature might be changed in backward-incompatible ways and is not
+recommended for production use. It is not subject to any SLA or deprecation
+policy.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/SnapshotTableRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\SnapshotTableRequest">SnapshotTableRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetSnapshot">
+        <div class="location">at         line 217</div>
+        <code>                    
+    <strong>GetSnapshot</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GetSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GetSnapshotRequest">GetSnapshotRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets metadata information about the specified snapshot.</p>                    <p>Note: This is a private alpha release of Cloud Bigtable snapshots. This
+feature is not currently available to most Cloud Bigtable customers. This
+feature might be changed in backward-incompatible ways and is not
+recommended for production use. It is not subject to any SLA or deprecation
+policy.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/GetSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\GetSnapshotRequest">GetSnapshotRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListSnapshots">
+        <div class="location">at         line 237</div>
+        <code>                    
+    <strong>ListSnapshots</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ListSnapshotsRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ListSnapshotsRequest">ListSnapshotsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all snapshots associated with the specified cluster.</p>                    <p>Note: This is a private alpha release of Cloud Bigtable snapshots. This
+feature is not currently available to most Cloud Bigtable customers. This
+feature might be changed in backward-incompatible ways and is not
+recommended for production use. It is not subject to any SLA or deprecation
+policy.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/ListSnapshotsRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\ListSnapshotsRequest">ListSnapshotsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteSnapshot">
+        <div class="location">at         line 257</div>
+        <code>                    
+    <strong>DeleteSnapshot</strong>(<a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DeleteSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DeleteSnapshotRequest">DeleteSnapshotRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Permanently deletes the specified snapshot.</p>                    <p>Note: This is a private alpha release of Cloud Bigtable snapshots. This
+feature is not currently available to most Cloud Bigtable customers. This
+feature might be changed in backward-incompatible ways and is not
+recommended for production use. It is not subject to any SLA or deprecation
+policy.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../../Google/Cloud/Bigtable/Admin/V2/DeleteSnapshotRequest.html"><abbr title="Google\Cloud\Bigtable\Admin\V2\DeleteSnapshotRequest">DeleteSnapshotRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

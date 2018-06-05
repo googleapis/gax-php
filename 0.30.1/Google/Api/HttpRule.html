@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Api\HttpRule | Google ApiCore - 0.30.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Api_HttpRule" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - 0.30.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Api.html">Api</a></li><li class="backslash">\</li><li>HttpRule</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            HttpRule
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>HttpRule</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p><code>HttpRule</code> defines the mapping of an RPC method to one or more HTTP
+REST APIs.  The mapping determines what portions of the request
+message are populated from the path, query parameters, or body of
+the HTTP request.  The mapping is typically specified as an
+<code>google.api.http</code> annotation, see "google/api/annotations.proto"
+for details.</p>            <p>The mapping consists of a field specifying the path template and
+method kind.  The path template can refer to fields in the request
+message, as in the example below which describes a REST GET
+operation on a resource collection of messages:
+    service Messaging {
+      rpc GetMessage(GetMessageRequest) returns (Message) {
+        option (google.api.http).get = "/v1/messages/{message_id}/{sub.subfield}";
+      }
+    }
+    message GetMessageRequest {
+      message SubMessage {
+        string subfield = 1;
+      }
+      string message_id = 1; // mapped to the URL
+      SubMessage sub = 2;    // <code>sub.subfield</code> is url-mapped
+    }
+    message Message {
+      string text = 1; // content of the resource
+    }
+The same http annotation can alternatively be expressed inside the
+<code>GRPC API Configuration</code> YAML file.
+    http:
+      rules:
+        - selector: <proto_package_name>.Messaging.GetMessage
+          get: /v1/messages/{message_id}/{sub.subfield}
+This definition enables an automatic, bidrectional mapping of HTTP
+JSON to RPC. Example:
+HTTP | RPC
+-----|-----
+<code>GET /v1/messages/123456/foo</code>  | <code>GetMessage(message_id: "123456" sub: SubMessage(subfield: "foo"))</code>
+In general, not only fields but also field paths can be referenced
+from a path pattern. Fields mapped to the path pattern cannot be
+repeated and must have a primitive (non-message) type.
+Any fields in the request message which are not bound by the path
+pattern automatically become (optional) HTTP query
+parameters. Assume the following definition of the request message:
+    message GetMessageRequest {
+      message SubMessage {
+        string subfield = 1;
+      }
+      string message_id = 1; // mapped to the URL
+      int64 revision = 2;    // becomes a parameter
+      SubMessage sub = 3;    // <code>sub.subfield</code> becomes a parameter
+    }
+This enables a HTTP JSON to RPC mapping as below:
+HTTP | RPC
+-----|-----
+<code>GET /v1/messages/123456?revision=2&amp;sub.subfield=foo</code> | <code>GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield: "foo"))</code>
+Note that fields which are mapped to HTTP parameters must have a
+primitive type or a repeated primitive type. Message types are not
+allowed. In the case of a repeated type, the parameter can be
+repeated in the URL, as in <code>...?param=A&amp;param=B</code>.
+For HTTP method kinds which allow a request body, the <code>body</code> field
+specifies the mapping. Consider a REST update method on the
+message resource collection:
+    service Messaging {
+      rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
+        option (google.api.http) = {
+          put: "/v1/messages/{message_id}"
+          body: "message"
+        };
+      }
+    }
+    message UpdateMessageRequest {
+      string message_id = 1; // mapped to the URL
+      Message message = 2;   // mapped to the body
+    }
+The following HTTP JSON to RPC mapping is enabled, where the
+representation of the JSON in the request body is determined by
+protos JSON encoding:
+HTTP | RPC
+-----|-----
+<code>PUT /v1/messages/123456 { "text": "Hi!" }</code> | <code>UpdateMessage(message_id: "123456" message { text: "Hi!" })</code>
+The special name <code>*</code> can be used in the body mapping to define that
+every field not bound by the path template should be mapped to the
+request body.  This enables the following alternative definition of
+the update method:
+    service Messaging {
+      rpc UpdateMessage(Message) returns (Message) {
+        option (google.api.http) = {
+          put: "/v1/messages/{message_id}"
+          body: "*"
+        };
+      }
+    }
+    message Message {
+      string message_id = 1;
+      string text = 2;
+    }
+The following HTTP JSON to RPC mapping is enabled:
+HTTP | RPC
+-----|-----
+<code>PUT /v1/messages/123456 { "text": "Hi!" }</code> | <code>UpdateMessage(message_id: "123456" text: "Hi!")</code>
+Note that when using <code>*</code> in the body mapping, it is not possible to
+have HTTP parameters, as all fields not bound by the path end in
+the body. This makes this option more rarely used in practice of
+defining REST APIs. The common usage of <code>*</code> is in custom methods
+which don't use the URL at all for transferring data.
+It is possible to define multiple HTTP methods for one RPC by using
+the <code>additional_bindings</code> option. Example:
+    service Messaging {
+      rpc GetMessage(GetMessageRequest) returns (Message) {
+        option (google.api.http) = {
+          get: "/v1/messages/{message_id}"
+          additional_bindings {
+            get: "/v1/users/{user_id}/messages/{message_id}"
+          }
+        };
+      }
+    }
+    message GetMessageRequest {
+      string message_id = 1;
+      string user_id = 2;
+    }
+This enables the following two alternative HTTP JSON to RPC
+mappings:
+<table>
+<thead>
+<tr>
+  <th>HTTP</th>
+  <th>RPC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GET /v1/messages/123456</code></td>
+  <td><code>GetMessage(message_id: "123456")</code></td>
+</tr>
+<tr>
+  <td><code>GET /v1/users/me/messages/123456</code></td>
+  <td><code>GetMessage(user_id: "me" message_id: "123456")</code></td>
+</tr>
+</tbody>
+</table></p>
+
+<h1>Rules for HTTP mapping</h1>
+
+<p>The rules for mapping HTTP path, query parameters, and body fields
+to the request message are as follows:
+1. The <code>body</code> field specifies either <code>*</code> or a field path, or is
+   omitted. If omitted, it assumes there is no HTTP body.
+2. Leaf fields (recursive expansion of nested messages in the
+   request) can be classified into three types:
+    (a) Matched in the URL template.
+    (b) Covered by body (if body is <code>*</code>, everything except (a) fields;
+        else everything under the body field)
+    (c) All other fields.
+3. URL query parameters found in the HTTP request are mapped to (c) fields.
+4. Any body sent with an HTTP request can contain only (b) fields.
+The syntax of the path template is as follows:
+    Template = "/" Segments [ Verb ] ;
+    Segments = Segment { "/" Segment } ;
+    Segment  = "*" | "**" | LITERAL | Variable ;
+    Variable = "{" FieldPath [ "=" Segments ] "}" ;
+    FieldPath = IDENT { "." IDENT } ;
+    Verb     = ":" LITERAL ;
+The syntax <code>*</code> matches a single path segment. It follows the semantics of
+<a href="https://tools.ietf.org/html/rfc6570">RFC 6570</a> Section 3.2.2 Simple String
+Expansion.
+The syntax <code>**</code> matches zero or more path segments. It follows the semantics
+of <a href="https://tools.ietf.org/html/rfc6570">RFC 6570</a> Section 3.2.3 Reserved
+Expansion. NOTE: it must be the last segment in the path except the Verb.
+The syntax <code>LITERAL</code> matches literal text in the URL path.
+The syntax <code>Variable</code> matches the entire path as specified by its template;
+this nested template must not contain further variables. If a variable
+matches a single path segment, its template may be omitted, e.g. <code>{var}</code>
+is equivalent to <code>{var=*}</code>.
+NOTE: the field paths in variables and in the <code>body</code> must not refer to
+repeated fields or map fields.
+Use CustomHttpPattern to specify any HTTP method that is not included in the
+<code>pattern</code> field, such as HEAD, or "*" to leave the HTTP method unspecified for
+a given URL path rule. The wild-card rule is useful for services that provide
+content to Web (HTML) clients.</p>
+
+<p>Generated from protobuf message <code>google.api.HttpRule</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_pattern">
+                                        protected                                        
+                </td>
+                <td>$pattern</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSelector">getSelector</a>()
+        
+                                            <p>Selects methods to which this rule applies.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSelector">setSelector</a>(string $var)
+        
+                                            <p>Selects methods to which this rule applies.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getGet">getGet</a>()
+        
+                                            <p>Used for listing and getting information about resources.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setGet">setGet</a>(string $var)
+        
+                                            <p>Used for listing and getting information about resources.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPut">getPut</a>()
+        
+                                            <p>Used for updating a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPut">setPut</a>(string $var)
+        
+                                            <p>Used for updating a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPost">getPost</a>()
+        
+                                            <p>Used for creating a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPost">setPost</a>(string $var)
+        
+                                            <p>Used for creating a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDelete">getDelete</a>()
+        
+                                            <p>Used for deleting a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDelete">setDelete</a>(string $var)
+        
+                                            <p>Used for deleting a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPatch">getPatch</a>()
+        
+                                            <p>Used for updating a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPatch">setPatch</a>(string $var)
+        
+                                            <p>Used for updating a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCustom">getCustom</a>()
+        
+                                            <p>Custom pattern is used for defining custom verbs.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCustom">setCustom</a>(<a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a> $var)
+        
+                                            <p>Custom pattern is used for defining custom verbs.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBody">getBody</a>()
+        
+                                            <p>The name of the request field whose value is mapped to the HTTP body, or
+<code>*</code> for mapping all fields not captured by the path pattern to the HTTP
+body. NOTE: the referred field must not be a repeated field and must be
+present at the top-level of request message type.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBody">setBody</a>(string $var)
+        
+                                            <p>The name of the request field whose value is mapped to the HTTP body, or
+<code>*</code> for mapping all fields not captured by the path pattern to the HTTP
+body. NOTE: the referred field must not be a repeated field and must be
+present at the top-level of request message type.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAdditionalBindings">getAdditionalBindings</a>()
+        
+                                            <p>Additional HTTP bindings for the selector. Nested bindings must
+not contain an <code>additional_bindings</code> field themselves (that is,
+the nesting may only be one level deep).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAdditionalBindings">setAdditionalBindings</a>(<a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Additional HTTP bindings for the selector. Nested bindings must
+not contain an <code>additional_bindings</code> field themselves (that is,
+the nesting may only be one level deep).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPattern">getPattern</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 206</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSelector">
+        <div class="location">at         line 218</div>
+        <code>                    string
+    <strong>getSelector</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Selects methods to which this rule applies.</p>                    <p>Refer to [selector][google.api.DocumentationRule.selector] for syntax details.</p>
+
+<p>Generated from protobuf field <code>string selector = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSelector">
+        <div class="location">at         line 231</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setSelector</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Selects methods to which this rule applies.</p>                    <p>Refer to [selector][google.api.DocumentationRule.selector] for syntax details.</p>
+
+<p>Generated from protobuf field <code>string selector = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getGet">
+        <div class="location">at         line 245</div>
+        <code>                    string
+    <strong>getGet</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for listing and getting information about resources.</p>                    <p>Generated from protobuf field <code>string get = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setGet">
+        <div class="location">at         line 257</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setGet</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for listing and getting information about resources.</p>                    <p>Generated from protobuf field <code>string get = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPut">
+        <div class="location">at         line 271</div>
+        <code>                    string
+    <strong>getPut</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for updating a resource.</p>                    <p>Generated from protobuf field <code>string put = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPut">
+        <div class="location">at         line 283</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setPut</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for updating a resource.</p>                    <p>Generated from protobuf field <code>string put = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPost">
+        <div class="location">at         line 297</div>
+        <code>                    string
+    <strong>getPost</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for creating a resource.</p>                    <p>Generated from protobuf field <code>string post = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPost">
+        <div class="location">at         line 309</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setPost</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for creating a resource.</p>                    <p>Generated from protobuf field <code>string post = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDelete">
+        <div class="location">at         line 323</div>
+        <code>                    string
+    <strong>getDelete</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for deleting a resource.</p>                    <p>Generated from protobuf field <code>string delete = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDelete">
+        <div class="location">at         line 335</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setDelete</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for deleting a resource.</p>                    <p>Generated from protobuf field <code>string delete = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPatch">
+        <div class="location">at         line 349</div>
+        <code>                    string
+    <strong>getPatch</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for updating a resource.</p>                    <p>Generated from protobuf field <code>string patch = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPatch">
+        <div class="location">at         line 361</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setPatch</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used for updating a resource.</p>                    <p>Generated from protobuf field <code>string patch = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCustom">
+        <div class="location">at         line 375</div>
+        <code>                    <a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a>
+    <strong>getCustom</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Custom pattern is used for defining custom verbs.</p>                    <p>Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCustom">
+        <div class="location">at         line 387</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setCustom</strong>(<a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Custom pattern is used for defining custom verbs.</p>                    <p>Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBody">
+        <div class="location">at         line 404</div>
+        <code>                    string
+    <strong>getBody</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the request field whose value is mapped to the HTTP body, or
+<code>*</code> for mapping all fields not captured by the path pattern to the HTTP
+body. NOTE: the referred field must not be a repeated field and must be
+present at the top-level of request message type.</p>                    <p>Generated from protobuf field <code>string body = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBody">
+        <div class="location">at         line 419</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setBody</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the request field whose value is mapped to the HTTP body, or
+<code>*</code> for mapping all fields not captured by the path pattern to the HTTP
+body. NOTE: the referred field must not be a repeated field and must be
+present at the top-level of request message type.</p>                    <p>Generated from protobuf field <code>string body = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAdditionalBindings">
+        <div class="location">at         line 435</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAdditionalBindings</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Additional HTTP bindings for the selector. Nested bindings must
+not contain an <code>additional_bindings</code> field themselves (that is,
+the nesting may only be one level deep).</p>                    <p>Generated from protobuf field <code>repeated .google.api.HttpRule additional_bindings = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAdditionalBindings">
+        <div class="location">at         line 449</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setAdditionalBindings</strong>(<a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Additional HTTP bindings for the selector. Nested bindings must
+not contain an <code>additional_bindings</code> field themselves (that is,
+the nesting may only be one level deep).</p>                    <p>Generated from protobuf field <code>repeated .google.api.HttpRule additional_bindings = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPattern">
+        <div class="location">at         line 460</div>
+        <code>                    string
+    <strong>getPattern</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Redis\V1beta1\Instance | Google ApiCore - 0.33.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Redis_V1beta1_Instance" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.33.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Redis.html">Redis</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Redis/V1beta1.html">V1beta1</a></li><li class="backslash">\</li><li>Instance</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Instance
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Instance</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A Google Cloud Redis instance.</p>            <p>Generated from protobuf message <code>google.cloud.redis.v1beta1.Instance</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>Required. Unique name of the resource in this scope including project and
+location using the form:
+    <code>projects/{project_id}/locations/{location_id}/instances/{instance_id}</code>
+Note: Redis instances are managed and addressed at regional level so
+location_id here refers to a GCP region; however, users get to choose which
+specific zone (or collection of zones for cross-zone instances) an instance
+should be provisioned in. Refer to [location_id] and
+[alternative_location_id] fields for more details.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>Required. Unique name of the resource in this scope including project and
+location using the form:
+    <code>projects/{project_id}/locations/{location_id}/instances/{instance_id}</code>
+Note: Redis instances are managed and addressed at regional level so
+location_id here refers to a GCP region; however, users get to choose which
+specific zone (or collection of zones for cross-zone instances) an instance
+should be provisioned in. Refer to [location_id] and
+[alternative_location_id] fields for more details.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisplayName">getDisplayName</a>()
+        
+                                            <p>An arbitrary and optional user-provided name for the instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisplayName">setDisplayName</a>(string $var)
+        
+                                            <p>An arbitrary and optional user-provided name for the instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLabels">getLabels</a>()
+        
+                                            <p>Resource labels to represent user provided metadata</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLabels">setLabels</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        
+                                            <p>Resource labels to represent user provided metadata</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLocationId">getLocationId</a>()
+        
+                                            <p>Optional. The zone where the instance will be provisioned. If not provided,
+the service will choose a zone for the instance. For STANDARD_HA tier,
+instances will be created across two zones for protection against zonal
+failures. if [alternative_location_id] is also provided, it must be
+different from [location_id].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLocationId">setLocationId</a>(string $var)
+        
+                                            <p>Optional. The zone where the instance will be provisioned. If not provided,
+the service will choose a zone for the instance. For STANDARD_HA tier,
+instances will be created across two zones for protection against zonal
+failures. if [alternative_location_id] is also provided, it must be
+different from [location_id].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAlternativeLocationId">getAlternativeLocationId</a>()
+        
+                                            <p>Optional. Only applicable to STANDARD_HA tier which protects the instance
+against zonal failures by provisioning it across two zones. If provided, it
+must be a different zone from the one provided in [location_id].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAlternativeLocationId">setAlternativeLocationId</a>(string $var)
+        
+                                            <p>Optional. Only applicable to STANDARD_HA tier which protects the instance
+against zonal failures by provisioning it across two zones. If provided, it
+must be a different zone from the one provided in [location_id].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRedisVersion">getRedisVersion</a>()
+        
+                                            <p>Optional. The version of Redis software.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRedisVersion">setRedisVersion</a>(string $var)
+        
+                                            <p>Optional. The version of Redis software.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getReservedIpRange">getReservedIpRange</a>()
+        
+                                            <p>Optional. The CIDR range of internal addresses that are reserved for this
+instance. If not provided, the service will choose an unused /29 block,
+for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be unique
+and non-overlapping with existing subnets in a network.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setReservedIpRange">setReservedIpRange</a>(string $var)
+        
+                                            <p>Optional. The CIDR range of internal addresses that are reserved for this
+instance. If not provided, the service will choose an unused /29 block,
+for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be unique
+and non-overlapping with existing subnets in a network.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHost">getHost</a>()
+        
+                                            <p>Output only. Hostname or IP address of the exposed redis endpoint used by
+clients to connect to the service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setHost">setHost</a>(string $var)
+        
+                                            <p>Output only. Hostname or IP address of the exposed redis endpoint used by
+clients to connect to the service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPort">getPort</a>()
+        
+                                            <p>Output only. The port number of the exposed redis endpoint.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPort">setPort</a>(int $var)
+        
+                                            <p>Output only. The port number of the exposed redis endpoint.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCurrentLocationId">getCurrentLocationId</a>()
+        
+                                            <p>Output only. The current zone where the Redis endpoint is placed. In
+single zone deployments, this will always be the same as [location_id]
+provided by the user at creation time. In cross-zone instances (only
+applicable in STANDARD_HA tier), this can be either [location_id] or
+[alternative_location_id] and can change on a failover event.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCurrentLocationId">setCurrentLocationId</a>(string $var)
+        
+                                            <p>Output only. The current zone where the Redis endpoint is placed. In
+single zone deployments, this will always be the same as [location_id]
+provided by the user at creation time. In cross-zone instances (only
+applicable in STANDARD_HA tier), this can be either [location_id] or
+[alternative_location_id] and can change on a failover event.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCreateTime">getCreateTime</a>()
+        
+                                            <p>Output only. The time the instance was created.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCreateTime">setCreateTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>Output only. The time the instance was created.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getState">getState</a>()
+        
+                                            <p>Output only. The current state of this instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setState">setState</a>(int $var)
+        
+                                            <p>Output only. The current state of this instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatusMessage">getStatusMessage</a>()
+        
+                                            <p>Output only. Additional information about the current status of this
+instance, if available.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatusMessage">setStatusMessage</a>(string $var)
+        
+                                            <p>Output only. Additional information about the current status of this
+instance, if available.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRedisConfigs">getRedisConfigs</a>()
+        
+                                            <p>Optional. Redis configuration parameters, according to
+http://redis.io/topics/config. Currently, the only supported parameters
+are:
+ * maxmemory-policy
+ * notify-keyspace-events</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRedisConfigs">setRedisConfigs</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        
+                                            <p>Optional. Redis configuration parameters, according to
+http://redis.io/topics/config. Currently, the only supported parameters
+are:
+ * maxmemory-policy
+ * notify-keyspace-events</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTier">getTier</a>()
+        
+                                            <p>Required. The service tier of the instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTier">setTier</a>(int $var)
+        
+                                            <p>Required. The service tier of the instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMemorySizeGb">getMemorySizeGb</a>()
+        
+                                            <p>Required. Redis memory size in GB.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMemorySizeGb">setMemorySizeGb</a>(int $var)
+        
+                                            <p>Required. Redis memory size in GB.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAuthorizedNetwork">getAuthorizedNetwork</a>()
+        
+                                            <p>Optional. The full name of the Google Compute Engine
+<a href="/compute/docs/networks-and-firewalls#networks">network</a> to which the
+instance is connected. If left unspecified, the <code>default</code> network
+will be used.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAuthorizedNetwork">setAuthorizedNetwork</a>(string $var)
+        
+                                            <p>Optional. The full name of the Google Compute Engine
+<a href="/compute/docs/networks-and-firewalls#networks">network</a> to which the
+instance is connected. If left unspecified, the <code>default</code> network
+will be used.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 151</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 169</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. Unique name of the resource in this scope including project and
+location using the form:
+    <code>projects/{project_id}/locations/{location_id}/instances/{instance_id}</code>
+Note: Redis instances are managed and addressed at regional level so
+location_id here refers to a GCP region; however, users get to choose which
+specific zone (or collection of zones for cross-zone instances) an instance
+should be provisioned in. Refer to [location_id] and
+[alternative_location_id] fields for more details.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 188</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. Unique name of the resource in this scope including project and
+location using the form:
+    <code>projects/{project_id}/locations/{location_id}/instances/{instance_id}</code>
+Note: Redis instances are managed and addressed at regional level so
+location_id here refers to a GCP region; however, users get to choose which
+specific zone (or collection of zones for cross-zone instances) an instance
+should be provisioned in. Refer to [location_id] and
+[alternative_location_id] fields for more details.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisplayName">
+        <div class="location">at         line 202</div>
+        <code>                    string
+    <strong>getDisplayName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An arbitrary and optional user-provided name for the instance.</p>                    <p>Generated from protobuf field <code>string display_name = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisplayName">
+        <div class="location">at         line 214</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setDisplayName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An arbitrary and optional user-provided name for the instance.</p>                    <p>Generated from protobuf field <code>string display_name = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLabels">
+        <div class="location">at         line 228</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+    <strong>getLabels</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Resource labels to represent user provided metadata</p>                    <p>Generated from protobuf field <code>map&lt;string, string> labels = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLabels">
+        <div class="location">at         line 240</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setLabels</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Resource labels to represent user provided metadata</p>                    <p>Generated from protobuf field <code>map&lt;string, string> labels = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLocationId">
+        <div class="location">at         line 258</div>
+        <code>                    string
+    <strong>getLocationId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The zone where the instance will be provisioned. If not provided,
+the service will choose a zone for the instance. For STANDARD_HA tier,
+instances will be created across two zones for protection against zonal
+failures. if [alternative_location_id] is also provided, it must be
+different from [location_id].</p>                    <p>Generated from protobuf field <code>string location_id = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLocationId">
+        <div class="location">at         line 274</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setLocationId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The zone where the instance will be provisioned. If not provided,
+the service will choose a zone for the instance. For STANDARD_HA tier,
+instances will be created across two zones for protection against zonal
+failures. if [alternative_location_id] is also provided, it must be
+different from [location_id].</p>                    <p>Generated from protobuf field <code>string location_id = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAlternativeLocationId">
+        <div class="location">at         line 290</div>
+        <code>                    string
+    <strong>getAlternativeLocationId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Only applicable to STANDARD_HA tier which protects the instance
+against zonal failures by provisioning it across two zones. If provided, it
+must be a different zone from the one provided in [location_id].</p>                    <p>Generated from protobuf field <code>string alternative_location_id = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAlternativeLocationId">
+        <div class="location">at         line 304</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setAlternativeLocationId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Only applicable to STANDARD_HA tier which protects the instance
+against zonal failures by provisioning it across two zones. If provided, it
+must be a different zone from the one provided in [location_id].</p>                    <p>Generated from protobuf field <code>string alternative_location_id = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRedisVersion">
+        <div class="location">at         line 319</div>
+        <code>                    string
+    <strong>getRedisVersion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The version of Redis software.</p>                    <p>If not provided, latest supported version will be used.</p>
+
+<p>Generated from protobuf field <code>string redis_version = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRedisVersion">
+        <div class="location">at         line 332</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setRedisVersion</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The version of Redis software.</p>                    <p>If not provided, latest supported version will be used.</p>
+
+<p>Generated from protobuf field <code>string redis_version = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getReservedIpRange">
+        <div class="location">at         line 349</div>
+        <code>                    string
+    <strong>getReservedIpRange</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The CIDR range of internal addresses that are reserved for this
+instance. If not provided, the service will choose an unused /29 block,
+for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be unique
+and non-overlapping with existing subnets in a network.</p>                    <p>Generated from protobuf field <code>string reserved_ip_range = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setReservedIpRange">
+        <div class="location">at         line 364</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setReservedIpRange</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The CIDR range of internal addresses that are reserved for this
+instance. If not provided, the service will choose an unused /29 block,
+for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be unique
+and non-overlapping with existing subnets in a network.</p>                    <p>Generated from protobuf field <code>string reserved_ip_range = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHost">
+        <div class="location">at         line 379</div>
+        <code>                    string
+    <strong>getHost</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Hostname or IP address of the exposed redis endpoint used by
+clients to connect to the service.</p>                    <p>Generated from protobuf field <code>string host = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setHost">
+        <div class="location">at         line 392</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setHost</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Hostname or IP address of the exposed redis endpoint used by
+clients to connect to the service.</p>                    <p>Generated from protobuf field <code>string host = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPort">
+        <div class="location">at         line 406</div>
+        <code>                    int
+    <strong>getPort</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The port number of the exposed redis endpoint.</p>                    <p>Generated from protobuf field <code>int32 port = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPort">
+        <div class="location">at         line 418</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setPort</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The port number of the exposed redis endpoint.</p>                    <p>Generated from protobuf field <code>int32 port = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCurrentLocationId">
+        <div class="location">at         line 436</div>
+        <code>                    string
+    <strong>getCurrentLocationId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The current zone where the Redis endpoint is placed. In
+single zone deployments, this will always be the same as [location_id]
+provided by the user at creation time. In cross-zone instances (only
+applicable in STANDARD_HA tier), this can be either [location_id] or
+[alternative_location_id] and can change on a failover event.</p>                    <p>Generated from protobuf field <code>string current_location_id = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCurrentLocationId">
+        <div class="location">at         line 452</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setCurrentLocationId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The current zone where the Redis endpoint is placed. In
+single zone deployments, this will always be the same as [location_id]
+provided by the user at creation time. In cross-zone instances (only
+applicable in STANDARD_HA tier), this can be either [location_id] or
+[alternative_location_id] and can change on a failover event.</p>                    <p>Generated from protobuf field <code>string current_location_id = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCreateTime">
+        <div class="location">at         line 466</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getCreateTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The time the instance was created.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp create_time = 13;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCreateTime">
+        <div class="location">at         line 478</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setCreateTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The time the instance was created.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp create_time = 13;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getState">
+        <div class="location">at         line 492</div>
+        <code>                    int
+    <strong>getState</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The current state of this instance.</p>                    <p>Generated from protobuf field <code>.google.cloud.redis.v1beta1.Instance.State state = 14;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setState">
+        <div class="location">at         line 504</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setState</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The current state of this instance.</p>                    <p>Generated from protobuf field <code>.google.cloud.redis.v1beta1.Instance.State state = 14;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatusMessage">
+        <div class="location">at         line 519</div>
+        <code>                    string
+    <strong>getStatusMessage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Additional information about the current status of this
+instance, if available.</p>                    <p>Generated from protobuf field <code>string status_message = 15;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatusMessage">
+        <div class="location">at         line 532</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setStatusMessage</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. Additional information about the current status of this
+instance, if available.</p>                    <p>Generated from protobuf field <code>string status_message = 15;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRedisConfigs">
+        <div class="location">at         line 550</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+    <strong>getRedisConfigs</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Redis configuration parameters, according to
+http://redis.io/topics/config. Currently, the only supported parameters
+are:
+ * maxmemory-policy
+ * notify-keyspace-events</p>                    <p>Generated from protobuf field <code>map&lt;string, string> redis_configs = 16;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRedisConfigs">
+        <div class="location">at         line 566</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setRedisConfigs</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. Redis configuration parameters, according to
+http://redis.io/topics/config. Currently, the only supported parameters
+are:
+ * maxmemory-policy
+ * notify-keyspace-events</p>                    <p>Generated from protobuf field <code>map&lt;string, string> redis_configs = 16;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTier">
+        <div class="location">at         line 580</div>
+        <code>                    int
+    <strong>getTier</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. The service tier of the instance.</p>                    <p>Generated from protobuf field <code>.google.cloud.redis.v1beta1.Instance.Tier tier = 17;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTier">
+        <div class="location">at         line 592</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setTier</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. The service tier of the instance.</p>                    <p>Generated from protobuf field <code>.google.cloud.redis.v1beta1.Instance.Tier tier = 17;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMemorySizeGb">
+        <div class="location">at         line 606</div>
+        <code>                    int
+    <strong>getMemorySizeGb</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. Redis memory size in GB.</p>                    <p>Generated from protobuf field <code>int32 memory_size_gb = 18;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMemorySizeGb">
+        <div class="location">at         line 618</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setMemorySizeGb</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. Redis memory size in GB.</p>                    <p>Generated from protobuf field <code>int32 memory_size_gb = 18;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAuthorizedNetwork">
+        <div class="location">at         line 635</div>
+        <code>                    string
+    <strong>getAuthorizedNetwork</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The full name of the Google Compute Engine
+<a href="/compute/docs/networks-and-firewalls#networks">network</a> to which the
+instance is connected. If left unspecified, the <code>default</code> network
+will be used.</p>                    <p>Generated from protobuf field <code>string authorized_network = 20;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAuthorizedNetwork">
+        <div class="location">at         line 650</div>
+        <code>                    <abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr>
+    <strong>setAuthorizedNetwork</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The full name of the Google Compute Engine
+<a href="/compute/docs/networks-and-firewalls#networks">network</a> to which the
+instance is connected. If left unspecified, the <code>default</code> network
+will be used.</p>                    <p>Generated from protobuf field <code>string authorized_network = 20;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Redis\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

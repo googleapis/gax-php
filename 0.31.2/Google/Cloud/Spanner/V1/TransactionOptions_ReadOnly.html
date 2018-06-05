@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Spanner\V1\TransactionOptions_ReadOnly | Google ApiCore - 0.31.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Spanner_V1_TransactionOptions_ReadOnly" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Spanner.html">Spanner</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Spanner/V1.html">V1</a></li><li class="backslash">\</li><li>TransactionOptions_ReadOnly</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            TransactionOptions_ReadOnly
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>TransactionOptions_ReadOnly</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Message type to initiate a read-only transaction.</p>            <p>Generated from protobuf message <code>google.spanner.v1.TransactionOptions.ReadOnly</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_timestamp_bound">
+                                        protected                                        
+                </td>
+                <td>$timestamp_bound</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStrong">getStrong</a>()
+        
+                                            <p>Read at a timestamp where all previously committed transactions
+are visible.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStrong">setStrong</a>(bool $var)
+        
+                                            <p>Read at a timestamp where all previously committed transactions
+are visible.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMinReadTimestamp">getMinReadTimestamp</a>()
+        
+                                            <p>Executes all reads at a timestamp >= <code>min_read_timestamp</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMinReadTimestamp">setMinReadTimestamp</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>Executes all reads at a timestamp >= <code>min_read_timestamp</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Duration">Duration</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaxStaleness">getMaxStaleness</a>()
+        
+                                            <p>Read data at a timestamp >= <code>NOW - max_staleness</code>
+seconds. Guarantees that all writes that have committed more
+than the specified number of seconds ago are visible. Because
+Cloud Spanner chooses the exact timestamp, this mode works even if
+the client's local clock is substantially skewed from Cloud Spanner
+commit timestamps.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMaxStaleness">setMaxStaleness</a>(<abbr title="Google\Protobuf\Duration">Duration</abbr> $var)
+        
+                                            <p>Read data at a timestamp >= <code>NOW - max_staleness</code>
+seconds. Guarantees that all writes that have committed more
+than the specified number of seconds ago are visible. Because
+Cloud Spanner chooses the exact timestamp, this mode works even if
+the client's local clock is substantially skewed from Cloud Spanner
+commit timestamps.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getReadTimestamp">getReadTimestamp</a>()
+        
+                                            <p>Executes all reads at the given timestamp. Unlike other modes,
+reads at a specific timestamp are repeatable; the same read at
+the same timestamp always returns the same data. If the
+timestamp is in the future, the read will block until the
+specified timestamp, modulo the read's deadline.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setReadTimestamp">setReadTimestamp</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>Executes all reads at the given timestamp. Unlike other modes,
+reads at a specific timestamp are repeatable; the same read at
+the same timestamp always returns the same data. If the
+timestamp is in the future, the read will block until the
+specified timestamp, modulo the read's deadline.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Duration">Duration</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getExactStaleness">getExactStaleness</a>()
+        
+                                            <p>Executes all reads at a timestamp that is <code>exact_staleness</code>
+old. The timestamp is chosen soon after the read is started.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setExactStaleness">setExactStaleness</a>(<abbr title="Google\Protobuf\Duration">Duration</abbr> $var)
+        
+                                            <p>Executes all reads at a timestamp that is <code>exact_staleness</code>
+old. The timestamp is chosen soon after the read is started.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getReturnReadTimestamp">getReturnReadTimestamp</a>()
+        
+                                            <p>If true, the Cloud Spanner-selected read timestamp is included in
+the [Transaction][google.spanner.v1.Transaction] message that describes the transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setReturnReadTimestamp">setReturnReadTimestamp</a>(bool $var)
+        
+                                            <p>If true, the Cloud Spanner-selected read timestamp is included in
+the [Transaction][google.spanner.v1.Transaction] message that describes the transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTimestampBound">getTimestampBound</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 27</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStrong">
+        <div class="location">at         line 39</div>
+        <code>                    bool
+    <strong>getStrong</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Read at a timestamp where all previously committed transactions
+are visible.</p>                    <p>Generated from protobuf field <code>bool strong = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStrong">
+        <div class="location">at         line 52</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setStrong</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Read at a timestamp where all previously committed transactions
+are visible.</p>                    <p>Generated from protobuf field <code>bool strong = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMinReadTimestamp">
+        <div class="location">at         line 72</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getMinReadTimestamp</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes all reads at a timestamp >= <code>min_read_timestamp</code>.</p>                    <p>This is useful for requesting fresher data than some previous
+read, or data that is fresh enough to observe the effects of some
+previously committed transaction whose timestamp is known.
+Note that this option can only be used in single-use transactions.
+A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds.
+Example: <code>"2014-10-02T15:01:23.045123456Z"</code>.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp min_read_timestamp = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMinReadTimestamp">
+        <div class="location">at         line 90</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setMinReadTimestamp</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes all reads at a timestamp >= <code>min_read_timestamp</code>.</p>                    <p>This is useful for requesting fresher data than some previous
+read, or data that is fresh enough to observe the effects of some
+previously committed transaction whose timestamp is known.
+Note that this option can only be used in single-use transactions.
+A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds.
+Example: <code>"2014-10-02T15:01:23.045123456Z"</code>.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp min_read_timestamp = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaxStaleness">
+        <div class="location">at         line 114</div>
+        <code>                    <abbr title="Google\Protobuf\Duration">Duration</abbr>
+    <strong>getMaxStaleness</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Read data at a timestamp >= <code>NOW - max_staleness</code>
+seconds. Guarantees that all writes that have committed more
+than the specified number of seconds ago are visible. Because
+Cloud Spanner chooses the exact timestamp, this mode works even if
+the client's local clock is substantially skewed from Cloud Spanner
+commit timestamps.</p>                    <p>Useful for reading the freshest data available at a nearby
+replica, while bounding the possible staleness if the local
+replica has fallen behind.
+Note that this option can only be used in single-use
+transactions.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Duration max_staleness = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Duration">Duration</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMaxStaleness">
+        <div class="location">at         line 136</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setMaxStaleness</strong>(<abbr title="Google\Protobuf\Duration">Duration</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Read data at a timestamp >= <code>NOW - max_staleness</code>
+seconds. Guarantees that all writes that have committed more
+than the specified number of seconds ago are visible. Because
+Cloud Spanner chooses the exact timestamp, this mode works even if
+the client's local clock is substantially skewed from Cloud Spanner
+commit timestamps.</p>                    <p>Useful for reading the freshest data available at a nearby
+replica, while bounding the possible staleness if the local
+replica has fallen behind.
+Note that this option can only be used in single-use
+transactions.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Duration max_staleness = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Duration">Duration</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getReadTimestamp">
+        <div class="location">at         line 159</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getReadTimestamp</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes all reads at the given timestamp. Unlike other modes,
+reads at a specific timestamp are repeatable; the same read at
+the same timestamp always returns the same data. If the
+timestamp is in the future, the read will block until the
+specified timestamp, modulo the read's deadline.</p>                    <p>Useful for large scale consistent reads such as mapreduces, or
+for coordinating many reads against a consistent snapshot of the
+data.
+A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds.
+Example: <code>"2014-10-02T15:01:23.045123456Z"</code>.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp read_timestamp = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setReadTimestamp">
+        <div class="location">at         line 180</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setReadTimestamp</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes all reads at the given timestamp. Unlike other modes,
+reads at a specific timestamp are repeatable; the same read at
+the same timestamp always returns the same data. If the
+timestamp is in the future, the read will block until the
+specified timestamp, modulo the read's deadline.</p>                    <p>Useful for large scale consistent reads such as mapreduces, or
+for coordinating many reads against a consistent snapshot of the
+data.
+A timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds.
+Example: <code>"2014-10-02T15:01:23.045123456Z"</code>.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp read_timestamp = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getExactStaleness">
+        <div class="location">at         line 202</div>
+        <code>                    <abbr title="Google\Protobuf\Duration">Duration</abbr>
+    <strong>getExactStaleness</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes all reads at a timestamp that is <code>exact_staleness</code>
+old. The timestamp is chosen soon after the read is started.</p>                    <p>Guarantees that all writes that have committed more than the
+specified number of seconds ago are visible. Because Cloud Spanner
+chooses the exact timestamp, this mode works even if the client's
+local clock is substantially skewed from Cloud Spanner commit
+timestamps.
+Useful for reading at nearby replicas without the distributed
+timestamp negotiation overhead of <code>max_staleness</code>.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Duration exact_staleness = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Duration">Duration</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setExactStaleness">
+        <div class="location">at         line 222</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setExactStaleness</strong>(<abbr title="Google\Protobuf\Duration">Duration</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes all reads at a timestamp that is <code>exact_staleness</code>
+old. The timestamp is chosen soon after the read is started.</p>                    <p>Guarantees that all writes that have committed more than the
+specified number of seconds ago are visible. Because Cloud Spanner
+chooses the exact timestamp, this mode works even if the client's
+local clock is substantially skewed from Cloud Spanner commit
+timestamps.
+Useful for reading at nearby replicas without the distributed
+timestamp negotiation overhead of <code>max_staleness</code>.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Duration exact_staleness = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Duration">Duration</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getReturnReadTimestamp">
+        <div class="location">at         line 237</div>
+        <code>                    bool
+    <strong>getReturnReadTimestamp</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If true, the Cloud Spanner-selected read timestamp is included in
+the [Transaction][google.spanner.v1.Transaction] message that describes the transaction.</p>                    <p>Generated from protobuf field <code>bool return_read_timestamp = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setReturnReadTimestamp">
+        <div class="location">at         line 250</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setReturnReadTimestamp</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If true, the Cloud Spanner-selected read timestamp is included in
+the [Transaction][google.spanner.v1.Transaction] message that describes the transaction.</p>                    <p>Generated from protobuf field <code>bool return_read_timestamp = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTimestampBound">
+        <div class="location">at         line 261</div>
+        <code>                    string
+    <strong>getTimestampBound</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

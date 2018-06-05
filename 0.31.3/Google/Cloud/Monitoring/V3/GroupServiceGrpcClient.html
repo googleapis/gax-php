@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\GroupServiceGrpcClient | Google ApiCore - 0.31.3</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_GroupServiceGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.3</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>GroupServiceGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            GroupServiceGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>GroupServiceGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The Group API lets you inspect and manage your
+<a href="google.monitoring.v3.Group">groups</a>.</p>            <p>A group is a named filter that is used to identify
+a collection of monitored resources. Groups are typically used to
+mirror the physical and/or logical topology of the environment.
+Because group membership is computed dynamically, monitored
+resources that are started in the future are automatically placed
+in matching groups. By using a group to name monitored resources in,
+for example, an alert policy, the target of that alert policy is
+updated automatically as monitored resources are added and removed
+from the infrastructure.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListGroups">ListGroups</a>(<a href="../../../../Google/Cloud/Monitoring/V3/ListGroupsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupsRequest">ListGroupsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the existing groups.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetGroup">GetGroup</a>(<a href="../../../../Google/Cloud/Monitoring/V3/GetGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetGroupRequest">GetGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets a single group.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateGroup">CreateGroup</a>(<a href="../../../../Google/Cloud/Monitoring/V3/CreateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateGroupRequest">CreateGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new group.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateGroup">UpdateGroup</a>(<a href="../../../../Google/Cloud/Monitoring/V3/UpdateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateGroupRequest">UpdateGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates an existing group.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteGroup">DeleteGroup</a>(<a href="../../../../Google/Cloud/Monitoring/V3/DeleteGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteGroupRequest">DeleteGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes an existing group.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListGroupMembers">ListGroupMembers</a>(<a href="../../../../Google/Cloud/Monitoring/V3/ListGroupMembersRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupMembersRequest">ListGroupMembersRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the monitored resources that are members of a group.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 42</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListGroups">
+        <div class="location">at         line 52</div>
+        <code>                    
+    <strong>ListGroups</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/ListGroupsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupsRequest">ListGroupsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the existing groups.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/ListGroupsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupsRequest">ListGroupsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetGroup">
+        <div class="location">at         line 66</div>
+        <code>                    
+    <strong>GetGroup</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/GetGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetGroupRequest">GetGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets a single group.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/GetGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetGroupRequest">GetGroupRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateGroup">
+        <div class="location">at         line 80</div>
+        <code>                    
+    <strong>CreateGroup</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/CreateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateGroupRequest">CreateGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new group.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/CreateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateGroupRequest">CreateGroupRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateGroup">
+        <div class="location">at         line 95</div>
+        <code>                    
+    <strong>UpdateGroup</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/UpdateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateGroupRequest">UpdateGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates an existing group.</p>                    <p>You can change any group attributes except <code>name</code>.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/UpdateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateGroupRequest">UpdateGroupRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteGroup">
+        <div class="location">at         line 109</div>
+        <code>                    
+    <strong>DeleteGroup</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/DeleteGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteGroupRequest">DeleteGroupRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes an existing group.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/DeleteGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteGroupRequest">DeleteGroupRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListGroupMembers">
+        <div class="location">at         line 123</div>
+        <code>                    
+    <strong>ListGroupMembers</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/ListGroupMembersRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupMembersRequest">ListGroupMembersRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the monitored resources that are members of a group.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/ListGroupMembersRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupMembersRequest">ListGroupMembersRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

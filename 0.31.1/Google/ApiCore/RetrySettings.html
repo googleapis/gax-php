@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\RetrySettings | Google ApiCore - 0.31.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_RetrySettings" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - 0.31.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li>RetrySettings</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            RetrySettings
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>RetrySettings</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The RetrySettings class is used to configure retrying and timeouts for RPCs.</p>            <p>This class can be passed as an optional parameter to RPC methods, or as part
+of an optional array in the constructor of a client object. In addition,
+many RPCs and API clients accept a PHP array in place of a RetrySettings
+object. This can be used to change particular retry parameters without
+needing to construct a complete RetrySettings object.</p>
+
+<h2>Constructing a RetrySettings object</h2>
+
+<p>See the RetrySettings constructor for documentation about parameters that
+can be passed to RetrySettings.</p>
+
+<p>Example of creating a RetrySettings object using the constructor:</p>
+
+<pre><code>$retrySettings = new RetrySettings([
+    'initialRetryDelayMillis' =&gt; 100,
+    'retryDelayMultiplier' =&gt; 1.3,
+    'maxRetryDelayMillis' =&gt; 60000,
+    'initialRpcTimeoutMillis' =&gt; 20000,
+    'rpcTimeoutMultiplier' =&gt; 1.0,
+    'maxRpcTimeoutMillis' =&gt; 20000,
+    'totalTimeoutMillis' =&gt; 600000,
+    'retryableCodes' =&gt; [ApiStatus::DEADLINE_EXCEEDED, ApiStatus::UNAVAILABLE],
+]);
+</code></pre>
+
+<p>It is also possible to create a new RetrySettings object from an existing
+object using the {see Google\ApiCore\RetrySettings::with()} method.</p>
+
+<p>Example modifying an existing RetrySettings object using <code>with()</code>:</p>
+
+<pre><code>$newRetrySettings = $retrySettings-&gt;with([
+    'totalTimeoutMillis' =&gt; 700000,
+]);
+</code></pre>
+
+<h2>Modifying the retry behavior of an RPC method</h2>
+
+<p>RetrySettings objects can be used to control retries for many RPC methods in
+<a href="https://github.com/GoogleCloudPlatform/google-cloud-php">google-cloud-php</a>.
+The examples below make use of the
+<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient">GroupServiceClient</a>
+from the <a href="https://github.com/GoogleCloudPlatform/google-cloud-php/tree/master/src/Monitoring/V3">Monitoring V3 API</a>,
+but they can be applied to other APIs in the
+<a href="https://github.com/GoogleCloudPlatform/google-cloud-php">google-cloud-php</a> repository.</p>
+
+<p>It is possible to specify the retry behavior to be used by an RPC via the
+<code>retrySettings</code> field in the <code>optionalArgs</code> parameter. The <code>retrySettings</code>
+field can contain either a RetrySettings object, or a PHP array containing
+the particular retry parameters to be updated.</p>
+
+<p>Example of disabling retries for a single call to the
+<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient?method=listGroups">listGroups</a>
+method, and setting a custom timeout:</p>
+
+<pre><code>$result = $client-&gt;listGroups($name, [
+    'retrySettings' =&gt; [
+        'retriesEnabled' =&gt; false,
+        'noRetriesRpcTimeoutMillis' =&gt; 5000,
+    ]
+]);
+</code></pre>
+
+<p>Example of creating a new RetrySettings object and using it to override
+the retry settings for a call to the
+<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient?method=listGroups">listGroups</a>
+method:</p>
+
+<pre><code>$customRetrySettings = new RetrySettings([
+    'initialRetryDelayMillis' =&gt; 100,
+    'retryDelayMultiplier' =&gt; 1.3,
+    'maxRetryDelayMillis' =&gt; 60000,
+    'initialRpcTimeoutMillis' =&gt; 20000,
+    'rpcTimeoutMultiplier' =&gt; 1.0,
+    'maxRpcTimeoutMillis' =&gt; 20000,
+    'totalTimeoutMillis' =&gt; 600000,
+    'retryableCodes' =&gt; [ApiStatus::DEADLINE_EXCEEDED, ApiStatus::UNAVAILABLE],
+]);
+
+$result = $client-&gt;listGroups($name, [
+    'retrySettings' =&gt; $customRetrySettings
+]);
+</code></pre>
+
+<h2>Modifying the default retry behavior for RPC methods on a Client object</h2>
+
+<p>It is also possible to specify the retry behavior for RPC methods when
+constructing a client object using the 'retrySettingsArray'. The examples
+below again make use of the
+<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient">GroupServiceClient</a>
+from the <a href="https://github.com/GoogleCloudPlatform/google-cloud-php/tree/master/src/Monitoring/V3">Monitoring V3 API</a>,
+but they can be applied to other APIs in the
+<a href="https://github.com/GoogleCloudPlatform/google-cloud-php">google-cloud-php</a> repository.</p>
+
+<p>The GroupServiceClient object accepts an optional <code>retrySettingsArray</code>
+parameter, which can be used to specify retry behavior for RPC methods
+on the client. The <code>retrySettingsArray</code> accepts a PHP array in which keys
+are the names of RPC methods on the client, and values are either a
+RetrySettings object or a PHP array containing the particular retry
+parameters to be updated.</p>
+
+<p>Example updating the retry settings for four methods of GroupServiceClient:</p>
+
+<pre><code>use Google\Cloud\Monitoring\V3\GroupServiceClient;
+
+$customRetrySettings = new RetrySettings([
+    'initialRetryDelayMillis' =&gt; 100,
+    'retryDelayMultiplier' =&gt; 1.3,
+    'maxRetryDelayMillis' =&gt; 60000,
+    'initialRpcTimeoutMillis' =&gt; 20000,
+    'rpcTimeoutMultiplier' =&gt; 1.0,
+    'maxRpcTimeoutMillis' =&gt; 20000,
+    'totalTimeoutMillis' =&gt; 600000,
+    'retryableCodes' =&gt; [ApiStatus::DEADLINE_EXCEEDED, ApiStatus::UNAVAILABLE],
+]);
+
+$updatedCustomRetrySettings = $customRetrySettings-&gt;with([
+    'totalTimeoutMillis' =&gt; 700000
+]);
+
+$client = new GroupServiceClient([
+    'retrySettingsArray' =&gt; [
+        'listGroups' =&gt; ['retriesEnabled' =&gt; false],
+        'getGroup' =&gt; [
+            'initialRpcTimeoutMillis' =&gt; 10000,
+            'maxRpcTimeoutMillis' =&gt; 30000,
+            'totalTimeoutMillis' =&gt; 60000,
+        ],
+        'deleteGroup' =&gt; $customRetrySettings,
+        'updateGroup' =&gt; $updatedCustomRetrySettings
+    ],
+]);
+</code></pre>
+</p>                    </div>
+    
+            <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Google/ApiCore/ValidationTrait.html"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+            </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validate">validate</a>(array $arr, array $requiredKeys)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validate"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_validateNotNull">validateNotNull</a>(array $arr, array $requiredKeys)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(array $settings)
+        
+                                            <p>Constructs an instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_load">load</a>(string $serviceName, array $clientConfig, array $retryingOverrides)
+        
+                                            <p>Constructs an array mapping method names to CallSettings.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_constructDefault">constructDefault</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_with">with</a>(array $settings)
+        
+                                            <p>Creates a new instance of RetrySettings that updates the settings in the existing instance
+with the settings specified in the $settings parameter.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_retriesEnabled">retriesEnabled</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNoRetriesRpcTimeoutMillis">getNoRetriesRpcTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRetryableCodes">getRetryableCodes</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInitialRetryDelayMillis">getInitialRetryDelayMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRetryDelayMultiplier">getRetryDelayMultiplier</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaxRetryDelayMillis">getMaxRetryDelayMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInitialRpcTimeoutMillis">getInitialRpcTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRpcTimeoutMultiplier">getRpcTimeoutMultiplier</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaxRpcTimeoutMillis">getMaxRpcTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTotalTimeoutMillis">getTotalTimeoutMillis</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_validate">
+        <div class="location">in <a href="../../Google/ApiCore/ValidationTrait.html#method_validate"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> at         line 41</div>
+        <code>        static            array
+    <strong>validate</strong>(array $arr, array $requiredKeys)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$arr</td>
+                <td>Associative array</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$requiredKeys</td>
+                <td>List of keys to check for in $arr</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>Returns $arr for fluent use</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validateNotNull">
+        <div class="location">in <a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> at         line 51</div>
+        <code>        static            array
+    <strong>validateNotNull</strong>(array $arr, array $requiredKeys)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$arr</td>
+                <td>Associative array</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$requiredKeys</td>
+                <td>List of keys to check for in $arr</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>Returns $arr for fluent use</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 216</div>
+        <code>                    
+    <strong>__construct</strong>(array $settings)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs an instance.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$settings</td>
+                <td>{
+    Required. Settings for configuring the retry behavior. All parameters are required except
+    $retriesEnabled and $noRetriesRpcTimeoutMillis, which are optional and have defaults
+    determined based on the other settings provided.</p>
+
+<pre><code>@type bool    $retriesEnabled Optional. Enables retries. If not specified, the value is
+              determined using the $retryableCodes setting. If $retryableCodes is empty,
+              then $retriesEnabled is set to false; otherwise, it is set to true.
+@type int     $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
+              if $retriesEnabled is false, in milliseconds. It not specified, the value
+              of $initialRpcTimeoutMillis is used.
+@type array   $retryableCodes The Status codes that are retryable. Each status should be
+              either one of the string constants defined on {see \Google\ApiCore\ApiStatus}
+              or an integer constant defined on {see \Google\Rpc\Code}.
+@type int     $initialRetryDelayMillis The initial delay of retry in milliseconds.
+@type int     $retryDelayMultiplier The exponential multiplier of retry delay.
+@type int     $maxRetryDelayMillis The max delay of retry in milliseconds.
+@type int     $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
+@type int     $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
+@type int     $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
+@type int     $totalTimeoutMillis The max accumulative timeout in total.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_load">
+        <div class="location">at         line 258</div>
+        <code>        static            <a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>[]
+    <strong>load</strong>(string $serviceName, array $clientConfig, array $retryingOverrides)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs an array mapping method names to CallSettings.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$serviceName</td>
+                <td>The fully-qualified name of this service, used as a key into
+    the client config file.</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$clientConfig</td>
+                <td>An array parsed from the standard API client config file.</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$retryingOverrides</td>
+                <td>A dictionary of method names to RetrySettings that
+    override those specified in $clientConfig.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>[]</td>
+            <td>$retrySettings</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_constructDefault">
+        <div class="location">at         line 321</div>
+        <code>        static            
+    <strong>constructDefault</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_with">
+        <div class="location">at         line 347</div>
+        <code>                    <a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>
+    <strong>with</strong>(array $settings)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new instance of RetrySettings that updates the settings in the existing instance
+with the settings specified in the $settings parameter.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$settings</td>
+                <td>{
+    Settings for configuring the retry behavior. Supports all of the options supported by
+    the constructor; see {see \Google\ApiCore\RetrySettings::__construct()}. All parameters
+    are optional - all unset parameters will default to the value in the existing instance.
+}</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_retriesEnabled">
+        <div class="location">at         line 367</div>
+        <code>                    bool
+    <strong>retriesEnabled</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td>Returns true if retries are enabled, otherwise returns false.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNoRetriesRpcTimeoutMillis">
+        <div class="location">at         line 376</div>
+        <code>                    int
+    <strong>getNoRetriesRpcTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The timeout of the rpc call to be used if $retriesEnabled is false,
+            in milliseconds.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRetryableCodes">
+        <div class="location">at         line 384</div>
+        <code>                    int[]
+    <strong>getRetryableCodes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int[]</td>
+            <td>Status codes to retry</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInitialRetryDelayMillis">
+        <div class="location">at         line 393</div>
+        <code>                    int
+    <strong>getInitialRetryDelayMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The initial retry delay in milliseconds. If $this->retriesEnabled()
+            is false, this setting is unused.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRetryDelayMultiplier">
+        <div class="location">at         line 402</div>
+        <code>                    float
+    <strong>getRetryDelayMultiplier</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td>The retry delay multiplier. If $this->retriesEnabled()
+              is false, this setting is unused.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaxRetryDelayMillis">
+        <div class="location">at         line 411</div>
+        <code>                    int
+    <strong>getMaxRetryDelayMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The maximum retry delay in milliseconds. If $this->retriesEnabled()
+            is false, this setting is unused.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInitialRpcTimeoutMillis">
+        <div class="location">at         line 421</div>
+        <code>                    int
+    <strong>getInitialRpcTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The initial rpc timeout in milliseconds. If $this->retriesEnabled()
+            is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+            set the timeout in that case.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRpcTimeoutMultiplier">
+        <div class="location">at         line 430</div>
+        <code>                    float
+    <strong>getRpcTimeoutMultiplier</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td>The rpc timeout multiplier. If $this->retriesEnabled()
+              is false, this setting is unused.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaxRpcTimeoutMillis">
+        <div class="location">at         line 440</div>
+        <code>                    int
+    <strong>getMaxRpcTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The maximum rpc timeout in milliseconds. If $this->retriesEnabled()
+            is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+            set the timeout in that case.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTotalTimeoutMillis">
+        <div class="location">at         line 451</div>
+        <code>                    int
+    <strong>getTotalTimeoutMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The total time in milliseconds to spend on the call, including all
+            retry attempts and delays between attempts. If $this->retriesEnabled()
+            is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+            set the timeout in that case.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Dlp\V2\CryptoReplaceFfxFpeConfig | Google ApiCore - 0.30.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Dlp_V2_CryptoReplaceFfxFpeConfig" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.30.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dlp.html">Dlp</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dlp/V2.html">V2</a></li><li class="backslash">\</li><li>CryptoReplaceFfxFpeConfig</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            CryptoReplaceFfxFpeConfig
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>CryptoReplaceFfxFpeConfig</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Replaces an identifier with a surrogate using FPE with the FFX
+mode of operation; however when used in the <code>ReidentifyContent</code> API method,
+it serves the opposite function by reversing the surrogate back into
+the original identifier.</p>            <p>The identifier must be encoded as ASCII.
+For a given crypto key and context, the same identifier will be
+replaced with the same surrogate.
+Identifiers must be at least two characters long.
+In the case that the identifier is the empty string, it will be skipped.
+See <a href="/dlp/docs/pseudonymization">Pseudonymization</a> for example usage.</p>
+
+<p>Generated from protobuf message <code>google.privacy.dlp.v2.CryptoReplaceFfxFpeConfig</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_alphabet">
+                                        protected                                        
+                </td>
+                <td>$alphabet</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Dlp/V2/CryptoKey.html"><abbr title="Google\Cloud\Dlp\V2\CryptoKey">CryptoKey</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCryptoKey">getCryptoKey</a>()
+        
+                                            <p>The key used by the encryption algorithm. [required]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCryptoKey">setCryptoKey</a>(<a href="../../../../Google/Cloud/Dlp/V2/CryptoKey.html"><abbr title="Google\Cloud\Dlp\V2\CryptoKey">CryptoKey</abbr></a> $var)
+        
+                                            <p>The key used by the encryption algorithm. [required]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Dlp/V2/FieldId.html"><abbr title="Google\Cloud\Dlp\V2\FieldId">FieldId</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getContext">getContext</a>()
+        
+                                            <p>The 'tweak', a context may be used for higher security since the same
+identifier in two different contexts won't be given the same surrogate. If
+the context is not set, a default tweak will be used.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setContext">setContext</a>(<a href="../../../../Google/Cloud/Dlp/V2/FieldId.html"><abbr title="Google\Cloud\Dlp\V2\FieldId">FieldId</abbr></a> $var)
+        
+                                            <p>The 'tweak', a context may be used for higher security since the same
+identifier in two different contexts won't be given the same surrogate. If
+the context is not set, a default tweak will be used.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCommonAlphabet">getCommonAlphabet</a>()
+        
+                                            <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CryptoReplaceFfxFpeConfig.FfxCommonNativeAlphabet common_alphabet = 4;</code></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCommonAlphabet">setCommonAlphabet</a>(int $var)
+        
+                                            <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CryptoReplaceFfxFpeConfig.FfxCommonNativeAlphabet common_alphabet = 4;</code></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCustomAlphabet">getCustomAlphabet</a>()
+        
+                                            <p>This is supported by mapping these to the alphanumeric characters
+that the FFX mode natively supports. This happens before/after
+encryption/decryption.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCustomAlphabet">setCustomAlphabet</a>(string $var)
+        
+                                            <p>This is supported by mapping these to the alphanumeric characters
+that the FFX mode natively supports. This happens before/after
+encryption/decryption.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRadix">getRadix</a>()
+        
+                                            <p>The native way to select the alphabet. Must be in the range [2, 62].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRadix">setRadix</a>(int $var)
+        
+                                            <p>The native way to select the alphabet. Must be in the range [2, 62].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Dlp/V2/InfoType.html"><abbr title="Google\Cloud\Dlp\V2\InfoType">InfoType</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSurrogateInfoType">getSurrogateInfoType</a>()
+        
+                                            <p>The custom infoType to annotate the surrogate with.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSurrogateInfoType">setSurrogateInfoType</a>(<a href="../../../../Google/Cloud/Dlp/V2/InfoType.html"><abbr title="Google\Cloud\Dlp\V2\InfoType">InfoType</abbr></a> $var)
+        
+                                            <p>The custom infoType to annotate the surrogate with.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAlphabet">getAlphabet</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 81</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCryptoKey">
+        <div class="location">at         line 92</div>
+        <code>                    <a href="../../../../Google/Cloud/Dlp/V2/CryptoKey.html"><abbr title="Google\Cloud\Dlp\V2\CryptoKey">CryptoKey</abbr></a>
+    <strong>getCryptoKey</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The key used by the encryption algorithm. [required]</p>                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CryptoKey crypto_key = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Dlp/V2/CryptoKey.html"><abbr title="Google\Cloud\Dlp\V2\CryptoKey">CryptoKey</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCryptoKey">
+        <div class="location">at         line 104</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setCryptoKey</strong>(<a href="../../../../Google/Cloud/Dlp/V2/CryptoKey.html"><abbr title="Google\Cloud\Dlp\V2\CryptoKey">CryptoKey</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The key used by the encryption algorithm. [required]</p>                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CryptoKey crypto_key = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/CryptoKey.html"><abbr title="Google\Cloud\Dlp\V2\CryptoKey">CryptoKey</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getContext">
+        <div class="location">at         line 131</div>
+        <code>                    <a href="../../../../Google/Cloud/Dlp/V2/FieldId.html"><abbr title="Google\Cloud\Dlp\V2\FieldId">FieldId</abbr></a>
+    <strong>getContext</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The 'tweak', a context may be used for higher security since the same
+identifier in two different contexts won't be given the same surrogate. If
+the context is not set, a default tweak will be used.</p>                    <p>If the context is set but:
+1. there is no record present when transforming a given value or
+1. the field is not present when transforming a given value,
+a default tweak will be used.
+Note that case (1) is expected when an <code>InfoTypeTransformation</code> is
+applied to both structured and non-structured <code>ContentItem</code>s.
+Currently, the referenced field may be of value type integer or string.
+The tweak is constructed as a sequence of bytes in big endian byte order
+such that:
+- a 64 bit integer is encoded followed by a single byte of value 1
+- a string is encoded in UTF-8 format followed by a single byte of value 2</p>
+
+<p>Generated from protobuf field <code>.google.privacy.dlp.v2.FieldId context = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Dlp/V2/FieldId.html"><abbr title="Google\Cloud\Dlp\V2\FieldId">FieldId</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setContext">
+        <div class="location">at         line 156</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setContext</strong>(<a href="../../../../Google/Cloud/Dlp/V2/FieldId.html"><abbr title="Google\Cloud\Dlp\V2\FieldId">FieldId</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The 'tweak', a context may be used for higher security since the same
+identifier in two different contexts won't be given the same surrogate. If
+the context is not set, a default tweak will be used.</p>                    <p>If the context is set but:
+1. there is no record present when transforming a given value or
+1. the field is not present when transforming a given value,
+a default tweak will be used.
+Note that case (1) is expected when an <code>InfoTypeTransformation</code> is
+applied to both structured and non-structured <code>ContentItem</code>s.
+Currently, the referenced field may be of value type integer or string.
+The tweak is constructed as a sequence of bytes in big endian byte order
+such that:
+- a 64 bit integer is encoded followed by a single byte of value 1
+- a string is encoded in UTF-8 format followed by a single byte of value 2</p>
+
+<p>Generated from protobuf field <code>.google.privacy.dlp.v2.FieldId context = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/FieldId.html"><abbr title="Google\Cloud\Dlp\V2\FieldId">FieldId</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCommonAlphabet">
+        <div class="location">at         line 168</div>
+        <code>                    int
+    <strong>getCommonAlphabet</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CryptoReplaceFfxFpeConfig.FfxCommonNativeAlphabet common_alphabet = 4;</code></p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCommonAlphabet">
+        <div class="location">at         line 178</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setCommonAlphabet</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CryptoReplaceFfxFpeConfig.FfxCommonNativeAlphabet common_alphabet = 4;</code></p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCustomAlphabet">
+        <div class="location">at         line 198</div>
+        <code>                    string
+    <strong>getCustomAlphabet</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This is supported by mapping these to the alphanumeric characters
+that the FFX mode natively supports. This happens before/after
+encryption/decryption.</p>                    <p>Each character listed must appear only once.
+Number of characters must be in the range [2, 62].
+This must be encoded as ASCII.
+The order of characters does not matter.</p>
+
+<p>Generated from protobuf field <code>string custom_alphabet = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCustomAlphabet">
+        <div class="location">at         line 216</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setCustomAlphabet</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This is supported by mapping these to the alphanumeric characters
+that the FFX mode natively supports. This happens before/after
+encryption/decryption.</p>                    <p>Each character listed must appear only once.
+Number of characters must be in the range [2, 62].
+This must be encoded as ASCII.
+The order of characters does not matter.</p>
+
+<p>Generated from protobuf field <code>string custom_alphabet = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRadix">
+        <div class="location">at         line 230</div>
+        <code>                    int
+    <strong>getRadix</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The native way to select the alphabet. Must be in the range [2, 62].</p>                    <p>Generated from protobuf field <code>int32 radix = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRadix">
+        <div class="location">at         line 242</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setRadix</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The native way to select the alphabet. Must be in the range [2, 62].</p>                    <p>Generated from protobuf field <code>int32 radix = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSurrogateInfoType">
+        <div class="location">at         line 277</div>
+        <code>                    <a href="../../../../Google/Cloud/Dlp/V2/InfoType.html"><abbr title="Google\Cloud\Dlp\V2\InfoType">InfoType</abbr></a>
+    <strong>getSurrogateInfoType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The custom infoType to annotate the surrogate with.</p>                    <p>This annotation will be applied to the surrogate by prefixing it with
+the name of the custom infoType followed by the number of
+characters comprising the surrogate. The following scheme defines the
+format: info_type_name(surrogate_character_count):surrogate
+For example, if the name of custom infoType is 'MY_TOKEN_INFO_TYPE' and
+the surrogate is 'abc', the full replacement value
+will be: 'MY_TOKEN_INFO_TYPE(3):abc'
+This annotation identifies the surrogate when inspecting content using the
+custom infoType
+<a href="/dlp/docs/reference/rest/v2/InspectConfig#surrogatetype"><code>SurrogateType</code></a>.
+This facilitates reversal of the surrogate when it occurs in free text.
+In order for inspection to work properly, the name of this infoType must
+not occur naturally anywhere in your data; otherwise, inspection may
+find a surrogate that does not correspond to an actual identifier.
+Therefore, choose your custom infoType name carefully after considering
+what your data looks like. One way to select a name that has a high chance
+of yielding reliable detection is to include one or more unicode characters
+that are highly improbable to exist in your data.
+For example, assuming your data is entered from a regular ASCII keyboard,
+the symbol with the hex code point 29DD might be used like so:
+⧝MY_TOKEN_TYPE</p>
+
+<p>Generated from protobuf field <code>.google.privacy.dlp.v2.InfoType surrogate_info_type = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Dlp/V2/InfoType.html"><abbr title="Google\Cloud\Dlp\V2\InfoType">InfoType</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSurrogateInfoType">
+        <div class="location">at         line 310</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setSurrogateInfoType</strong>(<a href="../../../../Google/Cloud/Dlp/V2/InfoType.html"><abbr title="Google\Cloud\Dlp\V2\InfoType">InfoType</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The custom infoType to annotate the surrogate with.</p>                    <p>This annotation will be applied to the surrogate by prefixing it with
+the name of the custom infoType followed by the number of
+characters comprising the surrogate. The following scheme defines the
+format: info_type_name(surrogate_character_count):surrogate
+For example, if the name of custom infoType is 'MY_TOKEN_INFO_TYPE' and
+the surrogate is 'abc', the full replacement value
+will be: 'MY_TOKEN_INFO_TYPE(3):abc'
+This annotation identifies the surrogate when inspecting content using the
+custom infoType
+<a href="/dlp/docs/reference/rest/v2/InspectConfig#surrogatetype"><code>SurrogateType</code></a>.
+This facilitates reversal of the surrogate when it occurs in free text.
+In order for inspection to work properly, the name of this infoType must
+not occur naturally anywhere in your data; otherwise, inspection may
+find a surrogate that does not correspond to an actual identifier.
+Therefore, choose your custom infoType name carefully after considering
+what your data looks like. One way to select a name that has a high chance
+of yielding reliable detection is to include one or more unicode characters
+that are highly improbable to exist in your data.
+For example, assuming your data is entered from a regular ASCII keyboard,
+the symbol with the hex code point 29DD might be used like so:
+⧝MY_TOKEN_TYPE</p>
+
+<p>Generated from protobuf field <code>.google.privacy.dlp.v2.InfoType surrogate_info_type = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/InfoType.html"><abbr title="Google\Cloud\Dlp\V2\InfoType">InfoType</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAlphabet">
+        <div class="location">at         line 321</div>
+        <code>                    string
+    <strong>getAlphabet</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

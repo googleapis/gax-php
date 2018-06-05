@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\BigQuery\DataTransfer\V1 | Google ApiCore - 0.31.3</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="namespace" data-name="namespace:Google_Cloud_BigQuery_DataTransfer_V1" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.3</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                <div class="namespace-breadcrumbs">
+        <ol class="breadcrumb">
+            <li><span class="label label-default">Namespace</span></li>
+                    <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/BigQuery.html">BigQuery</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/BigQuery/DataTransfer.html">DataTransfer</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1.html">V1</a></li><li class="backslash">\</li>
+        </ol>
+    </div>
+            <div id="page-content">
+                
+    <div class="page-header">
+        <h1>Google\Cloud\BigQuery\DataTransfer\V1</h1>
+    </div>
+
+    
+            <h2>Classes</h2>
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/CheckValidCredsRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\CheckValidCredsRequest">CheckValidCredsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to determine whether the user has valid credentials. This method
+is used to limit the number of OAuth popups in the user interface. The
+user id is inferred from the API call context.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/CheckValidCredsResponse.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\CheckValidCredsResponse">CheckValidCredsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A response indicating whether the credentials exist and are valid.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/CreateTransferConfigRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\CreateTransferConfigRequest">CreateTransferConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to create a data transfer configuration. If new credentials are
+needed for this transfer configuration, an authorization code must be
+provided. If an authorization code is provided, the transfer configuration
+will be associated with the user id corresponding to the
+authorization code. Otherwise, the transfer configuration will be associated
+with the calling user.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DataSource.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DataSource">DataSource</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents data source metadata. Metadata is sufficient to
+render UI and request proper OAuth tokens.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DataSourceParameter.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DataSourceParameter">DataSourceParameter</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a data source parameter with validation rules, so that
+parameters can be rendered in the UI. These parameters are given to us by
+supported data sources, and include all needed information for rendering
+and validation.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DataSourceParameter_Type.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DataSourceParameter_Type">DataSourceParameter_Type</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Parameter type.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DataSource_AuthorizationType.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DataSource_AuthorizationType">DataSource_AuthorizationType</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The type of authorization needed for this data source.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DataSource_DataRefreshType.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DataSource_DataRefreshType">DataSource_DataRefreshType</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents how the data source supports data auto refresh.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DataTransferServiceGrpcClient.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DataTransferServiceGrpcClient">DataTransferServiceGrpcClient</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The Google BigQuery Data Transfer Service API enables BigQuery users to
+configure the transfer of their data from other Google Products into BigQuery.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DeleteTransferConfigRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DeleteTransferConfigRequest">DeleteTransferConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to delete data transfer information. All associated transfer runs
+and log messages will be deleted as well.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/DeleteTransferRunRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\DeleteTransferRunRequest">DeleteTransferRunRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to delete data transfer run information.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/GetDataSourceRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\GetDataSourceRequest">GetDataSourceRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to get data source info.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/GetTransferConfigRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\GetTransferConfigRequest">GetTransferConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to get data transfer information.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/GetTransferRunRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\GetTransferRunRequest">GetTransferRunRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to get data transfer run information.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListDataSourcesRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListDataSourcesRequest">ListDataSourcesRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Request to list supported data sources and their data transfer settings.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListDataSourcesResponse.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListDataSourcesResponse">ListDataSourcesResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Returns list of supported data sources and their metadata.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferConfigsRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferConfigsRequest">ListTransferConfigsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to list data transfers configured for a BigQuery project.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferConfigsResponse.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferConfigsResponse">ListTransferConfigsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The returned list of pipelines in the project.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferLogsRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferLogsRequest">ListTransferLogsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to get user facing log messages associated with data transfer run.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferLogsResponse.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferLogsResponse">ListTransferLogsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The returned list transfer run messages.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferRunsRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferRunsRequest">ListTransferRunsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to list data transfer runs. UI can use this method to show/filter
+specific data transfer runs. The data source can use this method to request
+all scheduled transfer runs.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferRunsRequest_RunAttempt.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferRunsRequest_RunAttempt">ListTransferRunsRequest_RunAttempt</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents which runs should be pulled.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ListTransferRunsResponse.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ListTransferRunsResponse">ListTransferRunsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The returned list of pipelines in the project.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ScheduleTransferRunsRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ScheduleTransferRunsRequest">ScheduleTransferRunsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to schedule transfer runs for a time range.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/ScheduleTransferRunsResponse.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\ScheduleTransferRunsResponse">ScheduleTransferRunsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A response to schedule transfer runs for a time range.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/TransferConfig.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\TransferConfig">TransferConfig</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a data transfer configuration. A transfer configuration
+contains all metadata needed to perform a data transfer. For example,
+<code>destination_dataset_id</code> specifies where data should be stored.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/TransferMessage.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\TransferMessage">TransferMessage</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a user facing message for a particular data transfer run.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/TransferMessage_MessageSeverity.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\TransferMessage_MessageSeverity">TransferMessage_MessageSeverity</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents data transfer user facing message severity.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/TransferRun.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\TransferRun">TransferRun</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a data transfer run.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/TransferState.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\TransferState">TransferState</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents data transfer run state.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/TransferType.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\TransferType">TransferType</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    DEPRECATED. Represents data transfer type.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Google/Cloud/BigQuery/DataTransfer/V1/UpdateTransferConfigRequest.html"><abbr title="Google\Cloud\BigQuery\DataTransfer\V1\UpdateTransferConfigRequest">UpdateTransferConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A request to update a transfer configuration. To update the user id of the
+transfer configuration, an authorization code needs to be provided.
+                </div>
+            </div>
+            </div>
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

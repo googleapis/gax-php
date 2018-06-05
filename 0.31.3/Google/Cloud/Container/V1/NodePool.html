@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Container\V1\NodePool | Google ApiCore - 0.31.3</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Container_V1_NodePool" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.3</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Container.html">Container</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Container/V1.html">V1</a></li><li class="backslash">\</li><li>NodePool</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            NodePool
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>NodePool</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>NodePool contains the name and configuration for a cluster's node pool.</p>            <p>Node pools are a set of nodes (i.e. VM's), with a common configuration and
+specification, under the control of the cluster master. They may have a set
+of Kubernetes labels applied to them, which may be used to reference them
+during pod scheduling. They may also be resized up or down, to accommodate
+the workload.</p>
+
+<p>Generated from protobuf message <code>google.container.v1.NodePool</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>The name of the node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>The name of the node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Container/V1/NodeConfig.html"><abbr title="Google\Cloud\Container\V1\NodeConfig">NodeConfig</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConfig">getConfig</a>()
+        
+                                            <p>The node configuration of the pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setConfig">setConfig</a>(<a href="../../../../Google/Cloud/Container/V1/NodeConfig.html"><abbr title="Google\Cloud\Container\V1\NodeConfig">NodeConfig</abbr></a> $var)
+        
+                                            <p>The node configuration of the pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInitialNodeCount">getInitialNodeCount</a>()
+        
+                                            <p>The initial node count for the pool. You must ensure that your
+Compute Engine <a href="/compute/docs/resource-quotas">resource quota</a>
+is sufficient for this number of instances. You must also have available
+firewall and routes quota.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setInitialNodeCount">setInitialNodeCount</a>(int $var)
+        
+                                            <p>The initial node count for the pool. You must ensure that your
+Compute Engine <a href="/compute/docs/resource-quotas">resource quota</a>
+is sufficient for this number of instances. You must also have available
+firewall and routes quota.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSelfLink">getSelfLink</a>()
+        
+                                            <p>[Output only] Server-defined URL for the resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSelfLink">setSelfLink</a>(string $var)
+        
+                                            <p>[Output only] Server-defined URL for the resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getVersion">getVersion</a>()
+        
+                                            <p>The version of the Kubernetes of this node.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setVersion">setVersion</a>(string $var)
+        
+                                            <p>The version of the Kubernetes of this node.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getInstanceGroupUrls">getInstanceGroupUrls</a>()
+        
+                                            <p>[Output only] The resource URLs of the <a href="/compute/docs/instance-groups/creating-groups-of-managed-instances">managed instance
+groups</a>
+associated with this node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setInstanceGroupUrls">setInstanceGroupUrls</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>[Output only] The resource URLs of the <a href="/compute/docs/instance-groups/creating-groups-of-managed-instances">managed instance
+groups</a>
+associated with this node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatus">getStatus</a>()
+        
+                                            <p>[Output only] The status of the nodes in this pool instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatus">setStatus</a>(int $var)
+        
+                                            <p>[Output only] The status of the nodes in this pool instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatusMessage">getStatusMessage</a>()
+        
+                                            <p>[Output only] Additional information about the current status of this
+node pool instance, if available.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatusMessage">setStatusMessage</a>(string $var)
+        
+                                            <p>[Output only] Additional information about the current status of this
+node pool instance, if available.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Container/V1/NodePoolAutoscaling.html"><abbr title="Google\Cloud\Container\V1\NodePoolAutoscaling">NodePoolAutoscaling</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAutoscaling">getAutoscaling</a>()
+        
+                                            <p>Autoscaler configuration for this NodePool. Autoscaler is enabled
+only if a valid configuration is present.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAutoscaling">setAutoscaling</a>(<a href="../../../../Google/Cloud/Container/V1/NodePoolAutoscaling.html"><abbr title="Google\Cloud\Container\V1\NodePoolAutoscaling">NodePoolAutoscaling</abbr></a> $var)
+        
+                                            <p>Autoscaler configuration for this NodePool. Autoscaler is enabled
+only if a valid configuration is present.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Container/V1/NodeManagement.html"><abbr title="Google\Cloud\Container\V1\NodeManagement">NodeManagement</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getManagement">getManagement</a>()
+        
+                                            <p>NodeManagement configuration for this NodePool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setManagement">setManagement</a>(<a href="../../../../Google/Cloud/Container/V1/NodeManagement.html"><abbr title="Google\Cloud\Container\V1\NodeManagement">NodeManagement</abbr></a> $var)
+        
+                                            <p>NodeManagement configuration for this NodePool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 91</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 102</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the node pool.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 114</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The name of the node pool.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConfig">
+        <div class="location">at         line 128</div>
+        <code>                    <a href="../../../../Google/Cloud/Container/V1/NodeConfig.html"><abbr title="Google\Cloud\Container\V1\NodeConfig">NodeConfig</abbr></a>
+    <strong>getConfig</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The node configuration of the pool.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodeConfig config = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Container/V1/NodeConfig.html"><abbr title="Google\Cloud\Container\V1\NodeConfig">NodeConfig</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setConfig">
+        <div class="location">at         line 140</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setConfig</strong>(<a href="../../../../Google/Cloud/Container/V1/NodeConfig.html"><abbr title="Google\Cloud\Container\V1\NodeConfig">NodeConfig</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The node configuration of the pool.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodeConfig config = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/NodeConfig.html"><abbr title="Google\Cloud\Container\V1\NodeConfig">NodeConfig</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInitialNodeCount">
+        <div class="location">at         line 157</div>
+        <code>                    int
+    <strong>getInitialNodeCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The initial node count for the pool. You must ensure that your
+Compute Engine <a href="/compute/docs/resource-quotas">resource quota</a>
+is sufficient for this number of instances. You must also have available
+firewall and routes quota.</p>                    <p>Generated from protobuf field <code>int32 initial_node_count = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setInitialNodeCount">
+        <div class="location">at         line 172</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setInitialNodeCount</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The initial node count for the pool. You must ensure that your
+Compute Engine <a href="/compute/docs/resource-quotas">resource quota</a>
+is sufficient for this number of instances. You must also have available
+firewall and routes quota.</p>                    <p>Generated from protobuf field <code>int32 initial_node_count = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSelfLink">
+        <div class="location">at         line 186</div>
+        <code>                    string
+    <strong>getSelfLink</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] Server-defined URL for the resource.</p>                    <p>Generated from protobuf field <code>string self_link = 100;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSelfLink">
+        <div class="location">at         line 198</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setSelfLink</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] Server-defined URL for the resource.</p>                    <p>Generated from protobuf field <code>string self_link = 100;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getVersion">
+        <div class="location">at         line 212</div>
+        <code>                    string
+    <strong>getVersion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The version of the Kubernetes of this node.</p>                    <p>Generated from protobuf field <code>string version = 101;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setVersion">
+        <div class="location">at         line 224</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setVersion</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The version of the Kubernetes of this node.</p>                    <p>Generated from protobuf field <code>string version = 101;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getInstanceGroupUrls">
+        <div class="location">at         line 240</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getInstanceGroupUrls</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] The resource URLs of the <a href="/compute/docs/instance-groups/creating-groups-of-managed-instances">managed instance
+groups</a>
+associated with this node pool.</p>                    <p>Generated from protobuf field <code>repeated string instance_group_urls = 102;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setInstanceGroupUrls">
+        <div class="location">at         line 254</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setInstanceGroupUrls</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] The resource URLs of the <a href="/compute/docs/instance-groups/creating-groups-of-managed-instances">managed instance
+groups</a>
+associated with this node pool.</p>                    <p>Generated from protobuf field <code>repeated string instance_group_urls = 102;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatus">
+        <div class="location">at         line 268</div>
+        <code>                    int
+    <strong>getStatus</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] The status of the nodes in this pool instance.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodePool.Status status = 103;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatus">
+        <div class="location">at         line 280</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setStatus</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] The status of the nodes in this pool instance.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodePool.Status status = 103;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatusMessage">
+        <div class="location">at         line 295</div>
+        <code>                    string
+    <strong>getStatusMessage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] Additional information about the current status of this
+node pool instance, if available.</p>                    <p>Generated from protobuf field <code>string status_message = 104;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatusMessage">
+        <div class="location">at         line 308</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setStatusMessage</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[Output only] Additional information about the current status of this
+node pool instance, if available.</p>                    <p>Generated from protobuf field <code>string status_message = 104;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAutoscaling">
+        <div class="location">at         line 323</div>
+        <code>                    <a href="../../../../Google/Cloud/Container/V1/NodePoolAutoscaling.html"><abbr title="Google\Cloud\Container\V1\NodePoolAutoscaling">NodePoolAutoscaling</abbr></a>
+    <strong>getAutoscaling</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Autoscaler configuration for this NodePool. Autoscaler is enabled
+only if a valid configuration is present.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodePoolAutoscaling autoscaling = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Container/V1/NodePoolAutoscaling.html"><abbr title="Google\Cloud\Container\V1\NodePoolAutoscaling">NodePoolAutoscaling</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAutoscaling">
+        <div class="location">at         line 336</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setAutoscaling</strong>(<a href="../../../../Google/Cloud/Container/V1/NodePoolAutoscaling.html"><abbr title="Google\Cloud\Container\V1\NodePoolAutoscaling">NodePoolAutoscaling</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Autoscaler configuration for this NodePool. Autoscaler is enabled
+only if a valid configuration is present.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodePoolAutoscaling autoscaling = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/NodePoolAutoscaling.html"><abbr title="Google\Cloud\Container\V1\NodePoolAutoscaling">NodePoolAutoscaling</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getManagement">
+        <div class="location">at         line 350</div>
+        <code>                    <a href="../../../../Google/Cloud/Container/V1/NodeManagement.html"><abbr title="Google\Cloud\Container\V1\NodeManagement">NodeManagement</abbr></a>
+    <strong>getManagement</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>NodeManagement configuration for this NodePool.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodeManagement management = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Container/V1/NodeManagement.html"><abbr title="Google\Cloud\Container\V1\NodeManagement">NodeManagement</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setManagement">
+        <div class="location">at         line 362</div>
+        <code>                    <abbr title="Google\Cloud\Container\V1\$this">$this</abbr>
+    <strong>setManagement</strong>(<a href="../../../../Google/Cloud/Container/V1/NodeManagement.html"><abbr title="Google\Cloud\Container\V1\NodeManagement">NodeManagement</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>NodeManagement configuration for this NodePool.</p>                    <p>Generated from protobuf field <code>.google.container.v1.NodeManagement management = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/NodeManagement.html"><abbr title="Google\Cloud\Container\V1\NodeManagement">NodeManagement</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Container\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

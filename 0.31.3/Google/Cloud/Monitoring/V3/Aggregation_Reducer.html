@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\Aggregation_Reducer | Google ApiCore - 0.31.3</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_Aggregation_Reducer" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.3</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>Aggregation_Reducer</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Aggregation_Reducer
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Aggregation_Reducer</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A Reducer describes how to aggregate data points from multiple
+time series into a single time series.</p>            <p>Protobuf enum <code>Google\Monitoring\V3\Aggregation\Reducer</code></p>                    </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>REDUCE_NONE</td>
+                <td class="last">
+                    <p><em>No cross-time series reduction. The output of the aligner is
+returned.</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_NONE = 0;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_MEAN</td>
+                <td class="last">
+                    <p><em>Reduce by computing the mean across time series for each
+alignment period. This reducer is valid for delta and
+gauge metrics with numeric or distribution values. The value type of the
+output is [DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE].</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_MEAN = 1;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_MIN</td>
+                <td class="last">
+                    <p><em>Reduce by computing the minimum across time series for each
+alignment period. This reducer is valid for delta and
+gauge metrics with numeric values. The value type of the output
+is the same as the value type of the input.</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_MIN = 2;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_MAX</td>
+                <td class="last">
+                    <p><em>Reduce by computing the maximum across time series for each
+alignment period. This reducer is valid for delta and
+gauge metrics with numeric values. The value type of the output
+is the same as the value type of the input.</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_MAX = 3;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_SUM</td>
+                <td class="last">
+                    <p><em>Reduce by computing the sum across time series for each
+alignment period. This reducer is valid for delta and
+gauge metrics with numeric and distribution values. The value type of
+the output is the same as the value type of the input.</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_SUM = 4;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_STDDEV</td>
+                <td class="last">
+                    <p><em>Reduce by computing the standard deviation across time series
+for each alignment period. This reducer is valid for delta
+and gauge metrics with numeric or distribution values. The value type of
+the output is [DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE].</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_STDDEV = 5;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_COUNT</td>
+                <td class="last">
+                    <p><em>Reduce by computing the count of data points across time series
+for each alignment period. This reducer is valid for delta
+and gauge metrics of numeric, Boolean, distribution, and string value
+type. The value type of the output is
+[INT64][google.api.MetricDescriptor.ValueType.INT64].</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_COUNT = 6;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_COUNT_TRUE</td>
+                <td class="last">
+                    <p><em>Reduce by computing the count of True-valued data points across time
+series for each alignment period. This reducer is valid for delta
+and gauge metrics of Boolean value type. The value type of
+the output is [INT64][google.api.MetricDescriptor.ValueType.INT64].</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_COUNT_TRUE = 7;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_COUNT_FALSE</td>
+                <td class="last">
+                    <p><em>Reduce by computing the count of False-valued data points across time
+series for each alignment period. This reducer is valid for delta
+and gauge metrics of Boolean value type. The value type of
+the output is [INT64][google.api.MetricDescriptor.ValueType.INT64].</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_COUNT_FALSE = 15;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_FRACTION_TRUE</td>
+                <td class="last">
+                    <p><em>Reduce by computing the fraction of True-valued data points across time
+series for each alignment period. This reducer is valid for delta
+and gauge metrics of Boolean value type. The output value is in the
+range [0, 1] and has value type
+[DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE].</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_FRACTION_TRUE = 8;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_PERCENTILE_99</td>
+                <td class="last">
+                    <p><em>Reduce by computing 99th percentile of data points across time series
+for each alignment period. This reducer is valid for gauge and delta
+metrics of numeric and distribution type. The value of the output is
+[DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE]</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_PERCENTILE_99 = 9;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_PERCENTILE_95</td>
+                <td class="last">
+                    <p><em>Reduce by computing 95th percentile of data points across time series
+for each alignment period. This reducer is valid for gauge and delta
+metrics of numeric and distribution type. The value of the output is
+[DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE]</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_PERCENTILE_95 = 10;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_PERCENTILE_50</td>
+                <td class="last">
+                    <p><em>Reduce by computing 50th percentile of data points across time series
+for each alignment period. This reducer is valid for gauge and delta
+metrics of numeric and distribution type. The value of the output is
+[DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE]</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_PERCENTILE_50 = 11;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>REDUCE_PERCENTILE_05</td>
+                <td class="last">
+                    <p><em>Reduce by computing 5th percentile of data points across time series
+for each alignment period. This reducer is valid for gauge and delta
+metrics of numeric and distribution type. The value of the output is
+[DOUBLE][google.api.MetricDescriptor.ValueType.DOUBLE]</em></p>
+                    <p>Generated from protobuf enum <code>REDUCE_PERCENTILE_05 = 12;</code></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

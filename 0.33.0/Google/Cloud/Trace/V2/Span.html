@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Trace\V2\Span | Google ApiCore - 0.33.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Trace_V2_Span" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.33.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Trace.html">Trace</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Trace/V2.html">V2</a></li><li class="backslash">\</li><li>Span</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Span
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Span</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A span represents a single operation within a trace. Spans can be
+nested to form a trace tree. Often, a trace contains a root span
+that describes the end-to-end latency, and one or more subspans for
+its sub-operations. A trace can also contain multiple root spans,
+or none at all. Spans do not need to be contiguous&mdash;there may be
+gaps or overlaps between spans in a trace.</p>            <p>Generated from protobuf message <code>google.devtools.cloudtrace.v2.Span</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>The resource name of the span in the following format:
+    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+[TRACE_ID] is a unique identifier for a trace within a project;
+it is a 32-character hexadecimal encoding of a 16-byte array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>The resource name of the span in the following format:
+    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+[TRACE_ID] is a unique identifier for a trace within a project;
+it is a 32-character hexadecimal encoding of a 16-byte array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSpanId">getSpanId</a>()
+        
+                                            <p>The [SPAN_ID] portion of the span's resource name.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSpanId">setSpanId</a>(string $var)
+        
+                                            <p>The [SPAN_ID] portion of the span's resource name.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getParentSpanId">getParentSpanId</a>()
+        
+                                            <p>The [SPAN_ID] of this span's parent span. If this is a root span,
+then this field must be empty.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setParentSpanId">setParentSpanId</a>(string $var)
+        
+                                            <p>The [SPAN_ID] of this span's parent span. If this is a root span,
+then this field must be empty.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Trace/V2/TruncatableString.html"><abbr title="Google\Cloud\Trace\V2\TruncatableString">TruncatableString</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisplayName">getDisplayName</a>()
+        
+                                            <p>A description of the span's operation (up to 128 bytes).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisplayName">setDisplayName</a>(<a href="../../../../Google/Cloud/Trace/V2/TruncatableString.html"><abbr title="Google\Cloud\Trace\V2\TruncatableString">TruncatableString</abbr></a> $var)
+        
+                                            <p>A description of the span's operation (up to 128 bytes).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStartTime">getStartTime</a>()
+        
+                                            <p>The start time of the span. On the client side, this is the time kept by
+the local machine where the span execution starts. On the server side, this
+is the time when the server's application handler starts running.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStartTime">setStartTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>The start time of the span. On the client side, this is the time kept by
+the local machine where the span execution starts. On the server side, this
+is the time when the server's application handler starts running.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEndTime">getEndTime</a>()
+        
+                                            <p>The end time of the span. On the client side, this is the time kept by
+the local machine where the span execution ends. On the server side, this
+is the time when the server application handler stops running.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEndTime">setEndTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>The end time of the span. On the client side, this is the time kept by
+the local machine where the span execution ends. On the server side, this
+is the time when the server application handler stops running.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Trace/V2/Span_Attributes.html"><abbr title="Google\Cloud\Trace\V2\Span_Attributes">Span_Attributes</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAttributes">getAttributes</a>()
+        
+                                            <p>A set of attributes on the span. You can have up to 32 attributes per
+span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAttributes">setAttributes</a>(<a href="../../../../Google/Cloud/Trace/V2/Span_Attributes.html"><abbr title="Google\Cloud\Trace\V2\Span_Attributes">Span_Attributes</abbr></a> $var)
+        
+                                            <p>A set of attributes on the span. You can have up to 32 attributes per
+span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Trace/V2/StackTrace.html"><abbr title="Google\Cloud\Trace\V2\StackTrace">StackTrace</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStackTrace">getStackTrace</a>()
+        
+                                            <p>Stack trace captured at the start of the span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStackTrace">setStackTrace</a>(<a href="../../../../Google/Cloud/Trace/V2/StackTrace.html"><abbr title="Google\Cloud\Trace\V2\StackTrace">StackTrace</abbr></a> $var)
+        
+                                            <p>Stack trace captured at the start of the span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Trace/V2/Span_TimeEvents.html"><abbr title="Google\Cloud\Trace\V2\Span_TimeEvents">Span_TimeEvents</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTimeEvents">getTimeEvents</a>()
+        
+                                            <p>A set of time events. You can have up to 32 annotations and 128 message
+events per span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTimeEvents">setTimeEvents</a>(<a href="../../../../Google/Cloud/Trace/V2/Span_TimeEvents.html"><abbr title="Google\Cloud\Trace\V2\Span_TimeEvents">Span_TimeEvents</abbr></a> $var)
+        
+                                            <p>A set of time events. You can have up to 32 annotations and 128 message
+events per span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Trace/V2/Span_Links.html"><abbr title="Google\Cloud\Trace\V2\Span_Links">Span_Links</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLinks">getLinks</a>()
+        
+                                            <p>Links associated with the span. You can have up to 128 links per Span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLinks">setLinks</a>(<a href="../../../../Google/Cloud/Trace/V2/Span_Links.html"><abbr title="Google\Cloud\Trace\V2\Span_Links">Span_Links</abbr></a> $var)
+        
+                                            <p>Links associated with the span. You can have up to 128 links per Span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatus">getStatus</a>()
+        
+                                            <p>An optional final status for this span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatus">setStatus</a>(<a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
+        
+                                            <p>An optional final status for this span.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\BoolValue">BoolValue</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSameProcessAsParentSpan">getSameProcessAsParentSpan</a>()
+        
+                                            <p>(Optional) Set this parameter to indicate whether this span is in
+the same process as its parent. If you do not set this parameter,
+Stackdriver Trace is unable to take advantage of this helpful
+information.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSameProcessAsParentSpan">setSameProcessAsParentSpan</a>(<abbr title="Google\Protobuf\BoolValue">BoolValue</abbr> $var)
+        
+                                            <p>(Optional) Set this parameter to indicate whether this span is in
+the same process as its parent. If you do not set this parameter,
+Stackdriver Trace is unable to take advantage of this helpful
+information.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Int32Value">Int32Value</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getChildSpanCount">getChildSpanCount</a>()
+        
+                                            <p>An optional number of child spans that were generated while this span
+was active. If set, allows implementation to detect missing child spans.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setChildSpanCount">setChildSpanCount</a>(<abbr title="Google\Protobuf\Int32Value">Int32Value</abbr> $var)
+        
+                                            <p>An optional number of child spans that were generated while this span
+was active. If set, allows implementation to detect missing child spans.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 124</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 140</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The resource name of the span in the following format:
+    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+[TRACE_ID] is a unique identifier for a trace within a project;
+it is a 32-character hexadecimal encoding of a 16-byte array.</p>                    <p>[SPAN_ID] is a unique identifier for a span within a trace; it
+is a 16-character hexadecimal encoding of an 8-byte array.</p>
+
+<p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 157</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The resource name of the span in the following format:
+    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+[TRACE_ID] is a unique identifier for a trace within a project;
+it is a 32-character hexadecimal encoding of a 16-byte array.</p>                    <p>[SPAN_ID] is a unique identifier for a span within a trace; it
+is a 16-character hexadecimal encoding of an 8-byte array.</p>
+
+<p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSpanId">
+        <div class="location">at         line 171</div>
+        <code>                    string
+    <strong>getSpanId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The [SPAN_ID] portion of the span's resource name.</p>                    <p>Generated from protobuf field <code>string span_id = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSpanId">
+        <div class="location">at         line 183</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setSpanId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The [SPAN_ID] portion of the span's resource name.</p>                    <p>Generated from protobuf field <code>string span_id = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getParentSpanId">
+        <div class="location">at         line 198</div>
+        <code>                    string
+    <strong>getParentSpanId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The [SPAN_ID] of this span's parent span. If this is a root span,
+then this field must be empty.</p>                    <p>Generated from protobuf field <code>string parent_span_id = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setParentSpanId">
+        <div class="location">at         line 211</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setParentSpanId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The [SPAN_ID] of this span's parent span. If this is a root span,
+then this field must be empty.</p>                    <p>Generated from protobuf field <code>string parent_span_id = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisplayName">
+        <div class="location">at         line 231</div>
+        <code>                    <a href="../../../../Google/Cloud/Trace/V2/TruncatableString.html"><abbr title="Google\Cloud\Trace\V2\TruncatableString">TruncatableString</abbr></a>
+    <strong>getDisplayName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A description of the span's operation (up to 128 bytes).</p>                    <p>Stackdriver Trace displays the description in the
+{% dynamic print site_values.console_name %}.
+For example, the display name can be a qualified method name or a file name
+and a line number where the operation is called. A best practice is to use
+the same display name within an application and at the same call point.
+This makes it easier to correlate spans in different traces.</p>
+
+<p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.TruncatableString display_name = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Trace/V2/TruncatableString.html"><abbr title="Google\Cloud\Trace\V2\TruncatableString">TruncatableString</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisplayName">
+        <div class="location">at         line 249</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setDisplayName</strong>(<a href="../../../../Google/Cloud/Trace/V2/TruncatableString.html"><abbr title="Google\Cloud\Trace\V2\TruncatableString">TruncatableString</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A description of the span's operation (up to 128 bytes).</p>                    <p>Stackdriver Trace displays the description in the
+{% dynamic print site_values.console_name %}.
+For example, the display name can be a qualified method name or a file name
+and a line number where the operation is called. A best practice is to use
+the same display name within an application and at the same call point.
+This makes it easier to correlate spans in different traces.</p>
+
+<p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.TruncatableString display_name = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Trace/V2/TruncatableString.html"><abbr title="Google\Cloud\Trace\V2\TruncatableString">TruncatableString</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStartTime">
+        <div class="location">at         line 265</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getStartTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The start time of the span. On the client side, this is the time kept by
+the local machine where the span execution starts. On the server side, this
+is the time when the server's application handler starts running.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp start_time = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStartTime">
+        <div class="location">at         line 279</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setStartTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The start time of the span. On the client side, this is the time kept by
+the local machine where the span execution starts. On the server side, this
+is the time when the server's application handler starts running.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp start_time = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEndTime">
+        <div class="location">at         line 295</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getEndTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The end time of the span. On the client side, this is the time kept by
+the local machine where the span execution ends. On the server side, this
+is the time when the server application handler stops running.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp end_time = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEndTime">
+        <div class="location">at         line 309</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setEndTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The end time of the span. On the client side, this is the time kept by
+the local machine where the span execution ends. On the server side, this
+is the time when the server application handler stops running.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Timestamp end_time = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAttributes">
+        <div class="location">at         line 324</div>
+        <code>                    <a href="../../../../Google/Cloud/Trace/V2/Span_Attributes.html"><abbr title="Google\Cloud\Trace\V2\Span_Attributes">Span_Attributes</abbr></a>
+    <strong>getAttributes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A set of attributes on the span. You can have up to 32 attributes per
+span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.Span.Attributes attributes = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Trace/V2/Span_Attributes.html"><abbr title="Google\Cloud\Trace\V2\Span_Attributes">Span_Attributes</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAttributes">
+        <div class="location">at         line 337</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setAttributes</strong>(<a href="../../../../Google/Cloud/Trace/V2/Span_Attributes.html"><abbr title="Google\Cloud\Trace\V2\Span_Attributes">Span_Attributes</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A set of attributes on the span. You can have up to 32 attributes per
+span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.Span.Attributes attributes = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Trace/V2/Span_Attributes.html"><abbr title="Google\Cloud\Trace\V2\Span_Attributes">Span_Attributes</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStackTrace">
+        <div class="location">at         line 351</div>
+        <code>                    <a href="../../../../Google/Cloud/Trace/V2/StackTrace.html"><abbr title="Google\Cloud\Trace\V2\StackTrace">StackTrace</abbr></a>
+    <strong>getStackTrace</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Stack trace captured at the start of the span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.StackTrace stack_trace = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Trace/V2/StackTrace.html"><abbr title="Google\Cloud\Trace\V2\StackTrace">StackTrace</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStackTrace">
+        <div class="location">at         line 363</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setStackTrace</strong>(<a href="../../../../Google/Cloud/Trace/V2/StackTrace.html"><abbr title="Google\Cloud\Trace\V2\StackTrace">StackTrace</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Stack trace captured at the start of the span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.StackTrace stack_trace = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Trace/V2/StackTrace.html"><abbr title="Google\Cloud\Trace\V2\StackTrace">StackTrace</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTimeEvents">
+        <div class="location">at         line 378</div>
+        <code>                    <a href="../../../../Google/Cloud/Trace/V2/Span_TimeEvents.html"><abbr title="Google\Cloud\Trace\V2\Span_TimeEvents">Span_TimeEvents</abbr></a>
+    <strong>getTimeEvents</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A set of time events. You can have up to 32 annotations and 128 message
+events per span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.Span.TimeEvents time_events = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Trace/V2/Span_TimeEvents.html"><abbr title="Google\Cloud\Trace\V2\Span_TimeEvents">Span_TimeEvents</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTimeEvents">
+        <div class="location">at         line 391</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setTimeEvents</strong>(<a href="../../../../Google/Cloud/Trace/V2/Span_TimeEvents.html"><abbr title="Google\Cloud\Trace\V2\Span_TimeEvents">Span_TimeEvents</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A set of time events. You can have up to 32 annotations and 128 message
+events per span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.Span.TimeEvents time_events = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Trace/V2/Span_TimeEvents.html"><abbr title="Google\Cloud\Trace\V2\Span_TimeEvents">Span_TimeEvents</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLinks">
+        <div class="location">at         line 405</div>
+        <code>                    <a href="../../../../Google/Cloud/Trace/V2/Span_Links.html"><abbr title="Google\Cloud\Trace\V2\Span_Links">Span_Links</abbr></a>
+    <strong>getLinks</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Links associated with the span. You can have up to 128 links per Span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.Span.Links links = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Trace/V2/Span_Links.html"><abbr title="Google\Cloud\Trace\V2\Span_Links">Span_Links</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLinks">
+        <div class="location">at         line 417</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setLinks</strong>(<a href="../../../../Google/Cloud/Trace/V2/Span_Links.html"><abbr title="Google\Cloud\Trace\V2\Span_Links">Span_Links</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Links associated with the span. You can have up to 128 links per Span.</p>                    <p>Generated from protobuf field <code>.google.devtools.cloudtrace.v2.Span.Links links = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Trace/V2/Span_Links.html"><abbr title="Google\Cloud\Trace\V2\Span_Links">Span_Links</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatus">
+        <div class="location">at         line 431</div>
+        <code>                    <a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a>
+    <strong>getStatus</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional final status for this span.</p>                    <p>Generated from protobuf field <code>.google.rpc.Status status = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatus">
+        <div class="location">at         line 443</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setStatus</strong>(<a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional final status for this span.</p>                    <p>Generated from protobuf field <code>.google.rpc.Status status = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSameProcessAsParentSpan">
+        <div class="location">at         line 460</div>
+        <code>                    <abbr title="Google\Protobuf\BoolValue">BoolValue</abbr>
+    <strong>getSameProcessAsParentSpan</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>(Optional) Set this parameter to indicate whether this span is in
+the same process as its parent. If you do not set this parameter,
+Stackdriver Trace is unable to take advantage of this helpful
+information.</p>                    <p>Generated from protobuf field <code>.google.protobuf.BoolValue same_process_as_parent_span = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\BoolValue">BoolValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSameProcessAsParentSpan">
+        <div class="location">at         line 475</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setSameProcessAsParentSpan</strong>(<abbr title="Google\Protobuf\BoolValue">BoolValue</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>(Optional) Set this parameter to indicate whether this span is in
+the same process as its parent. If you do not set this parameter,
+Stackdriver Trace is unable to take advantage of this helpful
+information.</p>                    <p>Generated from protobuf field <code>.google.protobuf.BoolValue same_process_as_parent_span = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\BoolValue">BoolValue</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getChildSpanCount">
+        <div class="location">at         line 490</div>
+        <code>                    <abbr title="Google\Protobuf\Int32Value">Int32Value</abbr>
+    <strong>getChildSpanCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional number of child spans that were generated while this span
+was active. If set, allows implementation to detect missing child spans.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Int32Value child_span_count = 13;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Int32Value">Int32Value</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setChildSpanCount">
+        <div class="location">at         line 503</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setChildSpanCount</strong>(<abbr title="Google\Protobuf\Int32Value">Int32Value</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional number of child spans that were generated while this span
+was active. If set, allows implementation to detect missing child spans.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Int32Value child_span_count = 13;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Int32Value">Int32Value</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

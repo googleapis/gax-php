@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Type | Google ApiCore - 0.31.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="namespace" data-name="namespace:Google_Type" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Google ApiCore - 0.31.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                <div class="namespace-breadcrumbs">
+        <ol class="breadcrumb">
+            <li><span class="label label-default">Namespace</span></li>
+                    <li><a href="../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../Google/Type.html">Type</a></li><li class="backslash">\</li>
+        </ol>
+    </div>
+            <div id="page-content">
+                
+    <div class="page-header">
+        <h1>Google\Type</h1>
+    </div>
+
+    
+            <h2>Classes</h2>
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/Color.html"><abbr title="Google\Type\Color">Color</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a color in the RGBA color space. This representation is designed
+for simplicity of conversion to/from color representations in various
+languages over compactness; for example, the fields of this representation
+can be trivially provided to the constructor of "java.awt.Color" in Java; it
+can also be trivially provided to UIColor's "+colorWithRed:green:blue:alpha"
+method in iOS; and, with just a little work, it can be easily formatted into
+a CSS "rgba()" string in JavaScript, as well. Here are some examples:
+Example (Java):
+     import com.google.type.Color;
+     // .
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/Date.html"><abbr title="Google\Type\Date">Date</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a whole calendar date, e.g. date of birth. The time of day and
+time zone are either specified elsewhere or are not significant. The date
+is relative to the Proleptic Gregorian Calendar. The day may be 0 to
+represent a year and month where the day is not significant, e.g. credit card
+expiration date. The year may be 0 to represent a month and day independent
+of year, e.g. anniversary date. Related types are [google.type.TimeOfDay][google.type.TimeOfDay]
+and <code>google.protobuf.Timestamp</code>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/DayOfWeek.html"><abbr title="Google\Type\DayOfWeek">DayOfWeek</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a day of week.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/LatLng.html"><abbr title="Google\Type\LatLng">LatLng</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    An object representing a latitude/longitude pair. This is expressed as a pair
+of doubles representing degrees latitude and degrees longitude. Unless
+specified otherwise, this must conform to the
+<a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+standard</a>. Values must be within normalized ranges.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/Money.html"><abbr title="Google\Type\Money">Money</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents an amount of money with its currency type.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/PostalAddress.html"><abbr title="Google\Type\PostalAddress">PostalAddress</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a postal address, e.g. for postal delivery or payments addresses.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Google/Type/TimeOfDay.html"><abbr title="Google\Type\TimeOfDay">TimeOfDay</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Represents a time of day. The date and time zone are either not significant
+or are specified elsewhere. An API may chose to allow leap seconds. Related
+types are [google.type.Date][google.type.Date] and <code>google.protobuf.Timestamp</code>.
+                </div>
+            </div>
+            </div>
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

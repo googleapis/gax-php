@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Container\V1\ClusterManagerGrpcClient | Google ApiCore - 0.31.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Container_V1_ClusterManagerGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Container.html">Container</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Container/V1.html">V1</a></li><li class="backslash">\</li><li>ClusterManagerGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ClusterManagerGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ClusterManagerGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Google Container Engine Cluster Manager v1</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListClusters">ListClusters</a>(<a href="../../../../Google/Cloud/Container/V1/ListClustersRequest.html"><abbr title="Google\Cloud\Container\V1\ListClustersRequest">ListClustersRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all clusters owned by a project in either the specified zone or all
+zones.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetCluster">GetCluster</a>(<a href="../../../../Google/Cloud/Container/V1/GetClusterRequest.html"><abbr title="Google\Cloud\Container\V1\GetClusterRequest">GetClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets the details of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateCluster">CreateCluster</a>(<a href="../../../../Google/Cloud/Container/V1/CreateClusterRequest.html"><abbr title="Google\Cloud\Container\V1\CreateClusterRequest">CreateClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a cluster, consisting of the specified number and type of Google
+Compute Engine instances.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateCluster">UpdateCluster</a>(<a href="../../../../Google/Cloud/Container/V1/UpdateClusterRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateClusterRequest">UpdateClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates the settings of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateNodePool">UpdateNodePool</a>(<a href="../../../../Google/Cloud/Container/V1/UpdateNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateNodePoolRequest">UpdateNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates the version and/or image type of a specific node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetNodePoolAutoscaling">SetNodePoolAutoscaling</a>(<a href="../../../../Google/Cloud/Container/V1/SetNodePoolAutoscalingRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolAutoscalingRequest">SetNodePoolAutoscalingRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the autoscaling settings of a specific node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetLoggingService">SetLoggingService</a>(<a href="../../../../Google/Cloud/Container/V1/SetLoggingServiceRequest.html"><abbr title="Google\Cloud\Container\V1\SetLoggingServiceRequest">SetLoggingServiceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the logging service of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetMonitoringService">SetMonitoringService</a>(<a href="../../../../Google/Cloud/Container/V1/SetMonitoringServiceRequest.html"><abbr title="Google\Cloud\Container\V1\SetMonitoringServiceRequest">SetMonitoringServiceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the monitoring service of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetAddonsConfig">SetAddonsConfig</a>(<a href="../../../../Google/Cloud/Container/V1/SetAddonsConfigRequest.html"><abbr title="Google\Cloud\Container\V1\SetAddonsConfigRequest">SetAddonsConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the addons of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetLocations">SetLocations</a>(<a href="../../../../Google/Cloud/Container/V1/SetLocationsRequest.html"><abbr title="Google\Cloud\Container\V1\SetLocationsRequest">SetLocationsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the locations of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateMaster">UpdateMaster</a>(<a href="../../../../Google/Cloud/Container/V1/UpdateMasterRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateMasterRequest">UpdateMasterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates the master of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetMasterAuth">SetMasterAuth</a>(<a href="../../../../Google/Cloud/Container/V1/SetMasterAuthRequest.html"><abbr title="Google\Cloud\Container\V1\SetMasterAuthRequest">SetMasterAuthRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Used to set master auth materials. Currently supports :-
+Changing the admin password of a specific cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteCluster">DeleteCluster</a>(<a href="../../../../Google/Cloud/Container/V1/DeleteClusterRequest.html"><abbr title="Google\Cloud\Container\V1\DeleteClusterRequest">DeleteClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes the cluster, including the Kubernetes endpoint and all worker
+nodes.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListOperations">ListOperations</a>(<a href="../../../../Google/Cloud/Container/V1/ListOperationsRequest.html"><abbr title="Google\Cloud\Container\V1\ListOperationsRequest">ListOperationsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all operations in a project in a specific zone or all zones.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetOperation">GetOperation</a>(<a href="../../../../Google/Cloud/Container/V1/GetOperationRequest.html"><abbr title="Google\Cloud\Container\V1\GetOperationRequest">GetOperationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets the specified operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CancelOperation">CancelOperation</a>(<a href="../../../../Google/Cloud/Container/V1/CancelOperationRequest.html"><abbr title="Google\Cloud\Container\V1\CancelOperationRequest">CancelOperationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Cancels the specified operation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetServerConfig">GetServerConfig</a>(<a href="../../../../Google/Cloud/Container/V1/GetServerConfigRequest.html"><abbr title="Google\Cloud\Container\V1\GetServerConfigRequest">GetServerConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Returns configuration info about the Container Engine service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListNodePools">ListNodePools</a>(<a href="../../../../Google/Cloud/Container/V1/ListNodePoolsRequest.html"><abbr title="Google\Cloud\Container\V1\ListNodePoolsRequest">ListNodePoolsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the node pools for a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetNodePool">GetNodePool</a>(<a href="../../../../Google/Cloud/Container/V1/GetNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\GetNodePoolRequest">GetNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Retrieves the node pool requested.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateNodePool">CreateNodePool</a>(<a href="../../../../Google/Cloud/Container/V1/CreateNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\CreateNodePoolRequest">CreateNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a node pool for a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteNodePool">DeleteNodePool</a>(<a href="../../../../Google/Cloud/Container/V1/DeleteNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\DeleteNodePoolRequest">DeleteNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes a node pool from a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_RollbackNodePoolUpgrade">RollbackNodePoolUpgrade</a>(<a href="../../../../Google/Cloud/Container/V1/RollbackNodePoolUpgradeRequest.html"><abbr title="Google\Cloud\Container\V1\RollbackNodePoolUpgradeRequest">RollbackNodePoolUpgradeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Roll back the previously Aborted or Failed NodePool upgrade.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetNodePoolManagement">SetNodePoolManagement</a>(<a href="../../../../Google/Cloud/Container/V1/SetNodePoolManagementRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolManagementRequest">SetNodePoolManagementRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the NodeManagement options for a node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetLabels">SetLabels</a>(<a href="../../../../Google/Cloud/Container/V1/SetLabelsRequest.html"><abbr title="Google\Cloud\Container\V1\SetLabelsRequest">SetLabelsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets labels on a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetLegacyAbac">SetLegacyAbac</a>(<a href="../../../../Google/Cloud/Container/V1/SetLegacyAbacRequest.html"><abbr title="Google\Cloud\Container\V1\SetLegacyAbacRequest">SetLegacyAbacRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Enables or disables the ABAC authorization mechanism on a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_StartIPRotation">StartIPRotation</a>(<a href="../../../../Google/Cloud/Container/V1/StartIPRotationRequest.html"><abbr title="Google\Cloud\Container\V1\StartIPRotationRequest">StartIPRotationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Start master IP rotation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CompleteIPRotation">CompleteIPRotation</a>(<a href="../../../../Google/Cloud/Container/V1/CompleteIPRotationRequest.html"><abbr title="Google\Cloud\Container\V1\CompleteIPRotationRequest">CompleteIPRotationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Completes master IP rotation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetNodePoolSize">SetNodePoolSize</a>(<a href="../../../../Google/Cloud/Container/V1/SetNodePoolSizeRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolSizeRequest">SetNodePoolSizeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the size of a specific node pool.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetNetworkPolicy">SetNetworkPolicy</a>(<a href="../../../../Google/Cloud/Container/V1/SetNetworkPolicyRequest.html"><abbr title="Google\Cloud\Container\V1\SetNetworkPolicyRequest">SetNetworkPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Enables/Disables Network Policy for a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetMaintenancePolicy">SetMaintenancePolicy</a>(<a href="../../../../Google/Cloud/Container/V1/SetMaintenancePolicyRequest.html"><abbr title="Google\Cloud\Container\V1\SetMaintenancePolicyRequest">SetMaintenancePolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the maintenance policy for a cluster.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 31</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListClusters">
+        <div class="location">at         line 42</div>
+        <code>                    
+    <strong>ListClusters</strong>(<a href="../../../../Google/Cloud/Container/V1/ListClustersRequest.html"><abbr title="Google\Cloud\Container\V1\ListClustersRequest">ListClustersRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all clusters owned by a project in either the specified zone or all
+zones.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/ListClustersRequest.html"><abbr title="Google\Cloud\Container\V1\ListClustersRequest">ListClustersRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetCluster">
+        <div class="location">at         line 56</div>
+        <code>                    
+    <strong>GetCluster</strong>(<a href="../../../../Google/Cloud/Container/V1/GetClusterRequest.html"><abbr title="Google\Cloud\Container\V1\GetClusterRequest">GetClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the details of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/GetClusterRequest.html"><abbr title="Google\Cloud\Container\V1\GetClusterRequest">GetClusterRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateCluster">
+        <div class="location">at         line 82</div>
+        <code>                    
+    <strong>CreateCluster</strong>(<a href="../../../../Google/Cloud/Container/V1/CreateClusterRequest.html"><abbr title="Google\Cloud\Container\V1\CreateClusterRequest">CreateClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a cluster, consisting of the specified number and type of Google
+Compute Engine instances.</p>                    <p>By default, the cluster is created in the project's
+<a href="/compute/docs/networks-and-firewalls#networks">default network</a>.</p>
+
+<p>One firewall is added for the cluster. After cluster creation,
+the cluster creates routes for each node to allow the containers
+on that node to communicate with all other instances in the
+cluster.</p>
+
+<p>Finally, an entry is added to the project's global metadata indicating
+which CIDR range is being used by the cluster.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/CreateClusterRequest.html"><abbr title="Google\Cloud\Container\V1\CreateClusterRequest">CreateClusterRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateCluster">
+        <div class="location">at         line 96</div>
+        <code>                    
+    <strong>UpdateCluster</strong>(<a href="../../../../Google/Cloud/Container/V1/UpdateClusterRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateClusterRequest">UpdateClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates the settings of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/UpdateClusterRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateClusterRequest">UpdateClusterRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateNodePool">
+        <div class="location">at         line 110</div>
+        <code>                    
+    <strong>UpdateNodePool</strong>(<a href="../../../../Google/Cloud/Container/V1/UpdateNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateNodePoolRequest">UpdateNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates the version and/or image type of a specific node pool.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/UpdateNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateNodePoolRequest">UpdateNodePoolRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetNodePoolAutoscaling">
+        <div class="location">at         line 124</div>
+        <code>                    
+    <strong>SetNodePoolAutoscaling</strong>(<a href="../../../../Google/Cloud/Container/V1/SetNodePoolAutoscalingRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolAutoscalingRequest">SetNodePoolAutoscalingRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the autoscaling settings of a specific node pool.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetNodePoolAutoscalingRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolAutoscalingRequest">SetNodePoolAutoscalingRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetLoggingService">
+        <div class="location">at         line 138</div>
+        <code>                    
+    <strong>SetLoggingService</strong>(<a href="../../../../Google/Cloud/Container/V1/SetLoggingServiceRequest.html"><abbr title="Google\Cloud\Container\V1\SetLoggingServiceRequest">SetLoggingServiceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the logging service of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetLoggingServiceRequest.html"><abbr title="Google\Cloud\Container\V1\SetLoggingServiceRequest">SetLoggingServiceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetMonitoringService">
+        <div class="location">at         line 152</div>
+        <code>                    
+    <strong>SetMonitoringService</strong>(<a href="../../../../Google/Cloud/Container/V1/SetMonitoringServiceRequest.html"><abbr title="Google\Cloud\Container\V1\SetMonitoringServiceRequest">SetMonitoringServiceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the monitoring service of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetMonitoringServiceRequest.html"><abbr title="Google\Cloud\Container\V1\SetMonitoringServiceRequest">SetMonitoringServiceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetAddonsConfig">
+        <div class="location">at         line 166</div>
+        <code>                    
+    <strong>SetAddonsConfig</strong>(<a href="../../../../Google/Cloud/Container/V1/SetAddonsConfigRequest.html"><abbr title="Google\Cloud\Container\V1\SetAddonsConfigRequest">SetAddonsConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the addons of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetAddonsConfigRequest.html"><abbr title="Google\Cloud\Container\V1\SetAddonsConfigRequest">SetAddonsConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetLocations">
+        <div class="location">at         line 180</div>
+        <code>                    
+    <strong>SetLocations</strong>(<a href="../../../../Google/Cloud/Container/V1/SetLocationsRequest.html"><abbr title="Google\Cloud\Container\V1\SetLocationsRequest">SetLocationsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the locations of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetLocationsRequest.html"><abbr title="Google\Cloud\Container\V1\SetLocationsRequest">SetLocationsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateMaster">
+        <div class="location">at         line 194</div>
+        <code>                    
+    <strong>UpdateMaster</strong>(<a href="../../../../Google/Cloud/Container/V1/UpdateMasterRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateMasterRequest">UpdateMasterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates the master of a specific cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/UpdateMasterRequest.html"><abbr title="Google\Cloud\Container\V1\UpdateMasterRequest">UpdateMasterRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetMasterAuth">
+        <div class="location">at         line 210</div>
+        <code>                    
+    <strong>SetMasterAuth</strong>(<a href="../../../../Google/Cloud/Container/V1/SetMasterAuthRequest.html"><abbr title="Google\Cloud\Container\V1\SetMasterAuthRequest">SetMasterAuthRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Used to set master auth materials. Currently supports :-
+Changing the admin password of a specific cluster.</p>                    <p>This can be either via password generation or explicitly set the password.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetMasterAuthRequest.html"><abbr title="Google\Cloud\Container\V1\SetMasterAuthRequest">SetMasterAuthRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteCluster">
+        <div class="location">at         line 232</div>
+        <code>                    
+    <strong>DeleteCluster</strong>(<a href="../../../../Google/Cloud/Container/V1/DeleteClusterRequest.html"><abbr title="Google\Cloud\Container\V1\DeleteClusterRequest">DeleteClusterRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes the cluster, including the Kubernetes endpoint and all worker
+nodes.</p>                    <p>Firewalls and routes that were configured during cluster creation
+are also deleted.</p>
+
+<p>Other Google Compute Engine resources that might be in use by the cluster
+(e.g. load balancer resources) will not be deleted if they weren't present
+at the initial create time.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/DeleteClusterRequest.html"><abbr title="Google\Cloud\Container\V1\DeleteClusterRequest">DeleteClusterRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListOperations">
+        <div class="location">at         line 246</div>
+        <code>                    
+    <strong>ListOperations</strong>(<a href="../../../../Google/Cloud/Container/V1/ListOperationsRequest.html"><abbr title="Google\Cloud\Container\V1\ListOperationsRequest">ListOperationsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all operations in a project in a specific zone or all zones.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/ListOperationsRequest.html"><abbr title="Google\Cloud\Container\V1\ListOperationsRequest">ListOperationsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetOperation">
+        <div class="location">at         line 260</div>
+        <code>                    
+    <strong>GetOperation</strong>(<a href="../../../../Google/Cloud/Container/V1/GetOperationRequest.html"><abbr title="Google\Cloud\Container\V1\GetOperationRequest">GetOperationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the specified operation.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/GetOperationRequest.html"><abbr title="Google\Cloud\Container\V1\GetOperationRequest">GetOperationRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CancelOperation">
+        <div class="location">at         line 274</div>
+        <code>                    
+    <strong>CancelOperation</strong>(<a href="../../../../Google/Cloud/Container/V1/CancelOperationRequest.html"><abbr title="Google\Cloud\Container\V1\CancelOperationRequest">CancelOperationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Cancels the specified operation.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/CancelOperationRequest.html"><abbr title="Google\Cloud\Container\V1\CancelOperationRequest">CancelOperationRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetServerConfig">
+        <div class="location">at         line 288</div>
+        <code>                    
+    <strong>GetServerConfig</strong>(<a href="../../../../Google/Cloud/Container/V1/GetServerConfigRequest.html"><abbr title="Google\Cloud\Container\V1\GetServerConfigRequest">GetServerConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns configuration info about the Container Engine service.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/GetServerConfigRequest.html"><abbr title="Google\Cloud\Container\V1\GetServerConfigRequest">GetServerConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListNodePools">
+        <div class="location">at         line 302</div>
+        <code>                    
+    <strong>ListNodePools</strong>(<a href="../../../../Google/Cloud/Container/V1/ListNodePoolsRequest.html"><abbr title="Google\Cloud\Container\V1\ListNodePoolsRequest">ListNodePoolsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the node pools for a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/ListNodePoolsRequest.html"><abbr title="Google\Cloud\Container\V1\ListNodePoolsRequest">ListNodePoolsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetNodePool">
+        <div class="location">at         line 316</div>
+        <code>                    
+    <strong>GetNodePool</strong>(<a href="../../../../Google/Cloud/Container/V1/GetNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\GetNodePoolRequest">GetNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieves the node pool requested.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/GetNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\GetNodePoolRequest">GetNodePoolRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateNodePool">
+        <div class="location">at         line 330</div>
+        <code>                    
+    <strong>CreateNodePool</strong>(<a href="../../../../Google/Cloud/Container/V1/CreateNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\CreateNodePoolRequest">CreateNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a node pool for a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/CreateNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\CreateNodePoolRequest">CreateNodePoolRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteNodePool">
+        <div class="location">at         line 344</div>
+        <code>                    
+    <strong>DeleteNodePool</strong>(<a href="../../../../Google/Cloud/Container/V1/DeleteNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\DeleteNodePoolRequest">DeleteNodePoolRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes a node pool from a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/DeleteNodePoolRequest.html"><abbr title="Google\Cloud\Container\V1\DeleteNodePoolRequest">DeleteNodePoolRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_RollbackNodePoolUpgrade">
+        <div class="location">at         line 359</div>
+        <code>                    
+    <strong>RollbackNodePoolUpgrade</strong>(<a href="../../../../Google/Cloud/Container/V1/RollbackNodePoolUpgradeRequest.html"><abbr title="Google\Cloud\Container\V1\RollbackNodePoolUpgradeRequest">RollbackNodePoolUpgradeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Roll back the previously Aborted or Failed NodePool upgrade.</p>                    <p>This will be an no-op if the last upgrade successfully completed.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/RollbackNodePoolUpgradeRequest.html"><abbr title="Google\Cloud\Container\V1\RollbackNodePoolUpgradeRequest">RollbackNodePoolUpgradeRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetNodePoolManagement">
+        <div class="location">at         line 373</div>
+        <code>                    
+    <strong>SetNodePoolManagement</strong>(<a href="../../../../Google/Cloud/Container/V1/SetNodePoolManagementRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolManagementRequest">SetNodePoolManagementRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the NodeManagement options for a node pool.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetNodePoolManagementRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolManagementRequest">SetNodePoolManagementRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetLabels">
+        <div class="location">at         line 387</div>
+        <code>                    
+    <strong>SetLabels</strong>(<a href="../../../../Google/Cloud/Container/V1/SetLabelsRequest.html"><abbr title="Google\Cloud\Container\V1\SetLabelsRequest">SetLabelsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets labels on a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetLabelsRequest.html"><abbr title="Google\Cloud\Container\V1\SetLabelsRequest">SetLabelsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetLegacyAbac">
+        <div class="location">at         line 401</div>
+        <code>                    
+    <strong>SetLegacyAbac</strong>(<a href="../../../../Google/Cloud/Container/V1/SetLegacyAbacRequest.html"><abbr title="Google\Cloud\Container\V1\SetLegacyAbacRequest">SetLegacyAbacRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Enables or disables the ABAC authorization mechanism on a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetLegacyAbacRequest.html"><abbr title="Google\Cloud\Container\V1\SetLegacyAbacRequest">SetLegacyAbacRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_StartIPRotation">
+        <div class="location">at         line 415</div>
+        <code>                    
+    <strong>StartIPRotation</strong>(<a href="../../../../Google/Cloud/Container/V1/StartIPRotationRequest.html"><abbr title="Google\Cloud\Container\V1\StartIPRotationRequest">StartIPRotationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Start master IP rotation.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/StartIPRotationRequest.html"><abbr title="Google\Cloud\Container\V1\StartIPRotationRequest">StartIPRotationRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CompleteIPRotation">
+        <div class="location">at         line 429</div>
+        <code>                    
+    <strong>CompleteIPRotation</strong>(<a href="../../../../Google/Cloud/Container/V1/CompleteIPRotationRequest.html"><abbr title="Google\Cloud\Container\V1\CompleteIPRotationRequest">CompleteIPRotationRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Completes master IP rotation.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/CompleteIPRotationRequest.html"><abbr title="Google\Cloud\Container\V1\CompleteIPRotationRequest">CompleteIPRotationRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetNodePoolSize">
+        <div class="location">at         line 443</div>
+        <code>                    
+    <strong>SetNodePoolSize</strong>(<a href="../../../../Google/Cloud/Container/V1/SetNodePoolSizeRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolSizeRequest">SetNodePoolSizeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the size of a specific node pool.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetNodePoolSizeRequest.html"><abbr title="Google\Cloud\Container\V1\SetNodePoolSizeRequest">SetNodePoolSizeRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetNetworkPolicy">
+        <div class="location">at         line 457</div>
+        <code>                    
+    <strong>SetNetworkPolicy</strong>(<a href="../../../../Google/Cloud/Container/V1/SetNetworkPolicyRequest.html"><abbr title="Google\Cloud\Container\V1\SetNetworkPolicyRequest">SetNetworkPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Enables/Disables Network Policy for a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetNetworkPolicyRequest.html"><abbr title="Google\Cloud\Container\V1\SetNetworkPolicyRequest">SetNetworkPolicyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetMaintenancePolicy">
+        <div class="location">at         line 471</div>
+        <code>                    
+    <strong>SetMaintenancePolicy</strong>(<a href="../../../../Google/Cloud/Container/V1/SetMaintenancePolicyRequest.html"><abbr title="Google\Cloud\Container\V1\SetMaintenancePolicyRequest">SetMaintenancePolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the maintenance policy for a cluster.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Container/V1/SetMaintenancePolicyRequest.html"><abbr title="Google\Cloud\Container\V1\SetMaintenancePolicyRequest">SetMaintenancePolicyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig | Google ApiCore - 0.31.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Dlp_V2_PrivacyMetric_KMapEstimationConfig" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dlp.html">Dlp</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dlp/V2.html">V2</a></li><li class="backslash">\</li><li>PrivacyMetric_KMapEstimationConfig</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            PrivacyMetric_KMapEstimationConfig
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>PrivacyMetric_KMapEstimationConfig</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Reidentifiability metric. This corresponds to a risk model similar to what
+is called "journalist risk" in the literature, except the attack dataset is
+statistically modeled instead of being perfectly known. This can be done
+using publicly available data (like the US Census), or using a custom
+statistical model (indicated as one or several BigQuery tables), or by
+extrapolating from the distribution of values in the input dataset.</p>            <p>A column with a semantic tag attached.</p>
+
+<p>Generated from protobuf message <code>google.privacy.dlp.v2.PrivacyMetric.KMapEstimationConfig</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getQuasiIds">getQuasiIds</a>()
+        
+                                            <p>Fields considered to be quasi-identifiers. No two columns can have the
+same tag. [required]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setQuasiIds">setQuasiIds</a>(<a href="../../../../Google/Cloud/Dlp/V2/PrivacyMetric_KMapEstimationConfig_TaggedField.html"><abbr title="Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig_TaggedField">PrivacyMetric_KMapEstimationConfig_TaggedField</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Fields considered to be quasi-identifiers. No two columns can have the
+same tag. [required]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRegionCode">getRegionCode</a>()
+        
+                                            <p>ISO 3166-1 alpha-2 region code to use in the statistical modeling.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRegionCode">setRegionCode</a>(string $var)
+        
+                                            <p>ISO 3166-1 alpha-2 region code to use in the statistical modeling.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAuxiliaryTables">getAuxiliaryTables</a>()
+        
+                                            <p>Several auxiliary tables can be used in the analysis. Each custom_tag
+used to tag a quasi-identifiers column must appear in exactly one column
+of one auxiliary table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAuxiliaryTables">setAuxiliaryTables</a>(<a href="../../../../Google/Cloud/Dlp/V2/PrivacyMetric_KMapEstimationConfig_AuxiliaryTable.html"><abbr title="Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig_AuxiliaryTable">PrivacyMetric_KMapEstimationConfig_AuxiliaryTable</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Several auxiliary tables can be used in the analysis. Each custom_tag
+used to tag a quasi-identifiers column must appear in exactly one column
+of one auxiliary table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 48</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getQuasiIds">
+        <div class="location">at         line 60</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getQuasiIds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Fields considered to be quasi-identifiers. No two columns can have the
+same tag. [required]</p>                    <p>Generated from protobuf field <code>repeated .google.privacy.dlp.v2.PrivacyMetric.KMapEstimationConfig.TaggedField quasi_ids = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setQuasiIds">
+        <div class="location">at         line 73</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setQuasiIds</strong>(<a href="../../../../Google/Cloud/Dlp/V2/PrivacyMetric_KMapEstimationConfig_TaggedField.html"><abbr title="Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig_TaggedField">PrivacyMetric_KMapEstimationConfig_TaggedField</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Fields considered to be quasi-identifiers. No two columns can have the
+same tag. [required]</p>                    <p>Generated from protobuf field <code>repeated .google.privacy.dlp.v2.PrivacyMetric.KMapEstimationConfig.TaggedField quasi_ids = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/PrivacyMetric_KMapEstimationConfig_TaggedField.html"><abbr title="Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig_TaggedField">PrivacyMetric_KMapEstimationConfig_TaggedField</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRegionCode">
+        <div class="location">at         line 89</div>
+        <code>                    string
+    <strong>getRegionCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ISO 3166-1 alpha-2 region code to use in the statistical modeling.</p>                    <p>Required if no column is tagged with a region-specific InfoType (like
+US_ZIP_5) or a region code.</p>
+
+<p>Generated from protobuf field <code>string region_code = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRegionCode">
+        <div class="location">at         line 103</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setRegionCode</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ISO 3166-1 alpha-2 region code to use in the statistical modeling.</p>                    <p>Required if no column is tagged with a region-specific InfoType (like
+US_ZIP_5) or a region code.</p>
+
+<p>Generated from protobuf field <code>string region_code = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAuxiliaryTables">
+        <div class="location">at         line 119</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAuxiliaryTables</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Several auxiliary tables can be used in the analysis. Each custom_tag
+used to tag a quasi-identifiers column must appear in exactly one column
+of one auxiliary table.</p>                    <p>Generated from protobuf field <code>repeated .google.privacy.dlp.v2.PrivacyMetric.KMapEstimationConfig.AuxiliaryTable auxiliary_tables = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAuxiliaryTables">
+        <div class="location">at         line 133</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setAuxiliaryTables</strong>(<a href="../../../../Google/Cloud/Dlp/V2/PrivacyMetric_KMapEstimationConfig_AuxiliaryTable.html"><abbr title="Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig_AuxiliaryTable">PrivacyMetric_KMapEstimationConfig_AuxiliaryTable</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Several auxiliary tables can be used in the analysis. Each custom_tag
+used to tag a quasi-identifiers column must appear in exactly one column
+of one auxiliary table.</p>                    <p>Generated from protobuf field <code>repeated .google.privacy.dlp.v2.PrivacyMetric.KMapEstimationConfig.AuxiliaryTable auxiliary_tables = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/PrivacyMetric_KMapEstimationConfig_AuxiliaryTable.html"><abbr title="Google\Cloud\Dlp\V2\PrivacyMetric_KMapEstimationConfig_AuxiliaryTable">PrivacyMetric_KMapEstimationConfig_AuxiliaryTable</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

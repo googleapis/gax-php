@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Dialogflow\V2\AgentsGrpcClient | Google ApiCore - 0.31.3</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Dialogflow_V2_AgentsGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.3</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dialogflow.html">Dialogflow</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dialogflow/V2.html">V2</a></li><li class="backslash">\</li><li>AgentsGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AgentsGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AgentsGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Agents are best described as Natural Language Understanding (NLU) modules
+that transform user requests into actionable data. You can include agents
+in your app, product, or service to determine user intent and respond to the
+user in a natural way.</p>            <p>After you create an agent, you can add [Intents][google.cloud.dialogflow.v2.Intents], [Contexts][google.cloud.dialogflow.v2.Contexts],
+[Entity Types][google.cloud.dialogflow.v2.EntityTypes], [Webhooks][google.cloud.dialogflow.v2.WebhookRequest], and so on to
+manage the flow of a conversation and match user input to predefined intents
+and actions.</p>
+
+<p>You can create an agent using both Dialogflow Standard Edition and
+Dialogflow Enterprise Edition. For details, see
+<a href="/dialogflow-enterprise/docs/editions">Dialogflow Editions</a>.</p>
+
+<p>You can save your agent for backup or versioning by exporting the agent by
+using the [ExportAgent][google.cloud.dialogflow.v2.Agents.ExportAgent] method. You can import a saved
+agent by using the [ImportAgent][google.cloud.dialogflow.v2.Agents.ImportAgent] method.</p>
+
+<p>Dialogflow provides several
+<a href="https://dialogflow.com/docs/prebuilt-agents">prebuilt agents</a> for common
+conversation scenarios such as determining a date and time, converting
+currency, and so on.</p>
+
+<p>For more information about agents, see the
+<a href="https://dialogflow.com/docs/agents">Dialogflow documentation</a>.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetAgent">GetAgent</a>(<a href="../../../../Google/Cloud/Dialogflow/V2/GetAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\GetAgentRequest">GetAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Retrieves the specified agent.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SearchAgents">SearchAgents</a>(<a href="../../../../Google/Cloud/Dialogflow/V2/SearchAgentsRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\SearchAgentsRequest">SearchAgentsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Returns the list of agents.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_TrainAgent">TrainAgent</a>(<a href="../../../../Google/Cloud/Dialogflow/V2/TrainAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\TrainAgentRequest">TrainAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Trains the specified agent.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ExportAgent">ExportAgent</a>(<a href="../../../../Google/Cloud/Dialogflow/V2/ExportAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\ExportAgentRequest">ExportAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Exports the specified agent to a ZIP file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ImportAgent">ImportAgent</a>(<a href="../../../../Google/Cloud/Dialogflow/V2/ImportAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\ImportAgentRequest">ImportAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Imports the specified agent from a ZIP file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_RestoreAgent">RestoreAgent</a>(<a href="../../../../Google/Cloud/Dialogflow/V2/RestoreAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\RestoreAgentRequest">RestoreAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Restores the specified agent from a ZIP file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 55</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetAgent">
+        <div class="location">at         line 65</div>
+        <code>                    
+    <strong>GetAgent</strong>(<a href="../../../../Google/Cloud/Dialogflow/V2/GetAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\GetAgentRequest">GetAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieves the specified agent.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dialogflow/V2/GetAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\GetAgentRequest">GetAgentRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SearchAgents">
+        <div class="location">at         line 85</div>
+        <code>                    
+    <strong>SearchAgents</strong>(<a href="../../../../Google/Cloud/Dialogflow/V2/SearchAgentsRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\SearchAgentsRequest">SearchAgentsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the list of agents.</p>                    <p>Since there is at most one conversational agent per project, this method is
+useful primarily for listing all agents across projects the caller has
+access to. One can achieve that with a wildcard project collection id "-".
+Refer to <a href="https://cloud.google.com/apis/design/design_patterns#list_sub-collections">List
+Sub-Collections</a>.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dialogflow/V2/SearchAgentsRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\SearchAgentsRequest">SearchAgentsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_TrainAgent">
+        <div class="location">at         line 102</div>
+        <code>                    
+    <strong>TrainAgent</strong>(<a href="../../../../Google/Cloud/Dialogflow/V2/TrainAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\TrainAgentRequest">TrainAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Trains the specified agent.</p>                    <p>Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
+           metadata: [google.protobuf.Struct][google.protobuf.Struct]></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dialogflow/V2/TrainAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\TrainAgentRequest">TrainAgentRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ExportAgent">
+        <div class="location">at         line 119</div>
+        <code>                    
+    <strong>ExportAgent</strong>(<a href="../../../../Google/Cloud/Dialogflow/V2/ExportAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\ExportAgentRequest">ExportAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Exports the specified agent to a ZIP file.</p>                    <p>Operation <response: [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse],
+           metadata: [google.protobuf.Struct][google.protobuf.Struct]></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dialogflow/V2/ExportAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\ExportAgentRequest">ExportAgentRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ImportAgent">
+        <div class="location">at         line 140</div>
+        <code>                    
+    <strong>ImportAgent</strong>(<a href="../../../../Google/Cloud/Dialogflow/V2/ImportAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\ImportAgentRequest">ImportAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Imports the specified agent from a ZIP file.</p>                    <p>Uploads new intents and entity types without deleting the existing ones.
+Intents and entity types with the same name are replaced with the new
+versions from ImportAgentRequest.</p>
+
+<p>Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
+           metadata: [google.protobuf.Struct][google.protobuf.Struct]></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dialogflow/V2/ImportAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\ImportAgentRequest">ImportAgentRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_RestoreAgent">
+        <div class="location">at         line 160</div>
+        <code>                    
+    <strong>RestoreAgent</strong>(<a href="../../../../Google/Cloud/Dialogflow/V2/RestoreAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\RestoreAgentRequest">RestoreAgentRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Restores the specified agent from a ZIP file.</p>                    <p>Replaces the current agent version with a new one. All the intents and
+entity types in the older version are deleted.</p>
+
+<p>Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
+           metadata: [google.protobuf.Struct][google.protobuf.Struct]></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dialogflow/V2/RestoreAgentRequest.html"><abbr title="Google\Cloud\Dialogflow\V2\RestoreAgentRequest">RestoreAgentRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

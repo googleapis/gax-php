@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\NotificationChannel | Google ApiCore - 0.30.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_NotificationChannel" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.30.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>NotificationChannel</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            NotificationChannel
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>NotificationChannel</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A <code>NotificationChannel</code> is a medium through which an alert is
+delivered when a policy violation is detected. Examples of channels
+include email, SMS, and third-party messaging applications. Fields
+containing sensitive information like authentication tokens or
+contact info are only partially populated on retrieval.</p>            <p>Generated from protobuf message <code>google.monitoring.v3.NotificationChannel</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getType">getType</a>()
+        
+                                            <p>The type of the notification channel. This field matches the
+value of the [NotificationChannelDescriptor.type][google.monitoring.v3.NotificationChannelDescriptor.type] field.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setType">setType</a>(string $var)
+        
+                                            <p>The type of the notification channel. This field matches the
+value of the [NotificationChannelDescriptor.type][google.monitoring.v3.NotificationChannelDescriptor.type] field.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>The full REST resource name for this channel. The syntax is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]
+The <code>[CHANNEL_ID]</code> is automatically assigned by the server on creation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>The full REST resource name for this channel. The syntax is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]
+The <code>[CHANNEL_ID]</code> is automatically assigned by the server on creation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisplayName">getDisplayName</a>()
+        
+                                            <p>An optional human-readable name for this notification channel. It is
+recommended that you specify a non-empty and unique name in order to
+make it easier to identify the channels in your project, though this is
+not enforced. The display name is limited to 512 Unicode characters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisplayName">setDisplayName</a>(string $var)
+        
+                                            <p>An optional human-readable name for this notification channel. It is
+recommended that you specify a non-empty and unique name in order to
+make it easier to identify the channels in your project, though this is
+not enforced. The display name is limited to 512 Unicode characters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDescription">getDescription</a>()
+        
+                                            <p>An optional human-readable description of this notification channel. This
+description may provide additional details, beyond the display
+name, for the channel. This may not exceeed 1024 Unicode characters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDescription">setDescription</a>(string $var)
+        
+                                            <p>An optional human-readable description of this notification channel. This
+description may provide additional details, beyond the display
+name, for the channel. This may not exceeed 1024 Unicode characters.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLabels">getLabels</a>()
+        
+                                            <p>Configuration fields that define the channel and its behavior. The
+permissible and required labels are specified in the
+[NotificationChannelDescriptor.labels][google.monitoring.v3.NotificationChannelDescriptor.labels] of the
+<code>NotificationChannelDescriptor</code> corresponding to the <code>type</code> field.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLabels">setLabels</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        
+                                            <p>Configuration fields that define the channel and its behavior. The
+permissible and required labels are specified in the
+[NotificationChannelDescriptor.labels][google.monitoring.v3.NotificationChannelDescriptor.labels] of the
+<code>NotificationChannelDescriptor</code> corresponding to the <code>type</code> field.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUserLabels">getUserLabels</a>()
+        
+                                            <p>User-supplied key/value data that does not need to conform to
+the corresponding <code>NotificationChannelDescriptor</code>'s schema, unlike
+the <code>labels</code> field. This field is intended to be used for organizing
+and identifying the <code>NotificationChannel</code> objects.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUserLabels">setUserLabels</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        
+                                            <p>User-supplied key/value data that does not need to conform to
+the corresponding <code>NotificationChannelDescriptor</code>'s schema, unlike
+the <code>labels</code> field. This field is intended to be used for organizing
+and identifying the <code>NotificationChannel</code> objects.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getVerificationStatus">getVerificationStatus</a>()
+        
+                                            <p>Indicates whether this channel has been verified or not. On a
+[<code>ListNotificationChannels</code>][google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+or
+[<code>GetNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.GetNotificationChannel]
+operation, this field is expected to be populated.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setVerificationStatus">setVerificationStatus</a>(int $var)
+        
+                                            <p>Indicates whether this channel has been verified or not. On a
+[<code>ListNotificationChannels</code>][google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+or
+[<code>GetNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.GetNotificationChannel]
+operation, this field is expected to be populated.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\BoolValue">BoolValue</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnabled">getEnabled</a>()
+        
+                                            <p>Whether notifications are forwarded to the described channel. This makes
+it possible to disable delivery of notifications to a particular channel
+without removing the channel from all alerting policies that reference
+the channel. This is a more convenient approach when the change is
+temporary and you want to receive notifications from the same set
+of alerting policies on the channel at some point in the future.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnabled">setEnabled</a>(<abbr title="Google\Protobuf\BoolValue">BoolValue</abbr> $var)
+        
+                                            <p>Whether notifications are forwarded to the described channel. This makes
+it possible to disable delivery of notifications to a particular channel
+without removing the channel from all alerting policies that reference
+the channel. This is a more convenient approach when the change is
+temporary and you want to receive notifications from the same set
+of alerting policies on the channel at some point in the future.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 109</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getType">
+        <div class="location">at         line 121</div>
+        <code>                    string
+    <strong>getType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The type of the notification channel. This field matches the
+value of the [NotificationChannelDescriptor.type][google.monitoring.v3.NotificationChannelDescriptor.type] field.</p>                    <p>Generated from protobuf field <code>string type = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setType">
+        <div class="location">at         line 134</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setType</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The type of the notification channel. This field matches the
+value of the [NotificationChannelDescriptor.type][google.monitoring.v3.NotificationChannelDescriptor.type] field.</p>                    <p>Generated from protobuf field <code>string type = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 150</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The full REST resource name for this channel. The syntax is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]
+The <code>[CHANNEL_ID]</code> is automatically assigned by the server on creation.</p>                    <p>Generated from protobuf field <code>string name = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 164</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The full REST resource name for this channel. The syntax is:
+    projects/[PROJECT_ID]/notificationChannels/[CHANNEL_ID]
+The <code>[CHANNEL_ID]</code> is automatically assigned by the server on creation.</p>                    <p>Generated from protobuf field <code>string name = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisplayName">
+        <div class="location">at         line 181</div>
+        <code>                    string
+    <strong>getDisplayName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional human-readable name for this notification channel. It is
+recommended that you specify a non-empty and unique name in order to
+make it easier to identify the channels in your project, though this is
+not enforced. The display name is limited to 512 Unicode characters.</p>                    <p>Generated from protobuf field <code>string display_name = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisplayName">
+        <div class="location">at         line 196</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDisplayName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional human-readable name for this notification channel. It is
+recommended that you specify a non-empty and unique name in order to
+make it easier to identify the channels in your project, though this is
+not enforced. The display name is limited to 512 Unicode characters.</p>                    <p>Generated from protobuf field <code>string display_name = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDescription">
+        <div class="location">at         line 212</div>
+        <code>                    string
+    <strong>getDescription</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional human-readable description of this notification channel. This
+description may provide additional details, beyond the display
+name, for the channel. This may not exceeed 1024 Unicode characters.</p>                    <p>Generated from protobuf field <code>string description = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDescription">
+        <div class="location">at         line 226</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDescription</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>An optional human-readable description of this notification channel. This
+description may provide additional details, beyond the display
+name, for the channel. This may not exceeed 1024 Unicode characters.</p>                    <p>Generated from protobuf field <code>string description = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLabels">
+        <div class="location">at         line 243</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+    <strong>getLabels</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration fields that define the channel and its behavior. The
+permissible and required labels are specified in the
+[NotificationChannelDescriptor.labels][google.monitoring.v3.NotificationChannelDescriptor.labels] of the
+<code>NotificationChannelDescriptor</code> corresponding to the <code>type</code> field.</p>                    <p>Generated from protobuf field <code>map&lt;string, string> labels = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLabels">
+        <div class="location">at         line 258</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setLabels</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Configuration fields that define the channel and its behavior. The
+permissible and required labels are specified in the
+[NotificationChannelDescriptor.labels][google.monitoring.v3.NotificationChannelDescriptor.labels] of the
+<code>NotificationChannelDescriptor</code> corresponding to the <code>type</code> field.</p>                    <p>Generated from protobuf field <code>map&lt;string, string> labels = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUserLabels">
+        <div class="location">at         line 279</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+    <strong>getUserLabels</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>User-supplied key/value data that does not need to conform to
+the corresponding <code>NotificationChannelDescriptor</code>'s schema, unlike
+the <code>labels</code> field. This field is intended to be used for organizing
+and identifying the <code>NotificationChannel</code> objects.</p>                    <p>The field can contain up to 64 entries. Each key and value is limited to
+63 Unicode characters or 128 bytes, whichever is smaller. Labels and
+values can contain only lowercase letters, numerals, underscores, and
+dashes. Keys must begin with a letter.</p>
+
+<p>Generated from protobuf field <code>map&lt;string, string> user_labels = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUserLabels">
+        <div class="location">at         line 298</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setUserLabels</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>User-supplied key/value data that does not need to conform to
+the corresponding <code>NotificationChannelDescriptor</code>'s schema, unlike
+the <code>labels</code> field. This field is intended to be used for organizing
+and identifying the <code>NotificationChannel</code> objects.</p>                    <p>The field can contain up to 64 entries. Each key and value is limited to
+63 Unicode characters or 128 bytes, whichever is smaller. Labels and
+values can contain only lowercase letters, numerals, underscores, and
+dashes. Keys must begin with a letter.</p>
+
+<p>Generated from protobuf field <code>map&lt;string, string> user_labels = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getVerificationStatus">
+        <div class="location">at         line 327</div>
+        <code>                    int
+    <strong>getVerificationStatus</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Indicates whether this channel has been verified or not. On a
+[<code>ListNotificationChannels</code>][google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+or
+[<code>GetNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.GetNotificationChannel]
+operation, this field is expected to be populated.</p>                    <p>If the value is <code>UNVERIFIED</code>, then it indicates that the channel is
+non-functioning (it both requires verification and lacks verification);
+otherwise, it is assumed that the channel works.
+If the channel is neither <code>VERIFIED</code> nor <code>UNVERIFIED</code>, it implies that
+the channel is of a type that does not require verification or that
+this specific channel has been exempted from verification because it was
+created prior to verification being required for channels of this type.
+This field cannot be modified using a standard
+[<code>UpdateNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.UpdateNotificationChannel]
+operation. To change the value of this field, you must call
+[<code>VerifyNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.VerifyNotificationChannel].</p>
+
+<p>Generated from protobuf field <code>.google.monitoring.v3.NotificationChannel.VerificationStatus verification_status = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setVerificationStatus">
+        <div class="location">at         line 354</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setVerificationStatus</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Indicates whether this channel has been verified or not. On a
+[<code>ListNotificationChannels</code>][google.monitoring.v3.NotificationChannelService.ListNotificationChannels]
+or
+[<code>GetNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.GetNotificationChannel]
+operation, this field is expected to be populated.</p>                    <p>If the value is <code>UNVERIFIED</code>, then it indicates that the channel is
+non-functioning (it both requires verification and lacks verification);
+otherwise, it is assumed that the channel works.
+If the channel is neither <code>VERIFIED</code> nor <code>UNVERIFIED</code>, it implies that
+the channel is of a type that does not require verification or that
+this specific channel has been exempted from verification because it was
+created prior to verification being required for channels of this type.
+This field cannot be modified using a standard
+[<code>UpdateNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.UpdateNotificationChannel]
+operation. To change the value of this field, you must call
+[<code>VerifyNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.VerifyNotificationChannel].</p>
+
+<p>Generated from protobuf field <code>.google.monitoring.v3.NotificationChannel.VerificationStatus verification_status = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnabled">
+        <div class="location">at         line 373</div>
+        <code>                    <abbr title="Google\Protobuf\BoolValue">BoolValue</abbr>
+    <strong>getEnabled</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Whether notifications are forwarded to the described channel. This makes
+it possible to disable delivery of notifications to a particular channel
+without removing the channel from all alerting policies that reference
+the channel. This is a more convenient approach when the change is
+temporary and you want to receive notifications from the same set
+of alerting policies on the channel at some point in the future.</p>                    <p>Generated from protobuf field <code>.google.protobuf.BoolValue enabled = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\BoolValue">BoolValue</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnabled">
+        <div class="location">at         line 390</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setEnabled</strong>(<abbr title="Google\Protobuf\BoolValue">BoolValue</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Whether notifications are forwarded to the described channel. This makes
+it possible to disable delivery of notifications to a particular channel
+without removing the channel from all alerting policies that reference
+the channel. This is a more convenient approach when the change is
+temporary and you want to receive notifications from the same set
+of alerting policies on the channel at some point in the future.</p>                    <p>Generated from protobuf field <code>.google.protobuf.BoolValue enabled = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\BoolValue">BoolValue</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

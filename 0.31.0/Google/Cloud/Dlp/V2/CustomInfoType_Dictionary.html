@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Dlp\V2\CustomInfoType_Dictionary | Google ApiCore - 0.31.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Dlp_V2_CustomInfoType_Dictionary" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dlp.html">Dlp</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Dlp/V2.html">V2</a></li><li class="backslash">\</li><li>CustomInfoType_Dictionary</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            CustomInfoType_Dictionary
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>CustomInfoType_Dictionary</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Custom information type based on a dictionary of words or phrases. This can
+be used to match sensitive information specific to the data, such as a list
+of employee IDs or job titles.</p>            <p>Dictionary words are case-insensitive and all characters other than letters
+and digits in the unicode <a href="https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multilingual_Plane">Basic Multilingual
+Plane</a>
+will be replaced with whitespace when scanning for matches, so the
+dictionary phrase "Sam Johnson" will match all three phrases "sam johnson",
+"Sam, Johnson", and "Sam (Johnson)". Additionally, the characters
+surrounding any match must be of a different type than the adjacent
+characters within the word, so letters must be next to non-letters and
+digits next to non-digits. For example, the dictionary word "jen" will
+match the first three letters of the text "jen123" but will return no
+matches for "jennifer".
+Dictionary words containing a large number of characters that are not
+letters or digits may result in unexpected findings because such characters
+are treated as whitespace.</p>
+
+<p>Generated from protobuf message <code>google.privacy.dlp.v2.CustomInfoType.Dictionary</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_source">
+                                        protected                                        
+                </td>
+                <td>$source</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Dlp/V2/CustomInfoType_Dictionary_WordList.html"><abbr title="Google\Cloud\Dlp\V2\CustomInfoType_Dictionary_WordList">CustomInfoType_Dictionary_WordList</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getWordList">getWordList</a>()
+        
+                                            <p>List of words or phrases to search for.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setWordList">setWordList</a>(<a href="../../../../Google/Cloud/Dlp/V2/CustomInfoType_Dictionary_WordList.html"><abbr title="Google\Cloud\Dlp\V2\CustomInfoType_Dictionary_WordList">CustomInfoType_Dictionary_WordList</abbr></a> $var)
+        
+                                            <p>List of words or phrases to search for.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Dlp/V2/CloudStoragePath.html"><abbr title="Google\Cloud\Dlp\V2\CloudStoragePath">CloudStoragePath</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCloudStoragePath">getCloudStoragePath</a>()
+        
+                                            <p>Newline-delimited file of words in Cloud Storage. Only a single file
+is accepted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCloudStoragePath">setCloudStoragePath</a>(<a href="../../../../Google/Cloud/Dlp/V2/CloudStoragePath.html"><abbr title="Google\Cloud\Dlp\V2\CloudStoragePath">CloudStoragePath</abbr></a> $var)
+        
+                                            <p>Newline-delimited file of words in Cloud Storage. Only a single file
+is accepted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSource">getSource</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 36</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getWordList">
+        <div class="location">at         line 47</div>
+        <code>                    <a href="../../../../Google/Cloud/Dlp/V2/CustomInfoType_Dictionary_WordList.html"><abbr title="Google\Cloud\Dlp\V2\CustomInfoType_Dictionary_WordList">CustomInfoType_Dictionary_WordList</abbr></a>
+    <strong>getWordList</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of words or phrases to search for.</p>                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CustomInfoType.Dictionary.WordList word_list = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Dlp/V2/CustomInfoType_Dictionary_WordList.html"><abbr title="Google\Cloud\Dlp\V2\CustomInfoType_Dictionary_WordList">CustomInfoType_Dictionary_WordList</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setWordList">
+        <div class="location">at         line 59</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setWordList</strong>(<a href="../../../../Google/Cloud/Dlp/V2/CustomInfoType_Dictionary_WordList.html"><abbr title="Google\Cloud\Dlp\V2\CustomInfoType_Dictionary_WordList">CustomInfoType_Dictionary_WordList</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of words or phrases to search for.</p>                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CustomInfoType.Dictionary.WordList word_list = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/CustomInfoType_Dictionary_WordList.html"><abbr title="Google\Cloud\Dlp\V2\CustomInfoType_Dictionary_WordList">CustomInfoType_Dictionary_WordList</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCloudStoragePath">
+        <div class="location">at         line 74</div>
+        <code>                    <a href="../../../../Google/Cloud/Dlp/V2/CloudStoragePath.html"><abbr title="Google\Cloud\Dlp\V2\CloudStoragePath">CloudStoragePath</abbr></a>
+    <strong>getCloudStoragePath</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Newline-delimited file of words in Cloud Storage. Only a single file
+is accepted.</p>                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CloudStoragePath cloud_storage_path = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Dlp/V2/CloudStoragePath.html"><abbr title="Google\Cloud\Dlp\V2\CloudStoragePath">CloudStoragePath</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCloudStoragePath">
+        <div class="location">at         line 87</div>
+        <code>                    <abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr>
+    <strong>setCloudStoragePath</strong>(<a href="../../../../Google/Cloud/Dlp/V2/CloudStoragePath.html"><abbr title="Google\Cloud\Dlp\V2\CloudStoragePath">CloudStoragePath</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Newline-delimited file of words in Cloud Storage. Only a single file
+is accepted.</p>                    <p>Generated from protobuf field <code>.google.privacy.dlp.v2.CloudStoragePath cloud_storage_path = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Dlp/V2/CloudStoragePath.html"><abbr title="Google\Cloud\Dlp\V2\CloudStoragePath">CloudStoragePath</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Dlp\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSource">
+        <div class="location">at         line 98</div>
+        <code>                    string
+    <strong>getSource</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

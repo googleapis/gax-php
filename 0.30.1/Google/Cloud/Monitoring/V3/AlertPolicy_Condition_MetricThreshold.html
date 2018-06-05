@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold | Google ApiCore - 0.30.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_AlertPolicy_Condition_MetricThreshold" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.30.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>AlertPolicy_Condition_MetricThreshold</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AlertPolicy_Condition_MetricThreshold
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AlertPolicy_Condition_MetricThreshold</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A condition type that compares a collection of time series
+against a threshold.</p>            <p>Generated from protobuf message <code>google.monitoring.v3.AlertPolicy.Condition.MetricThreshold</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFilter">getFilter</a>()
+        
+                                            <p>A <a href="/monitoring/api/v3/filters">filter</a> that
+identifies which time series should be compared with the threshold.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setFilter">setFilter</a>(string $var)
+        
+                                            <p>A <a href="/monitoring/api/v3/filters">filter</a> that
+identifies which time series should be compared with the threshold.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAggregations">getAggregations</a>()
+        
+                                            <p>Specifies the alignment of data points in individual time series as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resrouces). Multiple aggregations
+are applied in the order specified.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAggregations">setAggregations</a>(<a href="../../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Specifies the alignment of data points in individual time series as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resrouces). Multiple aggregations
+are applied in the order specified.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDenominatorFilter">getDenominatorFilter</a>()
+        
+                                            <p>A <a href="/monitoring/api/v3/filters">filter</a> that identifies a time
+series that should be used as the denominator of a ratio that will be
+compared with the threshold. If a <code>denominator_filter</code> is specified,
+the time series specified by the <code>filter</code> field will be used as the
+numerator.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDenominatorFilter">setDenominatorFilter</a>(string $var)
+        
+                                            <p>A <a href="/monitoring/api/v3/filters">filter</a> that identifies a time
+series that should be used as the denominator of a ratio that will be
+compared with the threshold. If a <code>denominator_filter</code> is specified,
+the time series specified by the <code>filter</code> field will be used as the
+numerator.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDenominatorAggregations">getDenominatorAggregations</a>()
+        
+                                            <p>Specifies the alignment of data points in individual time series
+selected by <code>denominatorFilter</code> as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resources).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDenominatorAggregations">setDenominatorAggregations</a>(<a href="../../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Specifies the alignment of data points in individual time series
+selected by <code>denominatorFilter</code> as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resources).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getComparison">getComparison</a>()
+        
+                                            <p>The comparison to apply between the time series (indicated by <code>filter</code>
+and <code>aggregation</code>) and the threshold (indicated by <code>threshold_value</code>).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setComparison">setComparison</a>(int $var)
+        
+                                            <p>The comparison to apply between the time series (indicated by <code>filter</code>
+and <code>aggregation</code>) and the threshold (indicated by <code>threshold_value</code>).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getThresholdValue">getThresholdValue</a>()
+        
+                                            <p>A value against which to compare the time series.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setThresholdValue">setThresholdValue</a>(float $var)
+        
+                                            <p>A value against which to compare the time series.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Duration">Duration</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDuration">getDuration</a>()
+        
+                                            <p>The amount of time that a time series must violate the
+threshold to be considered failing. Currently, only values
+that are a multiple of a minute--e.g.  60, 120, or 300
+seconds--are supported. If an invalid value is given, an
+error will be returned. The <code>Duration.nanos</code> field is
+ignored. When choosing a duration, it is useful to keep in mind the
+frequency of the underlying time series data (which may also be
+affected by any alignments specified in the <code>aggregation</code> field);
+a good duration is long enough so that a single outlier does not
+generate spurious alerts, but short enough that unhealthy states
+are detected and alerted on quickly.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDuration">setDuration</a>(<abbr title="Google\Protobuf\Duration">Duration</abbr> $var)
+        
+                                            <p>The amount of time that a time series must violate the
+threshold to be considered failing. Currently, only values
+that are a multiple of a minute--e.g.  60, 120, or 300
+seconds--are supported. If an invalid value is given, an
+error will be returned. The <code>Duration.nanos</code> field is
+ignored. When choosing a duration, it is useful to keep in mind the
+frequency of the underlying time series data (which may also be
+affected by any alignments specified in the <code>aggregation</code> field);
+a good duration is long enough so that a single outlier does not
+generate spurious alerts, but short enough that unhealthy states
+are detected and alerted on quickly.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTrigger">getTrigger</a>()
+        
+                                            <p>The number/percent of time series for which the comparison must hold
+in order for the condition to trigger. If unspecified, then the
+condition will trigger if the comparison is true for any of the
+time series that have been identified by <code>filter</code> and <code>aggregations</code>,
+or by the ratio, if <code>denominator_filter</code> and <code>denominator_aggregations</code>
+are specified.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTrigger">setTrigger</a>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a> $var)
+        
+                                            <p>The number/percent of time series for which the comparison must hold
+in order for the condition to trigger. If unspecified, then the
+condition will trigger if the comparison is true for any of the
+time series that have been identified by <code>filter</code> and <code>aggregations</code>,
+or by the ratio, if <code>denominator_filter</code> and <code>denominator_aggregations</code>
+are specified.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 127</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFilter">
+        <div class="location">at         line 146</div>
+        <code>                    string
+    <strong>getFilter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A <a href="/monitoring/api/v3/filters">filter</a> that
+identifies which time series should be compared with the threshold.</p>                    <p>The filter is similar to the one that is specified in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code>
+request</a> (that
+call is useful to verify the time series that will be retrieved /
+processed) and must specify the metric type and optionally may contain
+restrictions on resource type, resource labels, and metric labels.
+This field may not exceed 2048 Unicode characters in length.</p>
+
+<p>Generated from protobuf field <code>string filter = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setFilter">
+        <div class="location">at         line 166</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setFilter</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A <a href="/monitoring/api/v3/filters">filter</a> that
+identifies which time series should be compared with the threshold.</p>                    <p>The filter is similar to the one that is specified in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code>
+request</a> (that
+call is useful to verify the time series that will be retrieved /
+processed) and must specify the metric type and optionally may contain
+restrictions on resource type, resource labels, and metric labels.
+This field may not exceed 2048 Unicode characters in length.</p>
+
+<p>Generated from protobuf field <code>string filter = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAggregations">
+        <div class="location">at         line 188</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAggregations</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Specifies the alignment of data points in individual time series as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resrouces). Multiple aggregations
+are applied in the order specified.</p>                    <p>This field is similar to the one in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code> request</a>.
+It is advisable to use the <code>ListTimeSeries</code> method when debugging this field.</p>
+
+<p>Generated from protobuf field <code>repeated .google.monitoring.v3.Aggregation aggregations = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAggregations">
+        <div class="location">at         line 208</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setAggregations</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Specifies the alignment of data points in individual time series as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resrouces). Multiple aggregations
+are applied in the order specified.</p>                    <p>This field is similar to the one in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code> request</a>.
+It is advisable to use the <code>ListTimeSeries</code> method when debugging this field.</p>
+
+<p>Generated from protobuf field <code>repeated .google.monitoring.v3.Aggregation aggregations = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDenominatorFilter">
+        <div class="location">at         line 233</div>
+        <code>                    string
+    <strong>getDenominatorFilter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A <a href="/monitoring/api/v3/filters">filter</a> that identifies a time
+series that should be used as the denominator of a ratio that will be
+compared with the threshold. If a <code>denominator_filter</code> is specified,
+the time series specified by the <code>filter</code> field will be used as the
+numerator.</p>                    <p>The filter is similar to the one that is specified in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code>
+request</a> (that
+call is useful to verify the time series that will be retrieved /
+processed) and must specify the metric type and optionally may contain
+restrictions on resource type, resource labels, and metric labels.
+This field may not exceed 2048 Unicode characters in length.</p>
+
+<p>Generated from protobuf field <code>string denominator_filter = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDenominatorFilter">
+        <div class="location">at         line 256</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDenominatorFilter</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A <a href="/monitoring/api/v3/filters">filter</a> that identifies a time
+series that should be used as the denominator of a ratio that will be
+compared with the threshold. If a <code>denominator_filter</code> is specified,
+the time series specified by the <code>filter</code> field will be used as the
+numerator.</p>                    <p>The filter is similar to the one that is specified in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code>
+request</a> (that
+call is useful to verify the time series that will be retrieved /
+processed) and must specify the metric type and optionally may contain
+restrictions on resource type, resource labels, and metric labels.
+This field may not exceed 2048 Unicode characters in length.</p>
+
+<p>Generated from protobuf field <code>string denominator_filter = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDenominatorAggregations">
+        <div class="location">at         line 283</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getDenominatorAggregations</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Specifies the alignment of data points in individual time series
+selected by <code>denominatorFilter</code> as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resources).</p>                    <p>When computing ratios, the <code>aggregations</code> and
+<code>denominator_aggregations</code> fields must use the same alignment period
+and produce time series that have the same periodicity and labels.
+This field is similar to the one in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code>
+request</a>. It
+is advisable to use the <code>ListTimeSeries</code> method when debugging this
+field.</p>
+
+<p>Generated from protobuf field <code>repeated .google.monitoring.v3.Aggregation denominator_aggregations = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDenominatorAggregations">
+        <div class="location">at         line 308</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDenominatorAggregations</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Specifies the alignment of data points in individual time series
+selected by <code>denominatorFilter</code> as
+well as how to combine the retrieved time series together (such as
+when aggregating multiple streams on each resource to a single
+stream for each resource or when aggregating streams across all
+members of a group of resources).</p>                    <p>When computing ratios, the <code>aggregations</code> and
+<code>denominator_aggregations</code> fields must use the same alignment period
+and produce time series that have the same periodicity and labels.
+This field is similar to the one in the
+<a href="/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list"><code>MetricService.ListTimeSeries</code>
+request</a>. It
+is advisable to use the <code>ListTimeSeries</code> method when debugging this
+field.</p>
+
+<p>Generated from protobuf field <code>repeated .google.monitoring.v3.Aggregation denominator_aggregations = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getComparison">
+        <div class="location">at         line 326</div>
+        <code>                    int
+    <strong>getComparison</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The comparison to apply between the time series (indicated by <code>filter</code>
+and <code>aggregation</code>) and the threshold (indicated by <code>threshold_value</code>).</p>                    <p>The comparison is applied on each time series, with the time series
+on the left-hand side and the threshold on the right-hand side.
+Only <code>COMPARISON_LT</code> and <code>COMPARISON_GT</code> are supported currently.</p>
+
+<p>Generated from protobuf field <code>.google.monitoring.v3.ComparisonType comparison = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setComparison">
+        <div class="location">at         line 342</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setComparison</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The comparison to apply between the time series (indicated by <code>filter</code>
+and <code>aggregation</code>) and the threshold (indicated by <code>threshold_value</code>).</p>                    <p>The comparison is applied on each time series, with the time series
+on the left-hand side and the threshold on the right-hand side.
+Only <code>COMPARISON_LT</code> and <code>COMPARISON_GT</code> are supported currently.</p>
+
+<p>Generated from protobuf field <code>.google.monitoring.v3.ComparisonType comparison = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getThresholdValue">
+        <div class="location">at         line 356</div>
+        <code>                    float
+    <strong>getThresholdValue</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A value against which to compare the time series.</p>                    <p>Generated from protobuf field <code>double threshold_value = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setThresholdValue">
+        <div class="location">at         line 368</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setThresholdValue</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A value against which to compare the time series.</p>                    <p>Generated from protobuf field <code>double threshold_value = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDuration">
+        <div class="location">at         line 392</div>
+        <code>                    <abbr title="Google\Protobuf\Duration">Duration</abbr>
+    <strong>getDuration</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The amount of time that a time series must violate the
+threshold to be considered failing. Currently, only values
+that are a multiple of a minute--e.g.  60, 120, or 300
+seconds--are supported. If an invalid value is given, an
+error will be returned. The <code>Duration.nanos</code> field is
+ignored. When choosing a duration, it is useful to keep in mind the
+frequency of the underlying time series data (which may also be
+affected by any alignments specified in the <code>aggregation</code> field);
+a good duration is long enough so that a single outlier does not
+generate spurious alerts, but short enough that unhealthy states
+are detected and alerted on quickly.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Duration duration = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Duration">Duration</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDuration">
+        <div class="location">at         line 414</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDuration</strong>(<abbr title="Google\Protobuf\Duration">Duration</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The amount of time that a time series must violate the
+threshold to be considered failing. Currently, only values
+that are a multiple of a minute--e.g.  60, 120, or 300
+seconds--are supported. If an invalid value is given, an
+error will be returned. The <code>Duration.nanos</code> field is
+ignored. When choosing a duration, it is useful to keep in mind the
+frequency of the underlying time series data (which may also be
+affected by any alignments specified in the <code>aggregation</code> field);
+a good duration is long enough so that a single outlier does not
+generate spurious alerts, but short enough that unhealthy states
+are detected and alerted on quickly.</p>                    <p>Generated from protobuf field <code>.google.protobuf.Duration duration = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Duration">Duration</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTrigger">
+        <div class="location">at         line 433</div>
+        <code>                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a>
+    <strong>getTrigger</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number/percent of time series for which the comparison must hold
+in order for the condition to trigger. If unspecified, then the
+condition will trigger if the comparison is true for any of the
+time series that have been identified by <code>filter</code> and <code>aggregations</code>,
+or by the ratio, if <code>denominator_filter</code> and <code>denominator_aggregations</code>
+are specified.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Condition.Trigger trigger = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTrigger">
+        <div class="location">at         line 450</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setTrigger</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number/percent of time series for which the comparison must hold
+in order for the condition to trigger. If unspecified, then the
+condition will trigger if the comparison is true for any of the
+time series that have been identified by <code>filter</code> and <code>aggregations</code>,
+or by the ratio, if <code>denominator_filter</code> and <code>denominator_aggregations</code>
+are specified.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Condition.Trigger trigger = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

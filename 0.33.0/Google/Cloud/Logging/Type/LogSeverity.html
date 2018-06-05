@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Logging\Type\LogSeverity | Google ApiCore - 0.33.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Logging_Type_LogSeverity" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.33.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Logging.html">Logging</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Logging/Type.html">Type</a></li><li class="backslash">\</li><li>LogSeverity</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            LogSeverity
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>LogSeverity</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The severity of the event described in a log entry, expressed as one of the
+standard severity levels listed below.  For your reference, the levels are
+assigned the listed numeric values. The effect of using numeric values other
+than those listed is undefined.</p>            <p>You can filter for log entries by severity.  For example, the following
+filter expression will match log entries with severities <code>INFO</code>, <code>NOTICE</code>,
+and <code>WARNING</code>:
+    severity > DEBUG AND severity &lt;= WARNING
+If you are writing log entries, you should map other severity encodings to
+one of these standard levels. For example, you might map all of Java's FINE,
+FINER, and FINEST levels to <code>LogSeverity.DEBUG</code>. You can preserve the
+original severity level in the log entry payload if you wish.</p>
+
+<p>Protobuf enum <code>Google\Logging\Type\LogSeverity</code></p>                    </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>PBDEFAULT</td>
+                <td class="last">
+                    <p><em>(0) The log entry has no assigned severity level.</em></p>
+                    <p>Generated from protobuf enum <code>DEFAULT = 0;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>DEBUG</td>
+                <td class="last">
+                    <p><em>(100) Debug or trace information.</em></p>
+                    <p>Generated from protobuf enum <code>DEBUG = 100;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>INFO</td>
+                <td class="last">
+                    <p><em>(200) Routine information, such as ongoing status or performance.</em></p>
+                    <p>Generated from protobuf enum <code>INFO = 200;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>NOTICE</td>
+                <td class="last">
+                    <p><em>(300) Normal but significant events, such as start up, shut down, or
+a configuration change.</em></p>
+                    <p>Generated from protobuf enum <code>NOTICE = 300;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>WARNING</td>
+                <td class="last">
+                    <p><em>(400) Warning events might cause problems.</em></p>
+                    <p>Generated from protobuf enum <code>WARNING = 400;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ERROR</td>
+                <td class="last">
+                    <p><em>(500) Error events are likely to cause problems.</em></p>
+                    <p>Generated from protobuf enum <code>ERROR = 500;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>CRITICAL</td>
+                <td class="last">
+                    <p><em>(600) Critical events cause more severe problems or outages.</em></p>
+                    <p>Generated from protobuf enum <code>CRITICAL = 600;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>ALERT</td>
+                <td class="last">
+                    <p><em>(700) A person must take an action immediately.</em></p>
+                    <p>Generated from protobuf enum <code>ALERT = 700;</code></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>EMERGENCY</td>
+                <td class="last">
+                    <p><em>(800) One or more systems are unusable.</em></p>
+                    <p>Generated from protobuf enum <code>EMERGENCY = 800;</code></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Spanner\V1\SpannerGrpcClient | Google ApiCore - 0.31.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Spanner_V1_SpannerGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Spanner.html">Spanner</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Spanner/V1.html">V1</a></li><li class="backslash">\</li><li>SpannerGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            SpannerGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>SpannerGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Cloud Spanner API</p>            <p>The Cloud Spanner API can be used to manage sessions and execute
+transactions on data stored in Cloud Spanner databases.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateSession">CreateSession</a>(<a href="../../../../Google/Cloud/Spanner/V1/CreateSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\CreateSessionRequest">CreateSessionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new session. A session can be used to perform
+transactions that read and/or modify data in a Cloud Spanner database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetSession">GetSession</a>(<a href="../../../../Google/Cloud/Spanner/V1/GetSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\GetSessionRequest">GetSessionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets a session. Returns <code>NOT_FOUND</code> if the session does not exist.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListSessions">ListSessions</a>(<a href="../../../../Google/Cloud/Spanner/V1/ListSessionsRequest.html"><abbr title="Google\Cloud\Spanner\V1\ListSessionsRequest">ListSessionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all sessions in a given database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteSession">DeleteSession</a>(<a href="../../../../Google/Cloud/Spanner/V1/DeleteSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\DeleteSessionRequest">DeleteSessionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Ends a session, releasing server resources associated with it.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ExecuteSql">ExecuteSql</a>(<a href="../../../../Google/Cloud/Spanner/V1/ExecuteSqlRequest.html"><abbr title="Google\Cloud\Spanner\V1\ExecuteSqlRequest">ExecuteSqlRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Executes an SQL query, returning all rows in a single reply. This
+method cannot be used to return a result set larger than 10 MiB;
+if the query yields more data than that, the query fails with
+a <code>FAILED_PRECONDITION</code> error.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ExecuteStreamingSql">ExecuteStreamingSql</a>(<a href="../../../../Google/Cloud/Spanner/V1/ExecuteSqlRequest.html"><abbr title="Google\Cloud\Spanner\V1\ExecuteSqlRequest">ExecuteSqlRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Like [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql], except returns the result
+set as a stream. Unlike [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql], there
+is no limit on the size of the returned result set. However, no
+individual row in the result set can exceed 100 MiB, and no
+column value can exceed 10 MiB.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_Read">Read</a>(<a href="../../../../Google/Cloud/Spanner/V1/ReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\ReadRequest">ReadRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Reads rows from the database using key lookups and scans, as a
+simple key/value style alternative to
+[ExecuteSql][google.spanner.v1.Spanner.ExecuteSql].  This method cannot be used to
+return a result set larger than 10 MiB; if the read matches more
+data than that, the read fails with a <code>FAILED_PRECONDITION</code>
+error.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_StreamingRead">StreamingRead</a>(<a href="../../../../Google/Cloud/Spanner/V1/ReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\ReadRequest">ReadRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Like [Read][google.spanner.v1.Spanner.Read], except returns the result set as a
+stream. Unlike [Read][google.spanner.v1.Spanner.Read], there is no limit on the
+size of the returned result set. However, no individual row in
+the result set can exceed 100 MiB, and no column value can exceed
+10 MiB.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_BeginTransaction">BeginTransaction</a>(<a href="../../../../Google/Cloud/Spanner/V1/BeginTransactionRequest.html"><abbr title="Google\Cloud\Spanner\V1\BeginTransactionRequest">BeginTransactionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Begins a new transaction. This step can often be skipped:
+[Read][google.spanner.v1.Spanner.Read], [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql] and
+[Commit][google.spanner.v1.Spanner.Commit] can begin a new transaction as a
+side-effect.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_Commit">Commit</a>(<a href="../../../../Google/Cloud/Spanner/V1/CommitRequest.html"><abbr title="Google\Cloud\Spanner\V1\CommitRequest">CommitRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Commits a transaction. The request includes the mutations to be
+applied to rows in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_Rollback">Rollback</a>(<a href="../../../../Google/Cloud/Spanner/V1/RollbackRequest.html"><abbr title="Google\Cloud\Spanner\V1\RollbackRequest">RollbackRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Rolls back a transaction, releasing any locks it holds. It is a good
+idea to call this for any transaction that includes one or more
+[Read][google.spanner.v1.Spanner.Read] or [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql] requests and
+ultimately decides not to commit.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_PartitionQuery">PartitionQuery</a>(<a href="../../../../Google/Cloud/Spanner/V1/PartitionQueryRequest.html"><abbr title="Google\Cloud\Spanner\V1\PartitionQueryRequest">PartitionQueryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a set of partition tokens that can be used to execute a query
+operation in parallel.  Each of the returned partition tokens can be used
+by [ExecuteStreamingSql][google.spanner.v1.Spanner.ExecuteStreamingSql] to specify a subset
+of the query result to read.  The same session and read-only transaction
+must be used by the PartitionQueryRequest used to create the
+partition tokens and the ExecuteSqlRequests that use the partition tokens.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_PartitionRead">PartitionRead</a>(<a href="../../../../Google/Cloud/Spanner/V1/PartitionReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\PartitionReadRequest">PartitionReadRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a set of partition tokens that can be used to execute a read
+operation in parallel.  Each of the returned partition tokens can be used
+by [StreamingRead][google.spanner.v1.Spanner.StreamingRead] to specify a subset of the read
+result to read.  The same session and read-only transaction must be used by
+the PartitionReadRequest used to create the partition tokens and the
+ReadRequests that use the partition tokens.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 34</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateSession">
+        <div class="location">at         line 62</div>
+        <code>                    
+    <strong>CreateSession</strong>(<a href="../../../../Google/Cloud/Spanner/V1/CreateSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\CreateSessionRequest">CreateSessionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new session. A session can be used to perform
+transactions that read and/or modify data in a Cloud Spanner database.</p>                    <p>Sessions are meant to be reused for many consecutive
+transactions.</p>
+
+<p>Sessions can only execute one transaction at a time. To execute
+multiple concurrent read-write/write-only transactions, create
+multiple sessions. Note that standalone reads and queries use a
+transaction internally, and count toward the one transaction
+limit.</p>
+
+<p>Cloud Spanner limits the number of sessions that can exist at any given
+time; thus, it is a good idea to delete idle and/or unneeded sessions.
+Aside from explicit deletes, Cloud Spanner can delete sessions for which no
+operations are sent for more than an hour. If a session is deleted,
+requests to it return <code>NOT_FOUND</code>.</p>
+
+<p>Idle sessions can be kept alive by sending a trivial SQL query
+periodically, e.g., <code>"SELECT 1"</code>.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/CreateSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\CreateSessionRequest">CreateSessionRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetSession">
+        <div class="location">at         line 78</div>
+        <code>                    
+    <strong>GetSession</strong>(<a href="../../../../Google/Cloud/Spanner/V1/GetSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\GetSessionRequest">GetSessionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets a session. Returns <code>NOT_FOUND</code> if the session does not exist.</p>                    <p>This is mainly useful for determining whether a session is still
+alive.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/GetSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\GetSessionRequest">GetSessionRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListSessions">
+        <div class="location">at         line 92</div>
+        <code>                    
+    <strong>ListSessions</strong>(<a href="../../../../Google/Cloud/Spanner/V1/ListSessionsRequest.html"><abbr title="Google\Cloud\Spanner\V1\ListSessionsRequest">ListSessionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all sessions in a given database.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/ListSessionsRequest.html"><abbr title="Google\Cloud\Spanner\V1\ListSessionsRequest">ListSessionsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteSession">
+        <div class="location">at         line 106</div>
+        <code>                    
+    <strong>DeleteSession</strong>(<a href="../../../../Google/Cloud/Spanner/V1/DeleteSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\DeleteSessionRequest">DeleteSessionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Ends a session, releasing server resources associated with it.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/DeleteSessionRequest.html"><abbr title="Google\Cloud\Spanner\V1\DeleteSessionRequest">DeleteSessionRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ExecuteSql">
+        <div class="location">at         line 130</div>
+        <code>                    
+    <strong>ExecuteSql</strong>(<a href="../../../../Google/Cloud/Spanner/V1/ExecuteSqlRequest.html"><abbr title="Google\Cloud\Spanner\V1\ExecuteSqlRequest">ExecuteSqlRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes an SQL query, returning all rows in a single reply. This
+method cannot be used to return a result set larger than 10 MiB;
+if the query yields more data than that, the query fails with
+a <code>FAILED_PRECONDITION</code> error.</p>                    <p>Queries inside read-write transactions might return <code>ABORTED</code>. If
+this occurs, the application should restart the transaction from
+the beginning. See [Transaction][google.spanner.v1.Transaction] for more details.</p>
+
+<p>Larger result sets can be fetched in streaming fashion by calling
+[ExecuteStreamingSql][google.spanner.v1.Spanner.ExecuteStreamingSql] instead.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/ExecuteSqlRequest.html"><abbr title="Google\Cloud\Spanner\V1\ExecuteSqlRequest">ExecuteSqlRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ExecuteStreamingSql">
+        <div class="location">at         line 148</div>
+        <code>                    
+    <strong>ExecuteStreamingSql</strong>(<a href="../../../../Google/Cloud/Spanner/V1/ExecuteSqlRequest.html"><abbr title="Google\Cloud\Spanner\V1\ExecuteSqlRequest">ExecuteSqlRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Like [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql], except returns the result
+set as a stream. Unlike [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql], there
+is no limit on the size of the returned result set. However, no
+individual row in the result set can exceed 100 MiB, and no
+column value can exceed 10 MiB.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/ExecuteSqlRequest.html"><abbr title="Google\Cloud\Spanner\V1\ExecuteSqlRequest">ExecuteSqlRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_Read">
+        <div class="location">at         line 174</div>
+        <code>                    
+    <strong>Read</strong>(<a href="../../../../Google/Cloud/Spanner/V1/ReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\ReadRequest">ReadRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reads rows from the database using key lookups and scans, as a
+simple key/value style alternative to
+[ExecuteSql][google.spanner.v1.Spanner.ExecuteSql].  This method cannot be used to
+return a result set larger than 10 MiB; if the read matches more
+data than that, the read fails with a <code>FAILED_PRECONDITION</code>
+error.</p>                    <p>Reads inside read-write transactions might return <code>ABORTED</code>. If
+this occurs, the application should restart the transaction from
+the beginning. See [Transaction][google.spanner.v1.Transaction] for more details.</p>
+
+<p>Larger result sets can be yielded in streaming fashion by calling
+[StreamingRead][google.spanner.v1.Spanner.StreamingRead] instead.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/ReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\ReadRequest">ReadRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_StreamingRead">
+        <div class="location">at         line 192</div>
+        <code>                    
+    <strong>StreamingRead</strong>(<a href="../../../../Google/Cloud/Spanner/V1/ReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\ReadRequest">ReadRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Like [Read][google.spanner.v1.Spanner.Read], except returns the result set as a
+stream. Unlike [Read][google.spanner.v1.Spanner.Read], there is no limit on the
+size of the returned result set. However, no individual row in
+the result set can exceed 100 MiB, and no column value can exceed
+10 MiB.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/ReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\ReadRequest">ReadRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_BeginTransaction">
+        <div class="location">at         line 209</div>
+        <code>                    
+    <strong>BeginTransaction</strong>(<a href="../../../../Google/Cloud/Spanner/V1/BeginTransactionRequest.html"><abbr title="Google\Cloud\Spanner\V1\BeginTransactionRequest">BeginTransactionRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Begins a new transaction. This step can often be skipped:
+[Read][google.spanner.v1.Spanner.Read], [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql] and
+[Commit][google.spanner.v1.Spanner.Commit] can begin a new transaction as a
+side-effect.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/BeginTransactionRequest.html"><abbr title="Google\Cloud\Spanner\V1\BeginTransactionRequest">BeginTransactionRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_Commit">
+        <div class="location">at         line 230</div>
+        <code>                    
+    <strong>Commit</strong>(<a href="../../../../Google/Cloud/Spanner/V1/CommitRequest.html"><abbr title="Google\Cloud\Spanner\V1\CommitRequest">CommitRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Commits a transaction. The request includes the mutations to be
+applied to rows in the database.</p>                    <p><code>Commit</code> might return an <code>ABORTED</code> error. This can occur at any time;
+commonly, the cause is conflicts with concurrent
+transactions. However, it can also happen for a variety of other
+reasons. If <code>Commit</code> returns <code>ABORTED</code>, the caller should re-attempt
+the transaction from the beginning, re-using the same session.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/CommitRequest.html"><abbr title="Google\Cloud\Spanner\V1\CommitRequest">CommitRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_Rollback">
+        <div class="location">at         line 251</div>
+        <code>                    
+    <strong>Rollback</strong>(<a href="../../../../Google/Cloud/Spanner/V1/RollbackRequest.html"><abbr title="Google\Cloud\Spanner\V1\RollbackRequest">RollbackRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Rolls back a transaction, releasing any locks it holds. It is a good
+idea to call this for any transaction that includes one or more
+[Read][google.spanner.v1.Spanner.Read] or [ExecuteSql][google.spanner.v1.Spanner.ExecuteSql] requests and
+ultimately decides not to commit.</p>                    <p><code>Rollback</code> returns <code>OK</code> if it successfully aborts the transaction, the
+transaction was already aborted, or the transaction is not
+found. <code>Rollback</code> never returns <code>ABORTED</code>.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/RollbackRequest.html"><abbr title="Google\Cloud\Spanner\V1\RollbackRequest">RollbackRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_PartitionQuery">
+        <div class="location">at         line 272</div>
+        <code>                    
+    <strong>PartitionQuery</strong>(<a href="../../../../Google/Cloud/Spanner/V1/PartitionQueryRequest.html"><abbr title="Google\Cloud\Spanner\V1\PartitionQueryRequest">PartitionQueryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a set of partition tokens that can be used to execute a query
+operation in parallel.  Each of the returned partition tokens can be used
+by [ExecuteStreamingSql][google.spanner.v1.Spanner.ExecuteStreamingSql] to specify a subset
+of the query result to read.  The same session and read-only transaction
+must be used by the PartitionQueryRequest used to create the
+partition tokens and the ExecuteSqlRequests that use the partition tokens.</p>                    <p>Partition tokens become invalid when the session used to create them
+is deleted or begins a new transaction.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/PartitionQueryRequest.html"><abbr title="Google\Cloud\Spanner\V1\PartitionQueryRequest">PartitionQueryRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_PartitionRead">
+        <div class="location">at         line 293</div>
+        <code>                    
+    <strong>PartitionRead</strong>(<a href="../../../../Google/Cloud/Spanner/V1/PartitionReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\PartitionReadRequest">PartitionReadRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a set of partition tokens that can be used to execute a read
+operation in parallel.  Each of the returned partition tokens can be used
+by [StreamingRead][google.spanner.v1.Spanner.StreamingRead] to specify a subset of the read
+result to read.  The same session and read-only transaction must be used by
+the PartitionReadRequest used to create the partition tokens and the
+ReadRequests that use the partition tokens.</p>                    <p>Partition tokens become invalid when the session used to create them
+is deleted or begins a new transaction.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/PartitionReadRequest.html"><abbr title="Google\Cloud\Spanner\V1\PartitionReadRequest">PartitionReadRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

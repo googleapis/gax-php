@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\NotificationChannelServiceGrpcClient | Google ApiCore - 0.31.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_NotificationChannelServiceGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>NotificationChannelServiceGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            NotificationChannelServiceGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>NotificationChannelServiceGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The Notification Channel API provides access to configuration that
+controls how messages related to incidents are sent.</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListNotificationChannelDescriptors">ListNotificationChannelDescriptors</a>(<a href="../../../../Google/Cloud/Monitoring/V3/ListNotificationChannelDescriptorsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelDescriptorsRequest">ListNotificationChannelDescriptorsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the descriptors for supported channel types. The use of descriptors
+makes it possible for new channel types to be dynamically added.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetNotificationChannelDescriptor">GetNotificationChannelDescriptor</a>(<a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelDescriptorRequest">GetNotificationChannelDescriptorRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets a single channel descriptor. The descriptor indicates which fields
+are expected / permitted for a notification channel of the given type.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListNotificationChannels">ListNotificationChannels</a>(<a href="../../../../Google/Cloud/Monitoring/V3/ListNotificationChannelsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelsRequest">ListNotificationChannelsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the notification channels that have been created for the project.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetNotificationChannel">GetNotificationChannel</a>(<a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelRequest">GetNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets a single notification channel. The channel includes the relevant
+configuration details with which the channel was created. However, the
+response may truncate or omit passwords, API keys, or other private key
+matter and thus the response may not be 100% identical to the information
+that was supplied in the call to the create method.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateNotificationChannel">CreateNotificationChannel</a>(<a href="../../../../Google/Cloud/Monitoring/V3/CreateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateNotificationChannelRequest">CreateNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new notification channel, representing a single notification
+endpoint such as an email address, SMS number, or pagerduty service.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateNotificationChannel">UpdateNotificationChannel</a>(<a href="../../../../Google/Cloud/Monitoring/V3/UpdateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateNotificationChannelRequest">UpdateNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates a notification channel. Fields not specified in the field mask
+remain unchanged.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteNotificationChannel">DeleteNotificationChannel</a>(<a href="../../../../Google/Cloud/Monitoring/V3/DeleteNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteNotificationChannelRequest">DeleteNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes a notification channel.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SendNotificationChannelVerificationCode">SendNotificationChannelVerificationCode</a>(<a href="../../../../Google/Cloud/Monitoring/V3/SendNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\SendNotificationChannelVerificationCodeRequest">SendNotificationChannelVerificationCodeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Causes a verification code to be delivered to the channel. The code
+can then be supplied in <code>VerifyNotificationChannel</code> to verify the channel.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetNotificationChannelVerificationCode">GetNotificationChannelVerificationCode</a>(<a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelVerificationCodeRequest">GetNotificationChannelVerificationCodeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Requests a verification code for an already verified channel that can then
+be used in a call to VerifyNotificationChannel() on a different channel
+with an equivalent identity in the same or in a different project. This
+makes it possible to copy a channel between projects without requiring
+manual reverification of the channel. If the channel is not in the
+verified state, this method will fail (in other words, this may only be
+used if the SendNotificationChannelVerificationCode and
+VerifyNotificationChannel paths have already been used to put the given
+channel into the verified state).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_VerifyNotificationChannel">VerifyNotificationChannel</a>(<a href="../../../../Google/Cloud/Monitoring/V3/VerifyNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\VerifyNotificationChannelRequest">VerifyNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Verifies a <code>NotificationChannel</code> by proving receipt of the code
+delivered to the channel as a result of calling
+<code>SendNotificationChannelVerificationCode</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 32</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListNotificationChannelDescriptors">
+        <div class="location">at         line 43</div>
+        <code>                    
+    <strong>ListNotificationChannelDescriptors</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/ListNotificationChannelDescriptorsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelDescriptorsRequest">ListNotificationChannelDescriptorsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the descriptors for supported channel types. The use of descriptors
+makes it possible for new channel types to be dynamically added.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/ListNotificationChannelDescriptorsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelDescriptorsRequest">ListNotificationChannelDescriptorsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetNotificationChannelDescriptor">
+        <div class="location">at         line 58</div>
+        <code>                    
+    <strong>GetNotificationChannelDescriptor</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelDescriptorRequest">GetNotificationChannelDescriptorRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets a single channel descriptor. The descriptor indicates which fields
+are expected / permitted for a notification channel of the given type.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelDescriptorRequest">GetNotificationChannelDescriptorRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListNotificationChannels">
+        <div class="location">at         line 72</div>
+        <code>                    
+    <strong>ListNotificationChannels</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/ListNotificationChannelsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelsRequest">ListNotificationChannelsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the notification channels that have been created for the project.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/ListNotificationChannelsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelsRequest">ListNotificationChannelsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetNotificationChannel">
+        <div class="location">at         line 90</div>
+        <code>                    
+    <strong>GetNotificationChannel</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelRequest">GetNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets a single notification channel. The channel includes the relevant
+configuration details with which the channel was created. However, the
+response may truncate or omit passwords, API keys, or other private key
+matter and thus the response may not be 100% identical to the information
+that was supplied in the call to the create method.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelRequest">GetNotificationChannelRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateNotificationChannel">
+        <div class="location">at         line 105</div>
+        <code>                    
+    <strong>CreateNotificationChannel</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/CreateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateNotificationChannelRequest">CreateNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new notification channel, representing a single notification
+endpoint such as an email address, SMS number, or pagerduty service.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/CreateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateNotificationChannelRequest">CreateNotificationChannelRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateNotificationChannel">
+        <div class="location">at         line 120</div>
+        <code>                    
+    <strong>UpdateNotificationChannel</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/UpdateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateNotificationChannelRequest">UpdateNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates a notification channel. Fields not specified in the field mask
+remain unchanged.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/UpdateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateNotificationChannelRequest">UpdateNotificationChannelRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteNotificationChannel">
+        <div class="location">at         line 134</div>
+        <code>                    
+    <strong>DeleteNotificationChannel</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/DeleteNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteNotificationChannelRequest">DeleteNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes a notification channel.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/DeleteNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteNotificationChannelRequest">DeleteNotificationChannelRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SendNotificationChannelVerificationCode">
+        <div class="location">at         line 149</div>
+        <code>                    
+    <strong>SendNotificationChannelVerificationCode</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/SendNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\SendNotificationChannelVerificationCodeRequest">SendNotificationChannelVerificationCodeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Causes a verification code to be delivered to the channel. The code
+can then be supplied in <code>VerifyNotificationChannel</code> to verify the channel.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/SendNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\SendNotificationChannelVerificationCodeRequest">SendNotificationChannelVerificationCodeRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetNotificationChannelVerificationCode">
+        <div class="location">at         line 183</div>
+        <code>                    
+    <strong>GetNotificationChannelVerificationCode</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelVerificationCodeRequest">GetNotificationChannelVerificationCodeRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Requests a verification code for an already verified channel that can then
+be used in a call to VerifyNotificationChannel() on a different channel
+with an equivalent identity in the same or in a different project. This
+makes it possible to copy a channel between projects without requiring
+manual reverification of the channel. If the channel is not in the
+verified state, this method will fail (in other words, this may only be
+used if the SendNotificationChannelVerificationCode and
+VerifyNotificationChannel paths have already been used to put the given
+channel into the verified state).</p>                    <p>There is no guarantee that the verification codes returned by this method
+will be of a similar structure or form as the ones that are delivered
+to the channel via SendNotificationChannelVerificationCode; while
+VerifyNotificationChannel() will recognize both the codes delivered via
+SendNotificationChannelVerificationCode() and returned from
+GetNotificationChannelVerificationCode(), it is typically the case that
+the verification codes delivered via
+SendNotificationChannelVerificationCode() will be shorter and also
+have a shorter expiration (e.g. codes such as "G-123456") whereas
+GetVerificationCode() will typically return a much longer, websafe base
+64 encoded string that has a longer expiration time.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/GetNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelVerificationCodeRequest">GetNotificationChannelVerificationCodeRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_VerifyNotificationChannel">
+        <div class="location">at         line 199</div>
+        <code>                    
+    <strong>VerifyNotificationChannel</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/VerifyNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\VerifyNotificationChannelRequest">VerifyNotificationChannelRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Verifies a <code>NotificationChannel</code> by proving receipt of the code
+delivered to the channel as a result of calling
+<code>SendNotificationChannelVerificationCode</code>.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/VerifyNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\VerifyNotificationChannelRequest">VerifyNotificationChannelRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

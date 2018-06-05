@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Iot\V1\DeviceManagerGrpcClient | Google ApiCore - 0.31.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Iot_V1_DeviceManagerGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Iot.html">Iot</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Iot/V1.html">V1</a></li><li class="backslash">\</li><li>DeviceManagerGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            DeviceManagerGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>DeviceManagerGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Internet of things (IoT) service. Allows to manipulate device registry
+instances and the registration of devices (Things) to the cloud.</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateDeviceRegistry">CreateDeviceRegistry</a>(<a href="../../../../Google/Cloud/Iot/V1/CreateDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\CreateDeviceRegistryRequest">CreateDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a device registry that contains devices.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetDeviceRegistry">GetDeviceRegistry</a>(<a href="../../../../Google/Cloud/Iot/V1/GetDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\GetDeviceRegistryRequest">GetDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets a device registry configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateDeviceRegistry">UpdateDeviceRegistry</a>(<a href="../../../../Google/Cloud/Iot/V1/UpdateDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\UpdateDeviceRegistryRequest">UpdateDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates a device registry configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteDeviceRegistry">DeleteDeviceRegistry</a>(<a href="../../../../Google/Cloud/Iot/V1/DeleteDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\DeleteDeviceRegistryRequest">DeleteDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes a device registry configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListDeviceRegistries">ListDeviceRegistries</a>(<a href="../../../../Google/Cloud/Iot/V1/ListDeviceRegistriesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceRegistriesRequest">ListDeviceRegistriesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists device registries.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateDevice">CreateDevice</a>(<a href="../../../../Google/Cloud/Iot/V1/CreateDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\CreateDeviceRequest">CreateDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a device in a device registry.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetDevice">GetDevice</a>(<a href="../../../../Google/Cloud/Iot/V1/GetDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\GetDeviceRequest">GetDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets details about a device.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateDevice">UpdateDevice</a>(<a href="../../../../Google/Cloud/Iot/V1/UpdateDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\UpdateDeviceRequest">UpdateDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates a device.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteDevice">DeleteDevice</a>(<a href="../../../../Google/Cloud/Iot/V1/DeleteDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\DeleteDeviceRequest">DeleteDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes a device.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListDevices">ListDevices</a>(<a href="../../../../Google/Cloud/Iot/V1/ListDevicesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDevicesRequest">ListDevicesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>List devices in a device registry.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ModifyCloudToDeviceConfig">ModifyCloudToDeviceConfig</a>(<a href="../../../../Google/Cloud/Iot/V1/ModifyCloudToDeviceConfigRequest.html"><abbr title="Google\Cloud\Iot\V1\ModifyCloudToDeviceConfigRequest">ModifyCloudToDeviceConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Modifies the configuration for the device, which is eventually sent from
+the Cloud IoT Core servers. Returns the modified configuration version and
+its metadata.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListDeviceConfigVersions">ListDeviceConfigVersions</a>(<a href="../../../../Google/Cloud/Iot/V1/ListDeviceConfigVersionsRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceConfigVersionsRequest">ListDeviceConfigVersionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the last few versions of the device configuration in descending
+order (i.e.: newest first).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListDeviceStates">ListDeviceStates</a>(<a href="../../../../Google/Cloud/Iot/V1/ListDeviceStatesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceStatesRequest">ListDeviceStatesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the last few versions of the device state in descending order (i.e.:
+newest first).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_SetIamPolicy">SetIamPolicy</a>(<a href="../../../../Google/Cloud/Iam/V1/SetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\SetIamPolicyRequest">SetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Sets the access control policy on the specified resource. Replaces any
+existing policy.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetIamPolicy">GetIamPolicy</a>(<a href="../../../../Google/Cloud/Iam/V1/GetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\GetIamPolicyRequest">GetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets the access control policy for a resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_TestIamPermissions">TestIamPermissions</a>(<a href="../../../../Google/Cloud/Iam/V1/TestIamPermissionsRequest.html"><abbr title="Google\Cloud\Iam\V1\TestIamPermissionsRequest">TestIamPermissionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Returns permissions that a caller has on the specified resource.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 32</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateDeviceRegistry">
+        <div class="location">at         line 42</div>
+        <code>                    
+    <strong>CreateDeviceRegistry</strong>(<a href="../../../../Google/Cloud/Iot/V1/CreateDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\CreateDeviceRegistryRequest">CreateDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a device registry that contains devices.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/CreateDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\CreateDeviceRegistryRequest">CreateDeviceRegistryRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetDeviceRegistry">
+        <div class="location">at         line 56</div>
+        <code>                    
+    <strong>GetDeviceRegistry</strong>(<a href="../../../../Google/Cloud/Iot/V1/GetDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\GetDeviceRegistryRequest">GetDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets a device registry configuration.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/GetDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\GetDeviceRegistryRequest">GetDeviceRegistryRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateDeviceRegistry">
+        <div class="location">at         line 70</div>
+        <code>                    
+    <strong>UpdateDeviceRegistry</strong>(<a href="../../../../Google/Cloud/Iot/V1/UpdateDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\UpdateDeviceRegistryRequest">UpdateDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates a device registry configuration.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/UpdateDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\UpdateDeviceRegistryRequest">UpdateDeviceRegistryRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteDeviceRegistry">
+        <div class="location">at         line 84</div>
+        <code>                    
+    <strong>DeleteDeviceRegistry</strong>(<a href="../../../../Google/Cloud/Iot/V1/DeleteDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\DeleteDeviceRegistryRequest">DeleteDeviceRegistryRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes a device registry configuration.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/DeleteDeviceRegistryRequest.html"><abbr title="Google\Cloud\Iot\V1\DeleteDeviceRegistryRequest">DeleteDeviceRegistryRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListDeviceRegistries">
+        <div class="location">at         line 98</div>
+        <code>                    
+    <strong>ListDeviceRegistries</strong>(<a href="../../../../Google/Cloud/Iot/V1/ListDeviceRegistriesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceRegistriesRequest">ListDeviceRegistriesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists device registries.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/ListDeviceRegistriesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceRegistriesRequest">ListDeviceRegistriesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateDevice">
+        <div class="location">at         line 112</div>
+        <code>                    
+    <strong>CreateDevice</strong>(<a href="../../../../Google/Cloud/Iot/V1/CreateDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\CreateDeviceRequest">CreateDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a device in a device registry.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/CreateDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\CreateDeviceRequest">CreateDeviceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetDevice">
+        <div class="location">at         line 126</div>
+        <code>                    
+    <strong>GetDevice</strong>(<a href="../../../../Google/Cloud/Iot/V1/GetDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\GetDeviceRequest">GetDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets details about a device.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/GetDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\GetDeviceRequest">GetDeviceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateDevice">
+        <div class="location">at         line 140</div>
+        <code>                    
+    <strong>UpdateDevice</strong>(<a href="../../../../Google/Cloud/Iot/V1/UpdateDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\UpdateDeviceRequest">UpdateDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates a device.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/UpdateDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\UpdateDeviceRequest">UpdateDeviceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteDevice">
+        <div class="location">at         line 154</div>
+        <code>                    
+    <strong>DeleteDevice</strong>(<a href="../../../../Google/Cloud/Iot/V1/DeleteDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\DeleteDeviceRequest">DeleteDeviceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes a device.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/DeleteDeviceRequest.html"><abbr title="Google\Cloud\Iot\V1\DeleteDeviceRequest">DeleteDeviceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListDevices">
+        <div class="location">at         line 168</div>
+        <code>                    
+    <strong>ListDevices</strong>(<a href="../../../../Google/Cloud/Iot/V1/ListDevicesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDevicesRequest">ListDevicesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List devices in a device registry.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/ListDevicesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDevicesRequest">ListDevicesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ModifyCloudToDeviceConfig">
+        <div class="location">at         line 184</div>
+        <code>                    
+    <strong>ModifyCloudToDeviceConfig</strong>(<a href="../../../../Google/Cloud/Iot/V1/ModifyCloudToDeviceConfigRequest.html"><abbr title="Google\Cloud\Iot\V1\ModifyCloudToDeviceConfigRequest">ModifyCloudToDeviceConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Modifies the configuration for the device, which is eventually sent from
+the Cloud IoT Core servers. Returns the modified configuration version and
+its metadata.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/ModifyCloudToDeviceConfigRequest.html"><abbr title="Google\Cloud\Iot\V1\ModifyCloudToDeviceConfigRequest">ModifyCloudToDeviceConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListDeviceConfigVersions">
+        <div class="location">at         line 199</div>
+        <code>                    
+    <strong>ListDeviceConfigVersions</strong>(<a href="../../../../Google/Cloud/Iot/V1/ListDeviceConfigVersionsRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceConfigVersionsRequest">ListDeviceConfigVersionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the last few versions of the device configuration in descending
+order (i.e.: newest first).</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/ListDeviceConfigVersionsRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceConfigVersionsRequest">ListDeviceConfigVersionsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListDeviceStates">
+        <div class="location">at         line 214</div>
+        <code>                    
+    <strong>ListDeviceStates</strong>(<a href="../../../../Google/Cloud/Iot/V1/ListDeviceStatesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceStatesRequest">ListDeviceStatesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the last few versions of the device state in descending order (i.e.:
+newest first).</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iot/V1/ListDeviceStatesRequest.html"><abbr title="Google\Cloud\Iot\V1\ListDeviceStatesRequest">ListDeviceStatesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_SetIamPolicy">
+        <div class="location">at         line 229</div>
+        <code>                    
+    <strong>SetIamPolicy</strong>(<a href="../../../../Google/Cloud/Iam/V1/SetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\SetIamPolicyRequest">SetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sets the access control policy on the specified resource. Replaces any
+existing policy.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iam/V1/SetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\SetIamPolicyRequest">SetIamPolicyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetIamPolicy">
+        <div class="location">at         line 245</div>
+        <code>                    
+    <strong>GetIamPolicy</strong>(<a href="../../../../Google/Cloud/Iam/V1/GetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\GetIamPolicyRequest">GetIamPolicyRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the access control policy for a resource.</p>                    <p>Returns an empty policy if the resource exists and does not have a policy
+set.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iam/V1/GetIamPolicyRequest.html"><abbr title="Google\Cloud\Iam\V1\GetIamPolicyRequest">GetIamPolicyRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_TestIamPermissions">
+        <div class="location">at         line 261</div>
+        <code>                    
+    <strong>TestIamPermissions</strong>(<a href="../../../../Google/Cloud/Iam/V1/TestIamPermissionsRequest.html"><abbr title="Google\Cloud\Iam\V1\TestIamPermissionsRequest">TestIamPermissionsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns permissions that a caller has on the specified resource.</p>                    <p>If the resource does not exist, this will return an empty set of
+permissions, not a NOT_FOUND error.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Iam/V1/TestIamPermissionsRequest.html"><abbr title="Google\Cloud\Iam\V1\TestIamPermissionsRequest">TestIamPermissionsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

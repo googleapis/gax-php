@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Spanner\V1\TransactionSelector | Google ApiCore - 0.33.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Spanner_V1_TransactionSelector" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.33.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Spanner.html">Spanner</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Spanner/V1.html">V1</a></li><li class="backslash">\</li><li>TransactionSelector</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            TransactionSelector
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>TransactionSelector</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>This message is used to select the transaction in which a
+[Read][google.spanner.v1.Spanner.Read] or
+[ExecuteSql][google.spanner.v1.Spanner.ExecuteSql] call runs.</p>            <p>See [TransactionOptions][google.spanner.v1.TransactionOptions] for more information about transactions.</p>
+
+<p>Generated from protobuf message <code>google.spanner.v1.TransactionSelector</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_selector">
+                                        protected                                        
+                </td>
+                <td>$selector</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSingleUse">getSingleUse</a>()
+        
+                                            <p>Execute the read or SQL query in a temporary transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSingleUse">setSingleUse</a>(<a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a> $var)
+        
+                                            <p>Execute the read or SQL query in a temporary transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getId">getId</a>()
+        
+                                            <p>Execute the read or SQL query in a previously-started transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setId">setId</a>(string $var)
+        
+                                            <p>Execute the read or SQL query in a previously-started transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBegin">getBegin</a>()
+        
+                                            <p>Begin a new transaction and execute this read or SQL query in
+it. The transaction ID of the new transaction is returned in
+[ResultSetMetadata.transaction][google.spanner.v1.ResultSetMetadata.transaction], which is a [Transaction][google.spanner.v1.Transaction].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBegin">setBegin</a>(<a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a> $var)
+        
+                                            <p>Begin a new transaction and execute this read or SQL query in
+it. The transaction ID of the new transaction is returned in
+[ResultSetMetadata.transaction][google.spanner.v1.ResultSetMetadata.transaction], which is a [Transaction][google.spanner.v1.Transaction].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSelector">getSelector</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 23</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSingleUse">
+        <div class="location">at         line 36</div>
+        <code>                    <a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a>
+    <strong>getSingleUse</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute the read or SQL query in a temporary transaction.</p>                    <p>This is the most efficient way to execute a transaction that
+consists of a single SQL query.</p>
+
+<p>Generated from protobuf field <code>.google.spanner.v1.TransactionOptions single_use = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSingleUse">
+        <div class="location">at         line 50</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setSingleUse</strong>(<a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute the read or SQL query in a temporary transaction.</p>                    <p>This is the most efficient way to execute a transaction that
+consists of a single SQL query.</p>
+
+<p>Generated from protobuf field <code>.google.spanner.v1.TransactionOptions single_use = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getId">
+        <div class="location">at         line 64</div>
+        <code>                    string
+    <strong>getId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute the read or SQL query in a previously-started transaction.</p>                    <p>Generated from protobuf field <code>bytes id = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setId">
+        <div class="location">at         line 76</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute the read or SQL query in a previously-started transaction.</p>                    <p>Generated from protobuf field <code>bytes id = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBegin">
+        <div class="location">at         line 92</div>
+        <code>                    <a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a>
+    <strong>getBegin</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Begin a new transaction and execute this read or SQL query in
+it. The transaction ID of the new transaction is returned in
+[ResultSetMetadata.transaction][google.spanner.v1.ResultSetMetadata.transaction], which is a [Transaction][google.spanner.v1.Transaction].</p>                    <p>Generated from protobuf field <code>.google.spanner.v1.TransactionOptions begin = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBegin">
+        <div class="location">at         line 106</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr>
+    <strong>setBegin</strong>(<a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Begin a new transaction and execute this read or SQL query in
+it. The transaction ID of the new transaction is returned in
+[ResultSetMetadata.transaction][google.spanner.v1.ResultSetMetadata.transaction], which is a [Transaction][google.spanner.v1.Transaction].</p>                    <p>Generated from protobuf field <code>.google.spanner.v1.TransactionOptions begin = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Spanner/V1/TransactionOptions.html"><abbr title="Google\Cloud\Spanner\V1\TransactionOptions">TransactionOptions</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSelector">
+        <div class="location">at         line 117</div>
+        <code>                    string
+    <strong>getSelector</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

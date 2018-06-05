@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3 | Google ApiCore - 0.31.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="namespace" data-name="namespace:Google_Cloud_Monitoring_V3" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google ApiCore - 0.31.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                <div class="namespace-breadcrumbs">
+        <ol class="breadcrumb">
+            <li><span class="label label-default">Namespace</span></li>
+                    <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li>
+        </ol>
+    </div>
+            <div id="page-content">
+                
+    <div class="page-header">
+        <h1>Google\Cloud\Monitoring\V3</h1>
+    </div>
+
+    
+            <h2>Classes</h2>
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/Aggregation.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation">Aggregation</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Describes how to combine multiple time series to provide different views of
+the data.  Aggregation consists of an alignment step on individual time
+series (<code>alignment_period</code> and <code>per_series_aligner</code>) followed by an optional
+reduction step of the data across the aligned time series
+(<code>cross_series_reducer</code> and <code>group_by_fields</code>).  For more details, see
+<a href="/monitoring/api/learn_more#aggregation">Aggregation</a>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/Aggregation_Aligner.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation_Aligner">Aggregation_Aligner</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The Aligner describes how to bring the data points in a single
+time series into temporal alignment.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/Aggregation_Reducer.html"><abbr title="Google\Cloud\Monitoring\V3\Aggregation_Reducer">Aggregation_Reducer</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A Reducer describes how to aggregate data points from multiple
+time series into a single time series.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy">AlertPolicy</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A description of the conditions under which some aspect of your system is
+considered to be "unhealthy" and the ways to notify people or services about
+this state. For an overview of alert policies, see
+<a href="/monitoring/alerts/">Introduction to Alerting</a>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicyServiceGrpcClient.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicyServiceGrpcClient">AlertPolicyServiceGrpcClient</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The AlertPolicyService API is used to manage (list, create, delete,
+edit) alert policies in Stackdriver Monitoring. An alerting policy is
+a description of the conditions under which some aspect of your
+system is considered to be "unhealthy" and the ways to notify
+people or services about this state. In addition to using this API, alert
+policies can also be managed through
+<a href="https://cloud.google.com/monitoring/docs/">Stackdriver Monitoring</a>,
+which can be reached by clicking the "Monitoring" tab in
+<a href="https://console.cloud.google.com/">Cloud Console</a>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition">AlertPolicy_Condition</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A condition is a true/false test that determines when an alerting policy
+should open an incident. If a condition evaluates to true, it signifies
+that something is wrong.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy_ConditionCombinerType.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_ConditionCombinerType">AlertPolicy_ConditionCombinerType</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Operators for combining conditions.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A condition type that checks that monitored resources
+are reporting data. The configuration defines a metric and
+a set of monitored resources. The predicate is considered in violation
+when a time series for the specified metric of a monitored
+resource does not include any data in the specified <code>duration</code>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A condition type that compares a collection of time series
+against a threshold.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_Trigger.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_Trigger">AlertPolicy_Condition_Trigger</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Specifies how many time series must fail a predicate to trigger a
+condition. If not specified, then a <code>{count: 1}</code> trigger is used.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/AlertPolicy_Documentation.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Documentation">AlertPolicy_Documentation</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A content string and a MIME type that describes the content string's
+format.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ComparisonType.html"><abbr title="Google\Cloud\Monitoring\V3\ComparisonType">ComparisonType</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Specifies an ordering relationship on two arguments, here called left and
+right.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateAlertPolicyRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateAlertPolicyRequest">CreateAlertPolicyRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>CreateAlertPolicy</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateGroupRequest">CreateGroupRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>CreateGroup</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateMetricDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateMetricDescriptorRequest">CreateMetricDescriptorRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>CreateMetricDescriptor</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateNotificationChannelRequest">CreateNotificationChannelRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>CreateNotificationChannel</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateTimeSeriesError.html"><abbr title="Google\Cloud\Monitoring\V3\CreateTimeSeriesError">CreateTimeSeriesError</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Describes the result of a failed request to write data to a time series.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateTimeSeriesRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateTimeSeriesRequest">CreateTimeSeriesRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>CreateTimeSeries</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/CreateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateUptimeCheckConfigRequest">CreateUptimeCheckConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>CreateUptimeCheckConfig</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/DeleteAlertPolicyRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteAlertPolicyRequest">DeleteAlertPolicyRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>DeleteAlertPolicy</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/DeleteGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteGroupRequest">DeleteGroupRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>DeleteGroup</code> request. You can only delete a group if it has no children.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/DeleteMetricDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteMetricDescriptorRequest">DeleteMetricDescriptorRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>DeleteMetricDescriptor</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/DeleteNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteNotificationChannelRequest">DeleteNotificationChannelRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>DeleteNotificationChannel</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/DeleteUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteUptimeCheckConfigRequest">DeleteUptimeCheckConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>DeleteUptimeCheckConfig</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetAlertPolicyRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetAlertPolicyRequest">GetAlertPolicyRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>GetAlertPolicy</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetGroupRequest">GetGroupRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetGroup</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetMetricDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetMetricDescriptorRequest">GetMetricDescriptorRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetMetricDescriptor</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetMonitoredResourceDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetMonitoredResourceDescriptorRequest">GetMonitoredResourceDescriptorRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetMonitoredResourceDescriptor</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetNotificationChannelDescriptorRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelDescriptorRequest">GetNotificationChannelDescriptorRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetNotificationChannelDescriptor</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelRequest">GetNotificationChannelRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetNotificationChannel</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelVerificationCodeRequest">GetNotificationChannelVerificationCodeRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetNotificationChannelVerificationCode</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetNotificationChannelVerificationCodeResponse.html"><abbr title="Google\Cloud\Monitoring\V3\GetNotificationChannelVerificationCodeResponse">GetNotificationChannelVerificationCodeResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>GetNotificationChannelVerificationCode</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GetUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetUptimeCheckConfigRequest">GetUptimeCheckConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>GetUptimeCheckConfig</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/Group.html"><abbr title="Google\Cloud\Monitoring\V3\Group">Group</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The description of a dynamic collection of monitored resources. Each group
+has a filter that is matched against monitored resources and their associated
+metadata. If a group's filter matches an available monitored resource, then
+that resource is a member of that group.  Groups can contain any number of
+monitored resources, and each monitored resource can be a member of any
+number of groups.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GroupResourceType.html"><abbr title="Google\Cloud\Monitoring\V3\GroupResourceType">GroupResourceType</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The supported resource types that can be used as values of
+group_resource.resource_type. gae_app and uptime_url are not allowed
+because group checks on App Engine modules and URLs are not allowed.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/GroupServiceGrpcClient.html"><abbr title="Google\Cloud\Monitoring\V3\GroupServiceGrpcClient">GroupServiceGrpcClient</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The Group API lets you inspect and manage your
+<a href="google.monitoring.v3.Group">groups</a>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListAlertPoliciesRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListAlertPoliciesRequest">ListAlertPoliciesRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>ListAlertPolicies</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListAlertPoliciesResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListAlertPoliciesResponse">ListAlertPoliciesResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>ListAlertPolicies</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListGroupMembersRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupMembersRequest">ListGroupMembersRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListGroupMembers</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListGroupMembersResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupMembersResponse">ListGroupMembersResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListGroupMembers</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListGroupsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupsRequest">ListGroupsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListGroup</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListGroupsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListGroupsResponse">ListGroupsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListGroups</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListMetricDescriptorsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListMetricDescriptorsRequest">ListMetricDescriptorsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListMetricDescriptors</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListMetricDescriptorsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListMetricDescriptorsResponse">ListMetricDescriptorsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListMetricDescriptors</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListMonitoredResourceDescriptorsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListMonitoredResourceDescriptorsRequest">ListMonitoredResourceDescriptorsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListMonitoredResourceDescriptors</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListMonitoredResourceDescriptorsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListMonitoredResourceDescriptorsResponse">ListMonitoredResourceDescriptorsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListMonitoredResourcDescriptors</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListNotificationChannelDescriptorsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelDescriptorsRequest">ListNotificationChannelDescriptorsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListNotificationChannelDescriptors</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListNotificationChannelDescriptorsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelDescriptorsResponse">ListNotificationChannelDescriptorsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListNotificationChannelDescriptors</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListNotificationChannelsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelsRequest">ListNotificationChannelsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListNotificationChannels</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListNotificationChannelsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListNotificationChannelsResponse">ListNotificationChannelsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListNotificationChannels</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListTimeSeriesRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListTimeSeriesRequest">ListTimeSeriesRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListTimeSeries</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListTimeSeriesRequest_TimeSeriesView.html"><abbr title="Google\Cloud\Monitoring\V3\ListTimeSeriesRequest_TimeSeriesView">ListTimeSeriesRequest_TimeSeriesView</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Controls which fields are returned by <code>ListTimeSeries</code>.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListTimeSeriesResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListTimeSeriesResponse">ListTimeSeriesResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>ListTimeSeries</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListUptimeCheckConfigsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckConfigsRequest">ListUptimeCheckConfigsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>ListUptimeCheckConfigs</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListUptimeCheckConfigsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckConfigsResponse">ListUptimeCheckConfigsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>ListUptimeCheckConfigs</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListUptimeCheckIpsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckIpsRequest">ListUptimeCheckIpsRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>ListUptimeCheckIps</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ListUptimeCheckIpsResponse.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckIpsResponse">ListUptimeCheckIpsResponse</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>ListUptimeCheckIps</code> response.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/MetricServiceGrpcClient.html"><abbr title="Google\Cloud\Monitoring\V3\MetricServiceGrpcClient">MetricServiceGrpcClient</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Manages metric descriptors, monitored resource descriptors, and
+time series data.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/MutationRecord.html"><abbr title="Google\Cloud\Monitoring\V3\MutationRecord">MutationRecord</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Describes a change made to a configuration.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/NotificationChannel.html"><abbr title="Google\Cloud\Monitoring\V3\NotificationChannel">NotificationChannel</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A <code>NotificationChannel</code> is a medium through which an alert is
+delivered when a policy violation is detected. Examples of channels
+include email, SMS, and third-party messaging applications. Fields
+containing sensitive information like authentication tokens or
+contact info are only partially populated on retrieval.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/NotificationChannelDescriptor.html"><abbr title="Google\Cloud\Monitoring\V3\NotificationChannelDescriptor">NotificationChannelDescriptor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A description of a notification channel. The descriptor includes
+the properties of the channel and the set of labels or fields that
+must be specified to configure channels of a given type.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/NotificationChannelServiceGrpcClient.html"><abbr title="Google\Cloud\Monitoring\V3\NotificationChannelServiceGrpcClient">NotificationChannelServiceGrpcClient</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The Notification Channel API provides access to configuration that
+controls how messages related to incidents are sent.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/NotificationChannel_VerificationStatus.html"><abbr title="Google\Cloud\Monitoring\V3\NotificationChannel_VerificationStatus">NotificationChannel_VerificationStatus</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Indicates whether the channel has been verified or not. It is illegal
+to specify this field in a
+[<code>CreateNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.CreateNotificationChannel]
+or an
+[<code>UpdateNotificationChannel</code>][google.monitoring.v3.NotificationChannelService.UpdateNotificationChannel]
+operation.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/Point.html"><abbr title="Google\Cloud\Monitoring\V3\Point">Point</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A single data point in a time series.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/SendNotificationChannelVerificationCodeRequest.html"><abbr title="Google\Cloud\Monitoring\V3\SendNotificationChannelVerificationCodeRequest">SendNotificationChannelVerificationCodeRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>SendNotificationChannelVerificationCode</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/ServiceTier.html"><abbr title="Google\Cloud\Monitoring\V3\ServiceTier">ServiceTier</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The tier of service for a Stackdriver account. Please see the
+<a href="https://cloud.google.com/monitoring/accounts/tiers">service tiers documentation</a>
+for more details.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/TimeInterval.html"><abbr title="Google\Cloud\Monitoring\V3\TimeInterval">TimeInterval</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A time interval extending just after a start time through an end time.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/TimeSeries.html"><abbr title="Google\Cloud\Monitoring\V3\TimeSeries">TimeSeries</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A collection of data points that describes the time-varying values
+of a metric. A time series is identified by a combination of a
+fully-specified monitored resource and a fully-specified metric.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/TypedValue.html"><abbr title="Google\Cloud\Monitoring\V3\TypedValue">TypedValue</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A single strongly-typed value.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UpdateAlertPolicyRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateAlertPolicyRequest">UpdateAlertPolicyRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>UpdateAlertPolicy</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UpdateGroupRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateGroupRequest">UpdateGroupRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>UpdateGroup</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UpdateNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateNotificationChannelRequest">UpdateNotificationChannelRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>UpdateNotificationChannel</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UpdateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateUptimeCheckConfigRequest">UpdateUptimeCheckConfigRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The protocol for the <code>UpdateUptimeCheckConfig</code> request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig">UptimeCheckConfig</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    This message configures which resources and services to monitor for
+availability.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig_ContentMatcher.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig_ContentMatcher">UptimeCheckConfig_ContentMatcher</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Used to perform string matching. Currently, this matches on the exact
+content. In the future, it can be expanded to allow for regular expressions
+and more complex matching.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig_HttpCheck.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig_HttpCheck">UptimeCheckConfig_HttpCheck</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Information involved in an HTTP/HTTPS uptime check request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig_HttpCheck_BasicAuthentication.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig_HttpCheck_BasicAuthentication">UptimeCheckConfig_HttpCheck_BasicAuthentication</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A type of authentication to perform against the specified resource or URL
+that uses username and password.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig_InternalChecker.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig_InternalChecker">UptimeCheckConfig_InternalChecker</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Nimbus InternalCheckers.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig_ResourceGroup.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig_ResourceGroup">UptimeCheckConfig_ResourceGroup</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The resource submessage for group checks. It can be used instead of a
+monitored resource, when multiple resources are being monitored.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckConfig_TcpCheck.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckConfig_TcpCheck">UptimeCheckConfig_TcpCheck</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Information required for a TCP uptime check request.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckIp.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckIp">UptimeCheckIp</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Contains the region, location, and list of IP
+addresses where checkers in the location run from.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckRegion.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckRegion">UptimeCheckRegion</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The regions from which an uptime check can be run.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/UptimeCheckServiceGrpcClient.html"><abbr title="Google\Cloud\Monitoring\V3\UptimeCheckServiceGrpcClient">UptimeCheckServiceGrpcClient</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The UptimeCheckService API is used to manage (list, create, delete, edit)
+uptime check configurations in the Stackdriver Monitoring product. An uptime
+check is a piece of configuration that determines which resources and
+services to monitor for availability. These configurations can also be
+configured interactively by navigating to the [Cloud Console]
+(http://console.cloud.google.com), selecting the appropriate project,
+clicking on "Monitoring" on the left-hand side to navigate to Stackdriver,
+and then clicking on "Uptime".
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../Google/Cloud/Monitoring/V3/VerifyNotificationChannelRequest.html"><abbr title="Google\Cloud\Monitoring\V3\VerifyNotificationChannelRequest">VerifyNotificationChannelRequest</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The <code>VerifyNotificationChannel</code> request.
+                </div>
+            </div>
+            </div>
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

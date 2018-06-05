@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Tasks\V2beta2\Task | Google ApiCore - 0.31.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Tasks_V2beta2_Task" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Tasks.html">Tasks</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Tasks/V2beta2.html">V2beta2</a></li><li class="backslash">\</li><li>Task</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Task
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Task</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A unit of scheduled work.</p>            <p>Generated from protobuf message <code>google.cloud.tasks.v2beta2.Task</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_payload_type">
+                                        protected                                        
+                </td>
+                <td>$payload_type</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>The task name.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>The task name.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Tasks/V2beta2/AppEngineHttpRequest.html"><abbr title="Google\Cloud\Tasks\V2beta2\AppEngineHttpRequest">AppEngineHttpRequest</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAppEngineHttpRequest">getAppEngineHttpRequest</a>()
+        
+                                            <p>App Engine HTTP request that is sent to the task's target. Can
+be set only if
+[app_engine_http_target][google.cloud.tasks.v2beta2.Queue.app_engine_http_target] is set
+on the queue.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAppEngineHttpRequest">setAppEngineHttpRequest</a>(<a href="../../../../Google/Cloud/Tasks/V2beta2/AppEngineHttpRequest.html"><abbr title="Google\Cloud\Tasks\V2beta2\AppEngineHttpRequest">AppEngineHttpRequest</abbr></a> $var)
+        
+                                            <p>App Engine HTTP request that is sent to the task's target. Can
+be set only if
+[app_engine_http_target][google.cloud.tasks.v2beta2.Queue.app_engine_http_target] is set
+on the queue.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Tasks/V2beta2/PullMessage.html"><abbr title="Google\Cloud\Tasks\V2beta2\PullMessage">PullMessage</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPullMessage">getPullMessage</a>()
+        
+                                            <p>[LeaseTasks][google.cloud.tasks.v2beta2.CloudTasks.LeaseTasks] to process the task. Can be
+set only if [pull_target][google.cloud.tasks.v2beta2.Queue.pull_target] is set on the queue.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPullMessage">setPullMessage</a>(<a href="../../../../Google/Cloud/Tasks/V2beta2/PullMessage.html"><abbr title="Google\Cloud\Tasks\V2beta2\PullMessage">PullMessage</abbr></a> $var)
+        
+                                            <p>[LeaseTasks][google.cloud.tasks.v2beta2.CloudTasks.LeaseTasks] to process the task. Can be
+set only if [pull_target][google.cloud.tasks.v2beta2.Queue.pull_target] is set on the queue.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getScheduleTime">getScheduleTime</a>()
+        
+                                            <p>The time when the task is scheduled to be attempted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setScheduleTime">setScheduleTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>The time when the task is scheduled to be attempted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCreateTime">getCreateTime</a>()
+        
+                                            <p>Output only. The time that the task was created.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCreateTime">setCreateTime</a>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        
+                                            <p>Output only. The time that the task was created.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Tasks/V2beta2/TaskStatus.html"><abbr title="Google\Cloud\Tasks\V2beta2\TaskStatus">TaskStatus</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatus">getStatus</a>()
+        
+                                            <p>Output only. The task status.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatus">setStatus</a>(<a href="../../../../Google/Cloud/Tasks/V2beta2/TaskStatus.html"><abbr title="Google\Cloud\Tasks\V2beta2\TaskStatus">TaskStatus</abbr></a> $var)
+        
+                                            <p>Output only. The task status.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getView">getView</a>()
+        
+                                            <p>Output only. The view specifies which subset of the [Task][google.cloud.tasks.v2beta2.Task] has
+been returned.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setView">setView</a>(int $var)
+        
+                                            <p>Output only. The view specifies which subset of the [Task][google.cloud.tasks.v2beta2.Task] has
+been returned.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPayloadType">getPayloadType</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 73</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 99</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The task name.</p>                    <p>The task name must have the following format:
+<code>projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID</code>
+* <code>PROJECT_ID</code> can contain letters ([A-Za-z]), numbers ([0-9]),
+   hyphens (-), colons (:), or periods (.).
+   For more information, see
+   <a href="/resource-manager/docs/creating-managing-projects#identifying_projects">Identifying projects</a>
+* <code>LOCATION_ID</code> is the canonical ID for the task's location.
+   The list of available locations can be obtained by calling
+   [ListLocations][google.cloud.location.Locations.ListLocations].
+   For more information, see https://cloud.google.com/about/locations/.
+* <code>QUEUE_ID</code> can contain letters ([A-Za-z]), numbers ([0-9]), or
+  hyphens (-). The maximum length is 100 characters.
+* <code>TASK_ID</code> can contain only letters ([A-Za-z]), numbers ([0-9]),
+  hyphens (-), or underscores (_). The maximum length is 500 characters.
+Optionally caller-specified in [CreateTask][google.cloud.tasks.v2beta2.CloudTasks.CreateTask].</p>
+
+<p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 126</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The task name.</p>                    <p>The task name must have the following format:
+<code>projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID</code>
+* <code>PROJECT_ID</code> can contain letters ([A-Za-z]), numbers ([0-9]),
+   hyphens (-), colons (:), or periods (.).
+   For more information, see
+   <a href="/resource-manager/docs/creating-managing-projects#identifying_projects">Identifying projects</a>
+* <code>LOCATION_ID</code> is the canonical ID for the task's location.
+   The list of available locations can be obtained by calling
+   [ListLocations][google.cloud.location.Locations.ListLocations].
+   For more information, see https://cloud.google.com/about/locations/.
+* <code>QUEUE_ID</code> can contain letters ([A-Za-z]), numbers ([0-9]), or
+  hyphens (-). The maximum length is 100 characters.
+* <code>TASK_ID</code> can contain only letters ([A-Za-z]), numbers ([0-9]),
+  hyphens (-), or underscores (_). The maximum length is 500 characters.
+Optionally caller-specified in [CreateTask][google.cloud.tasks.v2beta2.CloudTasks.CreateTask].</p>
+
+<p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAppEngineHttpRequest">
+        <div class="location">at         line 144</div>
+        <code>                    <a href="../../../../Google/Cloud/Tasks/V2beta2/AppEngineHttpRequest.html"><abbr title="Google\Cloud\Tasks\V2beta2\AppEngineHttpRequest">AppEngineHttpRequest</abbr></a>
+    <strong>getAppEngineHttpRequest</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>App Engine HTTP request that is sent to the task's target. Can
+be set only if
+[app_engine_http_target][google.cloud.tasks.v2beta2.Queue.app_engine_http_target] is set
+on the queue.</p>                    <p>An App Engine task is a task that has [AppEngineHttpRequest][google.cloud.tasks.v2beta2.AppEngineHttpRequest] set.</p>
+
+<p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.AppEngineHttpRequest app_engine_http_request = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Tasks/V2beta2/AppEngineHttpRequest.html"><abbr title="Google\Cloud\Tasks\V2beta2\AppEngineHttpRequest">AppEngineHttpRequest</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAppEngineHttpRequest">
+        <div class="location">at         line 160</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setAppEngineHttpRequest</strong>(<a href="../../../../Google/Cloud/Tasks/V2beta2/AppEngineHttpRequest.html"><abbr title="Google\Cloud\Tasks\V2beta2\AppEngineHttpRequest">AppEngineHttpRequest</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>App Engine HTTP request that is sent to the task's target. Can
+be set only if
+[app_engine_http_target][google.cloud.tasks.v2beta2.Queue.app_engine_http_target] is set
+on the queue.</p>                    <p>An App Engine task is a task that has [AppEngineHttpRequest][google.cloud.tasks.v2beta2.AppEngineHttpRequest] set.</p>
+
+<p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.AppEngineHttpRequest app_engine_http_request = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Tasks/V2beta2/AppEngineHttpRequest.html"><abbr title="Google\Cloud\Tasks\V2beta2\AppEngineHttpRequest">AppEngineHttpRequest</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPullMessage">
+        <div class="location">at         line 176</div>
+        <code>                    <a href="../../../../Google/Cloud/Tasks/V2beta2/PullMessage.html"><abbr title="Google\Cloud\Tasks\V2beta2\PullMessage">PullMessage</abbr></a>
+    <strong>getPullMessage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[LeaseTasks][google.cloud.tasks.v2beta2.CloudTasks.LeaseTasks] to process the task. Can be
+set only if [pull_target][google.cloud.tasks.v2beta2.Queue.pull_target] is set on the queue.</p>                    <p>A pull task is a task that has [PullMessage][google.cloud.tasks.v2beta2.PullMessage] set.</p>
+
+<p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.PullMessage pull_message = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Tasks/V2beta2/PullMessage.html"><abbr title="Google\Cloud\Tasks\V2beta2\PullMessage">PullMessage</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPullMessage">
+        <div class="location">at         line 190</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setPullMessage</strong>(<a href="../../../../Google/Cloud/Tasks/V2beta2/PullMessage.html"><abbr title="Google\Cloud\Tasks\V2beta2\PullMessage">PullMessage</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>[LeaseTasks][google.cloud.tasks.v2beta2.CloudTasks.LeaseTasks] to process the task. Can be
+set only if [pull_target][google.cloud.tasks.v2beta2.Queue.pull_target] is set on the queue.</p>                    <p>A pull task is a task that has [PullMessage][google.cloud.tasks.v2beta2.PullMessage] set.</p>
+
+<p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.PullMessage pull_message = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Tasks/V2beta2/PullMessage.html"><abbr title="Google\Cloud\Tasks\V2beta2\PullMessage">PullMessage</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getScheduleTime">
+        <div class="location">at         line 210</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getScheduleTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The time when the task is scheduled to be attempted.</p>                    <p>For App Engine queues, this is when the task will be attempted or retried.
+For pull queues, this is the time when the task is available to
+be leased; if a task is currently leased, this is the time when
+the current lease expires, that is, the time that the task was
+leased plus the [lease_duration][google.cloud.tasks.v2beta2.LeaseTasksRequest.lease_duration].
+<code>schedule_time</code> will be truncated to the nearest microsecond.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp schedule_time = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setScheduleTime">
+        <div class="location">at         line 228</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setScheduleTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The time when the task is scheduled to be attempted.</p>                    <p>For App Engine queues, this is when the task will be attempted or retried.
+For pull queues, this is the time when the task is available to
+be leased; if a task is currently leased, this is the time when
+the current lease expires, that is, the time that the task was
+leased plus the [lease_duration][google.cloud.tasks.v2beta2.LeaseTasksRequest.lease_duration].
+<code>schedule_time</code> will be truncated to the nearest microsecond.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp schedule_time = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCreateTime">
+        <div class="location">at         line 243</div>
+        <code>                    <abbr title="Google\Protobuf\Timestamp">Timestamp</abbr>
+    <strong>getCreateTime</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The time that the task was created.</p>                    <p><code>create_time</code> will be truncated to the nearest second.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp create_time = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCreateTime">
+        <div class="location">at         line 256</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setCreateTime</strong>(<abbr title="Google\Protobuf\Timestamp">Timestamp</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The time that the task was created.</p>                    <p><code>create_time</code> will be truncated to the nearest second.</p>
+
+<p>Generated from protobuf field <code>.google.protobuf.Timestamp create_time = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Timestamp">Timestamp</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatus">
+        <div class="location">at         line 270</div>
+        <code>                    <a href="../../../../Google/Cloud/Tasks/V2beta2/TaskStatus.html"><abbr title="Google\Cloud\Tasks\V2beta2\TaskStatus">TaskStatus</abbr></a>
+    <strong>getStatus</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The task status.</p>                    <p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.TaskStatus status = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Tasks/V2beta2/TaskStatus.html"><abbr title="Google\Cloud\Tasks\V2beta2\TaskStatus">TaskStatus</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatus">
+        <div class="location">at         line 282</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setStatus</strong>(<a href="../../../../Google/Cloud/Tasks/V2beta2/TaskStatus.html"><abbr title="Google\Cloud\Tasks\V2beta2\TaskStatus">TaskStatus</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The task status.</p>                    <p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.TaskStatus status = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Tasks/V2beta2/TaskStatus.html"><abbr title="Google\Cloud\Tasks\V2beta2\TaskStatus">TaskStatus</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getView">
+        <div class="location">at         line 297</div>
+        <code>                    int
+    <strong>getView</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The view specifies which subset of the [Task][google.cloud.tasks.v2beta2.Task] has
+been returned.</p>                    <p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.Task.View view = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setView">
+        <div class="location">at         line 310</div>
+        <code>                    <abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr>
+    <strong>setView</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Output only. The view specifies which subset of the [Task][google.cloud.tasks.v2beta2.Task] has
+been returned.</p>                    <p>Generated from protobuf field <code>.google.cloud.tasks.v2beta2.Task.View view = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Tasks\V2beta2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPayloadType">
+        <div class="location">at         line 321</div>
+        <code>                    string
+    <strong>getPayloadType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

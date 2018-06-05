@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\AlertPolicy_Condition | Google ApiCore - 0.32.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_AlertPolicy_Condition" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.32.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>AlertPolicy_Condition</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AlertPolicy_Condition
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AlertPolicy_Condition</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A condition is a true/false test that determines when an alerting policy
+should open an incident. If a condition evaluates to true, it signifies
+that something is wrong.</p>            <p>Generated from protobuf message <code>google.monitoring.v3.AlertPolicy.Condition</code></p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_condition">
+                                        protected                                        
+                </td>
+                <td>$condition</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p>Required if the condition exists. The unique resource name for this
+condition. Its syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[POLICY_ID]/conditions/[CONDITION_ID]
+<code>[CONDITION_ID]</code> is assigned by Stackdriver Monitoring when the
+condition is created as part of a new or updated alerting policy.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setName">setName</a>(string $var)
+        
+                                            <p>Required if the condition exists. The unique resource name for this
+condition. Its syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[POLICY_ID]/conditions/[CONDITION_ID]
+<code>[CONDITION_ID]</code> is assigned by Stackdriver Monitoring when the
+condition is created as part of a new or updated alerting policy.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDisplayName">getDisplayName</a>()
+        
+                                            <p>A short name or phrase used to identify the condition in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple conditions in the same policy.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDisplayName">setDisplayName</a>(string $var)
+        
+                                            <p>A short name or phrase used to identify the condition in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple conditions in the same policy.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConditionThreshold">getConditionThreshold</a>()
+        
+                                            <p>A condition that compares a time series against a threshold.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setConditionThreshold">setConditionThreshold</a>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a> $var)
+        
+                                            <p>A condition that compares a time series against a threshold.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConditionAbsent">getConditionAbsent</a>()
+        
+                                            <p>A condition that checks that a time series continues to
+receive new data points.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setConditionAbsent">setConditionAbsent</a>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a> $var)
+        
+                                            <p>A condition that checks that a time series continues to
+receive new data points.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCondition">getCondition</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 55</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">at         line 85</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required if the condition exists. The unique resource name for this
+condition. Its syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[POLICY_ID]/conditions/[CONDITION_ID]
+<code>[CONDITION_ID]</code> is assigned by Stackdriver Monitoring when the
+condition is created as part of a new or updated alerting policy.</p>                    <p>When calling the
+[alertPolicies.create][google.monitoring.v3.AlertPolicyService.CreateAlertPolicy]
+method, do not include the <code>name</code> field in the conditions of the
+requested alerting policy. Stackdriver Monitoring creates the
+condition identifiers and includes them in the new policy.
+When calling the
+[alertPolicies.update][google.monitoring.v3.AlertPolicyService.UpdateAlertPolicy]
+method to update a policy, including a condition <code>name</code> causes the
+existing condition to be updated. Conditions without names are added to
+the updated policy. Existing conditions are deleted if they are not
+updated.
+Best practice is to preserve <code>[CONDITION_ID]</code> if you make only small
+changes, such as those to condition thresholds, durations, or trigger
+values.  Otherwise, treat the change as a new condition and let the
+existing condition be deleted.</p>
+
+<p>Generated from protobuf field <code>string name = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setName">
+        <div class="location">at         line 116</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required if the condition exists. The unique resource name for this
+condition. Its syntax is:
+    projects/[PROJECT_ID]/alertPolicies/[POLICY_ID]/conditions/[CONDITION_ID]
+<code>[CONDITION_ID]</code> is assigned by Stackdriver Monitoring when the
+condition is created as part of a new or updated alerting policy.</p>                    <p>When calling the
+[alertPolicies.create][google.monitoring.v3.AlertPolicyService.CreateAlertPolicy]
+method, do not include the <code>name</code> field in the conditions of the
+requested alerting policy. Stackdriver Monitoring creates the
+condition identifiers and includes them in the new policy.
+When calling the
+[alertPolicies.update][google.monitoring.v3.AlertPolicyService.UpdateAlertPolicy]
+method to update a policy, including a condition <code>name</code> causes the
+existing condition to be updated. Conditions without names are added to
+the updated policy. Existing conditions are deleted if they are not
+updated.
+Best practice is to preserve <code>[CONDITION_ID]</code> if you make only small
+changes, such as those to condition thresholds, durations, or trigger
+values.  Otherwise, treat the change as a new condition and let the
+existing condition be deleted.</p>
+
+<p>Generated from protobuf field <code>string name = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDisplayName">
+        <div class="location">at         line 132</div>
+        <code>                    string
+    <strong>getDisplayName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A short name or phrase used to identify the condition in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple conditions in the same policy.</p>                    <p>Generated from protobuf field <code>string display_name = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisplayName">
+        <div class="location">at         line 146</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setDisplayName</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A short name or phrase used to identify the condition in dashboards,
+notifications, and incidents. To avoid confusion, don't use the same
+display name for multiple conditions in the same policy.</p>                    <p>Generated from protobuf field <code>string display_name = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConditionThreshold">
+        <div class="location">at         line 160</div>
+        <code>                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a>
+    <strong>getConditionThreshold</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A condition that compares a time series against a threshold.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Condition.MetricThreshold condition_threshold = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setConditionThreshold">
+        <div class="location">at         line 172</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setConditionThreshold</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A condition that compares a time series against a threshold.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Condition.MetricThreshold condition_threshold = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricThreshold.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricThreshold">AlertPolicy_Condition_MetricThreshold</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConditionAbsent">
+        <div class="location">at         line 187</div>
+        <code>                    <a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a>
+    <strong>getConditionAbsent</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A condition that checks that a time series continues to
+receive new data points.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Condition.MetricAbsence condition_absent = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setConditionAbsent">
+        <div class="location">at         line 200</div>
+        <code>                    <abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr>
+    <strong>setConditionAbsent</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A condition that checks that a time series continues to
+receive new data points.</p>                    <p>Generated from protobuf field <code>.google.monitoring.v3.AlertPolicy.Condition.MetricAbsence condition_absent = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/AlertPolicy_Condition_MetricAbsence.html"><abbr title="Google\Cloud\Monitoring\V3\AlertPolicy_Condition_MetricAbsence">AlertPolicy_Condition_MetricAbsence</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Monitoring\V3\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCondition">
+        <div class="location">at         line 211</div>
+        <code>                    string
+    <strong>getCondition</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Debugger\V2\ListBreakpointsRequest | Google ApiCore - 0.32.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Debugger_V2_ListBreakpointsRequest" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.32.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Debugger.html">Debugger</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Debugger/V2.html">V2</a></li><li class="backslash">\</li><li>ListBreakpointsRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ListBreakpointsRequest
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ListBreakpointsRequest</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Request to list breakpoints.</p>            <p>Generated from protobuf message <code>google.devtools.clouddebugger.v2.ListBreakpointsRequest</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDebuggeeId">getDebuggeeId</a>()
+        
+                                            <p>ID of the debuggee whose breakpoints to list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDebuggeeId">setDebuggeeId</a>(string $var)
+        
+                                            <p>ID of the debuggee whose breakpoints to list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIncludeAllUsers">getIncludeAllUsers</a>()
+        
+                                            <p>When set to <code>true</code>, the response includes the list of breakpoints set by
+any user. Otherwise, it includes only breakpoints set by the caller.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setIncludeAllUsers">setIncludeAllUsers</a>(bool $var)
+        
+                                            <p>When set to <code>true</code>, the response includes the list of breakpoints set by
+any user. Otherwise, it includes only breakpoints set by the caller.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIncludeInactive">getIncludeInactive</a>()
+        
+                                            <p>When set to <code>true</code>, the response includes active and inactive
+breakpoints. Otherwise, it includes only active breakpoints.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setIncludeInactive">setIncludeInactive</a>(bool $var)
+        
+                                            <p>When set to <code>true</code>, the response includes active and inactive
+breakpoints. Otherwise, it includes only active breakpoints.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Debugger/V2/ListBreakpointsRequest_BreakpointActionValue.html"><abbr title="Google\Cloud\Debugger\V2\ListBreakpointsRequest_BreakpointActionValue">ListBreakpointsRequest_BreakpointActionValue</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAction">getAction</a>()
+        
+                                            <p>When set, the response includes only breakpoints with the specified action.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAction">setAction</a>(<a href="../../../../Google/Cloud/Debugger/V2/ListBreakpointsRequest_BreakpointActionValue.html"><abbr title="Google\Cloud\Debugger\V2\ListBreakpointsRequest_BreakpointActionValue">ListBreakpointsRequest_BreakpointActionValue</abbr></a> $var)
+        
+                                            <p>When set, the response includes only breakpoints with the specified action.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStripResults">getStripResults</a>()
+        
+                                            <p>This field is deprecated. The following fields are always stripped out of
+the result: <code>stack_frames</code>, <code>evaluated_expressions</code> and <code>variable_table</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStripResults">setStripResults</a>(bool $var)
+        
+                                            <p>This field is deprecated. The following fields are always stripped out of
+the result: <code>stack_frames</code>, <code>evaluated_expressions</code> and <code>variable_table</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getWaitToken">getWaitToken</a>()
+        
+                                            <p>A wait token that, if specified, blocks the call until the breakpoints
+list has changed, or a server selected timeout has expired.  The value
+should be set from the last response. The error code
+<code>google.rpc.Code.ABORTED</code> (RPC) is returned on wait timeout, which
+should be called again with the same <code>wait_token</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setWaitToken">setWaitToken</a>(string $var)
+        
+                                            <p>A wait token that, if specified, blocks the call until the breakpoints
+list has changed, or a server selected timeout has expired.  The value
+should be set from the last response. The error code
+<code>google.rpc.Code.ABORTED</code> (RPC) is returned on wait timeout, which
+should be called again with the same <code>wait_token</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getClientVersion">getClientVersion</a>()
+        
+                                            <p>The client version making the call.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setClientVersion">setClientVersion</a>(string $var)
+        
+                                            <p>The client version making the call.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 69</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDebuggeeId">
+        <div class="location">at         line 80</div>
+        <code>                    string
+    <strong>getDebuggeeId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ID of the debuggee whose breakpoints to list.</p>                    <p>Generated from protobuf field <code>string debuggee_id = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDebuggeeId">
+        <div class="location">at         line 92</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setDebuggeeId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ID of the debuggee whose breakpoints to list.</p>                    <p>Generated from protobuf field <code>string debuggee_id = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIncludeAllUsers">
+        <div class="location">at         line 107</div>
+        <code>                    bool
+    <strong>getIncludeAllUsers</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>When set to <code>true</code>, the response includes the list of breakpoints set by
+any user. Otherwise, it includes only breakpoints set by the caller.</p>                    <p>Generated from protobuf field <code>bool include_all_users = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setIncludeAllUsers">
+        <div class="location">at         line 120</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setIncludeAllUsers</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>When set to <code>true</code>, the response includes the list of breakpoints set by
+any user. Otherwise, it includes only breakpoints set by the caller.</p>                    <p>Generated from protobuf field <code>bool include_all_users = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIncludeInactive">
+        <div class="location">at         line 135</div>
+        <code>                    bool
+    <strong>getIncludeInactive</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>When set to <code>true</code>, the response includes active and inactive
+breakpoints. Otherwise, it includes only active breakpoints.</p>                    <p>Generated from protobuf field <code>bool include_inactive = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setIncludeInactive">
+        <div class="location">at         line 148</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setIncludeInactive</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>When set to <code>true</code>, the response includes active and inactive
+breakpoints. Otherwise, it includes only active breakpoints.</p>                    <p>Generated from protobuf field <code>bool include_inactive = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAction">
+        <div class="location">at         line 162</div>
+        <code>                    <a href="../../../../Google/Cloud/Debugger/V2/ListBreakpointsRequest_BreakpointActionValue.html"><abbr title="Google\Cloud\Debugger\V2\ListBreakpointsRequest_BreakpointActionValue">ListBreakpointsRequest_BreakpointActionValue</abbr></a>
+    <strong>getAction</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>When set, the response includes only breakpoints with the specified action.</p>                    <p>Generated from protobuf field <code>.google.devtools.clouddebugger.v2.ListBreakpointsRequest.BreakpointActionValue action = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Debugger/V2/ListBreakpointsRequest_BreakpointActionValue.html"><abbr title="Google\Cloud\Debugger\V2\ListBreakpointsRequest_BreakpointActionValue">ListBreakpointsRequest_BreakpointActionValue</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAction">
+        <div class="location">at         line 174</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setAction</strong>(<a href="../../../../Google/Cloud/Debugger/V2/ListBreakpointsRequest_BreakpointActionValue.html"><abbr title="Google\Cloud\Debugger\V2\ListBreakpointsRequest_BreakpointActionValue">ListBreakpointsRequest_BreakpointActionValue</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>When set, the response includes only breakpoints with the specified action.</p>                    <p>Generated from protobuf field <code>.google.devtools.clouddebugger.v2.ListBreakpointsRequest.BreakpointActionValue action = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Debugger/V2/ListBreakpointsRequest_BreakpointActionValue.html"><abbr title="Google\Cloud\Debugger\V2\ListBreakpointsRequest_BreakpointActionValue">ListBreakpointsRequest_BreakpointActionValue</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStripResults">
+        <div class="location">at         line 189</div>
+        <code>                    bool
+    <strong>getStripResults</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This field is deprecated. The following fields are always stripped out of
+the result: <code>stack_frames</code>, <code>evaluated_expressions</code> and <code>variable_table</code>.</p>                    <p>Generated from protobuf field <code>bool strip_results = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStripResults">
+        <div class="location">at         line 202</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setStripResults</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This field is deprecated. The following fields are always stripped out of
+the result: <code>stack_frames</code>, <code>evaluated_expressions</code> and <code>variable_table</code>.</p>                    <p>Generated from protobuf field <code>bool strip_results = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getWaitToken">
+        <div class="location">at         line 220</div>
+        <code>                    string
+    <strong>getWaitToken</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A wait token that, if specified, blocks the call until the breakpoints
+list has changed, or a server selected timeout has expired.  The value
+should be set from the last response. The error code
+<code>google.rpc.Code.ABORTED</code> (RPC) is returned on wait timeout, which
+should be called again with the same <code>wait_token</code>.</p>                    <p>Generated from protobuf field <code>string wait_token = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setWaitToken">
+        <div class="location">at         line 236</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setWaitToken</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A wait token that, if specified, blocks the call until the breakpoints
+list has changed, or a server selected timeout has expired.  The value
+should be set from the last response. The error code
+<code>google.rpc.Code.ABORTED</code> (RPC) is returned on wait timeout, which
+should be called again with the same <code>wait_token</code>.</p>                    <p>Generated from protobuf field <code>string wait_token = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getClientVersion">
+        <div class="location">at         line 251</div>
+        <code>                    string
+    <strong>getClientVersion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The client version making the call.</p>                    <p>Schema: <code>domain/type/version</code> (e.g., <code>google.com/intellij/v1</code>).</p>
+
+<p>Generated from protobuf field <code>string client_version = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setClientVersion">
+        <div class="location">at         line 264</div>
+        <code>                    <abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr>
+    <strong>setClientVersion</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The client version making the call.</p>                    <p>Schema: <code>domain/type/version</code> (e.g., <code>google.com/intellij/v1</code>).</p>
+
+<p>Generated from protobuf field <code>string client_version = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Debugger\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

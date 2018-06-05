@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Api\Documentation | Google ApiCore - 0.31.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Api_Documentation" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - 0.31.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/Api.html">Api</a></li><li class="backslash">\</li><li>Documentation</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Documentation
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Documentation</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p><code>Documentation</code> provides the information for describing a service.</p>            <p>Example:</p>
+
+<pre><code>documentation:
+  summary: >
+    The Google Calendar API gives access
+    to most calendar features.
+  pages:
+  - name: Overview
+    content: &#40;== include google/foo/overview.md ==&#41;
+  - name: Tutorial
+    content: &#40;== include google/foo/tutorial.md ==&#41;
+    subpages;
+    - name: Java
+      content: &#40;== include google/foo/tutorial_java.md ==&#41;
+  rules:
+  - selector: google.calendar.Calendar.Get
+    description: >
+      ...
+  - selector: google.calendar.Calendar.Put
+    description: >
+      ...
+</code></pre>
+
+<p>Documentation is provided in markdown syntax. In addition to
+standard markdown features, definition lists, tables and fenced
+code blocks are supported. Section headers can be provided and are
+interpreted relative to the section nesting of the context where
+a documentation fragment is embedded.
+Documentation from the IDL is merged with documentation defined
+via the config at normalization time, where documentation provided
+by config rules overrides IDL provided.
+A number of constructs specific to the API platform are supported
+in documentation text.
+In order to reference a proto element, the following
+notation can be used:</p>
+
+<pre><code>&#91;fully.qualified.proto.name]&#91;]</code></pre>
+
+<p>To override the display text used for the link, this can be used:</p>
+
+<pre><code>&#91;display text]&#91;fully.qualified.proto.name]</code></pre>
+
+<p>Text can be excluded from doc using the following notation:</p>
+
+<pre><code>&#40;-- internal comment --&#41;</code></pre>
+
+<p>Comments can be made conditional using a visibility label. The below
+text will be only rendered if the <code>BETA</code> label is available:</p>
+
+<pre><code>&#40;--BETA: comment for BETA users --&#41;</code></pre>
+
+<p>A few directives are available in documentation. Note that
+directives must appear on a single line to be properly
+identified. The <code>include</code> directive includes a markdown file from
+an external source:</p>
+
+<pre><code>&#40;== include path/to/file ==&#41;</code></pre>
+
+<p>The <code>resource_for</code> directive marks a message to be the resource of
+a collection in REST view. If it is not specified, tools attempt
+to infer the resource from the operations in a collection:</p>
+
+<pre><code>&#40;== resource_for v1.shelves.books ==&#41;</code></pre>
+
+<p>The directive <code>suppress_warning</code> does not directly affect documentation
+and is documented together with service config validation.</p>
+
+<p>Generated from protobuf message <code>google.api.Documentation</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSummary">getSummary</a>()
+        
+                                            <p>A short summary of what the service does. Can only be provided by
+plain text.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSummary">setSummary</a>(string $var)
+        
+                                            <p>A short summary of what the service does. Can only be provided by
+plain text.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPages">getPages</a>()
+        
+                                            <p>The top level pages for the documentation set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPages">setPages</a>(<a href="../../Google/Api/Page.html"><abbr title="Google\Api\Page">Page</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>The top level pages for the documentation set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRules">getRules</a>()
+        
+                                            <p>A list of documentation rules that apply to individual API elements.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRules">setRules</a>(<a href="../../Google/Api/DocumentationRule.html"><abbr title="Google\Api\DocumentationRule">DocumentationRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>A list of documentation rules that apply to individual API elements.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocumentationRootUrl">getDocumentationRootUrl</a>()
+        
+                                            <p>The URL to the root of documentation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDocumentationRootUrl">setDocumentationRootUrl</a>(string $var)
+        
+                                            <p>The URL to the root of documentation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOverview">getOverview</a>()
+        
+                                            <p>Declares a single overview page. For example:</p>
+
+<p>&lt;</p>
+
+<p>pre><code>documentation:
+  summary: .</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setOverview">setOverview</a>(string $var)
+        
+                                            <p>Declares a single overview page. For example:</p>
+
+<p>&lt;</p>
+
+<p>pre><code>documentation:
+  summary: .</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 115</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSummary">
+        <div class="location">at         line 127</div>
+        <code>                    string
+    <strong>getSummary</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A short summary of what the service does. Can only be provided by
+plain text.</p>                    <p>Generated from protobuf field <code>string summary = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSummary">
+        <div class="location">at         line 140</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setSummary</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A short summary of what the service does. Can only be provided by
+plain text.</p>                    <p>Generated from protobuf field <code>string summary = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPages">
+        <div class="location">at         line 154</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getPages</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The top level pages for the documentation set.</p>                    <p>Generated from protobuf field <code>repeated .google.api.Page pages = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPages">
+        <div class="location">at         line 166</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setPages</strong>(<a href="../../Google/Api/Page.html"><abbr title="Google\Api\Page">Page</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The top level pages for the documentation set.</p>                    <p>Generated from protobuf field <code>repeated .google.api.Page pages = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/Page.html"><abbr title="Google\Api\Page">Page</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRules">
+        <div class="location">at         line 181</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getRules</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of documentation rules that apply to individual API elements.</p>                    <p><strong>NOTE:</strong> All service configuration rules follow "last one wins" order.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.DocumentationRule rules = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRules">
+        <div class="location">at         line 194</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setRules</strong>(<a href="../../Google/Api/DocumentationRule.html"><abbr title="Google\Api\DocumentationRule">DocumentationRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>A list of documentation rules that apply to individual API elements.</p>                    <p><strong>NOTE:</strong> All service configuration rules follow "last one wins" order.</p>
+
+<p>Generated from protobuf field <code>repeated .google.api.DocumentationRule rules = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Api/DocumentationRule.html"><abbr title="Google\Api\DocumentationRule">DocumentationRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocumentationRootUrl">
+        <div class="location">at         line 208</div>
+        <code>                    string
+    <strong>getDocumentationRootUrl</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The URL to the root of documentation.</p>                    <p>Generated from protobuf field <code>string documentation_root_url = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDocumentationRootUrl">
+        <div class="location">at         line 220</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setDocumentationRootUrl</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The URL to the root of documentation.</p>                    <p>Generated from protobuf field <code>string documentation_root_url = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOverview">
+        <div class="location">at         line 246</div>
+        <code>                    string
+    <strong>getOverview</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Declares a single overview page. For example:</p>
+
+<p>&lt;</p>
+
+<p>pre><code>documentation:
+  summary: .</p>                    <p>..
+  overview: &#40;== include overview.md ==&#41;
+</code></pre>
+This is a shortcut for the following declaration (using pages style):</p>
+
+<pre><code>documentation:
+  summary: ...
+  pages:
+  - name: Overview
+    content: &#40;== include overview.md ==&#41;
+</code></pre>
+
+<p>Note: you cannot specify both <code>overview</code> field and <code>pages</code> field.</p>
+
+<p>Generated from protobuf field <code>string overview = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setOverview">
+        <div class="location">at         line 270</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setOverview</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Declares a single overview page. For example:</p>
+
+<p>&lt;</p>
+
+<p>pre><code>documentation:
+  summary: .</p>                    <p>..
+  overview: &#40;== include overview.md ==&#41;
+</code></pre>
+This is a shortcut for the following declaration (using pages style):</p>
+
+<pre><code>documentation:
+  summary: ...
+  pages:
+  - name: Overview
+    content: &#40;== include overview.md ==&#41;
+</code></pre>
+
+<p>Note: you cannot specify both <code>overview</code> field and <code>pages</code> field.</p>
+
+<p>Generated from protobuf field <code>string overview = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

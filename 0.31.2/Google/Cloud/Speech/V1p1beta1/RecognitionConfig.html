@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Speech\V1p1beta1\RecognitionConfig | Google ApiCore - 0.31.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Speech_V1p1beta1_RecognitionConfig" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Speech.html">Speech</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Speech/V1p1beta1.html">V1p1beta1</a></li><li class="backslash">\</li><li>RecognitionConfig</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            RecognitionConfig
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>RecognitionConfig</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Provides information to the recognizer that specifies how to process the
+request.</p>            <p>Generated from protobuf message <code>google.cloud.speech.v1p1beta1.RecognitionConfig</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEncoding">getEncoding</a>()
+        
+                                            <p>Encoding of audio data sent in all <code>RecognitionAudio</code> messages.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEncoding">setEncoding</a>(int $var)
+        
+                                            <p>Encoding of audio data sent in all <code>RecognitionAudio</code> messages.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSampleRateHertz">getSampleRateHertz</a>()
+        
+                                            <p>Sample rate in Hertz of the audio data sent in all
+<code>RecognitionAudio</code> messages. Valid values are: 8000-48000.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSampleRateHertz">setSampleRateHertz</a>(int $var)
+        
+                                            <p>Sample rate in Hertz of the audio data sent in all
+<code>RecognitionAudio</code> messages. Valid values are: 8000-48000.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAudioChannelCount">getAudioChannelCount</a>()
+        
+                                            <p><em>Optional</em> The number of channels in the input audio data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAudioChannelCount">setAudioChannelCount</a>(int $var)
+        
+                                            <p><em>Optional</em> The number of channels in the input audio data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnableSeparateRecognitionPerChannel">getEnableSeparateRecognitionPerChannel</a>()
+        
+                                            <p>This needs to be set to ‘true’ explicitly and audio_channel_count > 1
+to get each channel recognized separately. The recognition result will
+contain a channel_tag field to state which channel that result belongs to.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnableSeparateRecognitionPerChannel">setEnableSeparateRecognitionPerChannel</a>(bool $var)
+        
+                                            <p>This needs to be set to ‘true’ explicitly and audio_channel_count > 1
+to get each channel recognized separately. The recognition result will
+contain a channel_tag field to state which channel that result belongs to.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLanguageCode">getLanguageCode</a>()
+        
+                                            <p><em>Required</em> The language of the supplied audio as a
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tag.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLanguageCode">setLanguageCode</a>(string $var)
+        
+                                            <p><em>Required</em> The language of the supplied audio as a
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tag.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAlternativeLanguageCodes">getAlternativeLanguageCodes</a>()
+        
+                                            <p><em>Optional</em> A list of up to 3 additional
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tags,
+listing possible alternative languages of the supplied audio.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAlternativeLanguageCodes">setAlternativeLanguageCodes</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p><em>Optional</em> A list of up to 3 additional
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tags,
+listing possible alternative languages of the supplied audio.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMaxAlternatives">getMaxAlternatives</a>()
+        
+                                            <p><em>Optional</em> Maximum number of recognition hypotheses to be returned.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMaxAlternatives">setMaxAlternatives</a>(int $var)
+        
+                                            <p><em>Optional</em> Maximum number of recognition hypotheses to be returned.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getProfanityFilter">getProfanityFilter</a>()
+        
+                                            <p><em>Optional</em> If set to <code>true</code>, the server will attempt to filter out
+profanities, replacing all but the initial character in each filtered word
+with asterisks, e.g. "f***". If set to <code>false</code> or omitted, profanities
+won't be filtered out.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setProfanityFilter">setProfanityFilter</a>(bool $var)
+        
+                                            <p><em>Optional</em> If set to <code>true</code>, the server will attempt to filter out
+profanities, replacing all but the initial character in each filtered word
+with asterisks, e.g. "f***". If set to <code>false</code> or omitted, profanities
+won't be filtered out.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSpeechContexts">getSpeechContexts</a>()
+        
+                                            <p><em>Optional</em> A means to provide context to assist the speech recognition.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSpeechContexts">setSpeechContexts</a>(<a href="../../../../Google/Cloud/Speech/V1p1beta1/SpeechContext.html"><abbr title="Google\Cloud\Speech\V1p1beta1\SpeechContext">SpeechContext</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p><em>Optional</em> A means to provide context to assist the speech recognition.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnableWordTimeOffsets">getEnableWordTimeOffsets</a>()
+        
+                                            <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnableWordTimeOffsets">setEnableWordTimeOffsets</a>(bool $var)
+        
+                                            <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnableWordConfidence">getEnableWordConfidence</a>()
+        
+                                            <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and the
+confidence for those words. If <code>false</code>, no word-level confidence
+information is returned. The default is <code>false</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnableWordConfidence">setEnableWordConfidence</a>(bool $var)
+        
+                                            <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and the
+confidence for those words. If <code>false</code>, no word-level confidence
+information is returned. The default is <code>false</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnableAutomaticPunctuation">getEnableAutomaticPunctuation</a>()
+        
+                                            <p><em>Optional</em> If 'true', adds punctuation to recognition result hypotheses.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnableAutomaticPunctuation">setEnableAutomaticPunctuation</a>(bool $var)
+        
+                                            <p><em>Optional</em> If 'true', adds punctuation to recognition result hypotheses.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEnableSpeakerDiarization">getEnableSpeakerDiarization</a>()
+        
+                                            <p><em>Optional</em> If 'true', enables speaker detection for each recognized word in
+the top alternative of the recognition result using a speaker_tag provided
+in the WordInfo.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setEnableSpeakerDiarization">setEnableSpeakerDiarization</a>(bool $var)
+        
+                                            <p><em>Optional</em> If 'true', enables speaker detection for each recognized word in
+the top alternative of the recognition result using a speaker_tag provided
+in the WordInfo.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDiarizationSpeakerCount">getDiarizationSpeakerCount</a>()
+        
+                                            <p><em>Optional</em>
+If set, specifies the estimated number of speakers in the conversation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDiarizationSpeakerCount">setDiarizationSpeakerCount</a>(int $var)
+        
+                                            <p><em>Optional</em>
+If set, specifies the estimated number of speakers in the conversation.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Speech/V1p1beta1/RecognitionMetadata.html"><abbr title="Google\Cloud\Speech\V1p1beta1\RecognitionMetadata">RecognitionMetadata</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMetadata">getMetadata</a>()
+        
+                                            <p><em>Optional</em> Metadata regarding this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMetadata">setMetadata</a>(<a href="../../../../Google/Cloud/Speech/V1p1beta1/RecognitionMetadata.html"><abbr title="Google\Cloud\Speech\V1p1beta1\RecognitionMetadata">RecognitionMetadata</abbr></a> $var)
+        
+                                            <p><em>Optional</em> Metadata regarding this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModel">getModel</a>()
+        
+                                            <p><em>Optional</em> Which model to select for the given request. Select the model
+best suited to your domain to get best results. If a model is not
+explicitly specified, then we auto-select a model based on the parameters
+in the RecognitionConfig.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setModel">setModel</a>(string $var)
+        
+                                            <p><em>Optional</em> Which model to select for the given request. Select the model
+best suited to your domain to get best results. If a model is not
+explicitly specified, then we auto-select a model based on the parameters
+in the RecognitionConfig.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUseEnhanced">getUseEnhanced</a>()
+        
+                                            <p><em>Optional</em> Set to true to use an enhanced model for speech recognition.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUseEnhanced">setUseEnhanced</a>(bool $var)
+        
+                                            <p><em>Optional</em> Set to true to use an enhanced model for speech recognition.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 226</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEncoding">
+        <div class="location">at         line 239</div>
+        <code>                    int
+    <strong>getEncoding</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Encoding of audio data sent in all <code>RecognitionAudio</code> messages.</p>                    <p>This field is optional for <code>FLAC</code> and <code>WAV</code> audio files and required
+for all other audio formats. For details, see [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].</p>
+
+<p>Generated from protobuf field <code>.google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding encoding = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEncoding">
+        <div class="location">at         line 253</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setEncoding</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Encoding of audio data sent in all <code>RecognitionAudio</code> messages.</p>                    <p>This field is optional for <code>FLAC</code> and <code>WAV</code> audio files and required
+for all other audio formats. For details, see [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].</p>
+
+<p>Generated from protobuf field <code>.google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding encoding = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSampleRateHertz">
+        <div class="location">at         line 273</div>
+        <code>                    int
+    <strong>getSampleRateHertz</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sample rate in Hertz of the audio data sent in all
+<code>RecognitionAudio</code> messages. Valid values are: 8000-48000.</p>                    <p>16000 is optimal. For best results, set the sampling rate of the audio
+source to 16000 Hz. If that's not possible, use the native sample rate of
+the audio source (instead of re-sampling).
+This field is optional for <code>FLAC</code> and <code>WAV</code> audio files and required
+for all other audio formats. For details, see [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].</p>
+
+<p>Generated from protobuf field <code>int32 sample_rate_hertz = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSampleRateHertz">
+        <div class="location">at         line 291</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setSampleRateHertz</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sample rate in Hertz of the audio data sent in all
+<code>RecognitionAudio</code> messages. Valid values are: 8000-48000.</p>                    <p>16000 is optimal. For best results, set the sampling rate of the audio
+source to 16000 Hz. If that's not possible, use the native sample rate of
+the audio source (instead of re-sampling).
+This field is optional for <code>FLAC</code> and <code>WAV</code> audio files and required
+for all other audio formats. For details, see [AudioEncoding][google.cloud.speech.v1p1beta1.RecognitionConfig.AudioEncoding].</p>
+
+<p>Generated from protobuf field <code>int32 sample_rate_hertz = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAudioChannelCount">
+        <div class="location">at         line 313</div>
+        <code>                    int
+    <strong>getAudioChannelCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> The number of channels in the input audio data.</p>                    <p>ONLY set this for MULTI-CHANNEL recognition.
+Valid values for LINEAR16 and FLAC are <code>1</code>-<code>8</code>.
+Valid values for OGG_OPUS are '1'-'254'.
+Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only <code>1</code>.
+If <code>0</code> or omitted, defaults to one channel (mono).
+NOTE: We only recognize the first channel by default.
+To perform independent recognition on each channel set
+enable_separate_recognition_per_channel to 'true'.</p>
+
+<p>Generated from protobuf field <code>int32 audio_channel_count = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAudioChannelCount">
+        <div class="location">at         line 333</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setAudioChannelCount</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> The number of channels in the input audio data.</p>                    <p>ONLY set this for MULTI-CHANNEL recognition.
+Valid values for LINEAR16 and FLAC are <code>1</code>-<code>8</code>.
+Valid values for OGG_OPUS are '1'-'254'.
+Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only <code>1</code>.
+If <code>0</code> or omitted, defaults to one channel (mono).
+NOTE: We only recognize the first channel by default.
+To perform independent recognition on each channel set
+enable_separate_recognition_per_channel to 'true'.</p>
+
+<p>Generated from protobuf field <code>int32 audio_channel_count = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnableSeparateRecognitionPerChannel">
+        <div class="location">at         line 352</div>
+        <code>                    bool
+    <strong>getEnableSeparateRecognitionPerChannel</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This needs to be set to ‘true’ explicitly and audio_channel_count > 1
+to get each channel recognized separately. The recognition result will
+contain a channel_tag field to state which channel that result belongs to.</p>                    <p>If this is not ‘true’, we will only recognize the first channel.
+NOTE: The request is also billed cumulatively for all channels recognized:
+    (audio_channel_count times the audio length)</p>
+
+<p>Generated from protobuf field <code>bool enable_separate_recognition_per_channel = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnableSeparateRecognitionPerChannel">
+        <div class="location">at         line 369</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setEnableSeparateRecognitionPerChannel</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This needs to be set to ‘true’ explicitly and audio_channel_count > 1
+to get each channel recognized separately. The recognition result will
+contain a channel_tag field to state which channel that result belongs to.</p>                    <p>If this is not ‘true’, we will only recognize the first channel.
+NOTE: The request is also billed cumulatively for all channels recognized:
+    (audio_channel_count times the audio length)</p>
+
+<p>Generated from protobuf field <code>bool enable_separate_recognition_per_channel = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLanguageCode">
+        <div class="location">at         line 387</div>
+        <code>                    string
+    <strong>getLanguageCode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Required</em> The language of the supplied audio as a
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tag.</p>                    <p>Example: "en-US".
+See <a href="https://cloud.google.com/speech/docs/languages">Language Support</a>
+for a list of the currently supported language codes.</p>
+
+<p>Generated from protobuf field <code>string language_code = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLanguageCode">
+        <div class="location">at         line 403</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setLanguageCode</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Required</em> The language of the supplied audio as a
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tag.</p>                    <p>Example: "en-US".
+See <a href="https://cloud.google.com/speech/docs/languages">Language Support</a>
+for a list of the currently supported language codes.</p>
+
+<p>Generated from protobuf field <code>string language_code = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAlternativeLanguageCodes">
+        <div class="location">at         line 428</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getAlternativeLanguageCodes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> A list of up to 3 additional
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tags,
+listing possible alternative languages of the supplied audio.</p>                    <p>See <a href="https://cloud.google.com/speech/docs/languages">Language Support</a>
+for a list of the currently supported language codes.
+If alternative languages are listed, recognition result will contain
+recognition in the most likely language detected including the main
+language_code. The recognition result will include the language tag
+of the language detected in the audio.
+NOTE: This feature is only supported for Voice Command and Voice Search
+use cases and performance may vary for other use cases (e.g., phone call
+transcription).</p>
+
+<p>Generated from protobuf field <code>repeated string alternative_language_codes = 18;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAlternativeLanguageCodes">
+        <div class="location">at         line 451</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setAlternativeLanguageCodes</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> A list of up to 3 additional
+<a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP-47</a> language tags,
+listing possible alternative languages of the supplied audio.</p>                    <p>See <a href="https://cloud.google.com/speech/docs/languages">Language Support</a>
+for a list of the currently supported language codes.
+If alternative languages are listed, recognition result will contain
+recognition in the most likely language detected including the main
+language_code. The recognition result will include the language tag
+of the language detected in the audio.
+NOTE: This feature is only supported for Voice Command and Voice Search
+use cases and performance may vary for other use cases (e.g., phone call
+transcription).</p>
+
+<p>Generated from protobuf field <code>repeated string alternative_language_codes = 18;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMaxAlternatives">
+        <div class="location">at         line 470</div>
+        <code>                    int
+    <strong>getMaxAlternatives</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Maximum number of recognition hypotheses to be returned.</p>                    <p>Specifically, the maximum number of <code>SpeechRecognitionAlternative</code> messages
+within each <code>SpeechRecognitionResult</code>.
+The server may return fewer than <code>max_alternatives</code>.
+Valid values are <code>0</code>-<code>30</code>. A value of <code>0</code> or <code>1</code> will return a maximum of
+one. If omitted, will return a maximum of one.</p>
+
+<p>Generated from protobuf field <code>int32 max_alternatives = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMaxAlternatives">
+        <div class="location">at         line 487</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setMaxAlternatives</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Maximum number of recognition hypotheses to be returned.</p>                    <p>Specifically, the maximum number of <code>SpeechRecognitionAlternative</code> messages
+within each <code>SpeechRecognitionResult</code>.
+The server may return fewer than <code>max_alternatives</code>.
+Valid values are <code>0</code>-<code>30</code>. A value of <code>0</code> or <code>1</code> will return a maximum of
+one. If omitted, will return a maximum of one.</p>
+
+<p>Generated from protobuf field <code>int32 max_alternatives = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getProfanityFilter">
+        <div class="location">at         line 504</div>
+        <code>                    bool
+    <strong>getProfanityFilter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If set to <code>true</code>, the server will attempt to filter out
+profanities, replacing all but the initial character in each filtered word
+with asterisks, e.g. "f***". If set to <code>false</code> or omitted, profanities
+won't be filtered out.</p>                    <p>Generated from protobuf field <code>bool profanity_filter = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setProfanityFilter">
+        <div class="location">at         line 519</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setProfanityFilter</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If set to <code>true</code>, the server will attempt to filter out
+profanities, replacing all but the initial character in each filtered word
+with asterisks, e.g. "f***". If set to <code>false</code> or omitted, profanities
+won't be filtered out.</p>                    <p>Generated from protobuf field <code>bool profanity_filter = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSpeechContexts">
+        <div class="location">at         line 533</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getSpeechContexts</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> A means to provide context to assist the speech recognition.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.speech.v1p1beta1.SpeechContext speech_contexts = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSpeechContexts">
+        <div class="location">at         line 545</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setSpeechContexts</strong>(<a href="../../../../Google/Cloud/Speech/V1p1beta1/SpeechContext.html"><abbr title="Google\Cloud\Speech\V1p1beta1\SpeechContext">SpeechContext</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> A means to provide context to assist the speech recognition.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.speech.v1p1beta1.SpeechContext speech_contexts = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Speech/V1p1beta1/SpeechContext.html"><abbr title="Google\Cloud\Speech\V1p1beta1\SpeechContext">SpeechContext</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnableWordTimeOffsets">
+        <div class="location">at         line 562</div>
+        <code>                    bool
+    <strong>getEnableWordTimeOffsets</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                    <p>Generated from protobuf field <code>bool enable_word_time_offsets = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnableWordTimeOffsets">
+        <div class="location">at         line 577</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setEnableWordTimeOffsets</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and
+the start and end time offsets (timestamps) for those words. If
+<code>false</code>, no word-level time offset information is returned. The default is
+<code>false</code>.</p>                    <p>Generated from protobuf field <code>bool enable_word_time_offsets = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnableWordConfidence">
+        <div class="location">at         line 593</div>
+        <code>                    bool
+    <strong>getEnableWordConfidence</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and the
+confidence for those words. If <code>false</code>, no word-level confidence
+information is returned. The default is <code>false</code>.</p>                    <p>Generated from protobuf field <code>bool enable_word_confidence = 15;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnableWordConfidence">
+        <div class="location">at         line 607</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setEnableWordConfidence</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If <code>true</code>, the top result includes a list of words and the
+confidence for those words. If <code>false</code>, no word-level confidence
+information is returned. The default is <code>false</code>.</p>                    <p>Generated from protobuf field <code>bool enable_word_confidence = 15;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnableAutomaticPunctuation">
+        <div class="location">at         line 627</div>
+        <code>                    bool
+    <strong>getEnableAutomaticPunctuation</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If 'true', adds punctuation to recognition result hypotheses.</p>                    <p>This feature is only available in select languages. Setting this for
+requests in other languages has no effect at all.
+The default 'false' value does not add punctuation to result hypotheses.
+NOTE: "This is currently offered as an experimental service, complimentary
+to all users. In the future this may be exclusively available as a
+premium feature."</p>
+
+<p>Generated from protobuf field <code>bool enable_automatic_punctuation = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnableAutomaticPunctuation">
+        <div class="location">at         line 645</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setEnableAutomaticPunctuation</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If 'true', adds punctuation to recognition result hypotheses.</p>                    <p>This feature is only available in select languages. Setting this for
+requests in other languages has no effect at all.
+The default 'false' value does not add punctuation to result hypotheses.
+NOTE: "This is currently offered as an experimental service, complimentary
+to all users. In the future this may be exclusively available as a
+premium feature."</p>
+
+<p>Generated from protobuf field <code>bool enable_automatic_punctuation = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEnableSpeakerDiarization">
+        <div class="location">at         line 665</div>
+        <code>                    bool
+    <strong>getEnableSpeakerDiarization</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If 'true', enables speaker detection for each recognized word in
+the top alternative of the recognition result using a speaker_tag provided
+in the WordInfo.</p>                    <p>Note: When this is true, we send all the words from the beginning of the
+audio for the top alternative in every consecutive responses.
+This is done in order to improve our speaker tags as our models learn to
+identify the speakers in the conversation over time.</p>
+
+<p>Generated from protobuf field <code>bool enable_speaker_diarization = 16;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setEnableSpeakerDiarization">
+        <div class="location">at         line 683</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setEnableSpeakerDiarization</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> If 'true', enables speaker detection for each recognized word in
+the top alternative of the recognition result using a speaker_tag provided
+in the WordInfo.</p>                    <p>Note: When this is true, we send all the words from the beginning of the
+audio for the top alternative in every consecutive responses.
+This is done in order to improve our speaker tags as our models learn to
+identify the speakers in the conversation over time.</p>
+
+<p>Generated from protobuf field <code>bool enable_speaker_diarization = 16;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDiarizationSpeakerCount">
+        <div class="location">at         line 700</div>
+        <code>                    int
+    <strong>getDiarizationSpeakerCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em>
+If set, specifies the estimated number of speakers in the conversation.</p>                    <p>If not set, defaults to '2'.
+Ignored unless enable_speaker_diarization is set to true."</p>
+
+<p>Generated from protobuf field <code>int32 diarization_speaker_count = 17;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDiarizationSpeakerCount">
+        <div class="location">at         line 715</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setDiarizationSpeakerCount</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em>
+If set, specifies the estimated number of speakers in the conversation.</p>                    <p>If not set, defaults to '2'.
+Ignored unless enable_speaker_diarization is set to true."</p>
+
+<p>Generated from protobuf field <code>int32 diarization_speaker_count = 17;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMetadata">
+        <div class="location">at         line 729</div>
+        <code>                    <a href="../../../../Google/Cloud/Speech/V1p1beta1/RecognitionMetadata.html"><abbr title="Google\Cloud\Speech\V1p1beta1\RecognitionMetadata">RecognitionMetadata</abbr></a>
+    <strong>getMetadata</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Metadata regarding this request.</p>                    <p>Generated from protobuf field <code>.google.cloud.speech.v1p1beta1.RecognitionMetadata metadata = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Speech/V1p1beta1/RecognitionMetadata.html"><abbr title="Google\Cloud\Speech\V1p1beta1\RecognitionMetadata">RecognitionMetadata</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMetadata">
+        <div class="location">at         line 741</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setMetadata</strong>(<a href="../../../../Google/Cloud/Speech/V1p1beta1/RecognitionMetadata.html"><abbr title="Google\Cloud\Speech\V1p1beta1\RecognitionMetadata">RecognitionMetadata</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Metadata regarding this request.</p>                    <p>Generated from protobuf field <code>.google.cloud.speech.v1p1beta1.RecognitionMetadata metadata = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Speech/V1p1beta1/RecognitionMetadata.html"><abbr title="Google\Cloud\Speech\V1p1beta1\RecognitionMetadata">RecognitionMetadata</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getModel">
+        <div class="location">at         line 786</div>
+        <code>                    string
+    <strong>getModel</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Which model to select for the given request. Select the model
+best suited to your domain to get best results. If a model is not
+explicitly specified, then we auto-select a model based on the parameters
+in the RecognitionConfig.</p>                    <p><table>
+  <tr>
+    <td><b>Model</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td><code>command_and_search</code></td>
+    <td>Best for short queries such as voice commands or voice search.</td>
+  </tr>
+  <tr>
+    <td><code>phone_call</code></td>
+    <td>Best for audio that originated from a phone call (typically
+    recorded at an 8khz sampling rate).</td>
+  </tr>
+  <tr>
+    <td><code>video</code></td>
+    <td>Best for audio that originated from from video or includes multiple
+        speakers. Ideally the audio is recorded at a 16khz or greater
+        sampling rate. This is a premium model that costs more than the
+        standard rate.</td>
+  </tr>
+  <tr>
+    <td><code>default</code></td>
+    <td>Best for audio that is not one of the specific audio models.
+        For example, long-form audio. Ideally the audio is high-fidelity,
+        recorded at a 16khz or greater sampling rate.</td>
+  </tr>
+</table>
+
+<p>Generated from protobuf field <code>string model = 13;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setModel">
+        <div class="location">at         line 829</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setModel</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Which model to select for the given request. Select the model
+best suited to your domain to get best results. If a model is not
+explicitly specified, then we auto-select a model based on the parameters
+in the RecognitionConfig.</p>                    <p><table>
+  <tr>
+    <td><b>Model</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td><code>command_and_search</code></td>
+    <td>Best for short queries such as voice commands or voice search.</td>
+  </tr>
+  <tr>
+    <td><code>phone_call</code></td>
+    <td>Best for audio that originated from a phone call (typically
+    recorded at an 8khz sampling rate).</td>
+  </tr>
+  <tr>
+    <td><code>video</code></td>
+    <td>Best for audio that originated from from video or includes multiple
+        speakers. Ideally the audio is recorded at a 16khz or greater
+        sampling rate. This is a premium model that costs more than the
+        standard rate.</td>
+  </tr>
+  <tr>
+    <td><code>default</code></td>
+    <td>Best for audio that is not one of the specific audio models.
+        For example, long-form audio. Ideally the audio is high-fidelity,
+        recorded at a 16khz or greater sampling rate.</td>
+  </tr>
+</table>
+
+<p>Generated from protobuf field <code>string model = 13;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUseEnhanced">
+        <div class="location">at         line 852</div>
+        <code>                    bool
+    <strong>getUseEnhanced</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Set to true to use an enhanced model for speech recognition.</p>                    <p>You must also set the <code>model</code> field to a valid, enhanced model. If
+<code>use_enhanced</code> is set to true and the <code>model</code> field is not set, then
+<code>use_enhanced</code> is ignored. If <code>use_enhanced</code> is true and an enhanced
+version of the specified model does not exist, then the speech is
+recognized using the standard version of the specified model.
+Enhanced speech models require that you opt-in to the audio logging using
+instructions in the <a href="/speech/data-sharing">alpha documentation</a>. If you set
+<code>use_enhanced</code> to true and you have not enabled audio logging, then you
+will receive an error.</p>
+
+<p>Generated from protobuf field <code>bool use_enhanced = 14;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUseEnhanced">
+        <div class="location">at         line 873</div>
+        <code>                    <abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr>
+    <strong>setUseEnhanced</strong>(bool $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p><em>Optional</em> Set to true to use an enhanced model for speech recognition.</p>                    <p>You must also set the <code>model</code> field to a valid, enhanced model. If
+<code>use_enhanced</code> is set to true and the <code>model</code> field is not set, then
+<code>use_enhanced</code> is ignored. If <code>use_enhanced</code> is true and an enhanced
+version of the specified model does not exist, then the speech is
+recognized using the standard version of the specified model.
+Enhanced speech models require that you opt-in to the audio logging using
+instructions in the <a href="/speech/data-sharing">alpha documentation</a>. If you set
+<code>use_enhanced</code> to true and you have not enabled audio logging, then you
+will receive an error.</p>
+
+<p>Generated from protobuf field <code>bool use_enhanced = 14;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Speech\V1p1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

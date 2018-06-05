@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Monitoring\V3\UptimeCheckServiceGrpcClient | Google ApiCore - 0.32.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Monitoring_V3_UptimeCheckServiceGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.32.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring.html">Monitoring</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Monitoring/V3.html">V3</a></li><li class="backslash">\</li><li>UptimeCheckServiceGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            UptimeCheckServiceGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>UptimeCheckServiceGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The UptimeCheckService API is used to manage (list, create, delete, edit)
+uptime check configurations in the Stackdriver Monitoring product. An uptime
+check is a piece of configuration that determines which resources and
+services to monitor for availability. These configurations can also be
+configured interactively by navigating to the [Cloud Console]
+(http://console.cloud.google.com), selecting the appropriate project,
+clicking on "Monitoring" on the left-hand side to navigate to Stackdriver,
+and then clicking on "Uptime".</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListUptimeCheckConfigs">ListUptimeCheckConfigs</a>(<a href="../../../../Google/Cloud/Monitoring/V3/ListUptimeCheckConfigsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckConfigsRequest">ListUptimeCheckConfigsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists the existing valid uptime check configurations for the project,
+leaving out any invalid configurations.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetUptimeCheckConfig">GetUptimeCheckConfig</a>(<a href="../../../../Google/Cloud/Monitoring/V3/GetUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetUptimeCheckConfigRequest">GetUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets a single uptime check configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateUptimeCheckConfig">CreateUptimeCheckConfig</a>(<a href="../../../../Google/Cloud/Monitoring/V3/CreateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateUptimeCheckConfigRequest">CreateUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a new uptime check configuration.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateUptimeCheckConfig">UpdateUptimeCheckConfig</a>(<a href="../../../../Google/Cloud/Monitoring/V3/UpdateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateUptimeCheckConfigRequest">UpdateUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates an uptime check configuration. You can either replace the entire
+configuration with a new one or replace only certain fields in the current
+configuration by specifying the fields to be updated via <code>"updateMask"</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteUptimeCheckConfig">DeleteUptimeCheckConfig</a>(<a href="../../../../Google/Cloud/Monitoring/V3/DeleteUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteUptimeCheckConfigRequest">DeleteUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes an uptime check configuration. Note that this method will fail
+if the uptime check configuration is referenced by an alert policy or
+other dependent configs that would be rendered invalid by the deletion.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListUptimeCheckIps">ListUptimeCheckIps</a>(<a href="../../../../Google/Cloud/Monitoring/V3/ListUptimeCheckIpsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckIpsRequest">ListUptimeCheckIpsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Returns the list of IPs that checkers run from</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 38</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListUptimeCheckConfigs">
+        <div class="location">at         line 49</div>
+        <code>                    
+    <strong>ListUptimeCheckConfigs</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/ListUptimeCheckConfigsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckConfigsRequest">ListUptimeCheckConfigsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists the existing valid uptime check configurations for the project,
+leaving out any invalid configurations.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/ListUptimeCheckConfigsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckConfigsRequest">ListUptimeCheckConfigsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetUptimeCheckConfig">
+        <div class="location">at         line 63</div>
+        <code>                    
+    <strong>GetUptimeCheckConfig</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/GetUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetUptimeCheckConfigRequest">GetUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets a single uptime check configuration.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/GetUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\GetUptimeCheckConfigRequest">GetUptimeCheckConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateUptimeCheckConfig">
+        <div class="location">at         line 77</div>
+        <code>                    
+    <strong>CreateUptimeCheckConfig</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/CreateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateUptimeCheckConfigRequest">CreateUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a new uptime check configuration.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/CreateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\CreateUptimeCheckConfigRequest">CreateUptimeCheckConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateUptimeCheckConfig">
+        <div class="location">at         line 94</div>
+        <code>                    
+    <strong>UpdateUptimeCheckConfig</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/UpdateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateUptimeCheckConfigRequest">UpdateUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates an uptime check configuration. You can either replace the entire
+configuration with a new one or replace only certain fields in the current
+configuration by specifying the fields to be updated via <code>"updateMask"</code>.</p>                    <p>Returns the updated configuration.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/UpdateUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\UpdateUptimeCheckConfigRequest">UpdateUptimeCheckConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteUptimeCheckConfig">
+        <div class="location">at         line 110</div>
+        <code>                    
+    <strong>DeleteUptimeCheckConfig</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/DeleteUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteUptimeCheckConfigRequest">DeleteUptimeCheckConfigRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes an uptime check configuration. Note that this method will fail
+if the uptime check configuration is referenced by an alert policy or
+other dependent configs that would be rendered invalid by the deletion.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/DeleteUptimeCheckConfigRequest.html"><abbr title="Google\Cloud\Monitoring\V3\DeleteUptimeCheckConfigRequest">DeleteUptimeCheckConfigRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListUptimeCheckIps">
+        <div class="location">at         line 124</div>
+        <code>                    
+    <strong>ListUptimeCheckIps</strong>(<a href="../../../../Google/Cloud/Monitoring/V3/ListUptimeCheckIpsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckIpsRequest">ListUptimeCheckIpsRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the list of IPs that checkers run from</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Monitoring/V3/ListUptimeCheckIpsRequest.html"><abbr title="Google\Cloud\Monitoring\V3\ListUptimeCheckIpsRequest">ListUptimeCheckIpsRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

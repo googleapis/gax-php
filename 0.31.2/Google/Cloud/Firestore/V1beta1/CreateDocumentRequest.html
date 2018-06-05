@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Firestore\V1beta1\CreateDocumentRequest | Google ApiCore - 0.31.2</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Firestore_V1beta1_CreateDocumentRequest" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.31.2</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Firestore.html">Firestore</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Firestore/V1beta1.html">V1beta1</a></li><li class="backslash">\</li><li>CreateDocumentRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            CreateDocumentRequest
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>CreateDocumentRequest</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The request for [Firestore.CreateDocument][google.firestore.v1beta1.Firestore.CreateDocument].</p>            <p>Generated from protobuf message <code>google.firestore.v1beta1.CreateDocumentRequest</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getParent">getParent</a>()
+        
+                                            <p>The parent resource. For example:
+<code>projects/{project_id}/databases/{database_id}/documents</code> or
+<code>projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}</code></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setParent">setParent</a>(string $var)
+        
+                                            <p>The parent resource. For example:
+<code>projects/{project_id}/databases/{database_id}/documents</code> or
+<code>projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}</code></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCollectionId">getCollectionId</a>()
+        
+                                            <p>The collection ID, relative to <code>parent</code>, to list. For example: <code>chatrooms</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setCollectionId">setCollectionId</a>(string $var)
+        
+                                            <p>The collection ID, relative to <code>parent</code>, to list. For example: <code>chatrooms</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocumentId">getDocumentId</a>()
+        
+                                            <p>The client-assigned document ID to use for this document.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDocumentId">setDocumentId</a>(string $var)
+        
+                                            <p>The client-assigned document ID to use for this document.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Firestore/V1beta1/Document.html"><abbr title="Google\Cloud\Firestore\V1beta1\Document">Document</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocument">getDocument</a>()
+        
+                                            <p>The document to create. <code>name</code> must not be set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDocument">setDocument</a>(<a href="../../../../Google/Cloud/Firestore/V1beta1/Document.html"><abbr title="Google\Cloud\Firestore\V1beta1\Document">Document</abbr></a> $var)
+        
+                                            <p>The document to create. <code>name</code> must not be set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Firestore/V1beta1/DocumentMask.html"><abbr title="Google\Cloud\Firestore\V1beta1\DocumentMask">DocumentMask</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMask">getMask</a>()
+        
+                                            <p>The fields to return. If not set, returns all fields.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMask">setMask</a>(<a href="../../../../Google/Cloud/Firestore/V1beta1/DocumentMask.html"><abbr title="Google\Cloud\Firestore\V1beta1\DocumentMask">DocumentMask</abbr></a> $var)
+        
+                                            <p>The fields to return. If not set, returns all fields.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 54</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getParent">
+        <div class="location">at         line 67</div>
+        <code>                    string
+    <strong>getParent</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The parent resource. For example:
+<code>projects/{project_id}/databases/{database_id}/documents</code> or
+<code>projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}</code></p>                    <p>Generated from protobuf field <code>string parent = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setParent">
+        <div class="location">at         line 81</div>
+        <code>                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+    <strong>setParent</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The parent resource. For example:
+<code>projects/{project_id}/databases/{database_id}/documents</code> or
+<code>projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}</code></p>                    <p>Generated from protobuf field <code>string parent = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCollectionId">
+        <div class="location">at         line 95</div>
+        <code>                    string
+    <strong>getCollectionId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The collection ID, relative to <code>parent</code>, to list. For example: <code>chatrooms</code>.</p>                    <p>Generated from protobuf field <code>string collection_id = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCollectionId">
+        <div class="location">at         line 107</div>
+        <code>                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+    <strong>setCollectionId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The collection ID, relative to <code>parent</code>, to list. For example: <code>chatrooms</code>.</p>                    <p>Generated from protobuf field <code>string collection_id = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocumentId">
+        <div class="location">at         line 122</div>
+        <code>                    string
+    <strong>getDocumentId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The client-assigned document ID to use for this document.</p>                    <p>Optional. If not specified, an ID will be assigned by the service.</p>
+
+<p>Generated from protobuf field <code>string document_id = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDocumentId">
+        <div class="location">at         line 135</div>
+        <code>                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+    <strong>setDocumentId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The client-assigned document ID to use for this document.</p>                    <p>Optional. If not specified, an ID will be assigned by the service.</p>
+
+<p>Generated from protobuf field <code>string document_id = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocument">
+        <div class="location">at         line 149</div>
+        <code>                    <a href="../../../../Google/Cloud/Firestore/V1beta1/Document.html"><abbr title="Google\Cloud\Firestore\V1beta1\Document">Document</abbr></a>
+    <strong>getDocument</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The document to create. <code>name</code> must not be set.</p>                    <p>Generated from protobuf field <code>.google.firestore.v1beta1.Document document = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Firestore/V1beta1/Document.html"><abbr title="Google\Cloud\Firestore\V1beta1\Document">Document</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDocument">
+        <div class="location">at         line 161</div>
+        <code>                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+    <strong>setDocument</strong>(<a href="../../../../Google/Cloud/Firestore/V1beta1/Document.html"><abbr title="Google\Cloud\Firestore\V1beta1\Document">Document</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The document to create. <code>name</code> must not be set.</p>                    <p>Generated from protobuf field <code>.google.firestore.v1beta1.Document document = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Firestore/V1beta1/Document.html"><abbr title="Google\Cloud\Firestore\V1beta1\Document">Document</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMask">
+        <div class="location">at         line 177</div>
+        <code>                    <a href="../../../../Google/Cloud/Firestore/V1beta1/DocumentMask.html"><abbr title="Google\Cloud\Firestore\V1beta1\DocumentMask">DocumentMask</abbr></a>
+    <strong>getMask</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The fields to return. If not set, returns all fields.</p>                    <p>If the document has a field that is not present in this mask, that field
+will not be returned in the response.</p>
+
+<p>Generated from protobuf field <code>.google.firestore.v1beta1.DocumentMask mask = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Firestore/V1beta1/DocumentMask.html"><abbr title="Google\Cloud\Firestore\V1beta1\DocumentMask">DocumentMask</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMask">
+        <div class="location">at         line 191</div>
+        <code>                    <abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr>
+    <strong>setMask</strong>(<a href="../../../../Google/Cloud/Firestore/V1beta1/DocumentMask.html"><abbr title="Google\Cloud\Firestore\V1beta1\DocumentMask">DocumentMask</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The fields to return. If not set, returns all fields.</p>                    <p>If the document has a field that is not present in this mask, that field
+will not be returned in the response.</p>
+
+<p>Generated from protobuf field <code>.google.firestore.v1beta1.DocumentMask mask = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Firestore/V1beta1/DocumentMask.html"><abbr title="Google\Cloud\Firestore\V1beta1\DocumentMask">DocumentMask</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Firestore\V1beta1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
