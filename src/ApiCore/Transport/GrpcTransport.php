@@ -83,15 +83,27 @@ class GrpcTransport extends BaseStub implements TransportInterface
     {
         self::validateGrpcSupport();
 
-        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
-        $host = "$addr:$port";
         $config += [
             'stubOpts' => [],
             'channel'  => null,
         ];
-        $channel = self::buildChannel($host, $config);
+        list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
+        $host = "$addr:$port";
+        $stubOpts = $config['stubOpts'];
+        // Set the required 'credentials' key in stubOpts if it is not already set. Use
+        // array_key_exists because null is a valid value.
+        if (!array_key_exists('credentials', $stubOpts)) {
+            $stubOpts['credentials'] = ChannelCredentials::createSsl();
+        }
+        $channel = $config['channel'];
+        if (!is_null($channel) && !($channel instanceof Channel)) {
+            throw new ValidationException(
+                "Channel argument to GrpcTransport must be of type \Grpc\Channel, " .
+                "instead got: " . print_r($channel, true)
+            );
+        }
         try {
-            $transport = new GrpcTransport($host, $config['stubOpts'], $channel);
+            $transport = new GrpcTransport($host, $stubOpts, $channel);
             $transport->interceptors = self::getInterceptors($config);
             return $transport;
         } catch (Exception $ex) {
