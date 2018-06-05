@@ -43,7 +43,9 @@ abstract class ForwardingCall
     protected $innerCall;
 
     /**
-     * {@inheritdoc}
+     * ForwardingCall constructor.
+     *
+     * @param AbstractCall|ForwardingCall $innerCall
      */
     public function __construct($innerCall)
     {
@@ -51,7 +53,7 @@ abstract class ForwardingCall
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed The metadata sent by the server
      */
     public function getMetadata()
     {
@@ -59,7 +61,7 @@ abstract class ForwardingCall
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed The trailing metadata sent by the server
      */
     public function getTrailingMetadata()
     {
@@ -67,7 +69,7 @@ abstract class ForwardingCall
     }
 
     /**
-     * {@inheritdoc}
+     * @return string The URI of the endpoint
      */
     public function getPeer()
     {
@@ -75,7 +77,7 @@ abstract class ForwardingCall
     }
 
     /**
-     * {@inheritdoc}
+     * Cancels the call.
      */
     public function cancel()
     {

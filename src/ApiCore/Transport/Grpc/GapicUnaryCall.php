@@ -34,11 +34,20 @@ namespace Google\ApiCore\Transport\Grpc;
 
 use Google\Rpc\Code;
 
+/**
+ * GapicUnaryCall extends the functionality of UnaryCall.
+ */
 class GapicUnaryCall extends ForwardingUnaryCall
 {
     private $gapicOptions;
 
-    public function __construct($innerCall, callable $gapicOptions)
+    /**
+     * GapicUnaryCall constructor.
+     *
+     * @param $innerCall
+     * @param array $gapicOptions
+     */
+    public function __construct($innerCall, array $gapicOptions)
     {
         parent::__construct($innerCall);
         $this->gapicOptions = $gapicOptions;

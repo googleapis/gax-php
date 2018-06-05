@@ -32,10 +32,19 @@
 
 namespace Google\ApiCore\Transport\Grpc;
 
+/**
+ * LoggingUnaryCall extends UnaryCall with logging functionality.
+ */
 class LoggingUnaryCall extends ForwardingUnaryCall
 {
     private $unaryCallLogger;
 
+    /**
+     * LoggingUnaryCall constructor.
+     *
+     * @param $innerCall
+     * @param UnaryCallLogger $unaryCallLogger
+     */
     public function __construct($innerCall, UnaryCallLogger $unaryCallLogger)
     {
         parent::__construct($innerCall);

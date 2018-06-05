@@ -36,12 +36,22 @@ use Grpc\UnaryCall;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
+/**
+ * UnaryCallLogger should be extended to allow logging via interceptors.
+ */
 abstract class UnaryCallLogger
 {
     private $logger;
     private $logLevel;
     private $context;
 
+    /**
+     * UnaryCallLogger constructor.
+     *
+     * @param LoggerInterface $logger
+     * @param string $logLevel
+     * @param array $context
+     */
     public function __construct(LoggerInterface $logger, $logLevel = LogLevel::INFO, $context = [])
     {
         $this->logger = $logger;

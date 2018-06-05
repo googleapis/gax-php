@@ -38,7 +38,9 @@ namespace Google\ApiCore\Transport\Grpc;
 class ForwardingUnaryCall extends ForwardingCall
 {
     /**
-     * {@inheritdoc}
+     * Wait for the server to respond with data and a status.
+     *
+     * @return array [response data, status]
      */
     public function wait()
     {

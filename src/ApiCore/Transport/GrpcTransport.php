@@ -82,7 +82,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public static function build($serviceAddress, array $config = [])
     {
         self::validateGrpcSupport();
-
         $config += [
             'stubOpts' => [],
             'channel'  => null,
@@ -192,21 +191,14 @@ class GrpcTransport extends BaseStub implements TransportInterface
         };
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function startUnaryCall(Call $call, array $options)
+    public function _simpleRequest($method,
+                                   $argument,
+                                   $deserialize,
+                                   array $metadata = [],
+                                   array $options = [])
     {
-        $options += [
-            'headers' => [],
-        ];
-        $deserialize = [$call->getDecodeType(), 'decode'];
-        $execute = function (
-                $method,
-                $argument,
-                array $metadata = [],
-                array $options = []) use ($deserialize) {
-            return $this->_simpleRequest(
+        $execute = function ($method, $argument, $metadata, array $options) use ($deserialize) {
+            return parent::_simpleRequest(
                 $method,
                 $argument,
                 $deserialize,
@@ -218,10 +210,19 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $execute  = $this->wrapExecuteWithInterceptor($execute, $interceptor);
         }
 
-        $unaryCall = $execute(
+        return $execute($method, $argument, $metadata, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function startUnaryCall(Call $call, array $options)
+    {
+        $unaryCall = $this->_simpleRequest(
         '/' . $call->getMethod(),
             $call->getMessage(),
-            $options['headers'],
+            [$call->getDecodeType(), 'decode'],
+            isset($options['headers']) ? $options['headers'] : [],
             $this->getCallOptions($options)
         );
 

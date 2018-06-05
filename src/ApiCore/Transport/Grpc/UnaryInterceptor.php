@@ -40,6 +40,14 @@ namespace Google\ApiCore\Transport\Grpc;
  */
 interface UnaryInterceptor
 {
+    /**
+     * @param $method
+     * @param $argument
+     * @param array $metadata
+     * @param array $options
+     * @param $continuation
+     * @return mixed
+     */
     public function interceptUnaryUnary(
         $method,
         $argument,
