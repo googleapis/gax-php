@@ -102,11 +102,12 @@ abstract class UnaryCallLogger
      * @param array $options
      * @return string
      */
-    protected abstract function formatRequest(
+    abstract protected function formatRequest(
         $method,
         $argument,
         array $metadata = [],
-        array $options = []);
+        array $options = []
+    );
 
     /**
      * @param $response
@@ -114,8 +115,9 @@ abstract class UnaryCallLogger
      * @param UnaryCall $unaryCall
      * @return string
      */
-    protected abstract function formatResponse(
+    abstract protected function formatResponse(
         $response,
         $status,
-        $unaryCall);
+        $unaryCall
+    );
 }

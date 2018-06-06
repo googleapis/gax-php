@@ -35,6 +35,7 @@ namespace Google\ApiCore\Tests\Unit\Transport;
 use Google\ApiCore\Call;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
+use Google\ApiCore\Transport\Grpc\GapicInterceptor;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Protobuf\Internal\RepeatedField;
@@ -393,7 +394,8 @@ class GrpcTransportTest extends TestCase
                         [
                             'credentials' => null,
                         ],
-                        null
+                        null,
+                        [new GapicInterceptor()]
                     );
                 },
             ],
@@ -406,7 +408,8 @@ class GrpcTransportTest extends TestCase
                         [
                             'credentials' => null,
                         ],
-                        null
+                        null,
+                        [new GapicInterceptor()]
                     );
                 },
             ],

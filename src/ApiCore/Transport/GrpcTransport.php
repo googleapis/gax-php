@@ -63,6 +63,21 @@ class GrpcTransport extends BaseStub implements TransportInterface
     private $interceptors = [];
 
     /**
+     * @param string $hostname
+     * @param array $opts
+     *  - 'update_metadata': (optional) a callback function which takes in a
+     * metadata array, and returns an updated metadata array
+     *  - 'grpc.primary_user_agent': (optional) a user-agent string
+     * @param Channel $channel An already created Channel object (optional)
+     * @param array $interceptors
+     */
+    public function __construct($hostname, $opts, Channel $channel = null, array $interceptors = [])
+    {
+        parent::__construct($hostname, $opts, $channel);
+        $this->interceptors = $interceptors;
+    }
+
+    /**
      * Builds a GrpcTransport.
      *
      * @param string $serviceAddress
@@ -102,9 +117,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            $transport = new GrpcTransport($host, $stubOpts, $channel);
-            $transport->interceptors = self::getInterceptors($config);
-            return $transport;
+            return new GrpcTransport($host, $stubOpts, $channel, self::getInterceptors($config));
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
@@ -183,20 +196,26 @@ class GrpcTransport extends BaseStub implements TransportInterface
     private function wrapExecuteWithInterceptor($execute, $interceptor)
     {
         return function (
-                $method,
-                $argument,
-                array $metadata = [],
-                array $options = []) use ($execute, $interceptor) {
+            $method,
+            $argument,
+            array $metadata = [],
+            array $options = []
+        ) use (
+            $execute,
+            $interceptor
+) {
             return $interceptor->interceptUnaryUnary($method, $argument, $metadata, $options, $execute);
         };
     }
 
-    public function _simpleRequest($method,
-                                   $argument,
-                                   $deserialize,
-                                   array $metadata = [],
-                                   array $options = [])
-    {
+    protected function _simpleRequest(
+        $method,
+        $argument,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+    
         $execute = function ($method, $argument, $metadata, array $options) use ($deserialize) {
             return parent::_simpleRequest(
                 $method,
@@ -219,7 +238,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $unaryCall = $this->_simpleRequest(
-        '/' . $call->getMethod(),
+            '/' . $call->getMethod(),
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
             isset($options['headers']) ? $options['headers'] : [],

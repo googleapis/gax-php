@@ -30,45 +30,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport\Grpc;
+namespace Google\ApiCore\Tests\Unit\Transport\Grpc;
 
-/**
- * LoggingInterceptor is used to add logging to gRPC Unary calls.
- */
-class LoggingInterceptor implements UnaryInterceptor
+use Google\ApiCore\Transport\Grpc\UnaryCallLogger;
+use Grpc\UnaryCall;
+
+class TestUnaryCallLogger extends UnaryCallLogger
 {
-    private $unaryCallLogger;
-
-    /**
-     * LoggingInterceptor constructor.
-     *
-     * @param UnaryCallLogger $unaryCallLogger
-     */
-    public function __construct(UnaryCallLogger $unaryCallLogger)
-    {
-        $this->unaryCallLogger = $unaryCallLogger;
-    }
-
     /**
      * @param $method
      * @param $argument
      * @param array $metadata
      * @param array $options
-     * @param callable $continuation
-     * @return LoggingUnaryCall
+     * @return string
      */
-    public function interceptUnaryUnary(
+    protected function formatRequest(
         $method,
         $argument,
-        array $metadata,
-        array $options,
-        $continuation
-    ) {
-    
-        $this->unaryCallLogger->logRequest($method, $argument, $metadata, $options);
-        return new LoggingUnaryCall(
-            $continuation($method, $argument, $metadata, $options),
-            $this->unaryCallLogger
-        );
+        array $metadata = [],
+        array $options = [])
+    {
+        return "formatRequest[$method]";
+    }
+
+    /**
+     * @param $response
+     * @param $status
+     * @param UnaryCall $unaryCall
+     * @return string
+     */
+    protected function formatResponse(
+        $response,
+        $status,
+        $unaryCall)
+    {
+        return "formatResponse[$response]";
     }
 }

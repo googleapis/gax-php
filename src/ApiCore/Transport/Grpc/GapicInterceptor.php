@@ -43,11 +43,11 @@ class GapicInterceptor implements UnaryInterceptor
     public function interceptUnaryUnary(
         $method,
         $argument,
-        array $metadata = [],
-        array $options = [],
+        array $metadata,
+        array $options,
         $continuation
-    )
-    {
+    ) {
+    
         $gapicOptions = isset($options['internalOptions']) ? $options['internalOptions'] : [];
         return new GapicUnaryCall($continuation($method, $argument, $metadata, $options), $gapicOptions);
     }

@@ -51,8 +51,8 @@ interface UnaryInterceptor
     public function interceptUnaryUnary(
         $method,
         $argument,
-        array $metadata = [],
-        array $options = [],
+        array $metadata,
+        array $options,
         $continuation
     );
 }

@@ -30,45 +30,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport\Grpc;
+namespace Google\ApiCore\Tests\Unit\Transport\Grpc;
 
-/**
- * LoggingInterceptor is used to add logging to gRPC Unary calls.
- */
-class LoggingInterceptor implements UnaryInterceptor
+use Google\ApiCore\Tests\Unit\TestTrait;
+use Google\ApiCore\Transport\Grpc\ForwardingUnaryCall;
+use Grpc\UnaryCall;
+use PHPUnit\Framework\TestCase;
+
+class ForwardingUnaryCallTest extends TestCase
 {
-    private $unaryCallLogger;
+    use TestTrait;
 
-    /**
-     * LoggingInterceptor constructor.
-     *
-     * @param UnaryCallLogger $unaryCallLogger
-     */
-    public function __construct(UnaryCallLogger $unaryCallLogger)
+    public function testUnaryForwardingCall()
     {
-        $this->unaryCallLogger = $unaryCallLogger;
-    }
+        $unaryCall = $this->getMockBuilder(UnaryCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $unaryCall->expects($this->once())->method('getMetadata');
+        $unaryCall->expects($this->once())->method('getTrailingMetadata');
+        $unaryCall->expects($this->once())->method('getPeer');
+        $unaryCall->expects($this->once())->method('cancel');
+        $unaryCall->expects($this->once())->method('wait');
 
-    /**
-     * @param $method
-     * @param $argument
-     * @param array $metadata
-     * @param array $options
-     * @param callable $continuation
-     * @return LoggingUnaryCall
-     */
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        array $metadata,
-        array $options,
-        $continuation
-    ) {
-    
-        $this->unaryCallLogger->logRequest($method, $argument, $metadata, $options);
-        return new LoggingUnaryCall(
-            $continuation($method, $argument, $metadata, $options),
-            $this->unaryCallLogger
-        );
+        $forwardingCall = new ForwardingUnaryCall($unaryCall);
+
+        $forwardingCall->getMetadata();
+        $forwardingCall->getTrailingMetadata();
+        $forwardingCall->getPeer();
+        $forwardingCall->cancel();
+        $forwardingCall->wait();
     }
 }

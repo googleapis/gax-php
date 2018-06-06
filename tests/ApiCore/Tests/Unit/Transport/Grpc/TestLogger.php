@@ -30,45 +30,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport\Grpc;
+namespace Google\ApiCore\Tests\Unit\Transport\Grpc;
 
-/**
- * LoggingInterceptor is used to add logging to gRPC Unary calls.
- */
-class LoggingInterceptor implements UnaryInterceptor
+use Psr\Log\AbstractLogger;
+
+class TestLogger extends AbstractLogger
 {
-    private $unaryCallLogger;
+    private $logs = [];
 
     /**
-     * LoggingInterceptor constructor.
+     * Logs with an arbitrary level.
      *
-     * @param UnaryCallLogger $unaryCallLogger
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
+     *
+     * @return void
      */
-    public function __construct(UnaryCallLogger $unaryCallLogger)
+    public function log($level, $message, array $context = array())
     {
-        $this->unaryCallLogger = $unaryCallLogger;
+        $this->logs[]  = [$level, $message, $context];
     }
 
-    /**
-     * @param $method
-     * @param $argument
-     * @param array $metadata
-     * @param array $options
-     * @param callable $continuation
-     * @return LoggingUnaryCall
-     */
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        array $metadata,
-        array $options,
-        $continuation
-    ) {
-    
-        $this->unaryCallLogger->logRequest($method, $argument, $metadata, $options);
-        return new LoggingUnaryCall(
-            $continuation($method, $argument, $metadata, $options),
-            $this->unaryCallLogger
-        );
+    public function getLogs()
+    {
+        return $this->logs;
+    }
+
+    public function clearLogs()
+    {
+        $this->logs = [];
     }
 }
