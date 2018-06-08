@@ -122,19 +122,6 @@
             </div>
     
     
-            <h2>Properties</h2>
-
-            <table class="table table-condensed">
-                    <tr>
-                <td class="type" id="property_transport">
-                                        protected                                        
-                </td>
-                <td>$transport</td>
-                <td class="last"></td>
-                <td></td>
-            </tr>
-            </table>
-
     
             <h2>Methods</h2>
 
@@ -170,6 +157,28 @@
         
                                             <p>Initiates an orderly shutdown in which preexisting calls continue but new
 calls are immediately cancelled.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTransport">getTransport</a>()
+        
+                                            <p>Get the transport for the client. This method is protected to support
+use by customized clients.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/ApiCore/CredentialsWrapper.html"><abbr title="Google\ApiCore\CredentialsWrapper">CredentialsWrapper</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCredentialsWrapper">getCredentialsWrapper</a>()
+        
+                                            <p>Get the credentials for the client. This method is protected to support
+use by customized clients.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -296,7 +305,7 @@ calls are immediately cancelled.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_close">
-        <div class="location">at         line 81</div>
+        <div class="location">at         line 80</div>
         <code>                    
     <strong>close</strong>()
         </code>
@@ -317,8 +326,70 @@ calls are immediately cancelled.</p>                                            
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_getTransport">
+        <div class="location">at         line 92</div>
+        <code>            protected        <a href="../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>
+    <strong>getTransport</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the transport for the client. This method is protected to support
+use by customized clients.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCredentialsWrapper">
+        <div class="location">at         line 104</div>
+        <code>            protected        <a href="../../Google/ApiCore/CredentialsWrapper.html"><abbr title="Google\ApiCore\CredentialsWrapper">CredentialsWrapper</abbr></a>
+    <strong>getCredentialsWrapper</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get the credentials for the client. This method is protected to support
+use by customized clients.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/CredentialsWrapper.html"><abbr title="Google\ApiCore\CredentialsWrapper">CredentialsWrapper</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_modifyClientOptions">
-        <div class="location">at         line 567</div>
+        <div class="location">at         line 590</div>
         <code>            protected        
     <strong>modifyClientOptions</strong>(array $options)
         </code>
@@ -349,7 +420,7 @@ calls are immediately cancelled.</p>                                            
             </div>
                     <div class="method-item">
                     <h3 id="method_modifyUnaryCallable">
-        <div class="location">at         line 578</div>
+        <div class="location">at         line 601</div>
         <code>            protected        
     <strong>modifyUnaryCallable</strong>(callable $callable)
         </code>
@@ -380,7 +451,7 @@ calls are immediately cancelled.</p>                                            
             </div>
                     <div class="method-item">
                     <h3 id="method_modifyStreamingCallable">
-        <div class="location">at         line 589</div>
+        <div class="location">at         line 612</div>
         <code>            protected        
     <strong>modifyStreamingCallable</strong>(callable $callable)
         </code>
