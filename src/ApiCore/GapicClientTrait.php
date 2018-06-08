@@ -56,8 +56,8 @@ trait GapicClientTrait
     use ValidationTrait;
     use GrpcSupportTrait;
 
-    protected $transport;
-    protected $credentialsWrapper;
+    private $transport;
+    private $credentialsWrapper;
 
     private static $gapicVersion;
     private $retrySettings;
