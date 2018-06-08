@@ -56,10 +56,7 @@ trait GapicClientTrait
     use ValidationTrait;
     use GrpcSupportTrait;
 
-    /** @access private */
     protected $transport;
-
-    /** @access private */
     protected $credentialsWrapper;
 
     private static $gapicVersion;
@@ -83,6 +80,30 @@ trait GapicClientTrait
     public function close()
     {
         $this->transport->close();
+    }
+
+    /**
+     * Get the transport for the client. This method is protected to support
+     * use by customized clients.
+     *
+     * @access private
+     * @return TransportInterface
+     */
+    protected function getTransport()
+    {
+        return $this->transport;
+    }
+
+    /**
+     * Get the credentials for the client. This method is protected to support
+     * use by customized clients.
+     *
+     * @access private
+     * @return CredentialsWrapper
+     */
+    protected function getCredentialsWrapper()
+    {
+        return $this->credentialsWrapper;
     }
 
     private static function getGapicVersion(array $options)
