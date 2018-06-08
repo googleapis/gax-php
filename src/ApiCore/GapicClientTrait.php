@@ -59,11 +59,13 @@ trait GapicClientTrait
     /** @access private */
     protected $transport;
 
+    /** @access private */
+    protected $credentialsWrapper;
+
     private static $gapicVersion;
     private $retrySettings;
     private $serviceName;
     private $agentHeaderDescriptor;
-    private $credentialsWrapper;
     private $descriptors;
     private $transportCallMethods = [
         Call::UNARY_CALL => 'startUnaryCall',
