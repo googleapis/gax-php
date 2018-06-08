@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Vision\V1\FaceAnnotation | Google ApiCore - 0.34.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Vision_V1_FaceAnnotation" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.34.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Vision.html">Vision</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Vision/V1.html">V1</a></li><li class="backslash">\</li><li>FaceAnnotation</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            FaceAnnotation
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>FaceAnnotation</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A face annotation object contains the results of face detection.</p>            <p>Generated from protobuf message <code>google.cloud.vision.v1.FaceAnnotation</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBoundingPoly">getBoundingPoly</a>()
+        
+                                            <p>The bounding polygon around the face. The coordinates of the bounding box
+are in the original image's scale, as returned in <code>ImageParams</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBoundingPoly">setBoundingPoly</a>(<a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a> $var)
+        
+                                            <p>The bounding polygon around the face. The coordinates of the bounding box
+are in the original image's scale, as returned in <code>ImageParams</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFdBoundingPoly">getFdBoundingPoly</a>()
+        
+                                            <p>The <code>fd_bounding_poly</code> bounding polygon is tighter than the
+<code>boundingPoly</code>, and encloses only the skin part of the face. Typically, it
+is used to eliminate the face from any image analysis that detects the
+"amount of skin" visible in an image. It is not based on the
+landmarker results, only on the initial face detection, hence
+the <code>fd</code> (face detection) prefix.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setFdBoundingPoly">setFdBoundingPoly</a>(<a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a> $var)
+        
+                                            <p>The <code>fd_bounding_poly</code> bounding polygon is tighter than the
+<code>boundingPoly</code>, and encloses only the skin part of the face. Typically, it
+is used to eliminate the face from any image analysis that detects the
+"amount of skin" visible in an image. It is not based on the
+landmarker results, only on the initial face detection, hence
+the <code>fd</code> (face detection) prefix.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLandmarks">getLandmarks</a>()
+        
+                                            <p>Detected face landmarks.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLandmarks">setLandmarks</a>(<a href="../../../../Google/Cloud/Vision/V1/FaceAnnotation_Landmark.html"><abbr title="Google\Cloud\Vision\V1\FaceAnnotation_Landmark">FaceAnnotation_Landmark</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Detected face landmarks.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRollAngle">getRollAngle</a>()
+        
+                                            <p>Roll angle, which indicates the amount of clockwise/anti-clockwise rotation
+of the face relative to the image vertical about the axis perpendicular to
+the face. Range [-180,180].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setRollAngle">setRollAngle</a>(float $var)
+        
+                                            <p>Roll angle, which indicates the amount of clockwise/anti-clockwise rotation
+of the face relative to the image vertical about the axis perpendicular to
+the face. Range [-180,180].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPanAngle">getPanAngle</a>()
+        
+                                            <p>Yaw angle, which indicates the leftward/rightward angle that the face is
+pointing relative to the vertical plane perpendicular to the image. Range
+[-180,180].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPanAngle">setPanAngle</a>(float $var)
+        
+                                            <p>Yaw angle, which indicates the leftward/rightward angle that the face is
+pointing relative to the vertical plane perpendicular to the image. Range
+[-180,180].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTiltAngle">getTiltAngle</a>()
+        
+                                            <p>Pitch angle, which indicates the upwards/downwards angle that the face is
+pointing relative to the image's horizontal plane. Range [-180,180].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setTiltAngle">setTiltAngle</a>(float $var)
+        
+                                            <p>Pitch angle, which indicates the upwards/downwards angle that the face is
+pointing relative to the image's horizontal plane. Range [-180,180].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDetectionConfidence">getDetectionConfidence</a>()
+        
+                                            <p>Detection confidence. Range [0, 1].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDetectionConfidence">setDetectionConfidence</a>(float $var)
+        
+                                            <p>Detection confidence. Range [0, 1].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLandmarkingConfidence">getLandmarkingConfidence</a>()
+        
+                                            <p>Face landmarking confidence. Range [0, 1].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setLandmarkingConfidence">setLandmarkingConfidence</a>(float $var)
+        
+                                            <p>Face landmarking confidence. Range [0, 1].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getJoyLikelihood">getJoyLikelihood</a>()
+        
+                                            <p>Joy likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setJoyLikelihood">setJoyLikelihood</a>(int $var)
+        
+                                            <p>Joy likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSorrowLikelihood">getSorrowLikelihood</a>()
+        
+                                            <p>Sorrow likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSorrowLikelihood">setSorrowLikelihood</a>(int $var)
+        
+                                            <p>Sorrow likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAngerLikelihood">getAngerLikelihood</a>()
+        
+                                            <p>Anger likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAngerLikelihood">setAngerLikelihood</a>(int $var)
+        
+                                            <p>Anger likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSurpriseLikelihood">getSurpriseLikelihood</a>()
+        
+                                            <p>Surprise likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSurpriseLikelihood">setSurpriseLikelihood</a>(int $var)
+        
+                                            <p>Surprise likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUnderExposedLikelihood">getUnderExposedLikelihood</a>()
+        
+                                            <p>Under-exposed likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUnderExposedLikelihood">setUnderExposedLikelihood</a>(int $var)
+        
+                                            <p>Under-exposed likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getBlurredLikelihood">getBlurredLikelihood</a>()
+        
+                                            <p>Blurred likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setBlurredLikelihood">setBlurredLikelihood</a>(int $var)
+        
+                                            <p>Blurred likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeadwearLikelihood">getHeadwearLikelihood</a>()
+        
+                                            <p>Headwear likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setHeadwearLikelihood">setHeadwearLikelihood</a>(int $var)
+        
+                                            <p>Headwear likelihood.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 125</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBoundingPoly">
+        <div class="location">at         line 142</div>
+        <code>                    <a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a>
+    <strong>getBoundingPoly</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The bounding polygon around the face. The coordinates of the bounding box
+are in the original image's scale, as returned in <code>ImageParams</code>.</p>                    <p>The bounding box is computed to "frame" the face in accordance with human
+expectations. It is based on the landmarker results.
+Note that one or more x and/or y coordinates may not be generated in the
+<code>BoundingPoly</code> (the polygon will be unbounded) if only a partial face
+appears in the image to be annotated.</p>
+
+<p>Generated from protobuf field <code>.google.cloud.vision.v1.BoundingPoly bounding_poly = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBoundingPoly">
+        <div class="location">at         line 160</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setBoundingPoly</strong>(<a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The bounding polygon around the face. The coordinates of the bounding box
+are in the original image's scale, as returned in <code>ImageParams</code>.</p>                    <p>The bounding box is computed to "frame" the face in accordance with human
+expectations. It is based on the landmarker results.
+Note that one or more x and/or y coordinates may not be generated in the
+<code>BoundingPoly</code> (the polygon will be unbounded) if only a partial face
+appears in the image to be annotated.</p>
+
+<p>Generated from protobuf field <code>.google.cloud.vision.v1.BoundingPoly bounding_poly = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFdBoundingPoly">
+        <div class="location">at         line 179</div>
+        <code>                    <a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a>
+    <strong>getFdBoundingPoly</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The <code>fd_bounding_poly</code> bounding polygon is tighter than the
+<code>boundingPoly</code>, and encloses only the skin part of the face. Typically, it
+is used to eliminate the face from any image analysis that detects the
+"amount of skin" visible in an image. It is not based on the
+landmarker results, only on the initial face detection, hence
+the <code>fd</code> (face detection) prefix.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.BoundingPoly fd_bounding_poly = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setFdBoundingPoly">
+        <div class="location">at         line 196</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setFdBoundingPoly</strong>(<a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The <code>fd_bounding_poly</code> bounding polygon is tighter than the
+<code>boundingPoly</code>, and encloses only the skin part of the face. Typically, it
+is used to eliminate the face from any image analysis that detects the
+"amount of skin" visible in an image. It is not based on the
+landmarker results, only on the initial face detection, hence
+the <code>fd</code> (face detection) prefix.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.BoundingPoly fd_bounding_poly = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Vision/V1/BoundingPoly.html"><abbr title="Google\Cloud\Vision\V1\BoundingPoly">BoundingPoly</abbr></a></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLandmarks">
+        <div class="location">at         line 210</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getLandmarks</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Detected face landmarks.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.vision.v1.FaceAnnotation.Landmark landmarks = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLandmarks">
+        <div class="location">at         line 222</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setLandmarks</strong>(<a href="../../../../Google/Cloud/Vision/V1/FaceAnnotation_Landmark.html"><abbr title="Google\Cloud\Vision\V1\FaceAnnotation_Landmark">FaceAnnotation_Landmark</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Detected face landmarks.</p>                    <p>Generated from protobuf field <code>repeated .google.cloud.vision.v1.FaceAnnotation.Landmark landmarks = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Vision/V1/FaceAnnotation_Landmark.html"><abbr title="Google\Cloud\Vision\V1\FaceAnnotation_Landmark">FaceAnnotation_Landmark</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRollAngle">
+        <div class="location">at         line 238</div>
+        <code>                    float
+    <strong>getRollAngle</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Roll angle, which indicates the amount of clockwise/anti-clockwise rotation
+of the face relative to the image vertical about the axis perpendicular to
+the face. Range [-180,180].</p>                    <p>Generated from protobuf field <code>float roll_angle = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setRollAngle">
+        <div class="location">at         line 252</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setRollAngle</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Roll angle, which indicates the amount of clockwise/anti-clockwise rotation
+of the face relative to the image vertical about the axis perpendicular to
+the face. Range [-180,180].</p>                    <p>Generated from protobuf field <code>float roll_angle = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPanAngle">
+        <div class="location">at         line 268</div>
+        <code>                    float
+    <strong>getPanAngle</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Yaw angle, which indicates the leftward/rightward angle that the face is
+pointing relative to the vertical plane perpendicular to the image. Range
+[-180,180].</p>                    <p>Generated from protobuf field <code>float pan_angle = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPanAngle">
+        <div class="location">at         line 282</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setPanAngle</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Yaw angle, which indicates the leftward/rightward angle that the face is
+pointing relative to the vertical plane perpendicular to the image. Range
+[-180,180].</p>                    <p>Generated from protobuf field <code>float pan_angle = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTiltAngle">
+        <div class="location">at         line 297</div>
+        <code>                    float
+    <strong>getTiltAngle</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Pitch angle, which indicates the upwards/downwards angle that the face is
+pointing relative to the image's horizontal plane. Range [-180,180].</p>                    <p>Generated from protobuf field <code>float tilt_angle = 6;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTiltAngle">
+        <div class="location">at         line 310</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setTiltAngle</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Pitch angle, which indicates the upwards/downwards angle that the face is
+pointing relative to the image's horizontal plane. Range [-180,180].</p>                    <p>Generated from protobuf field <code>float tilt_angle = 6;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDetectionConfidence">
+        <div class="location">at         line 324</div>
+        <code>                    float
+    <strong>getDetectionConfidence</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Detection confidence. Range [0, 1].</p>                    <p>Generated from protobuf field <code>float detection_confidence = 7;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDetectionConfidence">
+        <div class="location">at         line 336</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setDetectionConfidence</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Detection confidence. Range [0, 1].</p>                    <p>Generated from protobuf field <code>float detection_confidence = 7;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLandmarkingConfidence">
+        <div class="location">at         line 350</div>
+        <code>                    float
+    <strong>getLandmarkingConfidence</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Face landmarking confidence. Range [0, 1].</p>                    <p>Generated from protobuf field <code>float landmarking_confidence = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLandmarkingConfidence">
+        <div class="location">at         line 362</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setLandmarkingConfidence</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Face landmarking confidence. Range [0, 1].</p>                    <p>Generated from protobuf field <code>float landmarking_confidence = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getJoyLikelihood">
+        <div class="location">at         line 376</div>
+        <code>                    int
+    <strong>getJoyLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Joy likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood joy_likelihood = 9;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setJoyLikelihood">
+        <div class="location">at         line 388</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setJoyLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Joy likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood joy_likelihood = 9;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSorrowLikelihood">
+        <div class="location">at         line 402</div>
+        <code>                    int
+    <strong>getSorrowLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sorrow likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood sorrow_likelihood = 10;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSorrowLikelihood">
+        <div class="location">at         line 414</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setSorrowLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sorrow likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood sorrow_likelihood = 10;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAngerLikelihood">
+        <div class="location">at         line 428</div>
+        <code>                    int
+    <strong>getAngerLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Anger likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood anger_likelihood = 11;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAngerLikelihood">
+        <div class="location">at         line 440</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setAngerLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Anger likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood anger_likelihood = 11;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSurpriseLikelihood">
+        <div class="location">at         line 454</div>
+        <code>                    int
+    <strong>getSurpriseLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Surprise likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood surprise_likelihood = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSurpriseLikelihood">
+        <div class="location">at         line 466</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setSurpriseLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Surprise likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood surprise_likelihood = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUnderExposedLikelihood">
+        <div class="location">at         line 480</div>
+        <code>                    int
+    <strong>getUnderExposedLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Under-exposed likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood under_exposed_likelihood = 13;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUnderExposedLikelihood">
+        <div class="location">at         line 492</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setUnderExposedLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Under-exposed likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood under_exposed_likelihood = 13;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getBlurredLikelihood">
+        <div class="location">at         line 506</div>
+        <code>                    int
+    <strong>getBlurredLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Blurred likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood blurred_likelihood = 14;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setBlurredLikelihood">
+        <div class="location">at         line 518</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setBlurredLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Blurred likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood blurred_likelihood = 14;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeadwearLikelihood">
+        <div class="location">at         line 532</div>
+        <code>                    int
+    <strong>getHeadwearLikelihood</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Headwear likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood headwear_likelihood = 15;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setHeadwearLikelihood">
+        <div class="location">at         line 544</div>
+        <code>                    <abbr title="Google\Cloud\Vision\V1\$this">$this</abbr>
+    <strong>setHeadwearLikelihood</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Headwear likelihood.</p>                    <p>Generated from protobuf field <code>.google.cloud.vision.v1.Likelihood headwear_likelihood = 15;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Vision\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Trace\V2\Span_Attributes | Google ApiCore - 0.34.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Trace_V2_Span_Attributes" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.34.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Trace.html">Trace</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Trace/V2.html">V2</a></li><li class="backslash">\</li><li>Span_Attributes</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Span_Attributes
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Span_Attributes</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A set of attributes, each in the format <code>[KEY]:[VALUE]</code>.</p>            <p>Generated from protobuf message <code>google.devtools.cloudtrace.v2.Span.Attributes</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAttributeMap">getAttributeMap</a>()
+        
+                                            <p>The set of attributes. Each attribute's key can be up to 128 bytes
+long. The value can be a string up to 256 bytes, an integer, or the
+Boolean values <code>true</code> and <code>false</code>. For example:
+    "/instance_id": "my-instance"
+    "/http/user_agent": ""
+    "/http/request_bytes": 300
+    "abc.com/myattribute": true</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setAttributeMap">setAttributeMap</a>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        
+                                            <p>The set of attributes. Each attribute's key can be up to 128 bytes
+long. The value can be a string up to 256 bytes, an integer, or the
+Boolean values <code>true</code> and <code>false</code>. For example:
+    "/instance_id": "my-instance"
+    "/http/user_agent": ""
+    "/http/request_bytes": 300
+    "abc.com/myattribute": true</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDroppedAttributesCount">getDroppedAttributesCount</a>()
+        
+                                            <p>The number of attributes that were discarded. Attributes can be discarded
+because their keys are too long or because there are too many attributes.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDroppedAttributesCount">setDroppedAttributesCount</a>(int $var)
+        
+                                            <p>The number of attributes that were discarded. Attributes can be discarded
+because their keys are too long or because there are too many attributes.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 39</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAttributeMap">
+        <div class="location">at         line 56</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
+    <strong>getAttributeMap</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The set of attributes. Each attribute's key can be up to 128 bytes
+long. The value can be a string up to 256 bytes, an integer, or the
+Boolean values <code>true</code> and <code>false</code>. For example:
+    "/instance_id": "my-instance"
+    "/http/user_agent": ""
+    "/http/request_bytes": 300
+    "abc.com/myattribute": true</p>                    <p>Generated from protobuf field <code>map&lt;string, .google.devtools.cloudtrace.v2.AttributeValue> attribute_map = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setAttributeMap">
+        <div class="location">at         line 74</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setAttributeMap</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The set of attributes. Each attribute's key can be up to 128 bytes
+long. The value can be a string up to 256 bytes, an integer, or the
+Boolean values <code>true</code> and <code>false</code>. For example:
+    "/instance_id": "my-instance"
+    "/http/user_agent": ""
+    "/http/request_bytes": 300
+    "abc.com/myattribute": true</p>                    <p>Generated from protobuf field <code>map&lt;string, .google.devtools.cloudtrace.v2.AttributeValue> attribute_map = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDroppedAttributesCount">
+        <div class="location">at         line 90</div>
+        <code>                    int
+    <strong>getDroppedAttributesCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number of attributes that were discarded. Attributes can be discarded
+because their keys are too long or because there are too many attributes.</p>                    <p>If this value is 0 then all attributes are valid.</p>
+
+<p>Generated from protobuf field <code>int32 dropped_attributes_count = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDroppedAttributesCount">
+        <div class="location">at         line 104</div>
+        <code>                    <abbr title="Google\Cloud\Trace\V2\$this">$this</abbr>
+    <strong>setDroppedAttributesCount</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The number of attributes that were discarded. Attributes can be discarded
+because their keys are too long or because there are too many attributes.</p>                    <p>If this value is 0 then all attributes are valid.</p>
+
+<p>Generated from protobuf field <code>int32 dropped_attributes_count = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Trace\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Redis\V1beta1\CloudRedisGrpcClient | Google ApiCore - 0.34.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Redis_V1beta1_CloudRedisGrpcClient" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.34.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Redis.html">Redis</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Redis/V1beta1.html">V1beta1</a></li><li class="backslash">\</li><li>CloudRedisGrpcClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            CloudRedisGrpcClient
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>CloudRedisGrpcClient</strong>        extends <abbr title="Grpc\BaseStub">BaseStub</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Configures and manages Cloud Memorystore for Redis instances</p>            <p>Google Cloud Memorystore for Redis v1beta1</p>
+
+<p>The <code>redis.googleapis.com</code> service implements the Google Cloud Memorystore
+for Redis API and defines the following resource model for managing Redis
+instances:
+* The service works with a collection of cloud projects, named: <code>/projects/*</code>
+* Each project has a collection of available locations, named: <code>/locations/*</code>
+* Each location has a collection of Redis instances, named: <code>/instances/*</code>
+* As such, Redis instances are resources of the form:
+  <code>/projects/{project_id}/locations/{location_id}/instances/{instance_id}</code></p>
+
+<p>Note that location_id must be refering to a GCP <code>region</code>; for example:
+* <code>projects/redpepper-1290/locations/us-central1/instances/my-redis</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ListInstances">ListInstances</a>(<a href="../../../../Google/Cloud/Redis/V1beta1/ListInstancesRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\ListInstancesRequest">ListInstancesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Lists all Redis instances owned by a project in either the specified
+location (region) or all locations.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_GetInstance">GetInstance</a>(<a href="../../../../Google/Cloud/Redis/V1beta1/GetInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\GetInstanceRequest">GetInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Gets the details of a specific Redis instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_CreateInstance">CreateInstance</a>(<a href="../../../../Google/Cloud/Redis/V1beta1/CreateInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\CreateInstanceRequest">CreateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Creates a Redis instance based on the specified tier and memory size.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_UpdateInstance">UpdateInstance</a>(<a href="../../../../Google/Cloud/Redis/V1beta1/UpdateInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\UpdateInstanceRequest">UpdateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Updates the metadata and configuration of a specific Redis instance.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_DeleteInstance">DeleteInstance</a>(<a href="../../../../Google/Cloud/Redis/V1beta1/DeleteInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\DeleteInstanceRequest">DeleteInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        
+                                            <p>Deletes a specific Redis instance.  Instance stops serving and data is
+deleted.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 45</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td>hostname</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td>channel options</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>(optional) re-use channel object</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ListInstances">
+        <div class="location">at         line 62</div>
+        <code>                    
+    <strong>ListInstances</strong>(<a href="../../../../Google/Cloud/Redis/V1beta1/ListInstancesRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\ListInstancesRequest">ListInstancesRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Lists all Redis instances owned by a project in either the specified
+location (region) or all locations.</p>                    <p>The location should have the following format:
+* <code>projects/{project_id}/locations/{location_id}</code></p>
+
+<p>If <code>location_id</code> is specified as <code>-</code> (wildcard), then all regions
+available to the project are queried, and the results are aggregated.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Redis/V1beta1/ListInstancesRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\ListInstancesRequest">ListInstancesRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_GetInstance">
+        <div class="location">at         line 76</div>
+        <code>                    
+    <strong>GetInstance</strong>(<a href="../../../../Google/Cloud/Redis/V1beta1/GetInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\GetInstanceRequest">GetInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the details of a specific Redis instance.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Redis/V1beta1/GetInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\GetInstanceRequest">GetInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_CreateInstance">
+        <div class="location">at         line 101</div>
+        <code>                    
+    <strong>CreateInstance</strong>(<a href="../../../../Google/Cloud/Redis/V1beta1/CreateInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\CreateInstanceRequest">CreateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a Redis instance based on the specified tier and memory size.</p>                    <p>By default, the instance is peered to the project's
+<a href="/compute/docs/networks-and-firewalls#networks">default network</a>.</p>
+
+<p>The creation is executed asynchronously and callers may check the returned
+operation to track its progress. Once the operation is completed the Redis
+instance will be fully functional. Completed longrunning.Operation will
+contain the new instance object in the response field.</p>
+
+<p>The returned operation is automatically deleted after a few hours, so there
+is no need to call DeleteOperation.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Redis/V1beta1/CreateInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\CreateInstanceRequest">CreateInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_UpdateInstance">
+        <div class="location">at         line 119</div>
+        <code>                    
+    <strong>UpdateInstance</strong>(<a href="../../../../Google/Cloud/Redis/V1beta1/UpdateInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\UpdateInstanceRequest">UpdateInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates the metadata and configuration of a specific Redis instance.</p>                    <p>Completed longrunning.Operation will contain the new instance object
+in the response field. The returned operation is automatically deleted
+after a few hours, so there is no need to call DeleteOperation.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Redis/V1beta1/UpdateInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\UpdateInstanceRequest">UpdateInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_DeleteInstance">
+        <div class="location">at         line 134</div>
+        <code>                    
+    <strong>DeleteInstance</strong>(<a href="../../../../Google/Cloud/Redis/V1beta1/DeleteInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\DeleteInstanceRequest">DeleteInstanceRequest</abbr></a> $argument, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deletes a specific Redis instance.  Instance stops serving and data is
+deleted.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/Cloud/Redis/V1beta1/DeleteInstanceRequest.html"><abbr title="Google\Cloud\Redis\V1beta1\DeleteInstanceRequest">DeleteInstanceRequest</abbr></a></td>
+                <td>$argument</td>
+                <td>input argument</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>metadata</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>call options</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

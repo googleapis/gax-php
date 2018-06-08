@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Logging\V2\ListLogEntriesRequest | Google ApiCore - 0.34.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Logging_V2_ListLogEntriesRequest" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google ApiCore - 0.34.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Logging.html">Logging</a></li><li class="backslash">\</li><li><a href="../../../../Google/Cloud/Logging/V2.html">V2</a></li><li class="backslash">\</li><li>ListLogEntriesRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ListLogEntriesRequest
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ListLogEntriesRequest</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The parameters to <code>ListLogEntries</code>.</p>            <p>Generated from protobuf message <code>google.logging.v2.ListLogEntriesRequest</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getProjectIds">getProjectIds</a>()
+        
+                                            <p>Deprecated. Use <code>resource_names</code> instead.  One or more project identifiers
+or project numbers from which to retrieve log entries.  Example:
+<code>"my-project-1A"</code>. If present, these project identifiers are converted to
+resource name format and added to the list of resources in
+<code>resource_names</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setProjectIds">setProjectIds</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Deprecated. Use <code>resource_names</code> instead.  One or more project identifiers
+or project numbers from which to retrieve log entries.  Example:
+<code>"my-project-1A"</code>. If present, these project identifiers are converted to
+resource name format and added to the list of resources in
+<code>resource_names</code>.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResourceNames">getResourceNames</a>()
+        
+                                            <p>Required. Names of one or more parent resources from which to
+retrieve log entries:
+    "projects/[PROJECT_ID]"
+    "organizations/[ORGANIZATION_ID]"
+    "billingAccounts/[BILLING_ACCOUNT_ID]"
+    "folders/[FOLDER_ID]"
+Projects listed in the <code>project_ids</code> field are added to this list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setResourceNames">setResourceNames</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>Required. Names of one or more parent resources from which to
+retrieve log entries:
+    "projects/[PROJECT_ID]"
+    "organizations/[ORGANIZATION_ID]"
+    "billingAccounts/[BILLING_ACCOUNT_ID]"
+    "folders/[FOLDER_ID]"
+Projects listed in the <code>project_ids</code> field are added to this list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFilter">getFilter</a>()
+        
+                                            <p>Optional. A filter that chooses which log entries to return.  See <a href="/logging/docs/view/advanced_filters">Advanced
+Logs Filters</a>.  Only log entries that
+match the filter are returned.  An empty filter matches all log entries in
+the resources listed in <code>resource_names</code>. Referencing a parent resource
+that is not listed in <code>resource_names</code> will cause the filter to return no
+results.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setFilter">setFilter</a>(string $var)
+        
+                                            <p>Optional. A filter that chooses which log entries to return.  See <a href="/logging/docs/view/advanced_filters">Advanced
+Logs Filters</a>.  Only log entries that
+match the filter are returned.  An empty filter matches all log entries in
+the resources listed in <code>resource_names</code>. Referencing a parent resource
+that is not listed in <code>resource_names</code> will cause the filter to return no
+results.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOrderBy">getOrderBy</a>()
+        
+                                            <p>Optional. How the results should be sorted.  Presently, the only permitted
+values are <code>"timestamp asc"</code> (default) and <code>"timestamp desc"</code>. The first
+option returns entries in order of increasing values of
+<code>LogEntry.timestamp</code> (oldest first), and the second option returns entries
+in order of decreasing timestamps (newest first).  Entries with equal
+timestamps are returned in order of their <code>insert_id</code> values.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setOrderBy">setOrderBy</a>(string $var)
+        
+                                            <p>Optional. How the results should be sorted.  Presently, the only permitted
+values are <code>"timestamp asc"</code> (default) and <code>"timestamp desc"</code>. The first
+option returns entries in order of increasing values of
+<code>LogEntry.timestamp</code> (oldest first), and the second option returns entries
+in order of decreasing timestamps (newest first).  Entries with equal
+timestamps are returned in order of their <code>insert_id</code> values.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPageSize">getPageSize</a>()
+        
+                                            <p>Optional. The maximum number of results to return from this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPageSize">setPageSize</a>(int $var)
+        
+                                            <p>Optional. The maximum number of results to return from this request.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPageToken">getPageToken</a>()
+        
+                                            <p>Optional. If present, then retrieve the next batch of results from the
+preceding call to this method.  <code>page_token</code> must be the value of
+<code>next_page_token</code> from the previous response.  The values of other method
+parameters should be identical to those in the previous call.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setPageToken">setPageToken</a>(string $var)
+        
+                                            <p>Optional. If present, then retrieve the next batch of results from the
+preceding call to this method.  <code>page_token</code> must be the value of
+<code>next_page_token</code> from the previous response.  The values of other method
+parameters should be identical to those in the previous call.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 81</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getProjectIds">
+        <div class="location">at         line 96</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getProjectIds</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deprecated. Use <code>resource_names</code> instead.  One or more project identifiers
+or project numbers from which to retrieve log entries.  Example:
+<code>"my-project-1A"</code>. If present, these project identifiers are converted to
+resource name format and added to the list of resources in
+<code>resource_names</code>.</p>                    <p>Generated from protobuf field <code>repeated string project_ids = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setProjectIds">
+        <div class="location">at         line 112</div>
+        <code>                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+    <strong>setProjectIds</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Deprecated. Use <code>resource_names</code> instead.  One or more project identifiers
+or project numbers from which to retrieve log entries.  Example:
+<code>"my-project-1A"</code>. If present, these project identifiers are converted to
+resource name format and added to the list of resources in
+<code>resource_names</code>.</p>                    <p>Generated from protobuf field <code>repeated string project_ids = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Logging\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResourceNames">
+        <div class="location">at         line 132</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getResourceNames</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. Names of one or more parent resources from which to
+retrieve log entries:
+    "projects/[PROJECT_ID]"
+    "organizations/[ORGANIZATION_ID]"
+    "billingAccounts/[BILLING_ACCOUNT_ID]"
+    "folders/[FOLDER_ID]"
+Projects listed in the <code>project_ids</code> field are added to this list.</p>                    <p>Generated from protobuf field <code>repeated string resource_names = 8;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setResourceNames">
+        <div class="location">at         line 150</div>
+        <code>                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+    <strong>setResourceNames</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. Names of one or more parent resources from which to
+retrieve log entries:
+    "projects/[PROJECT_ID]"
+    "organizations/[ORGANIZATION_ID]"
+    "billingAccounts/[BILLING_ACCOUNT_ID]"
+    "folders/[FOLDER_ID]"
+Projects listed in the <code>project_ids</code> field are added to this list.</p>                    <p>Generated from protobuf field <code>repeated string resource_names = 8;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Logging\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFilter">
+        <div class="location">at         line 170</div>
+        <code>                    string
+    <strong>getFilter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. A filter that chooses which log entries to return.  See <a href="/logging/docs/view/advanced_filters">Advanced
+Logs Filters</a>.  Only log entries that
+match the filter are returned.  An empty filter matches all log entries in
+the resources listed in <code>resource_names</code>. Referencing a parent resource
+that is not listed in <code>resource_names</code> will cause the filter to return no
+results.</p>                    <p>The maximum length of the filter is 20000 characters.</p>
+
+<p>Generated from protobuf field <code>string filter = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setFilter">
+        <div class="location">at         line 188</div>
+        <code>                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+    <strong>setFilter</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. A filter that chooses which log entries to return.  See <a href="/logging/docs/view/advanced_filters">Advanced
+Logs Filters</a>.  Only log entries that
+match the filter are returned.  An empty filter matches all log entries in
+the resources listed in <code>resource_names</code>. Referencing a parent resource
+that is not listed in <code>resource_names</code> will cause the filter to return no
+results.</p>                    <p>The maximum length of the filter is 20000 characters.</p>
+
+<p>Generated from protobuf field <code>string filter = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Logging\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOrderBy">
+        <div class="location">at         line 207</div>
+        <code>                    string
+    <strong>getOrderBy</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. How the results should be sorted.  Presently, the only permitted
+values are <code>"timestamp asc"</code> (default) and <code>"timestamp desc"</code>. The first
+option returns entries in order of increasing values of
+<code>LogEntry.timestamp</code> (oldest first), and the second option returns entries
+in order of decreasing timestamps (newest first).  Entries with equal
+timestamps are returned in order of their <code>insert_id</code> values.</p>                    <p>Generated from protobuf field <code>string order_by = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setOrderBy">
+        <div class="location">at         line 224</div>
+        <code>                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+    <strong>setOrderBy</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. How the results should be sorted.  Presently, the only permitted
+values are <code>"timestamp asc"</code> (default) and <code>"timestamp desc"</code>. The first
+option returns entries in order of increasing values of
+<code>LogEntry.timestamp</code> (oldest first), and the second option returns entries
+in order of decreasing timestamps (newest first).  Entries with equal
+timestamps are returned in order of their <code>insert_id</code> values.</p>                    <p>Generated from protobuf field <code>string order_by = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Logging\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPageSize">
+        <div class="location">at         line 240</div>
+        <code>                    int
+    <strong>getPageSize</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The maximum number of results to return from this request.</p>                    <p>Non-positive values are ignored.  The presence of <code>next_page_token</code> in the
+response indicates that more results might be available.</p>
+
+<p>Generated from protobuf field <code>int32 page_size = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPageSize">
+        <div class="location">at         line 254</div>
+        <code>                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+    <strong>setPageSize</strong>(int $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The maximum number of results to return from this request.</p>                    <p>Non-positive values are ignored.  The presence of <code>next_page_token</code> in the
+response indicates that more results might be available.</p>
+
+<p>Generated from protobuf field <code>int32 page_size = 4;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Logging\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPageToken">
+        <div class="location">at         line 271</div>
+        <code>                    string
+    <strong>getPageToken</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. If present, then retrieve the next batch of results from the
+preceding call to this method.  <code>page_token</code> must be the value of
+<code>next_page_token</code> from the previous response.  The values of other method
+parameters should be identical to those in the previous call.</p>                    <p>Generated from protobuf field <code>string page_token = 5;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setPageToken">
+        <div class="location">at         line 286</div>
+        <code>                    <abbr title="Google\Cloud\Logging\V2\$this">$this</abbr>
+    <strong>setPageToken</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. If present, then retrieve the next batch of results from the
+preceding call to this method.  <code>page_token</code> must be the value of
+<code>next_page_token</code> from the previous response.  The values of other method
+parameters should be identical to those in the previous call.</p>                    <p>Generated from protobuf field <code>string page_token = 5;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Logging\V2\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

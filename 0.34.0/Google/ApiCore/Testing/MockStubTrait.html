@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\Testing\MockStubTrait | Google ApiCore - 0.34.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_Testing_MockStubTrait" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google ApiCore - 0.34.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">trait</span></li>
+                        <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li><a href="../../../Google/ApiCore/Testing.html">Testing</a></li><li class="backslash">\</li><li>MockStubTrait</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            MockStubTrait
+                
+        </h1>
+    </div>
+
+    <p>    trait
+    <strong>MockStubTrait</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The MockStubTrait is used by generated mock stub classes which extent \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+It provides functionality to add responses, get received calls, and overrides the _simpleRequest
+method so that the elements of $responses are returned instead of making a call to the API.</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>($deserialize = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method__simpleRequest">_simpleRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p>Overrides the _simpleRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockUnaryCall object that will return the first item from $responses</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method__clientStreamRequest">_clientStreamRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockClientStreamingCall object that will return the first item from $responses</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method__serverStreamRequest">_serverStreamRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p>Overrides the _serverStreamRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockServerStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method__bidiRequest">_bidiRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p>Overrides the _bidiRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockBidiStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_stripStatusFromResponses">stripStatusFromResponses</a>($responses)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_addResponse">addResponse</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $status = null)
+        
+                                            <p>Add a response object, and an optional status, to the list of responses to be returned via
+_simpleRequest.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStreamingStatus">setStreamingStatus</a>(<a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $status)
+        
+                                            <p>Set the status object to be used when creating streaming calls.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_popReceivedCalls">popReceivedCalls</a>()
+        
+                                            <p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getReceivedCallCount">getReceivedCallCount</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_popCallObjects">popCallObjects</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_isExhausted">isExhausted</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create">create</a>(mixed $responseObject, $status = null, callable $deserialize = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createWithResponseSequence">createWithResponseSequence</a>(mixed[] $sequence, callable $deserialize = null, <a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $finalStatus = null)
+        
+                                            <p>Creates a sequence such that the responses are returned in order.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 52</div>
+        <code>                    
+    <strong>__construct</strong>($deserialize = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__simpleRequest">
+        <div class="location">at         line 68</div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a>
+    <strong>_simpleRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Overrides the _simpleRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockUnaryCall object that will return the first item from $responses</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>The API method name to be called</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$argument</td>
+                <td>The request object to the API method</td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td>A function to deserialize the response object</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__clientStreamRequest">
+        <div class="location">at         line 98</div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a>
+    <strong>_clientStreamRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockClientStreamingCall object that will return the first item from $responses</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>The name of the method to call</td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td>A function that deserializes the responses</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>A metadata map to send to the server
+                             (optional)</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array of options (optional)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a></td>
+            <td>The active call object</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__serverStreamRequest">
+        <div class="location">at         line 129</div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a>
+    <strong>_serverStreamRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Overrides the _serverStreamRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockServerStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>The name of the method to call</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$argument</td>
+                <td>The argument to the method</td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td>A function that deserializes the responses</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>A metadata map to send to the server
+                             (optional)</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array of options (optional)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a></td>
+            <td>The active call object</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__bidiRequest">
+        <div class="location">at         line 164</div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a>
+    <strong>_bidiRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Overrides the _bidiRequest method in \Grpc\BaseStub
+(https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
+Returns a MockBidiStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td>The name of the method to call</td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td>A function that deserializes the responses</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td>A metadata map to send to the server
+                             (optional)</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>An array of options (optional)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a></td>
+            <td>The active call object</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_stripStatusFromResponses">
+        <div class="location">at         line 179</div>
+        <code>        static            
+    <strong>stripStatusFromResponses</strong>($responses)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$responses</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_addResponse">
+        <div class="location">at         line 195</div>
+        <code>                    
+    <strong>addResponse</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $status = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Add a response object, and an optional status, to the list of responses to be returned via
+_simpleRequest.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$response</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$status</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStreamingStatus">
+        <div class="location">at         line 212</div>
+        <code>                    
+    <strong>setStreamingStatus</strong>(<a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $status)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the status object to be used when creating streaming calls.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$status</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_popReceivedCalls">
+        <div class="location">at         line 222</div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]
+    <strong>popReceivedCalls</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]</td>
+            <td>An array of received requests</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getReceivedCallCount">
+        <div class="location">at         line 232</div>
+        <code>                    int
+    <strong>getReceivedCallCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td>The number of calls received.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_popCallObjects">
+        <div class="location">at         line 240</div>
+        <code>                    mixed[]
+    <strong>popCallObjects</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed[]</td>
+            <td>The call objects created by calls to the stub</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isExhausted">
+        <div class="location">at         line 250</div>
+        <code>                    bool
+    <strong>isExhausted</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td>True if $receivedFuncCalls and $response are empty.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create">
+        <div class="location">at         line 262</div>
+        <code>        static            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+    <strong>create</strong>(mixed $responseObject, $status = null, callable $deserialize = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed</td>
+                <td>$responseObject</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$status</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></td>
+            <td>An instance of the current class type.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createWithResponseSequence">
+        <div class="location">at         line 276</div>
+        <code>        static            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+    <strong>createWithResponseSequence</strong>(mixed[] $sequence, callable $deserialize = null, <a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $finalStatus = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates a sequence such that the responses are returned in order.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed[]</td>
+                <td>$sequence</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$finalStatus</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></td>
+            <td>An instance of the current class type.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

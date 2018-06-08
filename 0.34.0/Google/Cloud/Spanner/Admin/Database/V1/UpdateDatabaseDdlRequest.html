@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\Cloud\Spanner\Admin\Database\V1\UpdateDatabaseDdlRequest | Google ApiCore - 0.34.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../../../css/sami.css">
+        <script src="../../../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../../../js/typeahead.min.js"></script>
+        <script src="../../../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Google_Cloud_Spanner_Admin_Database_V1_UpdateDatabaseDdlRequest" data-root-path="../../../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../../../index.html">Google ApiCore - 0.34.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud.html">Cloud</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner.html">Spanner</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner/Admin.html">Admin</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner/Admin/Database.html">Database</a></li><li class="backslash">\</li><li><a href="../../../../../../Google/Cloud/Spanner/Admin/Database/V1.html">V1</a></li><li class="backslash">\</li><li>UpdateDatabaseDdlRequest</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            UpdateDatabaseDdlRequest
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>UpdateDatabaseDdlRequest</strong>        extends <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Enqueues the given DDL statements to be applied, in order but not
+necessarily all at once, to the database schema at some point (or
+points) in the future. The server checks that the statements
+are executable (syntactically valid, name tables that exist, etc.)
+before enqueueing them, but they may still fail upon
+later execution (e.g., if a statement from another batch of
+statements is applied first and it conflicts in some way, or if
+there is some data-related problem like a <code>NULL</code> value in a column to
+which <code>NOT NULL</code> would be added). If a statement fails, all
+subsequent statements in the batch are automatically cancelled.</p>            <p>Each batch of statements is assigned a name which can be used with
+the [Operations][google.longrunning.Operations] API to monitor
+progress. See the
+[operation_id][google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.operation_id] field for more
+details.</p>
+
+<p>Generated from protobuf message <code>google.spanner.admin.database.v1.UpdateDatabaseDdlRequest</code></p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDatabase">getDatabase</a>()
+        
+                                            <p>Required. The database to update.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDatabase">setDatabase</a>(string $var)
+        
+                                            <p>Required. The database to update.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getStatements">getStatements</a>()
+        
+                                            <p>DDL statements to be applied to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setStatements">setStatements</a>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        
+                                            <p>DDL statements to be applied to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOperationId">getOperationId</a>()
+        
+                                            <p>If empty, the new update request is assigned an
+automatically-generated operation ID. Otherwise, <code>operation_id</code>
+is used to construct the name of the resulting
+[Operation][google.longrunning.Operation].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setOperationId">setOperationId</a>(string $var)
+        
+                                            <p>If empty, the new update request is assigned an
+automatically-generated operation ID. Otherwise, <code>operation_id</code>
+is used to construct the name of the resulting
+[Operation][google.longrunning.Operation].</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 67</div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDatabase">
+        <div class="location">at         line 78</div>
+        <code>                    string
+    <strong>getDatabase</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. The database to update.</p>                    <p>Generated from protobuf field <code>string database = 1;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDatabase">
+        <div class="location">at         line 90</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr>
+    <strong>setDatabase</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Required. The database to update.</p>                    <p>Generated from protobuf field <code>string database = 1;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getStatements">
+        <div class="location">at         line 104</div>
+        <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
+    <strong>getStatements</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>DDL statements to be applied to the database.</p>                    <p>Generated from protobuf field <code>repeated string statements = 2;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStatements">
+        <div class="location">at         line 116</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr>
+    <strong>setStatements</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>DDL statements to be applied to the database.</p>                    <p>Generated from protobuf field <code>repeated string statements = 2;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOperationId">
+        <div class="location">at         line 146</div>
+        <code>                    string
+    <strong>getOperationId</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If empty, the new update request is assigned an
+automatically-generated operation ID. Otherwise, <code>operation_id</code>
+is used to construct the name of the resulting
+[Operation][google.longrunning.Operation].</p>                    <p>Specifying an explicit operation ID simplifies determining
+whether the statements were executed in the event that the
+[UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl] call is replayed,
+or the return value is otherwise lost: the [database][google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.database] and
+<code>operation_id</code> fields can be combined to form the
+[name][google.longrunning.Operation.name] of the resulting
+<code>operation_id</code> should be unique within the database, and must be
+a valid identifier: <code>[a-z][a-z0-9_]*</code>. Note that
+automatically-generated operation IDs always begin with an
+underscore. If the named operation already exists,
+[UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl] returns
+<code>ALREADY_EXISTS</code>.</p>
+
+<p>Generated from protobuf field <code>string operation_id = 3;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setOperationId">
+        <div class="location">at         line 174</div>
+        <code>                    <abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr>
+    <strong>setOperationId</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If empty, the new update request is assigned an
+automatically-generated operation ID. Otherwise, <code>operation_id</code>
+is used to construct the name of the resulting
+[Operation][google.longrunning.Operation].</p>                    <p>Specifying an explicit operation ID simplifies determining
+whether the statements were executed in the event that the
+[UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl] call is replayed,
+or the return value is otherwise lost: the [database][google.spanner.admin.database.v1.UpdateDatabaseDdlRequest.database] and
+<code>operation_id</code> fields can be combined to form the
+[name][google.longrunning.Operation.name] of the resulting
+<code>operation_id</code> should be unique within the database, and must be
+a valid identifier: <code>[a-z][a-z0-9_]*</code>. Note that
+automatically-generated operation IDs always begin with an
+underscore. If the named operation already exists,
+[UpdateDatabaseDdl][google.spanner.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl] returns
+<code>ALREADY_EXISTS</code>.</p>
+
+<p>Generated from protobuf field <code>string operation_id = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Cloud\Spanner\Admin\Database\V1\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
