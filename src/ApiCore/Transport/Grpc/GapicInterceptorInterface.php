@@ -35,7 +35,7 @@ namespace Google\ApiCore\Transport\Grpc;
 /**
  * Interceptor class that provides functionality common to gapic clients.
  */
-class GapicInterceptor implements UnaryInterceptor
+class GapicInterceptorInterface implements UnaryInterceptorInterface
 {
     /**
      * @inheritdoc

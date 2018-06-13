@@ -33,8 +33,8 @@
 namespace Google\ApiCore\Tests\Unit\Transport\Grpc;
 
 use Google\ApiCore\Tests\Unit\TestTrait;
-use Google\ApiCore\Transport\Grpc\GapicInterceptor;
-use Google\ApiCore\Transport\Grpc\LoggingInterceptor;
+use Google\ApiCore\Transport\Grpc\GapicInterceptorInterface;
+use Google\ApiCore\Transport\Grpc\LoggingInterceptorInterface;
 use Google\ApiCore\Transport\Grpc\LoggingUnaryCall;
 use Google\Rpc\Code;
 use Grpc\UnaryCall;
@@ -48,7 +48,7 @@ class GapicInterceptorTest extends TestCase
 
     public function testGapicInterceptorWithCallback()
     {
-        $interceptor = new GapicInterceptor();
+        $interceptor = new GapicInterceptorInterface();
 
         $responseString = "response-string";
         $status = new stdClass;
@@ -89,7 +89,7 @@ class GapicInterceptorTest extends TestCase
 
     public function testGapicInterceptorWithoutCallback()
     {
-        $interceptor = new GapicInterceptor();
+        $interceptor = new GapicInterceptorInterface();
 
         $responseString = "response-string";
         $status = new stdClass;

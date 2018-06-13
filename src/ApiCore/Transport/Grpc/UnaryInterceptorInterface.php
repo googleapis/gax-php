@@ -33,42 +33,26 @@
 namespace Google\ApiCore\Transport\Grpc;
 
 /**
- * LoggingInterceptor is used to add logging to gRPC Unary calls.
+ * Temporary class to support an interceptor-like interface until gRPC interceptor support is
+ * available.
+ *
+ * @package Google\ApiCore\Transport\Grpc
  */
-class LoggingInterceptor implements UnaryInterceptor
+interface UnaryInterceptorInterface
 {
-    private $unaryCallLogger;
-
-    /**
-     * LoggingInterceptor constructor.
-     *
-     * @param UnaryCallLogger $unaryCallLogger
-     */
-    public function __construct(UnaryCallLogger $unaryCallLogger)
-    {
-        $this->unaryCallLogger = $unaryCallLogger;
-    }
-
     /**
      * @param $method
      * @param $argument
      * @param array $metadata
      * @param array $options
      * @param callable $continuation
-     * @return LoggingUnaryCall
+     * @return mixed
      */
     public function interceptUnaryUnary(
         $method,
         $argument,
         array $metadata,
         array $options,
-        $continuation
-    ) {
-    
-        $this->unaryCallLogger->logRequest($method, $argument, $metadata, $options);
-        return new LoggingUnaryCall(
-            $continuation($method, $argument, $metadata, $options),
-            $this->unaryCallLogger
-        );
-    }
+        callable $continuation
+    );
 }

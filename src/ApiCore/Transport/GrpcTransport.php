@@ -40,8 +40,8 @@ use Google\ApiCore\ClientStream;
 use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
-use Google\ApiCore\Transport\Grpc\GapicInterceptor;
-use Google\ApiCore\Transport\Grpc\UnaryInterceptor;
+use Google\ApiCore\Transport\Grpc\GapicInterceptorInterface;
+use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
@@ -88,7 +88,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *
      *    @type array $stubOpts Options used to construct the gRPC stub.
      *    @type Channel $channel Grpc channel to be used.
-     *    @type UnaryInterceptor[] $interceptors *INTERNAL* Interceptor support, required until
+     *    @type UnaryInterceptorInterface[] $interceptors *INTERNAL* Interceptor support, required until
      *                                           gRPC interceptors are available.
      * }
      * @return GrpcTransport
@@ -130,7 +130,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     private static function getInterceptors($config)
     {
         $interceptors = [
-            new GapicInterceptor()
+            new GapicInterceptorInterface()
         ];
         if (isset($config['interceptors'])) {
             $interceptors += $config['interceptors'];
