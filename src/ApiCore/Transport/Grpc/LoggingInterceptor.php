@@ -35,7 +35,7 @@ namespace Google\ApiCore\Transport\Grpc;
 /**
  * LoggingInterceptor is used to add logging to gRPC Unary calls.
  */
-class LoggingInterceptorInterface implements UnaryInterceptorInterface
+class LoggingInterceptor implements UnaryInterceptorInterface
 {
     private $unaryCallLogger;
 

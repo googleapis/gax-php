@@ -33,7 +33,7 @@
 namespace Google\ApiCore\Tests\Unit\Transport\Grpc;
 
 use Google\ApiCore\Tests\Unit\TestTrait;
-use Google\ApiCore\Transport\Grpc\LoggingInterceptorInterface;
+use Google\ApiCore\Transport\Grpc\LoggingInterceptor;
 use Google\ApiCore\Transport\Grpc\LoggingUnaryCall;
 use Google\Rpc\Code;
 use Grpc\UnaryCall;
@@ -50,7 +50,7 @@ class LoggingInterceptorTest extends TestCase
         $testLogger = new TestLogger();
         $testUnaryCallLogger = new TestUnaryCallLogger($testLogger);
 
-        $interceptor = new LoggingInterceptorInterface($testUnaryCallLogger);
+        $interceptor = new LoggingInterceptor($testUnaryCallLogger);
 
         $responseString = "response-string";
         $status = new stdClass;
