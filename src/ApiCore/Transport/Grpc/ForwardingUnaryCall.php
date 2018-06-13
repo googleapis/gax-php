@@ -34,6 +34,8 @@ namespace Google\ApiCore\Transport\Grpc;
 
 /**
  * Class ForwardingUnaryCall wraps a \Grpc\UnaryCall.
+ *
+ * @experimental
  */
 class ForwardingUnaryCall extends ForwardingCall
 {

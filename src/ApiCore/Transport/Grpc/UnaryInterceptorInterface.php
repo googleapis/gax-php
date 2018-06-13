@@ -36,7 +36,7 @@ namespace Google\ApiCore\Transport\Grpc;
  * Temporary class to support an interceptor-like interface until gRPC interceptor support is
  * available.
  *
- * @package Google\ApiCore\Transport\Grpc
+ * @experimental
  */
 interface UnaryInterceptorInterface
 {

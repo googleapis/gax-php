@@ -36,6 +36,8 @@ use Grpc\AbstractCall;
 
 /**
  * Class ForwardingCall wraps a \Grpc\AbstractCall.
+ *
+ * @experimental
  */
 abstract class ForwardingCall
 {
