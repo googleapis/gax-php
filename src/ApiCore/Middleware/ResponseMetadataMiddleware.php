@@ -55,8 +55,7 @@ class ResponseMetadataMiddleware
     public function __invoke(Call $call, array $options)
     {
         $metadataReceiver = new Promise();
-        $options += ['internalOptions' => []];
-        $options['internalOptions']['metadataCallback'] = function ($metadata) use ($metadataReceiver) {
+        $options['metadataCallback'] = function ($metadata) use ($metadataReceiver) {
             $metadataReceiver->resolve($metadata);
         };
         $next = $this->nextHandler;

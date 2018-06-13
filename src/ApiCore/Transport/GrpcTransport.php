@@ -98,8 +98,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
     {
         self::validateGrpcSupport();
         $config += [
-            'stubOpts' => [],
-            'channel'  => null,
+            'stubOpts'     => [],
+            'channel'      => null,
+            'interceptors' => [],
         ];
         list($addr, $port) = self::normalizeServiceAddress($serviceAddress);
         $host = "$addr:$port";
@@ -117,7 +118,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            return new GrpcTransport($host, $stubOpts, $channel, self::getInterceptors($config));
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors']);
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
@@ -125,17 +126,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 $ex
             );
         }
-    }
-
-    private static function getInterceptors($config)
-    {
-        $interceptors = [
-            new GapicInterceptorInterface()
-        ];
-        if (isset($config['interceptors'])) {
-            $interceptors += $config['interceptors'];
-        }
-        return $interceptors;
     }
 
     /**
@@ -203,7 +193,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         ) use (
             $execute,
             $interceptor
-) {
+        ) {
             return $interceptor->interceptUnaryUnary($method, $argument, $metadata, $options, $execute);
         };
     }
@@ -250,6 +240,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 list($response, $status) = $unaryCall->wait();
 
                 if ($status->code == Code::OK) {
+                    if (isset($options['metadataCallback'])) {
+                        $metadataCallback = $options['metadataCallback'];
+                        $metadataCallback($unaryCall->getMetadata());
+                    }
                     $promise->resolve($response);
                 } else {
                     throw ApiException::createFromStdClass($status);

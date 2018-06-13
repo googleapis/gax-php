@@ -431,7 +431,7 @@ trait GapicClientTrait
             'headers',
             'timeoutMillis',
             'transportOptions',
-            'internalOptions',
+            'metadataCallback',
         ]);
 
         return $callStack;

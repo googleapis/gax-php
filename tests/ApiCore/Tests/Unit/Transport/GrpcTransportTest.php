@@ -394,8 +394,7 @@ class GrpcTransportTest extends TestCase
                         [
                             'credentials' => null,
                         ],
-                        null,
-                        [new GapicInterceptorInterface()]
+                        null
                     );
                 },
             ],
@@ -408,8 +407,7 @@ class GrpcTransportTest extends TestCase
                         [
                             'credentials' => null,
                         ],
-                        null,
-                        [new GapicInterceptorInterface()]
+                        null
                     );
                 },
             ],
