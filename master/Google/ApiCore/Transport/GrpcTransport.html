@@ -151,6 +151,17 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null, array $interceptors = [])
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     static&nbsp;<a href="../../../Google/ApiCore/Transport/GrpcTransport.html"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a>
                 </div>
                 <div class="col-md-8 type">
@@ -187,6 +198,17 @@
                     <a href="#method_startServerStreamingCall">startServerStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         
                                             <p>Starts a server streaming call.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method__simpleRequest">_simpleRequest</a>($method, $argument, $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -292,8 +314,61 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 74</div>
+        <code>                    
+    <strong>__construct</strong>(string $hostname, array $opts, <abbr title="Grpc\Channel">Channel</abbr> $channel = null, array $interceptors = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hostname</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$opts</td>
+                <td><ul>
+<li>'update_metadata': (optional) a callback function which takes in a
+metadata array, and returns an updated metadata array
+
+<ul>
+<li>'grpc.primary_user_agent': (optional) a user-agent string</li>
+</ul></li>
+</ul>
+</td>
+            </tr>
+                    <tr>
+                <td><abbr title="Grpc\Channel">Channel</abbr></td>
+                <td>$channel</td>
+                <td>An already created Channel object (optional)</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$interceptors</td>
+                <td><em>EXPERIMENTAL</em> Interceptor support, required until
+                                          gRPC interceptors are available.</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_build">
-        <div class="location">at         line 75</div>
+        <div class="location">at         line 97</div>
         <code>        static            <a href="../../../Google/ApiCore/Transport/GrpcTransport.html"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a>
     <strong>build</strong>(string $serviceAddress, array $config = [])
         </code>
@@ -322,6 +397,8 @@
 
 <p>@type array $stubOpts Options used to construct the gRPC stub.
    @type Channel $channel Grpc channel to be used.
+   @type UnaryInterceptorInterface[] $interceptors <em>EXPERIMENTAL</em> Interceptor support, required until
+                                          gRPC interceptors are available.
 }</td>
             </tr>
             </table>
@@ -353,7 +430,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startBidiStreamingCall">
-        <div class="location">at         line 111</div>
+        <div class="location">at         line 134</div>
         <code>                    <a href="../../../Google/ApiCore/BidiStream.html"><abbr title="Google\ApiCore\BidiStream">BidiStream</abbr></a>
     <strong>startBidiStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
@@ -398,7 +475,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startClientStreamingCall">
-        <div class="location">at         line 127</div>
+        <div class="location">at         line 150</div>
         <code>                    <a href="../../../Google/ApiCore/ClientStream.html"><abbr title="Google\ApiCore\ClientStream">ClientStream</abbr></a>
     <strong>startClientStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
@@ -443,7 +520,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startServerStreamingCall">
-        <div class="location">at         line 143</div>
+        <div class="location">at         line 166</div>
         <code>                    <a href="../../../Google/ApiCore/ServerStream.html"><abbr title="Google\ApiCore\ServerStream">ServerStream</abbr></a>
     <strong>startServerStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
@@ -487,8 +564,57 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method__simpleRequest">
+        <div class="location">at         line 201</div>
+        <code>            protected        
+    <strong>_simpleRequest</strong>($method, $argument, $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$method</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$argument</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_startUnaryCall">
-        <div class="location">at         line 166</div>
+        <div class="location">at         line 228</div>
         <code>                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
     <strong>startUnaryCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>

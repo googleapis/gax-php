@@ -148,6 +148,17 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>($mockCall = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     static&nbsp;<a href="../../../Google/ApiCore/Transport/GrpcTransport.html"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a>
                 </div>
                 <div class="col-md-8 type">
@@ -188,27 +199,6 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_startUnaryCall">startUnaryCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
-                                            <p>Returns a promise used to execute network requests.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startUnaryCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a></small></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>($mockCall = null)
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
                     
                 </div>
                 <div class="col-md-8 type">
@@ -217,6 +207,16 @@
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_startUnaryCall">startUnaryCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
+        
+                                            <p>Returns a promise used to execute network requests.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startUnaryCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -355,8 +355,37 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 48</div>
+        <code>                    
+    <strong>__construct</strong>($mockCall = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$mockCall</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_build">
-        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_build"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 75</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_build"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 97</div>
         <code>        static            <a href="../../../Google/ApiCore/Transport/GrpcTransport.html"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a>
     <strong>build</strong>(string $serviceAddress, array $config = [])
         </code>
@@ -385,6 +414,8 @@
 
 <p>@type array $stubOpts Options used to construct the gRPC stub.
    @type Channel $channel Grpc channel to be used.
+   @type UnaryInterceptorInterface[] $interceptors <em>EXPERIMENTAL</em> Interceptor support, required until
+                                          gRPC interceptors are available.
 }</td>
             </tr>
             </table>
@@ -416,7 +447,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startBidiStreamingCall">
-        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startBidiStreamingCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 111</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startBidiStreamingCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 134</div>
         <code>                    <a href="../../../Google/ApiCore/BidiStream.html"><abbr title="Google\ApiCore\BidiStream">BidiStream</abbr></a>
     <strong>startBidiStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
@@ -461,7 +492,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startClientStreamingCall">
-        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startClientStreamingCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 127</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startClientStreamingCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 150</div>
         <code>                    <a href="../../../Google/ApiCore/ClientStream.html"><abbr title="Google\ApiCore\ClientStream">ClientStream</abbr></a>
     <strong>startClientStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
@@ -506,7 +537,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startServerStreamingCall">
-        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startServerStreamingCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 143</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startServerStreamingCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 166</div>
         <code>                    <a href="../../../Google/ApiCore/ServerStream.html"><abbr title="Google\ApiCore\ServerStream">ServerStream</abbr></a>
     <strong>startServerStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
@@ -543,80 +574,6 @@
         </tr>
     </table>
 
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_startUnaryCall">
-        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startUnaryCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 166</div>
-        <code>                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
-    <strong>startUnaryCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>Returns a promise used to execute network requests.</p>                                                </div>
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td><a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a></td>
-                <td>$call</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td>array</td>
-                <td>$options</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td><abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr></td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method___construct">
-        <div class="location">at         line 48</div>
-        <code>                    
-    <strong>__construct</strong>($mockCall = null)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td></td>
-                <td>$mockCall</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
             
             
                     </div>
@@ -666,6 +623,51 @@
             </table>
 
             
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_startUnaryCall">
+        <div class="location">in <a href="../../../Google/ApiCore/Transport/GrpcTransport.html#method_startUnaryCall"><abbr title="Google\ApiCore\Transport\GrpcTransport">GrpcTransport</abbr></a> at         line 228</div>
+        <code>                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
+    <strong>startUnaryCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a promise used to execute network requests.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a></td>
+                <td>$call</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
