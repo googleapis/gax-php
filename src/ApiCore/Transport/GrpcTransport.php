@@ -40,7 +40,6 @@ use Google\ApiCore\ClientStream;
 use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
-use Google\ApiCore\Transport\Grpc\GapicInterceptorInterface;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
@@ -69,7 +68,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * metadata array, and returns an updated metadata array
      *  - 'grpc.primary_user_agent': (optional) a user-agent string
      * @param Channel $channel An already created Channel object (optional)
-     * @param array $interceptors
+     * @param array $interceptors *EXPERIMENTAL* Interceptor support, required until
+     *                                           gRPC interceptors are available.
      */
     public function __construct($hostname, $opts, Channel $channel = null, array $interceptors = [])
     {
@@ -88,7 +88,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *
      *    @type array $stubOpts Options used to construct the gRPC stub.
      *    @type Channel $channel Grpc channel to be used.
-     *    @type UnaryInterceptorInterface[] $interceptors *INTERNAL* Interceptor support, required until
+     *    @type UnaryInterceptorInterface[] $interceptors *EXPERIMENTAL* Interceptor support, required until
      *                                           gRPC interceptors are available.
      * }
      * @return GrpcTransport
@@ -183,7 +183,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         );
     }
 
-    private function wrapExecuteWithInterceptor($execute, $interceptor)
+    private function wrapExecuteWithInterceptor(callable $execute, UnaryInterceptorInterface $interceptor)
     {
         return function (
             $method,
