@@ -35,10 +35,66 @@ use Google\ApiCore\Serializer;
 use Google\Protobuf\DescriptorPool;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
 abstract class GeneratedTest extends TestCase
 {
+    // Workaround for https://github.com/google/protobuf/issues/4761
+    public static function assertSame($expected, $actual, $message = '')
+    {
+        if ($expected instanceof \Google\Protobuf\Internal\Message) {
+            if (!$actual instanceof \Google\Protobuf\Internal\Message) {
+                throw new Exception("not \\Google\\Protobuf\\Internal\\Message object");
+                return;
+            }
+            parent::assertSame(spl_object_hash($expected), spl_object_hash($actual), $message);
+        }
+        parent::assertSame($expected, $actual, $message);
+    }
+
+    // Workaround for https://github.com/google/protobuf/issues/4761
+    public static function assertEquals($expected, $actual, $message = '', $delta = 0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+    {
+        if (is_array($expected)){
+            if (count($expected) === 0) {
+                parent::assertEquals($expected, $actual, $message);
+                return;
+            }
+            if ($expected[0] instanceof \Google\Protobuf\Internal\Message) {
+                foreach($expected as $key => $value) {
+                    if (! array_key_exists($key, $actual)) {
+                        throw new Exception("Key: $key does not exist");
+                        return;
+                    }
+                    self::assertEquals($value, $actual[$key]);
+                    return;
+                }
+            } else {
+                parent::assertEquals($expected, $actual, $message);
+                return;
+            }
+        }
+        if ($expected instanceof \Google\Protobuf\Internal\Message) {
+            if (!$actual instanceof \Google\Protobuf\Internal\Message) {
+                throw new Exception("not \\Google\\Protobuf\\Internal\\Message object");
+                return;
+            }
+            parent::assertEquals(
+                $expected->serializeToString(),
+                $actual->serializeToString(),
+                $message
+            );
+        } else if ($expected instanceof \Google\Protobuf\GPBEmpty) {
+            if (!$actual instanceof \Google\Protobuf\GPBEmpty) {
+                throw new Exception("not a \\Google\\Protobuf\\GPBEmpty object");
+                return;
+            }
+        } else {
+            parent::assertEquals($expected, $actual, $message);
+        }
+    }
+
     public function assertProtobufEquals(&$expected, &$actual)
     {
         if ($expected === $actual) {
@@ -61,7 +117,8 @@ abstract class GeneratedTest extends TestCase
                 $this->assertProtobufEquals($expectedElement, $actualElement);
             }
         } else {
-            $this->assertEquals($expected, $actual);
+            // Call the workaround function above
+            self::assertEquals($expected, $actual);
             if ($expected instanceof Message) {
                 $pool = DescriptorPool::getGeneratedPool();
                 $descriptor = $pool->getDescriptorByClassName(get_class($expected));
