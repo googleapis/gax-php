@@ -29,11 +29,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 $loader = require_once __DIR__ . '/../vendor/autoload.php';
-$loader->add(
-    'GPBMetadata\Google\ApiCore\Tests\Unit',
-    __DIR__ . '/ApiCore/Tests/Unit/testdata/src/'
-);
 
 use Google\ApiCore\Testing\MessageAwareArrayComparator;
 use Google\ApiCore\Testing\ProtobufMessageComparator;
