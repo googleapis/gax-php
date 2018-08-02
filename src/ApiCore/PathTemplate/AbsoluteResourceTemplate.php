@@ -35,15 +35,16 @@ namespace Google\ApiCore\PathTemplate;
 use Google\ApiCore\ValidationException;
 
 /**
- * Represents a path template.
+ * Represents an absolute resource template, meaning that it will always contain a leading slash,
+ * and may contain a trailer verb (":<verb>").
  *
  * Templates use the syntax of the API platform; see
  * https://github.com/googleapis/api-common-protos/blob/master/google/api/http.proto
  * for details. A template consists of a sequence of literals, wildcards, and variable bindings,
  * where each binding can have a sub-path. A string representation can be parsed into an
- * instance of PathTemplate, which can then be used to perform matching and instantiation.
+ * instance of AbsoluteResourceTemplate, which can then be used to perform matching and instantiation.
  */
-class PathTemplate
+class AbsoluteResourceTemplate
 {
     /** @var ResourceTemplate */
     private $resourceTemplate;
@@ -52,15 +53,18 @@ class PathTemplate
     private $verb;
 
     /**
-     * PathTemplate constructor.
+     * AbsoluteResourceTemplate constructor.
      * @param string $path
      * @throws ValidationException
      */
     public function __construct($path)
     {
-        if (!$path || $path[0] !== '/') {
+        if (empty($path)) {
+            throw new ValidationException("Cannot construct AbsoluteResourceTemplate from empty string");
+        }
+        if ($path[0] !== '/') {
             throw new ValidationException(
-                "Could not construct PathTemplate from '$path': must begin with '/'"
+                "Could not construct AbsoluteResourceTemplate from '$path': must begin with '/'"
             );
         }
         $verbSeparatorPos = $this->verbSeparatorPos($path);

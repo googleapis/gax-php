@@ -30,6 +30,9 @@ class RequestBuilderTest extends TestCase
 {
     const SERVICE_NAME = 'test.interface.v1.api';
 
+    /** @var RequestBuilder */
+    private $builder;
+
     public function setUp()
     {
         $this->builder = new RequestBuilder(
