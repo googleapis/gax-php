@@ -394,7 +394,8 @@ class GapicClientTraitTest extends TestCase
                 'grpc' => [],
                 'rest' => [
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
-                ]
+                ],
+                'grpc-fallback' => [],
             ],
             'credentials' => null,
             'credentialsConfig' => [],
