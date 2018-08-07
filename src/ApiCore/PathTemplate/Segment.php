@@ -183,6 +183,9 @@ class Segment
                 "Cannot bind segment '$this' as it is already bound."
             );
         }
+        if (isset($this->template)) {
+            $this->template->match($value);
+        }
         return new Segment(
             $this->segmentType,
             $this->key,
