@@ -32,26 +32,68 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\PathTemplate\AbsoluteResourceTemplate;
+use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 class AbsoluteResourceTemplateTest extends TestCase
 {
     /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Cannot construct AbsoluteResourceTemplate from empty string
+     * @dataProvider validPathProvider
+     * @param string $path
+     * @param $expectedString
      */
-    public function testFailNullString()
+    public function testValidPaths($path, $expectedString = null)
     {
-        new AbsoluteResourceTemplate(null);
+        $template = new AbsoluteResourceTemplate($path);
+        $this->assertEquals($expectedString ?: $path, $template->__toString());
+    }
+
+    public function validPathProvider()
+    {
+        return [
+            ["/foo"],
+            ["/*"],
+            ["/**"],
+            ["/{foo}", "/{foo=*}"],
+            ["/{foo=*}"],
+            ["/{foo=**}"],
+            ["/foo/*"],
+            ["/*/foo"],
+            ["/foo/*:bar"],
+            ["/*/foo:bar"],
+            ["/*/*/*/*:foo"],
+            ["/**/*/*:foo"],
+            ["/foo/**/bar/*"],
+            ["/foo/*/bar/**"],
+            ["/foo/helloazAZ09-.~_what"],
+        ];
     }
 
     /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Cannot construct AbsoluteResourceTemplate from empty string
+     * @dataProvider invalidPathProvider
+     * @expectedException Google\ApiCore\ValidationException
+     * @param string $path
      */
-    public function testFailEmptyString()
+    public function testInvalidPaths($path)
     {
-        new AbsoluteResourceTemplate("");
+        new AbsoluteResourceTemplate($path);
+    }
+
+    public function invalidPathProvider()
+    {
+        return [
+            [null],                     // Null path
+            [""],                       // Empty path
+            ["foo"],                    // No leading '/'
+            ["/foo:bar/baz"],           // Action containing '/'
+            ["/foo:bar:baz"],           // Multiple ':'
+            ["/foo/bar*baz"],           // Mixed literal and '*'
+            ["/foo/**/**"],             // Multiple '**'
+            ["/foo/{bar={baz}}"],       // Nested {}
+            ["/foo/{bar=fizz=buzz}"],   // Multiple '=' in variable
+            ["/foo/{bar"],              // Unmatched '{'
+            ["/foo/{bar/baz}"],         // Variable containing '/'
+        ];
     }
 
     public function testMatchAtomicResourceName()
@@ -73,7 +115,10 @@ class AbsoluteResourceTemplateTest extends TestCase
         );
     }
 
-    public function testMatchWildcardWithColonInMiddle()
+    /**
+     * @expectedException Google\ApiCore\ValidationException
+     */
+    public function testFailWithColonInMiddle()
     {
         $template = new AbsoluteResourceTemplate('/buckets/*:action/objects');
         $this->assertEquals(
@@ -109,6 +154,9 @@ class AbsoluteResourceTemplateTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException Google\ApiCore\ValidationException
+     */
     public function testMatchUnboundedWildcardWithColonInMiddle()
     {
         $template = new AbsoluteResourceTemplate('/buckets/*/objects/**:action/path');

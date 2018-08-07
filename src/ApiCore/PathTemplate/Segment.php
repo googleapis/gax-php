@@ -39,10 +39,10 @@ use Google\ApiCore\ValidationException;
  */
 class Segment
 {
-    private static $literalSegment = 0;
-    private static $wildcardSegment = 1;
-    private static $doubleWildcardSegment = 2;
-    private static $variableSegment = 3;
+    const LITERAL_SEGMENT = 0;
+    const WILDCARD_SEGMENT = 1;
+    const DOUBLE_WILDCARD_SEGMENT = 2;
+    const VARIABLE_SEGMENT = 3;
 
     private $segmentType;
     private $key;
@@ -50,59 +50,108 @@ class Segment
     private $template;
     private $valueBindings;
 
+    public static function parse($segmentString)
+    {
+        if ($segmentString === '*') {
+            return Segment::unboundWildcard();
+        } elseif ($segmentString === '**') {
+            return Segment::unboundDoubleWildcard();
+        } elseif ($segmentString[0] === '{') {
+            if (substr($segmentString, -1) !== '}') {
+                throw new ValidationException(
+                    "Expected '}' at end of segment $segmentString"
+                );
+            }
+
+            // Validate there are no nested braces
+            $segmentStringWithoutBraces = substr($segmentString, 1, strlen($segmentString) - 2);
+            $nestedOpenBracket = strpos($segmentStringWithoutBraces, '{');
+            if ($nestedOpenBracket !== false) {
+                throw new ValidationException(
+                    "Unexpected '{' parsing segment $segmentString at index $nestedOpenBracket"
+                );
+            }
+
+            $equalsIndex = strpos($segmentStringWithoutBraces, '=');
+            if ($equalsIndex === false) {
+                $variableKey = $segmentStringWithoutBraces;
+                $nestedResource = null;
+            } else {
+                $variableKey = substr($segmentStringWithoutBraces, 0, $equalsIndex);
+                $nestedResourceString = substr($segmentStringWithoutBraces, $equalsIndex + 1);
+                $nestedResource = new RelativeResourceTemplate($nestedResourceString);
+            }
+
+            return Segment::unboundVariable($variableKey, $nestedResource);
+        } else {
+            return Segment::literal($segmentString);
+        }
+    }
+
+    private static function isValidLiteral($literal)
+    {
+        return preg_match("/^[0-9a-zA-Z\\.\\-~_]+$/", $literal);
+    }
+
     public static function literal($value)
     {
-        return new Segment(self::$literalSegment, null, $value);
-    }
-
-    public static function unboundWildcard($position)
-    {
-        $key = self::wildcardKeyFromPosition($position);
-        return new Segment(self::$wildcardSegment, $key, null);
-    }
-
-    public static function unboundDoubleWildcard($position)
-    {
-        $key = self::wildcardKeyFromPosition($position);
-        return new Segment(self::$doubleWildcardSegment, $key, null);
-    }
-
-    public static function boundWildcard($position, $value)
-    {
-        $key = self::wildcardKeyFromPosition($position);
-        return new Segment(self::$wildcardSegment, $key, $value);
-    }
-
-    public static function boundDoubleWildcard($position, $value)
-    {
-        $key = self::wildcardKeyFromPosition($position);
-        return new Segment(self::$doubleWildcardSegment, $key, $value);
-    }
-
-    public static function unboundVariable($key, ResourceTemplate $template = null)
-    {
-        if (is_null($template)) {
-            $template = new ResourceTemplate("*");
+        if (!self::isValidLiteral($value)) {
+            throw new ValidationException(
+                "Unexpected characters in literal segment $value"
+            );
         }
-        return new Segment(self::$variableSegment, $key, null, $template);
+        return new Segment(self::LITERAL_SEGMENT, null, $value);
+    }
+
+    public static function unboundWildcard()
+    {
+        return new Segment(self::WILDCARD_SEGMENT, null, null);
+    }
+
+    public static function unboundDoubleWildcard()
+    {
+        return new Segment(self::DOUBLE_WILDCARD_SEGMENT, null, null);
+    }
+
+    public static function boundWildcard($value)
+    {
+        return new Segment(self::WILDCARD_SEGMENT, null, $value);
+    }
+
+    public static function boundDoubleWildcard($value)
+    {
+        return new Segment(self::DOUBLE_WILDCARD_SEGMENT, null, $value);
+    }
+
+    public static function unboundVariable($key, RelativeResourceTemplate $template = null)
+    {
+        if (!self::isValidLiteral($key)) {
+            throw new ValidationException(
+                "Unexpected characters in variable name $key"
+            );
+        }
+        if (is_null($template)) {
+            $template = new RelativeResourceTemplate("*");
+        }
+        return new Segment(self::VARIABLE_SEGMENT, $key, null, $template);
     }
 
     /**
      * @param $key
-     * @param ResourceTemplate $template
+     * @param RelativeResourceTemplate $template
      * @param $value
      * @return Segment
      * @throws ValidationException
      */
-    public static function boundVariable($key, ResourceTemplate $template, $value)
+    public static function boundVariable($key, RelativeResourceTemplate $template, $value)
     {
+        if (!self::isValidLiteral($key)) {
+            throw new ValidationException(
+                "Unexpected characters in variable name $key"
+            );
+        }
         $bindings = $template->match($value);
-        return new Segment(self::$variableSegment, $key, $value, $template, $bindings);
-    }
-
-    private static function wildcardKeyFromPosition($position)
-    {
-        return "\$$position";
+        return new Segment(self::VARIABLE_SEGMENT, $key, $value, $template, $bindings);
     }
 
     private function __construct($segmentType, $key, $value, $template = null, $valueBindings = null)
@@ -123,30 +172,24 @@ class Segment
     }
 
     /**
-     * @param array $bindings
+     * @param mixed $value
      * @return Segment
      * @throws ValidationException
      */
-    public function bind(array $bindings = [])
+    public function bindTo($value)
     {
         if ($this->isBound()) {
-            return $this;
-        }
-        if (!array_key_exists($this->key, $bindings)) {
             throw new ValidationException(
-                'Rendering error - missing required binding ' . $this->key
+                "Cannot bind segment '$this' as it is already bound."
             );
         }
-        $boundValue = $bindings[$this->key];
-
-        switch ($this->segmentType) {
-            case Segment::$wildcardSegment:
-                return Segment::boundWildcard($this->key, $boundValue);
-            case Segment::$doubleWildcardSegment:
-                return Segment::boundDoubleWildcard($this->key, $boundValue);
-            case Segment::$variableSegment:
-                return Segment::boundVariable($this->key, $this->template, $boundValue);
-        }
+        return new Segment(
+            $this->segmentType,
+            $this->key,
+            $value,
+            $this->template,
+            $this->valueBindings
+        );
     }
 
     public function render()
@@ -155,14 +198,18 @@ class Segment
             return $this->value;
         }
         switch ($this->segmentType) {
-            case Segment::$wildcardSegment:
+            case Segment::WILDCARD_SEGMENT:
                 return "*";
-            case Segment::$doubleWildcardSegment:
+            case Segment::DOUBLE_WILDCARD_SEGMENT:
                 return "**";
-            case Segment::$variableSegment:
+            case Segment::VARIABLE_SEGMENT:
                 $key = $this->key;
                 $template = $this->template;
                 return "{{$key}=$template}";
+            default:
+                throw new ValidationException(
+                    "Unexpected Segment type: {$this->segmentType}"
+                );
         }
     }
 
@@ -174,14 +221,18 @@ class Segment
     public function matchValue($value)
     {
         switch ($this->segmentType) {
-            case self::$literalSegment:
+            case self::LITERAL_SEGMENT:
                 return $this->value === $value;
-            case self::$wildcardSegment:
+            case self::WILDCARD_SEGMENT:
                 return true;
-            case self::$doubleWildcardSegment:
+            case self::DOUBLE_WILDCARD_SEGMENT:
                 throw new ValidationException("Cannot call matchValue on DoubleWildcard segment");
-            case self::$variableSegment:
+            case self::VARIABLE_SEGMENT:
                 throw new ValidationException("Cannot call matchValue on Variable segment");
+            default:
+                throw new ValidationException(
+                    "Unexpected Segment type: {$this->segmentType}"
+                );
         }
     }
 
@@ -191,7 +242,7 @@ class Segment
     }
 
     /**
-     * @return ResourceTemplate|null
+     * @return RelativeResourceTemplate|null
      */
     public function getTemplate()
     {
@@ -200,16 +251,11 @@ class Segment
 
     public function isBound()
     {
-        return !is_null($this->value);
+        return isset($this->value);
     }
 
-    public function isVariable()
+    public function getSegmentType()
     {
-        return $this->segmentType === self::$variableSegment;
-    }
-
-    public function isDoubleWildcard()
-    {
-        return $this->segmentType === self::$doubleWildcardSegment;
+        return $this->segmentType;
     }
 }

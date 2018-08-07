@@ -46,7 +46,7 @@ use Google\ApiCore\ValidationException;
  */
 class AbsoluteResourceTemplate
 {
-    /** @var ResourceTemplate */
+    /** @var RelativeResourceTemplate */
     private $resourceTemplate;
 
     /** @var string */
@@ -68,7 +68,7 @@ class AbsoluteResourceTemplate
             );
         }
         $verbSeparatorPos = $this->verbSeparatorPos($path);
-        $this->resourceTemplate = new ResourceTemplate(substr($path, 1, $verbSeparatorPos - 1));
+        $this->resourceTemplate = new RelativeResourceTemplate(substr($path, 1, $verbSeparatorPos - 1));
         $this->verb = substr($path, $verbSeparatorPos + 1);
     }
 

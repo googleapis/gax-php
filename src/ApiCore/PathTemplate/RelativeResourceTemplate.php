@@ -34,13 +34,13 @@ namespace Google\ApiCore\PathTemplate;
 
 use Google\ApiCore\ValidationException;
 
-class ResourceTemplate
+class RelativeResourceTemplate
 {
     /** @var Segment[] $segments */
     private $segments;
 
     /**
-     * ResourceTemplate constructor.
+     * RelativeResourceTemplate constructor.
      *
      * @param string $path
      * @throws ValidationException
@@ -48,19 +48,18 @@ class ResourceTemplate
     public function __construct($path)
     {
         if (empty($path)) {
-            throw new ValidationException("Cannot construct ResourceTemplate from empty string");
+            throw new ValidationException("Cannot construct RelativeResourceTemplate from empty string");
         }
 
         $segments = [];
         $index = 0;
-        $positionalWildcardIndex = 0;
         $doubleWildcardCount = 0;
-        $segments[] = self::consumeSegment($path, $index, $positionalWildcardIndex);
+        $segments[] = self::consumeSegment($path, $index);
         while ($index < strlen($path)) {
             self::consumeLiteral('/', $path, $index);
-            $segment = self::consumeSegment($path, $index, $positionalWildcardIndex);
+            $segment = self::consumeSegment($path, $index);
             $segments[] = $segment;
-            if ($segment->isDoubleWildcard()) {
+            if ($segment->getSegmentType() == Segment::DOUBLE_WILDCARD_SEGMENT) {
                 $doubleWildcardCount++;
             }
         }
@@ -78,49 +77,28 @@ class ResourceTemplate
      *
      * @param string $path
      * @param int $index
-     * @param int $positionalWildcardIndex
      * @return Segment
      * @throws ValidationException
      */
-    private static function consumeSegment($path, &$index, &$positionalWildcardIndex)
+    private static function consumeSegment($path, &$index)
     {
         assert($index < strlen($path));
         if ($path[$index] === '/') {
             throw self::parseErrorUnexpected('/', $path, $index);
         } elseif ($path[$index] === '{') {
-
             // Validate that the { has a matching }
             $closingBraceIndex = strpos($path, '}', $index);
             if ($closingBraceIndex === false) {
                 throw self::parseErrorUnexpected('{', $path, $index);
             }
 
-            // Grab the segment string  and validate that there are no
-            // nested braces
+            // Grab the segment string, update the index, and parse the segment
             $segmentStringWithBraces = substr($path, $index, $closingBraceIndex + 1 - $index);
             assert($segmentStringWithBraces[0] === '{');
             assert(substr($segmentStringWithBraces, -1) === '}');
 
-            $segmentString = substr($segmentStringWithBraces, 1, strlen($segmentStringWithBraces) - 2);
-            $nestedOpenBracket = strpos($segmentString, '{');
-            if ($nestedOpenBracket !== false) {
-                throw self::parseErrorUnexpected('{', $path, $index + $nestedOpenBracket + 1);
-            }
-
-            $equalsIndex = strpos($segmentString, '=');
-            if ($equalsIndex === false) {
-                $variableKey = $segmentString;
-                $nestedResource = null;
-            } else {
-                $variableKey = substr($segmentString, 0, $equalsIndex);
-                $nestedResourceString = substr($segmentString, $equalsIndex + 1);
-                $nestedResource = new ResourceTemplate($nestedResourceString);
-            }
-
-            // Construct the Segment
-            $segment = Segment::unboundVariable($variableKey, $nestedResource);
             $index = $closingBraceIndex + 1;
-            return $segment;
+            return Segment::parse($segmentStringWithBraces);
         } else {
             $nextSlash = strpos($path, '/', $index);
             if ($nextSlash === false) {
@@ -128,21 +106,7 @@ class ResourceTemplate
             }
             $segmentString = substr($path, $index, $nextSlash - $index);
             $index = $nextSlash;
-
-            if ($segmentString === '*') {
-                $segment = Segment::unboundWildcard($positionalWildcardIndex);
-                $positionalWildcardIndex++;
-                return $segment;
-            } elseif ($segmentString === '**') {
-                $segment = Segment::unboundDoubleWildcard($positionalWildcardIndex);
-                $positionalWildcardIndex++;
-                return $segment;
-            } else {
-                if (preg_match("/[\\*{}]/", $segmentString)) {
-                    throw self::parseErrorUnexpected($segmentString, $path, $index);
-                }
-                return Segment::literal($segmentString);
-            }
+            return Segment::parse($segmentString);
         }
     }
 
@@ -190,7 +154,7 @@ class ResourceTemplate
     }
 
     /**
-     * Renders a resource template using the provided bindings.
+     * Renders a relative resource template using the provided bindings.
      *
      * @param array $bindings An array matching var names to binding strings.
      * @return string A rendered representation of this resource template.
@@ -199,24 +163,47 @@ class ResourceTemplate
      */
     public function render(array $bindings)
     {
-        $boundSegments = $this->bind($this->segments, $bindings);
+        $boundSegments = $this->bind($bindings);
         return $this->renderSegments($boundSegments);
     }
 
     /**
-     * @param Segment[] $segments
      * @param array $bindings
      * @return array
      * @throws ValidationException
      */
-    private static function bind(array $segments, array $bindings)
+    private function bind(array $bindings)
     {
+        $positionalArgumentCounter = 0;
         $boundSegments = [];
-        foreach ($segments as $segment) {
-            $boundSegment = $segment->bind($bindings);
+        foreach ($this->segments as $segment) {
+            if ($segment->isBound()) {
+                $boundSegments[] = $segment;
+                continue;
+            }
+            $key = self::getKey($segment, $positionalArgumentCounter);
+            if (!array_key_exists($key, $bindings)) {
+                throw new ValidationException(
+                    "Rendering error - missing required binding '$key' for segment '$segment'."
+                );
+            }
+            $boundSegment = $segment->bindTo($bindings[$key]);
             $boundSegments[] = $boundSegment;
         }
         return $boundSegments;
+    }
+
+    private static function getKey($segment, &$positionalArgumentCounter)
+    {
+        switch ($segment->getSegmentType()) {
+            case Segment::WILDCARD_SEGMENT:
+            case Segment::DOUBLE_WILDCARD_SEGMENT:
+                $key = "\$$positionalArgumentCounter";
+                $positionalArgumentCounter++;
+                return $key;
+            default:
+                return $segment->getKey();
+        }
     }
 
     /**
@@ -268,8 +255,9 @@ class ResourceTemplate
         do {
             list($poppedKey, $poppedSegment) = $poppedTuple;
 
-            assert(!$poppedSegment->isVariable());
-            if ($poppedSegment->isDoubleWildcard()) {
+            assert(!empty($poppedKey));
+            assert($poppedSegment->getSegmentType() !== Segment::VARIABLE_SEGMENT);
+            if ($poppedSegment->getSegmentType() === Segment::DOUBLE_WILDCARD_SEGMENT) {
                 $foundDoubleWildcard = true;
                 break;
             }
@@ -304,8 +292,8 @@ class ResourceTemplate
             $value = $pathValues[$pathIndex];
             $pathIndex++;
 
-            assert(!$segment->isVariable());
-            assert(!$segment->isDoubleWildcard());
+            assert($segment->getSegmentType() !== Segment::VARIABLE_SEGMENT);
+            assert($segment->getSegmentType() !== Segment::DOUBLE_WILDCARD_SEGMENT);
 
             if (!$segment->matchValue($value)) {
                 throw $this->matchException($path);
@@ -333,27 +321,43 @@ class ResourceTemplate
     /**
      * In order to match elements from the path to segments, we need to flatten
      * our array of segments, because it may contain variable segments that
-     * consist of other ResourceTemplates. However, we also need to keep track
+     * consist of other RelativeResourceTemplate. However, we need to determine the
+     * correct keys for positional wildcards, and also need to keep track
      * of the variable name for any flattened segments in order to correctly
      * build the bindings array. Therefore, we flatten our segments into an array
      * of <ParentKey, Segment> tuples.
+     * @throws ValidationException
      */
     private function buildFlattenedKeyedSegmentArray()
     {
         $flattenedKeyedSegments = [];
+        $positionalArgumentCounter = 0;
         foreach ($this->segments as $segment) {
-            if ($segment->isVariable()) {
-                $key = $segment->getKey();
-                $template = $segment->getTemplate();
-                $innerFlattenedKeyedSegments = $template->buildFlattenedKeyedSegmentArray();
-                // Add flattened segment tuples to our list, replacing the key for each
-                // segment with the parent key
-                foreach ($innerFlattenedKeyedSegments as $segmentTuple) {
-                    list($innerKey, $innerSegment) = $segmentTuple;
-                    $flattenedKeyedSegments[] = [$key, $innerSegment];
-                }
-            } else {
-                $flattenedKeyedSegments[] = [$segment->getKey(), $segment];
+            switch ($segment->getSegmentType()) {
+                case Segment::LITERAL_SEGMENT:
+                    $flattenedKeyedSegments[] = [null, $segment];
+                    break;
+                case Segment::WILDCARD_SEGMENT:
+                case Segment::DOUBLE_WILDCARD_SEGMENT:
+                    $positionalKey = "\$$positionalArgumentCounter";
+                    $positionalArgumentCounter++;
+                    $flattenedKeyedSegments[] = [$positionalKey, $segment];
+                    break;
+                case Segment::VARIABLE_SEGMENT:
+                    $key = $segment->getKey();
+                    $template = $segment->getTemplate();
+                    $innerFlattenedKeyedSegments = $template->buildFlattenedKeyedSegmentArray();
+                    // Add flattened segment tuples to our list, replacing the key for each
+                    // segment with the parent key
+                    foreach ($innerFlattenedKeyedSegments as $segmentTuple) {
+                        list($innerKey, $innerSegment) = $segmentTuple;
+                        $flattenedKeyedSegments[] = [$key, $innerSegment];
+                    }
+                    break;
+                default:
+                    throw new ValidationException(
+                        "Unexpected Segment type: {$segment->getSegmentType()}"
+                    );
             }
         }
         return $flattenedKeyedSegments;
