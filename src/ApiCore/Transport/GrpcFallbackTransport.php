@@ -41,6 +41,7 @@ use Google\Protobuf\Internal\Message;
 use Google\Rpc\Status;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -121,17 +122,16 @@ class GrpcFallbackTransport implements TransportInterface
     /**
      * @param Call $call
      * @param array $options
-     * @return Request
+     * @return RequestInterface
      */
     private function buildRequest(Call $call, array $options)
     {
-        $headers = self::buildCommonHeaders($options);
+        // Build common headers and set the content type to 'application/x-protobuf'
+        $headers = ['Content-Type' => 'application/x-protobuf'] + self::buildCommonHeaders($options);
 
         // It is necessary to supply 'grpc-web' in the 'x-goog-api-client' header
         // when using the grpc-fallback protocol.
-        if (!isset($headers['x-goog-api-client'])) {
-            $headers['x-goog-api-client'] = [];
-        }
+        $headers += ['x-goog-api-client' => []];
         $headers['x-goog-api-client'][] = 'grpc-web';
 
         // Uri format: https://<service>/$rpc/<method>
@@ -140,7 +140,7 @@ class GrpcFallbackTransport implements TransportInterface
         return new Request(
             'POST',
             $uri,
-            ['Content-Type' => 'application/x-protobuf'] + $headers,
+            $headers,
             $call->getMessage()->serializeToString()
         );
     }
@@ -153,10 +153,10 @@ class GrpcFallbackTransport implements TransportInterface
     private function unpackResponse(Call $call, ResponseInterface $response)
     {
         $decodeType = $call->getDecodeType();
-        /** @var Message $return */
-        $return = new $decodeType;
-        $return->mergeFromString((string)$response->getBody());
-        return $return;
+        /** @var Message $responseMessage */
+        $responseMessage = new $decodeType;
+        $responseMessage->mergeFromString((string)$response->getBody());
+        return $responseMessage;
     }
 
     /**
@@ -189,12 +189,14 @@ class GrpcFallbackTransport implements TransportInterface
             try {
                 $status->mergeFromString($body);
                 return ApiException::createFromRpcStatus($status);
-            } catch (\Exception $ex) {
+            } catch (\Exception $parseException) {
+                // We were unable to parse the response body into a $status object. Instead,
+                // create an ApiException using the unparsed $body as message.
                 $code = ApiStatus::rpcCodeFromHttpStatusCode($res->getStatusCode());
-                return ApiException::createFromApiResponse($body, $code, null, $ex);
+                return ApiException::createFromApiResponse($body, $code, null, $parseException);
             }
         } else {
-            throw $ex;
+            return $ex;
         }
     }
 }
