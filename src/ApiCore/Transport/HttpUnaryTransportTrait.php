@@ -37,8 +37,8 @@ use Google\ApiCore\ValidationException;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 
 /**
- * An trait for shared functionality between transports that support only unary RPCs using simple
- * HTTP requests/
+ * A trait for shared functionality between transports that support only unary RPCs using simple
+ * HTTP requests.
  */
 trait HttpUnaryTransportTrait
 {

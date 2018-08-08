@@ -96,8 +96,12 @@ class ApiException extends Exception
      * @param \Exception $previous
      * @return ApiException
      */
-    public static function createFromApiResponse($basicMessage, $rpcCode, $metadata = null, $previous = null)
-    {
+    public static function createFromApiResponse(
+        $basicMessage,
+        $rpcCode,
+        array $metadata = null,
+        \Exception $previous = null
+    ) {
         $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
 
         $messageData = [
