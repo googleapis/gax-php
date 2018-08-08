@@ -165,8 +165,8 @@ class GrpcFallbackTransport implements TransportInterface
      */
     private function getCallOptions(array $options)
     {
-        $callOptions = isset($options['transportOptions']['grpc-fallbackOptions'])
-            ? $options['transportOptions']['grpc-fallbackOptions']
+        $callOptions = isset($options['transportOptions']['grpcFallbackOptions'])
+            ? $options['transportOptions']['grpcFallbackOptions']
             : [];
 
         if (isset($options['timeoutMillis'])) {
