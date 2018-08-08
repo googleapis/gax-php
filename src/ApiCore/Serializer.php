@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore;
 
+use Google\Protobuf\Any;
 use Google\Protobuf\Descriptor;
 use Google\Protobuf\DescriptorPool;
 use Google\Protobuf\FieldDescriptor;
@@ -169,6 +170,32 @@ class Serializer
             }
         }
         return $result;
+    }
+
+    /**
+     * Decode an array of Any messages into a printable PHP array.
+     *
+     * @param $anyArray
+     * @return array
+     */
+    public static function decodeAnyMessages($anyArray)
+    {
+        $results = [];
+        foreach ($anyArray as $any) {
+            try {
+                /** @var Any $any */
+                $unpacked = $any->unpack();
+                $results[] = self::serializeToPhpArray($unpacked);
+            } catch (\Exception $ex) {
+                echo "$ex\n";
+                // failed to unpack the $any object - show as unknown binary data
+                $results[] = [
+                    'typeUrl' => $any->getTypeUrl(),
+                    'value' => '<Unknown Binary Data>',
+                ];
+            }
+        }
+        return $results;
     }
 
     private function encodeElement(FieldDescriptor $field, $data)
@@ -400,4 +427,13 @@ class Serializer
         }
         return self::$phpArraySerializer;
     }
+
+    public static function loadKnownMetadataTypes()
+    {
+        foreach (self::$metadataKnownTypes as $key => $class) {
+            new $class;
+        }
+    }
 }
+
+Serializer::loadKnownMetadataTypes();

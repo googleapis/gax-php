@@ -83,11 +83,13 @@ class ApiException extends Exception
      */
     public static function createFromStdClass($status)
     {
-        $basicMessage = $status->details;
-        $code = $status->code;
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
-
-        return self::createFromApiResponse($basicMessage, $code, $metadata);
+        return self::create(
+            $status->details,
+            $status->code,
+            $metadata,
+            Serializer::decodeMetadata($metadata)
+        );
     }
 
     /**
@@ -103,38 +105,41 @@ class ApiException extends Exception
         array $metadata = null,
         \Exception $previous = null
     ) {
-        $message = self::createMessage($basicMessage, $rpcCode, Serializer::decodeMetadata($metadata));
-        $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
-
-        return new ApiException($message, $rpcCode, $rpcStatus, [
-            'previous' => $previous,
-            'metadata' => $metadata,
-            'basicMessage' => $basicMessage,
-
-        ]);
+        return self::create(
+            $basicMessage,
+            $rpcCode,
+            $metadata,
+            Serializer::decodeMetadata($metadata),
+            $previous
+        );
     }
 
-    private static function create(
-        $basicMessage,
-        $rpcCode,
-        array $metadata = null,
-        \Exception $previous = null
-    ) {
+    /**
+     * Construct an ApiException with a useful message, including decoded metadata.
+     *
+     * @param string $basicMessage
+     * @param int $rpcCode
+     * @param mixed[] $metadata
+     * @param array $decodedMetadata
+     * @param \Exception|null $previous
+     * @return ApiException
+     */
+    private static function create($basicMessage, $rpcCode, $metadata, array $decodedMetadata, $previous = null)
+    {
         $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
-
         $messageData = [
             'message' => $basicMessage,
             'code' => $rpcCode,
             'status' => $rpcStatus,
-            'details' => $metadata,
+            'details' => $decodedMetadata
         ];
 
         $message = json_encode($messageData, JSON_PRETTY_PRINT);
 
         return new ApiException($message, $rpcCode, $rpcStatus, [
+            'previous' => $previous,
             'metadata' => $metadata,
             'basicMessage' => $basicMessage,
-            'previous' => $previous,
         ]);
     }
 
@@ -144,51 +149,12 @@ class ApiException extends Exception
      */
     public static function createFromRpcStatus(Status $status)
     {
-        $basicMessage = $status->getMessage();
-        $rpcCode = $status->getCode();
-        $metadata = $status->getDetails();
-
-        $decodedMetadata = [];
-        foreach ($status->getDetails() as $any) {
-            /** @var Any $any */
-            try {
-                $unpacked = $any->unpack();
-                $decodedMetadata[] = Serializer::serializeToPhpArray($unpacked);
-            } catch (\Exception $ex) {
-                // failed to unpack the $any object - use the Any object directly
-                $decodedMetadata[] = Serializer::serializeToPhpArray($any);
-            }
-        }
-
-        $message = self::createMessage($status->getMessage(), $status->getCode(), $decodedMetadata);
-        $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
-
-        return new ApiException($message, $rpcCode, $rpcStatus, [
-            'metadata' => $metadata,
-            'basicMessage' => $basicMessage,
-        ]);
-    }
-
-    /**
-     * Construct a message string that contains useful debugging information.
-     *
-     * @param string $basicMessage
-     * @param int $rpcCode
-     * @param array $details
-     * @return string
-     */
-    private static function createMessage($basicMessage, $rpcCode, array $details)
-    {
-        $messageData = [
-            'message' => $basicMessage,
-            'code' => $rpcCode,
-            'status' => ApiStatus::statusFromRpcCode($rpcCode),
-            'details' => $details
-        ];
-
-        $message = json_encode($messageData, JSON_PRETTY_PRINT);
-
-        return $message;
+        return self::create(
+            $status->getMessage(),
+            $status->getCode(),
+            $status->getDetails(),
+            Serializer::decodeAnyMessages($status->getDetails())
+        );
     }
 
     /**
