@@ -29,119 +29,120 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\PathTemplate\RelativeResourceTemplate;
+use Google\ApiCore\PathTemplate;
 use PHPUnit\Framework\TestCase;
 
-class RelativeResourceTemplateTest extends TestCase
+class PathTemplateTest extends TestCase
 {
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Unexpected
+     * @expectedExceptionMessage Unexpected characters in literal segment
      */
     public function testFailInvalidToken()
     {
-        new RelativeResourceTemplate('hello/wor*ld');
+        new PathTemplate('hello/wor*ld');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Could not match
+     * @expectedExceptionMessage Could not match path
      */
     public function testFailWhenImpossibleMatch01()
     {
-        $template = new RelativeResourceTemplate('hello/world');
+        $template = new PathTemplate('hello/world');
         $template->match('hello');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Could not match
+     * @expectedExceptionMessage Could not match path
      */
     public function testFailWhenImpossibleMatch02()
     {
-        $template = new RelativeResourceTemplate('hello/world');
+        $template = new PathTemplate('hello/world');
         $template->match('hello/world/fail');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Could not match
+     * @expectedExceptionMessage Could not match path
      */
     public function testFailMismatchedLiteral()
     {
-        $template = new RelativeResourceTemplate('hello/world');
+        $template = new PathTemplate('hello/world');
         $template->match('hello/world2');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage cannot contain more than one path wildcard
+     * @expectedExceptionMessage Cannot parse
      */
     public function testFailWhenMultiplePathWildcards()
     {
-        new RelativeResourceTemplate('buckets/*/**/**/objects/*');
+        new PathTemplate('buckets/*/**/**/objects/*');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Unexpected
+     * @expectedExceptionMessage Unexpected '{'
      */
     public function testFailIfInnerBinding()
     {
-        new RelativeResourceTemplate('buckets/{hello={world}}');
+        new PathTemplate('buckets/{hello={world}}');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Unexpected
+     * @expectedExceptionMessage Expected '}'
      */
     public function testFailUnexpectedEof()
     {
-        new RelativeResourceTemplate('a/{hello=world');
+        new PathTemplate('a/{hello=world');
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Cannot construct RelativeResourceTemplate from empty string
+     * @expectedExceptionMessage Cannot construct PathTemplate from empty string
      */
     public function testFailNullString()
     {
-        new RelativeResourceTemplate(null);
+        new PathTemplate(null);
     }
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Cannot construct RelativeResourceTemplate from empty string
+     * @expectedExceptionMessage Cannot construct PathTemplate from empty string
      */
     public function testFailEmptyString()
     {
-        new RelativeResourceTemplate("");
+        new PathTemplate("");
     }
 
     public function testMatchAtomicResourceName()
     {
-        $template = new RelativeResourceTemplate('buckets/*/*/objects/*');
+        $template = new PathTemplate('buckets/*/*/objects/*');
         $this->assertEquals(
             ['$0' => 'f', '$1' => 'o', '$2' => 'bar'],
             $template->match('buckets/f/o/objects/bar')
         );
-        $template = new RelativeResourceTemplate('buckets/{hello}');
+        $template = new PathTemplate('/buckets/{hello}');
         $this->assertEquals(
             ['hello' => 'world'],
-            $template->match('buckets/world')
+            $template->match('/buckets/world')
         );
-        $template = new RelativeResourceTemplate('buckets/{hello=*}');
+        $template = new PathTemplate('/buckets/{hello=*}');
         $this->assertEquals(
             ['hello' => 'world'],
-            $template->match('buckets/world')
+            $template->match('/buckets/world')
         );
     }
 
     public function testMatchEscapedChars()
     {
-        $template = new RelativeResourceTemplate('buckets/*/objects');
+        $template = new PathTemplate('buckets/*/objects');
         $this->assertEquals(
             ['$0' => 'hello%2F%2Bworld'],
             $template->match('buckets/hello%2F%2Bworld/objects')
@@ -150,43 +151,50 @@ class RelativeResourceTemplateTest extends TestCase
 
     /**
      * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Unexpected
      */
-    public function testFailsWithLeadingSlash()
+    public function testMatchWildcardWithColonInMiddle()
     {
-        new RelativeResourceTemplate('/buckets/*');
+        new PathTemplate('/buckets/*:action/objects');
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Unexpected
-     */
-    public function testFailsWithAction()
+    public function testMatchWildcardWithColon()
     {
-        new RelativeResourceTemplate('buckets/*/foo:action');
+        $template = new PathTemplate('/buckets/*:action');
+        $this->assertEquals(
+            ['$0' => 'foo'],
+            $template->match('/buckets/foo:action')
+        );
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Unexpected
-     */
-    public function testFailsWithActionAfterWildcard()
+    public function testMatchColonInWildcardAndTemplate()
     {
-        new RelativeResourceTemplate('buckets/*:action');
-    }
-
-    public function testMatchColonInWildcard()
-    {
-        $template = new RelativeResourceTemplate('buckets/*/*/*/objects/*');
+        $template = new PathTemplate('/buckets/*/*/*/objects/*:action');
         $url = $template->render(
             ['$0' => 'f', '$1' => 'o', '$2' => 'o', '$3' => 'google.com:a-b']
         );
-        $this->assertEquals($url, 'buckets/f/o/o/objects/google.com:a-b');
+        $this->assertEquals($url, '/buckets/f/o/o/objects/google.com:a-b:action');
+    }
+
+    public function testMatchUnboundedWildcardWithColon()
+    {
+        $template = new PathTemplate('/buckets/*/objects/**:action');
+        $this->assertEquals(
+            ['$0' => 'foo', '$1' => 'bar/baz'],
+            $template->match('/buckets/foo/objects/bar/baz:action')
+        );
+    }
+
+    /**
+     * @expectedException \Google\ApiCore\ValidationException
+     */
+    public function testMatchUnboundedWildcardWithColonInMiddle()
+    {
+        new PathTemplate('/buckets/*/objects/**:action/path');
     }
 
     public function testMatchTemplateWithUnboundedWildcard()
     {
-        $template = new RelativeResourceTemplate('buckets/*/objects/**');
+        $template = new PathTemplate('buckets/*/objects/**');
         $this->assertEquals(
             ['$0' => 'foo', '$1' => 'bar/baz'],
             $template->match('buckets/foo/objects/bar/baz')
@@ -195,7 +203,7 @@ class RelativeResourceTemplateTest extends TestCase
 
     public function testMatchWithUnboundInMiddle()
     {
-        $template = new RelativeResourceTemplate('bar/**/foo/*');
+        $template = new PathTemplate('bar/**/foo/*');
         $this->assertEquals(
             ['$0' => 'foo/foo', '$1' => 'bar'],
             $template->match('bar/foo/foo/foo/bar')
@@ -204,7 +212,7 @@ class RelativeResourceTemplateTest extends TestCase
 
     public function testRenderAtomicResource()
     {
-        $template = new RelativeResourceTemplate('buckets/*/*/*/objects/*');
+        $template = new PathTemplate('buckets/*/*/*/objects/*');
         $url = $template->render(
             ['$0' => 'f', '$1' => 'o', '$2' => 'o', '$3' => 'google.com:a-b']
         );
@@ -217,43 +225,43 @@ class RelativeResourceTemplateTest extends TestCase
      */
     public function testRenderFailWhenTooFewVariables()
     {
-        $template = new RelativeResourceTemplate('buckets/*/*/*/objects/*');
+        $template = new PathTemplate('buckets/*/*/*/objects/*');
         $template->render(['$0' => 'f', '$1' => 'l', '$2' => 'o']);
     }
 
     public function testRenderWithUnboundInMiddle()
     {
-        $template = new RelativeResourceTemplate('bar/**/foo/*');
+        $template = new PathTemplate('bar/**/foo/*');
         $url = $template->render(['$0' => '1/2', '$1' => '3']);
         $this->assertEquals($url, 'bar/1/2/foo/3');
     }
 
     public function testToString()
     {
-        $template = new RelativeResourceTemplate('bar/**/foo/*');
+        $template = new PathTemplate('bar/**/foo/*');
         $this->assertEquals((string) $template, 'bar/**/foo/*');
-        $template = new RelativeResourceTemplate('buckets/*/objects/*');
+        $template = new PathTemplate('buckets/*/objects/*');
         $this->assertEquals(
             (string) ($template),
             'buckets/*/objects/*'
         );
-        $template = new RelativeResourceTemplate('buckets/{hello}');
-        $this->assertEquals((string) ($template), 'buckets/{hello=*}');
-        $template = new RelativeResourceTemplate('buckets/{hello=what}/{world}');
+        $template = new PathTemplate('/buckets/{hello}');
+        $this->assertEquals((string) ($template), '/buckets/{hello=*}');
+        $template = new PathTemplate('/buckets/{hello=what}/{world}');
         $this->assertEquals(
             (string) ($template),
-            'buckets/{hello=what}/{world=*}'
+            '/buckets/{hello=what}/{world=*}'
         );
-        $template = new RelativeResourceTemplate('buckets/helloazAZ09-.~_what');
+        $template = new PathTemplate('/buckets/helloazAZ09-.~_what');
         $this->assertEquals(
             (string) ($template),
-            'buckets/helloazAZ09-.~_what'
+            '/buckets/helloazAZ09-.~_what'
         );
     }
 
     public function testSubstitutionOddChars()
     {
-        $template = new RelativeResourceTemplate('projects/{project}/topics/{topic}');
+        $template = new PathTemplate('projects/{project}/topics/{topic}');
         $url = $template->render(
             ['project' => 'google.com:proj-test', 'topic' => 'some-topic']
         );
@@ -261,7 +269,7 @@ class RelativeResourceTemplateTest extends TestCase
             $url,
             'projects/google.com:proj-test/topics/some-topic'
         );
-        $template = new RelativeResourceTemplate('projects/{project}/topics/{topic}');
+        $template = new PathTemplate('projects/{project}/topics/{topic}');
         $url = $template->render(
             ['project' => 'g.,;:~`!@#$%^&()+-', 'topic' => 'sdf<>,.?[]']
         );

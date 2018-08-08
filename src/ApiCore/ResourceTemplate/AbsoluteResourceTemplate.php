@@ -30,13 +30,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\PathTemplate;
+namespace Google\ApiCore\ResourceTemplate;
 
 use Google\ApiCore\ValidationException;
 
 /**
  * Represents an absolute resource template, meaning that it will always contain a leading slash,
- * and may contain a trailer verb (":<verb>").
+ * and may contain a trailing verb (":<verb>").
+ *
+ * Examples:
+ *   /projects
+ *   /projects/{project}
+ *   /foo/{bar=**}/fizz/*:action
  *
  * Templates use the syntax of the API platform; see
  * https://github.com/googleapis/api-common-protos/blob/master/google/api/http.proto
@@ -44,7 +49,7 @@ use Google\ApiCore\ValidationException;
  * where each binding can have a sub-path. A string representation can be parsed into an
  * instance of AbsoluteResourceTemplate, which can then be used to perform matching and instantiation.
  */
-class AbsoluteResourceTemplate
+class AbsoluteResourceTemplate implements ResourceTemplateInterface
 {
     /** @var RelativeResourceTemplate */
     private $resourceTemplate;
@@ -73,7 +78,7 @@ class AbsoluteResourceTemplate
     }
 
     /**
-     * @return string A string representation of the path template
+     * @inheritdoc
      */
     public function __toString()
     {
@@ -81,24 +86,28 @@ class AbsoluteResourceTemplate
     }
 
     /**
-     * Renders a path template using the provided bindings.
-     *
-     * @param array $bindings An array matching var names to binding strings.
-     * @return string A rendered representation of this path template.
-     * @throws ValidationException If $bindings does not contain all required keys
-     *         or if a sub-template can't be parsed.
+     * @inheritdoc
      */
-    public function render($bindings)
+    public function render(array $bindings)
     {
         return sprintf("/%s%s", $this->resourceTemplate->render($bindings), $this->renderVerb());
     }
 
     /**
-     * Matches a fully qualified path template string.
-     *
-     * @param string $path A fully qualified path template string.
-     * @throws ValidationException if path can't be matched to the template.
-     * @return array Array matching var names to binding values.
+     * @inheritdoc
+     */
+    public function matches($path)
+    {
+        try {
+            $this->match($path);
+            return true;
+        } catch (ValidationException $ex) {
+            return false;
+        }
+    }
+
+    /**
+     * @inheritdoc
      */
     public function match($path)
     {

@@ -32,7 +32,7 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\PathTemplate\AbsoluteResourceTemplate;
+use Google\ApiCore\ResourceTemplate\AbsoluteResourceTemplate;
 use Google\Protobuf\Internal\GPBUtil;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
