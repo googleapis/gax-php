@@ -120,6 +120,30 @@ class ApiException extends Exception
         ]);
     }
 
+    private static function create(
+        $basicMessage,
+        $rpcCode,
+        array $metadata = null,
+        \Exception $previous = null
+    ) {
+        $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
+
+        $messageData = [
+            'message' => $basicMessage,
+            'code' => $rpcCode,
+            'status' => $rpcStatus,
+            'details' => $metadata,
+        ];
+
+        $message = json_encode($messageData, JSON_PRETTY_PRINT);
+
+        return new ApiException($message, $rpcCode, $rpcStatus, [
+            'metadata' => $metadata,
+            'basicMessage' => $basicMessage,
+            'previous' => $previous,
+        ]);
+    }
+
     /**
      * @param Status $status
      * @return ApiException
