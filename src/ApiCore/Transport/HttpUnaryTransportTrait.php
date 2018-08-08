@@ -37,9 +37,10 @@ use Google\ApiCore\ValidationException;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 
 /**
- * An trait for shared functionality between Guzzle HTTP-based transports.
+ * An trait for shared functionality between transports that support only unary RPCs using simple
+ * HTTP requests/
  */
-trait GuzzleTransportTrait
+trait HttpUnaryTransportTrait
 {
     private $httpHandler;
     private $transportName;

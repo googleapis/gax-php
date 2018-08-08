@@ -48,7 +48,7 @@ class RestTransport implements TransportInterface
 {
     use ValidationTrait;
     use ServiceAddressTrait;
-    use GuzzleTransportTrait;
+    use HttpUnaryTransportTrait;
 
     private $requestBuilder;
 
