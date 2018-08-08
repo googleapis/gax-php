@@ -32,6 +32,7 @@
 namespace Google\ApiCore;
 
 use Exception;
+use Google\Protobuf\Any;
 use Google\Rpc\Status;
 
 /**
@@ -149,7 +150,14 @@ class ApiException extends Exception
 
         $decodedMetadata = [];
         foreach ($status->getDetails() as $any) {
-            $decodedMetadata[] = Serializer::serializeToPhpArray($any);
+            /** @var Any $any */
+            try {
+                $unpacked = $any->unpack();
+                $decodedMetadata[] = Serializer::serializeToPhpArray($unpacked);
+            } catch (\Exception $ex) {
+                // failed to unpack the $any object - use the Any object directly
+                $decodedMetadata[] = Serializer::serializeToPhpArray($any);
+            }
         }
 
         $message = self::createMessage($status->getMessage(), $status->getCode(), $decodedMetadata);
