@@ -131,7 +131,18 @@
                     static&nbsp;<a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_createFromApiResponse">createFromApiResponse</a>(string $basicMessage, int $rpcCode, string|null $metadata = null)
+                    <a href="#method_createFromApiResponse">createFromApiResponse</a>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" href="http://php.net/Exception">Exception</a> $previous = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createFromRpcStatus">createFromRpcStatus</a>(<a href="../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $status)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -177,7 +188,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 56</div>
+        <div class="location">at         line 57</div>
         <code>                    
     <strong>__construct</strong>(string $message, int $code, string $status, array $optionalArgs = [])
         </code>
@@ -227,7 +238,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getStatus">
-        <div class="location">at         line 73</div>
+        <div class="location">at         line 74</div>
         <code>                    
     <strong>getStatus</strong>()
         </code>
@@ -246,7 +257,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_createFromStdClass">
-        <div class="location">at         line 82</div>
+        <div class="location">at         line 83</div>
         <code>        static            <a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
     <strong>createFromStdClass</strong>(<a target="_blank" href="http://php.net/stdClass">stdClass</a> $status)
         </code>
@@ -284,9 +295,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_createFromApiResponse">
-        <div class="location">at         line 97</div>
+        <div class="location">at         line 99</div>
         <code>        static            <a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
-    <strong>createFromApiResponse</strong>(string $basicMessage, int $rpcCode, string|null $metadata = null)
+    <strong>createFromApiResponse</strong>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" href="http://php.net/Exception">Exception</a> $previous = null)
         </code>
     </h3>
     <div class="details">
@@ -308,8 +319,51 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>string|null</td>
+                <td>array</td>
                 <td>$metadata</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" href="http://php.net/Exception">Exception</a></td>
+                <td>$previous</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createFromRpcStatus">
+        <div class="location">at         line 127</div>
+        <code>        static            <a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
+    <strong>createFromRpcStatus</strong>(<a href="../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a> $status)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/Rpc/Status.html"><abbr title="Google\Rpc\Status">Status</abbr></a></td>
+                <td>$status</td>
                 <td></td>
             </tr>
             </table>
@@ -332,7 +386,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBasicMessage">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 139</div>
         <code>                    null|string
     <strong>getBasicMessage</strong>()
         </code>
@@ -360,7 +414,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetadata">
-        <div class="location">at         line 127</div>
+        <div class="location">at         line 147</div>
         <code>                    mixed[]
     <strong>getMetadata</strong>()
         </code>
@@ -388,7 +442,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 136</div>
+        <div class="location">at         line 156</div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
