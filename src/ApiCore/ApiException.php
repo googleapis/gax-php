@@ -102,21 +102,14 @@ class ApiException extends Exception
         array $metadata = null,
         \Exception $previous = null
     ) {
+        $message = self::createMessage($basicMessage, $rpcCode, Serializer::decodeMetadata($metadata));
         $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
 
-        $messageData = [
-            'message' => $basicMessage,
-            'code' => $rpcCode,
-            'status' => $rpcStatus,
-            'details' => Serializer::decodeMetadata($metadata)
-        ];
-
-        $message = json_encode($messageData, JSON_PRETTY_PRINT);
-
         return new ApiException($message, $rpcCode, $rpcStatus, [
+            'previous' => $previous,
             'metadata' => $metadata,
             'basicMessage' => $basicMessage,
-            'previous' => $previous,
+
         ]);
     }
 
@@ -150,11 +143,44 @@ class ApiException extends Exception
      */
     public static function createFromRpcStatus(Status $status)
     {
-        $metadata = [];
+        $basicMessage = $status->getMessage();
+        $rpcCode = $status->getCode();
+        $metadata = $status->getDetails();
+
+        $decodedMetadata = [];
         foreach ($status->getDetails() as $any) {
-            $metadata[] = Serializer::serializeToPhpArray($any);
+            $decodedMetadata[] = Serializer::serializeToPhpArray($any);
         }
-        return self::createFromApiResponse($status->getMessage(), $status->getCode(), $metadata);
+
+        $message = self::createMessage($status->getMessage(), $status->getCode(), $decodedMetadata);
+        $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
+
+        return new ApiException($message, $rpcCode, $rpcStatus, [
+            'metadata' => $metadata,
+            'basicMessage' => $basicMessage,
+        ]);
+    }
+
+    /**
+     * Construct a message string that contains useful debugging information.
+     *
+     * @param string $basicMessage
+     * @param int $rpcCode
+     * @param array $details
+     * @return string
+     */
+    private static function createMessage($basicMessage, $rpcCode, array $details)
+    {
+        $messageData = [
+            'message' => $basicMessage,
+            'code' => $rpcCode,
+            'status' => ApiStatus::statusFromRpcCode($rpcCode),
+            'details' => $details
+        ];
+
+        $message = json_encode($messageData, JSON_PRETTY_PRINT);
+
+        return $message;
     }
 
     /**
