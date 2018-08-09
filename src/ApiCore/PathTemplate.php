@@ -68,7 +68,7 @@ class PathTemplate implements ResourceTemplateInterface
     }
 
     /**
-     * @inheritdoc
+     * @return string A string representation of the path template
      */
     public function __toString()
     {
@@ -76,7 +76,12 @@ class PathTemplate implements ResourceTemplateInterface
     }
 
     /**
-     * @inheritdoc
+     * Renders a path template using the provided bindings.
+     *
+     * @param array $bindings An array matching var names to binding strings.
+     * @throws ValidationException if a key isn't provided or if a sub-template
+     *    can't be parsed.
+     * @return string A rendered representation of this path template.
      */
     public function render(array $bindings)
     {
@@ -84,7 +89,10 @@ class PathTemplate implements ResourceTemplateInterface
     }
 
     /**
-     * @inheritdoc
+     * Check if $path matches a resource string.
+     *
+     * @param string $path A resource string.
+     * @return bool
      */
     public function matches($path)
     {
@@ -92,7 +100,11 @@ class PathTemplate implements ResourceTemplateInterface
     }
 
     /**
-     * @inheritdoc
+     * Matches a fully qualified path template string.
+     *
+     * @param string $path A fully qualified path template string.
+     * @throws ValidationException if path can't be matched to the template.
+     * @return array Array matching var names to binding values.
      */
     public function match($path)
     {
