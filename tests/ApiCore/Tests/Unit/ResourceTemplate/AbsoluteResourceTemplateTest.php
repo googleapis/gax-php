@@ -191,6 +191,17 @@ class AbsoluteResourceTemplateTest extends TestCase
         $template->match($path);
     }
 
+    /**
+     * @param string $pathTemplate
+     * @param string $path
+     * @dataProvider invalidMatchData
+     */
+    public function testFailMatches($pathTemplate, $path)
+    {
+        $template = new AbsoluteResourceTemplate($pathTemplate);
+        $this->assertFalse($template->matches($path));
+    }
+
     public function invalidMatchData()
     {
         return [

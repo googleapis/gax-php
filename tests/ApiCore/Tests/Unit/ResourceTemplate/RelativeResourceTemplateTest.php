@@ -194,6 +194,17 @@ class RelativeResourceTemplateTest extends TestCase
         $template->match($path);
     }
 
+    /**
+     * @param string $pathTemplate
+     * @param string $path
+     * @dataProvider invalidMatchData
+     */
+    public function testFailMatches($pathTemplate, $path)
+    {
+        $template = new RelativeResourceTemplate($pathTemplate);
+        $this->assertFalse($template->matches($path));
+    }
+
     public function invalidMatchData()
     {
         return [
