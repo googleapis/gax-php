@@ -439,4 +439,6 @@ class Serializer
 // It is necessary to call this when this file is included. Otherwise we cannot be
 // guaranteed that the relevant classes will be loaded into the protobuf descriptor
 // pool when we try to unpack an Any object containing that class.
+// phpcs:disable PSR1.Files.SideEffects
 Serializer::loadKnownMetadataTypes();
+// phpcs:enable
