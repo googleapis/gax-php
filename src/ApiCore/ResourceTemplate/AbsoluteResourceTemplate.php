@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2018, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -111,7 +111,7 @@ class AbsoluteResourceTemplate implements ResourceTemplateInterface
      */
     public function match($path)
     {
-        if (!$path || $path[0] !== '/') {
+        if (empty($path) || $path[0] !== '/') {
             throw $this->matchException($path);
         }
         $verbSeparatorPos = $this->verbSeparatorPos($path);
