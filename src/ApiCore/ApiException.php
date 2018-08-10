@@ -33,12 +33,11 @@ namespace Google\ApiCore;
 
 use Exception;
 use Google\Rpc\Status;
-use RuntimeException;
 
 /**
  * Represents an exception thrown during an RPC.
  */
-class ApiException extends RuntimeException
+class ApiException extends Exception
 {
     private $status;
     private $metadata;
