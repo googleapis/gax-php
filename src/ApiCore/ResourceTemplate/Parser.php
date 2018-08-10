@@ -182,25 +182,25 @@ class Parser
 
     /**
      * Check if $binding is a valid segment binding. Segment bindings may contain any characters
-     * except the following: /={}\
+     * except a forward slash ('/'), and may not be empty.
      *
      * @param $binding
      * @return bool
      */
     public static function isValidBinding($binding)
     {
-        return preg_match("-^[^/=\\{\\}\\\\]+$-", $binding) === 1;
+        return preg_match("-^[^/]+$-", $binding) === 1;
     }
 
     /**
      * Check if $binding is a valid double wildcard binding. Segment bindings may contain any
-     * characters except the following: ={}\
+     * characters, but may not be empty.
      *
      * @param $binding
      * @return bool
      */
     public static function isValidDoubleWildcardBinding($binding)
     {
-        return preg_match("-^[^=\\{\\}\\\\]+$-", $binding) === 1;
+        return preg_match("-^.+$-", $binding) === 1;
     }
 }

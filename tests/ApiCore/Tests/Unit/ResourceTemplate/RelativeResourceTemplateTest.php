@@ -179,6 +179,11 @@ class RelativeResourceTemplateTest extends TestCase
                 'foo/fizz/fuzz/rar/bar/bizz/buzz/baz',
                 ['$0' => 'fizz', '$1' => 'bizz/buzz', '$2' => 'baz', 'bar' => 'fuzz/rar/bar'],
             ],
+            [
+                'buckets/*',
+                'buckets/{}!@#$%^&*()+=[]\|`~-_',
+                ['$0' => '{}!@#$%^&*()+=[]\|`~-_'],
+            ],
         ];
     }
 
@@ -272,23 +277,11 @@ class RelativeResourceTemplateTest extends TestCase
             ],
             [
                 'buckets/{hello=*}',
-                ['hello' => 'world\weary'], // Invalid binding
-            ],
-            [
-                'buckets/{hello=*}',
-                ['hello' => 'world{weary'], // Invalid binding
-            ],
-            [
-                'buckets/{hello=*}',
                 ['hello' => ''], // Invalid binding
             ],
             [
                 'buckets/*/objects/**',
                 ['$0' => 'foo', '$1' => ''],  // Invalid binding
-            ],
-            [
-                'buckets/*/objects/**',
-                ['$0' => 'foo', '$1' => 'world\weary'],  // Invalid binding
             ],
             [
                 'foo/*/{bar=*/rar/*}/**/*:action',

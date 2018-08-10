@@ -245,7 +245,21 @@ class ParserTest extends TestCase
             $this->validLiterals(),
             [
                 ["fo#o"],
-                ["fo%o"]
+                ["fo%o"],
+                ["fo!o"],
+                ["fo@o"],
+                ["fo#o"],
+                ["fo\$o"],
+                ["fo%o"],
+                ["fo^o"],
+                ["fo&o"],
+                ["fo*o"],
+                ["fo(o"],
+                ["fo)o"],
+                ["fo{o"],
+                ["fo}o"],
+                ["fo+o"],
+                ["fo=o"],
             ]
         );
     }
@@ -264,10 +278,7 @@ class ParserTest extends TestCase
         return [
             [null],
             [""],
-            ["fo{o"],
-            ["fo}o"],
             ["fo/o"],
-            ["fo\\o"],
         ];
     }
 
@@ -304,9 +315,6 @@ class ParserTest extends TestCase
         return [
             [null],
             [""],
-            ["fo{o"],
-            ["fo}o"],
-            ["fo\\o"],
         ];
     }
 }
