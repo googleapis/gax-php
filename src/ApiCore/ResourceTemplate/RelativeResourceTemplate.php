@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018, Google Inc.
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         // Check for duplicate keys
         $keys = [];
         foreach ($this->segments as $segment) {
-            if ($segment->hasKey()) {
+            if ($segment->getSegmentType() === Segment::VARIABLE_SEGMENT) {
                 if (isset($keys[$segment->getKey()])) {
                     throw new ValidationException(
                         "Duplicate key '{$segment->getKey()}' in path $path"
@@ -101,22 +101,12 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
      */
     public function render(array $bindings)
     {
-        $boundSegments = $this->bind($bindings);
-        return implode("/", $boundSegments);
-    }
-
-    /**
-     * @param array $bindings
-     * @return array
-     * @throws ValidationException
-     */
-    private function bind(array $bindings)
-    {
-        $boundSegments = [];
+        $literalSegments = [];
         $keySegmentTuples = self::buildKeySegmentTuples($this->segments);
         foreach ($keySegmentTuples as list($key, $segment)) {
-            if ($segment->hasValue()) {
-                $boundSegments[] = $segment;
+            /** @var Segment $segment */
+            if ($segment->getSegmentType() === Segment::LITERAL_SEGMENT) {
+                $literalSegments[] = $segment;
                 continue;
             }
             if (!array_key_exists($key, $bindings)) {
@@ -125,9 +115,9 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                 );
             }
             $boundSegment = $segment->bindTo($bindings[$key]);
-            $boundSegments[] = $boundSegment;
+            $literalSegments[] =  $boundSegment;
         }
-        return $boundSegments;
+        return implode("/", $literalSegments);
     }
 
     /**
@@ -268,6 +258,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                     $template = $segment->getTemplate();
                     $nestedKeySegmentTuples = self::buildKeySegmentTuples($template->segments);
                     foreach ($nestedKeySegmentTuples as list($nestedKey, $nestedSegment)) {
+                        /** @var Segment $nestedSegment */
                         // Nested variables are not allowed
                         assert($nestedSegment->getSegmentType() !== Segment::VARIABLE_SEGMENT);
                         // Insert the nested segment with key set to the outer key of the

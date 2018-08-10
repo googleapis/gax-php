@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018, Google Inc.
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,6 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\ResourceTemplate\AbsoluteResourceTemplate;
-use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 class AbsoluteResourceTemplateTest extends TestCase

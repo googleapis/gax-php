@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018, Google Inc.
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,12 +46,19 @@ class Segment
     const DOUBLE_WILDCARD_SEGMENT = 2;
     const VARIABLE_SEGMENT = 3;
 
+    /** @var int */
     private $segmentType;
+
+    /** @var string|null */
     private $key;
+
+    /** @var string|null */
     private $value;
+
+    /** @var RelativeResourceTemplate|null */
     private $template;
 
-    public function __construct($segmentType, $key, $value, $template = null)
+    public function __construct($segmentType, $key, $value, RelativeResourceTemplate $template = null)
     {
         $this->segmentType = $segmentType;
         $this->key = $key;
@@ -64,10 +71,9 @@ class Segment
      */
     public function __toString()
     {
-        if ($this->hasValue()) {
-            return $this->value;
-        }
         switch ($this->segmentType) {
+            case Segment::LITERAL_SEGMENT:
+                return $this->value;
             case Segment::WILDCARD_SEGMENT:
                 return "*";
             case Segment::DOUBLE_WILDCARD_SEGMENT:
@@ -82,8 +88,8 @@ class Segment
     }
 
     /**
-     * Creates a new Segment which is a copy of $this with value equal to $value. If $value does
-     * not match the current Segment, throws a ValidationException.
+     * Checks if $value matches the current segment, and creates a new literal Segment with value
+     * equal to $value. If $value does not match the current Segment, throws a ValidationException.
      *
      * @param string $value
      * @return Segment
@@ -93,12 +99,7 @@ class Segment
     {
         $value = (string) $value;
         if ($this->matches($value)) {
-            return new Segment(
-                $this->segmentType,
-                $this->key,
-                $value,
-                $this->template
-            );
+            return new Segment(Segment::LITERAL_SEGMENT, null, $value);
         } else {
             throw new ValidationException(
                 "Cannot bind segment '$this' to value '$value'"
@@ -154,21 +155,5 @@ class Segment
     public function getTemplate()
     {
         return $this->template;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasKey()
-    {
-        return isset($this->key);
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasValue()
-    {
-        return isset($this->value);
     }
 }

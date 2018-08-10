@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018, Google Inc.
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -168,18 +168,39 @@ class Parser
         );
     }
 
+    /**
+     * Check if $literal is a valid segment literal. Segment literals may only contain numbers,
+     * letters, and any of the following: .-~_
+     *
+     * @param string $literal
+     * @return bool
+     */
     public static function isValidLiteral($literal)
     {
         return preg_match("/^[0-9a-zA-Z\\.\\-~_]+$/", $literal) === 1;
     }
 
-    public static function isValidBinding($literal)
+    /**
+     * Check if $binding is a valid segment binding. Segment bindings may contain any characters
+     * except the following: /={}\
+     *
+     * @param $binding
+     * @return bool
+     */
+    public static function isValidBinding($binding)
     {
-        return preg_match("-^[^/=\\{\\}\\\\]+$-", $literal) === 1;
+        return preg_match("-^[^/=\\{\\}\\\\]+$-", $binding) === 1;
     }
 
-    public static function isValidDoubleWildcardBinding($literal)
+    /**
+     * Check if $binding is a valid double wildcard binding. Segment bindings may contain any
+     * characters except the following: ={}\
+     *
+     * @param $binding
+     * @return bool
+     */
+    public static function isValidDoubleWildcardBinding($binding)
     {
-        return preg_match("-^[^=\\{\\}\\\\]+$-", $literal) === 1;
+        return preg_match("-^[^=\\{\\}\\\\]+$-", $binding) === 1;
     }
 }
