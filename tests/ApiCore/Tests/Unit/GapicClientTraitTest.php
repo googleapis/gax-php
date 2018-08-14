@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeader;
+use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
@@ -68,7 +69,14 @@ class GapicClientTraitTest extends TestCase
 
     public function testHeadersOverwriteBehavior()
     {
-        $agentHeader = ['x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1']];
+        $header = AgentHeader::buildAgentHeader([
+            'libName' => 'gccl',
+            'libVersion' => '0.0.0',
+            'gapicVersion' => '0.9.0',
+            'apiCoreVersion' => '1.0.0',
+            'phpVersion' => '5.5.0',
+            'grpcVersion' => '1.0.1'
+        ]);
         $headers = [
             'x-goog-api-client' => ['this-should-not-be-used'],
             'new-header' => ['this-should-be-used']
@@ -89,7 +97,7 @@ class GapicClientTraitTest extends TestCase
                 ])
             );
         $client = new GapicClientTraitStub();
-        $client->set('agentHeader', $agentHeader);
+        $client->set('agentHeader', $header);
         $client->set('retrySettings', [
             'method' => $this->getMockBuilder(RetrySettings::class)
                 ->disableOriginalConstructor()
@@ -107,7 +115,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testStartOperationsCall()
     {
-        $agentHeader = ['x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1']];
+        $header = AgentHeader::buildAgentHeader([]);
         $retrySettings = $this->getMockBuilder(RetrySettings::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -131,7 +139,7 @@ class GapicClientTraitTest extends TestCase
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
-        $client->set('agentHeader', $agentHeader);
+        $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
         $client->set('descriptors', ['method' => $longRunningDescriptors]);
         $message = new MockRequest();
@@ -152,6 +160,31 @@ class GapicClientTraitTest extends TestCase
         );
 
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function testGetGapicVersionWithVersionFile()
+    {
+        require_once __DIR__ . '/testdata/src/GapicClientStub.php';
+        $version = '1.2.3-dev';
+        $client = new \GapicClientStub();
+        $this->assertEquals($version, $client->call('getGapicVersion', [[]]));
+    }
+
+    public function testGetGapicVersionWithNoAvailableVersion()
+    {
+        $client = new GapicClientTraitStub();
+        $this->assertEquals('', $client->call('getGapicVersion', [[]]));
+    }
+
+    public function testGetGapicVersionWithLibVersion()
+    {
+        $version = '1.2.3-dev';
+        $client = new GapicClientTraitStub();
+        $client->set('gapicVersionFromFile', $version, true);
+        $options = ['libVersion' => $version];
+        $this->assertEquals($version, $client->call('getGapicVersion', [
+            $options
+        ]));
     }
 
     /**
@@ -309,7 +342,6 @@ class GapicClientTraitTest extends TestCase
 
     public function setClientOptionsData()
     {
-        $agentHeader = AgentHeader::buildAgentHeader([]);
         $clientDefaults = GapicClientTraitStub::getClientDefaults();
         $expectedRetrySettings = RetrySettings::load(
             $clientDefaults['serviceName'],
@@ -324,7 +356,7 @@ class GapicClientTraitTest extends TestCase
         }
         $expectedProperties = [
             'serviceName' => 'test.interface.v1.api',
-            'agentHeader' => $agentHeader,
+            'agentHeader' => AgentHeader::buildAgentHeader([]),
             'retrySettings' => $expectedRetrySettings,
         ];
         return [
@@ -411,7 +443,7 @@ class GapicClientTraitTest extends TestCase
 
     private function buildClientToTestModifyCallMethods()
     {
-        $agentHeader = [];
+        $header = AgentHeader::buildAgentHeader([]);
         $retrySettings = $this->getMockBuilder(RetrySettings::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -437,7 +469,7 @@ class GapicClientTraitTest extends TestCase
         $client = new GapicClientTraitStubExtension();
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
-        $client->set('agentHeader', $agentHeader);
+        $client->set('agentHeader', $header);
         $client->set('retrySettings', [
             'simpleMethod' => $retrySettings,
             'longRunningMethod' => $retrySettings,
@@ -464,7 +496,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyUnaryCallableOption' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -488,7 +520,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyUnaryCallableOption' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -515,7 +547,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyUnaryCallableOption' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
@@ -542,7 +574,7 @@ class GapicClientTraitTest extends TestCase
                     'transportOptions' => [
                         'custom' => ['addModifyStreamingCallable' => true]
                     ],
-                    'headers' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]),
                     'credentialsWrapper' => CredentialsWrapper::build([])
                 ])
             )
