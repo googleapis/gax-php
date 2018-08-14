@@ -33,14 +33,12 @@
 namespace Google\ApiCore;
 
 /**
- * Encapsulates the custom GAPIC header information.
+ * Class containing functions used to build the Agent header.
  */
-class AgentHeaderDescriptor
+class AgentHeader
 {
     const AGENT_HEADER_KEY = 'x-goog-api-client';
     const UNKNOWN_VERSION = '';
-
-    private $metricsHeaders;
 
     /**
      * @param array $headerInfo {
@@ -53,8 +51,9 @@ class AgentHeaderDescriptor
      *     @type string $apiCoreVersion the ApiCore version.
      *     @type string $grpcVersion the gRPC version.
      * }
+     * @return array Agent header array
      */
-    public function __construct($headerInfo)
+    public static function buildAgentHeader($headerInfo)
     {
         $metricsHeaders = [];
 
@@ -93,30 +92,22 @@ class AgentHeaderDescriptor
             : phpversion('grpc');
         $metricsHeaders['grpc'] = $grpcVersion;
 
-        $this->metricsHeaders = $metricsHeaders;
-    }
-
-    /**
-     * Returns an associative array that contains GAPIC header metadata.
-     *
-     * @return array
-     */
-    public function getHeader()
-    {
         $metricsList = [];
-        foreach ($this->metricsHeaders as $key => $value) {
+        foreach ($metricsHeaders as $key => $value) {
             $metricsList[] = $key . "/" . $value;
         }
         return [self::AGENT_HEADER_KEY => [implode(" ", $metricsList)]];
     }
 
-    /**
-     * Returns the version string for ApiCore.
-     *
-     * @return string
-     */
-    public static function getApiCoreVersion()
+    public static function readGapicVersionFromFile($callingClass)
     {
-        return self::API_CORE_VERSION;
+        $clientFile = (new \ReflectionClass($callingClass))->getFileName();
+        $versionFile = substr(
+                $clientFile,
+                0,
+                strrpos($clientFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
+            ) . DIRECTORY_SEPARATOR . 'VERSION';
+
+        return Version::readVersionFile($versionFile);
     }
 }

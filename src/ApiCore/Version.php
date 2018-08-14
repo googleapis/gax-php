@@ -42,10 +42,15 @@ class Version
     {
         if (is_null(self::$version)) {
             $versionFile = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'VERSION']);
-            $versionString = @file_get_contents($versionFile) ?: "";
-            self::$version = trim($versionString);
+            self::$version = self::readVersionFile($versionFile);
         }
         return self::$version;
+    }
+
+    public static function readVersionFile($file)
+    {
+        $versionString = @file_get_contents($file) ?: "";
+        return trim($versionString);
     }
 
     /**
