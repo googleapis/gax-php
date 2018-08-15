@@ -177,6 +177,16 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_decodeAnyMessages">decodeAnyMessages</a>($anyArray)
+        
+                                            <p>Decode an array of Any messages into a printable PHP array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
                     static&nbsp;string
                 </div>
                 <div class="col-md-8 type">
@@ -217,6 +227,17 @@
                                             <p>Convert string from snake_case to camelCase</p>                </div>
                 <div class="col-md-2"></div>
             </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadKnownMetadataTypes">loadKnownMetadataTypes</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
             </div>
 
 
@@ -225,7 +246,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 75</div>
+        <div class="location">at         line 76</div>
         <code>                    
     <strong>__construct</strong>(array $fieldTransformers = [], array $messageTypeTransformers = [], array $decodeFieldTransformers = [], array $decodeMessageTypeTransformers = [])
         </code>
@@ -271,7 +292,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_encodeMessage">
-        <div class="location">at         line 93</div>
+        <div class="location">at         line 94</div>
         <code>                    array
     <strong>encodeMessage</strong>(mixed $message)
         </code>
@@ -311,7 +332,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_decodeMessage">
-        <div class="location">at         line 108</div>
+        <div class="location">at         line 109</div>
         <code>                    mixed
     <strong>decodeMessage</strong>(mixed $message, array $data)
         </code>
@@ -356,7 +377,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_serializeToJson">
-        <div class="location">at         line 120</div>
+        <div class="location">at         line 121</div>
         <code>        static            string
     <strong>serializeToJson</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $message)
         </code>
@@ -394,7 +415,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_serializeToPhpArray">
-        <div class="location">at         line 129</div>
+        <div class="location">at         line 130</div>
         <code>        static            array
     <strong>serializeToPhpArray</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $message)
         </code>
@@ -432,7 +453,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_decodeMetadata">
-        <div class="location">at         line 140</div>
+        <div class="location">at         line 141</div>
         <code>        static            array
     <strong>decodeMetadata</strong>(array $metadata)
         </code>
@@ -471,8 +492,48 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_decodeAnyMessages">
+        <div class="location">at         line 181</div>
+        <code>        static            array
+    <strong>decodeAnyMessages</strong>($anyArray)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Decode an array of Any messages into a printable PHP array.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$anyArray</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_getGetter">
-        <div class="location">at         line 355</div>
+        <div class="location">at         line 382</div>
         <code>        static            string
     <strong>getGetter</strong>(string $name)
         </code>
@@ -510,7 +571,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSetter">
-        <div class="location">at         line 364</div>
+        <div class="location">at         line 391</div>
         <code>        static            string
     <strong>getSetter</strong>(string $name)
         </code>
@@ -548,7 +609,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_toSnakeCase">
-        <div class="location">at         line 375</div>
+        <div class="location">at         line 402</div>
         <code>        static            string
     <strong>toSnakeCase</strong>(string $key)
         </code>
@@ -588,7 +649,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_toCamelCase">
-        <div class="location">at         line 386</div>
+        <div class="location">at         line 413</div>
         <code>        static            string
     <strong>toCamelCase</strong>(string $key)
         </code>
@@ -620,6 +681,25 @@
         </tr>
     </table>
 
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadKnownMetadataTypes">
+        <div class="location">at         line 431</div>
+        <code>        static            
+    <strong>loadKnownMetadataTypes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
             
             
                     </div>
