@@ -32,7 +32,6 @@
 namespace Google\ApiCore;
 
 use Exception;
-use Google\Protobuf\Any;
 use Google\Rpc\Status;
 
 /**
