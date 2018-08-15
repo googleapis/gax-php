@@ -35,6 +35,7 @@ namespace Google\ApiCore;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
+use Google\ApiCore\Middleware\FixedHeaderMiddleware;
 use Google\ApiCore\Middleware\OperationsMiddleware;
 use Google\ApiCore\Middleware\OptionsFilterMiddleware;
 use Google\ApiCore\Middleware\PagedMiddleware;
@@ -61,10 +62,10 @@ trait GapicClientTrait
     private $transport;
     private $credentialsWrapper;
 
-    private static $gapicVersion;
+    private static $gapicVersionFromFile;
     private $retrySettings;
     private $serviceName;
-    private $agentHeaderDescriptor;
+    private $agentHeader;
     private $descriptors;
     private $transportCallMethods = [
         Call::UNARY_CALL => 'startUnaryCall',
@@ -110,25 +111,14 @@ trait GapicClientTrait
 
     private static function getGapicVersion(array $options)
     {
-        if (!self::$gapicVersion) {
-            self::$gapicVersion = isset($options['libVersion'])
-                ? $options['libVersion']
-                : self::getVersionFileContents();
+        if (isset($options['libVersion'])) {
+            return $options['libVersion'];
+        } else {
+            if (!isset(self::$gapicVersionFromFile)) {
+                self::$gapicVersionFromFile = AgentHeader::readGapicVersionFromFile(__CLASS__);
+            }
+            return self::$gapicVersionFromFile;
         }
-
-        return self::$gapicVersion;
-    }
-
-    private static function getVersionFileContents()
-    {
-        $clientFile = (new \ReflectionClass(__CLASS__))->getFileName();
-        $versionFile = substr(
-            $clientFile,
-            0,
-            strrpos($clientFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
-        ) . DIRECTORY_SEPARATOR . 'VERSION';
-
-        return @file_get_contents($versionFile) ?: null;
     }
 
     private static function initGrpcGcpConfig($hostName, $confPath)
@@ -295,7 +285,7 @@ trait GapicClientTrait
             $clientConfig,
             $options['disableRetries']
         );
-        $this->agentHeaderDescriptor = new AgentHeaderDescriptor(
+        $this->agentHeader = AgentHeader::buildAgentHeader(
             $this->pluckArray([
                 'libName',
                 'libVersion',
@@ -479,7 +469,7 @@ trait GapicClientTrait
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-        $callStack = new AgentHeaderMiddleware($callStack, $this->agentHeaderDescriptor);
+        $callStack = new FixedHeaderMiddleware($callStack, $this->agentHeader, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
