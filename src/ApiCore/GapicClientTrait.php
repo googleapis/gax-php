@@ -172,26 +172,6 @@ trait GapicClientTrait
             'rest' => [],
         ];
 
-        if (isset($defaultOptions['gcpApiConfigPath'])
-                && file_exists($defaultOptions['gcpApiConfigPath'])
-                && isset($defaultOptions['serviceAddress'])) {
-            $grpcGcpConfig = self::initGrpcGcpConfig(
-                $defaultOptions['serviceAddress'], $defaultOptions['gcpApiConfigPath']);
-            
-            if (array_key_exists('stubOpts',
-                                 $defaultOptions['transportConfig']['grpc'])) {
-                $defaultOptions['transportConfig']['grpc']['stubOpts'] += [
-                    'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
-                ];
-            } else {
-                $defaultOptions['transportConfig']['grpc'] += [
-                    'stubOpts' => [
-                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
-                    ]
-                ];
-            }
-        }
-
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
@@ -200,8 +180,29 @@ trait GapicClientTrait
         $options['transportConfig'] += $defaultOptions['transportConfig'];
         $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
         $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
-
+        
         $this->modifyClientOptions($options);
+
+        if (isset($options['gcpApiConfigPath'])
+                && file_exists($options['gcpApiConfigPath'])
+                && isset($options['serviceAddress'])) {
+            $grpcGcpConfig = self::initGrpcGcpConfig(
+                $options['serviceAddress'], $options['gcpApiConfigPath']);
+
+            if (array_key_exists('stubOpts',
+                                 $options['transportConfig']['grpc'])) {
+                $options['transportConfig']['grpc']['stubOpts'] += [
+                    'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                ];
+            } else {
+                $options['transportConfig']['grpc'] += [
+                    'stubOpts' => [
+                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                    ]
+                ];
+            }
+        }
+
         return $options;
     }
 
