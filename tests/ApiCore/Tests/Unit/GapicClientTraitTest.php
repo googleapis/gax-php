@@ -55,6 +55,9 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
+use Grpc\Gcp\ApiConfig;
+use Grpc\Gcp\Config;
+
 class GapicClientTraitTest extends TestCase
 {
     use TestTrait;
@@ -381,18 +384,27 @@ class GapicClientTraitTest extends TestCase
 
     public function buildClientOptionsProvider()
     {
+        $apiConfig = new ApiConfig();
+        $apiConfig->mergeFromJsonString(
+            file_get_contents(__DIR__.'/testdata/test_service_grpc_config.json'));
+        $grpcGcpConfig = new Config('test.address.com:443', $apiConfig);
+
         $defaultOptions = [
             'serviceAddress' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
-            'gcpApiConfigPath' => __DIR__.'/../testdata/test_service_grpc_config.json',
+            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,
             'transport' => null,
             'transportConfig' => [
-                'grpc' => [],
+                'grpc' => [
+                    'stubOpts' => [
+                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                    ]
+                ],
                 'rest' => [
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
                 ]
@@ -405,12 +417,11 @@ class GapicClientTraitTest extends TestCase
         ];
 
         $restConfigOptions = $defaultOptions;
-        $restConfigOptions['transportConfig']['rest'] = [
-            'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+        $restConfigOptions['transportConfig']['rest'] += [
             'customRestConfig' => 'value'
         ];
         $grpcConfigOptions = $defaultOptions;
-        $grpcConfigOptions['transportConfig']['grpc'] = [
+        $grpcConfigOptions['transportConfig']['grpc'] += [
             'customGrpcConfig' => 'value'
         ];
         return [
@@ -667,7 +678,7 @@ class GapicClientTraitStub
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
-            'gcpApiConfigPath' => __DIR__.'/../testdata/test_service_grpc_config.json',
+            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,

@@ -131,7 +131,7 @@ trait GapicClientTrait
         return @file_get_contents($versionFile) ?: null;
     }
 
-    private function initGrpcGcpConfig($hostName, $confPath)
+    private static function initGrpcGcpConfig($hostName, $confPath)
     {
         $apiConfig = new ApiConfig();
         $apiConfig->mergeFromJsonString(file_get_contents($confPath));
@@ -172,11 +172,11 @@ trait GapicClientTrait
             'rest' => [],
         ];
 
-        if (isset($options['gcpApiConfigPath'])
-                && file_exists($options['gcpApiConfigPath'])
-                && isset($options['serviceAddress'])) {
-            $grpcGcpConfig = initGrpcGcpConfig(
-                $options['serviceAddress'], $options['gcpApiConfigPath']);
+        if (isset($defaultOptions['gcpApiConfigPath'])
+                && file_exists($defaultOptions['gcpApiConfigPath'])
+                && isset($defaultOptions['serviceAddress'])) {
+            $grpcGcpConfig = self::initGrpcGcpConfig(
+                $defaultOptions['serviceAddress'], $defaultOptions['gcpApiConfigPath']);
             
             if (array_key_exists('stubOpts',
                                  $defaultOptions['transportConfig']['grpc'])) {
