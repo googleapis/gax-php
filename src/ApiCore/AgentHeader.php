@@ -115,10 +115,10 @@ class AgentHeader
     {
         $callingClassFile = (new \ReflectionClass($callingClass))->getFileName();
         $versionFile = substr(
-                $callingClassFile,
-                0,
-                strrpos($callingClassFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
-            ) . DIRECTORY_SEPARATOR . 'VERSION';
+            $callingClassFile,
+            0,
+            strrpos($callingClassFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
+        ) . DIRECTORY_SEPARATOR . 'VERSION';
 
         return Version::readVersionFile($versionFile);
     }
