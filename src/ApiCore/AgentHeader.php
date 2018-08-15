@@ -99,13 +99,25 @@ class AgentHeader
         return [self::AGENT_HEADER_KEY => [implode(" ", $metricsList)]];
     }
 
+    /**
+     * Reads the gapic version string from a VERSION file. In order to determine the file
+     * location, this method follows this procedure:
+     * - accepts a class name $callingClass
+     * - identifies the file defining that class
+     * - searches up the directory structure for the 'src' directory
+     * - looks in the directory above 'src' for a file named VERSION
+     *
+     * @param string $callingClass
+     * @return string the gapic version
+     * @throws \ReflectionException
+     */
     public static function readGapicVersionFromFile($callingClass)
     {
-        $clientFile = (new \ReflectionClass($callingClass))->getFileName();
+        $callingClassFile = (new \ReflectionClass($callingClass))->getFileName();
         $versionFile = substr(
-                $clientFile,
+                $callingClassFile,
                 0,
-                strrpos($clientFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
+                strrpos($callingClassFile, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR)
             ) . DIRECTORY_SEPARATOR . 'VERSION';
 
         return Version::readVersionFile($versionFile);

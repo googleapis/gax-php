@@ -47,6 +47,13 @@ class Version
         return self::$version;
     }
 
+    /**
+     * Reads a VERSION file and returns the contents. If the file does not
+     * exist, returns "".
+     *
+     * @param string $file
+     * @return string
+     */
     public static function readVersionFile($file)
     {
         $versionString = @file_get_contents($file) ?: "";
