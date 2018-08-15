@@ -31,7 +31,6 @@
  */
 namespace Google\ApiCore;
 
-use Exception;
 use RuntimeException;
 
 /**
