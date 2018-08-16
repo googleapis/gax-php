@@ -35,9 +35,9 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\AgentHeader;
 use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\BidiStream;
+use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\Call;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
@@ -51,13 +51,12 @@ use Google\ApiCore\ValidationException;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use GPBMetadata\Google\Api\Auth;
-use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Promise\FulfilledPromise;
-use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
+use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 
 class GapicClientTraitTest extends TestCase
 {

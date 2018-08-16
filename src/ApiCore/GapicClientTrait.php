@@ -177,10 +177,11 @@ trait GapicClientTrait
                 && file_exists($options['gcpApiConfigPath'])
                 && isset($options['serviceAddress'])) {
             $grpcGcpConfig = self::initGrpcGcpConfig(
-                $options['serviceAddress'], $options['gcpApiConfigPath']);
+                $options['serviceAddress'],
+                $options['gcpApiConfigPath']
+            );
 
-            if (array_key_exists('stubOpts',
-                                 $options['transportConfig']['grpc'])) {
+            if (array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
                 $options['transportConfig']['grpc']['stubOpts'] += [
                     'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
                 ];
