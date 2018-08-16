@@ -31,11 +31,11 @@
  */
 namespace Google\ApiCore;
 
-use RuntimeException;
+use Exception;
 
 /**
  * ValidationException represents a local error (i.e. not during an RPC call).
  */
-class ValidationException extends RuntimeException
+class ValidationException extends Exception
 {
 }
