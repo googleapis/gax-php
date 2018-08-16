@@ -170,10 +170,11 @@ trait GapicClientTrait
         $options['transportConfig'] += $defaultOptions['transportConfig'];
         $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
         $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
-        
+
         $this->modifyClientOptions($options);
 
-        if (isset($options['gcpApiConfigPath'])
+        if (extension_loaded('sysvshm')
+                && isset($options['gcpApiConfigPath'])
                 && file_exists($options['gcpApiConfigPath'])
                 && isset($options['serviceAddress'])) {
             $grpcGcpConfig = self::initGrpcGcpConfig(

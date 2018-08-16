@@ -381,7 +381,8 @@ class GapicClientTraitTest extends TestCase
     {
         $apiConfig = new ApiConfig();
         $apiConfig->mergeFromJsonString(
-            file_get_contents(__DIR__.'/testdata/test_service_grpc_config.json'));
+            file_get_contents(__DIR__.'/testdata/test_service_grpc_config.json')
+        );
         $grpcGcpConfig = new Config('test.address.com:443', $apiConfig);
 
         $defaultOptions = [
