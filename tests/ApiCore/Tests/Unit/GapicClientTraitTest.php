@@ -372,6 +372,9 @@ class GapicClientTraitTest extends TestCase
      */
     public function testBuildClientOptions($options, $expectedUpdatedOptions)
     {
+        if (!extension_loaded('sysvshm')) {
+            $this->markTestSkipped('The sysvshm extension must be installed to execute this test.');
+        }
         $client = new GapicClientTraitStub();
         $updatedOptions = $client->call('buildClientOptions', [$options]);
         $this->assertEquals($expectedUpdatedOptions, $updatedOptions);
