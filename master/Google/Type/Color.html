@@ -199,10 +199,9 @@ Example (iOS / Obj-C):
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -305,16 +304,49 @@ possible to distinguish between a default value and the value being unset.</p>  
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 149</div>
+        <div class="location">at         line 173</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type float $red
+      The amount of red in the color as a value in the interval [0, 1].
+@type float $green
+      The amount of green in the color as a value in the interval [0, 1].
+@type float $blue
+      The amount of blue in the color as a value in the interval [0, 1].
+@type \Google\Protobuf\FloatValue $alpha
+      The fraction of this color that should be applied to the pixel. That is,
+      the final pixel color is defined by the equation:
+        pixel color = alpha * (this color) + (1.0 - alpha) * (background color)
+      This means that a value of 1.0 corresponds to a solid color, whereas
+      a value of 0.0 corresponds to a completely transparent color. This
+      uses a wrapper message rather than a simple float scalar so that it is
+      possible to distinguish between a default value and the value being unset.
+      If omitted, this color object is to be rendered as a solid color
+      (as if the alpha value had been explicitly given with a value of 1.0).
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -324,7 +356,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getRed">
-        <div class="location">at         line 160</div>
+        <div class="location">at         line 184</div>
         <code>                    float
     <strong>getRed</strong>()
         </code>
@@ -354,7 +386,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setRed">
-        <div class="location">at         line 172</div>
+        <div class="location">at         line 196</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setRed</strong>(float $var)
         </code>
@@ -394,7 +426,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getGreen">
-        <div class="location">at         line 186</div>
+        <div class="location">at         line 210</div>
         <code>                    float
     <strong>getGreen</strong>()
         </code>
@@ -424,7 +456,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setGreen">
-        <div class="location">at         line 198</div>
+        <div class="location">at         line 222</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setGreen</strong>(float $var)
         </code>
@@ -464,7 +496,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getBlue">
-        <div class="location">at         line 212</div>
+        <div class="location">at         line 236</div>
         <code>                    float
     <strong>getBlue</strong>()
         </code>
@@ -494,7 +526,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setBlue">
-        <div class="location">at         line 224</div>
+        <div class="location">at         line 248</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setBlue</strong>(float $var)
         </code>
@@ -534,7 +566,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getAlpha">
-        <div class="location">at         line 246</div>
+        <div class="location">at         line 270</div>
         <code>                    <abbr title="Google\Protobuf\FloatValue">FloatValue</abbr>
     <strong>getAlpha</strong>()
         </code>
@@ -573,7 +605,7 @@ possible to distinguish between a default value and the value being unset.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setAlpha">
-        <div class="location">at         line 266</div>
+        <div class="location">at         line 290</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setAlpha</strong>(<abbr title="Google\Protobuf\FloatValue">FloatValue</abbr> $var)
         </code>

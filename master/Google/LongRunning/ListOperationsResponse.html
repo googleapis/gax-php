@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -153,16 +152,37 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 31</div>
+        <div class="location">at         line 43</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\LongRunning\Operation[]|\Google\Protobuf\Internal\RepeatedField $operations
+      A list of operations that matches the specified filter in the request.
+@type string $next_page_token
+      The standard List next-page token.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -172,7 +192,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getOperations">
-        <div class="location">at         line 42</div>
+        <div class="location">at         line 54</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getOperations</strong>()
         </code>
@@ -202,7 +222,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setOperations">
-        <div class="location">at         line 54</div>
+        <div class="location">at         line 66</div>
         <code>                    <abbr title="Google\LongRunning\$this">$this</abbr>
     <strong>setOperations</strong>(<a href="../../Google/LongRunning/Operation.html"><abbr title="Google\LongRunning\Operation">Operation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
@@ -242,7 +262,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getNextPageToken">
-        <div class="location">at         line 68</div>
+        <div class="location">at         line 80</div>
         <code>                    string
     <strong>getNextPageToken</strong>()
         </code>
@@ -272,7 +292,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setNextPageToken">
-        <div class="location">at         line 80</div>
+        <div class="location">at         line 92</div>
         <code>                    <abbr title="Google\LongRunning\$this">$this</abbr>
     <strong>setNextPageToken</strong>(string $var)
         </code>

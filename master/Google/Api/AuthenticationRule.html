@@ -106,10 +106,9 @@ ignored.</p>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -159,8 +158,7 @@ ignored.</p>
                 <div class="col-md-8 type">
                     <a href="#method_getAllowWithoutCredential">getAllowWithoutCredential</a>()
         
-                                            <p>Whether to allow requests without a credential. The credential can be
-an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>                </div>
+                                            <p>If true, the service accepts API keys without any other credential.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -170,8 +168,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
                 <div class="col-md-8 type">
                     <a href="#method_setAllowWithoutCredential">setAllowWithoutCredential</a>(bool $var)
         
-                                            <p>Whether to allow requests without a credential. The credential can be
-an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>                </div>
+                                            <p>If true, the service accepts API keys without any other credential.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -202,16 +199,42 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 55</div>
+        <div class="location">at         line 67</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $selector
+      Selects the methods to which this rule applies.
+      Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+@type \Google\Api\OAuthRequirements $oauth
+      The requirements for OAuth credentials.
+@type bool $allow_without_credential
+      If true, the service accepts API keys without any other credential.
+@type \Google\Api\AuthRequirement[]|\Google\Protobuf\Internal\RepeatedField $requirements
+      Requirements for additional authentication providers.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -221,7 +244,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_getSelector">
-        <div class="location">at         line 67</div>
+        <div class="location">at         line 79</div>
         <code>                    string
     <strong>getSelector</strong>()
         </code>
@@ -253,7 +276,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_setSelector">
-        <div class="location">at         line 80</div>
+        <div class="location">at         line 92</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSelector</strong>(string $var)
         </code>
@@ -295,7 +318,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_getOauth">
-        <div class="location">at         line 94</div>
+        <div class="location">at         line 106</div>
         <code>                    <a href="../../Google/Api/OAuthRequirements.html"><abbr title="Google\Api\OAuthRequirements">OAuthRequirements</abbr></a>
     <strong>getOauth</strong>()
         </code>
@@ -325,7 +348,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_setOauth">
-        <div class="location">at         line 106</div>
+        <div class="location">at         line 118</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setOauth</strong>(<a href="../../Google/Api/OAuthRequirements.html"><abbr title="Google\Api\OAuthRequirements">OAuthRequirements</abbr></a> $var)
         </code>
@@ -365,7 +388,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_getAllowWithoutCredential">
-        <div class="location">at         line 125</div>
+        <div class="location">at         line 132</div>
         <code>                    bool
     <strong>getAllowWithoutCredential</strong>()
         </code>
@@ -375,13 +398,7 @@ an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>          
     
 
                     <div class="method-description">
-                                    <p>Whether to allow requests without a credential. The credential can be
-an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>                    <p>For requests without credentials, if the service control environment is
-specified, each incoming request <strong>must</strong> be associated with a service
-consumer. This can be done by passing an API key that belongs to a consumer
-project.</p>
-
-<p>Generated from protobuf field <code>bool allow_without_credential = 5;</code></p>                            </div>
+                                    <p>If true, the service accepts API keys without any other credential.</p>                    <p>Generated from protobuf field <code>bool allow_without_credential = 5;</code></p>                            </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -401,7 +418,7 @@ project.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setAllowWithoutCredential">
-        <div class="location">at         line 142</div>
+        <div class="location">at         line 144</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAllowWithoutCredential</strong>(bool $var)
         </code>
@@ -411,13 +428,7 @@ project.</p>
     
 
                     <div class="method-description">
-                                    <p>Whether to allow requests without a credential. The credential can be
-an OAuth token, Google cookies (first-party auth) or EndUserCreds.</p>                    <p>For requests without credentials, if the service control environment is
-specified, each incoming request <strong>must</strong> be associated with a service
-consumer. This can be done by passing an API key that belongs to a consumer
-project.</p>
-
-<p>Generated from protobuf field <code>bool allow_without_credential = 5;</code></p>                            </div>
+                                    <p>If true, the service accepts API keys without any other credential.</p>                    <p>Generated from protobuf field <code>bool allow_without_credential = 5;</code></p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -447,7 +458,7 @@ project.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRequirements">
-        <div class="location">at         line 156</div>
+        <div class="location">at         line 158</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getRequirements</strong>()
         </code>
@@ -477,7 +488,7 @@ project.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setRequirements">
-        <div class="location">at         line 168</div>
+        <div class="location">at         line 170</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setRequirements</strong>(<a href="../../Google/Api/AuthRequirement.html"><abbr title="Google\Api\AuthRequirement">AuthRequirement</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>

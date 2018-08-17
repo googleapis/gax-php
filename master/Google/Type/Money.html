@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -173,16 +172,45 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 43</div>
+        <div class="location">at         line 63</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $currency_code
+      The 3-letter currency code defined in ISO 4217.
+@type int|string $units
+      The whole units of the amount.
+      For example if `currencyCode` is `"USD"`, then 1 unit is one US dollar.
+@type int $nanos
+      Number of nano (10^-9) units of the amount.
+      The value must be between -999,999,999 and +999,999,999 inclusive.
+      If `units` is positive, `nanos` must be positive or zero.
+      If `units` is zero, `nanos` can be positive, zero, or negative.
+      If `units` is negative, `nanos` must be negative or zero.
+      For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -192,7 +220,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCurrencyCode">
-        <div class="location">at         line 54</div>
+        <div class="location">at         line 74</div>
         <code>                    string
     <strong>getCurrencyCode</strong>()
         </code>
@@ -222,7 +250,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setCurrencyCode">
-        <div class="location">at         line 66</div>
+        <div class="location">at         line 86</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setCurrencyCode</strong>(string $var)
         </code>
@@ -262,7 +290,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getUnits">
-        <div class="location">at         line 81</div>
+        <div class="location">at         line 101</div>
         <code>                    int|string
     <strong>getUnits</strong>()
         </code>
@@ -294,7 +322,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setUnits">
-        <div class="location">at         line 94</div>
+        <div class="location">at         line 114</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setUnits</strong>(int|string $var)
         </code>
@@ -336,7 +364,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getNanos">
-        <div class="location">at         line 113</div>
+        <div class="location">at         line 133</div>
         <code>                    int
     <strong>getNanos</strong>()
         </code>
@@ -372,7 +400,7 @@ For example $-1.75 is represented as <code>units</code>=-1 and <code>nanos</code
             </div>
                     <div class="method-item">
                     <h3 id="method_setNanos">
-        <div class="location">at         line 130</div>
+        <div class="location">at         line 150</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setNanos</strong>(int $var)
         </code>

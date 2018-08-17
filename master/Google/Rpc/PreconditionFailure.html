@@ -103,10 +103,9 @@ PreconditionFailure message.</p>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -124,7 +123,7 @@ PreconditionFailure message.</p>
                     <abbr title="Google\Rpc\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setViolations">setViolations</a>(<a href="../../Google/Rpc/PreconditionFailure_Violation.html"><abbr title="Google\Rpc\PreconditionFailure_Violation">PreconditionFailure_Violation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setViolations">setViolations</a>(<a href="../../Google/Rpc/PreconditionFailure/Violation.html"><abbr title="Google\Rpc\PreconditionFailure\Violation">Violation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Describes all precondition violations.</p>                </div>
                 <div class="col-md-2"></div>
@@ -137,16 +136,35 @@ PreconditionFailure message.</p>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 28</div>
+        <div class="location">at         line 38</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\Rpc\PreconditionFailure\Violation[]|\Google\Protobuf\Internal\RepeatedField $violations
+      Describes all precondition violations.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -156,7 +174,7 @@ PreconditionFailure message.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getViolations">
-        <div class="location">at         line 39</div>
+        <div class="location">at         line 49</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getViolations</strong>()
         </code>
@@ -186,9 +204,9 @@ PreconditionFailure message.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setViolations">
-        <div class="location">at         line 51</div>
+        <div class="location">at         line 61</div>
         <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
-    <strong>setViolations</strong>(<a href="../../Google/Rpc/PreconditionFailure_Violation.html"><abbr title="Google\Rpc\PreconditionFailure_Violation">PreconditionFailure_Violation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+    <strong>setViolations</strong>(<a href="../../Google/Rpc/PreconditionFailure/Violation.html"><abbr title="Google\Rpc\PreconditionFailure\Violation">Violation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -202,7 +220,7 @@ PreconditionFailure message.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/Rpc/PreconditionFailure_Violation.html"><abbr title="Google\Rpc\PreconditionFailure_Violation">PreconditionFailure_Violation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Rpc/PreconditionFailure/Violation.html"><abbr title="Google\Rpc\PreconditionFailure\Violation">Violation</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>

@@ -101,10 +101,9 @@ monitoring, etc.</p>            <p>Generated from protobuf message <code>google.
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -137,16 +136,36 @@ feature (like quota and billing) will be enabled.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 28</div>
+        <div class="location">at         line 39</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $environment
+      The service control environment to use. If empty, no control plane
+      feature (like quota and billing) will be enabled.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -156,7 +175,7 @@ feature (like quota and billing) will be enabled.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getEnvironment">
-        <div class="location">at         line 40</div>
+        <div class="location">at         line 51</div>
         <code>                    string
     <strong>getEnvironment</strong>()
         </code>
@@ -187,7 +206,7 @@ feature (like quota and billing) will be enabled.</p>                    <p>Gene
             </div>
                     <div class="method-item">
                     <h3 id="method_setEnvironment">
-        <div class="location">at         line 53</div>
+        <div class="location">at         line 64</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setEnvironment</strong>(string $var)
         </code>

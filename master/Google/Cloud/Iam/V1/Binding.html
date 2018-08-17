@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -153,16 +152,52 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 46</div>
+        <div class="location">at         line 73</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $role
+      Role that is assigned to `members`.
+      For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+      Required
+@type string[]|\Google\Protobuf\Internal\RepeatedField $members
+      Specifies the identities requesting access for a Cloud Platform resource.
+      `members` can have the following values:
+      * `allUsers`: A special identifier that represents anyone who is
+         on the internet; with or without a Google account.
+      * `allAuthenticatedUsers`: A special identifier that represents anyone
+         who is authenticated with a Google account or a service account.
+      * `user:{emailid}`: An email address that represents a specific Google
+         account. For example, `alice&amp;#64;gmail.com` or `joe&amp;#64;example.com`.
+      * `serviceAccount:{emailid}`: An email address that represents a service
+         account. For example, `my-other-app&amp;#64;appspot.gserviceaccount.com`.
+      * `group:{emailid}`: An email address that represents a Google group.
+         For example, `admins&amp;#64;example.com`.
+      * `domain:{domain}`: A Google Apps domain name that represents all the
+         users of that domain. For example, `google.com` or `example.com`.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -172,7 +207,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getRole">
-        <div class="location">at         line 59</div>
+        <div class="location">at         line 86</div>
         <code>                    string
     <strong>getRole</strong>()
         </code>
@@ -205,7 +240,7 @@ Required</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setRole">
-        <div class="location">at         line 73</div>
+        <div class="location">at         line 100</div>
         <code>                    <abbr title="Google\Cloud\Iam\V1\$this">$this</abbr>
     <strong>setRole</strong>(string $var)
         </code>
@@ -248,7 +283,7 @@ Required</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMembers">
-        <div class="location">at         line 100</div>
+        <div class="location">at         line 127</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getMembers</strong>()
         </code>
@@ -292,7 +327,7 @@ Required</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setMembers">
-        <div class="location">at         line 125</div>
+        <div class="location">at         line 152</div>
         <code>                    <abbr title="Google\Cloud\Iam\V1\$this">$this</abbr>
     <strong>setMembers</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>

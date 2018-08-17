@@ -101,10 +101,9 @@ type combination defined within a <code>QuotaGroup</code>.</p>            <p>Gen
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -337,16 +336,147 @@ values if "/{region}" or "/{zone}" is specified in the unit field.</p>          
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 175</div>
+        <div class="location">at         line 297</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $name
+      Name of the quota limit. The name is used to refer to the limit when
+      overriding the default limit on per-consumer basis.
+      For group-based quota limits, the name must be unique within the quota
+      group. If a name is not provided, it will be generated from the limit_by
+      and duration fields.
+      For metric-based quota limits, the name must be provided, and it must be
+      unique within the service. The name can only include alphanumeric
+      characters as well as '-'.
+      The maximum length of the limit name is 64 characters.
+      The name of a limit is used as a unique identifier for this limit.
+      Therefore, once a limit has been put into use, its name should be
+      immutable. You can use the display_name field to provide a user-friendly
+      name for the limit. The display name can be evolved over time without
+      affecting the identity of the limit.
+@type string $description
+      Optional. User-visible, extended description for this quota limit.
+      Should be used only when more context is needed to understand this limit
+      than provided by the limit's display name (see: `display_name`).
+@type int|string $default_limit
+      Default number of tokens that can be consumed during the specified
+      duration. This is the number of tokens assigned when a client
+      application developer activates the service for his/her project.
+      Specifying a value of 0 will block all requests. This can be used if you
+      are provisioning quota to selected consumers and blocking others.
+      Similarly, a value of -1 will indicate an unlimited quota. No other
+      negative values are allowed.
+      Used by group-based quotas only.
+@type int|string $max_limit
+      Maximum number of tokens that can be consumed during the specified
+      duration. Client application developers can override the default limit up
+      to this maximum. If specified, this value cannot be set to a value less
+      than the default limit. If not specified, it is set to the default limit.
+      To allow clients to apply overrides with no upper bound, set this to -1,
+      indicating unlimited maximum quota.
+      Used by group-based quotas only.
+@type int|string $free_tier
+      Free tier value displayed in the Developers Console for this limit.
+      The free tier is the number of tokens that will be subtracted from the
+      billed amount when billing is enabled.
+      This field can only be set on a limit with duration "1d", in a billable
+      group; it is invalid on any other limit. If this field is not set, it
+      defaults to 0, indicating that there is no free tier for this service.
+      Used by group-based quotas only.
+@type string $duration
+      Duration of this limit in textual notation. Example: "100s", "24h", "1d".
+      For duration longer than a day, only multiple of days is supported. We
+      support only "100s" and "1d" for now. Additional support will be added in
+      the future. "0" indicates indefinite duration.
+      Used by group-based quotas only.
+@type string $metric
+      The name of the metric this quota limit applies to. The quota limits with
+      the same metric will be checked together during runtime. The metric must be
+      defined within the service config.
+      Used by metric-based quotas only.
+@type string $unit
+      Specify the unit of the quota limit. It uses the same syntax as
+      [Metric.unit][]. The supported unit kinds are determined by the quota
+      backend system.
+      The [Google Service Control](https://cloud.google.com/service-control)
+      supports the following unit components:
+      * One of the time intevals:
+        * "/min"  for quota every minute.
+        * "/d"  for quota every 24 hours, starting 00:00 US Pacific Time.
+        * Otherwise the quota won't be reset by time, such as storage limit.
+      * One and only one of the granted containers:
+        * "/{organization}" quota for an organization.
+        * "/{project}" quota for a project.
+        * "/{folder}" quota for a folder.
+        * "/{resource}" quota for a universal resource.
+      * Zero or more quota segmentation dimension. Not all combos are valid.
+        * "/{region}" quota for every region. Not to be used with time intervals.
+        * Otherwise the resources granted on the target is not segmented.
+        * "/{zone}" quota for every zone. Not to be used with time intervals.
+        * Otherwise the resources granted on the target is not segmented.
+        * "/{resource}" quota for a resource associated with a project or org.
+      Here are some examples:
+      * "1/min/{project}" for quota per minute per project.
+      * "1/min/{user}" for quota per minute per user.
+      * "1/min/{organization}" for quota per minute per organization.
+      Note: the order of unit components is insignificant.
+      The "1" at the beginning is required to follow the metric unit syntax.
+      Used by metric-based quotas only.
+@type array|\Google\Protobuf\Internal\MapField $values
+      Tiered limit values. Also allows for regional or zone overrides for these
+      values if "/{region}" or "/{zone}" is specified in the unit field.
+      Currently supported tiers from low to high:
+      VERY_LOW, LOW, STANDARD, HIGH, VERY_HIGH
+      To apply different limit values for users according to their tiers, specify
+      the values for the tiers you want to differentiate. For example:
+      {LOW:100, STANDARD:500, HIGH:1000, VERY_HIGH:5000}
+      The limit value for each tier is optional except for the tier STANDARD.
+      The limit value for an unspecified tier falls to the value of its next
+      tier towards tier STANDARD. For the above example, the limit value for tier
+      STANDARD is 500.
+      To apply the same limit value for all users, just specify limit value for
+      tier STANDARD. For example: {STANDARD:500}.
+      To apply a regional overide for a tier, add a map entry with key
+      "&lt;TIER&gt;/&lt;region&gt;", where &lt;region&gt; is a region name. Similarly, for a zone
+      override, add a map entry with key "&lt;TIER&gt;/{zone}".
+      Further, a wildcard can be used at the end of a zone name in order to
+      specify zone level overrides. For example:
+      LOW: 10, STANDARD: 50, HIGH: 100,
+      LOW/us-central1: 20, STANDARD/us-central1: 60, HIGH/us-central1: 200,
+      LOW/us-central1-*: 10, STANDARD/us-central1-*: 20, HIGH/us-central1-*: 80
+      The regional overrides tier set for each region must be the same as
+      the tier set for default limit values. Same rule applies for zone overrides
+      tier as well.
+      Used by metric-based quotas only.
+@type string $display_name
+      User-visible display name for this limit.
+      Optional. If not set, the UI will provide a default display name based on
+      the quota configuration. This field can be used to override the default
+      display name generated from the configuration.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -356,7 +486,7 @@ values if "/{region}" or "/{zone}" is specified in the unit field.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_getName">
-        <div class="location">at         line 199</div>
+        <div class="location">at         line 321</div>
         <code>                    string
     <strong>getName</strong>()
         </code>
@@ -400,7 +530,7 @@ affecting the identity of the limit.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setName">
-        <div class="location">at         line 224</div>
+        <div class="location">at         line 346</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setName</strong>(string $var)
         </code>
@@ -454,7 +584,7 @@ affecting the identity of the limit.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDescription">
-        <div class="location">at         line 240</div>
+        <div class="location">at         line 362</div>
         <code>                    string
     <strong>getDescription</strong>()
         </code>
@@ -487,7 +617,7 @@ than provided by the limit's display name (see: <code>display_name</code>).</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setDescription">
-        <div class="location">at         line 254</div>
+        <div class="location">at         line 376</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDescription</strong>(string $var)
         </code>
@@ -530,7 +660,7 @@ than provided by the limit's display name (see: <code>display_name</code>).</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDefaultLimit">
-        <div class="location">at         line 275</div>
+        <div class="location">at         line 397</div>
         <code>                    int|string
     <strong>getDefaultLimit</strong>()
         </code>
@@ -568,7 +698,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setDefaultLimit">
-        <div class="location">at         line 294</div>
+        <div class="location">at         line 416</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDefaultLimit</strong>(int|string $var)
         </code>
@@ -616,7 +746,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMaxLimit">
-        <div class="location">at         line 314</div>
+        <div class="location">at         line 436</div>
         <code>                    int|string
     <strong>getMaxLimit</strong>()
         </code>
@@ -653,7 +783,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setMaxLimit">
-        <div class="location">at         line 332</div>
+        <div class="location">at         line 454</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMaxLimit</strong>(int|string $var)
         </code>
@@ -700,7 +830,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getFreeTier">
-        <div class="location">at         line 352</div>
+        <div class="location">at         line 474</div>
         <code>                    int|string
     <strong>getFreeTier</strong>()
         </code>
@@ -737,7 +867,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setFreeTier">
-        <div class="location">at         line 370</div>
+        <div class="location">at         line 492</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setFreeTier</strong>(int|string $var)
         </code>
@@ -784,7 +914,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDuration">
-        <div class="location">at         line 388</div>
+        <div class="location">at         line 510</div>
         <code>                    string
     <strong>getDuration</strong>()
         </code>
@@ -819,7 +949,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setDuration">
-        <div class="location">at         line 404</div>
+        <div class="location">at         line 526</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDuration</strong>(string $var)
         </code>
@@ -864,7 +994,7 @@ Used by group-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetric">
-        <div class="location">at         line 421</div>
+        <div class="location">at         line 543</div>
         <code>                    string
     <strong>getMetric</strong>()
         </code>
@@ -898,7 +1028,7 @@ defined within the service config.</p>                    <p>Used by metric-base
             </div>
                     <div class="method-item">
                     <h3 id="method_setMetric">
-        <div class="location">at         line 436</div>
+        <div class="location">at         line 558</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMetric</strong>(string $var)
         </code>
@@ -942,7 +1072,7 @@ defined within the service config.</p>                    <p>Used by metric-base
             </div>
                     <div class="method-item">
                     <h3 id="method_getUnit">
-        <div class="location">at         line 476</div>
+        <div class="location">at         line 598</div>
         <code>                    string
     <strong>getUnit</strong>()
         </code>
@@ -999,7 +1129,7 @@ Used by metric-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setUnit">
-        <div class="location">at         line 514</div>
+        <div class="location">at         line 636</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setUnit</strong>(string $var)
         </code>
@@ -1066,7 +1196,7 @@ Used by metric-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getValues">
-        <div class="location">at         line 552</div>
+        <div class="location">at         line 674</div>
         <code>                    <abbr title="Google\Protobuf\Internal\MapField">MapField</abbr>
     <strong>getValues</strong>()
         </code>
@@ -1121,7 +1251,7 @@ Used by metric-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setValues">
-        <div class="location">at         line 588</div>
+        <div class="location">at         line 710</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setValues</strong>(array|<abbr title="Google\Protobuf\Internal\MapField">MapField</abbr> $var)
         </code>
@@ -1186,7 +1316,7 @@ Used by metric-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDisplayName">
-        <div class="location">at         line 605</div>
+        <div class="location">at         line 727</div>
         <code>                    string
     <strong>getDisplayName</strong>()
         </code>
@@ -1220,7 +1350,7 @@ display name generated from the configuration.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setDisplayName">
-        <div class="location">at         line 620</div>
+        <div class="location">at         line 742</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDisplayName</strong>(string $var)
         </code>

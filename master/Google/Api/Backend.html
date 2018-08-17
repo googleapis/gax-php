@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -133,16 +132,36 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 26</div>
+        <div class="location">at         line 37</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\Api\BackendRule[]|\Google\Protobuf\Internal\RepeatedField $rules
+      A list of API backend rules that apply to individual API methods.
+      **NOTE:** All service configuration rules follow "last one wins" order.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -152,7 +171,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getRules">
-        <div class="location">at         line 38</div>
+        <div class="location">at         line 49</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getRules</strong>()
         </code>
@@ -184,7 +203,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setRules">
-        <div class="location">at         line 51</div>
+        <div class="location">at         line 62</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setRules</strong>(<a href="../../Google/Api/BackendRule.html"><abbr title="Google\Api\BackendRule">BackendRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>

@@ -100,10 +100,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -154,16 +153,37 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 32</div>
+        <div class="location">at         line 44</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $project_id
+      The ID of the project.
+@type string $repo_name
+      The name of the repo. Leave empty for the default repo.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -173,7 +193,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getProjectId">
-        <div class="location">at         line 43</div>
+        <div class="location">at         line 55</div>
         <code>                    string
     <strong>getProjectId</strong>()
         </code>
@@ -203,7 +223,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setProjectId">
-        <div class="location">at         line 55</div>
+        <div class="location">at         line 67</div>
         <code>                    <abbr title="Google\Cloud\DevTools\Source\V1\$this">$this</abbr>
     <strong>setProjectId</strong>(string $var)
         </code>
@@ -243,7 +263,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getRepoName">
-        <div class="location">at         line 69</div>
+        <div class="location">at         line 81</div>
         <code>                    string
     <strong>getRepoName</strong>()
         </code>
@@ -273,7 +293,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setRepoName">
-        <div class="location">at         line 81</div>
+        <div class="location">at         line 93</div>
         <code>                    <abbr title="Google\Cloud\DevTools\Source\V1\$this">$this</abbr>
     <strong>setRepoName</strong>(string $var)
         </code>

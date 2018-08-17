@@ -74,7 +74,7 @@
     <div class="page-header">
         <h1>
             MetricDescriptor_MetricKind
-                
+                <small><sup><span class="label label-danger">deprecated</span></sup></small>
         </h1>
     </div>
 
@@ -83,49 +83,19 @@
 </p>
 
         
+            <p>
+                <small><sup><span class="label label-danger">deprecated</span></sup></small>
+                            <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    </p>
     
 
             <div class="description">
-            <p>The kind of measurement. It describes how the data is reported.</p>            <p>Protobuf enum <code>Google\Api\MetricDescriptor\MetricKind</code></p>                    </div>
+            <p>This class is deprecated. Use Google\Api\MetricDescriptor\MetricKind instead.</p>                                </div>
     
     
-            <h2>Constants</h2>
-
-            <table class="table table-condensed">
-                    <tr>
-                <td>METRIC_KIND_UNSPECIFIED</td>
-                <td class="last">
-                    <p><em>Do not use this default value.</em></p>
-                    <p>Generated from protobuf enum <code>METRIC_KIND_UNSPECIFIED = 0;</code></p>
-                </td>
-            </tr>
-                    <tr>
-                <td>GAUGE</td>
-                <td class="last">
-                    <p><em>An instantaneous measurement of a value.</em></p>
-                    <p>Generated from protobuf enum <code>GAUGE = 1;</code></p>
-                </td>
-            </tr>
-                    <tr>
-                <td>DELTA</td>
-                <td class="last">
-                    <p><em>The change in a value during a time interval.</em></p>
-                    <p>Generated from protobuf enum <code>DELTA = 2;</code></p>
-                </td>
-            </tr>
-                    <tr>
-                <td>CUMULATIVE</td>
-                <td class="last">
-                    <p><em>A value accumulated over a time interval.  Cumulative
-measurements in a time series should have the same start time
-and increasing end times, until an event resets the cumulative
-value to zero and sets a new start time for the following
-points.</em></p>
-                    <p>Generated from protobuf enum <code>CUMULATIVE = 3;</code></p>
-                </td>
-            </tr>
-            </table>
-
     
     
     

@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -153,16 +152,38 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 32</div>
+        <div class="location">at         line 45</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\Cloud\DevTools\Source\V1\CloudWorkspaceId $workspace_id
+      The ID of the workspace.
+@type string $snapshot_id
+      The ID of the snapshot.
+      An empty snapshot_id refers to the most recent snapshot.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -172,7 +193,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getWorkspaceId">
-        <div class="location">at         line 43</div>
+        <div class="location">at         line 56</div>
         <code>                    <a href="../../../../../Google/Cloud/DevTools/Source/V1/CloudWorkspaceId.html"><abbr title="Google\Cloud\DevTools\Source\V1\CloudWorkspaceId">CloudWorkspaceId</abbr></a>
     <strong>getWorkspaceId</strong>()
         </code>
@@ -202,7 +223,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setWorkspaceId">
-        <div class="location">at         line 55</div>
+        <div class="location">at         line 68</div>
         <code>                    <abbr title="Google\Cloud\DevTools\Source\V1\$this">$this</abbr>
     <strong>setWorkspaceId</strong>(<a href="../../../../../Google/Cloud/DevTools/Source/V1/CloudWorkspaceId.html"><abbr title="Google\Cloud\DevTools\Source\V1\CloudWorkspaceId">CloudWorkspaceId</abbr></a> $var)
         </code>
@@ -242,7 +263,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSnapshotId">
-        <div class="location">at         line 70</div>
+        <div class="location">at         line 83</div>
         <code>                    string
     <strong>getSnapshotId</strong>()
         </code>
@@ -274,7 +295,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setSnapshotId">
-        <div class="location">at         line 83</div>
+        <div class="location">at         line 96</div>
         <code>                    <abbr title="Google\Cloud\DevTools\Source\V1\$this">$this</abbr>
     <strong>setSnapshotId</strong>(string $var)
         </code>

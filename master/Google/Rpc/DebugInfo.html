@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -153,16 +152,37 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 31</div>
+        <div class="location">at         line 43</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string[]|\Google\Protobuf\Internal\RepeatedField $stack_entries
+      The stack trace entries indicating where the error occurred.
+@type string $detail
+      Additional debugging information provided by the server.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -172,7 +192,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getStackEntries">
-        <div class="location">at         line 42</div>
+        <div class="location">at         line 54</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getStackEntries</strong>()
         </code>
@@ -202,7 +222,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setStackEntries">
-        <div class="location">at         line 54</div>
+        <div class="location">at         line 66</div>
         <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
     <strong>setStackEntries</strong>(string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
@@ -242,7 +262,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getDetail">
-        <div class="location">at         line 68</div>
+        <div class="location">at         line 80</div>
         <code>                    string
     <strong>getDetail</strong>()
         </code>
@@ -272,7 +292,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setDetail">
-        <div class="location">at         line 80</div>
+        <div class="location">at         line 92</div>
         <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
     <strong>setDetail</strong>(string $var)
         </code>

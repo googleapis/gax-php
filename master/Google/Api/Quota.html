@@ -139,10 +139,9 @@ An example quota configuration in yaml format:
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -195,16 +194,40 @@ or more metrics.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 73</div>
+        <div class="location">at         line 88</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\Api\QuotaLimit[]|\Google\Protobuf\Internal\RepeatedField $limits
+      List of `QuotaLimit` definitions for the service.
+      Used by metric-based quotas only.
+@type \Google\Api\MetricRule[]|\Google\Protobuf\Internal\RepeatedField $metric_rules
+      List of `MetricRule` definitions, each one mapping a selected method to one
+      or more metrics.
+      Used by metric-based quotas only.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -214,7 +237,7 @@ or more metrics.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getLimits">
-        <div class="location">at         line 85</div>
+        <div class="location">at         line 100</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getLimits</strong>()
         </code>
@@ -246,7 +269,7 @@ or more metrics.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setLimits">
-        <div class="location">at         line 98</div>
+        <div class="location">at         line 113</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setLimits</strong>(<a href="../../Google/Api/QuotaLimit.html"><abbr title="Google\Api\QuotaLimit">QuotaLimit</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
@@ -288,7 +311,7 @@ or more metrics.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetricRules">
-        <div class="location">at         line 114</div>
+        <div class="location">at         line 129</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getMetricRules</strong>()
         </code>
@@ -321,7 +344,7 @@ or more metrics.</p>                    <p>Used by metric-based quotas only.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setMetricRules">
-        <div class="location">at         line 128</div>
+        <div class="location">at         line 143</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMetricRules</strong>(<a href="../../Google/Api/MetricRule.html"><abbr title="Google\Api\MetricRule">MetricRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>

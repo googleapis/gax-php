@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -152,8 +151,8 @@
                 <div class="col-md-8 type">
                     <a href="#method_getDeadline">getDeadline</a>()
         
-                                            <p>The number of seconds to wait for a response from a request.  The
-default depends on the deployment context.</p>                </div>
+                                            <p>The number of seconds to wait for a response from a request.  The default
+deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -163,8 +162,30 @@ default depends on the deployment context.</p>                </div>
                 <div class="col-md-8 type">
                     <a href="#method_setDeadline">setDeadline</a>(float $var)
         
-                                            <p>The number of seconds to wait for a response from a request.  The
-default depends on the deployment context.</p>                </div>
+                                            <p>The number of seconds to wait for a response from a request.  The default
+deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMinDeadline">getMinDeadline</a>()
+        
+                                            <p>Minimum deadline in seconds needed for this method. Calls having deadline
+value lower than this will be rejected.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setMinDeadline">setMinDeadline</a>(float $var)
+        
+                                            <p>Minimum deadline in seconds needed for this method. Calls having deadline
+value lower than this will be rejected.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -175,16 +196,44 @@ default depends on the deployment context.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 39</div>
+        <div class="location">at         line 65</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $selector
+      Selects the methods to which this rule applies.
+      Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+@type string $address
+      The address of the API backend.
+@type float $deadline
+      The number of seconds to wait for a response from a request.  The default
+      deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.
+@type float $min_deadline
+      Minimum deadline in seconds needed for this method. Calls having deadline
+      value lower than this will be rejected.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -194,7 +243,7 @@ default depends on the deployment context.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getSelector">
-        <div class="location">at         line 51</div>
+        <div class="location">at         line 77</div>
         <code>                    string
     <strong>getSelector</strong>()
         </code>
@@ -226,7 +275,7 @@ default depends on the deployment context.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSelector">
-        <div class="location">at         line 64</div>
+        <div class="location">at         line 90</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSelector</strong>(string $var)
         </code>
@@ -268,7 +317,7 @@ default depends on the deployment context.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getAddress">
-        <div class="location">at         line 78</div>
+        <div class="location">at         line 104</div>
         <code>                    string
     <strong>getAddress</strong>()
         </code>
@@ -298,7 +347,7 @@ default depends on the deployment context.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setAddress">
-        <div class="location">at         line 90</div>
+        <div class="location">at         line 116</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAddress</strong>(string $var)
         </code>
@@ -338,7 +387,7 @@ default depends on the deployment context.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDeadline">
-        <div class="location">at         line 105</div>
+        <div class="location">at         line 131</div>
         <code>                    float
     <strong>getDeadline</strong>()
         </code>
@@ -348,8 +397,8 @@ default depends on the deployment context.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>The number of seconds to wait for a response from a request.  The
-default depends on the deployment context.</p>                    <p>Generated from protobuf field <code>double deadline = 3;</code></p>                            </div>
+                                    <p>The number of seconds to wait for a response from a request.  The default
+deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.</p>                    <p>Generated from protobuf field <code>double deadline = 3;</code></p>                            </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -369,7 +418,7 @@ default depends on the deployment context.</p>                    <p>Generated f
             </div>
                     <div class="method-item">
                     <h3 id="method_setDeadline">
-        <div class="location">at         line 118</div>
+        <div class="location">at         line 144</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDeadline</strong>(float $var)
         </code>
@@ -379,8 +428,80 @@ default depends on the deployment context.</p>                    <p>Generated f
     
 
                     <div class="method-description">
-                                    <p>The number of seconds to wait for a response from a request.  The
-default depends on the deployment context.</p>                    <p>Generated from protobuf field <code>double deadline = 3;</code></p>                            </div>
+                                    <p>The number of seconds to wait for a response from a request.  The default
+deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.</p>                    <p>Generated from protobuf field <code>double deadline = 3;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>float</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMinDeadline">
+        <div class="location">at         line 159</div>
+        <code>                    float
+    <strong>getMinDeadline</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Minimum deadline in seconds needed for this method. Calls having deadline
+value lower than this will be rejected.</p>                    <p>Generated from protobuf field <code>double min_deadline = 4;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setMinDeadline">
+        <div class="location">at         line 172</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setMinDeadline</strong>(float $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Minimum deadline in seconds needed for this method. Calls having deadline
+value lower than this will be rejected.</p>                    <p>Generated from protobuf field <code>double min_deadline = 4;</code></p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 

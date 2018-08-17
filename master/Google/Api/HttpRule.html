@@ -87,11 +87,11 @@
 
             <div class="description">
             <p><code>HttpRule</code> defines the mapping of an RPC method to one or more HTTP
-REST APIs.  The mapping determines what portions of the request
-message are populated from the path, query parameters, or body of
-the HTTP request.  The mapping is typically specified as an
-<code>google.api.http</code> annotation, see "google/api/annotations.proto"
-for details.</p>            <p>The mapping consists of a field specifying the path template and
+REST API methods. The mapping specifies how different portions of the RPC
+request message are mapped to URL path, URL query parameters, and
+HTTP request body. The mapping is typically specified as an
+<code>google.api.http</code> annotation on the RPC method,
+see "google/api/annotations.proto" for details.</p>            <p>The mapping consists of a field specifying the path template and
 method kind.  The path template can refer to fields in the request
 message, as in the example below which describes a REST GET
 operation on a resource collection of messages:
@@ -127,6 +127,11 @@ repeated and must have a primitive (non-message) type.
 Any fields in the request message which are not bound by the path
 pattern automatically become (optional) HTTP query
 parameters. Assume the following definition of the request message:
+    service Messaging {
+      rpc GetMessage(GetMessageRequest) returns (Message) {
+        option (google.api.http).get = "/v1/messages/{message_id}";
+      }
+    }
     message GetMessageRequest {
       message SubMessage {
         string subfield = 1;
@@ -231,7 +236,7 @@ mappings:
 <p>The rules for mapping HTTP path, query parameters, and body fields
 to the request message are as follows:
 1. The <code>body</code> field specifies either <code>*</code> or a field path, or is
-   omitted. If omitted, it assumes there is no HTTP body.
+   omitted. If omitted, it indicates there is no HTTP request body.
 2. Leaf fields (recursive expansion of nested messages in the
    request) can be classified into three types:
     (a) Matched in the URL template.
@@ -243,27 +248,33 @@ to the request message are as follows:
 The syntax of the path template is as follows:
     Template = "/" Segments [ Verb ] ;
     Segments = Segment { "/" Segment } ;
-    Segment  = "*" | "**" | LITERAL | Variable ;
+    Segment  = "*" | "<strong>" | LITERAL | Variable ;
     Variable = "{" FieldPath [ "=" Segments ] "}" ;
     FieldPath = IDENT { "." IDENT } ;
     Verb     = ":" LITERAL ;
-The syntax <code>*</code> matches a single path segment. It follows the semantics of
-<a href="https://tools.ietf.org/html/rfc6570">RFC 6570</a> Section 3.2.2 Simple String
-Expansion.
-The syntax <code>**</code> matches zero or more path segments. It follows the semantics
-of <a href="https://tools.ietf.org/html/rfc6570">RFC 6570</a> Section 3.2.3 Reserved
-Expansion. NOTE: it must be the last segment in the path except the Verb.
-The syntax <code>LITERAL</code> matches literal text in the URL path.
-The syntax <code>Variable</code> matches the entire path as specified by its template;
-this nested template must not contain further variables. If a variable
+The syntax <code>*</code> matches a single path segment. The syntax <code>**</code> matches zero
+or more path segments, which must be the last part of the path except the
+<code>Verb</code>. The syntax <code>LITERAL</code> matches literal text in the path.
+The syntax <code>Variable</code> matches part of the URL path as specified by its
+template. A variable template must not contain other variables. If a variable
 matches a single path segment, its template may be omitted, e.g. <code>{var}</code>
 is equivalent to <code>{var=*}</code>.
+If a variable contains exactly one path segment, such as <code>"{var}"</code> or
+<code>"{var=*}"</code>, when such a variable is expanded into a URL path, all characters
+except <code>[-_.~0-9a-zA-Z]</code> are percent-encoded. Such variables show up in the
+Discovery Document as <code>{var}</code>.
+If a variable contains one or more path segments, such as <code>"{var=foo/&amp;#42;}"</code>
+or <code>"{var=**}"</code>, when such a variable is expanded into a URL path, all
+characters except <code>[-_.~/0-9a-zA-Z]</code> are percent-encoded. Such variables
+show up in the Discovery Document as <code>{+var}</code>.
+NOTE: While the single segment variable matches the semantics of
+<a href="https://tools.ietf.org/html/rfc6570">RFC 6570</a> Section 3.2.2
+Simple String Expansion, the multi segment variable **does not</strong> match
+RFC 6570 Reserved Expansion. The reason is that the Reserved Expansion
+does not expand special characters like <code>?</code> and <code>#</code>, which would lead
+to invalid URLs.
 NOTE: the field paths in variables and in the <code>body</code> must not refer to
-repeated fields or map fields.
-Use CustomHttpPattern to specify any HTTP method that is not included in the
-<code>pattern</code> field, such as HEAD, or "*" to leave the HTTP method unspecified for
-a given URL path rule. The wild-card rule is useful for services that provide
-content to Web (HTML) clients.</p>
+repeated fields or map fields.</p>
 
 <p>Generated from protobuf message <code>google.api.HttpRule</code></p>                    </div>
     
@@ -291,10 +302,9 @@ content to Web (HTML) clients.</p>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -424,7 +434,10 @@ content to Web (HTML) clients.</p>
                 <div class="col-md-8 type">
                     <a href="#method_getCustom">getCustom</a>()
         
-                                            <p>Custom pattern is used for defining custom verbs.</p>                </div>
+                                            <p>The custom pattern is used for specifying an HTTP method that is not
+included in the <code>pattern</code> field, such as HEAD, or "*" to leave the
+HTTP method unspecified for this rule. The wild-card rule is useful
+for services that provide content to Web (HTML) clients.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -434,7 +447,10 @@ content to Web (HTML) clients.</p>
                 <div class="col-md-8 type">
                     <a href="#method_setCustom">setCustom</a>(<a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a> $var)
         
-                                            <p>Custom pattern is used for defining custom verbs.</p>                </div>
+                                            <p>The custom pattern is used for specifying an HTTP method that is not
+included in the <code>pattern</code> field, such as HEAD, or "*" to leave the
+HTTP method unspecified for this rule. The wild-card rule is useful
+for services that provide content to Web (HTML) clients.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -461,6 +477,30 @@ present at the top-level of request message type.</p>                </div>
 <code>*</code> for mapping all fields not captured by the path pattern to the HTTP
 body. NOTE: the referred field must not be a repeated field and must be
 present at the top-level of request message type.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResponseBody">getResponseBody</a>()
+        
+                                            <p>Optional. The name of the response field whose value is mapped to the HTTP
+body of response. Other response fields are ignored. When
+not set, the response message will be used as HTTP body of response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Api\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setResponseBody">setResponseBody</a>(string $var)
+        
+                                            <p>Optional. The name of the response field whose value is mapped to the HTTP
+body of response. Other response fields are ignored. When
+not set, the response message will be used as HTTP body of response.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -506,16 +546,64 @@ the nesting may only be one level deep).</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 206</div>
+        <div class="location">at         line 264</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $selector
+      Selects methods to which this rule applies.
+      Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+@type string $get
+      Used for listing and getting information about resources.
+@type string $put
+      Used for updating a resource.
+@type string $post
+      Used for creating a resource.
+@type string $delete
+      Used for deleting a resource.
+@type string $patch
+      Used for updating a resource.
+@type \Google\Api\CustomHttpPattern $custom
+      The custom pattern is used for specifying an HTTP method that is not
+      included in the `pattern` field, such as HEAD, or "*" to leave the
+      HTTP method unspecified for this rule. The wild-card rule is useful
+      for services that provide content to Web (HTML) clients.
+@type string $body
+      The name of the request field whose value is mapped to the HTTP body, or
+      `*` for mapping all fields not captured by the path pattern to the HTTP
+      body. NOTE: the referred field must not be a repeated field and must be
+      present at the top-level of request message type.
+@type string $response_body
+      Optional. The name of the response field whose value is mapped to the HTTP
+      body of response. Other response fields are ignored. When
+      not set, the response message will be used as HTTP body of response.
+@type \Google\Api\HttpRule[]|\Google\Protobuf\Internal\RepeatedField $additional_bindings
+      Additional HTTP bindings for the selector. Nested bindings must
+      not contain an `additional_bindings` field themselves (that is,
+      the nesting may only be one level deep).
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -525,7 +613,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getSelector">
-        <div class="location">at         line 218</div>
+        <div class="location">at         line 276</div>
         <code>                    string
     <strong>getSelector</strong>()
         </code>
@@ -557,7 +645,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSelector">
-        <div class="location">at         line 231</div>
+        <div class="location">at         line 289</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSelector</strong>(string $var)
         </code>
@@ -599,7 +687,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getGet">
-        <div class="location">at         line 245</div>
+        <div class="location">at         line 303</div>
         <code>                    string
     <strong>getGet</strong>()
         </code>
@@ -629,7 +717,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setGet">
-        <div class="location">at         line 257</div>
+        <div class="location">at         line 315</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setGet</strong>(string $var)
         </code>
@@ -669,7 +757,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getPut">
-        <div class="location">at         line 271</div>
+        <div class="location">at         line 329</div>
         <code>                    string
     <strong>getPut</strong>()
         </code>
@@ -699,7 +787,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setPut">
-        <div class="location">at         line 283</div>
+        <div class="location">at         line 341</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setPut</strong>(string $var)
         </code>
@@ -739,7 +827,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getPost">
-        <div class="location">at         line 297</div>
+        <div class="location">at         line 355</div>
         <code>                    string
     <strong>getPost</strong>()
         </code>
@@ -769,7 +857,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setPost">
-        <div class="location">at         line 309</div>
+        <div class="location">at         line 367</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setPost</strong>(string $var)
         </code>
@@ -809,7 +897,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDelete">
-        <div class="location">at         line 323</div>
+        <div class="location">at         line 381</div>
         <code>                    string
     <strong>getDelete</strong>()
         </code>
@@ -839,7 +927,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setDelete">
-        <div class="location">at         line 335</div>
+        <div class="location">at         line 393</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDelete</strong>(string $var)
         </code>
@@ -879,7 +967,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getPatch">
-        <div class="location">at         line 349</div>
+        <div class="location">at         line 407</div>
         <code>                    string
     <strong>getPatch</strong>()
         </code>
@@ -909,7 +997,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setPatch">
-        <div class="location">at         line 361</div>
+        <div class="location">at         line 419</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setPatch</strong>(string $var)
         </code>
@@ -949,7 +1037,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getCustom">
-        <div class="location">at         line 375</div>
+        <div class="location">at         line 436</div>
         <code>                    <a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a>
     <strong>getCustom</strong>()
         </code>
@@ -959,7 +1047,10 @@ the nesting may only be one level deep).</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Custom pattern is used for defining custom verbs.</p>                    <p>Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code></p>                            </div>
+                                    <p>The custom pattern is used for specifying an HTTP method that is not
+included in the <code>pattern</code> field, such as HEAD, or "*" to leave the
+HTTP method unspecified for this rule. The wild-card rule is useful
+for services that provide content to Web (HTML) clients.</p>                    <p>Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code></p>                            </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -979,7 +1070,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setCustom">
-        <div class="location">at         line 387</div>
+        <div class="location">at         line 451</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setCustom</strong>(<a href="../../Google/Api/CustomHttpPattern.html"><abbr title="Google\Api\CustomHttpPattern">CustomHttpPattern</abbr></a> $var)
         </code>
@@ -989,7 +1080,10 @@ the nesting may only be one level deep).</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Custom pattern is used for defining custom verbs.</p>                    <p>Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code></p>                            </div>
+                                    <p>The custom pattern is used for specifying an HTTP method that is not
+included in the <code>pattern</code> field, such as HEAD, or "*" to leave the
+HTTP method unspecified for this rule. The wild-card rule is useful
+for services that provide content to Web (HTML) clients.</p>                    <p>Generated from protobuf field <code>.google.api.CustomHttpPattern custom = 8;</code></p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -1019,7 +1113,7 @@ the nesting may only be one level deep).</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getBody">
-        <div class="location">at         line 404</div>
+        <div class="location">at         line 468</div>
         <code>                    string
     <strong>getBody</strong>()
         </code>
@@ -1052,7 +1146,7 @@ present at the top-level of request message type.</p>                    <p>Gene
             </div>
                     <div class="method-item">
                     <h3 id="method_setBody">
-        <div class="location">at         line 419</div>
+        <div class="location">at         line 483</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setBody</strong>(string $var)
         </code>
@@ -1094,8 +1188,82 @@ present at the top-level of request message type.</p>                    <p>Gene
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_getResponseBody">
+        <div class="location">at         line 499</div>
+        <code>                    string
+    <strong>getResponseBody</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The name of the response field whose value is mapped to the HTTP
+body of response. Other response fields are ignored. When
+not set, the response message will be used as HTTP body of response.</p>                    <p>Generated from protobuf field <code>string response_body = 12;</code></p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setResponseBody">
+        <div class="location">at         line 513</div>
+        <code>                    <abbr title="Google\Api\$this">$this</abbr>
+    <strong>setResponseBody</strong>(string $var)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Optional. The name of the response field whose value is mapped to the HTTP
+body of response. Other response fields are ignored. When
+not set, the response message will be used as HTTP body of response.</p>                    <p>Generated from protobuf field <code>string response_body = 12;</code></p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Api\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_getAdditionalBindings">
-        <div class="location">at         line 435</div>
+        <div class="location">at         line 529</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getAdditionalBindings</strong>()
         </code>
@@ -1127,7 +1295,7 @@ the nesting may only be one level deep).</p>                    <p>Generated fro
             </div>
                     <div class="method-item">
                     <h3 id="method_setAdditionalBindings">
-        <div class="location">at         line 449</div>
+        <div class="location">at         line 543</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAdditionalBindings</strong>(<a href="../../Google/Api/HttpRule.html"><abbr title="Google\Api\HttpRule">HttpRule</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
@@ -1169,7 +1337,7 @@ the nesting may only be one level deep).</p>                    <p>Generated fro
             </div>
                     <div class="method-item">
                     <h3 id="method_getPattern">
-        <div class="location">at         line 460</div>
+        <div class="location">at         line 554</div>
         <code>                    string
     <strong>getPattern</strong>()
         </code>

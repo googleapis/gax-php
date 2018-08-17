@@ -111,10 +111,9 @@ will render the <code>mean</code> and <code>sum_of_squared_deviation</code> fiel
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -185,7 +184,7 @@ population.  For values x_i this is:
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a>
+                    <a href="../../Google/Api/Distribution/Range.html"><abbr title="Google\Api\Distribution\Range">Range</abbr></a>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getRange">getRange</a>()
@@ -199,7 +198,7 @@ must not be present if the <code>count</code> is zero.</p>                </div>
                     <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setRange">setRange</a>(<a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a> $var)
+                    <a href="#method_setRange">setRange</a>(<a href="../../Google/Api/Distribution/Range.html"><abbr title="Google\Api\Distribution\Range">Range</abbr></a> $var)
         
                                             <p>If specified, contains the range of the population values. The field
 must not be present if the <code>count</code> is zero.</p>                </div>
@@ -207,7 +206,7 @@ must not be present if the <code>count</code> is zero.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a>
+                    <a href="../../Google/Api/Distribution/BucketOptions.html"><abbr title="Google\Api\Distribution\BucketOptions">BucketOptions</abbr></a>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getBucketOptions">getBucketOptions</a>()
@@ -220,7 +219,7 @@ must not be present if the <code>count</code> is zero.</p>                </div>
                     <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setBucketOptions">setBucketOptions</a>(<a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a> $var)
+                    <a href="#method_setBucketOptions">setBucketOptions</a>(<a href="../../Google/Api/Distribution/BucketOptions.html"><abbr title="Google\Api\Distribution\BucketOptions">BucketOptions</abbr></a> $var)
         
                                             <p>Defines the histogram bucket boundaries.</p>                </div>
                 <div class="col-md-2"></div>
@@ -257,16 +256,60 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 81</div>
+        <div class="location">at         line 116</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type int|string $count
+      The number of values in the population. Must be non-negative.
+@type float $mean
+      The arithmetic mean of the values in the population. If `count` is zero
+      then this field must be zero.
+@type float $sum_of_squared_deviation
+      The sum of squared deviations from the mean of the values in the
+      population.  For values x_i this is:
+          Sum[i=1..n]((x_i - mean)^2)
+      Knuth, "The Art of Computer Programming", Vol. 2, page 323, 3rd edition
+      describes Welford's method for accumulating this sum in one pass.
+      If `count` is zero then this field must be zero.
+@type \Google\Api\Distribution\Range $range
+      If specified, contains the range of the population values. The field
+      must not be present if the `count` is zero.
+@type \Google\Api\Distribution\BucketOptions $bucket_options
+      Defines the histogram bucket boundaries.
+@type int[]|string[]|\Google\Protobuf\Internal\RepeatedField $bucket_counts
+      If `bucket_options` is given, then the sum of the values in `bucket_counts`
+      must equal the value in `count`.  If `bucket_options` is not given, no
+      `bucket_counts` fields may be given.
+      Bucket counts are given in order under the numbering scheme described
+      above (the underflow bucket has number 0; the finite buckets, if any,
+      have numbers 1 through N-2; the overflow bucket has number N-1).
+      The size of `bucket_counts` must be no greater than N as defined in
+      `bucket_options`.
+      Any suffix of trailing zero bucket_count fields may be omitted.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -276,7 +319,7 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </div>
                     <div class="method-item">
                     <h3 id="method_getCount">
-        <div class="location">at         line 92</div>
+        <div class="location">at         line 127</div>
         <code>                    int|string
     <strong>getCount</strong>()
         </code>
@@ -306,7 +349,7 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </div>
                     <div class="method-item">
                     <h3 id="method_setCount">
-        <div class="location">at         line 104</div>
+        <div class="location">at         line 139</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setCount</strong>(int|string $var)
         </code>
@@ -346,7 +389,7 @@ must equal the value in <code>count</code>.  If <code>bucket_options</code> is n
             </div>
                     <div class="method-item">
                     <h3 id="method_getMean">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 154</div>
         <code>                    float
     <strong>getMean</strong>()
         </code>
@@ -377,7 +420,7 @@ then this field must be zero.</p>                    <p>Generated from protobuf 
             </div>
                     <div class="method-item">
                     <h3 id="method_setMean">
-        <div class="location">at         line 132</div>
+        <div class="location">at         line 167</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMean</strong>(float $var)
         </code>
@@ -418,7 +461,7 @@ then this field must be zero.</p>                    <p>Generated from protobuf 
             </div>
                     <div class="method-item">
                     <h3 id="method_getSumOfSquaredDeviation">
-        <div class="location">at         line 151</div>
+        <div class="location">at         line 186</div>
         <code>                    float
     <strong>getSumOfSquaredDeviation</strong>()
         </code>
@@ -455,7 +498,7 @@ If <code>count</code> is zero then this field must be zero.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setSumOfSquaredDeviation">
-        <div class="location">at         line 168</div>
+        <div class="location">at         line 203</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setSumOfSquaredDeviation</strong>(float $var)
         </code>
@@ -502,8 +545,8 @@ If <code>count</code> is zero then this field must be zero.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRange">
-        <div class="location">at         line 183</div>
-        <code>                    <a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a>
+        <div class="location">at         line 218</div>
+        <code>                    <a href="../../Google/Api/Distribution/Range.html"><abbr title="Google\Api\Distribution\Range">Range</abbr></a>
     <strong>getRange</strong>()
         </code>
     </h3>
@@ -520,7 +563,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a></td>
+            <td><a href="../../Google/Api/Distribution/Range.html"><abbr title="Google\Api\Distribution\Range">Range</abbr></a></td>
             <td></td>
         </tr>
     </table>
@@ -533,9 +576,9 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_setRange">
-        <div class="location">at         line 196</div>
+        <div class="location">at         line 231</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
-    <strong>setRange</strong>(<a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a> $var)
+    <strong>setRange</strong>(<a href="../../Google/Api/Distribution/Range.html"><abbr title="Google\Api\Distribution\Range">Range</abbr></a> $var)
         </code>
     </h3>
     <div class="details">
@@ -550,7 +593,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a></td>
+                <td><a href="../../Google/Api/Distribution/Range.html"><abbr title="Google\Api\Distribution\Range">Range</abbr></a></td>
                 <td>$var</td>
                 <td></td>
             </tr>
@@ -574,8 +617,8 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_getBucketOptions">
-        <div class="location">at         line 210</div>
-        <code>                    <a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a>
+        <div class="location">at         line 245</div>
+        <code>                    <a href="../../Google/Api/Distribution/BucketOptions.html"><abbr title="Google\Api\Distribution\BucketOptions">BucketOptions</abbr></a>
     <strong>getBucketOptions</strong>()
         </code>
     </h3>
@@ -591,7 +634,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a></td>
+            <td><a href="../../Google/Api/Distribution/BucketOptions.html"><abbr title="Google\Api\Distribution\BucketOptions">BucketOptions</abbr></a></td>
             <td></td>
         </tr>
     </table>
@@ -604,9 +647,9 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_setBucketOptions">
-        <div class="location">at         line 222</div>
+        <div class="location">at         line 257</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
-    <strong>setBucketOptions</strong>(<a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a> $var)
+    <strong>setBucketOptions</strong>(<a href="../../Google/Api/Distribution/BucketOptions.html"><abbr title="Google\Api\Distribution\BucketOptions">BucketOptions</abbr></a> $var)
         </code>
     </h3>
     <div class="details">
@@ -620,7 +663,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a></td>
+                <td><a href="../../Google/Api/Distribution/BucketOptions.html"><abbr title="Google\Api\Distribution\BucketOptions">BucketOptions</abbr></a></td>
                 <td>$var</td>
                 <td></td>
             </tr>
@@ -644,7 +687,7 @@ must not be present if the <code>count</code> is zero.</p>                    <p
             </div>
                     <div class="method-item">
                     <h3 id="method_getBucketCounts">
-        <div class="location">at         line 244</div>
+        <div class="location">at         line 279</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getBucketCounts</strong>()
         </code>
@@ -683,7 +726,7 @@ Any suffix of trailing zero bucket_count fields may be omitted.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setBucketCounts">
-        <div class="location">at         line 264</div>
+        <div class="location">at         line 299</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setBucketCounts</strong>(int[]|string[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>

@@ -104,10 +104,9 @@ backwards-incompatibility.</p>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -232,16 +231,54 @@ possible impact of this change.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 64</div>
+        <div class="location">at         line 93</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $element
+      Object hierarchy path to the change, with levels separated by a '.'
+      character. For repeated fields, an applicable unique identifier field is
+      used for the index (usually selector, name, or id). For maps, the term
+      'key' is used. If the field has no unique identifier, the numeric index
+      is used.
+      Examples:
+      - visibility.rules[selector=="google.LibraryService.CreateBook"].restriction
+      - quota.metric_rules[selector=="google"].metric_costs[key=="reads"].value
+      - logging.producer_destinations[0]
+@type string $old_value
+      Value of the changed object in the old Service configuration,
+      in JSON format. This field will not be populated if ChangeType == ADDED.
+@type string $new_value
+      Value of the changed object in the new Service configuration,
+      in JSON format. This field will not be populated if ChangeType == REMOVED.
+@type int $change_type
+      The type for this change, either ADDED, REMOVED, or MODIFIED.
+@type \Google\Api\Advice[]|\Google\Protobuf\Internal\RepeatedField $advices
+      Collection of advice provided for this change, useful for determining the
+      possible impact of this change.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -251,7 +288,7 @@ possible impact of this change.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getElement">
-        <div class="location">at         line 83</div>
+        <div class="location">at         line 112</div>
         <code>                    string
     <strong>getElement</strong>()
         </code>
@@ -290,7 +327,7 @@ is used.</p>                    <p>Examples:
             </div>
                     <div class="method-item">
                     <h3 id="method_setElement">
-        <div class="location">at         line 103</div>
+        <div class="location">at         line 132</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setElement</strong>(string $var)
         </code>
@@ -339,7 +376,7 @@ is used.</p>                    <p>Examples:
             </div>
                     <div class="method-item">
                     <h3 id="method_getOldValue">
-        <div class="location">at         line 118</div>
+        <div class="location">at         line 147</div>
         <code>                    string
     <strong>getOldValue</strong>()
         </code>
@@ -370,7 +407,7 @@ in JSON format. This field will not be populated if ChangeType == ADDED.</p>    
             </div>
                     <div class="method-item">
                     <h3 id="method_setOldValue">
-        <div class="location">at         line 131</div>
+        <div class="location">at         line 160</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setOldValue</strong>(string $var)
         </code>
@@ -411,7 +448,7 @@ in JSON format. This field will not be populated if ChangeType == ADDED.</p>    
             </div>
                     <div class="method-item">
                     <h3 id="method_getNewValue">
-        <div class="location">at         line 146</div>
+        <div class="location">at         line 175</div>
         <code>                    string
     <strong>getNewValue</strong>()
         </code>
@@ -442,7 +479,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setNewValue">
-        <div class="location">at         line 159</div>
+        <div class="location">at         line 188</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setNewValue</strong>(string $var)
         </code>
@@ -483,7 +520,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getChangeType">
-        <div class="location">at         line 173</div>
+        <div class="location">at         line 202</div>
         <code>                    int
     <strong>getChangeType</strong>()
         </code>
@@ -513,7 +550,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_setChangeType">
-        <div class="location">at         line 185</div>
+        <div class="location">at         line 214</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setChangeType</strong>(int $var)
         </code>
@@ -553,7 +590,7 @@ in JSON format. This field will not be populated if ChangeType == REMOVED.</p>  
             </div>
                     <div class="method-item">
                     <h3 id="method_getAdvices">
-        <div class="location">at         line 200</div>
+        <div class="location">at         line 229</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getAdvices</strong>()
         </code>
@@ -584,7 +621,7 @@ possible impact of this change.</p>                    <p>Generated from protobu
             </div>
                     <div class="method-item">
                     <h3 id="method_setAdvices">
-        <div class="location">at         line 213</div>
+        <div class="location">at         line 242</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAdvices</strong>(<a href="../../Google/Api/Advice.html"><abbr title="Google\Api\Advice">Advice</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>

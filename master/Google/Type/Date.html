@@ -105,10 +105,9 @@ and <code>google.protobuf.Timestamp</code>.</p>            <p>Generated from pro
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -183,16 +182,41 @@ if specifying a year/month where the day is not significant.</p>                
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 45</div>
+        <div class="location">at         line 61</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type int $year
+      Year of date. Must be from 1 to 9999, or 0 if specifying a date without
+      a year.
+@type int $month
+      Month of year. Must be from 1 to 12.
+@type int $day
+      Day of month. Must be from 1 to 31 and valid for the year and month, or 0
+      if specifying a year/month where the day is not significant.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -202,7 +226,7 @@ if specifying a year/month where the day is not significant.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_getYear">
-        <div class="location">at         line 57</div>
+        <div class="location">at         line 73</div>
         <code>                    int
     <strong>getYear</strong>()
         </code>
@@ -233,7 +257,7 @@ a year.</p>                    <p>Generated from protobuf field <code>int32 year
             </div>
                     <div class="method-item">
                     <h3 id="method_setYear">
-        <div class="location">at         line 70</div>
+        <div class="location">at         line 86</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setYear</strong>(int $var)
         </code>
@@ -274,7 +298,7 @@ a year.</p>                    <p>Generated from protobuf field <code>int32 year
             </div>
                     <div class="method-item">
                     <h3 id="method_getMonth">
-        <div class="location">at         line 84</div>
+        <div class="location">at         line 100</div>
         <code>                    int
     <strong>getMonth</strong>()
         </code>
@@ -304,7 +328,7 @@ a year.</p>                    <p>Generated from protobuf field <code>int32 year
             </div>
                     <div class="method-item">
                     <h3 id="method_setMonth">
-        <div class="location">at         line 96</div>
+        <div class="location">at         line 112</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setMonth</strong>(int $var)
         </code>
@@ -344,7 +368,7 @@ a year.</p>                    <p>Generated from protobuf field <code>int32 year
             </div>
                     <div class="method-item">
                     <h3 id="method_getDay">
-        <div class="location">at         line 111</div>
+        <div class="location">at         line 127</div>
         <code>                    int
     <strong>getDay</strong>()
         </code>
@@ -375,7 +399,7 @@ if specifying a year/month where the day is not significant.</p>                
             </div>
                     <div class="method-item">
                     <h3 id="method_setDay">
-        <div class="location">at         line 124</div>
+        <div class="location">at         line 140</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setDay</strong>(int $var)
         </code>

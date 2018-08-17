@@ -101,10 +101,9 @@ existing data unusable.</p>            <p>Generated from protobuf message <code>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -114,13 +113,7 @@ existing data unusable.</p>            <p>Generated from protobuf message <code>
                 <div class="col-md-8 type">
                     <a href="#method_getName">getName</a>()
         
-                                            <p>The resource name of the metric descriptor. Depending on the
-implementation, the name typically includes: (1) the parent resource name
-that defines the scope of the metric type or of its data; and (2) the
-metric's URL-encoded type, which also appears in the <code>type</code> field of this
-descriptor. For example, following is the resource name of a custom
-metric within the GCP project <code>my-project-id</code>:
-    "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"</p>                </div>
+                                            <p>The resource name of the metric descriptor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -130,13 +123,7 @@ metric within the GCP project <code>my-project-id</code>:
                 <div class="col-md-8 type">
                     <a href="#method_setName">setName</a>(string $var)
         
-                                            <p>The resource name of the metric descriptor. Depending on the
-implementation, the name typically includes: (1) the parent resource name
-that defines the scope of the metric type or of its data; and (2) the
-metric's URL-encoded type, which also appears in the <code>type</code> field of this
-descriptor. For example, following is the resource name of a custom
-metric within the GCP project <code>my-project-id</code>:
-    "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"</p>                </div>
+                                            <p>The resource name of the metric descriptor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -279,7 +266,8 @@ Measure</a> standard:
 * <code>Gi</code>    gibi    (2<strong>30)
 * <code>Ti</code>    tebi    (2</strong>40)
 <strong>Grammar</strong>
-The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</code>.</p>                </div>
+The grammar also includes these connectors:
+* <code>/</code>    division (as an infix operator, e.g. <code>1/s</code>).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -322,7 +310,8 @@ Measure</a> standard:
 * <code>Gi</code>    gibi    (2<strong>30)
 * <code>Ti</code>    tebi    (2</strong>40)
 <strong>Grammar</strong>
-The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</code>.</p>                </div>
+The grammar also includes these connectors:
+* <code>/</code>    division (as an infix operator, e.g. <code>1/s</code>).</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -373,16 +362,115 @@ The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</c
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 137</div>
+        <div class="location">at         line 225</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $name
+      The resource name of the metric descriptor.
+@type string $type
+      The metric type, including its DNS name prefix. The type is not
+      URL-encoded.  All user-defined custom metric types have the DNS name
+      `custom.googleapis.com`.  Metric types should use a natural hierarchical
+      grouping. For example:
+          "custom.googleapis.com/invoice/paid/amount"
+          "appengine.googleapis.com/http/server/response_latencies"
+@type \Google\Api\LabelDescriptor[]|\Google\Protobuf\Internal\RepeatedField $labels
+      The set of labels that can be used to describe a specific
+      instance of this metric type. For example, the
+      `appengine.googleapis.com/http/server/response_latencies` metric
+      type has a label for the HTTP response code, `response_code`, so
+      you can look at latencies for successful responses or just
+      for responses that failed.
+@type int $metric_kind
+      Whether the metric records instantaneous values, changes to a value, etc.
+      Some combinations of `metric_kind` and `value_type` might not be supported.
+@type int $value_type
+      Whether the measurement is an integer, a floating-point number, etc.
+      Some combinations of `metric_kind` and `value_type` might not be supported.
+@type string $unit
+      The unit in which the metric value is reported. It is only applicable
+      if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The
+      supported units are a subset of [The Unified Code for Units of
+      Measure](http://unitsofmeasure.org/ucum.html) standard:
+      **Basic units (UNIT)**
+      * `bit`   bit
+      * `By`    byte
+      * `s`     second
+      * `min`   minute
+      * `h`     hour
+      * `d`     day
+      **Prefixes (PREFIX)**
+      * `k`     kilo    (10**3)
+      * `M`     mega    (10**6)
+      * `G`     giga    (10**9)
+      * `T`     tera    (10**12)
+      * `P`     peta    (10**15)
+      * `E`     exa     (10**18)
+      * `Z`     zetta   (10**21)
+      * `Y`     yotta   (10**24)
+      * `m`     milli   (10**-3)
+      * `u`     micro   (10**-6)
+      * `n`     nano    (10**-9)
+      * `p`     pico    (10**-12)
+      * `f`     femto   (10**-15)
+      * `a`     atto    (10**-18)
+      * `z`     zepto   (10**-21)
+      * `y`     yocto   (10**-24)
+      * `Ki`    kibi    (2**10)
+      * `Mi`    mebi    (2**20)
+      * `Gi`    gibi    (2**30)
+      * `Ti`    tebi    (2**40)
+      **Grammar**
+      The grammar also includes these connectors:
+      * `/`    division (as an infix operator, e.g. `1/s`).
+      * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
+      The grammar for a unit is as follows:
+          Expression = Component { "." Component } { "/" Component } ;
+          Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
+                    | Annotation
+                    | "1"
+                    ;
+          Annotation = "{" NAME "}" ;
+      Notes:
+      * `Annotation` is just a comment if it follows a `UNIT` and is
+         equivalent to `1` if it is used alone. For examples,
+         `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
+      * `NAME` is a sequence of non-blank printable ASCII characters not
+         containing '{' or '}'.
+      * `1` represents dimensionless value 1, such as in `1/s`.
+      * `%` represents dimensionless value 1/100, and annotates values giving
+         a percentage.
+@type string $description
+      A detailed description of the metric, which can be used in documentation.
+@type string $display_name
+      A concise name for the metric, which can be displayed in user interfaces.
+      Use sentence case without an ending period, for example "Request count".
+      This field is optional but it is recommended to be set for any metrics
+      associated with user-visible concepts, such as Quota.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -392,7 +480,7 @@ The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</c
             </div>
                     <div class="method-item">
                     <h3 id="method_getName">
-        <div class="location">at         line 154</div>
+        <div class="location">at         line 236</div>
         <code>                    string
     <strong>getName</strong>()
         </code>
@@ -402,13 +490,7 @@ The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</c
     
 
                     <div class="method-description">
-                                    <p>The resource name of the metric descriptor. Depending on the
-implementation, the name typically includes: (1) the parent resource name
-that defines the scope of the metric type or of its data; and (2) the
-metric's URL-encoded type, which also appears in the <code>type</code> field of this
-descriptor. For example, following is the resource name of a custom
-metric within the GCP project <code>my-project-id</code>:
-    "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                                    <p>The resource name of the metric descriptor.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -428,7 +510,7 @@ metric within the GCP project <code>my-project-id</code>:
             </div>
                     <div class="method-item">
                     <h3 id="method_setName">
-        <div class="location">at         line 172</div>
+        <div class="location">at         line 248</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setName</strong>(string $var)
         </code>
@@ -438,13 +520,7 @@ metric within the GCP project <code>my-project-id</code>:
     
 
                     <div class="method-description">
-                                    <p>The resource name of the metric descriptor. Depending on the
-implementation, the name typically includes: (1) the parent resource name
-that defines the scope of the metric type or of its data; and (2) the
-metric's URL-encoded type, which also appears in the <code>type</code> field of this
-descriptor. For example, following is the resource name of a custom
-metric within the GCP project <code>my-project-id</code>:
-    "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
+                                    <p>The resource name of the metric descriptor.</p>                    <p>Generated from protobuf field <code>string name = 1;</code></p>                            </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
@@ -474,7 +550,7 @@ metric within the GCP project <code>my-project-id</code>:
             </div>
                     <div class="method-item">
                     <h3 id="method_getType">
-        <div class="location">at         line 191</div>
+        <div class="location">at         line 267</div>
         <code>                    string
     <strong>getType</strong>()
         </code>
@@ -509,7 +585,7 @@ grouping. For example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setType">
-        <div class="location">at         line 208</div>
+        <div class="location">at         line 284</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setType</strong>(string $var)
         </code>
@@ -554,7 +630,7 @@ grouping. For example:
             </div>
                     <div class="method-item">
                     <h3 id="method_getLabels">
-        <div class="location">at         line 227</div>
+        <div class="location">at         line 303</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getLabels</strong>()
         </code>
@@ -589,7 +665,7 @@ for responses that failed.</p>                    <p>Generated from protobuf fie
             </div>
                     <div class="method-item">
                     <h3 id="method_setLabels">
-        <div class="location">at         line 244</div>
+        <div class="location">at         line 320</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setLabels</strong>(<a href="../../Google/Api/LabelDescriptor.html"><abbr title="Google\Api\LabelDescriptor">LabelDescriptor</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
@@ -634,7 +710,7 @@ for responses that failed.</p>                    <p>Generated from protobuf fie
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetricKind">
-        <div class="location">at         line 259</div>
+        <div class="location">at         line 335</div>
         <code>                    int
     <strong>getMetricKind</strong>()
         </code>
@@ -666,7 +742,7 @@ for responses that failed.</p>                    <p>Generated from protobuf fie
             </div>
                     <div class="method-item">
                     <h3 id="method_setMetricKind">
-        <div class="location">at         line 272</div>
+        <div class="location">at         line 348</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setMetricKind</strong>(int $var)
         </code>
@@ -708,7 +784,7 @@ for responses that failed.</p>                    <p>Generated from protobuf fie
             </div>
                     <div class="method-item">
                     <h3 id="method_getValueType">
-        <div class="location">at         line 287</div>
+        <div class="location">at         line 363</div>
         <code>                    int
     <strong>getValueType</strong>()
         </code>
@@ -740,7 +816,7 @@ for responses that failed.</p>                    <p>Generated from protobuf fie
             </div>
                     <div class="method-item">
                     <h3 id="method_setValueType">
-        <div class="location">at         line 300</div>
+        <div class="location">at         line 376</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setValueType</strong>(int $var)
         </code>
@@ -782,7 +858,7 @@ for responses that failed.</p>                    <p>Generated from protobuf fie
             </div>
                     <div class="method-item">
                     <h3 id="method_getUnit">
-        <div class="location">at         line 363</div>
+        <div class="location">at         line 441</div>
         <code>                    string
     <strong>getUnit</strong>()
         </code>
@@ -825,22 +901,26 @@ Measure</a> standard:
 * <code>Gi</code>    gibi    (2<strong>30)
 * <code>Ti</code>    tebi    (2</strong>40)
 <strong>Grammar</strong>
-The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</code>.</p>                    <p>The grammar also includes these connectors:
-* <code>/</code>    division (as an infix operator, e.g. <code>1/s</code>).
-* <code>.</code>    multiplication (as an infix operator, e.g. <code>GBy.d</code>)
+The grammar also includes these connectors:
+* <code>/</code>    division (as an infix operator, e.g. <code>1/s</code>).</p>                    <p><ul>
+<li><code>.</code>    multiplication (as an infix operator, e.g. <code>GBy.d</code>)
 The grammar for a unit is as follows:
-    Expression = Component { "." Component } { "/" Component } ;
-    Component = [ PREFIX ] UNIT [ Annotation ]
-              | Annotation
-              | "1"
-              ;
-    Annotation = "{" NAME "}" ;
-Notes:
-* <code>Annotation</code> is just a comment if it follows a <code>UNIT</code> and is
-   equivalent to <code>1</code> if it is used alone. For examples,
-   <code>{requests}/s == 1/s</code>, <code>By{transmitted}/s == By/s</code>.
-* <code>NAME</code> is a sequence of non-blank printable ASCII characters not
-   containing '{' or '}'.</p>
+Expression = Component { "." Component } { "/" Component } ;
+Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
+          | Annotation
+          | "1"
+          ;
+Annotation = "{" NAME "}" ;
+Notes:</li>
+<li><code>Annotation</code> is just a comment if it follows a <code>UNIT</code> and is
+equivalent to <code>1</code> if it is used alone. For examples,
+<code>{requests}/s == 1/s</code>, <code>By{transmitted}/s == By/s</code>.</li>
+<li><code>NAME</code> is a sequence of non-blank printable ASCII characters not
+containing '{' or '}'.</li>
+<li><code>1</code> represents dimensionless value 1, such as in <code>1/s</code>.</li>
+<li><code>%</code> represents dimensionless value 1/100, and annotates values giving
+a percentage.</li>
+</ul>
 
 <p>Generated from protobuf field <code>string unit = 5;</code></p>                            </div>
                 <div class="tags">
@@ -862,7 +942,7 @@ Notes:
             </div>
                     <div class="method-item">
                     <h3 id="method_setUnit">
-        <div class="location">at         line 424</div>
+        <div class="location">at         line 504</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setUnit</strong>(string $var)
         </code>
@@ -905,22 +985,26 @@ Measure</a> standard:
 * <code>Gi</code>    gibi    (2<strong>30)
 * <code>Ti</code>    tebi    (2</strong>40)
 <strong>Grammar</strong>
-The grammar includes the dimensionless unit <code>1</code>, such as <code>1/s</code>.</p>                    <p>The grammar also includes these connectors:
-* <code>/</code>    division (as an infix operator, e.g. <code>1/s</code>).
-* <code>.</code>    multiplication (as an infix operator, e.g. <code>GBy.d</code>)
+The grammar also includes these connectors:
+* <code>/</code>    division (as an infix operator, e.g. <code>1/s</code>).</p>                    <p><ul>
+<li><code>.</code>    multiplication (as an infix operator, e.g. <code>GBy.d</code>)
 The grammar for a unit is as follows:
-    Expression = Component { "." Component } { "/" Component } ;
-    Component = [ PREFIX ] UNIT [ Annotation ]
-              | Annotation
-              | "1"
-              ;
-    Annotation = "{" NAME "}" ;
-Notes:
-* <code>Annotation</code> is just a comment if it follows a <code>UNIT</code> and is
-   equivalent to <code>1</code> if it is used alone. For examples,
-   <code>{requests}/s == 1/s</code>, <code>By{transmitted}/s == By/s</code>.
-* <code>NAME</code> is a sequence of non-blank printable ASCII characters not
-   containing '{' or '}'.</p>
+Expression = Component { "." Component } { "/" Component } ;
+Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
+          | Annotation
+          | "1"
+          ;
+Annotation = "{" NAME "}" ;
+Notes:</li>
+<li><code>Annotation</code> is just a comment if it follows a <code>UNIT</code> and is
+equivalent to <code>1</code> if it is used alone. For examples,
+<code>{requests}/s == 1/s</code>, <code>By{transmitted}/s == By/s</code>.</li>
+<li><code>NAME</code> is a sequence of non-blank printable ASCII characters not
+containing '{' or '}'.</li>
+<li><code>1</code> represents dimensionless value 1, such as in <code>1/s</code>.</li>
+<li><code>%</code> represents dimensionless value 1/100, and annotates values giving
+a percentage.</li>
+</ul>
 
 <p>Generated from protobuf field <code>string unit = 5;</code></p>                            </div>
                 <div class="tags">
@@ -952,7 +1036,7 @@ Notes:
             </div>
                     <div class="method-item">
                     <h3 id="method_getDescription">
-        <div class="location">at         line 438</div>
+        <div class="location">at         line 518</div>
         <code>                    string
     <strong>getDescription</strong>()
         </code>
@@ -982,7 +1066,7 @@ Notes:
             </div>
                     <div class="method-item">
                     <h3 id="method_setDescription">
-        <div class="location">at         line 450</div>
+        <div class="location">at         line 530</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDescription</strong>(string $var)
         </code>
@@ -1022,7 +1106,7 @@ Notes:
             </div>
                     <div class="method-item">
                     <h3 id="method_getDisplayName">
-        <div class="location">at         line 465</div>
+        <div class="location">at         line 547</div>
         <code>                    string
     <strong>getDisplayName</strong>()
         </code>
@@ -1032,7 +1116,9 @@ Notes:
     
 
                     <div class="method-description">
-                                    <p>A concise name for the metric, which can be displayed in user interfaces.</p>                    <p>Use sentence case without an ending period, for example "Request count".</p>
+                                    <p>A concise name for the metric, which can be displayed in user interfaces.</p>                    <p>Use sentence case without an ending period, for example "Request count".
+This field is optional but it is recommended to be set for any metrics
+associated with user-visible concepts, such as Quota.</p>
 
 <p>Generated from protobuf field <code>string display_name = 7;</code></p>                            </div>
                 <div class="tags">
@@ -1054,7 +1140,7 @@ Notes:
             </div>
                     <div class="method-item">
                     <h3 id="method_setDisplayName">
-        <div class="location">at         line 478</div>
+        <div class="location">at         line 562</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDisplayName</strong>(string $var)
         </code>
@@ -1064,7 +1150,9 @@ Notes:
     
 
                     <div class="method-description">
-                                    <p>A concise name for the metric, which can be displayed in user interfaces.</p>                    <p>Use sentence case without an ending period, for example "Request count".</p>
+                                    <p>A concise name for the metric, which can be displayed in user interfaces.</p>                    <p>Use sentence case without an ending period, for example "Request count".
+This field is optional but it is recommended to be set for any metrics
+associated with user-visible concepts, such as Quota.</p>
 
 <p>Generated from protobuf field <code>string display_name = 7;</code></p>                            </div>
                 <div class="tags">

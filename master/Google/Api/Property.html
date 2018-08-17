@@ -107,10 +107,9 @@ define and set these properties.</p>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -181,16 +180,39 @@ define and set these properties.</p>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 44</div>
+        <div class="location">at         line 58</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $name
+      The name of the property (a.k.a key).
+@type int $type
+      The type of this property.
+@type string $description
+      The description of the property
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -200,7 +222,7 @@ define and set these properties.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getName">
-        <div class="location">at         line 55</div>
+        <div class="location">at         line 69</div>
         <code>                    string
     <strong>getName</strong>()
         </code>
@@ -230,7 +252,7 @@ define and set these properties.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setName">
-        <div class="location">at         line 67</div>
+        <div class="location">at         line 81</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setName</strong>(string $var)
         </code>
@@ -270,7 +292,7 @@ define and set these properties.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getType">
-        <div class="location">at         line 81</div>
+        <div class="location">at         line 95</div>
         <code>                    int
     <strong>getType</strong>()
         </code>
@@ -300,7 +322,7 @@ define and set these properties.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setType">
-        <div class="location">at         line 93</div>
+        <div class="location">at         line 107</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setType</strong>(int $var)
         </code>
@@ -340,7 +362,7 @@ define and set these properties.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDescription">
-        <div class="location">at         line 107</div>
+        <div class="location">at         line 121</div>
         <code>                    string
     <strong>getDescription</strong>()
         </code>
@@ -370,7 +392,7 @@ define and set these properties.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setDescription">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 133</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setDescription</strong>(string $var)
         </code>

@@ -118,10 +118,9 @@ for billing:
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -139,7 +138,7 @@ for billing:
                     <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setConsumerDestinations">setConsumerDestinations</a>(<a href="../../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setConsumerDestinations">setConsumerDestinations</a>(<a href="../../Google/Api/Billing/BillingDestination.html"><abbr title="Google\Api\Billing\BillingDestination">BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Billing configurations for sending metrics to the consumer project.</p>                </div>
                 <div class="col-md-2"></div>
@@ -152,16 +151,38 @@ for billing:
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 46</div>
+        <div class="location">at         line 59</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\Api\Billing\BillingDestination[]|\Google\Protobuf\Internal\RepeatedField $consumer_destinations
+      Billing configurations for sending metrics to the consumer project.
+      There can be multiple consumer destinations per service, each one must have
+      a different monitored resource type. A metric can be used in at most
+      one consumer destination.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -171,7 +192,7 @@ for billing:
             </div>
                     <div class="method-item">
                     <h3 id="method_getConsumerDestinations">
-        <div class="location">at         line 60</div>
+        <div class="location">at         line 73</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getConsumerDestinations</strong>()
         </code>
@@ -205,9 +226,9 @@ one consumer destination.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setConsumerDestinations">
-        <div class="location">at         line 75</div>
+        <div class="location">at         line 88</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
-    <strong>setConsumerDestinations</strong>(<a href="../../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+    <strong>setConsumerDestinations</strong>(<a href="../../Google/Api/Billing/BillingDestination.html"><abbr title="Google\Api\Billing\BillingDestination">BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -225,7 +246,7 @@ one consumer destination.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/Billing/BillingDestination.html"><abbr title="Google\Api\Billing\BillingDestination">BillingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>

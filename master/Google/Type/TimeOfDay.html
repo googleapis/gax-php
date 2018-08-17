@@ -101,10 +101,9 @@ types are [google.type.Date][google.type.Date] and <code>google.protobuf.Timesta
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -199,16 +198,43 @@ allow the value 60 if it allows leap-seconds.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 47</div>
+        <div class="location">at         line 65</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type int $hours
+      Hours of day in 24 hour format. Should be from 0 to 23. An API may choose
+      to allow the value "24:00:00" for scenarios like business closing time.
+@type int $minutes
+      Minutes of hour of day. Must be from 0 to 59.
+@type int $seconds
+      Seconds of minutes of the time. Must normally be from 0 to 59. An API may
+      allow the value 60 if it allows leap-seconds.
+@type int $nanos
+      Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -218,7 +244,7 @@ allow the value 60 if it allows leap-seconds.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getHours">
-        <div class="location">at         line 59</div>
+        <div class="location">at         line 77</div>
         <code>                    int
     <strong>getHours</strong>()
         </code>
@@ -249,7 +275,7 @@ to allow the value "24:00:00" for scenarios like business closing time.</p>     
             </div>
                     <div class="method-item">
                     <h3 id="method_setHours">
-        <div class="location">at         line 72</div>
+        <div class="location">at         line 90</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setHours</strong>(int $var)
         </code>
@@ -290,7 +316,7 @@ to allow the value "24:00:00" for scenarios like business closing time.</p>     
             </div>
                     <div class="method-item">
                     <h3 id="method_getMinutes">
-        <div class="location">at         line 86</div>
+        <div class="location">at         line 104</div>
         <code>                    int
     <strong>getMinutes</strong>()
         </code>
@@ -320,7 +346,7 @@ to allow the value "24:00:00" for scenarios like business closing time.</p>     
             </div>
                     <div class="method-item">
                     <h3 id="method_setMinutes">
-        <div class="location">at         line 98</div>
+        <div class="location">at         line 116</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setMinutes</strong>(int $var)
         </code>
@@ -360,7 +386,7 @@ to allow the value "24:00:00" for scenarios like business closing time.</p>     
             </div>
                     <div class="method-item">
                     <h3 id="method_getSeconds">
-        <div class="location">at         line 113</div>
+        <div class="location">at         line 131</div>
         <code>                    int
     <strong>getSeconds</strong>()
         </code>
@@ -391,7 +417,7 @@ allow the value 60 if it allows leap-seconds.</p>                    <p>Generate
             </div>
                     <div class="method-item">
                     <h3 id="method_setSeconds">
-        <div class="location">at         line 126</div>
+        <div class="location">at         line 144</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setSeconds</strong>(int $var)
         </code>
@@ -432,7 +458,7 @@ allow the value 60 if it allows leap-seconds.</p>                    <p>Generate
             </div>
                     <div class="method-item">
                     <h3 id="method_getNanos">
-        <div class="location">at         line 140</div>
+        <div class="location">at         line 158</div>
         <code>                    int
     <strong>getNanos</strong>()
         </code>
@@ -462,7 +488,7 @@ allow the value 60 if it allows leap-seconds.</p>                    <p>Generate
             </div>
                     <div class="method-item">
                     <h3 id="method_setNanos">
-        <div class="location">at         line 152</div>
+        <div class="location">at         line 170</div>
         <code>                    <abbr title="Google\Type\$this">$this</abbr>
     <strong>setNanos</strong>(int $var)
         </code>

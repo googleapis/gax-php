@@ -126,10 +126,9 @@ log is sent to both the producer and consumer projects, whereas the
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -147,7 +146,7 @@ log is sent to both the producer and consumer projects, whereas the
                     <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setProducerDestinations">setProducerDestinations</a>(<a href="../../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setProducerDestinations">setProducerDestinations</a>(<a href="../../Google/Api/Logging/LoggingDestination.html"><abbr title="Google\Api\Logging\LoggingDestination">LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Logging configurations for sending logs to the producer project.</p>                </div>
                 <div class="col-md-2"></div>
@@ -167,7 +166,7 @@ log is sent to both the producer and consumer projects, whereas the
                     <abbr title="Google\Api\$this">$this</abbr>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setConsumerDestinations">setConsumerDestinations</a>(<a href="../../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+                    <a href="#method_setConsumerDestinations">setConsumerDestinations</a>(<a href="../../Google/Api/Logging/LoggingDestination.html"><abbr title="Google\Api\Logging\LoggingDestination">LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         
                                             <p>Logging configurations for sending logs to the consumer project.</p>                </div>
                 <div class="col-md-2"></div>
@@ -180,16 +179,43 @@ log is sent to both the producer and consumer projects, whereas the
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 63</div>
+        <div class="location">at         line 81</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type \Google\Api\Logging\LoggingDestination[]|\Google\Protobuf\Internal\RepeatedField $producer_destinations
+      Logging configurations for sending logs to the producer project.
+      There can be multiple producer destinations, each one must have a
+      different monitored resource type. A log can be used in at most
+      one producer destination.
+@type \Google\Api\Logging\LoggingDestination[]|\Google\Protobuf\Internal\RepeatedField $consumer_destinations
+      Logging configurations for sending logs to the consumer project.
+      There can be multiple consumer destinations, each one must have a
+      different monitored resource type. A log can be used in at most
+      one consumer destination.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -199,7 +225,7 @@ log is sent to both the producer and consumer projects, whereas the
             </div>
                     <div class="method-item">
                     <h3 id="method_getProducerDestinations">
-        <div class="location">at         line 77</div>
+        <div class="location">at         line 95</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getProducerDestinations</strong>()
         </code>
@@ -233,9 +259,9 @@ one producer destination.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setProducerDestinations">
-        <div class="location">at         line 92</div>
+        <div class="location">at         line 110</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
-    <strong>setProducerDestinations</strong>(<a href="../../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+    <strong>setProducerDestinations</strong>(<a href="../../Google/Api/Logging/LoggingDestination.html"><abbr title="Google\Api\Logging\LoggingDestination">LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -253,7 +279,7 @@ one producer destination.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/Logging/LoggingDestination.html"><abbr title="Google\Api\Logging\LoggingDestination">LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>
@@ -277,7 +303,7 @@ one producer destination.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getConsumerDestinations">
-        <div class="location">at         line 109</div>
+        <div class="location">at         line 127</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getConsumerDestinations</strong>()
         </code>
@@ -311,9 +337,9 @@ one consumer destination.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setConsumerDestinations">
-        <div class="location">at         line 124</div>
+        <div class="location">at         line 142</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
-    <strong>setConsumerDestinations</strong>(<a href="../../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
+    <strong>setConsumerDestinations</strong>(<a href="../../Google/Api/Logging/LoggingDestination.html"><abbr title="Google\Api\Logging\LoggingDestination">LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
     </h3>
     <div class="details">
@@ -331,7 +357,7 @@ one consumer destination.</p>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
+                <td><a href="../../Google/Api/Logging/LoggingDestination.html"><abbr title="Google\Api\Logging\LoggingDestination">LoggingDestination</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr></td>
                 <td>$var</td>
                 <td></td>
             </tr>

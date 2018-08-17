@@ -75,6 +75,9 @@
         <h1>Google\Api</h1>
     </div>
 
+            <h2>Namespaces</h2>
+        <div class="namespace-list">
+            <a href="../Google/Api/Billing.html">Google\Api\Billing</a><a href="../Google/Api/Distribution.html">Google\Api\Distribution</a><a href="../Google/Api/LabelDescriptor.html">Google\Api\LabelDescriptor</a><a href="../Google/Api/Logging.html">Google\Api\Logging</a><a href="../Google/Api/MetricDescriptor.html">Google\Api\MetricDescriptor</a><a href="../Google/Api/Monitoring.html">Google\Api\Monitoring</a><a href="../Google/Api/Property.html">Google\Api\Property</a>        </div>
     
             <h2>Classes</h2>
         
@@ -166,11 +169,10 @@ information about how a change will affect the existing service.
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Billing_BillingDestination.html"><abbr title="Google\Api\Billing_BillingDestination">Billing_BillingDestination</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Configuration of a specific billing destination (Currently only support
-bill against consumer project).
+                    This class is deprecated. Use Google\Api\Billing\BillingDestination instead.
                 </div>
             </div>
                     <div class="row">
@@ -246,53 +248,46 @@ a specified set of histogram buckets.
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Distribution_BucketOptions.html"><abbr title="Google\Api\Distribution_BucketOptions">Distribution_BucketOptions</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    A Distribution may optionally contain a histogram of the values in the
-population.  The histogram is given in <code>bucket_counts</code> as counts of values
-that fall into one of a sequence of non-overlapping buckets.  The sequence
-of buckets is described by <code>bucket_options</code>.
+                    This class is deprecated. Use Google\Api\Distribution\BucketOptions instead.
                 </div>
             </div>
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Distribution_BucketOptions_Explicit.html"><abbr title="Google\Api\Distribution_BucketOptions_Explicit">Distribution_BucketOptions_Explicit</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    A set of buckets with arbitrary widths.
+                    This class is deprecated. Use Google\Api\Distribution\BucketOptions\Explicit instead.
                 </div>
             </div>
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Distribution_BucketOptions_Exponential.html"><abbr title="Google\Api\Distribution_BucketOptions_Exponential">Distribution_BucketOptions_Exponential</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Specify a sequence of buckets that have a width that is proportional to
-the value of the lower bound.  Each bucket represents a constant relative
-uncertainty on a specific value in the bucket.
+                    This class is deprecated. Use Google\Api\Distribution\BucketOptions\Exponential instead.
                 </div>
             </div>
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Distribution_BucketOptions_Linear.html"><abbr title="Google\Api\Distribution_BucketOptions_Linear">Distribution_BucketOptions_Linear</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Specify a sequence of buckets that all have the same width (except
-overflow and underflow).  Each bucket represents a constant absolute
-uncertainty on the specific value in the bucket.
+                    This class is deprecated. Use Google\Api\Distribution\BucketOptions\Linear instead.
                 </div>
             </div>
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Distribution_Range.html"><abbr title="Google\Api\Distribution_Range">Distribution_Range</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    The range of the population values.
+                    This class is deprecated. Use Google\Api\Distribution\Range instead.
                 </div>
             </div>
                     <div class="row">
@@ -338,7 +333,7 @@ only be used by whitelisted users.
                                             
                 </div>
                 <div class="col-md-6">
-                    Defines the HTTP configuration for a service. It contains a list of
+                    Defines the HTTP configuration for an API service. It contains a list of
 [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
 to one or more HTTP REST API methods.
                 </div>
@@ -361,11 +356,11 @@ an HTML page.
                 </div>
                 <div class="col-md-6">
                     <code>HttpRule</code> defines the mapping of an RPC method to one or more HTTP
-REST APIs.  The mapping determines what portions of the request
-message are populated from the path, query parameters, or body of
-the HTTP request.  The mapping is typically specified as an
-<code>google.api.http</code> annotation, see "google/api/annotations.proto"
-for details.
+REST API methods. The mapping specifies how different portions of the RPC
+request message are mapped to URL path, URL query parameters, and
+HTTP request body. The mapping is typically specified as an
+<code>google.api.http</code> annotation on the RPC method,
+see "google/api/annotations.proto" for details.
                 </div>
             </div>
                     <div class="row">
@@ -380,10 +375,10 @@ for details.
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/LabelDescriptor_ValueType.html"><abbr title="Google\Api\LabelDescriptor_ValueType">LabelDescriptor_ValueType</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Value types that can be used as label values.
+                    This class is deprecated. Use Google\Api\LabelDescriptor\ValueType instead.
                 </div>
             </div>
                     <div class="row">
@@ -409,11 +404,10 @@ for details.
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Logging_LoggingDestination.html"><abbr title="Google\Api\Logging_LoggingDestination">Logging_LoggingDestination</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Configuration of a specific logging destination (the producer project
-or the consumer project).
+                    This class is deprecated. Use Google\Api\Logging\LoggingDestination instead.
                 </div>
             </div>
                     <div class="row">
@@ -440,19 +434,19 @@ existing data unusable.
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/MetricDescriptor_MetricKind.html"><abbr title="Google\Api\MetricDescriptor_MetricKind">MetricDescriptor_MetricKind</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    The kind of measurement. It describes how the data is reported.
+                    This class is deprecated. Use Google\Api\MetricDescriptor\MetricKind instead.
                 </div>
             </div>
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/MetricDescriptor_ValueType.html"><abbr title="Google\Api\MetricDescriptor_ValueType">MetricDescriptor_ValueType</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    The value type of a metric.
+                    This class is deprecated. Use Google\Api\MetricDescriptor\ValueType instead.
                 </div>
             </div>
                     <div class="row">
@@ -501,6 +495,15 @@ descriptor for Google Compute Engine VM instances has a type of
             </div>
                     <div class="row">
                 <div class="col-md-6">
+                                            <a href="../Google/Api/MonitoredResourceMetadata.html"><abbr title="Google\Api\MonitoredResourceMetadata">MonitoredResourceMetadata</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Auxiliary metadata for a [MonitoredResource][google.api.MonitoredResource] object.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
                                             <a href="../Google/Api/Monitoring.html"><abbr title="Google\Api\Monitoring">Monitoring</abbr></a>
                                             
                 </div>
@@ -511,11 +514,10 @@ descriptor for Google Compute Engine VM instances has a type of
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Monitoring_MonitoringDestination.html"><abbr title="Google\Api\Monitoring_MonitoringDestination">Monitoring_MonitoringDestination</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Configuration of a specific monitoring destination (the producer project
-or the consumer project).
+                    This class is deprecated. Use Google\Api\Monitoring\MonitoringDestination instead.
                 </div>
             </div>
                     <div class="row">
@@ -565,10 +567,10 @@ type property on the project may affect how a service responds to the client.
                     <div class="row">
                 <div class="col-md-6">
                                             <a href="../Google/Api/Property_PropertyType.html"><abbr title="Google\Api\Property_PropertyType">Property_PropertyType</abbr></a>
-                                            
+                                            <small><sup><span class="label label-danger">deprecated</span></sup></small>
                 </div>
                 <div class="col-md-6">
-                    Supported data type of the property values
+                    This class is deprecated. Use Google\Api\Property\PropertyType instead.
                 </div>
             </div>
                     <div class="row">

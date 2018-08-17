@@ -99,10 +99,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -153,16 +152,45 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 39</div>
+        <div class="location">at         line 59</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $caller_ip
+      The IP address of the caller.
+@type string $caller_supplied_user_agent
+      The user agent of the caller.
+      This information is not authenticated and should be treated accordingly.
+      For example:
+      +   `google-api-python-client/1.4.0`:
+          The request was made by the Google API client for Python.
+      +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
+          The request was made by the Google Cloud SDK CLI (gcloud).
+      +   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:
+          The request was made from the `my-project` App Engine app.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -172,7 +200,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCallerIp">
-        <div class="location">at         line 50</div>
+        <div class="location">at         line 70</div>
         <code>                    string
     <strong>getCallerIp</strong>()
         </code>
@@ -202,7 +230,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setCallerIp">
-        <div class="location">at         line 62</div>
+        <div class="location">at         line 82</div>
         <code>                    <abbr title="Google\Cloud\Audit\$this">$this</abbr>
     <strong>setCallerIp</strong>(string $var)
         </code>
@@ -242,7 +270,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCallerSuppliedUserAgent">
-        <div class="location">at         line 84</div>
+        <div class="location">at         line 104</div>
         <code>                    string
     <strong>getCallerSuppliedUserAgent</strong>()
         </code>
@@ -281,7 +309,7 @@ For example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setCallerSuppliedUserAgent">
-        <div class="location">at         line 104</div>
+        <div class="location">at         line 124</div>
         <code>                    <abbr title="Google\Cloud\Audit\$this">$this</abbr>
     <strong>setCallerSuppliedUserAgent</strong>(string $var)
         </code>

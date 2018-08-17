@@ -125,10 +125,9 @@ For a description of IAM and its features, see the
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -201,16 +200,49 @@ prevent simultaneous updates of a policy from overwriting each other.</p>       
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 72</div>
+        <div class="location">at         line 96</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type int $version
+      Version of the `Policy`. The default version is 0.
+@type \Google\Cloud\Iam\V1\Binding[]|\Google\Protobuf\Internal\RepeatedField $bindings
+      Associates a list of `members` to a `role`.
+      Multiple `bindings` must not be specified for the same `role`.
+      `bindings` with no members will result in an error.
+@type string $etag
+      `etag` is used for optimistic concurrency control as a way to help
+      prevent simultaneous updates of a policy from overwriting each other.
+      It is strongly suggested that systems make use of the `etag` in the
+      read-modify-write cycle to perform policy updates in order to avoid race
+      conditions: An `etag` is returned in the response to `getIamPolicy`, and
+      systems are expected to put that etag in the request to `setIamPolicy` to
+      ensure that their change will be applied to the same version of the policy.
+      If no `etag` is provided in the call to `setIamPolicy`, then the existing
+      policy is overwritten blindly.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -220,7 +252,7 @@ prevent simultaneous updates of a policy from overwriting each other.</p>       
             </div>
                     <div class="method-item">
                     <h3 id="method_getVersion">
-        <div class="location">at         line 83</div>
+        <div class="location">at         line 107</div>
         <code>                    int
     <strong>getVersion</strong>()
         </code>
@@ -250,7 +282,7 @@ prevent simultaneous updates of a policy from overwriting each other.</p>       
             </div>
                     <div class="method-item">
                     <h3 id="method_setVersion">
-        <div class="location">at         line 95</div>
+        <div class="location">at         line 119</div>
         <code>                    <abbr title="Google\Cloud\Iam\V1\$this">$this</abbr>
     <strong>setVersion</strong>(int $var)
         </code>
@@ -290,7 +322,7 @@ prevent simultaneous updates of a policy from overwriting each other.</p>       
             </div>
                     <div class="method-item">
                     <h3 id="method_getBindings">
-        <div class="location">at         line 111</div>
+        <div class="location">at         line 135</div>
         <code>                    <abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr>
     <strong>getBindings</strong>()
         </code>
@@ -323,7 +355,7 @@ prevent simultaneous updates of a policy from overwriting each other.</p>       
             </div>
                     <div class="method-item">
                     <h3 id="method_setBindings">
-        <div class="location">at         line 125</div>
+        <div class="location">at         line 149</div>
         <code>                    <abbr title="Google\Cloud\Iam\V1\$this">$this</abbr>
     <strong>setBindings</strong>(<a href="../../../../Google/Cloud/Iam/V1/Binding.html"><abbr title="Google\Cloud\Iam\V1\Binding">Binding</abbr></a>[]|<abbr title="Google\Protobuf\Internal\RepeatedField">RepeatedField</abbr> $var)
         </code>
@@ -366,7 +398,7 @@ prevent simultaneous updates of a policy from overwriting each other.</p>       
             </div>
                     <div class="method-item">
                     <h3 id="method_getEtag">
-        <div class="location">at         line 147</div>
+        <div class="location">at         line 171</div>
         <code>                    string
     <strong>getEtag</strong>()
         </code>
@@ -405,7 +437,7 @@ policy is overwritten blindly.</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setEtag">
-        <div class="location">at         line 167</div>
+        <div class="location">at         line 191</div>
         <code>                    <abbr title="Google\Cloud\Iam\V1\$this">$this</abbr>
     <strong>setEtag</strong>(string $var)
         </code>

@@ -100,10 +100,9 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -224,16 +223,67 @@ Usually a URL or an email address.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 74</div>
+        <div class="location">at         line 116</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $id
+      The unique identifier of the auth provider. It will be referred to by
+      `AuthRequirement.provider_id`.
+      Example: "bookstore_auth".
+@type string $issuer
+      Identifies the principal that issued the JWT. See
+      https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+      Usually a URL or an email address.
+      Example: https://securetoken.google.com
+      Example: 1234567-compute&amp;#64;developer.gserviceaccount.com
+@type string $jwks_uri
+      URL of the provider's public key set to validate signature of the JWT. See
+      [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+      Optional if the key set document:
+       - can be retrieved from
+         [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
+         of the issuer.
+       - can be inferred from the email domain of the issuer (e.g. a Google service account).
+      Example: https://www.googleapis.com/oauth2/v1/certs
+@type string $audiences
+      The list of JWT
+      [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+      that are allowed to access. A JWT containing any of these audiences will
+      be accepted. When this setting is absent, only JWTs with audience
+      "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
+      will be accepted. For example, if no audiences are in the setting,
+      LibraryService API will only accept JWTs with the following audience
+      "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+      Example:
+          audiences: bookstore_android.apps.googleusercontent.com,
+                     bookstore_web.apps.googleusercontent.com
+@type string $authorization_url
+      Redirect URL if JWT token is required but no present or is expired.
+      Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -243,7 +293,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getId">
-        <div class="location">at         line 87</div>
+        <div class="location">at         line 129</div>
         <code>                    string
     <strong>getId</strong>()
         </code>
@@ -276,7 +326,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setId">
-        <div class="location">at         line 101</div>
+        <div class="location">at         line 143</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setId</strong>(string $var)
         </code>
@@ -319,7 +369,7 @@ Usually a URL or an email address.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getIssuer">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 161</div>
         <code>                    string
     <strong>getIssuer</strong>()
         </code>
@@ -354,7 +404,7 @@ Example: 1234567-compute&#64;developer.gserviceaccount.com</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setIssuer">
-        <div class="location">at         line 135</div>
+        <div class="location">at         line 177</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setIssuer</strong>(string $var)
         </code>
@@ -399,7 +449,7 @@ Example: 1234567-compute&#64;developer.gserviceaccount.com</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getJwksUri">
-        <div class="location">at         line 156</div>
+        <div class="location">at         line 198</div>
         <code>                    string
     <strong>getJwksUri</strong>()
         </code>
@@ -437,7 +487,7 @@ Example: https://www.googleapis.com/oauth2/v1/certs</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_setJwksUri">
-        <div class="location">at         line 175</div>
+        <div class="location">at         line 217</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setJwksUri</strong>(string $var)
         </code>
@@ -485,7 +535,7 @@ Example: https://www.googleapis.com/oauth2/v1/certs</p>
             </div>
                     <div class="method-item">
                     <h3 id="method_getAudiences">
-        <div class="location">at         line 199</div>
+        <div class="location">at         line 241</div>
         <code>                    string
     <strong>getAudiences</strong>()
         </code>
@@ -526,7 +576,7 @@ Example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setAudiences">
-        <div class="location">at         line 221</div>
+        <div class="location">at         line 263</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAudiences</strong>(string $var)
         </code>
@@ -577,7 +627,7 @@ Example:
             </div>
                     <div class="method-item">
                     <h3 id="method_getAuthorizationUrl">
-        <div class="location">at         line 236</div>
+        <div class="location">at         line 278</div>
         <code>                    string
     <strong>getAuthorizationUrl</strong>()
         </code>
@@ -609,7 +659,7 @@ Example:
             </div>
                     <div class="method-item">
                     <h3 id="method_setAuthorizationUrl">
-        <div class="location">at         line 249</div>
+        <div class="location">at         line 291</div>
         <code>                    <abbr title="Google\Api\$this">$this</abbr>
     <strong>setAuthorizationUrl</strong>(string $var)
         </code>

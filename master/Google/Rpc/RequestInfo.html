@@ -100,10 +100,9 @@ or providing other forms of feedback.</p>            <p>Generated from protobuf 
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>()
+                    <a href="#method___construct">__construct</a>(array $data = NULL)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -158,16 +157,39 @@ stack trace that can be sent back to the service provider for debugging.</p>    
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 34</div>
+        <div class="location">at         line 48</div>
         <code>                    
-    <strong>__construct</strong>()
+    <strong>__construct</strong>(array $data = NULL)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Constructor.</p>                                                </div>
                 <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td>{
+    Optional. Data for populating the Message object.</p>
+
+<pre><code>@type string $request_id
+      An opaque string that should only be interpreted by the service generating
+      it. For example, it can be used to identify requests in the service's logs.
+@type string $serving_data
+      Any data that was used to serve this request. For example, an encrypted
+      stack trace that can be sent back to the service provider for debugging.
+</code></pre>
+
+<p>}</td>
+            </tr>
+            </table>
+
             
             
             
@@ -177,7 +199,7 @@ stack trace that can be sent back to the service provider for debugging.</p>    
             </div>
                     <div class="method-item">
                     <h3 id="method_getRequestId">
-        <div class="location">at         line 46</div>
+        <div class="location">at         line 60</div>
         <code>                    string
     <strong>getRequestId</strong>()
         </code>
@@ -208,7 +230,7 @@ it. For example, it can be used to identify requests in the service's logs.</p> 
             </div>
                     <div class="method-item">
                     <h3 id="method_setRequestId">
-        <div class="location">at         line 59</div>
+        <div class="location">at         line 73</div>
         <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
     <strong>setRequestId</strong>(string $var)
         </code>
@@ -249,7 +271,7 @@ it. For example, it can be used to identify requests in the service's logs.</p> 
             </div>
                     <div class="method-item">
                     <h3 id="method_getServingData">
-        <div class="location">at         line 74</div>
+        <div class="location">at         line 88</div>
         <code>                    string
     <strong>getServingData</strong>()
         </code>
@@ -280,7 +302,7 @@ stack trace that can be sent back to the service provider for debugging.</p>    
             </div>
                     <div class="method-item">
                     <h3 id="method_setServingData">
-        <div class="location">at         line 87</div>
+        <div class="location">at         line 101</div>
         <code>                    <abbr title="Google\Rpc\$this">$this</abbr>
     <strong>setServingData</strong>(string $var)
         </code>
