@@ -99,42 +99,9 @@
                     static&nbsp;array
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_parseSegments">parseSegments</a>($path)
+                    <a href="#method_parseSegments">parseSegments</a>(string $path)
         
                                             <p>Parses a path into an array of segments.</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    static&nbsp;bool
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_isValidLiteral">isValidLiteral</a>(string $literal)
-        
-                                            <p>Check if $literal is a valid segment literal. Segment literals may only contain numbers,
-letters, and any of the following: .-~_</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    static&nbsp;bool
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_isValidBinding">isValidBinding</a>($binding)
-        
-                                            <p>Check if $binding is a valid segment binding. Segment bindings may contain any characters
-except a forward slash ('/'), and may not be empty.</p>                </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    static&nbsp;bool
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_isValidDoubleWildcardBinding">isValidDoubleWildcardBinding</a>($binding)
-        
-                                            <p>Check if $binding is a valid double wildcard binding. Segment bindings may contain any
-characters, but may not be empty.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -145,9 +112,9 @@ characters, but may not be empty.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_parseSegments">
-        <div class="location">at         line 48</div>
+        <div class="location">at         line 49</div>
         <code>        static            array
-    <strong>parseSegments</strong>($path)
+    <strong>parseSegments</strong>(string $path)
         </code>
     </h3>
     <div class="details">
@@ -161,7 +128,7 @@ characters, but may not be empty.</p>                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$path</td>
                 <td></td>
             </tr>
@@ -178,129 +145,15 @@ characters, but may not be empty.</p>                </div>
     </table>
 
             
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_isValidLiteral">
-        <div class="location">at         line 178</div>
-        <code>        static            bool
-    <strong>isValidLiteral</strong>(string $literal)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>Check if $literal is a valid segment literal. Segment literals may only contain numbers,
-letters, and any of the following: .-~_</p>                                                </div>
-                <div class="tags">
-                            <h4>Parameters</h4>
+                            <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>string</td>
-                <td>$literal</td>
+                <td><a href="../../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
                 <td></td>
             </tr>
             </table>
 
-            
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td>bool</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_isValidBinding">
-        <div class="location">at         line 190</div>
-        <code>        static            bool
-    <strong>isValidBinding</strong>($binding)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>Check if $binding is a valid segment binding. Segment bindings may contain any characters
-except a forward slash ('/'), and may not be empty.</p>                                                </div>
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td></td>
-                <td>$binding</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td>bool</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_isValidDoubleWildcardBinding">
-        <div class="location">at         line 202</div>
-        <code>        static            bool
-    <strong>isValidDoubleWildcardBinding</strong>($binding)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                    <div class="method-description">
-                                    <p>Check if $binding is a valid double wildcard binding. Segment bindings may contain any
-characters, but may not be empty.</p>                                                </div>
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td></td>
-                <td>$binding</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td>bool</td>
-            <td></td>
-        </tr>
-    </table>
-
-            
             
                     </div>
     </div>

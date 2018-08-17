@@ -133,10 +133,9 @@ but is not intended for public use and may change without notice.</p>           
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>($segmentType, $key, $value, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null)
+                    <a href="#method___construct">__construct</a>(int $segmentType, string|null $value = null, string|null $key = null, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Segment constructor.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -163,13 +162,12 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    bool
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_matches">matches</a>($value)
+                    <a href="#method_matches">matches</a>(string $value)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>Checks if $value matches this Segment.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -224,32 +222,34 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 61</div>
+        <div class="location">at         line 72</div>
         <code>                    
-    <strong>__construct</strong>($segmentType, $key, $value, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null)
+    <strong>__construct</strong>(int $segmentType, string|null $value = null, string|null $key = null, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Segment constructor.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>int</td>
                 <td>$segmentType</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
-                <td>$key</td>
+                <td>string|null</td>
+                <td>$value</td>
                 <td></td>
             </tr>
                     <tr>
-                <td></td>
-                <td>$value</td>
+                <td>string|null</td>
+                <td>$key</td>
                 <td></td>
             </tr>
                     <tr>
@@ -261,6 +261,15 @@ equal to $value. If $value does not match the current Segment, throws a Validati
 
             
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>
@@ -268,7 +277,7 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 72</div>
+        <div class="location">at         line 102</div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
@@ -296,7 +305,7 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method_bindTo">
-        <div class="location">at         line 98</div>
+        <div class="location">at         line 115</div>
         <code>                    <a href="../../../Google/ApiCore/ResourceTemplate/Segment.html"><abbr title="Google\ApiCore\ResourceTemplate\Segment">Segment</abbr></a>
     <strong>bindTo</strong>(string $value)
         </code>
@@ -346,28 +355,48 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method_matches">
-        <div class="location">at         line 110</div>
-        <code>                    
-    <strong>matches</strong>($value)
+        <div class="location">at         line 134</div>
+        <code>                    bool
+    <strong>matches</strong>(string $value)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>Checks if $value matches this Segment.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td></td>
+                <td>string</td>
                 <td>$value</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>
@@ -375,7 +404,7 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method_getSegmentType">
-        <div class="location">at         line 131</div>
+        <div class="location">at         line 155</div>
         <code>                    int
     <strong>getSegmentType</strong>()
         </code>
@@ -403,7 +432,7 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method_getKey">
-        <div class="location">at         line 139</div>
+        <div class="location">at         line 163</div>
         <code>                    string|null
     <strong>getKey</strong>()
         </code>
@@ -431,7 +460,7 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method_getValue">
-        <div class="location">at         line 147</div>
+        <div class="location">at         line 171</div>
         <code>                    string|null
     <strong>getValue</strong>()
         </code>
@@ -459,7 +488,7 @@ equal to $value. If $value does not match the current Segment, throws a Validati
             </div>
                     <div class="method-item">
                     <h3 id="method_getTemplate">
-        <div class="location">at         line 155</div>
+        <div class="location">at         line 179</div>
         <code>                    <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a>|null
     <strong>getTemplate</strong>()
         </code>
