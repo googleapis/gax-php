@@ -87,7 +87,7 @@ class RestTransport implements TransportInterface
             'httpHandler'  => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($serviceAddress);
-        $requestBuilder = new RequestBuilder($baseUri, $restConfigPath);
+        $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         return new RestTransport($requestBuilder, $httpHandler);
     }

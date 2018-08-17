@@ -59,9 +59,9 @@ class RestTransportTest extends TestCase
             new MockRequest()
         );
     }
-    private function getTransport(callable $httpHandler)
+    private function getTransport(callable $httpHandler, $serviceAddress = 'http://www.example.com')
     {
-        $request = new Request('POST', 'http://www.example.com');
+        $request = new Request('POST', $serviceAddress);
         $requestBuilder = $this->getMockBuilder(RequestBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -79,12 +79,23 @@ class RestTransportTest extends TestCase
         );
     }
 
-    public function testStartUnaryCall()
+    /**
+     * @param $serviceAddress
+     * @dataProvider startUnaryCallDataProvider
+     */
+    public function testStartUnaryCall($serviceAddress)
     {
-        $body = ['name' => 'hello', 'number' => 15];
-        $code = 200;
+        $expectedRequest = new Request(
+            'POST',
+            "$serviceAddress",
+            [],
+            ""
+        );
 
-        $httpHandler = function (RequestInterface $request, array $options = []) use ($body, $code) {
+        $body = ['name' => 'hello', 'number' => 15];
+
+        $httpHandler = function (RequestInterface $request, array $options = []) use ($body, $expectedRequest) {
+            $this->assertEquals($expectedRequest, $request);
             return Promise\promise_for(
                 new Response(
                     200,
@@ -94,12 +105,21 @@ class RestTransportTest extends TestCase
             );
         };
 
-        $response = $this->getTransport($httpHandler)
+        $response = $this->getTransport($httpHandler, $serviceAddress)
             ->startUnaryCall($this->call, [])
             ->wait();
 
         $this->assertEquals($body['name'], $response->getName());
         $this->assertEquals($body['number'], $response->getNumber());
+    }
+
+    public function startUnaryCallDataProvider()
+    {
+        return [
+            ["www.example.com"],
+            ["www.example.com:443"],
+            ["www.example.com:447"],
+        ];
     }
 
     /**
@@ -158,7 +178,7 @@ class RestTransportTest extends TestCase
         $uri = "address.com";
         $serviceAddress = "$uri:443";
         $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
-        $requestBuilder = new RequestBuilder($uri, $restConfigPath);
+        $requestBuilder = new RequestBuilder($serviceAddress, $restConfigPath);
         $httpHandler = [HttpHandlerFactory::build(), 'async'];
         return [
             [

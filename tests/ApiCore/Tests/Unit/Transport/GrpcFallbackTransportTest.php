@@ -62,6 +62,7 @@ class GrpcFallbackTransportTest extends TestCase
             new MockRequest()
         );
     }
+
     private function getTransport(callable $httpHandler)
     {
         return new GrpcFallbackTransport(
@@ -70,40 +71,61 @@ class GrpcFallbackTransportTest extends TestCase
         );
     }
 
-    public function testStartUnaryCall()
+    /**
+     * @param $serviceAddress
+     * @param $requestMessage
+     * @dataProvider startUnaryCallDataProvider
+     */
+    public function testStartUnaryCall($serviceAddress, $requestMessage)
     {
-        $body = (new MockResponse())
-            ->setName('hello')
-            ->setNumber(15);
-
         $expectedRequest = new Request(
             'POST',
-            'https://www.example.com/$rpc/Testing123',
+            "https://$serviceAddress/\$rpc/Testing123",
             [
                 'Content-Type' => 'application/x-protobuf',
                 'x-goog-api-client' => ['grpc-web'],
             ],
-            (new MockRequest())->serializeToString()
+            $requestMessage->serializeToString()
         );
 
-        $httpHandler = function (RequestInterface $request, array $options = []) use ($body, $expectedRequest) {
+        $expectedResponse = (new MockResponse())
+            ->setName('hello')
+            ->setNumber(15);
+
+        $httpHandler = function (RequestInterface $request, array $options = []) use ($expectedResponse, $expectedRequest) {
             $this->assertEquals($expectedRequest, $request);
 
             return Promise\promise_for(
                 new Response(
                     200,
                     [],
-                    $body->serializeToString()
+                    $expectedResponse->serializeToString()
                 )
             );
         };
 
-        $response = $this->getTransport($httpHandler)
-            ->startUnaryCall($this->call, [])
-            ->wait();
+        $transport = new GrpcFallbackTransport(
+            $serviceAddress,
+            $httpHandler
+        );
+        $call = new Call(
+            'Testing123',
+            MockResponse::class,
+            $requestMessage
+        );
+        $response = $transport->startUnaryCall($call, [])->wait();
 
-        $this->assertEquals($body->getName(), $response->getName());
-        $this->assertEquals($body->getNumber(), $response->getNumber());
+        $this->assertEquals($expectedResponse->getName(), $response->getName());
+        $this->assertEquals($expectedResponse->getNumber(), $response->getNumber());
+    }
+
+    public function startUnaryCallDataProvider()
+    {
+        return [
+            ["www.example.com", new MockRequest()],
+            ["www.example.com:443", new MockRequest()],
+            ["www.example.com:447", new MockRequest()],
+        ];
     }
 
     /**
@@ -164,12 +186,12 @@ class GrpcFallbackTransportTest extends TestCase
             [
                 $serviceAddress,
                 ['httpHandler' => $httpHandler],
-                new GrpcFallbackTransport($uri, $httpHandler)
+                new GrpcFallbackTransport($serviceAddress, $httpHandler)
             ],
             [
                 $serviceAddress,
                 [],
-                new GrpcFallbackTransport($uri, $httpHandler),
+                new GrpcFallbackTransport($serviceAddress, $httpHandler),
             ],
         ];
     }

@@ -89,7 +89,7 @@ class GrpcFallbackTransport implements TransportInterface
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($serviceAddress);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        return new GrpcFallbackTransport($baseUri, $httpHandler);
+        return new GrpcFallbackTransport("$baseUri:$port", $httpHandler);
     }
 
     /**
