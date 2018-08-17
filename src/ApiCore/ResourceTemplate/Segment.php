@@ -78,7 +78,7 @@ class Segment
 
         switch ($this->segmentType) {
             case Segment::LITERAL_SEGMENT:
-                $this->stringRepr = (string) $this->value;
+                $this->stringRepr = "{$this->value}";
                 break;
             case Segment::WILDCARD_SEGMENT:
                 $this->stringRepr = "*";
