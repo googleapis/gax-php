@@ -289,7 +289,7 @@ class Serializer
      * @return array
      * @throws \Exception
      */
-    private function encodeMessageImpl(Message $message, Descriptor $messageType)
+    private function encodeMessageImpl($message, Descriptor $messageType)
     {
         $data = [];
 
@@ -378,7 +378,7 @@ class Serializer
      * @return mixed
      * @throws \Exception
      */
-    private function decodeMessageImpl(Message $message, Descriptor $messageType, $data)
+    private function decodeMessageImpl($message, Descriptor $messageType, $data)
     {
         list($fieldsByName, $_) = $this->getDescriptorMaps($messageType);
         foreach ($data as $key => $v) {
