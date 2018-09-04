@@ -107,7 +107,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_assertEquals">assertEquals</a>(<abbr title="Google\ApiCore\Testing\Message">Message</abbr> $expected, <abbr title="Google\ApiCore\Testing\Message">Message</abbr> $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
+                    <a href="#method_assertEquals">assertEquals</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $expected, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
         
                                             <p>Asserts that two values are equal.</p>                </div>
                 <div class="col-md-2"></div>
@@ -120,7 +120,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_accepts">
-        <div class="location">at         line 32</div>
+        <div class="location">at         line 34</div>
         <code>                    boolean
     <strong>accepts</strong>(mixed $expected, mixed $actual)
         </code>
@@ -165,9 +165,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_assertEquals">
-        <div class="location">at         line 52</div>
+        <div class="location">at         line 54</div>
         <code>                    
-    <strong>assertEquals</strong>(<abbr title="Google\ApiCore\Testing\Message">Message</abbr> $expected, <abbr title="Google\ApiCore\Testing\Message">Message</abbr> $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
+    <strong>assertEquals</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $expected, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
         </code>
     </h3>
     <div class="details">
@@ -181,12 +181,12 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="Google\ApiCore\Testing\Message">Message</abbr></td>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
                 <td>$expected</td>
                 <td>The first value to compare</td>
             </tr>
                     <tr>
-                <td><abbr title="Google\ApiCore\Testing\Message">Message</abbr></td>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
                 <td>$actual</td>
                 <td>The second value to compare</td>
             </tr>
@@ -216,7 +216,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>PHPUnit_Framework_ComparisonFailure</td>
+                <td><abbr title="SebastianBergmann\Comparator\ComparisonFailure">ComparisonFailure</abbr></td>
                 <td>Thrown when the comparison
                           fails. Contains information about the
                           specific errors that lead to the failure.</td>

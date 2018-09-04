@@ -171,7 +171,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
+                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_iteratePages">iteratePages</a>()
@@ -332,7 +332,7 @@ API.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getNextPage">
-        <div class="location">at         line 111</div>
+        <div class="location">at         line 112</div>
         <code>                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>
     <strong>getNextPage</strong>(int|null $pageSize = null)
         </code>
@@ -373,6 +373,10 @@ API.</p>                                                </div>
                 <td>if there are no pages remaining, or if pageSize is supplied but
 is not supported by the API</td>
             </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>if the call to fetch the next page fails.</td>
+            </tr>
             </table>
 
             
@@ -382,7 +386,7 @@ is not supported by the API</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_getPageElementCount">
-        <div class="location">at         line 157</div>
+        <div class="location">at         line 158</div>
         <code>                    int
     <strong>getPageElementCount</strong>()
         </code>
@@ -412,7 +416,7 @@ is not supported by the API</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_getIterator">
-        <div class="location">at         line 168</div>
+        <div class="location">at         line 169</div>
         <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>
     <strong>getIterator</strong>()
         </code>
@@ -442,8 +446,8 @@ is not supported by the API</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_iteratePages">
-        <div class="location">at         line 183</div>
-        <code>                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
+        <div class="location">at         line 186</div>
+        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
     <strong>iteratePages</strong>()
         </code>
     </h3>
@@ -460,12 +464,25 @@ all elements have been retrieved.</p>                            </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]</td>
+            <td><a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]</td>
             <td></td>
         </tr>
     </table>
 
             
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
             
                     </div>
     </div>
@@ -473,7 +490,7 @@ all elements have been retrieved.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRequestObject">
-        <div class="location">at         line 198</div>
+        <div class="location">at         line 201</div>
         <code>                    <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
     <strong>getRequestObject</strong>()
         </code>
@@ -503,7 +520,7 @@ all elements have been retrieved.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getResponseObject">
-        <div class="location">at         line 208</div>
+        <div class="location">at         line 211</div>
         <code>                    <abbr title="Google\Protobuf\Internal\Message">Message</abbr>
     <strong>getResponseObject</strong>()
         </code>
@@ -533,7 +550,7 @@ all elements have been retrieved.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_expandToFixedSizeCollection">
-        <div class="location">at         line 229</div>
+        <div class="location">at         line 232</div>
         <code>                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
     <strong>expandToFixedSizeCollection</strong>($collectionSize)
         </code>
