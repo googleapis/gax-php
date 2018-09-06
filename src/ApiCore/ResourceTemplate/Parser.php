@@ -81,7 +81,11 @@ class Parser
             // Validate that the { has a matching }
             $closingBraceIndex = strpos($path, '}', $index);
             if ($closingBraceIndex === false) {
-                throw new ValidationException("Expected '}' in path $path");
+                throw self::parseError(
+                    $path,
+                    strlen($path),
+                    "Expected '}' to match '{' at index $index, got end of string"
+                );
             }
 
             $segmentStringLengthWithoutBraces = $closingBraceIndex - $index - 1;
@@ -95,16 +99,18 @@ class Parser
             }
             $segmentString = substr($path, $index, $nextSlash - $index);
             $index = $nextSlash;
-            return self::parse($segmentString);
+            return self::parse($segmentString, $path, $index);
         }
     }
 
     /**
      * @param string $segmentString
+     * @param string $path
+     * @param int $index
      * @return Segment
      * @throws ValidationException
      */
-    private static function parse($segmentString)
+    private static function parse($segmentString, $path, $index)
     {
         if ($segmentString === '*') {
             return new Segment(Segment::WILDCARD_SEGMENT);
@@ -112,9 +118,7 @@ class Parser
             return new Segment(Segment::DOUBLE_WILDCARD_SEGMENT);
         } else {
             if (!self::isValidLiteral($segmentString)) {
-                throw new ValidationException(
-                    "Unexpected characters in literal segment $segmentString"
-                );
+                throw self::parseError($path, $index, "Unexpected characters in literal segment $segmentString");
             }
             return new Segment(Segment::LITERAL_SEGMENT, $segmentString);
         }
