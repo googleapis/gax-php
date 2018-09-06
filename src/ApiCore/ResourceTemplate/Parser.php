@@ -72,13 +72,16 @@ class Parser
      */
     private static function parseSegmentFromPath($path, &$index)
     {
+        if ($index >= strlen($path)) {
+            // A trailing '/' has caused the index to exceed the bounds
+            // of the string - provide a helpful error message.
+            throw self::parseError($path, strlen($path) - 1, "invalid trailing '/'");
+        }
         if ($path[$index] === '{') {
             // Validate that the { has a matching }
             $closingBraceIndex = strpos($path, '}', $index);
             if ($closingBraceIndex === false) {
-                throw new ValidationException(
-                    "Expected '}' in path $path"
-                );
+                throw new ValidationException("Expected '}' in path $path");
             }
 
             $segmentStringLengthWithoutBraces = $closingBraceIndex - $index - 1;
@@ -162,22 +165,19 @@ class Parser
     {
         $literalLength = strlen($literal);
         if (strlen($path) < ($index + $literalLength)) {
-            throw self::parseError($literal, $path, $index);
+            throw self::parseError($path, $index,  "expected '$literal'");
         }
         $consumedLiteral = substr($path, $index, $literalLength);
         if ($consumedLiteral !== $literal) {
-            throw self::parseError($literal, $path, $index);
+            throw self::parseError($path, $index, "expected '$literal'");
         }
         $index += $literalLength;
         return $consumedLiteral;
     }
 
-    private static function parseError($literal, $path, $index)
+    private static function parseError($path, $index, $reason)
     {
-        return new ValidationException(
-            "Error parsing '$path' as index $index: " .
-            "expected '$literal'"
-        );
+        return new ValidationException("Error parsing '$path' at index $index: $reason");
     }
 
     /**

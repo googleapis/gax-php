@@ -81,8 +81,8 @@ class RelativeResourceTemplateTest extends TestCase
     public function invalidPathProvider()
     {
         return [
-            [null],                     // Null path
-            [""],                       // Empty path
+            [null],                    // Null path
+            [""],                      // Empty path
             ["foo:bar/baz"],           // Action containing '/'
             ["foo:bar:baz"],           // Multiple ':'
             ["foo/bar*baz"],           // Mixed literal and '*'
@@ -95,6 +95,8 @@ class RelativeResourceTemplateTest extends TestCase
             ["foo/{bar"],              // Unmatched '{'
             ["foo/{bar}/{bar}"],       // Duplicate variable key
             ["foo/{bar/baz}"],         // Variable containing '/'
+            ["foo//bar"],              // Consecutive '/'
+            ["foo/"],                  // Trailing '/'
         ];
     }
 
