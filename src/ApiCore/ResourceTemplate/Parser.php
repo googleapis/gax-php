@@ -174,7 +174,7 @@ class Parser
     {
         $literalLength = strlen($literal);
         if (strlen($path) < ($index + $literalLength)) {
-            throw self::parseError($path, $index,  "expected '$literal'");
+            throw self::parseError($path, $index, "expected '$literal'");
         }
         $consumedLiteral = substr($path, $index, $literalLength);
         if ($consumedLiteral !== $literal) {
