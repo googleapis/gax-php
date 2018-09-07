@@ -118,7 +118,12 @@ class Parser
             return new Segment(Segment::DOUBLE_WILDCARD_SEGMENT);
         } else {
             if (!self::isValidLiteral($segmentString)) {
-                throw self::parseError($path, $index, "Unexpected characters in literal segment $segmentString");
+                if (empty($segmentString)) {
+                    // Create user friendly message in case of empty segment
+                    throw self::parseError($path, $index, "Unexpected empty segment (consecutive '/'s are invalid)");
+                } else {
+                    throw self::parseError($path, $index, "Unexpected characters in literal segment $segmentString");
+                }
             }
             return new Segment(Segment::LITERAL_SEGMENT, $segmentString);
         }

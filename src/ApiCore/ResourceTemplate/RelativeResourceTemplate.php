@@ -63,7 +63,11 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
     public function __construct($path)
     {
         if (empty($path)) {
-            throw new ValidationException("Cannot construct RelativeResourceTemplate from empty string");
+            $msg = sprintf(
+                "Cannot construct RelativeResourceTemplate from %s string",
+                is_null($path) ? "null" : "empty"
+            );
+            throw new ValidationException($msg);
         }
         $this->segments = Parser::parseSegments($path);
 
