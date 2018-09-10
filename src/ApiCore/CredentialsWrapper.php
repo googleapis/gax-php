@@ -141,7 +141,12 @@ class CredentialsWrapper
      */
     public function getBearerString()
     {
-        return 'Bearer ' . self::getToken($this->credentialsFetcher, $this->authHttpHandler);
+        $token = self::getToken($this->credentialsFetcher, $this->authHttpHandler);
+        if (isset($token)) {
+            return "Bearer $token";
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -156,7 +161,12 @@ class CredentialsWrapper
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
         return function () use ($credentialsFetcher, $authHttpHandler) {
-            return ['authorization' => ['Bearer ' . self::getToken($credentialsFetcher, $authHttpHandler)]];
+            $token = self::getToken($credentialsFetcher, $authHttpHandler);
+            if (isset($token)) {
+                return ['authorization' => ["Bearer $token"]];
+            } else {
+                return [];
+            }
         };
     }
 
