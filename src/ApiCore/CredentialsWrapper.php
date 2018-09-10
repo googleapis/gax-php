@@ -142,11 +142,7 @@ class CredentialsWrapper
     public function getBearerString()
     {
         $token = self::getToken($this->credentialsFetcher, $this->authHttpHandler);
-        if (empty($token)) {
-            return '';
-        } else {
-            return "Bearer $token";
-        }
+        return empty($token) ? '' : "Bearer $token";
     }
 
     /**
@@ -162,11 +158,7 @@ class CredentialsWrapper
         // difficult-to-diagnose segmentation faults.
         return function () use ($credentialsFetcher, $authHttpHandler) {
             $token = self::getToken($credentialsFetcher, $authHttpHandler);
-            if (empty($token)) {
-                return [];
-            } else {
-                return ['authorization' => ["Bearer $token"]];
-            }
+            return empty($token) ? [] : ['authorization' => ["Bearer $token"]];
         };
     }
 
