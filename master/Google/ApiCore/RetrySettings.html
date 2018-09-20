@@ -124,12 +124,12 @@ object using the {see Google\ApiCore\RetrySettings::with()} method.</p>
 <h2>Modifying the retry behavior of an RPC method</h2>
 
 <p>RetrySettings objects can be used to control retries for many RPC methods in
-<a href="https://github.com/GoogleCloudPlatform/google-cloud-php">google-cloud-php</a>.
+<a href="https://github.com/googleapis/google-cloud-php">google-cloud-php</a>.
 The examples below make use of the
-<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient">GroupServiceClient</a>
-from the <a href="https://github.com/GoogleCloudPlatform/google-cloud-php/tree/master/src/Monitoring/V3">Monitoring V3 API</a>,
+<a href="https://googleapis.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient">GroupServiceClient</a>
+from the <a href="https://github.com/googleapis/google-cloud-php/tree/master/src/Monitoring/V3">Monitoring V3 API</a>,
 but they can be applied to other APIs in the
-<a href="https://github.com/GoogleCloudPlatform/google-cloud-php">google-cloud-php</a> repository.</p>
+<a href="https://github.com/googleapis/google-cloud-php">google-cloud-php</a> repository.</p>
 
 <p>It is possible to specify the retry behavior to be used by an RPC via the
 <code>retrySettings</code> field in the <code>optionalArgs</code> parameter. The <code>retrySettings</code>
@@ -137,7 +137,7 @@ field can contain either a RetrySettings object, or a PHP array containing
 the particular retry parameters to be updated.</p>
 
 <p>Example of disabling retries for a single call to the
-<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient?method=listGroups">listGroups</a>
+<a href="https://googleapis.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient?method=listGroups">listGroups</a>
 method, and setting a custom timeout:</p>
 
 <pre><code>$result = $client-&gt;listGroups($name, [
@@ -150,7 +150,7 @@ method, and setting a custom timeout:</p>
 
 <p>Example of creating a new RetrySettings object and using it to override
 the retry settings for a call to the
-<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient?method=listGroups">listGroups</a>
+<a href="https://googleapis.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient?method=listGroups">listGroups</a>
 method:</p>
 
 <pre><code>$customRetrySettings = new RetrySettings([
@@ -174,10 +174,10 @@ $result = $client-&gt;listGroups($name, [
 <p>It is also possible to specify the retry behavior for RPC methods when
 constructing a client object using the 'retrySettingsArray'. The examples
 below again make use of the
-<a href="https://googlecloudplatform.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient">GroupServiceClient</a>
-from the <a href="https://github.com/GoogleCloudPlatform/google-cloud-php/tree/master/src/Monitoring/V3">Monitoring V3 API</a>,
+<a href="https://googleapis.github.io/google-cloud-php/#/docs/google-cloud/monitoring/v3/groupserviceclient">GroupServiceClient</a>
+from the <a href="https://github.com/googleapis/google-cloud-php/tree/master/src/Monitoring/V3">Monitoring V3 API</a>,
 but they can be applied to other APIs in the
-<a href="https://github.com/GoogleCloudPlatform/google-cloud-php">google-cloud-php</a> repository.</p>
+<a href="https://github.com/googleapis/google-cloud-php">google-cloud-php</a> repository.</p>
 
 <p>The GroupServiceClient object accepts an optional <code>retrySettingsArray</code>
 parameter, which can be used to specify retry behavior for RPC methods
