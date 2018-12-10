@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Google\\ApiCore\\": "src/ApiCore",
+            "Google\\ApiCore\\": "src",
             "GPBMetadata\\Google\\": "metadata"
         }
     },
