@@ -36,6 +36,8 @@ use Google\Protobuf\Internal\Message;
 
 /**
  * Contains information necessary to manage a network request.
+ *
+ * @internal
  */
 class Call
 {
