@@ -65,8 +65,10 @@ class PagedListResponse implements IteratorAggregate
     }
 
     /**
-     * Returns an iterator over the full list of elements. Elements
-     * of the list are retrieved lazily using the underlying API.
+     * Returns an iterator over the full list of elements. If the
+     * API response contains a (non-empty) next page token, then
+     * the PagedListResponse object will make calls to the underlying
+     * API to retrieve additional elements as required.
      *
      * NOTE: The result of this method is the same as getIterator().
      * Prefer using getIterator(), or iterate directly on the
@@ -81,8 +83,10 @@ class PagedListResponse implements IteratorAggregate
     }
 
     /**
-     * Returns an iterator over the full list of elements. Elements
-     * of the list are retrieved lazily using the underlying API.
+     * Returns an iterator over the full list of elements. If the
+     * API response contains a (non-empty) next page token, then
+     * the PagedListResponse object will make calls to the underlying
+     * API to retrieve additional elements as required.
      *
      * @return Generator
      * @throws ValidationException
