@@ -79,7 +79,8 @@
     </div>
 
     <p>    class
-    <strong>PagedListResponse</strong>
+    <strong>PagedListResponse</strong>        implements
+        <a target="_blank" href="http://php.net/IteratorAggregate">IteratorAggregate</a>
 </p>
 
         
@@ -93,10 +94,41 @@ lazily, with additional API calls being made as additional results
 are required.</p>
 
 <p>The list elements can be accessed in the following ways:
- - As a single iterable using the iterateAllElements method
+ - As a single iterable used in a foreach loop or via the getIterator method
  - As pages of elements, using the getPage and iteratePages methods
  - As fixed size collections of elements, using the
-   getFixedSizeCollection and iterateFixedSizeCollections methods</p>                    </div>
+   getFixedSizeCollection and iterateFixedSizeCollections methods</p>
+
+<p>Example of using PagedListResponse as an iterator:</p>
+
+<pre><code>$pagedListResponse = $client-&gt;getList(...);
+foreach ($pagedListResponse as $element) {
+    // doSomethingWith($element);
+}
+</code></pre>
+
+<p>Example of iterating over each page of elements:</p>
+
+<pre><code>$pagedListResponse = $client-&gt;getList(...);
+foreach ($pagedListResponse-&gt;iteratePages() as $page) {
+    foreach ($page as $element) {
+        // doSomethingWith($element);
+    }
+}
+</code></pre>
+
+<p>Example of accessing the current page, and manually iterating
+over pages:</p>
+
+<pre><code>$pagedListResponse = $client-&gt;getList(...);
+$page = $pagedListResponse-&gt;getPage();
+// doSomethingWith($page);
+while ($page-&gt;hasNextPage()) {
+    $page = $page-&gt;getNextPage();
+    // doSomethingWith($page);
+}
+</code></pre>
+</p>                    </div>
     
     
     
@@ -121,8 +153,23 @@ are required.</p>
                 <div class="col-md-8 type">
                     <a href="#method_iterateAllElements">iterateAllElements</a>()
         
-                                            <p>Returns an iterator over the full list of elements. Elements
-of the list are retrieved lazily using the underlying API.</p>                </div>
+                                            <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIterator">getIterator</a>()
+        
+                                            <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -177,7 +224,7 @@ pages to be retrieved from the server.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 60</div>
+        <div class="location">at         line 91</div>
         <code>                    
     <strong>__construct</strong>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $firstPage)
         </code>
@@ -208,7 +255,7 @@ pages to be retrieved from the server.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_iterateAllElements">
-        <div class="location">at         line 73</div>
+        <div class="location">at         line 110</div>
         <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>
     <strong>iterateAllElements</strong>()
         </code>
@@ -218,8 +265,54 @@ pages to be retrieved from the server.</p>                </div>
     
 
                     <div class="method-description">
-                                    <p>Returns an iterator over the full list of elements. Elements
-of the list are retrieved lazily using the underlying API.</p>                                                </div>
+                                    <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                    <p>NOTE: The result of this method is the same as getIterator().
+Prefer using getIterator(), or iterate directly on the
+PagedListResponse object.</p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" href="http://php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIterator">
+        <div class="location">at         line 124</div>
+        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+    <strong>getIterator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                                                </div>
                 <div class="tags">
             
                             <h4>Return Value</h4>
@@ -248,7 +341,7 @@ of the list are retrieved lazily using the underlying API.</p>                  
             </div>
                     <div class="method-item">
                     <h3 id="method_getPage">
-        <div class="location">at         line 87</div>
+        <div class="location">at         line 138</div>
         <code>                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>
     <strong>getPage</strong>()
         </code>
@@ -278,7 +371,7 @@ of the list are retrieved lazily using the underlying API.</p>                  
             </div>
                     <div class="method-item">
                     <h3 id="method_iteratePages">
-        <div class="location">at         line 99</div>
+        <div class="location">at         line 150</div>
         <code>                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
     <strong>iteratePages</strong>()
         </code>
@@ -318,7 +411,7 @@ retrieved lazily from the underlying API.</p>                                   
             </div>
                     <div class="method-item">
                     <h3 id="method_expandToFixedSizeCollection">
-        <div class="location">at         line 119</div>
+        <div class="location">at         line 170</div>
         <code>                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
     <strong>expandToFixedSizeCollection</strong>($collectionSize)
         </code>
@@ -373,7 +466,7 @@ is less than the page size that has been set.</p>                            </d
             </div>
                     <div class="method-item">
                     <h3 id="method_iterateFixedSizeCollections">
-        <div class="location">at         line 141</div>
+        <div class="location">at         line 192</div>
         <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>[]
     <strong>iterateFixedSizeCollections</strong>($collectionSize)
         </code>
