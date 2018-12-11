@@ -32,6 +32,7 @@
 namespace Google\ApiCore;
 
 use Generator;
+use IteratorAggregate;
 
 /**
  * Response object for paged results from a list API method
@@ -43,12 +44,12 @@ use Generator;
  * are required.
  *
  * The list elements can be accessed in the following ways:
- *  - As a single iterable using the iterateAllElements method
+ *  - As a single iterable used in a foreach loop or via the getIterator method
  *  - As pages of elements, using the getPage and iteratePages methods
  *  - As fixed size collections of elements, using the
  *    getFixedSizeCollection and iterateFixedSizeCollections methods
  */
-class PagedListResponse
+class PagedListResponse implements IteratorAggregate
 {
     private $firstPage;
 
@@ -67,10 +68,26 @@ class PagedListResponse
      * Returns an iterator over the full list of elements. Elements
      * of the list are retrieved lazily using the underlying API.
      *
+     * NOTE: The result of this method is the same as getIterator().
+     * Prefer using getIterator(), or iterate directly on the
+     * PagedListResponse object.
+     *
      * @return Generator
      * @throws ValidationException
      */
     public function iterateAllElements()
+    {
+        return $this->getIterator();
+    }
+
+    /**
+     * Returns an iterator over the full list of elements. Elements
+     * of the list are retrieved lazily using the underlying API.
+     *
+     * @return Generator
+     * @throws ValidationException
+     */
+    public function getIterator()
     {
         foreach ($this->iteratePages() as $page) {
             foreach ($page as $element) {
