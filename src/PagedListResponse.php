@@ -53,7 +53,7 @@ use IteratorAggregate;
  * ```
  * $pagedListResponse = $client->getList(...);
  * foreach ($pagedListResponse as $element) {
- *   // doSomethingWith($element);
+ *     // doSomethingWith($element);
  * }
  * ```
  *
@@ -61,9 +61,9 @@ use IteratorAggregate;
  * ```
  * $pagedListResponse = $client->getList(...);
  * foreach ($pagedListResponse->iteratePages() as $page) {
- *   foreach ($page as $element) {
- *     // doSomethingWith($element);
- *   }
+ *     foreach ($page as $element) {
+ *         // doSomethingWith($element);
+ *     }
  * }
  * ```
  *
@@ -74,8 +74,8 @@ use IteratorAggregate;
  * $page = $pagedListResponse->getPage();
  * // doSomethingWith($page);
  * while ($page->hasNextPage()) {
- *   $page = $page->getNextPage();
- *   // doSomethingWith($page);
+ *     $page = $page->getNextPage();
+ *     // doSomethingWith($page);
  * }
  * ```
  */
