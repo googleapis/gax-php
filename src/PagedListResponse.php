@@ -48,6 +48,36 @@ use IteratorAggregate;
  *  - As pages of elements, using the getPage and iteratePages methods
  *  - As fixed size collections of elements, using the
  *    getFixedSizeCollection and iterateFixedSizeCollections methods
+ *
+ * Example of using PagedListResponse as an iterator:
+ * ```
+ * $pagedListResponse = $client->getList(...);
+ * foreach ($pagedListResponse as $element) {
+ *   // doSomethingWith($element);
+ * }
+ * ```
+ *
+ * Example of iterating over each page of elements:
+ * ```
+ * $pagedListResponse = $client->getList(...);
+ * foreach ($pagedListResponse->iteratePages() as $page) {
+ *   foreach ($page as $element) {
+ *     // doSomethingWith($element);
+ *   }
+ * }
+ * ```
+ *
+ * Example of accessing the current page, and manually iterating
+ * over pages:
+ * ```
+ * $pagedListResponse = $client->getList(...);
+ * $page = $pagedListResponse->getPage();
+ * // doSomethingWith($page);
+ * while ($page->hasNextPage()) {
+ *   $page = $page->getNextPage();
+ *   // doSomethingWith($page);
+ * }
+ * ```
  */
 class PagedListResponse implements IteratorAggregate
 {
