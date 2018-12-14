@@ -196,7 +196,7 @@ class Page implements IteratorAggregate
     /**
      * Gets the request object used to generate the Page.
      *
-     * @return mixed
+     * @return mixed|Message
      */
     public function getRequestObject()
     {
@@ -206,7 +206,7 @@ class Page implements IteratorAggregate
     /**
      * Gets the API response object.
      *
-     * @return mixed
+     * @return mixed|Message
      */
     public function getResponseObject()
     {
