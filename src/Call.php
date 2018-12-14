@@ -32,6 +32,8 @@
 
 namespace Google\ApiCore;
 
+use Google\Protobuf\Internal\Message;
+
 /**
  * Contains information necessary to manage a network request.
  */
@@ -51,7 +53,7 @@ class Call
     /**
      * @param string $method
      * @param string $decodeType
-     * @param mixed $message
+     * @param mixed|Message $message
      * @param array $descriptor
      * @param int $callType
      */
@@ -94,7 +96,7 @@ class Call
     }
 
     /**
-     * @return mixed
+     * @return mixed|Message
      */
     public function getMessage()
     {
@@ -110,7 +112,7 @@ class Call
     }
 
     /**
-     * @param mixed $message
+     * @param mixed|Message $message
      * @return Call
      */
     public function withMessage($message)
