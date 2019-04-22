@@ -67,7 +67,7 @@ class RequestBuilderTest extends TestCase
         $nestedMessage->setName('nested/foo');
         $message->setNestedMessage($nestedMessage);
 
-        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithBody', $message);
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithBodyAndUrlPlaceholder', $message);
         $uri = $request->getUri();
 
         $this->assertEmpty($uri->getQuery());
@@ -100,15 +100,14 @@ class RequestBuilderTest extends TestCase
     public function testMethodWithEmptyMessageInBody()
     {
         $message = new MockRequestBody();
-        $message->setName('message/foo');
         $nestedMessage = new MockRequestBody();
         $message->setNestedMessage($nestedMessage);
 
         $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithBody', $message);
 
         $this->assertEquals(
-            '{"name":"message\/foo","nestedMessage":{}}',
-            (string) $request->getBody()
+            '{"nestedMessage":{}}',
+            $request->getBody()
         );
     }
 
@@ -117,7 +116,6 @@ class RequestBuilderTest extends TestCase
         $message = new MockRequestBody();
         $message->setName('message/foo');
         $nestedMessage = new MockRequestBody();
-        $nestedMessage->setName('nested/foo');
         $message->setNestedMessage($nestedMessage);
         $emptyMessage = new MockRequestBody();
         $nestedMessage->setNestedMessage($emptyMessage);
@@ -126,8 +124,8 @@ class RequestBuilderTest extends TestCase
         $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithNestedMessageAsBody', $message);
 
         $this->assertEquals(
-            '{"name":"nested\/foo","nestedMessage":{}}',
-            (string) $request->getBody()
+            '{"nestedMessage":{}}',
+            $request->getBody()
         );
     }
 
