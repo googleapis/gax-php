@@ -97,6 +97,19 @@ class RequestBuilderTest extends TestCase
         );
     }
 
+    public function testMethodWithScalarBody()
+    {
+        $message = new MockRequestBody();
+        $message->setName('foo');
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithScalarBody', $message);
+
+        $this->assertEquals(
+            '"foo"',
+            (string) $request->getBody()
+        );
+    }
+
     public function testMethodWithEmptyMessageInBody()
     {
         $message = new MockRequestBody();

@@ -43,6 +43,11 @@ return [
                     ],
                 ],
             ],
+            'MethodWithScalarBody' => [
+                'method' => 'post',
+                'uriTemplate' => '/v1/foo',
+                'body' => 'name',
+            ],
             'MethodWithNestedUrlPlaceholder' => [
                 'method' => 'get',
                 'uriTemplate' => '/v1/{nested_message=nested/**}',

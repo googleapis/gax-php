@@ -160,7 +160,11 @@ class RequestBuilder
             }
 
             if (Serializer::toSnakeCase($name) === $config['body']) {
-                $body = $message->{"get$name"}()->serializeToJsonString();
+                if (($bodyMessage = $message->{"get$name"}()) instanceof Message) {
+                    $body = $bodyMessage->serializeToJsonString();
+                } else {
+                    $body = json_encode($value);
+                }
                 continue;
             }
 
