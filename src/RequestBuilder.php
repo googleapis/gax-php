@@ -103,7 +103,7 @@ class RequestBuilder
                     $config['method'],
                     $uri,
                     ['Content-Type' => 'application/json'] + $headers,
-                    $body ? json_encode($body) : null
+                    $body
                 );
             }
         }
@@ -145,15 +145,15 @@ class RequestBuilder
      */
     private function constructBodyAndQueryParameters(Message $message, $config)
     {
-        $messageData = json_decode($message->serializeToJsonString(), true);
+        $messageDataJson = $message->serializeToJsonString();
 
         if ($config['body'] === '*') {
-            return [$messageData, []];
+            return [$messageDataJson, []];
         }
 
         $body = null;
         $queryParams = [];
-
+        $messageData = json_decode($messageDataJson, true);
         foreach ($messageData as $name => $value) {
             if (array_key_exists($name, $config['placeholders'])) {
                 continue;
@@ -173,7 +173,7 @@ class RequestBuilder
             }
         }
 
-        return [$body, $queryParams];
+        return [$body ? json_encode($body) : null, $queryParams];
     }
 
     /**
