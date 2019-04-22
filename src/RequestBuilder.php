@@ -160,7 +160,7 @@ class RequestBuilder
             }
 
             if (Serializer::toSnakeCase($name) === $config['body']) {
-                $body = $value;
+                $body = $message->{"get$name"}()->serializeToJsonString();
                 continue;
             }
 
@@ -173,7 +173,7 @@ class RequestBuilder
             }
         }
 
-        return [$body ? json_encode($body) : null, $queryParams];
+        return [$body, $queryParams];
     }
 
     /**
