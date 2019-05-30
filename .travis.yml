@@ -33,7 +33,7 @@ stages:
     if: ((type != pull_request) AND (branch = master)) OR (tag IS present)
 
 install:
-  - travis_retry pecl install grpc-1.19.0
+  - travis_retry pecl install grpc-1.20.0
   - if [[ $PROTOBUF_C_EXT =~ ^true ]]; then travis_retry pecl install protobuf-3.8.0; fi
   - travis_retry composer install
 script:
