@@ -160,7 +160,7 @@ trait GapicClientTrait
             'libVersion' => null,
         ];
         $defaultOptions['transportConfig'] += [
-            'grpc' => [],
+            'grpc' => ['stubOpts' => ['grpc.service_config_disable_resolution' => 1]],
             'rest' => [],
             'grpc-fallback' => [],
         ];
