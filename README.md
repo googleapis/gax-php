@@ -41,7 +41,7 @@ Versioning
 
 This library follows [Semantic Versioning][].
 
-gax-php is considered GA (generally available). As such, it will not introduce backwards-incompatible changes in any minor or patch releases. We will address issues and requests with the highest priority.
+This library is considered GA (generally available). As such, it will not introduce backwards-incompatible changes in any minor or patch releases. We will address issues and requests with the highest priority.
 
 [Semantic Versioning]: http://semver.org/
 
