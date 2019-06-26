@@ -207,13 +207,7 @@ class RestTransportTest extends TestCase
 
     public function buildInvalidData()
     {
-        $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
         return [
-            [
-                "addresswithtoo:many:segments",
-                $restConfigPath,
-                [],
-            ],
             [
                 "address.com",
                 "badpath",

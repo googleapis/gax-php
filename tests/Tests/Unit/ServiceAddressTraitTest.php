@@ -31,7 +31,7 @@ class ServiceAddressTraitTest extends TestCase
     {
         list($actualAddress, $actualPort) = self::normalizeServiceAddress($serviceAddressString);
         $this->assertSame($expectedAddress, $actualAddress);
-        $this->assertSame($expectedPort, $actualPort);
+        $this->assertEquals($expectedPort, $actualPort);
     }
 
     public function normalizeServiceAddressData()
@@ -40,24 +40,11 @@ class ServiceAddressTraitTest extends TestCase
             ["simple.com:123", "simple.com", "123"],
             ["really.long.and.dotted:456", "really.long.and.dotted", "456"],
             ["noport.com", "noport.com", self::$defaultPort],
-        ];
-    }
-
-    /**
-     * @dataProvider normalizeServiceAddressInvalidData
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Invalid serviceAddress
-     */
-    public function testNormalizeServiceAddressInvalid($serviceAddressString)
-    {
-        self::normalizeServiceAddress($serviceAddressString);
-    }
-
-    public function normalizeServiceAddressInvalidData()
-    {
-        return [
-            ["too.many:colons:123"],
-            ["too:many:colons"],
+            ["2001:db8:85a3:8d3:1319:8a2e:370:7348", "2001:db8:85a3:8d3:1319:8a2e:370:7348", self::$defaultPort],
+            ["[2001:db8:85a3:8d3:1319:8a2e:370:7348]:443", "2001:db8:85a3:8d3:1319:8a2e:370:7348", "443"],
+            ["::1", "::1", self::$defaultPort],
+            ["[::1]:443", "::1", self::$defaultPort],
+            ["", "", self::$defaultPort]
         ];
     }
 }

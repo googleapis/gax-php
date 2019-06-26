@@ -426,10 +426,6 @@ class GrpcTransportTest extends TestCase
     {
         return [
             [
-                "addresswithtoo:many:segments",
-                [],
-            ],
-            [
                 'serviceaddress.com',
                 [
                     'channel' => 'not a channel',
@@ -491,4 +487,3 @@ class TestUnaryInterceptor implements UnaryInterceptorInterface
         return $continuation($method, $argument, $deserialize, $metadata, $options);
     }
 }
-

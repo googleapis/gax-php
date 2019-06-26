@@ -32,14 +32,10 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
-use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
-use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Testing\MockResponse;
 use Google\ApiCore\Transport\GrpcFallbackTransport;
-use Google\ApiCore\Transport\RestTransport;
-use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Rpc\Code;
 use Google\Rpc\Status;
@@ -192,28 +188,6 @@ class GrpcFallbackTransportTest extends TestCase
                 $serviceAddress,
                 [],
                 new GrpcFallbackTransport($serviceAddress, $httpHandler),
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider buildInvalidData
-     * @expectedException \Google\ApiCore\ValidationException
-     * @param $serviceAddress
-     * @param $args
-     * @throws \Google\ApiCore\ValidationException
-     */
-    public function testBuildInvalid($serviceAddress, $args)
-    {
-        GrpcFallbackTransport::build($serviceAddress, $args);
-    }
-
-    public function buildInvalidData()
-    {
-        return [
-            [
-                "addresswithtoo:many:segments",
-                [],
             ],
         ];
     }

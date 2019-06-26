@@ -46,15 +46,24 @@ trait ServiceAddressTrait
      */
     private static function normalizeServiceAddress($serviceAddress)
     {
+        // Check if ipv6 address with port.
+        if (preg_match('/\[(\S{1,})\]\:(\d{1,})/', $serviceAddress, $parts) === 1) {
+            return [$parts[1], $parts[2]];
+        }
+
         $components = explode(':', $serviceAddress);
-        if (count($components) == 2) {
+
+        if (count($components) > 2) {
+            // IPv6
+            return [$serviceAddress, self::$defaultPort];
+        } elseif (count($components) == 2) {
             // Port is included in service address
             return [$components[0], $components[1]];
         } elseif (count($components) == 1) {
             // Port is not included - append default port
             return [$components[0], self::$defaultPort];
-        } else {
-            throw new ValidationException("Invalid serviceAddress: $serviceAddress");
         }
+
+        throw new ValidationException("Invalid serviceAddress: $serviceAddress");
     }
 }
