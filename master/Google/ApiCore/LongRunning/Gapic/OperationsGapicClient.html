@@ -102,7 +102,7 @@ if necessary.</p>
 calls that map to API methods. Sample code to get started:</p>
 
 <pre><code>$options = [
-    'serviceAddress' =&gt; 'my-service-address',
+    'apiEndpoint' =&gt; 'my-service-address',
     'scopes' =&gt; ['my-service-scope'],
 ];
 $operationsClient = new OperationsClient($options);
@@ -518,7 +518,7 @@ use by customized clients.</p>                                                </
             </div>
                     <div class="method-item">
                     <h3 id="method_modifyClientOptions">
-        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_modifyClientOptions"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> at         line 621</div>
+        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_modifyClientOptions"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> at         line 632</div>
         <code>            protected        
     <strong>modifyClientOptions</strong>(array $options)
         </code>
@@ -549,7 +549,7 @@ use by customized clients.</p>                                                </
             </div>
                     <div class="method-item">
                     <h3 id="method_modifyUnaryCallable">
-        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_modifyUnaryCallable"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> at         line 632</div>
+        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_modifyUnaryCallable"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> at         line 643</div>
         <code>            protected        
     <strong>modifyUnaryCallable</strong>(callable $callable)
         </code>
@@ -580,7 +580,7 @@ use by customized clients.</p>                                                </
             </div>
                     <div class="method-item">
                     <h3 id="method_modifyStreamingCallable">
-        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_modifyStreamingCallable"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> at         line 643</div>
+        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_modifyStreamingCallable"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> at         line 654</div>
         <code>            protected        
     <strong>modifyStreamingCallable</strong>(callable $callable)
         </code>
@@ -633,7 +633,7 @@ use by customized clients.</p>                                                </
                       Required. Options for configuring the service API wrapper. Those options
                       that must be provided are marked as Required.</p>
 
-<pre><code>@type string $serviceAddress
+<pre><code>@type string $apiEndpoint
       Required. The address of the API remote host. May optionally include the port,
       formatted as "&lt;uri&gt;:&lt;port&gt;".
 @type string|array $credentials
@@ -661,7 +661,7 @@ use by customized clients.</p>                                                </
       or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
       *Advanced usage*: Additionally, it is possible to pass in an already instantiated
       TransportInterface object. Note that when this objects is provided, any settings in
-      $transportConfig, and any $serviceAddress setting, will be ignored.
+      $transportConfig, and any $apiEndpoint setting, will be ignored.
 @type array $transportConfig
       Configuration options that will be used to construct the transport. Options for
       each supported transport type should be passed in a key for that transport. For
@@ -702,7 +702,7 @@ method to poll the operation result at intervals as recommended by the API
 service.</p>                    <p>Sample code:</p>
 
 <pre><code>$options = [
-    'serviceAddress' =&gt; 'my-service-address',
+    'apiEndpoint' =&gt; 'my-service-address',
     'scopes' =&gt; ['my-service-scope'],
 ];
 $operationsClient = new OperationsClient($options);
@@ -786,7 +786,7 @@ to use different resource name schemes, such as <code>users/&amp;#42;/operations
 <p>Sample code:</p>
 
 <pre><code>$options = [
-    'serviceAddress' =&gt; 'my-service-address',
+    'apiEndpoint' =&gt; 'my-service-address',
     'scopes' =&gt; ['my-service-scope'],
 ];
 $operationsClient = new OperationsClient($options);
@@ -902,7 +902,7 @@ an [Operation.error][google.longrunning.Operation.error] value with a [google.rp
 corresponding to <code>Code.CANCELLED</code>.</p>                    <p>Sample code:</p>
 
 <pre><code>$options = [
-    'serviceAddress' =&gt; 'my-service-address',
+    'apiEndpoint' =&gt; 'my-service-address',
     'scopes' =&gt; ['my-service-scope'],
 ];
 $operationsClient = new OperationsClient($options);
@@ -976,7 +976,7 @@ operation. If the server doesn't support this method, it returns
 <code>google.rpc.Code.UNIMPLEMENTED</code>.</p>                    <p>Sample code:</p>
 
 <pre><code>$options = [
-    'serviceAddress' =&gt; 'my-service-address',
+    'apiEndpoint' =&gt; 'my-service-address',
     'scopes' =&gt; ['my-service-scope'],
 ];
 $operationsClient = new OperationsClient($options);
