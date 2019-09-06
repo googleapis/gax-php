@@ -72,7 +72,7 @@ class RequestParamsHeaderDescriptorTest extends TestCase
         $this->assertSame($expectedHeader, $header);
     }
 
-    public function testNonAsciiChars()
+    public function testNonAsciiCharsAppendsBinToHeaderKey()
     {
         $val = 'こんにちは';
         $expectedHeader = [
