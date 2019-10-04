@@ -66,7 +66,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * metadata array, and returns an updated metadata array
      *  - 'grpc.primary_user_agent': (optional) a user-agent string
      * @param Channel $channel An already created Channel object (optional)
-     * @param Interceptor[]|UnaryTransportInterface[] $interceptors *EXPERIMENTAL*
+     * @param Interceptor[]|UnaryInterceptorInterface[] $interceptors *EXPERIMENTAL*
      *        Interceptors used to intercept RPC invocations before a call starts.
      *        Please note that implementations of
      *        {@see Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface} are
@@ -99,7 +99,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *
      *    @type array $stubOpts Options used to construct the gRPC stub.
      *    @type Channel $channel Grpc channel to be used.
-     *    @type Interceptor[]|UnaryTransportInterface[] $interceptors *EXPERIMENTAL*
+     *    @type Interceptor[]|UnaryInterceptorInterface[] $interceptors *EXPERIMENTAL*
      *          Interceptors used to intercept RPC invocations before a call starts.
      *          Please note that implementations of
      *          {@see Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface} are
