@@ -91,6 +91,8 @@ class CredentialsWrapper
      *           A cache for storing access tokens. Defaults to a simple in memory implementation.
      *     @type array $authCacheOptions
      *           Cache configuration options.
+     *     @type string $quotaProject
+     *           Specifies a user project to bill for access charges associated with the request.
      * }
      * @return CredentialsWrapper
      * @throws ValidationException
@@ -104,6 +106,7 @@ class CredentialsWrapper
             'enableCaching'     => true,
             'authCache'         => null,
             'authCacheOptions'  => [],
+            'quotaProject'      => null,
         ];
         $keyFile = $args['keyFile'];
         $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
@@ -111,7 +114,10 @@ class CredentialsWrapper
         if (is_null($keyFile)) {
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
-                $authHttpHandler
+                $authHttpHandler,
+                null,
+                null,
+                $args['quotaProject']
             );
         } else {
             if (is_string($keyFile)) {
@@ -119,6 +125,10 @@ class CredentialsWrapper
                     throw new ValidationException("Could not find keyfile: $keyFile");
                 }
                 $keyFile = json_decode(file_get_contents($keyFile), true);
+            }
+
+            if (isset($args['quotaProject'])) {
+                $keyFile['quota_project_id'] = $args['quotaProject'];
             }
 
             $loader = CredentialsLoader::makeCredentials($args['scopes'], $keyFile);
@@ -134,6 +144,14 @@ class CredentialsWrapper
         }
 
         return new CredentialsWrapper($loader, $authHttpHandler);
+    }
+
+    /**
+     * @return string The quota project associated with the credentials.
+     */
+    public function getQuotaProject()
+    {
+        return $this->credentialsFetcher->getQuotaProject();
     }
 
     /**
@@ -180,6 +198,7 @@ class CredentialsWrapper
      * @param callable $authHttpHandler
      * @param array $authCacheOptions
      * @param CacheItemPoolInterface $authCache
+     * @param string $quotaProject
      * @return CredentialsLoader
      * @throws ValidationException
      */
@@ -187,14 +206,16 @@ class CredentialsWrapper
         array $scopes = null,
         callable $authHttpHandler = null,
         array $authCacheOptions = null,
-        CacheItemPoolInterface $authCache = null
+        CacheItemPoolInterface $authCache = null,
+        $quotaProject = null
     ) {
         try {
             return ApplicationDefaultCredentials::getCredentials(
                 $scopes,
                 $authHttpHandler,
                 $authCacheOptions,
-                $authCache
+                $authCache,
+                $quotaProject
             );
         } catch (DomainException $ex) {
             throw new ValidationException("Could not construct ApplicationDefaultCredentials", $ex->getCode(), $ex);

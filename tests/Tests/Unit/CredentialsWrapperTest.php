@@ -71,6 +71,7 @@ class CredentialsWrapperTest extends TestCase
         $defaultAuthCache = new MemoryCacheItemPool();
         $authCache = new SysVCacheItemPool();
         $authCacheOptions = ['lifetime' => 600];
+        $quotaProject = 'my-quota-project';
         return [
             [
                 [],
@@ -96,6 +97,10 @@ class CredentialsWrapperTest extends TestCase
                 ['authCache' => $authCache],
                 new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $authCache), $defaultAuthHttpHandler),
             ],
+            [
+                ['quotaProject' => $quotaProject],
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache, $quotaProject), $defaultAuthHttpHandler),
+            ],
         ];
     }
 
@@ -109,6 +114,7 @@ class CredentialsWrapperTest extends TestCase
         $defaultAuthCache = new MemoryCacheItemPool();
         $authCache = new SysVCacheItemPool();
         $authCacheOptions = ['lifetime' => 600];
+        $quotaProject = 'my-quota-project';
         return [
             [
                 ['keyFile' => $keyFile],
@@ -137,6 +143,16 @@ class CredentialsWrapperTest extends TestCase
             [
                 ['keyFile' => $keyFile, 'authCache' => $authCache],
                 $this->makeExpectedKeyFileCreds($keyFile, null, $authCache, null, null),
+            ],
+            [
+                ['keyFile' => $keyFile, 'quotaProject' => $quotaProject],
+                $this->makeExpectedKeyFileCreds(
+                    $keyFile + ['quota_project_id' => $quotaProject],
+                    null,
+                    $defaultAuthCache,
+                    null,
+                    null
+                ),
             ],
         ];
     }
