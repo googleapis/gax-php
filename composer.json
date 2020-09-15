@@ -26,14 +26,13 @@
     "autoload": {
         "psr-4": {
             "Google\\ApiCore\\": "src",
-            "GPBMetadata\\Google\\": "metadata"
+            "GPBMetadata\\": "metadata"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Google\\ApiCore\\Dev\\": "dev/src",
-            "Google\\ApiCore\\": "tests",
-            "GPBMetadata\\": "metadata"
+            "Google\\ApiCore\\": "tests"
         }
     },
     "scripts": {
