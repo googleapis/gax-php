@@ -66,7 +66,7 @@ class CredentialsWrapperTest extends TestCase
         $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
     }
 
-    private function buildDataWithoutExplicitKeyFile()
+    public function buildDataWithoutExplicitKeyFile()
     {
         $scopes = ['myscope'];
         $defaultAuthHttpHandler = HttpHandlerFactory::build();
@@ -115,7 +115,7 @@ class CredentialsWrapperTest extends TestCase
         return $testData;
     }
 
-    private function buildDataWithKeyFile()
+    public function buildDataWithKeyFile()
     {
         $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
         $keyFile = json_decode(file_get_contents($keyFilePath), true);
