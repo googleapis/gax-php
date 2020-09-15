@@ -47,20 +47,26 @@ use Prophecy\Argument;
 class CredentialsWrapperTest extends TestCase
 {
     /**
-     * @dataProvider buildData
+     * @dataProvider buildDataWithoutExplicitKeyFile
      */
-    public function testBuild($args, $expectedCredentialsWrapper)
+    public function testBuildWithoutExplicitKeyFile($args, $expectedCredentialsWrapper)
+    {
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . __DIR__ . '/testdata/json-key-file.json');
+        $actualCredentialsWrapper = CredentialsWrapper::build($args);
+        $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
+        putenv('GOOGLE_APPLICATION_CREDENTIALS');
+    }
+
+    /**
+     * @dataProvider buildDataWithKeyFile
+     */
+    public function testBuildWithKeyFile($args, $expectedCredentialsWrapper)
     {
         $actualCredentialsWrapper = CredentialsWrapper::build($args);
         $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
     }
 
-    public function buildData()
-    {
-        return $this->buildDataWithoutKeyFile() + $this->buildDataWithKeyFile();
-    }
-
-    private function buildDataWithoutKeyFile()
+    private function buildDataWithoutExplicitKeyFile()
     {
         $scopes = ['myscope'];
         $defaultAuthHttpHandler = HttpHandlerFactory::build();
@@ -72,7 +78,9 @@ class CredentialsWrapperTest extends TestCase
         $authCache = new SysVCacheItemPool();
         $authCacheOptions = ['lifetime' => 600];
         $quotaProject = 'my-quota-project';
-        return [
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . __DIR__ . '/testdata/json-key-file.json');
+
+        $testData = [
             [
                 [],
                 new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache), $defaultAuthHttpHandler),
@@ -102,6 +110,9 @@ class CredentialsWrapperTest extends TestCase
                 new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache, $quotaProject), $defaultAuthHttpHandler),
             ],
         ];
+        putenv('GOOGLE_APPLICATION_CREDENTIALS');
+
+        return $testData;
     }
 
     private function buildDataWithKeyFile()
