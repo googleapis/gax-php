@@ -44,7 +44,6 @@ use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
-use Google\Auth\GetQuotaProjectInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use Grpc\Gcp\ApiConfig;
@@ -491,7 +490,7 @@ trait GapicClientTrait
         $fixedHeaders = $this->agentHeader;
         if ($quotaProject) {
             $fixedHeaders += [
-                GetQuotaProjectInterface::X_GOOG_USER_PROJECT_HEADER => [$quotaProject]
+                'X-Goog-User-Project' => [$quotaProject]
             ];
         }
         $callStack = function (Call $call, array $options) {

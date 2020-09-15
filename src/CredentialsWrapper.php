@@ -38,6 +38,7 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\GetQuotaProjectInterface;
 use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -147,11 +148,13 @@ class CredentialsWrapper
     }
 
     /**
-     * @return string The quota project associated with the credentials.
+     * @return string|null The quota project associated with the credentials.
      */
     public function getQuotaProject()
     {
-        return $this->credentialsFetcher->getQuotaProject();
+        if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
+            return $this->credentialsFetcher->getQuotaProject();
+        }
     }
 
     /**
