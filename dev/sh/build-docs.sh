@@ -14,8 +14,8 @@ ROOT_DIR=$(pwd)
 DOC_OUTPUT_DIR=${ROOT_DIR}/tmp_gh-pages
 INDEX_FILE=${DOC_OUTPUT_DIR}/index.html
 VERSION_FILE=${ROOT_DIR}/VERSION
-SAMI_EXECUTABLE=${ROOT_DIR}/vendor/sami/sami/sami.php
-SAMI_CONFIG=${ROOT_DIR}/dev/src/Docs/sami-config.php
+DOCTUM_EXECUTABLE=${ROOT_DIR}/vendor/bin/doctum.php
+DOCTUM_CONFIG=${ROOT_DIR}/dev/src/Docs/doctum-config.php
 
 # Construct the base index file that redirects to the latest version
 # of the docs. This will only be generated when TRAVIS_TAG is set.
@@ -38,7 +38,7 @@ function checkVersionFile() {
 
 function buildDocs() {
   DOCS_VERSION_TO_BUILD=${1}
-  API_CORE_DOCS_VERSION=${DOCS_VERSION_TO_BUILD} php ${SAMI_EXECUTABLE} update ${SAMI_CONFIG} -v
+  API_CORE_DOCS_VERSION=${DOCS_VERSION_TO_BUILD} php ${DOCTUM_EXECUTABLE} update ${DOCTUM_CONFIG} -v
 }
 
 if [[ ! -z ${TRAVIS_TAG} ]]; then

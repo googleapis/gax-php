@@ -33,8 +33,8 @@
 namespace Google\ApiCore\Dev\Docs;
 
 
-SamiConfigBuilder::checkPhpVersion();
+DoctumConfigBuilder::checkPhpVersion();
 
 $currentVersion = getenv('API_CORE_DOCS_VERSION');
 
-return SamiConfigBuilder::buildConfigForVersion($currentVersion);
+return DoctumConfigBuilder::buildConfigForVersion($currentVersion);
