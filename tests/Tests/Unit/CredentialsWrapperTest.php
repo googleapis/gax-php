@@ -39,6 +39,7 @@ use Google\Auth\Cache\SysVCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\UpdateMetadataInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GPBMetadata\Google\Api\Auth;
 use PHPUnit\Framework\TestCase;
@@ -232,48 +233,65 @@ class CredentialsWrapperTest extends TestCase
     public function testGetAuthorizationHeaderCallback($fetcher, $expectedCallbackResponse)
     {
         $credentialsWrapper = new CredentialsWrapper($fetcher);
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback('audience');
         $actualResponse = $callback();
         $this->assertSame($expectedCallbackResponse, $actualResponse);
     }
 
     public function getAuthorizationHeaderCallbackData()
     {
-        $expiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredFetcher = $this->prophesize();
+        $expiredFetcher->willImplement(FetchAuthTokenInterface::class);
+        $expiredFetcher->willImplement(UpdateMetadataInterface::class);
         $expiredFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => 123,
                 'expires_at' => time() - 1
             ]);
-        $expiredFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => 456,
-                'expires_at' => time() + 1000
-            ]);
-        $unexpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredFetcher->updateMetadata(Argument::any(), 'audience')
+            ->willReturn(['authorization' => ['Bearer 456']]);
+        $unexpiredFetcher = $this->prophesize();
+        $unexpiredFetcher->willImplement(FetchAuthTokenInterface::class);
         $unexpiredFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => 123,
                 'expires_at' => time() + 100,
             ]);
 
-        $insecureFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $insecureFetcher->getLastReceivedToken()->willReturn(null);
-        $insecureFetcher->fetchAuthToken(Argument::any())
+        $insecureFetcher = $this->prophesize();
+        $insecureFetcher->willImplement(FetchAuthTokenInterface::class);
+        $insecureFetcher->willImplement(UpdateMetadataInterface::class);
+        $insecureFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => '',
             ]);
-        $nullFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $nullFetcher->getLastReceivedToken()->willReturn(null);
-        $nullFetcher->fetchAuthToken(Argument::any())
+        $insecureFetcher->updateMetadata(Argument::any(), 'audience')
+            ->willReturn([]);
+        $nullFetcher = $this->prophesize();
+        $nullFetcher->willImplement(FetchAuthTokenInterface::class);
+        $nullFetcher->willImplement(UpdateMetadataInterface::class);
+        $nullFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => null,
             ]);
+        $nullFetcher->updateMetadata(Argument::any(), 'audience')
+            ->willReturn([]);
+
+        $customFetcher = $this->prophesize();
+        $customFetcher->willImplement(FetchAuthTokenInterface::class);
+        $customFetcher->getLastReceivedToken()->willReturn(null);
+        $customFetcher->fetchAuthToken(Argument::any())
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() + 100,
+            ]);
+
         return [
             [$expiredFetcher->reveal(), ['authorization' => ['Bearer 456']]],
             [$unexpiredFetcher->reveal(), ['authorization' => ['Bearer 123']]],
             [$insecureFetcher->reveal(), []],
             [$nullFetcher->reveal(), []],
+            [$customFetcher->reveal(), ['authorization' => ['Bearer 123']]],
         ];
     }
 }
