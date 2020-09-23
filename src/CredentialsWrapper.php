@@ -190,11 +190,11 @@ class CredentialsWrapper
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
 
-        return function () use ($credentialsFetcher, $authHttpHandler, $audience) {
+        return function (array $headers = []) use ($credentialsFetcher, $authHttpHandler, $audience) {
             $token = $credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
                 if ($credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $credentialsFetcher->updateMetadata([], $audience);
+                    return $credentialsFetcher->updateMetadata($headers, $audience);
                 }
                 $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
                 if (!self::isValid($token)) {
@@ -202,7 +202,10 @@ class CredentialsWrapper
                 }
             }
             $tokenString = $token['access_token'];
-            return empty($tokenString) ? [] : ['authorization' => ["Bearer $tokenString"]];
+            if (!empty($tokenString)) {
+                $headers['authorization'] = ["Bearer $tokenString"];
+            }
+            return $headers;
         };
     }
 
