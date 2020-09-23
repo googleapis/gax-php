@@ -159,6 +159,7 @@ trait GapicClientTrait
             'gapicVersion' => self::getGapicVersion($options),
             'libName' => null,
             'libVersion' => null,
+            'apiEndpoint' => null,
         ];
         $defaultOptions['transportConfig'] += [
             'grpc' => ['stubOpts' => ['grpc.service_config_disable_resolution' => 1]],
@@ -187,9 +188,7 @@ trait GapicClientTrait
         // If an API endpoint is set, ensure the "audience" does not conflict
         // with the custom endpoint by setting "user defined" scopes.
         if (
-            isset($options['apiEndpoint'])
-            && isset($defaultOptions['apiEndpoint'])
-            && $options['apiEndpoint'] != $defaultOptions['apiEndpoint']
+            $options['apiEndpoint'] != $defaultOptions['apiEndpoint']
             && empty($options['credentialsConfig']['scopes'])
             && !empty($options['credentialsConfig']['defaultScopes'])
         ) {
