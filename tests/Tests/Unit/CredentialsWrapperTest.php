@@ -258,24 +258,18 @@ class CredentialsWrapperTest extends TestCase
                 'expires_at' => time() + 100,
             ]);
 
-        $insecureFetcher = $this->prophesize();
-        $insecureFetcher->willImplement(FetchAuthTokenInterface::class);
-        $insecureFetcher->willImplement(UpdateMetadataInterface::class);
-        $insecureFetcher->getLastReceivedToken()
+        $insecureFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $insecureFetcher->getLastReceivedToken()->willReturn(null);
+        $insecureFetcher->fetchAuthToken(Argument::any())
             ->willReturn([
                 'access_token' => '',
             ]);
-        $insecureFetcher->updateMetadata(Argument::any(), 'audience')
-            ->willReturn([]);
-        $nullFetcher = $this->prophesize();
-        $nullFetcher->willImplement(FetchAuthTokenInterface::class);
-        $nullFetcher->willImplement(UpdateMetadataInterface::class);
-        $nullFetcher->getLastReceivedToken()
+        $nullFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $nullFetcher->getLastReceivedToken()->willReturn(null);
+        $nullFetcher->fetchAuthToken(Argument::any())
             ->willReturn([
                 'access_token' => null,
             ]);
-        $nullFetcher->updateMetadata(Argument::any(), 'audience')
-            ->willReturn([]);
 
         $customFetcher = $this->prophesize();
         $customFetcher->willImplement(FetchAuthTokenInterface::class);

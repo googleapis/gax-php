@@ -193,9 +193,13 @@ class CredentialsWrapper
         return function (array $headers = []) use ($credentialsFetcher, $authHttpHandler, $audience) {
             $token = $credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
+                // Call updateMetadata to take advantage of self-signed JWTs
                 if ($credentialsFetcher instanceof UpdateMetadataInterface) {
                     return $credentialsFetcher->updateMetadata($headers, $audience);
                 }
+
+                // In case a custom fetcher is provided (unlikely) which doesn't
+                // implement UpdateMetadataInterface
                 $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
                 if (!self::isValid($token)) {
                     return [];
