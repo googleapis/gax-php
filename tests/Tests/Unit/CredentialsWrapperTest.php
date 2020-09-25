@@ -250,6 +250,14 @@ class CredentialsWrapperTest extends TestCase
             ]);
         $expiredFetcher->updateMetadata(Argument::any(), 'audience')
             ->willReturn(['authorization' => ['Bearer 456']]);
+        $expiredInvalidFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredInvalidFetcher->getLastReceivedToken()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() - 1
+            ]);
+        $expiredInvalidFetcher->fetchAuthToken(Argument::any())
+            ->willReturn(['not-a' => 'valid-token']);
         $unexpiredFetcher = $this->prophesize();
         $unexpiredFetcher->willImplement(FetchAuthTokenInterface::class);
         $unexpiredFetcher->getLastReceivedToken()
@@ -282,6 +290,7 @@ class CredentialsWrapperTest extends TestCase
 
         return [
             [$expiredFetcher->reveal(), ['authorization' => ['Bearer 456']]],
+            [$expiredInvalidFetcher->reveal(), []],
             [$unexpiredFetcher->reveal(), ['authorization' => ['Bearer 123']]],
             [$insecureFetcher->reveal(), []],
             [$nullFetcher->reveal(), []],
