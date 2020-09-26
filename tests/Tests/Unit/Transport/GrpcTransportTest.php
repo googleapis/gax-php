@@ -377,16 +377,12 @@ class GrpcTransportTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider buildDataGrpc
-     */
     public function testAudienceOption()
     {
-        $message = $this->prophesize(Message::class);
-        $message->serializeToString()->willReturn('');
+        $message = $this->createMockRequest();
 
         $call = $this->prophesize(Call::class);
-        $call->getMessage()->willReturn($message->reveal());
+        $call->getMessage()->willReturn($message);
         $call->getMethod()->shouldBeCalled();
         $call->getDecodeType()->shouldBeCalled();
 
