@@ -97,18 +97,18 @@ class Parser
             $nextLiteral = '/';
             $remainingPath = substr($path, $index);
             if (!empty($remainingPath)) {
-              // Find the firstnon-slash separator seen, if any.
-              $nextSlashIndex = strpos($remainingPath, '/', 0);
-              $nonSlashSeparators = ['-', '_', '~', '.'];
-              foreach ($nonSlashSeparators as $nonSlashSeparator) {
-                $nonSlashSeparatorIndex = strpos($remainingPath, $nonSlashSeparator, 0);
-                $nextOpenBraceIndex = strpos($remainingPath, '{', 0);
-                if ($nonSlashSeparatorIndex !== false && $nonSlashSeparatorIndex === $nextOpenBraceIndex - 1) {
-                  $index += $nonSlashSeparatorIndex;
-                  $nextLiteral = $nonSlashSeparator;
-                  break;
+                // Find the firstnon-slash separator seen, if any.
+                $nextSlashIndex = strpos($remainingPath, '/', 0);
+                $nonSlashSeparators = ['-', '_', '~', '.'];
+                foreach ($nonSlashSeparators as $nonSlashSeparator) {
+                    $nonSlashSeparatorIndex = strpos($remainingPath, $nonSlashSeparator, 0);
+                    $nextOpenBraceIndex = strpos($remainingPath, '{', 0);
+                    if ($nonSlashSeparatorIndex !== false && $nonSlashSeparatorIndex === $nextOpenBraceIndex - 1) {
+                        $index += $nonSlashSeparatorIndex;
+                        $nextLiteral = $nonSlashSeparator;
+                        break;
+                    }
                 }
-              }
             }
 
             return self::parseVariableSegment($segmentStringWithoutBraces);
