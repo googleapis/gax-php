@@ -73,8 +73,13 @@ class Segment
      * @param RelativeResourceTemplate|null $template
      * @throws ValidationException
      */
-    public function __construct($segmentType, $value = null, $key = null, RelativeResourceTemplate $template = null, $separator = '/')
-    {
+    public function __construct(
+        $segmentType,
+        $value = null,
+        $key = null,
+        RelativeResourceTemplate $template = null,
+        $separator = '/'
+    ) {
         $this->segmentType = $segmentType;
         $this->value = $value;
         $this->key = $key;

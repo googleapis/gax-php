@@ -118,7 +118,13 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
             }
             $value = $bindings[$key];
             if ($segment->matches($value)) {
-                $literalSegments[] = new Segment(Segment::LITERAL_SEGMENT, $value, $segment->getValue(), $segment->getTemplate(), $segment->getSeparator());
+                $literalSegments[] = new Segment(
+                    Segment::LITERAL_SEGMENT,
+                    $value,
+                    $segment->getValue(),
+                    $segment->getTemplate(),
+                    $segment->getSeparator()
+                );
             } else {
                 $valueString = is_null($value) ? "null" : "'$value'";
                 throw $this->renderingException(
@@ -226,7 +232,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         if ($pathPiecesCount < $flattenedKeySegmentTuplesCount) {
             // Each segment in $flattenedKeyedSegments must consume at least one
             // segment in $pathSegments, so matching must fail.
-            throw $this->matchException($path, "path does not contain enough segments to be matched, has " . implode(' :: ', $pathPieces));
+            throw $this->matchException($path, "path does not contain enough segments to be matched");
         }
 
         $doubleWildcardPieceCount = $pathPiecesCount - $flattenedKeySegmentTuplesCount + 1;
@@ -295,7 +301,13 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                     $positionalArgumentCounter++;
                     $newSegment = $segment;
                     if ($separator !== null) {
-                        $newSegment = new Segment($segment->getSegmentType(), $segment->getValue(), $segment->getKey(), $segment->getTemplate(), $separator);
+                        $newSegment = new Segment(
+                            $segment->getSegmentType(),
+                            $segment->getValue(),
+                            $segment->getKey(),
+                            $segment->getTemplate(),
+                            $separator
+                        );
                     }
                     $keySegmentTuples[] = [$positionalKey, $newSegment];
                     break;
@@ -319,7 +331,8 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                 case Segment::VARIABLE_SEGMENT:
                     // For segment variables, replace the segment with the segments of its children
                     $template = $segment->getTemplate();
-                    $nestedKeySegmentTuples = self::buildKeySegmentTuples($template->segments, $segment->getSeparator());
+                    $nestedKeySegmentTuples =
+                        self::buildKeySegmentTuples($template->segments, $segment->getSeparator());
                     foreach ($nestedKeySegmentTuples as list($nestedKey, $nestedSegment)) {
                         /** @var Segment $nestedSegment */
                         // Nested variables are not allowed
