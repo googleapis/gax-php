@@ -89,7 +89,7 @@ be found for Mac or Windows.
 5.  Formatting source:
 
     ```sh
-    > vendor/bin/phpcs -s --standard=./ruleset.xml
+    > vendor/bin/phpcbf -s --standard=./ruleset.xml
     ```
 
 ## License
