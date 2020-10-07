@@ -160,9 +160,9 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         // information about the variable identifier of any flattened segments. To do this, we
         // build a list of [string, Segment] tuples, where the string component is the appropriate
         // key.
-      $keySegmentTuples = self::buildKeySegmentTuples($this->segments);
+        $keySegmentTuples = self::buildKeySegmentTuples($this->segments);
 
-      $flattenedKeySegmentTuples = self::flattenKeySegmentTuples($keySegmentTuples);
+        $flattenedKeySegmentTuples = self::flattenKeySegmentTuples($keySegmentTuples);
         $flattenedKeySegmentTuplesCount = count($flattenedKeySegmentTuples);
         assert($flattenedKeySegmentTuplesCount > 0);
 
@@ -175,8 +175,8 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         $doubleWildcardPieceCount = $slashPathPiecesCount - $flattenedKeySegmentTuplesCount + 1;
 
         for ($i = 0; $i < count($flattenedKeySegmentTuples); $i++) {
-          $segmentKey = $flattenedKeySegmentTuples[$i][0];
-          $segment = $flattenedKeySegmentTuples[$i][1];
+            $segmentKey = $flattenedKeySegmentTuples[$i][0];
+            $segment = $flattenedKeySegmentTuples[$i][1];
             // In our flattened list of segments, we should never encounter a variable segment
             assert($segment->getSegmentType() !== Segment::VARIABLE_SEGMENT);
 
@@ -189,30 +189,30 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
             }
 
             if ($segment->getSegmentType() == Segment::WILDCARD_SEGMENT) {
-              if ($pathPiecesIndex >= $slashPathPiecesCount) {
-                break;
-              }
+                if ($pathPiecesIndex >= $slashPathPiecesCount) {
+                    break;
+                }
             }
             if ($segment->getSeparator() === '/') {
-              if ($pathPiecesIndex >= $slashPathPiecesCount) {
-                throw $this->matchException($path, "segment and path length mismatch");
-              }
-              $pathPiece = substr($slashPathPieces[$pathPiecesIndex++], $startIndex);
-              $startIndex = 0;
+                if ($pathPiecesIndex >= $slashPathPiecesCount) {
+                    throw $this->matchException($path, "segment and path length mismatch");
+                }
+                $pathPiece = substr($slashPathPieces[$pathPiecesIndex++], $startIndex);
+                $startIndex = 0;
             } else {
-              $rawPiece = substr($slashPathPieces[$pathPiecesIndex], $startIndex);
-              $pathPieceLength = strpos($rawPiece, $segment->getSeparator());
-              $pathPiece = substr($rawPiece, 0, $pathPieceLength);
-              $startIndex += $pathPieceLength + 1;
+                $rawPiece = substr($slashPathPieces[$pathPiecesIndex], $startIndex);
+                $pathPieceLength = strpos($rawPiece, $segment->getSeparator());
+                $pathPiece = substr($rawPiece, 0, $pathPieceLength);
+                $startIndex += $pathPieceLength + 1;
             }
             $pathPieces[] = $pathPiece;
         }
 
         if ($flattenedKeySegmentTuples[$i - 1][1]->getSegmentType() !== Segment::DOUBLE_WILDCARD_SEGMENT) {
           // Process any remaining pieces. The binding logic will throw exceptions for any invalid paths.
-          for (; $pathPiecesIndex < count($slashPathPieces); $pathPiecesIndex++) {
-            $pathPieces[] = $slashPathPieces[$pathPiecesIndex];
-          }
+            for (; $pathPiecesIndex < count($slashPathPieces); $pathPiecesIndex++) {
+                $pathPieces[] = $slashPathPieces[$pathPiecesIndex];
+            }
         }
         $pathPiecesCount = count($pathPieces);
 
@@ -226,7 +226,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         if ($pathPiecesCount < $flattenedKeySegmentTuplesCount) {
             // Each segment in $flattenedKeyedSegments must consume at least one
             // segment in $pathSegments, so matching must fail.
-            throw $this->matchException($path, "path does not contain enough segments to be matched, has " . implode(' :: ', $pathPieces ));
+            throw $this->matchException($path, "path does not contain enough segments to be matched, has " . implode(' :: ', $pathPieces));
         }
 
         $doubleWildcardPieceCount = $pathPiecesCount - $flattenedKeySegmentTuplesCount + 1;
@@ -295,7 +295,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                     $positionalArgumentCounter++;
                     $newSegment = $segment;
                     if ($separator !== null) {
-                      $newSegment = new Segment($segment->getSegmentType(), $segment->getValue(), $segment->getKey(), $segment->getTemplate(), $separator);
+                        $newSegment = new Segment($segment->getSegmentType(), $segment->getValue(), $segment->getKey(), $segment->getTemplate(), $separator);
                     }
                     $keySegmentTuples[] = [$positionalKey, $newSegment];
                     break;
@@ -362,17 +362,16 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
    * @param array Segments.
    * @return string
    */
-    private static function renderSegments($segmentsToRender) {
-      $renderResult = "";
-      for ($i = 0; $i < count($segmentsToRender); $i++) {
-        $segment = $segmentsToRender[$i];
-        $renderResult .= $segment;
-        if ($i < count($segmentsToRender) - 1) {
-          $renderResult .= $segment->getSeparator();
+    private static function renderSegments($segmentsToRender)
+    {
+        $renderResult = "";
+        for ($i = 0; $i < count($segmentsToRender); $i++) {
+            $segment = $segmentsToRender[$i];
+            $renderResult .= $segment;
+            if ($i < count($segmentsToRender) - 1) {
+                $renderResult .= $segment->getSeparator();
+            }
         }
-      }
-      return $renderResult;
+        return $renderResult;
     }
-
-
 }
