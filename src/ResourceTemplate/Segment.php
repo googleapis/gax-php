@@ -64,13 +64,13 @@ class Segment
     /** @var string */
     private $separator;
 
-
     /**
      * Segment constructor.
      * @param int $segmentType
      * @param string|null $value
      * @param string|null $key
      * @param RelativeResourceTemplate|null $template
+     * @param string $separator The separator that belongs at the end of a segment. Ending segments should use '/'.
      * @throws ValidationException
      */
     public function __construct(

@@ -172,7 +172,6 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         $flattenedKeySegmentTuplesCount = count($flattenedKeySegmentTuples);
         assert($flattenedKeySegmentTuplesCount > 0);
 
-
         $slashPathPieces = explode('/', $path);
         $pathPieces = [];
         $pathPiecesIndex = 0;
@@ -287,6 +286,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
 
     /**
      * @param Segment[] $segments
+     * @param string|null $separator An optional string separator
      * @return array[] A list of [string, Segment] tuples
      */
     private static function buildKeySegmentTuples(array $segments, $separator = null)
@@ -331,8 +331,10 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                 case Segment::VARIABLE_SEGMENT:
                     // For segment variables, replace the segment with the segments of its children
                     $template = $segment->getTemplate();
-                    $nestedKeySegmentTuples =
-                        self::buildKeySegmentTuples($template->segments, $segment->getSeparator());
+                    $nestedKeySegmentTuples = self::buildKeySegmentTuples(
+                        $template->segments,
+                        $segment->getSeparator()
+                    );
                     foreach ($nestedKeySegmentTuples as list($nestedKey, $nestedSegment)) {
                         /** @var Segment $nestedSegment */
                         // Nested variables are not allowed
@@ -372,7 +374,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
 
   /**
    * Joins segments using their separators.
-   * @param array Segments.
+   * @param array $segmentsToRender.
    * @return string
    */
     private static function renderSegments($segmentsToRender)

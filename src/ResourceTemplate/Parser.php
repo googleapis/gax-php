@@ -152,7 +152,7 @@ class Parser
 
     /**
      * @param string $segmentStringWithoutBraces
-     * @param string separatorLiteral
+     * @param string $separatorLiteral
      * @return Segment
      * @throws ValidationException
      */
