@@ -133,7 +133,7 @@ but is not intended for public use and may change without notice.</p>           
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(int $segmentType, string|null $value = null, string|null $key = null, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null)
+                    <a href="#method___construct">__construct</a>(int $segmentType, string|null $value = null, string|null $key = null, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null, string $separator = &#039;/&#039;)
         
                                             <p>Segment constructor.</p>                </div>
                 <div class="col-md-2"></div>
@@ -203,6 +203,17 @@ but is not intended for public use and may change without notice.</p>           
                                     </div>
                 <div class="col-md-2"></div>
             </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSeparator">getSeparator</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
             </div>
 
 
@@ -211,9 +222,9 @@ but is not intended for public use and may change without notice.</p>           
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 72</div>
+        <div class="location">at         line 76</div>
         <code>                    
-    <strong>__construct</strong>(int $segmentType, string|null $value = null, string|null $key = null, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null)
+    <strong>__construct</strong>(int $segmentType, string|null $value = null, string|null $key = null, <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a> $template = null, string $separator = &#039;/&#039;)
         </code>
     </h3>
     <div class="details">
@@ -246,6 +257,11 @@ but is not intended for public use and may change without notice.</p>           
                 <td>$template</td>
                 <td></td>
             </tr>
+                    <tr>
+                <td>string</td>
+                <td>$separator</td>
+                <td>The separator that belongs at the end of a segment. Ending segments should use '/'.</td>
+            </tr>
             </table>
 
             
@@ -266,7 +282,7 @@ but is not intended for public use and may change without notice.</p>           
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 102</div>
+        <div class="location">at         line 112</div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
@@ -294,7 +310,7 @@ but is not intended for public use and may change without notice.</p>           
             </div>
                     <div class="method-item">
                     <h3 id="method_matches">
-        <div class="location">at         line 114</div>
+        <div class="location">at         line 124</div>
         <code>                    bool
     <strong>matches</strong>(string $value)
         </code>
@@ -343,7 +359,7 @@ but is not intended for public use and may change without notice.</p>           
             </div>
                     <div class="method-item">
                     <h3 id="method_getSegmentType">
-        <div class="location">at         line 135</div>
+        <div class="location">at         line 145</div>
         <code>                    int
     <strong>getSegmentType</strong>()
         </code>
@@ -371,7 +387,7 @@ but is not intended for public use and may change without notice.</p>           
             </div>
                     <div class="method-item">
                     <h3 id="method_getKey">
-        <div class="location">at         line 143</div>
+        <div class="location">at         line 153</div>
         <code>                    string|null
     <strong>getKey</strong>()
         </code>
@@ -399,7 +415,7 @@ but is not intended for public use and may change without notice.</p>           
             </div>
                     <div class="method-item">
                     <h3 id="method_getValue">
-        <div class="location">at         line 151</div>
+        <div class="location">at         line 161</div>
         <code>                    string|null
     <strong>getValue</strong>()
         </code>
@@ -427,7 +443,7 @@ but is not intended for public use and may change without notice.</p>           
             </div>
                     <div class="method-item">
                     <h3 id="method_getTemplate">
-        <div class="location">at         line 159</div>
+        <div class="location">at         line 169</div>
         <code>                    <a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a>|null
     <strong>getTemplate</strong>()
         </code>
@@ -443,6 +459,34 @@ but is not intended for public use and may change without notice.</p>           
                     <table class="table table-condensed">
         <tr>
             <td><a href="../../../Google/ApiCore/ResourceTemplate/RelativeResourceTemplate.html"><abbr title="Google\ApiCore\ResourceTemplate\RelativeResourceTemplate">RelativeResourceTemplate</abbr></a>|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSeparator">
+        <div class="location">at         line 177</div>
+        <code>                    string
+    <strong>getSeparator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
             <td></td>
         </tr>
     </table>
