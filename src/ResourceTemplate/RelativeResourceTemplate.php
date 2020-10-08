@@ -214,7 +214,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         }
 
         if ($flattenedKeySegmentTuples[$i - 1][1]->getSegmentType() !== Segment::DOUBLE_WILDCARD_SEGMENT) {
-          // Process any remaining pieces. The binding logic will throw exceptions for any invalid paths.
+            // Process any remaining pieces. The binding logic will throw exceptions for any invalid paths.
             for (; $pathPiecesIndex < count($slashPathPieces); $pathPiecesIndex++) {
                 $pathPieces[] = $slashPathPieces[$pathPiecesIndex];
             }
@@ -372,11 +372,11 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         return $doubleWildcardCount;
     }
 
-  /**
-   * Joins segments using their separators.
-   * @param array $segmentsToRender.
-   * @return string
-   */
+    /**
+     * Joins segments using their separators.
+     * @param array $segmentsToRender
+     * @return string
+     */
     private static function renderSegments($segmentsToRender)
     {
         $renderResult = "";
