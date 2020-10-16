@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Page" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -80,7 +76,7 @@
 
     <p>    class
     <strong>Page</strong>        implements
-        <a target="_blank" href="http://php.net/IteratorAggregate">IteratorAggregate</a>
+        <a target="_blank" rel="noopener" href="https://www.php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php">View source</a>)
 </p>
 
         
@@ -141,7 +137,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>
+                    Page
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getNextPage">getNextPage</a>(int|null $pageSize = null)
@@ -161,7 +157,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getIterator">getIterator</a>()
@@ -171,7 +167,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|Page[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_iteratePages">iteratePages</a>()
@@ -181,7 +177,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+                    mixed|Message
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getRequestObject">getRequestObject</a>()
@@ -191,7 +187,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+                    mixed|Message
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getResponseObject">getResponseObject</a>()
@@ -201,7 +197,7 @@ API.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
+                    FixedSizeCollection
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_expandToFixedSizeCollection">expandToFixedSizeCollection</a>($collectionSize)
@@ -220,7 +216,7 @@ pages to be retrieved from the server.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 64</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L64">at line 64</a></div>
         <code>                    
     <strong>__construct</strong>(<a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options, callable $callable, <a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a> $pageStreamingDescriptor, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response)
         </code>
@@ -271,7 +267,7 @@ pages to be retrieved from the server.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_hasNextPage">
-        <div class="location">at         line 87</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L87">at line 87</a></div>
         <code>                    bool
     <strong>hasNextPage</strong>()
         </code>
@@ -302,7 +298,7 @@ API.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getNextPageToken">
-        <div class="location">at         line 97</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L97">at line 97</a></div>
         <code>                    string
     <strong>getNextPageToken</strong>()
         </code>
@@ -332,8 +328,8 @@ API.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getNextPage">
-        <div class="location">at         line 112</div>
-        <code>                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L112">at line 112</a></div>
+        <code>                    Page
     <strong>getNextPage</strong>(int|null $pageSize = null)
         </code>
     </h3>
@@ -359,7 +355,7 @@ API.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a></td>
+            <td>Page</td>
             <td></td>
         </tr>
     </table>
@@ -369,12 +365,12 @@ API.</p>                                                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td>if there are no pages remaining, or if pageSize is supplied but
 is not supported by the API</td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td>if the call to fetch the next page fails.</td>
             </tr>
             </table>
@@ -386,7 +382,7 @@ is not supported by the API</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_getPageElementCount">
-        <div class="location">at         line 161</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L161">at line 161</a></div>
         <code>                    int
     <strong>getPageElementCount</strong>()
         </code>
@@ -416,8 +412,8 @@ is not supported by the API</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_getIterator">
-        <div class="location">at         line 172</div>
-        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L172">at line 172</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
     <strong>getIterator</strong>()
         </code>
     </h3>
@@ -433,7 +429,7 @@ is not supported by the API</td>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a target="_blank" href="http://php.net/Generator">Generator</a></td>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a></td>
             <td></td>
         </tr>
     </table>
@@ -446,8 +442,8 @@ is not supported by the API</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_iteratePages">
-        <div class="location">at         line 189</div>
-        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L189">at line 189</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|Page[]
     <strong>iteratePages</strong>()
         </code>
     </h3>
@@ -464,7 +460,7 @@ all elements have been retrieved.</p>                            </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]</td>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|Page[]</td>
             <td></td>
         </tr>
     </table>
@@ -474,11 +470,11 @@ all elements have been retrieved.</p>                            </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td></td>
             </tr>
             </table>
@@ -490,8 +486,8 @@ all elements have been retrieved.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getRequestObject">
-        <div class="location">at         line 204</div>
-        <code>                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L204">at line 204</a></div>
+        <code>                    mixed|Message
     <strong>getRequestObject</strong>()
         </code>
     </h3>
@@ -507,7 +503,7 @@ all elements have been retrieved.</p>                            </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+            <td>mixed|Message</td>
             <td></td>
         </tr>
     </table>
@@ -520,8 +516,8 @@ all elements have been retrieved.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getResponseObject">
-        <div class="location">at         line 214</div>
-        <code>                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L214">at line 214</a></div>
+        <code>                    mixed|Message
     <strong>getResponseObject</strong>()
         </code>
     </h3>
@@ -537,7 +533,7 @@ all elements have been retrieved.</p>                            </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+            <td>mixed|Message</td>
             <td></td>
         </tr>
     </table>
@@ -550,8 +546,8 @@ all elements have been retrieved.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_expandToFixedSizeCollection">
-        <div class="location">at         line 235</div>
-        <code>                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Page.php#L235">at line 235</a></div>
+        <code>                    FixedSizeCollection
     <strong>expandToFixedSizeCollection</strong>($collectionSize)
         </code>
     </h3>
@@ -584,7 +580,7 @@ has been set.</p>                            </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a></td>
+            <td>FixedSizeCollection</td>
             <td></td>
         </tr>
     </table>
@@ -594,7 +590,7 @@ has been set.</p>                            </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td>if a FixedSizeCollection of the specified size cannot be constructed</td>
             </tr>
             </table>
@@ -607,12 +603,9 @@ has been set.</p>                            </div>
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Call" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>Call</strong>
+    <strong>Call</strong>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php">View source</a>)
 </p>
 
         
@@ -132,7 +128,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(string $method, string $decodeType, mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $message = null, array $descriptor = [], int $callType = Call::UNARY_CALL)
+                    <a href="#method___construct">__construct</a>(string $method, string $decodeType, mixed|Message $message = null, array $descriptor = [], int $callType = Call::UNARY_CALL)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -173,7 +169,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+                    mixed|Message
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getMessage">getMessage</a>()
@@ -195,10 +191,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a>
+                    Call
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_withMessage">withMessage</a>(mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $message)
+                    <a href="#method_withMessage">withMessage</a>(mixed|Message $message)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -212,9 +208,9 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 60</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L60">at line 60</a></div>
         <code>                    
-    <strong>__construct</strong>(string $method, string $decodeType, mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $message = null, array $descriptor = [], int $callType = Call::UNARY_CALL)
+    <strong>__construct</strong>(string $method, string $decodeType, mixed|Message $message = null, array $descriptor = [], int $callType = Call::UNARY_CALL)
         </code>
     </h3>
     <div class="details">
@@ -236,7 +232,7 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>mixed|Message</td>
                 <td>$message</td>
                 <td></td>
             </tr>
@@ -261,7 +257,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getMethod">
-        <div class="location">at         line 77</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L77">at line 77</a></div>
         <code>                    string
     <strong>getMethod</strong>()
         </code>
@@ -289,7 +285,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCallType">
-        <div class="location">at         line 85</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L85">at line 85</a></div>
         <code>                    int
     <strong>getCallType</strong>()
         </code>
@@ -317,7 +313,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getDecodeType">
-        <div class="location">at         line 93</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L93">at line 93</a></div>
         <code>                    string
     <strong>getDecodeType</strong>()
         </code>
@@ -345,8 +341,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getMessage">
-        <div class="location">at         line 101</div>
-        <code>                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L101">at line 101</a></div>
+        <code>                    mixed|Message
     <strong>getMessage</strong>()
         </code>
     </h3>
@@ -360,7 +356,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+            <td>mixed|Message</td>
             <td></td>
         </tr>
     </table>
@@ -373,7 +369,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getDescriptor">
-        <div class="location">at         line 109</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L109">at line 109</a></div>
         <code>                    array|null
     <strong>getDescriptor</strong>()
         </code>
@@ -401,9 +397,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_withMessage">
-        <div class="location">at         line 118</div>
-        <code>                    <a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a>
-    <strong>withMessage</strong>(mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $message)
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Call.php#L118">at line 118</a></div>
+        <code>                    Call
+    <strong>withMessage</strong>(mixed|Message $message)
         </code>
     </h3>
     <div class="details">
@@ -415,7 +411,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>mixed|Message</td>
                 <td>$message</td>
                 <td></td>
             </tr>
@@ -426,7 +422,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a></td>
+            <td>Call</td>
             <td></td>
         </tr>
     </table>
@@ -440,12 +436,9 @@
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

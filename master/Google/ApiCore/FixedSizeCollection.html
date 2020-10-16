@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_FixedSizeCollection" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -80,7 +76,7 @@
 
     <p>    class
     <strong>FixedSizeCollection</strong>        implements
-        <a target="_blank" href="http://php.net/IteratorAggregate">IteratorAggregate</a>
+        <a target="_blank" rel="noopener" href="https://www.php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php">View source</a>)
 </p>
 
         
@@ -103,7 +99,7 @@ are no more elements to retrieve.</p>                                </div>
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $initialPage, integer $collectionSize)
+                    <a href="#method___construct">__construct</a>(Page $initialPage, int $collectionSize)
         
                                             <p>FixedSizeCollection constructor.</p>                </div>
                 <div class="col-md-2"></div>
@@ -144,7 +140,7 @@ method to retrieve additional elements.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
+                    FixedSizeCollection
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getNextCollection">getNextCollection</a>()
@@ -154,7 +150,7 @@ method to retrieve additional elements.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getIterator">getIterator</a>()
@@ -164,7 +160,7 @@ method to retrieve additional elements.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>[]
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|FixedSizeCollection[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_iterateCollections">iterateCollections</a>()
@@ -182,9 +178,9 @@ been retrieved.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 55</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L55">at line 55</a></div>
         <code>                    
-    <strong>__construct</strong>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $initialPage, integer $collectionSize)
+    <strong>__construct</strong>(Page $initialPage, int $collectionSize)
         </code>
     </h3>
     <div class="details">
@@ -198,12 +194,12 @@ been retrieved.</p>                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a></td>
+                <td>Page</td>
                 <td>$initialPage</td>
                 <td></td>
             </tr>
                     <tr>
-                <td>integer</td>
+                <td>int</td>
                 <td>$collectionSize</td>
                 <td></td>
             </tr>
@@ -218,7 +214,7 @@ been retrieved.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getCollectionSize">
-        <div class="location">at         line 82</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L82">at line 82</a></div>
         <code>                    int
     <strong>getCollectionSize</strong>()
         </code>
@@ -250,7 +246,7 @@ unless there are no elements remaining to be retrieved.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_hasNextCollection">
-        <div class="location">at         line 97</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L97">at line 97</a></div>
         <code>                    bool
     <strong>hasNextCollection</strong>()
         </code>
@@ -281,7 +277,7 @@ from the API.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getNextPageToken">
-        <div class="location">at         line 108</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L108">at line 108</a></div>
         <code>                    string
     <strong>getNextPageToken</strong>()
         </code>
@@ -312,8 +308,8 @@ method to retrieve additional elements.</p>                                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getNextCollection">
-        <div class="location">at         line 118</div>
-        <code>                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L118">at line 118</a></div>
+        <code>                    FixedSizeCollection
     <strong>getNextCollection</strong>()
         </code>
     </h3>
@@ -329,7 +325,7 @@ method to retrieve additional elements.</p>                                     
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a></td>
+            <td>FixedSizeCollection</td>
             <td></td>
         </tr>
     </table>
@@ -342,8 +338,8 @@ method to retrieve additional elements.</p>                                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getIterator">
-        <div class="location">at         line 130</div>
-        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L130">at line 130</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
     <strong>getIterator</strong>()
         </code>
     </h3>
@@ -359,7 +355,7 @@ method to retrieve additional elements.</p>                                     
 
                     <table class="table table-condensed">
         <tr>
-            <td><a target="_blank" href="http://php.net/Generator">Generator</a></td>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a></td>
             <td></td>
         </tr>
     </table>
@@ -372,8 +368,8 @@ method to retrieve additional elements.</p>                                     
             </div>
                     <div class="method-item">
                     <h3 id="method_iterateCollections">
-        <div class="location">at         line 146</div>
-        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>[]
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/FixedSizeCollection.php#L146">at line 146</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|FixedSizeCollection[]
     <strong>iterateCollections</strong>()
         </code>
     </h3>
@@ -391,7 +387,7 @@ been retrieved.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a target="_blank" href="http://php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>[]</td>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|FixedSizeCollection[]</td>
             <td></td>
         </tr>
     </table>
@@ -405,12 +401,9 @@ been retrieved.</p>                                                </div>
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

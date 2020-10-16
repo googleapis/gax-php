@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
-        <script src="../../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
         <script src="../../../js/typeahead.min.js"></script>
-        <script src="../../../sami.js"></script>
+        <script src="../../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Testing_MockClientStreamingCall" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../../classes.html">Classes</a></li>
-                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../../traits.html">Traits</a></li>
                     <li><a href="../../../doc-index.html">Index</a></li>
                     <li><a href="../../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>MockClientStreamingCall</strong>        extends <abbr title="Grpc\ClientStreamingCall">ClientStreamingCall</abbr>
+    <strong>MockClientStreamingCall</strong>        extends <abbr title="Grpc\ClientStreamingCall">ClientStreamingCall</abbr>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockClientStreamingCall.php">View source</a>)
 </p>
 
         
@@ -103,7 +99,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, <a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null $status = null)
+                    <a href="#method___construct">__construct</a>(Message $response, callable|null $deserialize = null, MockStatus|null $status = null)
         
                                             <p>MockClientStreamingCall constructor.</p>                </div>
                 <div class="col-md-2"></div>
@@ -130,7 +126,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    mixed[]
+                    array
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_popReceivedCalls">popReceivedCalls</a>()
@@ -146,9 +142,9 @@ getAllRequests() method that returns all request objects passed to write(), and 
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 62</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockClientStreamingCall.php#L62">at line 62</a></div>
         <code>                    
-    <strong>__construct</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, <a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null $status = null)
+    <strong>__construct</strong>(Message $response, callable|null $deserialize = null, MockStatus|null $status = null)
         </code>
     </h3>
     <div class="details">
@@ -162,7 +158,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>Message</td>
                 <td>$response</td>
                 <td>The response object.</td>
             </tr>
@@ -172,7 +168,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
                 <td>An optional deserialize method for the response object.</td>
             </tr>
                     <tr>
-                <td><a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null</td>
+                <td>MockStatus|null</td>
                 <td>$status</td>
                 <td>An optional status object. If set to null, a status of OK is used.</td>
             </tr>
@@ -187,7 +183,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </div>
                     <div class="method-item">
                     <h3 id="method_wait">
-        <div class="location">at         line 71</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockClientStreamingCall.php#L71">at line 71</a></div>
         <code>                    array
     <strong>wait</strong>()
         </code>
@@ -217,7 +213,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </div>
                     <div class="method-item">
                     <h3 id="method_write">
-        <div class="location">at         line 83</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockClientStreamingCall.php#L83">at line 83</a></div>
         <code>                    
     <strong>write</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr>|mixed $request, array $options = [])
         </code>
@@ -250,7 +246,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td></td>
             </tr>
             </table>
@@ -262,8 +258,8 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </div>
                     <div class="method-item">
                     <h3 id="method_popReceivedCalls">
-        <div class="location">at         line 102</div>
-        <code>                    mixed[]
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockClientStreamingCall.php#L102">at line 102</a></div>
+        <code>                    array
     <strong>popReceivedCalls</strong>()
         </code>
     </h3>
@@ -279,7 +275,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
 
                     <table class="table table-condensed">
         <tr>
-            <td>mixed[]</td>
+            <td>array</td>
             <td>An array of received requests</td>
         </tr>
     </table>
@@ -293,12 +289,9 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

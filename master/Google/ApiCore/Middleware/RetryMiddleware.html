@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
-        <script src="../../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
         <script src="../../../js/typeahead.min.js"></script>
-        <script src="../../../sami.js"></script>
+        <script src="../../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Middleware_RetryMiddleware" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../../classes.html">Classes</a></li>
-                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../../traits.html">Traits</a></li>
                     <li><a href="../../../doc-index.html">Index</a></li>
                     <li><a href="../../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>RetryMiddleware</strong>
+    <strong>RetryMiddleware</strong>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Middleware/RetryMiddleware.php">View source</a>)
 </p>
 
         
@@ -107,7 +103,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
+                    PromiseInterface
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method___invoke">__invoke</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
@@ -135,7 +131,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 54</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Middleware/RetryMiddleware.php#L54">at line 54</a></div>
         <code>                    
     <strong>__construct</strong>(callable $nextHandler, <a href="../../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a> $retrySettings, $deadlineMs = null)
         </code>
@@ -174,8 +170,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___invoke">
-        <div class="location">at         line 70</div>
-        <code>                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Middleware/RetryMiddleware.php#L70">at line 70</a></div>
+        <code>                    PromiseInterface
     <strong>__invoke</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
@@ -204,7 +200,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr></td>
+            <td>PromiseInterface</td>
             <td></td>
         </tr>
     </table>
@@ -217,7 +213,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCurrentTimeMs">
-        <div class="location">at         line 158</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Middleware/RetryMiddleware.php#L158">at line 158</a></div>
         <code>            protected        
     <strong>getCurrentTimeMs</strong>()
         </code>
@@ -237,12 +233,9 @@
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

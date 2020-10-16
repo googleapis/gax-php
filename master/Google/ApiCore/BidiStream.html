@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_BidiStream" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>BidiStream</strong>
+    <strong>BidiStream</strong>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php">View source</a>)
 </p>
 
         
@@ -119,7 +115,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_writeAll">writeAll</a>(mixed[] $requests = [])
+                    <a href="#method_writeAll">writeAll</a>(array $requests = [])
         
                                             <p>Write all requests in $requests.</p>                </div>
                 <div class="col-md-2"></div>
@@ -148,7 +144,7 @@ successfully. Throws an ApiException if the streaming call failed.</p>          
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a target="_blank" href="http://php.net/Generator">Generator</a>|mixed[]
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|array
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_closeWriteAndReadAll">closeWriteAndReadAll</a>()
@@ -175,7 +171,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 53</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L53">at line 53</a></div>
         <code>                    
     <strong>__construct</strong>(<abbr title="Grpc\BidiStreamingCall">BidiStreamingCall</abbr> $bidiStreamingCall, array $streamingDescriptor = [])
         </code>
@@ -211,7 +207,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_write">
-        <div class="location">at         line 67</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L67">at line 67</a></div>
         <code>                    
     <strong>write</strong>(mixed $request)
         </code>
@@ -239,7 +235,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
             </table>
@@ -251,9 +247,9 @@ completed. Throws an ApiException if the streaming call failed.</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_writeAll">
-        <div class="location">at         line 85</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L85">at line 85</a></div>
         <code>                    
-    <strong>writeAll</strong>(mixed[] $requests = [])
+    <strong>writeAll</strong>(array $requests = [])
         </code>
     </h3>
     <div class="details">
@@ -267,7 +263,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
 
                     <table class="table table-condensed">
                     <tr>
-                <td>mixed[]</td>
+                <td>array</td>
                 <td>$requests</td>
                 <td>An Iterable of request objects to write to the server</td>
             </tr>
@@ -279,7 +275,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
             </table>
@@ -291,7 +287,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_closeWrite">
-        <div class="location">at         line 97</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L97">at line 97</a></div>
         <code>                    
     <strong>closeWrite</strong>()
         </code>
@@ -310,7 +306,7 @@ called after closeWrite() is called.</p>                                        
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
             </table>
@@ -322,7 +318,7 @@ called after closeWrite() is called.</p>                                        
             </div>
                     <div class="method-item">
                     <h3 id="method_read">
-        <div class="location">at         line 118</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L118">at line 118</a></div>
         <code>                    mixed
     <strong>read</strong>()
         </code>
@@ -350,11 +346,11 @@ successfully. Throws an ApiException if the streaming call failed.</p>          
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td></td>
             </tr>
             </table>
@@ -366,8 +362,8 @@ successfully. Throws an ApiException if the streaming call failed.</p>          
             </div>
                     <div class="method-item">
                     <h3 id="method_closeWriteAndReadAll">
-        <div class="location">at         line 157</div>
-        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>|mixed[]
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L157">at line 157</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|array
     <strong>closeWriteAndReadAll</strong>()
         </code>
     </h3>
@@ -384,7 +380,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
 
                     <table class="table table-condensed">
         <tr>
-            <td><a target="_blank" href="http://php.net/Generator">Generator</a>|mixed[]</td>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|array</td>
             <td></td>
         </tr>
     </table>
@@ -394,11 +390,11 @@ completed. Throws an ApiException if the streaming call failed.</p>             
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td></td>
             </tr>
             </table>
@@ -410,7 +406,7 @@ completed. Throws an ApiException if the streaming call failed.</p>             
             </div>
                     <div class="method-item">
                     <h3 id="method_getBidiStreamingCall">
-        <div class="location">at         line 172</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/BidiStream.php#L172">at line 172</a></div>
         <code>                    <abbr title="Grpc\BidiStreamingCall">BidiStreamingCall</abbr>|mixed
     <strong>getBidiStreamingCall</strong>()
         </code>
@@ -441,12 +437,9 @@ completed. Throws an ApiException if the streaming call failed.</p>             
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

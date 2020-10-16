@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_RetrySettings" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>RetrySettings</strong>
+    <strong>RetrySettings</strong>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php">View source</a>)
 </p>
 
         
@@ -112,7 +108,7 @@ can be passed to RetrySettings.</p>
 </code></pre>
 
 <p>It is also possible to create a new RetrySettings object from an existing
-object using the {see Google\ApiCore\RetrySettings::with()} method.</p>
+object using the {see \Google\ApiCore\RetrySettings::with()} method.</p>
 
 <p>Example modifying an existing RetrySettings object using <code>with()</code>:</p>
 
@@ -226,12 +222,8 @@ $client = new GroupServiceClient([
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
-                                            <a href="../../Google/ApiCore/ValidationTrait.html"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a>
-                                            
-                </div>
-                <div class="col-md-6">
-                    
-                </div>
+                    <a href="../../Google/ApiCore/ValidationTrait.html"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a>    </div>
+                <div class="col-md-6"></div>
             </div>
             </div>
     
@@ -249,7 +241,8 @@ $client = new GroupServiceClient([
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validate"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validate">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -260,7 +253,8 @@ $client = new GroupServiceClient([
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -274,7 +268,7 @@ $client = new GroupServiceClient([
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    static&nbsp;<a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>[]
+                    static&nbsp;RetrySettings[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_load">load</a>(string $serviceName, array $clientConfig, bool $disableRetries = false)
@@ -295,7 +289,7 @@ $client = new GroupServiceClient([
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>
+                    RetrySettings
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_with">with</a>(array $settings)
@@ -422,7 +416,8 @@ with the settings specified in the $settings parameter.</p>                </div
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_validate">
-        <div class="location">in <a href="../../Google/ApiCore/ValidationTrait.html#method_validate"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> at         line 41</div>
+        <div class="location">in <a href="../../Google/ApiCore/ValidationTrait.html#method_validate">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/ValidationTrait.php#L41">at line 41</a></div>
         <code>        static            array
     <strong>validate</strong>(array $arr, array $requiredKeys)
         </code>
@@ -465,7 +460,8 @@ with the settings specified in the $settings parameter.</p>                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_validateNotNull">
-        <div class="location">in <a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> at         line 51</div>
+        <div class="location">in <a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/ValidationTrait.php#L51">at line 51</a></div>
         <code>        static            array
     <strong>validateNotNull</strong>(array $arr, array $requiredKeys)
         </code>
@@ -508,7 +504,7 @@ with the settings specified in the $settings parameter.</p>                </div
             </div>
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 216</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L216">at line 216</a></div>
         <code>                    
     <strong>__construct</strong>(array $settings)
         </code>
@@ -562,8 +558,8 @@ with the settings specified in the $settings parameter.</p>                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_load">
-        <div class="location">at         line 257</div>
-        <code>        static            <a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>[]
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L257">at line 257</a></div>
+        <code>        static            RetrySettings[]
     <strong>load</strong>(string $serviceName, array $clientConfig, bool $disableRetries = false)
         </code>
     </h3>
@@ -581,7 +577,7 @@ with the settings specified in the $settings parameter.</p>                </div
                 <td>string</td>
                 <td>$serviceName</td>
                 <td>The fully-qualified name of this service, used as a key into
-    the client config file.</td>
+the client config file.</td>
             </tr>
                     <tr>
                 <td>array</td>
@@ -600,7 +596,7 @@ with the settings specified in the $settings parameter.</p>                </div
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>[]</td>
+            <td>RetrySettings[]</td>
             <td>$retrySettings</td>
         </tr>
     </table>
@@ -610,7 +606,7 @@ with the settings specified in the $settings parameter.</p>                </div
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
             </table>
@@ -622,7 +618,7 @@ with the settings specified in the $settings parameter.</p>                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_constructDefault">
-        <div class="location">at         line 309</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L309">at line 309</a></div>
         <code>        static            
     <strong>constructDefault</strong>()
         </code>
@@ -641,8 +637,8 @@ with the settings specified in the $settings parameter.</p>                </div
             </div>
                     <div class="method-item">
                     <h3 id="method_with">
-        <div class="location">at         line 335</div>
-        <code>                    <a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L335">at line 335</a></div>
+        <code>                    RetrySettings
     <strong>with</strong>(array $settings)
         </code>
     </h3>
@@ -673,7 +669,7 @@ with the settings specified in the $settings parameter.</p>                     
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/RetrySettings.html"><abbr title="Google\ApiCore\RetrySettings">RetrySettings</abbr></a></td>
+            <td>RetrySettings</td>
             <td></td>
         </tr>
     </table>
@@ -686,7 +682,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_retriesEnabled">
-        <div class="location">at         line 355</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L355">at line 355</a></div>
         <code>                    bool
     <strong>retriesEnabled</strong>()
         </code>
@@ -714,7 +710,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getNoRetriesRpcTimeoutMillis">
-        <div class="location">at         line 364</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L364">at line 364</a></div>
         <code>                    int
     <strong>getNoRetriesRpcTimeoutMillis</strong>()
         </code>
@@ -731,7 +727,7 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>int</td>
             <td>The timeout of the rpc call to be used if $retriesEnabled is false,
-            in milliseconds.</td>
+in milliseconds.</td>
         </tr>
     </table>
 
@@ -743,7 +739,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getRetryableCodes">
-        <div class="location">at         line 372</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L372">at line 372</a></div>
         <code>                    int[]
     <strong>getRetryableCodes</strong>()
         </code>
@@ -771,7 +767,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getInitialRetryDelayMillis">
-        <div class="location">at         line 381</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L381">at line 381</a></div>
         <code>                    int
     <strong>getInitialRetryDelayMillis</strong>()
         </code>
@@ -788,7 +784,7 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>int</td>
             <td>The initial retry delay in milliseconds. If $this->retriesEnabled()
-            is false, this setting is unused.</td>
+is false, this setting is unused.</td>
         </tr>
     </table>
 
@@ -800,7 +796,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getRetryDelayMultiplier">
-        <div class="location">at         line 390</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L390">at line 390</a></div>
         <code>                    float
     <strong>getRetryDelayMultiplier</strong>()
         </code>
@@ -817,7 +813,7 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>float</td>
             <td>The retry delay multiplier. If $this->retriesEnabled()
-              is false, this setting is unused.</td>
+is false, this setting is unused.</td>
         </tr>
     </table>
 
@@ -829,7 +825,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getMaxRetryDelayMillis">
-        <div class="location">at         line 399</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L399">at line 399</a></div>
         <code>                    int
     <strong>getMaxRetryDelayMillis</strong>()
         </code>
@@ -846,7 +842,7 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>int</td>
             <td>The maximum retry delay in milliseconds. If $this->retriesEnabled()
-            is false, this setting is unused.</td>
+is false, this setting is unused.</td>
         </tr>
     </table>
 
@@ -858,7 +854,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getInitialRpcTimeoutMillis">
-        <div class="location">at         line 409</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L409">at line 409</a></div>
         <code>                    int
     <strong>getInitialRpcTimeoutMillis</strong>()
         </code>
@@ -875,8 +871,8 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>int</td>
             <td>The initial rpc timeout in milliseconds. If $this->retriesEnabled()
-            is false, this setting is unused - use noRetriesRpcTimeoutMillis to
-            set the timeout in that case.</td>
+is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+set the timeout in that case.</td>
         </tr>
     </table>
 
@@ -888,7 +884,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getRpcTimeoutMultiplier">
-        <div class="location">at         line 418</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L418">at line 418</a></div>
         <code>                    float
     <strong>getRpcTimeoutMultiplier</strong>()
         </code>
@@ -905,7 +901,7 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>float</td>
             <td>The rpc timeout multiplier. If $this->retriesEnabled()
-              is false, this setting is unused.</td>
+is false, this setting is unused.</td>
         </tr>
     </table>
 
@@ -917,7 +913,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getMaxRpcTimeoutMillis">
-        <div class="location">at         line 428</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L428">at line 428</a></div>
         <code>                    int
     <strong>getMaxRpcTimeoutMillis</strong>()
         </code>
@@ -934,8 +930,8 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>int</td>
             <td>The maximum rpc timeout in milliseconds. If $this->retriesEnabled()
-            is false, this setting is unused - use noRetriesRpcTimeoutMillis to
-            set the timeout in that case.</td>
+is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+set the timeout in that case.</td>
         </tr>
     </table>
 
@@ -947,7 +943,7 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
                     <div class="method-item">
                     <h3 id="method_getTotalTimeoutMillis">
-        <div class="location">at         line 439</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/RetrySettings.php#L439">at line 439</a></div>
         <code>                    int
     <strong>getTotalTimeoutMillis</strong>()
         </code>
@@ -964,9 +960,9 @@ with the settings specified in the $settings parameter.</p>                     
         <tr>
             <td>int</td>
             <td>The total time in milliseconds to spend on the call, including all
-            retry attempts and delays between attempts. If $this->retriesEnabled()
-            is false, this setting is unused - use noRetriesRpcTimeoutMillis to
-            set the timeout in that case.</td>
+retry attempts and delays between attempts. If $this->retriesEnabled()
+is false, this setting is unused - use noRetriesRpcTimeoutMillis to
+set the timeout in that case.</td>
         </tr>
     </table>
 
@@ -979,12 +975,9 @@ with the settings specified in the $settings parameter.</p>                     
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

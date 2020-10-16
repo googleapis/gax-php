@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_ApiException" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>ApiException</strong>        extends <a target="_blank" href="http://php.net/Exception">Exception</a>
+    <strong>ApiException</strong>        extends <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php">View source</a>)
 </p>
 
         
@@ -117,10 +113,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    static&nbsp;<a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
+                    static&nbsp;ApiException
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_createFromStdClass">createFromStdClass</a>(<a target="_blank" href="http://php.net/stdClass">stdClass</a> $status)
+                    <a href="#method_createFromStdClass">createFromStdClass</a>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -128,10 +124,10 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    static&nbsp;<a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
+                    static&nbsp;ApiException
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_createFromApiResponse">createFromApiResponse</a>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" href="http://php.net/Exception">Exception</a> $previous = null)
+                    <a href="#method_createFromApiResponse">createFromApiResponse</a>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a> $previous = null)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -139,7 +135,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    static&nbsp;<a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
+                    static&nbsp;ApiException
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_createFromRpcStatus">createFromRpcStatus</a>(<abbr title="Google\Rpc\Status">Status</abbr> $status)
@@ -161,7 +157,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    mixed[]
+                    array
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getMetadata">getMetadata</a>()
@@ -188,7 +184,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 58</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L58">at line 58</a></div>
         <code>                    
     <strong>__construct</strong>(string $message, int $code, string $status, array $optionalArgs = [])
         </code>
@@ -238,7 +234,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getStatus">
-        <div class="location">at         line 75</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L75">at line 75</a></div>
         <code>                    
     <strong>getStatus</strong>()
         </code>
@@ -257,9 +253,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_createFromStdClass">
-        <div class="location">at         line 84</div>
-        <code>        static            <a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
-    <strong>createFromStdClass</strong>(<a target="_blank" href="http://php.net/stdClass">stdClass</a> $status)
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L84">at line 84</a></div>
+        <code>        static            ApiException
+    <strong>createFromStdClass</strong>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
         </code>
     </h3>
     <div class="details">
@@ -271,7 +267,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a target="_blank" href="http://php.net/stdClass">stdClass</a></td>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a></td>
                 <td>$status</td>
                 <td></td>
             </tr>
@@ -282,7 +278,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+            <td>ApiException</td>
             <td></td>
         </tr>
     </table>
@@ -295,9 +291,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_createFromApiResponse">
-        <div class="location">at         line 102</div>
-        <code>        static            <a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
-    <strong>createFromApiResponse</strong>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" href="http://php.net/Exception">Exception</a> $previous = null)
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L102">at line 102</a></div>
+        <code>        static            ApiException
+    <strong>createFromApiResponse</strong>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a> $previous = null)
         </code>
     </h3>
     <div class="details">
@@ -324,7 +320,7 @@
                 <td></td>
             </tr>
                     <tr>
-                <td><a target="_blank" href="http://php.net/Exception">Exception</a></td>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a></td>
                 <td>$previous</td>
                 <td></td>
             </tr>
@@ -335,7 +331,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+            <td>ApiException</td>
             <td></td>
         </tr>
     </table>
@@ -348,8 +344,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_createFromRpcStatus">
-        <div class="location">at         line 150</div>
-        <code>        static            <a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L150">at line 150</a></div>
+        <code>        static            ApiException
     <strong>createFromRpcStatus</strong>(<abbr title="Google\Rpc\Status">Status</abbr> $status)
         </code>
     </h3>
@@ -373,7 +369,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+            <td>ApiException</td>
             <td></td>
         </tr>
     </table>
@@ -386,7 +382,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getBasicMessage">
-        <div class="location">at         line 163</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L163">at line 163</a></div>
         <code>                    null|string
     <strong>getBasicMessage</strong>()
         </code>
@@ -414,8 +410,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetadata">
-        <div class="location">at         line 171</div>
-        <code>                    mixed[]
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L171">at line 171</a></div>
+        <code>                    array
     <strong>getMetadata</strong>()
         </code>
     </h3>
@@ -429,7 +425,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td>mixed[]</td>
+            <td>array</td>
             <td></td>
         </tr>
     </table>
@@ -442,7 +438,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 180</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/ApiException.php#L180">at line 180</a></div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
@@ -473,12 +469,9 @@
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

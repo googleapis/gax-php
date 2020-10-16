@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_PathTemplate" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -80,7 +76,7 @@
 
     <p>    class
     <strong>PathTemplate</strong>        implements
-        <a href="../../Google/ApiCore/ResourceTemplate/ResourceTemplateInterface.html"><abbr title="Google\ApiCore\ResourceTemplate\ResourceTemplateInterface">ResourceTemplateInterface</abbr></a>
+        <a href="../../Google/ApiCore/ResourceTemplate/ResourceTemplateInterface.html"><abbr title="Google\ApiCore\ResourceTemplate\ResourceTemplateInterface">ResourceTemplateInterface</abbr></a>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/PathTemplate.php">View source</a>)
 </p>
 
         
@@ -157,7 +153,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 57</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/PathTemplate.php#L57">at line 57</a></div>
         <code>                    
     <strong>__construct</strong>(string $path)
         </code>
@@ -185,7 +181,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td>When $path cannot be parsed into a valid PathTemplate</td>
             </tr>
             </table>
@@ -197,7 +193,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
             </div>
                     <div class="method-item">
                     <h3 id="method___toString">
-        <div class="location">at         line 73</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/PathTemplate.php#L73">at line 73</a></div>
         <code>                    string
     <strong>__toString</strong>()
         </code>
@@ -225,7 +221,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
             </div>
                     <div class="method-item">
                     <h3 id="method_render">
-        <div class="location">at         line 86</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/PathTemplate.php#L86">at line 86</a></div>
         <code>                    string
     <strong>render</strong>(array $bindings)
         </code>
@@ -262,9 +258,9 @@ instance of PathTemplate, which can then be used to perform matching and instant
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td>if a key isn't provided or if a sub-template
-   can't be parsed.</td>
+can't be parsed.</td>
             </tr>
             </table>
 
@@ -275,7 +271,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
             </div>
                     <div class="method-item">
                     <h3 id="method_matches">
-        <div class="location">at         line 97</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/PathTemplate.php#L97">at line 97</a></div>
         <code>                    bool
     <strong>matches</strong>(string $path)
         </code>
@@ -315,7 +311,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
             </div>
                     <div class="method-item">
                     <h3 id="method_match">
-        <div class="location">at         line 109</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/PathTemplate.php#L109">at line 109</a></div>
         <code>                    array
     <strong>match</strong>(string $path)
         </code>
@@ -352,7 +348,7 @@ instance of PathTemplate, which can then be used to perform matching and instant
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td>if path can't be matched to the template.</td>
             </tr>
             </table>
@@ -365,12 +361,9 @@ instance of PathTemplate, which can then be used to perform matching and instant
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

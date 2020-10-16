@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
-        <script src="../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
         <script src="../../js/typeahead.min.js"></script>
-        <script src="../../sami.js"></script>
+        <script src="../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_OperationResponse" data-root-path="../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../classes.html">Classes</a></li>
-                                            <li><a href="../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../traits.html">Traits</a></li>
                     <li><a href="../../doc-index.html">Index</a></li>
                     <li><a href="../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>OperationResponse</strong>
+    <strong>OperationResponse</strong>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php">View source</a>)
 </p>
 
         
@@ -103,12 +99,8 @@ using an OperationsClient instance.</p>                    </div>
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
-                                            <a href="../../Google/ApiCore/PollingTrait.html"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a>
-                                            
-                </div>
-                <div class="col-md-6">
-                    
-                </div>
+                    <a href="../../Google/ApiCore/PollingTrait.html"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a>    </div>
+                <div class="col-md-6"></div>
             </div>
             </div>
     
@@ -158,7 +150,8 @@ using an OperationsClient instance.</p>                    </div>
                     <a href="#method_getCurrentTimeMillis">getCurrentTimeMillis</a>()
         
                                             <p>Protected to allow overriding for tests</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/PollingTrait.html#method_getCurrentTimeMillis"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/PollingTrait.html#method_getCurrentTimeMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -168,14 +161,15 @@ using an OperationsClient instance.</p>                    </div>
                     <a href="#method_sleepMillis">sleepMillis</a>(float $millis)
         
                                             <p>Protected to allow overriding for tests</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/PollingTrait.html#method_sleepMillis"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/PollingTrait.html#method_sleepMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(string $operationName, <a href="../../Google/ApiCore/LongRunning/OperationsClient.html"><abbr title="Google\ApiCore\LongRunning\OperationsClient">OperationsClient</abbr></a> $operationsClient, array $options = [])
+                    <a href="#method___construct">__construct</a>(string $operationName, OperationsClient $operationsClient, array $options = [])
         
                                             <p>OperationResponse constructor.</p>                </div>
                 <div class="col-md-2"></div>
@@ -254,7 +248,7 @@ succeeded, return false.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="Google\Rpc\Status">Status</abbr>|null
+                    Status|null
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getError">getError</a>()
@@ -277,7 +271,7 @@ constructor when creating another OperationResponse object.</p>                <
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="Google\LongRunning\Operation">Operation</abbr>|null
+                    Operation|null
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getLastProtoResponse">getLastProtoResponse</a>()
@@ -288,7 +282,7 @@ constructor when creating another OperationResponse object.</p>                <
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../Google/ApiCore/LongRunning/OperationsClient.html"><abbr title="Google\ApiCore\LongRunning\OperationsClient">OperationsClient</abbr></a>
+                    OperationsClient
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getOperationsClient">getOperationsClient</a>()
@@ -343,7 +337,8 @@ no metadata object is available, returns null.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_getCurrentTimeMillis">
-        <div class="location">in <a href="../../Google/ApiCore/PollingTrait.html#method_getCurrentTimeMillis"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a> at         line 80</div>
+        <div class="location">in <a href="../../Google/ApiCore/PollingTrait.html#method_getCurrentTimeMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/PollingTrait.php#L80">at line 80</a></div>
         <code>            protected        float
     <strong>getCurrentTimeMillis</strong>()
         </code>
@@ -373,7 +368,8 @@ no metadata object is available, returns null.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_sleepMillis">
-        <div class="location">in <a href="../../Google/ApiCore/PollingTrait.html#method_sleepMillis"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a> at         line 90</div>
+        <div class="location">in <a href="../../Google/ApiCore/PollingTrait.html#method_sleepMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/PollingTrait.php#L90">at line 90</a></div>
         <code>            protected        
     <strong>sleepMillis</strong>(float $millis)
         </code>
@@ -404,9 +400,9 @@ no metadata object is available, returns null.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 96</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L96">at line 96</a></div>
         <code>                    
-    <strong>__construct</strong>(string $operationName, <a href="../../Google/ApiCore/LongRunning/OperationsClient.html"><abbr title="Google\ApiCore\LongRunning\OperationsClient">OperationsClient</abbr></a> $operationsClient, array $options = [])
+    <strong>__construct</strong>(string $operationName, OperationsClient $operationsClient, array $options = [])
         </code>
     </h3>
     <div class="details">
@@ -425,7 +421,7 @@ no metadata object is available, returns null.</p>                </div>
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/LongRunning/OperationsClient.html"><abbr title="Google\ApiCore\LongRunning\OperationsClient">OperationsClient</abbr></a></td>
+                <td>OperationsClient</td>
                 <td>$operationsClient</td>
                 <td></td>
             </tr>
@@ -457,7 +453,7 @@ no metadata object is available, returns null.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_isDone">
-        <div class="location">at         line 128</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L128">at line 128</a></div>
         <code>                    bool
     <strong>isDone</strong>()
         </code>
@@ -487,7 +483,7 @@ no metadata object is available, returns null.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_operationSucceeded">
-        <div class="location">at         line 141</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L141">at line 141</a></div>
         <code>                    bool
     <strong>operationSucceeded</strong>()
         </code>
@@ -518,7 +514,7 @@ failed, return false.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_operationFailed">
-        <div class="location">at         line 152</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L152">at line 152</a></div>
         <code>                    bool
     <strong>operationFailed</strong>()
         </code>
@@ -549,7 +545,7 @@ succeeded, return false.</p>                                                </di
             </div>
                     <div class="method-item">
                     <h3 id="method_getName">
-        <div class="location">at         line 162</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L162">at line 162</a></div>
         <code>                    string
     <strong>getName</strong>()
         </code>
@@ -579,7 +575,7 @@ succeeded, return false.</p>                                                </di
             </div>
                     <div class="method-item">
                     <h3 id="method_pollUntilComplete">
-        <div class="location">at         line 187</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L187">at line 187</a></div>
         <code>                    bool
     <strong>pollUntilComplete</strong>(array $options = [])
         </code>
@@ -628,11 +624,11 @@ and therefore will always return true.</p>                            </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td>If an API call fails.</td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
             </table>
@@ -644,7 +640,7 @@ and therefore will always return true.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_reload">
-        <div class="location">at         line 206</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L206">at line 206</a></div>
         <code>                    
     <strong>reload</strong>()
         </code>
@@ -662,11 +658,11 @@ and therefore will always return true.</p>                            </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td>If the API call fails.</td>
             </tr>
                     <tr>
-                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td>If called on a deleted operation.</td>
             </tr>
             </table>
@@ -678,7 +674,7 @@ and therefore will always return true.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getResult">
-        <div class="location">at         line 220</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L220">at line 220</a></div>
         <code>                    mixed|null
     <strong>getResult</strong>()
         </code>
@@ -708,8 +704,8 @@ and therefore will always return true.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getError">
-        <div class="location">at         line 244</div>
-        <code>                    <abbr title="Google\Rpc\Status">Status</abbr>|null
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L244">at line 244</a></div>
+        <code>                    Status|null
     <strong>getError</strong>()
         </code>
     </h3>
@@ -725,9 +721,9 @@ and therefore will always return true.</p>                            </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="Google\Rpc\Status">Status</abbr>|null</td>
+            <td>Status|null</td>
             <td>The status of the operation in case of failure, or null if
-                                operationFailed() is false.</td>
+operationFailed() is false.</td>
         </tr>
     </table>
 
@@ -739,7 +735,7 @@ and therefore will always return true.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getDescriptorOptions">
-        <div class="location">at         line 260</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L260">at line 260</a></div>
         <code>                    array
     <strong>getDescriptorOptions</strong>()
         </code>
@@ -772,8 +768,8 @@ constructor when creating another OperationResponse object.</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method_getLastProtoResponse">
-        <div class="location">at         line 271</div>
-        <code>                    <abbr title="Google\LongRunning\Operation">Operation</abbr>|null
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L271">at line 271</a></div>
+        <code>                    Operation|null
     <strong>getLastProtoResponse</strong>()
         </code>
     </h3>
@@ -787,7 +783,7 @@ constructor when creating another OperationResponse object.</p>                 
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="Google\LongRunning\Operation">Operation</abbr>|null</td>
+            <td>Operation|null</td>
             <td>The last Operation object received from the server.</td>
         </tr>
     </table>
@@ -800,8 +796,8 @@ constructor when creating another OperationResponse object.</p>                 
             </div>
                     <div class="method-item">
                     <h3 id="method_getOperationsClient">
-        <div class="location">at         line 280</div>
-        <code>                    <a href="../../Google/ApiCore/LongRunning/OperationsClient.html"><abbr title="Google\ApiCore\LongRunning\OperationsClient">OperationsClient</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L280">at line 280</a></div>
+        <code>                    OperationsClient
     <strong>getOperationsClient</strong>()
         </code>
     </h3>
@@ -815,7 +811,7 @@ constructor when creating another OperationResponse object.</p>                 
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../Google/ApiCore/LongRunning/OperationsClient.html"><abbr title="Google\ApiCore\LongRunning\OperationsClient">OperationsClient</abbr></a></td>
+            <td>OperationsClient</td>
             <td>The OperationsClient object used to make
 requests to the operations API.</td>
         </tr>
@@ -829,7 +825,7 @@ requests to the operations API.</td>
             </div>
                     <div class="method-item">
                     <h3 id="method_cancel">
-        <div class="location">at         line 298</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L298">at line 298</a></div>
         <code>                    
     <strong>cancel</strong>()
         </code>
@@ -854,7 +850,7 @@ corresponding to \Google\Rpc\Code::CANCELLED.</p>                            </d
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td>If the API call fails.</td>
             </tr>
             </table>
@@ -866,7 +862,7 @@ corresponding to \Google\Rpc\Code::CANCELLED.</p>                            </d
             </div>
                     <div class="method-item">
                     <h3 id="method_delete">
-        <div class="location">at         line 311</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L311">at line 311</a></div>
         <code>                    
     <strong>delete</strong>()
         </code>
@@ -886,7 +882,7 @@ code \Google\Rpc\Code::UNIMPLEMENTED.</p>                            </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td>ApiException</td>
                 <td>If the API call fails.</td>
             </tr>
             </table>
@@ -898,7 +894,7 @@ code \Google\Rpc\Code::UNIMPLEMENTED.</p>                            </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getMetadata">
-        <div class="location">at         line 324</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/OperationResponse.php#L324">at line 324</a></div>
         <code>                    mixed
     <strong>getMetadata</strong>()
         </code>
@@ -931,12 +927,9 @@ no metadata object is available, returns null.</p>                              
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

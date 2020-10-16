@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
-        <script src="../../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
         <script src="../../../js/typeahead.min.js"></script>
-        <script src="../../../sami.js"></script>
+        <script src="../../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Testing_MockTransport" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../../classes.html">Classes</a></li>
-                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../../traits.html">Traits</a></li>
                     <li><a href="../../../doc-index.html">Index</a></li>
                     <li><a href="../../../search.html">Search</a></li>
@@ -80,7 +76,7 @@
 
     <p>    class
     <strong>MockTransport</strong>        implements
-        <a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>
+        <a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php">View source</a>)
 </p>
 
         
@@ -93,15 +89,11 @@
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
-                                            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
-                                            
-                </div>
-                <div class="col-md-6">
-                    The MockStubTrait is used by generated mock stub classes which extent \Grpc\BaseStub
+                    <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>    </div>
+                <div class="col-md-6">The MockStubTrait is used by generated mock stub classes which extent \Grpc\BaseStub
 (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
 It provides functionality to add responses, get received calls, and overrides the _simpleRequest
-method so that the elements of $responses are returned instead of making a call to the API.
-                </div>
+method so that the elements of $responses are returned instead of making a call to the API.</div>
             </div>
             </div>
     
@@ -119,11 +111,12 @@ method so that the elements of $responses are returned instead of making a call 
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method___construct"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method___construct">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a>
+                    MockUnaryCall
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method__simpleRequest">_simpleRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
@@ -131,11 +124,12 @@ method so that the elements of $responses are returned instead of making a call 
                                             <p>Overrides the _simpleRequest method in \Grpc\BaseStub
 (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
 Returns a MockUnaryCall object that will return the first item from $responses</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__simpleRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__simpleRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a>
+                    MockClientStreamingCall
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method__clientStreamRequest">_clientStreamRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
@@ -143,11 +137,12 @@ Returns a MockUnaryCall object that will return the first item from $responses</
                                             <p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
 (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
 Returns a MockClientStreamingCall object that will return the first item from $responses</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__clientStreamRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__clientStreamRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a>
+                    MockServerStreamingCall
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method__serverStreamRequest">_serverStreamRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
@@ -156,11 +151,12 @@ Returns a MockClientStreamingCall object that will return the first item from $r
 (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
 Returns a MockServerStreamingCall object that will stream items from $responses, and return
 a final status of $serverStreamingStatus.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__serverStreamRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__serverStreamRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a>
+                    MockBidiStreamingCall
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method__bidiRequest">_bidiRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
@@ -169,7 +165,8 @@ a final status of $serverStreamingStatus.</p>                </div>
 (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php)
 Returns a MockBidiStreamingCall object that will stream items from $responses, and return
 a final status of $serverStreamingStatus.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__bidiRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__bidiRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -180,38 +177,42 @@ a final status of $serverStreamingStatus.</p>                </div>
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_stripStatusFromResponses"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_stripStatusFromResponses">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_addResponse">addResponse</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <abbr title="Google\Rpc\Status">Status</abbr> $status = null)
+                    <a href="#method_addResponse">addResponse</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, Status $status = null)
         
                                             <p>Add a response object, and an optional status, to the list of responses to be returned via
 _simpleRequest.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_addResponse"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_addResponse">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_setStreamingStatus">setStreamingStatus</a>(<abbr title="Google\Rpc\Status">Status</abbr> $status)
+                    <a href="#method_setStreamingStatus">setStreamingStatus</a>(Status $status)
         
                                             <p>Set the status object to be used when creating streaming calls.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_setStreamingStatus"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_setStreamingStatus">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]
+                    ReceivedRequest[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_popReceivedCalls">popReceivedCalls</a>()
         
                                             <p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popReceivedCalls"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popReceivedCalls">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -222,18 +223,20 @@ _simpleRequest.</p>                </div>
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_getReceivedCallCount"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_getReceivedCallCount">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    mixed[]
+                    array
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_popCallObjects">popCallObjects</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popCallObjects"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popCallObjects">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -244,7 +247,8 @@ _simpleRequest.</p>                </div>
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_isExhausted"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_isExhausted">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -255,17 +259,19 @@ _simpleRequest.</p>                </div>
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_create"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_create">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     static&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_createWithResponseSequence">createWithResponseSequence</a>(mixed[] $sequence, callable $deserialize = null, <abbr title="Google\Rpc\Status">Status</abbr> $finalStatus = null)
+                    <a href="#method_createWithResponseSequence">createWithResponseSequence</a>(array $sequence, callable $deserialize = null, Status $finalStatus = null)
         
                                             <p>Creates a sequence such that the responses are returned in order.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_createWithResponseSequence"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_createWithResponseSequence">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -280,7 +286,7 @@ _simpleRequest.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
+                    PromiseInterface
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_startUnaryCall">startUnaryCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
@@ -290,7 +296,7 @@ _simpleRequest.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/BidiStream.html"><abbr title="Google\ApiCore\BidiStream">BidiStream</abbr></a>
+                    BidiStream
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_startBidiStreamingCall">startBidiStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
@@ -300,7 +306,7 @@ _simpleRequest.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/ClientStream.html"><abbr title="Google\ApiCore\ClientStream">ClientStream</abbr></a>
+                    ClientStream
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_startClientStreamingCall">startClientStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
@@ -310,7 +316,7 @@ _simpleRequest.</p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../Google/ApiCore/ServerStream.html"><abbr title="Google\ApiCore\ServerStream">ServerStream</abbr></a>
+                    ServerStream
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_startServerStreamingCall">startServerStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
@@ -347,7 +353,8 @@ _simpleRequest.</p>                </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method___construct"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 53</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method___construct">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L53">at line 53</a></div>
         <code>                    
     <strong>__construct</strong>($deserialize = null)
         </code>
@@ -376,8 +383,9 @@ _simpleRequest.</p>                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method__simpleRequest">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__simpleRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 69</div>
-        <code>                    <a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__simpleRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L69">at line 69</a></div>
+        <code>                    MockUnaryCall
     <strong>_simpleRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
@@ -425,7 +433,7 @@ Returns a MockUnaryCall object that will return the first item from $responses</
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a></td>
+            <td>MockUnaryCall</td>
             <td></td>
         </tr>
     </table>
@@ -438,8 +446,9 @@ Returns a MockUnaryCall object that will return the first item from $responses</
             </div>
                     <div class="method-item">
                     <h3 id="method__clientStreamRequest">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__clientStreamRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 99</div>
-        <code>                    <a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__clientStreamRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L99">at line 99</a></div>
+        <code>                    MockClientStreamingCall
     <strong>_clientStreamRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
@@ -469,7 +478,7 @@ Returns a MockClientStreamingCall object that will return the first item from $r
                 <td>array</td>
                 <td>$metadata</td>
                 <td>A metadata map to send to the server
-                             (optional)</td>
+(optional)</td>
             </tr>
                     <tr>
                 <td>array</td>
@@ -483,7 +492,7 @@ Returns a MockClientStreamingCall object that will return the first item from $r
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a></td>
+            <td>MockClientStreamingCall</td>
             <td>The active call object</td>
         </tr>
     </table>
@@ -496,8 +505,9 @@ Returns a MockClientStreamingCall object that will return the first item from $r
             </div>
                     <div class="method-item">
                     <h3 id="method__serverStreamRequest">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__serverStreamRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 130</div>
-        <code>                    <a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__serverStreamRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L130">at line 130</a></div>
+        <code>                    MockServerStreamingCall
     <strong>_serverStreamRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
@@ -533,7 +543,7 @@ a final status of $serverStreamingStatus.</p>                                   
                 <td>array</td>
                 <td>$metadata</td>
                 <td>A metadata map to send to the server
-                             (optional)</td>
+(optional)</td>
             </tr>
                     <tr>
                 <td>array</td>
@@ -547,7 +557,7 @@ a final status of $serverStreamingStatus.</p>                                   
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a></td>
+            <td>MockServerStreamingCall</td>
             <td>The active call object</td>
         </tr>
     </table>
@@ -560,8 +570,9 @@ a final status of $serverStreamingStatus.</p>                                   
             </div>
                     <div class="method-item">
                     <h3 id="method__bidiRequest">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__bidiRequest"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 166</div>
-        <code>                    <a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method__bidiRequest">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L166">at line 166</a></div>
+        <code>                    MockBidiStreamingCall
     <strong>_bidiRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
@@ -592,7 +603,7 @@ a final status of $serverStreamingStatus.</p>                                   
                 <td>array</td>
                 <td>$metadata</td>
                 <td>A metadata map to send to the server
-                             (optional)</td>
+(optional)</td>
             </tr>
                     <tr>
                 <td>array</td>
@@ -606,7 +617,7 @@ a final status of $serverStreamingStatus.</p>                                   
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a></td>
+            <td>MockBidiStreamingCall</td>
             <td>The active call object</td>
         </tr>
     </table>
@@ -619,7 +630,8 @@ a final status of $serverStreamingStatus.</p>                                   
             </div>
                     <div class="method-item">
                     <h3 id="method_stripStatusFromResponses">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_stripStatusFromResponses"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 181</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_stripStatusFromResponses">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L181">at line 181</a></div>
         <code>        static            
     <strong>stripStatusFromResponses</strong>($responses)
         </code>
@@ -648,9 +660,10 @@ a final status of $serverStreamingStatus.</p>                                   
             </div>
                     <div class="method-item">
                     <h3 id="method_addResponse">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_addResponse"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 197</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_addResponse">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L197">at line 197</a></div>
         <code>                    
-    <strong>addResponse</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <abbr title="Google\Rpc\Status">Status</abbr> $status = null)
+    <strong>addResponse</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, Status $status = null)
         </code>
     </h3>
     <div class="details">
@@ -670,7 +683,7 @@ _simpleRequest.</p>                                                </div>
                 <td></td>
             </tr>
                     <tr>
-                <td><abbr title="Google\Rpc\Status">Status</abbr></td>
+                <td>Status</td>
                 <td>$status</td>
                 <td></td>
             </tr>
@@ -685,9 +698,10 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setStreamingStatus">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_setStreamingStatus"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 214</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_setStreamingStatus">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L214">at line 214</a></div>
         <code>                    
-    <strong>setStreamingStatus</strong>(<abbr title="Google\Rpc\Status">Status</abbr> $status)
+    <strong>setStreamingStatus</strong>(Status $status)
         </code>
     </h3>
     <div class="details">
@@ -701,7 +715,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="Google\Rpc\Status">Status</abbr></td>
+                <td>Status</td>
                 <td>$status</td>
                 <td></td>
             </tr>
@@ -716,8 +730,9 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_popReceivedCalls">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popReceivedCalls"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 224</div>
-        <code>                    <a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popReceivedCalls">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L224">at line 224</a></div>
+        <code>                    ReceivedRequest[]
     <strong>popReceivedCalls</strong>()
         </code>
     </h3>
@@ -733,7 +748,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]</td>
+            <td>ReceivedRequest[]</td>
             <td>An array of received requests</td>
         </tr>
     </table>
@@ -746,7 +761,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_getReceivedCallCount">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_getReceivedCallCount"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 234</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_getReceivedCallCount">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L234">at line 234</a></div>
         <code>                    int
     <strong>getReceivedCallCount</strong>()
         </code>
@@ -774,8 +790,9 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_popCallObjects">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popCallObjects"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 242</div>
-        <code>                    mixed[]
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popCallObjects">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L242">at line 242</a></div>
+        <code>                    array
     <strong>popCallObjects</strong>()
         </code>
     </h3>
@@ -789,7 +806,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td>mixed[]</td>
+            <td>array</td>
             <td>The call objects created by calls to the stub</td>
         </tr>
     </table>
@@ -802,7 +819,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_isExhausted">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_isExhausted"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 252</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_isExhausted">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L252">at line 252</a></div>
         <code>                    bool
     <strong>isExhausted</strong>()
         </code>
@@ -830,7 +848,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_create">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_create"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 264</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_create">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L264">at line 264</a></div>
         <code>        static            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
     <strong>create</strong>(mixed $responseObject, $status = null, callable $deserialize = null)
         </code>
@@ -878,9 +897,10 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_createWithResponseSequence">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_createWithResponseSequence"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> at         line 278</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_createWithResponseSequence">
+<abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockStubTrait.php#L278">at line 278</a></div>
         <code>        static            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
-    <strong>createWithResponseSequence</strong>(mixed[] $sequence, callable $deserialize = null, <abbr title="Google\Rpc\Status">Status</abbr> $finalStatus = null)
+    <strong>createWithResponseSequence</strong>(array $sequence, callable $deserialize = null, Status $finalStatus = null)
         </code>
     </h3>
     <div class="details">
@@ -894,7 +914,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td>mixed[]</td>
+                <td>array</td>
                 <td>$sequence</td>
                 <td></td>
             </tr>
@@ -904,7 +924,7 @@ _simpleRequest.</p>                                                </div>
                 <td></td>
             </tr>
                     <tr>
-                <td><abbr title="Google\Rpc\Status">Status</abbr></td>
+                <td>Status</td>
                 <td>$finalStatus</td>
                 <td></td>
             </tr>
@@ -928,7 +948,7 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_setAgentHeaderDescriptor">
-        <div class="location">at         line 50</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L50">at line 50</a></div>
         <code>                    
     <strong>setAgentHeaderDescriptor</strong>($agentHeaderDescriptor)
         </code>
@@ -957,8 +977,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_startUnaryCall">
-        <div class="location">at         line 55</div>
-        <code>                    <abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L55">at line 55</a></div>
+        <code>                    PromiseInterface
     <strong>startUnaryCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
@@ -989,7 +1009,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><abbr title="GuzzleHttp\Promise\PromiseInterface">PromiseInterface</abbr></td>
+            <td>PromiseInterface</td>
             <td></td>
         </tr>
     </table>
@@ -999,7 +1019,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td>ValidationException</td>
                 <td></td>
             </tr>
             </table>
@@ -1011,8 +1031,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_startBidiStreamingCall">
-        <div class="location">at         line 72</div>
-        <code>                    <a href="../../../Google/ApiCore/BidiStream.html"><abbr title="Google\ApiCore\BidiStream">BidiStream</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L72">at line 72</a></div>
+        <code>                    BidiStream
     <strong>startBidiStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
@@ -1043,7 +1063,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/BidiStream.html"><abbr title="Google\ApiCore\BidiStream">BidiStream</abbr></a></td>
+            <td>BidiStream</td>
             <td></td>
         </tr>
     </table>
@@ -1056,8 +1076,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_startClientStreamingCall">
-        <div class="location">at         line 79</div>
-        <code>                    <a href="../../../Google/ApiCore/ClientStream.html"><abbr title="Google\ApiCore\ClientStream">ClientStream</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L79">at line 79</a></div>
+        <code>                    ClientStream
     <strong>startClientStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
@@ -1088,7 +1108,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/ClientStream.html"><abbr title="Google\ApiCore\ClientStream">ClientStream</abbr></a></td>
+            <td>ClientStream</td>
             <td></td>
         </tr>
     </table>
@@ -1101,8 +1121,8 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_startServerStreamingCall">
-        <div class="location">at         line 86</div>
-        <code>                    <a href="../../../Google/ApiCore/ServerStream.html"><abbr title="Google\ApiCore\ServerStream">ServerStream</abbr></a>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L86">at line 86</a></div>
+        <code>                    ServerStream
     <strong>startServerStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
@@ -1133,7 +1153,7 @@ _simpleRequest.</p>                                                </div>
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../Google/ApiCore/ServerStream.html"><abbr title="Google\ApiCore\ServerStream">ServerStream</abbr></a></td>
+            <td>ServerStream</td>
             <td></td>
         </tr>
     </table>
@@ -1146,7 +1166,7 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method___call">
-        <div class="location">at         line 93</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L93">at line 93</a></div>
         <code>                    
     <strong>__call</strong>($name, $arguments)
         </code>
@@ -1180,7 +1200,7 @@ _simpleRequest.</p>                                                </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_close">
-        <div class="location">at         line 107</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockTransport.php#L107">at line 107</a></div>
         <code>                    
     <strong>close</strong>()
         </code>
@@ -1202,12 +1222,9 @@ _simpleRequest.</p>                                                </div>
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

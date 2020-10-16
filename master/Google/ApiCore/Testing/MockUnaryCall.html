@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
-        <script src="../../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
         <script src="../../../js/typeahead.min.js"></script>
-        <script src="../../../sami.js"></script>
+        <script src="../../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Testing_MockUnaryCall" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../../classes.html">Classes</a></li>
-                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../../traits.html">Traits</a></li>
                     <li><a href="../../../doc-index.html">Index</a></li>
                     <li><a href="../../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>MockUnaryCall</strong>        extends <abbr title="Grpc\UnaryCall">UnaryCall</abbr>
+    <strong>MockUnaryCall</strong>        extends <abbr title="Grpc\UnaryCall">UnaryCall</abbr>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockUnaryCall.php">View source</a>)
 </p>
 
         
@@ -97,12 +93,8 @@ wait() method.</p>                    </div>
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
-                                            <a href="../../../Google/ApiCore/Testing/SerializationTrait.html"><abbr title="Google\ApiCore\Testing\SerializationTrait">SerializationTrait</abbr></a>
-                                            
-                </div>
-                <div class="col-md-6">
-                    
-                </div>
+                    <a href="../../../Google/ApiCore/Testing/SerializationTrait.html"><abbr title="Google\ApiCore\Testing\SerializationTrait">SerializationTrait</abbr></a>    </div>
+                <div class="col-md-6"></div>
             </div>
             </div>
     
@@ -120,14 +112,15 @@ wait() method.</p>                    </div>
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/SerializationTrait.html#method_deserializeMessage"><abbr title="Google\ApiCore\Testing\SerializationTrait">SerializationTrait</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/SerializationTrait.html#method_deserializeMessage">
+<abbr title="Google\ApiCore\Testing\SerializationTrait">SerializationTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, <a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null $status = null)
+                    <a href="#method___construct">__construct</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, MockStatus|null $status = null)
         
                                             <p>MockUnaryCall constructor.</p>                </div>
                 <div class="col-md-2"></div>
@@ -150,7 +143,8 @@ wait() method.</p>                    </div>
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_deserializeMessage">
-        <div class="location">in <a href="../../../Google/ApiCore/Testing/SerializationTrait.html#method_deserializeMessage"><abbr title="Google\ApiCore\Testing\SerializationTrait">SerializationTrait</abbr></a> at         line 38</div>
+        <div class="location">in <a href="../../../Google/ApiCore/Testing/SerializationTrait.html#method_deserializeMessage">
+<abbr title="Google\ApiCore\Testing\SerializationTrait">SerializationTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/SerializationTrait.php#L38">at line 38</a></div>
         <code>            protected        
     <strong>deserializeMessage</strong>($message, $deserialize)
         </code>
@@ -184,9 +178,9 @@ wait() method.</p>                    </div>
             </div>
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 58</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockUnaryCall.php#L58">at line 58</a></div>
         <code>                    
-    <strong>__construct</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, <a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null $status = null)
+    <strong>__construct</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, MockStatus|null $status = null)
         </code>
     </h3>
     <div class="details">
@@ -210,7 +204,7 @@ wait() method.</p>                    </div>
                 <td>An optional deserialize method for the response object.</td>
             </tr>
                     <tr>
-                <td><a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null</td>
+                <td>MockStatus|null</td>
                 <td>$status</td>
                 <td>An optional status object. If set to null, a status of OK is used.</td>
             </tr>
@@ -225,7 +219,7 @@ wait() method.</p>                    </div>
             </div>
                     <div class="method-item">
                     <h3 id="method_wait">
-        <div class="location">at         line 72</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/MockUnaryCall.php#L72">at line 72</a></div>
         <code>                    array
     <strong>wait</strong>()
         </code>
@@ -256,12 +250,9 @@ wait() method.</p>                    </div>
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 

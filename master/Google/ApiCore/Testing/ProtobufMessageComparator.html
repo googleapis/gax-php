@@ -7,27 +7,23 @@
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
-        <script src="../../../js/jquery-1.11.1.min.js"></script>
-        <script src="../../../js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
         <script src="../../../js/typeahead.min.js"></script>
-        <script src="../../../sami.js"></script>
+        <script src="../../../doctum.js"></script>
         <meta name="MobileOptimized" content="width">
         <meta name="HandheldFriendly" content="true">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    
-    
     </head>
 
     <body id="class" data-name="class:Google_ApiCore_Testing_ProtobufMessageComparator" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
-                <script>
-            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
-        </script>
-        <form id="search-form" action="../../../search.html" method="GET">
-            <span class="glyphicon glyphicon-search"></span>
+                <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
             <input name="search"
                    class="typeahead form-control"
                    type="search"
@@ -53,8 +49,8 @@
             <div class="collapse navbar-collapse" id="navbar-elements">
                 <ul class="nav navbar-nav">
                     <li><a href="../../../classes.html">Classes</a></li>
-                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
-                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
                     <li><a href="../../../traits.html">Traits</a></li>
                     <li><a href="../../../doc-index.html">Index</a></li>
                     <li><a href="../../../search.html">Search</a></li>
@@ -79,7 +75,7 @@
     </div>
 
     <p>    class
-    <strong>ProtobufMessageComparator</strong>        extends <abbr title="SebastianBergmann\Comparator\Comparator">Comparator</abbr>
+    <strong>ProtobufMessageComparator</strong>        extends <abbr title="SebastianBergmann\Comparator\Comparator">Comparator</abbr>        (<a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/ProtobufMessageComparator.php">View source</a>)
 </p>
 
         
@@ -93,7 +89,7 @@
             <table class="table table-condensed">
                     <tr>
                 <td class="type" id="property_exporter">
-                                        protected                                        <abbr title="SebastianBergmann\Exporter\Exporter">Exporter</abbr>
+                                        protected                                        Exporter
                 </td>
                 <td>$exporter</td>
                 <td class="last"></td>
@@ -118,7 +114,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    boolean
+                    bool
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_accepts">accepts</a>(mixed $expected, mixed $actual)
@@ -131,7 +127,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_assertEquals">assertEquals</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $expected, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
+                    <a href="#method_assertEquals">assertEquals</a>(Message $expected, Message $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
         
                                             <p>Asserts that two values are equal.</p>                </div>
                 <div class="col-md-2"></div>
@@ -144,7 +140,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         line 30</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/ProtobufMessageComparator.php#L30">at line 30</a></div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -163,8 +159,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_accepts">
-        <div class="location">at         line 43</div>
-        <code>                    boolean
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/ProtobufMessageComparator.php#L43">at line 43</a></div>
+        <code>                    bool
     <strong>accepts</strong>(mixed $expected, mixed $actual)
         </code>
     </h3>
@@ -195,7 +191,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td>boolean</td>
+            <td>bool</td>
             <td></td>
         </tr>
     </table>
@@ -208,9 +204,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_assertEquals">
-        <div class="location">at         line 63</div>
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/master/src/Testing/ProtobufMessageComparator.php#L63">at line 63</a></div>
         <code>                    
-    <strong>assertEquals</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $expected, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
+    <strong>assertEquals</strong>(Message $expected, Message $actual, float|int $delta = 0, bool $canonicalize = FALSE, bool $ignoreCase = FALSE)
         </code>
     </h3>
     <div class="details">
@@ -224,12 +220,12 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>Message</td>
                 <td>$expected</td>
                 <td>The first value to compare</td>
             </tr>
                     <tr>
-                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>Message</td>
                 <td>$actual</td>
                 <td>The second value to compare</td>
             </tr>
@@ -237,19 +233,19 @@
                 <td>float|int</td>
                 <td>$delta</td>
                 <td>The allowed numerical distance between two values to
-                     consider them equal</td>
+consider them equal</td>
             </tr>
                     <tr>
                 <td>bool</td>
                 <td>$canonicalize</td>
                 <td>If set to TRUE, arrays are sorted before
-                            comparison</td>
+comparison</td>
             </tr>
                     <tr>
                 <td>bool</td>
                 <td>$ignoreCase</td>
                 <td>If set to TRUE, upper- and lowercasing is
-                          ignored when comparing string values</td>
+ignored when comparing string values</td>
             </tr>
             </table>
 
@@ -259,10 +255,10 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="SebastianBergmann\Comparator\ComparisonFailure">ComparisonFailure</abbr></td>
+                <td>ComparisonFailure</td>
                 <td>Thrown when the comparison
-                          fails. Contains information about the
-                          specific errors that lead to the failure.</td>
+fails. Contains information about the
+specific errors that lead to the failure.</td>
             </tr>
             </table>
 
@@ -274,12 +270,9 @@
             </div>
 
     
-            </div>
-                <div id="footer">
-        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
-    </div>
-
-        </div>
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
     </div>
     </body>
 
