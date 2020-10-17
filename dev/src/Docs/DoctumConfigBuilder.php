@@ -64,7 +64,6 @@ class DoctumConfigBuilder
             'build_dir'            => "$gaxRootDir/tmp_gh-pages/%version%",
             'cache_dir'            => "$gaxRootDir/cache/%version%",
             'remote_repository'    => new GitHubRemoteRepository('googleapis/gax-php', $gaxRootDir),
-            'default_opened_level' => 1,
         ]);
     }
 }
