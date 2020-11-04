@@ -87,7 +87,7 @@ trait HttpUnaryTransportTrait
     private static function buildCommonHeaders(array $options)
     {
         $headers = isset($options['headers'])
-            ? $options['headers']
+            ? (array) $options['headers']
             : [];
 
         // If not already set, add an auth header to the request
@@ -101,7 +101,7 @@ trait HttpUnaryTransportTrait
             // Prevent unexpected behavior, as the authorization header callback
             // uses lowercase "authorization"
             unset($headers['authorization']);
-            $headers += $callback();
+            $headers += (array) $callback();
         }
 
         return $headers;
