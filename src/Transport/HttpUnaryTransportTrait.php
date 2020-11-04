@@ -101,7 +101,7 @@ trait HttpUnaryTransportTrait
             // Prevent unexpected behavior, as the authorization header callback
             // uses lowercase "authorization"
             unset($headers['authorization']);
-            $headers += (array) $callback();
+            $headers += $callback();
         }
 
         return $headers;

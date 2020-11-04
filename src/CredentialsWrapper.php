@@ -194,7 +194,7 @@ class CredentialsWrapper
             if (self::isExpired($token)) {
                 // Call updateMetadata to take advantage of self-signed JWTs
                 if ($credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $credentialsFetcher->updateMetadata([], $audience);
+                    return (array) $credentialsFetcher->updateMetadata([], $audience);
                 }
 
                 // In case a custom fetcher is provided (unlikely) which doesn't
