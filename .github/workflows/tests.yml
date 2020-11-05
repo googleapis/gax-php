@@ -17,7 +17,7 @@ jobs:
                     extensions: "protobuf-3.12.2,grpc"
                     tools: "pecl"
                   - php: 7.3
-                    extensions: "protobuf-3.12.2,grpc"
+                    extensions: "protobuf,grpc"
                     tools: "pecl"
         name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}"
         steps:
