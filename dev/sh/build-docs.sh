@@ -3,7 +3,7 @@
 # Script to build doc site.
 # This script expects to be invoked from the gax-php root.
 #
-# This script will look for the TRAVIS_TAG environment variable, and
+# This script will look for the GITHUB_REF environment variable, and
 # use that as the version number. If no environment variable is found,
 # it will use the first command line argument. If no command line
 # argument is specified, default to 'master'.
@@ -18,9 +18,13 @@ DOCTUM_EXECUTABLE=${ROOT_DIR}/doctum.phar
 DOCTUM_CONFIG=${ROOT_DIR}/dev/src/Docs/doctum-config.php
 
 # Construct the base index file that redirects to the latest version
-# of the docs. This will only be generated when TRAVIS_TAG is set.
+# of the docs. This will only be generated when GITHUB_REF is set.
+if [[ $GITHUB_REF == refs/tags/* ]]; then
+  GITHUB_TAG=${GITHUB_REF#refs/tags/}
+fi
+
 UPDATED_INDEX_FILE=$(cat << EndOfMessage
-<html><head><script>window.location.replace('/gax-php/${TRAVIS_TAG}/' + location.hash.substring(1))</script></head><body></body></html>
+<html><head><script>window.location.replace('/gax-php/${GITHUB_TAG}/' + location.hash.substring(1))</script></head><body></body></html>
 EndOfMessage
 )
 
@@ -54,11 +58,11 @@ function buildDocs() {
 }
 
 downloadDoctum
-if [[ ! -z ${TRAVIS_TAG} ]]; then
-  checkVersionFile ${TRAVIS_TAG}
-  buildDocs ${TRAVIS_TAG}
+if [[ ! -z ${GITHUB_TAG} ]]; then
+  checkVersionFile ${GITHUB_TAG}
+  buildDocs ${GITHUB_TAG}
   # Update the redirect index file only for builds that use the
-  # TRAVIS_TAG env variable.
+  # GITHUB_TAG env variable.
   echo ${UPDATED_INDEX_FILE} > ${INDEX_FILE}
 else
   if [[ ! -z ${1} ]]; then
