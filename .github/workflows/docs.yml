@@ -20,12 +20,10 @@ jobs:
             command: composer install
         - name: Generate Documentation
           uses: docker://php:7.2-cli
-          env:
-            GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           with:
             entrypoint: ./dev/sh/build-docs.sh ${{ steps.tagName.outputs.tag }}
         - run: |
-            git submodule add -q -f -b gh-pages https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY} ghpages
+            git submodule add -q -f -b gh-pages https://github.com/${{github.repository}} ghpages
             rsync -aP tmp_gh-pages/* ghpages/
         - name: Deploy 🚀
           uses: JamesIves/github-pages-deploy-action@releases/v3
