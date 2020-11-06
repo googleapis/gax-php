@@ -21,7 +21,8 @@ jobs:
         - name: Generate Documentation
           uses: docker://php:7.2-cli
           with:
-            entrypoint: ["./dev/sh/build-docs.sh", "${{ steps.tagName.outputs.tag }}"]
+            entrypoint: ./dev/sh/build-docs.sh
+            args: ${{ steps.tagName.outputs.tag }}
         - run: |
             git submodule add -q -f -b gh-pages https://github.com/${{github.repository}} ghpages
             rsync -aP tmp_gh-pages/* ghpages/
