@@ -1,8 +1,6 @@
 name: Generate Documentation
 on:
     push:
-        branches:
-            - master
         tags:
             - "*"
 jobs:
@@ -12,6 +10,8 @@ jobs:
         steps:
         - name: Checkout
           uses: actions/checkout@v2
+        - uses: olegtarasov/get-tag@v2
+          id: tagName
         - name: Install composer dependencies
           uses: nick-invision/retry@v1
           with:
@@ -23,7 +23,7 @@ jobs:
           env:
             GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           with:
-            entrypoint: ./dev/sh/build-docs.sh
+            entrypoint: ./dev/sh/build-docs.sh ${{ steps.tagName.outputs.tag }}
         - run: |
             git submodule add -q -f -b gh-pages https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY} ghpages
             rsync -aP tmp_gh-pages/* ghpages/
