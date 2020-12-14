@@ -20,6 +20,10 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\ServiceAddressTrait;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @todo (dwsupplee) serviceAddress is deprecated now in favor of
+ *        apiEndpoint. Rename the tests/variables in our next major release.
+ */
 class ServiceAddressTraitTest extends TestCase
 {
     use ServiceAddressTrait;
@@ -45,6 +49,24 @@ class ServiceAddressTraitTest extends TestCase
             ["::1", "::1", self::$defaultPort],
             ["[::1]:443", "::1", self::$defaultPort],
             ["", "", self::$defaultPort]
+        ];
+    }
+
+    /**
+     * @dataProvider normalizeServiceAddressInvalidData
+     * @expectedException \Google\ApiCore\ValidationException
+     * @expectedExceptionMessage Invalid apiEndpoint
+     */
+    public function testNormalizeServiceAddressInvalid($serviceAddressString)
+    {
+        self::normalizeServiceAddress($serviceAddressString);
+    }
+
+    public function normalizeServiceAddressInvalidData()
+    {
+        return [
+            ["too.many:colons:123"],
+            ["too:many:colons"],
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2020 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,40 +30,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Dev\Docs;
+namespace Google\ApiCore\Transport\Grpc;
 
-use RuntimeException;
-use Sami\Sami;
-use Sami\Version\GitVersionCollection;
-use Symfony\Component\Finder\Finder;
-
-
-class SamiConfigBuilder
+/**
+ * Class ForwardingServerStreamingCall wraps a \Grpc\ServerStreamingCall.
+ *
+ * @experimental
+ */
+class ForwardingServerStreamingCall extends ForwardingCall
 {
-    public static function checkPhpVersion()
+    /**
+     * @return mixed An iterator of response values
+     */
+    public function responses()
     {
-        // Verify that we are running PHP 7 or above
-        if (version_compare(phpversion(), '7', '<')) {
-            throw new RuntimeException("PHP must be >= 7.0 to build docs, found version " . phpversion());
-        }
+        return $this->innerCall->responses();
     }
 
-    public static function buildConfigForVersion($version)
+    /**
+     * Wait for the server to send the status, and return it.
+     *
+     * @return \stdClass The status object, with integer $code, string
+     *                   $details, and array $metadata members
+     */
+    public function getStatus()
     {
-        $gaxRootDir = realpath(__DIR__ . '/../../..');
-        $iterator = Finder::create()
-            ->files()
-            ->name('*.php')
-            ->exclude('GPBMetadata')
-            ->in($dir = "$gaxRootDir/src")
-        ;
-
-        return new Sami($iterator, array(
-            'title'                => "Google ApiCore - $version",
-            'version'              => $version,
-            'build_dir'            => "$gaxRootDir/tmp_gh-pages/%version%",
-            'cache_dir'            => "$gaxRootDir/cache/%version%",
-            'default_opened_level' => 1,
-        ));
+        return $this->innerCall->getStatus();
     }
 }

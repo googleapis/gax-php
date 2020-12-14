@@ -116,6 +116,39 @@ class GapicClientTraitTest extends TestCase
         ]);
     }
 
+    public function testConfigureCallConstructionOptionsAcceptsRetryObjectOrArray()
+    {
+        $defaultRetrySettings = RetrySettings::constructDefault();
+        $client = new GapicClientTraitStub();
+        $client->set('retrySettings', ['method' => $defaultRetrySettings]);
+        $expectedOptions = [
+            'retrySettings' => $defaultRetrySettings
+                ->with(['rpcTimeoutMultiplier' => 5])
+        ];
+        $actualOptionsWithObject = $client->call(
+            'configureCallConstructionOptions',
+            [
+                'method',
+                [
+                    'retrySettings' => $defaultRetrySettings
+                        ->with(['rpcTimeoutMultiplier' => 5])
+                ]
+            ]
+        );
+        $actualOptionsWithArray = $client->call(
+            'configureCallConstructionOptions',
+            [
+                'method',
+                [
+                    'retrySettings' => ['rpcTimeoutMultiplier' => 5]
+                ]
+            ]
+        );
+
+        $this->assertEquals($expectedOptions, $actualOptionsWithObject);
+        $this->assertEquals($expectedOptions, $actualOptionsWithArray);
+    }
+
     public function testStartOperationsCall()
     {
         $header = AgentHeader::buildAgentHeader([]);
@@ -263,14 +296,14 @@ class GapicClientTraitTest extends TestCase
     /**
      * @dataProvider createTransportData
      */
-    public function testCreateTransport($serviceAddress, $transport, $transportConfig, $expectedTransportClass)
+    public function testCreateTransport($apiEndpoint, $transport, $transportConfig, $expectedTransportClass)
     {
         if ($expectedTransportClass == GrpcTransport::class) {
             $this->requiresGrpcExtension();
         }
         $client = new GapicClientTraitStub();
         $transport = $client->call('createTransport', [
-            $serviceAddress,
+            $apiEndpoint,
             $transport,
             $transportConfig
         ]);
@@ -283,7 +316,7 @@ class GapicClientTraitTest extends TestCase
         $defaultTransportClass = extension_loaded('grpc')
             ? GrpcTransport::class
             : RestTransport::class;
-        $serviceAddress = 'address:443';
+        $apiEndpoint = 'address:443';
         $transport = extension_loaded('grpc')
             ? 'grpc'
             : 'rest';
@@ -293,10 +326,10 @@ class GapicClientTraitTest extends TestCase
             ],
         ];
         return [
-            [$serviceAddress, $transport, $transportConfig, $defaultTransportClass],
-            [$serviceAddress, 'grpc', $transportConfig, GrpcTransport::class],
-            [$serviceAddress, 'rest', $transportConfig, RestTransport::class],
-            [$serviceAddress, 'grpc-fallback', $transportConfig, GrpcFallbackTransport::class],
+            [$apiEndpoint, $transport, $transportConfig, $defaultTransportClass],
+            [$apiEndpoint, 'grpc', $transportConfig, GrpcTransport::class],
+            [$apiEndpoint, 'rest', $transportConfig, RestTransport::class],
+            [$apiEndpoint, 'grpc-fallback', $transportConfig, GrpcFallbackTransport::class],
         ];
     }
 
@@ -304,11 +337,11 @@ class GapicClientTraitTest extends TestCase
      * @dataProvider createTransportDataInvalid
      * @expectedException \Google\ApiCore\ValidationException
      */
-    public function testCreateTransportInvalid($serviceAddress, $transport, $transportConfig)
+    public function testCreateTransportInvalid($apiEndpoint, $transport, $transportConfig)
     {
         $client = new GapicClientTraitStub();
         $client->call('createTransport', [
-            $serviceAddress,
+            $apiEndpoint,
             $transport,
             $transportConfig
         ]);
@@ -316,18 +349,31 @@ class GapicClientTraitTest extends TestCase
 
     public function createTransportDataInvalid()
     {
-        $serviceAddress = 'address:443';
+        $apiEndpoint = 'address:443';
         $transportConfig = [
             'rest' => [
                 'restConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
             ],
         ];
         return [
-            [$serviceAddress, null, $transportConfig],
-            [$serviceAddress, ['transport' => 'weirdstring'], $transportConfig],
-            [$serviceAddress, ['transport' => new \stdClass()], $transportConfig],
-            [$serviceAddress, ['transport' => 'rest'], []],
+            [$apiEndpoint, null, $transportConfig],
+            [$apiEndpoint, ['transport' => 'weirdstring'], $transportConfig],
+            [$apiEndpoint, ['transport' => new \stdClass()], $transportConfig],
+            [$apiEndpoint, ['transport' => 'rest'], []],
         ];
+    }
+
+    public function testServiceAddressAlias()
+    {
+        $client = new GapicClientTraitStub();
+        $apiEndpoint = 'test.address.com:443';
+        $updatedOptions = $client->call('buildClientOptions', [
+            ['serviceAddress' => $apiEndpoint]
+        ]);
+        $client->call('setClientOptions', [$updatedOptions]);
+
+        $this->assertEquals($apiEndpoint, $updatedOptions['apiEndpoint']);
+        $this->assertArrayNotHasKey('serviceAddress', $updatedOptions);
     }
 
     /**
@@ -391,7 +437,7 @@ class GapicClientTraitTest extends TestCase
         $grpcGcpConfig = new Config('test.address.com:443', $apiConfig);
 
         $defaultOptions = [
-            'serviceAddress' => 'test.address.com:443',
+            'apiEndpoint' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
             'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
@@ -663,6 +709,246 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $this->assertEquals($credentialsWrapper, $client->call('getCredentialsWrapper'));
     }
+
+    public function testUserProjectHeaderIsSetWhenProvidingQuotaProject()
+    {
+        $quotaProject = 'test-quota-project';
+        $credentialsWrapper = $this->getMockBuilder(CredentialsWrapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $credentialsWrapper->expects($this->once())
+            ->method('getQuotaProject')
+            ->willReturn($quotaProject);
+        $transport = $this->getMock(TransportInterface::class);
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->equalTo([
+                    'headers' => AgentHeader::buildAgentHeader([]) + [
+                        'X-Goog-User-Project' => [$quotaProject]
+                    ],
+                    'credentialsWrapper' => $credentialsWrapper
+                ])
+            );
+        $client = new GapicClientTraitStub();
+        $updatedOptions = $client->call('buildClientOptions', [
+            [
+                'transport' => $transport,
+                'credentials' => $credentialsWrapper,
+            ]
+        ]);
+        $client->call('setClientOptions', [$updatedOptions]);
+        $client->set('retrySettings', [
+            'method' => $this->getMockBuilder(RetrySettings::class)
+                ->disableOriginalConstructor()
+                ->getMock()
+            ]
+        );
+        $client->call('startCall', [
+            'method',
+            'decodeType'
+        ]);
+    }
+
+    public function testDefaultScopes()
+    {
+        $client = new GapicClientTraitDefaultScopeAndAudienceStub();
+
+        // verify scopes are not set by default
+        $defaultOptions = $client->call('buildClientOptions', [[]]);
+        $this->assertArrayNotHasKey('scopes', $defaultOptions['credentialsConfig']);
+
+        // verify scopes are set when a custom api endpoint is used
+        $defaultOptions = $client->call('buildClientOptions', [[
+            'apiEndpoint' => 'www.someotherendpoint.com',
+        ]]);
+        $this->assertArrayHasKey('scopes', $defaultOptions['credentialsConfig']);
+        $this->assertEquals(
+            $client::$serviceScopes,
+            $defaultOptions['credentialsConfig']['scopes']
+        );
+
+        // verify user-defined scopes override default scopes
+        $defaultOptions = $client->call('buildClientOptions', [[
+            'credentialsConfig' => ['scopes' => ['user-scope-1']],
+            'apiEndpoint' => 'www.someotherendpoint.com',
+        ]]);
+        $this->assertArrayHasKey('scopes', $defaultOptions['credentialsConfig']);
+        $this->assertEquals(
+            ['user-scope-1'],
+            $defaultOptions['credentialsConfig']['scopes']
+        );
+
+        // verify empty default scopes has no effect
+        $client::$serviceScopes = null;
+        $defaultOptions = $client->call('buildClientOptions', [[
+            'apiEndpoint' => 'www.someotherendpoint.com',
+        ]]);
+        $this->assertArrayNotHasKey('scopes', $defaultOptions['credentialsConfig']);
+    }
+
+    public function testDefaultAudience()
+    {
+        $retrySettings = $this->prophesize(RetrySettings::class);
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
+            ->reveal();
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport
+            ->startUnaryCall(
+                Argument::any(),
+                [
+                    'audience' => 'https://service-address/',
+                    'headers' => [],
+                    'credentialsWrapper' => $credentialsWrapper,
+                ]
+            )
+            ->shouldBeCalledOnce();
+
+        $client = new GapicClientTraitDefaultScopeAndAudienceStub();
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', []);
+        $client->set(
+            'retrySettings',
+            ['method.name' => $retrySettings->reveal()]
+        );
+        $client->set('transport', $transport->reveal());
+        $client->call('startCall', ['method.name', 'decodeType']);
+
+        $transport
+            ->startUnaryCall(
+                Argument::any(),
+                [
+                    'audience' => 'custom-audience',
+                    'headers' => [],
+                    'credentialsWrapper' => $credentialsWrapper,
+                ]
+            )
+            ->shouldBeCalledOnce();
+
+        $client->call('startCall', ['method.name', 'decodeType', [
+            'audience' => 'custom-audience',
+        ]]);
+    }
+
+    public function testDefaultAudienceWithOperations()
+    {
+        $retrySettings = $this->prophesize(RetrySettings::class);
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
+            ->reveal();
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport
+            ->startUnaryCall(
+                Argument::any(),
+                [
+                    'audience' => 'https://service-address/',
+                    'headers' => [],
+                    'credentialsWrapper' => $credentialsWrapper,
+                ]
+            )
+            ->shouldBeCalledOnce()
+            ->willReturn(new FulfilledPromise(new Operation()));
+
+        $longRunningDescriptors = [
+            'longRunning' => [
+                'operationReturnType' => 'operationType',
+                'metadataReturnType' => 'metadataType',
+                'initialPollDelayMillis' => 100,
+                'pollDelayMultiplier' => 1.0,
+                'maxPollDelayMillis' => 200,
+                'totalPollTimeoutMillis' => 300,
+            ]
+        ];
+        $client = new GapicClientTraitDefaultScopeAndAudienceStub();
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', []);
+        $client->set(
+            'retrySettings',
+            ['method.name' => $retrySettings->reveal()]
+        );
+        $client->set('transport', $transport->reveal());
+        $client->set('descriptors', ['method.name' => $longRunningDescriptors]);
+        $operationsClient = $this->getMockBuilder(OperationsClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        // Test startOperationsCall with default audience
+        $client->call('startOperationsCall', [
+            'method.name',
+            [],
+            new MockRequest(),
+            $operationsClient,
+        ])->wait();
+    }
+
+    public function testDefaultAudienceWithPagedList()
+    {
+        $retrySettings = $this->prophesize(RetrySettings::class);
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
+            ->reveal();
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport
+            ->startUnaryCall(
+                Argument::any(),
+                [
+                    'audience' => 'https://service-address/',
+                    'headers' => [],
+                    'credentialsWrapper' => $credentialsWrapper,
+                ]
+            )
+            ->shouldBeCalledOnce()
+            ->willReturn(new FulfilledPromise(new Operation()));
+        $pageStreamingDescriptors = [
+            'pageStreaming' => [
+                'requestPageTokenGetMethod' => 'getPageToken',
+                'requestPageTokenSetMethod' => 'setPageToken',
+                'requestPageSizeGetMethod' => 'getPageSize',
+                'requestPageSizeSetMethod' => 'setPageSize',
+                'responsePageTokenGetMethod' => 'getNextPageToken',
+                'resourcesGetMethod' => 'getResources',
+            ],
+        ];
+        $client = new GapicClientTraitDefaultScopeAndAudienceStub();
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', []);
+        $client->set(
+            'retrySettings',
+            ['method.name' => $retrySettings->reveal()]
+        );
+        $client->set('transport', $transport->reveal());
+        $client->set('descriptors', [
+            'method.name' => $pageStreamingDescriptors
+        ]);
+
+        // Test getPagedListResponse with default audience
+        $client->call('getPagedListResponse', [
+            'method.name',
+            [],
+            'decodeType',
+            new MockRequest(),
+        ]);
+    }
+
+    public function testSupportedTransportOverrideWithInvalidTransport()
+    {
+        $this->setExpectedException(
+            ValidationException::class,
+            'Unexpected transport option "grpc". Supported transports: rest'
+        );
+        $client = new GapicClientTraitRestOnly(['transport' => 'grpc']);
+    }
+
+    public function testSupportedTransportOverrideWithDefaultTransport()
+    {
+        $client = new GapicClientTraitRestOnly();
+        $this->assertInstanceOf(RestTransport::class, $client->getTransport());
+    }
+
+    public function testSupportedTransportOverrideWithExplicitTransport()
+    {
+        $client = new GapicClientTraitRestOnly(['transport' => 'rest']);
+        $this->assertInstanceOf(RestTransport::class, $client->getTransport());
+    }
 }
 
 class GapicClientTraitStub
@@ -672,6 +958,7 @@ class GapicClientTraitStub
     public static function getClientDefaults()
     {
         return [
+            'apiEndpoint' => 'test.address.com:443',
             'serviceAddress' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
@@ -743,5 +1030,86 @@ class GapicClientTraitStubExtension extends GapicClientTraitStub
             ];
             return $originalCallable($call, $options);
         };
+    }
+}
+
+class GapicClientTraitDefaultScopeAndAudienceStub
+{
+    use GapicClientTrait;
+
+    const SERVICE_ADDRESS = 'service-address';
+
+    public static $serviceScopes = [
+        'default-scope-1',
+        'default-scope-2',
+    ];
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'credentialsConfig' => [
+                'defaultScopes' => self::$serviceScopes,
+            ],
+        ];
+    }
+
+    public function call($fn, array $args = [])
+    {
+        return call_user_func_array([$this, $fn], $args);
+    }
+
+    public function set($name, $val, $static = false)
+    {
+        if (!property_exists($this, $name)) {
+            throw new \InvalidArgumentException("Property not found: $name");
+        }
+        if ($static) {
+            $this::$$name = $val;
+        } else {
+            $this->$name = $val;
+        }
+    }
+}
+
+class GapicClientTraitRestOnly
+{
+    use GapicClientTrait;
+
+    public function __construct($options = [])
+    {
+        $options['apiEndpoint'] = 'api.example.com';
+        $this->setClientOptions($this->buildClientOptions($options));
+    }
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceAddress' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+        ];
+    }
+
+    public function getTransport()
+    {
+        return $this->transport;
+    }
+
+    private static function supportedTransports()
+    {
+        return ['rest', 'fake-transport'];
+    }
+
+    private static function defaultTransport()
+    {
+        return 'rest';
     }
 }

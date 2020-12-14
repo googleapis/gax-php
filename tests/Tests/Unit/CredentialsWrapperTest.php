@@ -39,6 +39,7 @@ use Google\Auth\Cache\SysVCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\UpdateMetadataInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GPBMetadata\Google\Api\Auth;
 use PHPUnit\Framework\TestCase;
@@ -46,21 +47,38 @@ use Prophecy\Argument;
 
 class CredentialsWrapperTest extends TestCase
 {
+    private static $appDefaultCreds;
+
+    public static function setUpBeforeClass()
+    {
+        self::$appDefaultCreds = getenv('GOOGLE_APPLICATION_CREDENTIALS');
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . __DIR__ . '/testdata/json-key-file.json');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . self::$appDefaultCreds);
+    }
+
     /**
-     * @dataProvider buildData
+     * @dataProvider buildDataWithoutExplicitKeyFile
      */
-    public function testBuild($args, $expectedCredentialsWrapper)
+    public function testBuildWithoutExplicitKeyFile($args, $expectedCredentialsWrapper)
     {
         $actualCredentialsWrapper = CredentialsWrapper::build($args);
         $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
     }
 
-    public function buildData()
+    /**
+     * @dataProvider buildDataWithKeyFile
+     */
+    public function testBuildWithKeyFile($args, $expectedCredentialsWrapper)
     {
-        return $this->buildDataWithoutKeyFile() + $this->buildDataWithKeyFile();
+        $actualCredentialsWrapper = CredentialsWrapper::build($args);
+        $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
     }
 
-    private function buildDataWithoutKeyFile()
+    public function buildDataWithoutExplicitKeyFile()
     {
         $scopes = ['myscope'];
         $defaultAuthHttpHandler = HttpHandlerFactory::build();
@@ -71,7 +89,9 @@ class CredentialsWrapperTest extends TestCase
         $defaultAuthCache = new MemoryCacheItemPool();
         $authCache = new SysVCacheItemPool();
         $authCacheOptions = ['lifetime' => 600];
-        return [
+        $quotaProject = 'my-quota-project';
+
+        $testData = [
             [
                 [],
                 new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache), $defaultAuthHttpHandler),
@@ -96,10 +116,16 @@ class CredentialsWrapperTest extends TestCase
                 ['authCache' => $authCache],
                 new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $authCache), $defaultAuthHttpHandler),
             ],
+            [
+                ['quotaProject' => $quotaProject],
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache, $quotaProject), $defaultAuthHttpHandler),
+            ],
         ];
+
+        return $testData;
     }
 
-    private function buildDataWithKeyFile()
+    public function buildDataWithKeyFile()
     {
         $keyFilePath = __DIR__ . '/testdata/json-key-file.json';
         $keyFile = json_decode(file_get_contents($keyFilePath), true);
@@ -109,6 +135,7 @@ class CredentialsWrapperTest extends TestCase
         $defaultAuthCache = new MemoryCacheItemPool();
         $authCache = new SysVCacheItemPool();
         $authCacheOptions = ['lifetime' => 600];
+        $quotaProject = 'my-quota-project';
         return [
             [
                 ['keyFile' => $keyFile],
@@ -137,6 +164,16 @@ class CredentialsWrapperTest extends TestCase
             [
                 ['keyFile' => $keyFile, 'authCache' => $authCache],
                 $this->makeExpectedKeyFileCreds($keyFile, null, $authCache, null, null),
+            ],
+            [
+                ['keyFile' => $keyFile, 'quotaProject' => $quotaProject],
+                $this->makeExpectedKeyFileCreds(
+                    $keyFile + ['quota_project_id' => $quotaProject],
+                    null,
+                    $defaultAuthCache,
+                    null,
+                    null
+                ),
             ],
         ];
     }
@@ -205,25 +242,33 @@ class CredentialsWrapperTest extends TestCase
     public function testGetAuthorizationHeaderCallback($fetcher, $expectedCallbackResponse)
     {
         $credentialsWrapper = new CredentialsWrapper($fetcher);
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback('audience');
         $actualResponse = $callback();
         $this->assertSame($expectedCallbackResponse, $actualResponse);
     }
 
     public function getAuthorizationHeaderCallbackData()
     {
-        $expiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredFetcher = $this->prophesize();
+        $expiredFetcher->willImplement(FetchAuthTokenInterface::class);
+        $expiredFetcher->willImplement(UpdateMetadataInterface::class);
         $expiredFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => 123,
                 'expires_at' => time() - 1
             ]);
-        $expiredFetcher->fetchAuthToken(Argument::any())
+        $expiredFetcher->updateMetadata(Argument::any(), 'audience')
+            ->willReturn(['authorization' => ['Bearer 456']]);
+        $expiredInvalidFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredInvalidFetcher->getLastReceivedToken()
             ->willReturn([
-                'access_token' => 456,
-                'expires_at' => time() + 1000
+                'access_token' => 123,
+                'expires_at' => time() - 1
             ]);
-        $unexpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredInvalidFetcher->fetchAuthToken(Argument::any())
+            ->willReturn(['not-a' => 'valid-token']);
+        $unexpiredFetcher = $this->prophesize();
+        $unexpiredFetcher->willImplement(FetchAuthTokenInterface::class);
         $unexpiredFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => 123,
@@ -242,11 +287,23 @@ class CredentialsWrapperTest extends TestCase
             ->willReturn([
                 'access_token' => null,
             ]);
+
+        $customFetcher = $this->prophesize();
+        $customFetcher->willImplement(FetchAuthTokenInterface::class);
+        $customFetcher->getLastReceivedToken()->willReturn(null);
+        $customFetcher->fetchAuthToken(Argument::any())
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() + 100,
+            ]);
+
         return [
             [$expiredFetcher->reveal(), ['authorization' => ['Bearer 456']]],
+            [$expiredInvalidFetcher->reveal(), []],
             [$unexpiredFetcher->reveal(), ['authorization' => ['Bearer 123']]],
             [$insecureFetcher->reveal(), []],
             [$nullFetcher->reveal(), []],
+            [$customFetcher->reveal(), ['authorization' => ['Bearer 123']]],
         ];
     }
 }

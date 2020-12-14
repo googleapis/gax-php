@@ -70,7 +70,7 @@ class RestTransport implements TransportInterface
     /**
      * Builds a RestTransport.
      *
-     * @param string $serviceAddress
+     * @param string $apiEndpoint
      *        The address of the API remote host, for example "example.googleapis.com".
      * @param string $restConfigPath
      *        Path to rest config file.
@@ -82,12 +82,12 @@ class RestTransport implements TransportInterface
      * @return RestTransport
      * @throws ValidationException
      */
-    public static function build($serviceAddress, $restConfigPath, array $config = [])
+    public static function build($apiEndpoint, $restConfigPath, array $config = [])
     {
         $config += [
             'httpHandler'  => null,
         ];
-        list($baseUri, $port) = self::normalizeServiceAddress($serviceAddress);
+        list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         return new RestTransport($requestBuilder, $httpHandler);
@@ -115,7 +115,8 @@ class RestTransport implements TransportInterface
                 /** @var Message $return */
                 $return = new $decodeType;
                 $return->mergeFromJsonString(
-                    (string) $response->getBody()
+                    (string) $response->getBody(),
+                    true
                 );
 
                 if (isset($options['metadataCallback'])) {
@@ -159,7 +160,9 @@ class RestTransport implements TransportInterface
         $body = (string) $res->getBody();
         if ($error = json_decode($body, true)['error']) {
             $basicMessage = $error['message'];
-            $code = ApiStatus::rpcCodeFromStatus($error['status']);
+            $code = isset($error['status'])
+                ? ApiStatus::rpcCodeFromStatus($error['status'])
+                : $ex->getCode();
             $metadata = isset($error['details']) ? $error['details'] : null;
             return ApiException::createFromApiResponse($basicMessage, $code, $metadata);
         }

@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit;
+namespace Google\ApiCore\Tests\Unit\ResourceTemplate;
 
 use Google\ApiCore\ResourceTemplate\RelativeResourceTemplate;
 use PHPUnit\Framework\TestCase;
@@ -206,6 +206,21 @@ class RelativeResourceTemplateTest extends TestCase
                 'buckets/*',
                 'buckets/{}!@#$%^&*()+=[]\|`~-_',
                 ['$0' => '{}!@#$%^&*()+=[]\|`~-_'],
+            ],
+            [
+              'foos/{foo}_{oof}',
+              'foos/imafoo_thisisanoof',
+              ['foo' => 'imafoo', 'oof' => 'thisisanoof'],
+            ],
+            [
+              'foos/{foo}.{oof}_{bar}.{car}',
+              'foos/food.doof_mars.porsche',
+              ['foo' => 'food', 'oof' => 'doof', 'bar' => 'mars', 'car' => 'porsche'],
+            ],
+            [
+              'foos/{foo}_{oof}-{bar}.{baz}~{car}/projects/{project}/locations/{state}~{city}.{cell}',
+              'foos/food_doof-mars.bazz~porsche/projects/someProject/locations/wa~sea.fre3',
+              ['foo' => 'food', 'oof' => 'doof', 'bar' => 'mars', 'baz' => 'bazz', 'car' => 'porsche', 'project' => 'someProject', 'state' => 'wa', 'city' => 'sea', 'cell' => 'fre3'],
             ],
         ];
     }

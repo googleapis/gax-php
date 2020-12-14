@@ -38,6 +38,8 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\GetQuotaProjectInterface;
+use Google\Auth\UpdateMetadataInterface;
 use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -91,6 +93,11 @@ class CredentialsWrapper
      *           A cache for storing access tokens. Defaults to a simple in memory implementation.
      *     @type array $authCacheOptions
      *           Cache configuration options.
+     *     @type string $quotaProject
+     *           Specifies a user project to bill for access charges associated with the request.
+     *     @type string[] $defaultScopes
+     *           A string array of default scopes to use when acquiring
+     *           credentials.
      * }
      * @return CredentialsWrapper
      * @throws ValidationException
@@ -104,6 +111,8 @@ class CredentialsWrapper
             'enableCaching'     => true,
             'authCache'         => null,
             'authCacheOptions'  => [],
+            'quotaProject'      => null,
+            'defaultScopes'     => null,
         ];
         $keyFile = $args['keyFile'];
         $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
@@ -111,7 +120,11 @@ class CredentialsWrapper
         if (is_null($keyFile)) {
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
-                $authHttpHandler
+                $authHttpHandler,
+                null,
+                null,
+                $args['quotaProject'],
+                $args['defaultScopes']
             );
         } else {
             if (is_string($keyFile)) {
@@ -121,7 +134,15 @@ class CredentialsWrapper
                 $keyFile = json_decode(file_get_contents($keyFile), true);
             }
 
-            $loader = CredentialsLoader::makeCredentials($args['scopes'], $keyFile);
+            if (isset($args['quotaProject'])) {
+                $keyFile['quota_project_id'] = $args['quotaProject'];
+            }
+
+            $loader = CredentialsLoader::makeCredentials(
+                $args['scopes'],
+                $keyFile,
+                $args['defaultScopes']
+            );
         }
 
         if ($args['enableCaching']) {
@@ -137,6 +158,17 @@ class CredentialsWrapper
     }
 
     /**
+     * @return string|null The quota project associated with the credentials.
+     */
+    public function getQuotaProject()
+    {
+        if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
+            return $this->credentialsFetcher->getQuotaProject();
+        }
+    }
+
+    /**
+     * @deprecated
      * @return string Bearer string containing access token.
      */
     public function getBearerString()
@@ -146,9 +178,10 @@ class CredentialsWrapper
     }
 
     /**
+     * @param string $audience optional audience for self-signed JWTs.
      * @return callable Callable function that returns an authorization header.
      */
-    public function getAuthorizationHeaderCallback()
+    public function getAuthorizationHeaderCallback($audience = null)
     {
         $credentialsFetcher = $this->credentialsFetcher;
         $authHttpHandler = $this->authHttpHandler;
@@ -156,9 +189,26 @@ class CredentialsWrapper
         // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
-        return function () use ($credentialsFetcher, $authHttpHandler) {
-            $token = self::getToken($credentialsFetcher, $authHttpHandler);
-            return empty($token) ? [] : ['authorization' => ["Bearer $token"]];
+        return function () use ($credentialsFetcher, $authHttpHandler, $audience) {
+            $token = $credentialsFetcher->getLastReceivedToken();
+            if (self::isExpired($token)) {
+                // Call updateMetadata to take advantage of self-signed JWTs
+                if ($credentialsFetcher instanceof UpdateMetadataInterface) {
+                    return $credentialsFetcher->updateMetadata([], $audience);
+                }
+
+                // In case a custom fetcher is provided (unlikely) which doesn't
+                // implement UpdateMetadataInterface
+                $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
+                if (!self::isValid($token)) {
+                    return [];
+                }
+            }
+            $tokenString = $token['access_token'];
+            if (!empty($tokenString)) {
+                return ['authorization' => ["Bearer $tokenString"]];
+            }
+            return [];
         };
     }
 
@@ -180,6 +230,8 @@ class CredentialsWrapper
      * @param callable $authHttpHandler
      * @param array $authCacheOptions
      * @param CacheItemPoolInterface $authCache
+     * @param string $quotaProject
+     * @param array $defaultScopes
      * @return CredentialsLoader
      * @throws ValidationException
      */
@@ -187,14 +239,18 @@ class CredentialsWrapper
         array $scopes = null,
         callable $authHttpHandler = null,
         array $authCacheOptions = null,
-        CacheItemPoolInterface $authCache = null
+        CacheItemPoolInterface $authCache = null,
+        $quotaProject = null,
+        array $defaultScopes = null
     ) {
         try {
             return ApplicationDefaultCredentials::getCredentials(
                 $scopes,
                 $authHttpHandler,
                 $authCacheOptions,
-                $authCache
+                $authCache,
+                $quotaProject,
+                $defaultScopes
             );
         } catch (DomainException $ex) {
             throw new ValidationException("Could not construct ApplicationDefaultCredentials", $ex->getCode(), $ex);

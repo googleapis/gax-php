@@ -68,15 +68,15 @@ class GrpcFallbackTransportTest extends TestCase
     }
 
     /**
-     * @param $serviceAddress
+     * @param $apiEndpoint
      * @param $requestMessage
      * @dataProvider startUnaryCallDataProvider
      */
-    public function testStartUnaryCall($serviceAddress, $requestMessage)
+    public function testStartUnaryCall($apiEndpoint, $requestMessage)
     {
         $expectedRequest = new Request(
             'POST',
-            "https://$serviceAddress/\$rpc/Testing123",
+            "https://$apiEndpoint/\$rpc/Testing123",
             [
                 'Content-Type' => 'application/x-protobuf',
                 'x-goog-api-client' => ['grpc-web'],
@@ -101,7 +101,7 @@ class GrpcFallbackTransportTest extends TestCase
         };
 
         $transport = new GrpcFallbackTransport(
-            $serviceAddress,
+            $apiEndpoint,
             $httpHandler
         );
         $call = new Call(
@@ -167,27 +167,49 @@ class GrpcFallbackTransportTest extends TestCase
     /**
      * @dataProvider buildDataGrpcFallback
      */
-    public function testBuildGrpcFallback($serviceAddress, $config, $expectedTransport)
+    public function testBuildGrpcFallback($apiEndpoint, $config, $expectedTransport)
     {
-        $actualTransport = GrpcFallbackTransport::build($serviceAddress, $config);
+        $actualTransport = GrpcFallbackTransport::build($apiEndpoint, $config);
         $this->assertEquals($expectedTransport, $actualTransport);
     }
 
     public function buildDataGrpcFallback()
     {
         $uri = "address.com";
-        $serviceAddress = "$uri:443";
+        $apiEndpoint = "$uri:443";
         $httpHandler = [HttpHandlerFactory::build(), 'async'];
         return [
             [
-                $serviceAddress,
+                $apiEndpoint,
                 ['httpHandler' => $httpHandler],
-                new GrpcFallbackTransport($serviceAddress, $httpHandler)
+                new GrpcFallbackTransport($apiEndpoint, $httpHandler)
             ],
             [
-                $serviceAddress,
+                $apiEndpoint,
                 [],
-                new GrpcFallbackTransport($serviceAddress, $httpHandler),
+                new GrpcFallbackTransport($apiEndpoint, $httpHandler),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider buildInvalidData
+     * @expectedException \Google\ApiCore\ValidationException
+     * @param $apiEndpoint
+     * @param $args
+     * @throws \Google\ApiCore\ValidationException
+     */
+    public function testBuildInvalid($apiEndpoint, $args)
+    {
+        GrpcFallbackTransport::build($apiEndpoint, $args);
+    }
+
+    public function buildInvalidData()
+    {
+        return [
+            [
+                "addresswithtoo:many:segments",
+                [],
             ],
         ];
     }

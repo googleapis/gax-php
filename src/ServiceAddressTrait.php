@@ -34,28 +34,31 @@ namespace Google\ApiCore;
 
 /**
  * Provides helper methods for service address handling.
+ *
+ * @todo (dwsupplee) serviceAddress is deprecated now in favor of
+ *        apiEndpoint. Rename the trait/method in our next major release.
  */
 trait ServiceAddressTrait
 {
     private static $defaultPort = 443;
 
     /**
-     * @param string $serviceAddress
+     * @param string $apiEndpoint
      * @return array
      * @throws ValidationException
      */
-    private static function normalizeServiceAddress($serviceAddress)
+    private static function normalizeServiceAddress($apiEndpoint)
     {
         // Check if ipv6 address with port.
-        if (preg_match('/\[(\S{1,})\]\:(\d{1,})/', $serviceAddress, $parts) === 1) {
+        if (preg_match('/\[(\S{1,})\]\:(\d{1,})/', $apiEndpoint, $parts) === 1) {
             return [$parts[1], $parts[2]];
         }
 
-        $components = explode(':', $serviceAddress);
+        $components = explode(':', $apiEndpoint);
 
         if (count($components) > 2) {
             // IPv6
-            return [$serviceAddress, self::$defaultPort];
+            return [$apiEndpoint, self::$defaultPort];
         } elseif (count($components) == 2) {
             // Port is included in service address
             return [$components[0], $components[1]];
@@ -64,6 +67,6 @@ trait ServiceAddressTrait
             return [$components[0], self::$defaultPort];
         }
 
-        throw new ValidationException("Invalid serviceAddress: $serviceAddress");
+        throw new ValidationException("Invalid apiEndpoint: $apiEndpoint");
     }
 }

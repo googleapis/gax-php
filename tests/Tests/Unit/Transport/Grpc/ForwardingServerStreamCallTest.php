@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2020 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Dev\Docs;
+namespace Google\ApiCore\Tests\Unit\Transport\Grpc;
 
+use Google\ApiCore\Tests\Unit\TestTrait;
+use Google\ApiCore\Transport\Grpc\ForwardingServerStreamingCall;
+use Grpc\ServerStreamingCall;
+use PHPUnit\Framework\TestCase;
 
-SamiConfigBuilder::checkPhpVersion();
+class ForwardingServerStreamCallTest extends TestCase
+{
+    use TestTrait;
 
-$currentVersion = getenv('API_CORE_DOCS_VERSION');
+    public function testServerStreamingForwardingCall()
+    {
+        $serverStreamingCall = $this->getMockBuilder(ServerStreamingCall::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $serverStreamingCall->expects($this->once())->method('getMetadata');
+        $serverStreamingCall->expects($this->once())->method('getTrailingMetadata');
+        $serverStreamingCall->expects($this->once())->method('getPeer');
+        $serverStreamingCall->expects($this->once())->method('cancel');
+        $serverStreamingCall->expects($this->once())->method('responses');
+        $serverStreamingCall->expects($this->once())->method('getStatus');
 
-return SamiConfigBuilder::buildConfigForVersion($currentVersion);
+        $forwardingCall = new ForwardingServerStreamingCall($serverStreamingCall);
+
+        $forwardingCall->getMetadata();
+        $forwardingCall->getTrailingMetadata();
+        $forwardingCall->getPeer();
+        $forwardingCall->cancel();
+        $forwardingCall->responses();
+        $forwardingCall->getStatus();
+    }
+}

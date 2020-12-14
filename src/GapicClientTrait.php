@@ -49,6 +49,7 @@ use Google\Protobuf\Internal\Message;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\PromiseInterface;
+use LogicException;
 
 /**
  * Common functions used to work with various clients.
@@ -158,6 +159,7 @@ trait GapicClientTrait
             'gapicVersion' => self::getGapicVersion($options),
             'libName' => null,
             'libVersion' => null,
+            'apiEndpoint' => null,
         ];
         $defaultOptions['transportConfig'] += [
             'grpc' => ['stubOpts' => ['grpc.service_config_disable_resolution' => 1]],
@@ -178,12 +180,26 @@ trait GapicClientTrait
 
         $this->modifyClientOptions($options);
 
+        // serviceAddress is now deprecated and acts as an alias for apiEndpoint
+        if (isset($options['serviceAddress'])) {
+            $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
+        }
+
+        // If an API endpoint is set, ensure the "audience" does not conflict
+        // with the custom endpoint by setting "user defined" scopes.
+        if ($options['apiEndpoint'] != $defaultOptions['apiEndpoint']
+            && empty($options['credentialsConfig']['scopes'])
+            && !empty($options['credentialsConfig']['defaultScopes'])
+        ) {
+            $options['credentialsConfig']['scopes'] = $options['credentialsConfig']['defaultScopes'];
+        }
+
         if (extension_loaded('sysvshm')
                 && isset($options['gcpApiConfigPath'])
                 && file_exists($options['gcpApiConfigPath'])
-                && isset($options['serviceAddress'])) {
+                && isset($options['apiEndpoint'])) {
             $grpcGcpConfig = self::initGrpcGcpConfig(
-                $options['serviceAddress'],
+                $options['apiEndpoint'],
                 $options['gcpApiConfigPath']
             );
 
@@ -209,9 +225,12 @@ trait GapicClientTrait
      * @param array $options {
      *     An array of required and optional arguments.
      *
-     *     @type string $serviceAddress
+     *     @type string $apiEndpoint
      *           The address of the API remote host, for example "example.googleapis.com. May also
      *           include the port, for example "example.googleapis.com:443"
+     *     @type string $serviceAddress
+     *           **Deprecated**. This option will be removed in the next major release. Please
+     *           utilize the `$apiEndpoint` option instead.
      *     @type bool $disableRetries
      *           Determines whether or not retries defined by the client configuration should be
      *           disabled. Defaults to `false`.
@@ -237,7 +256,7 @@ trait GapicClientTrait
      *           `grpc`, or 'grpc-fallback'. Defaults to `grpc` if gRPC support is detected on the system.
      *           *Advanced usage*: Additionally, it is possible to pass in an already instantiated
      *           TransportInterface object. Note that when this objects is provided, any settings in
-     *           $transportConfig, and any $serviceAddress setting, will be ignored.
+     *           $transportConfig, and any `$apiEndpoint` setting, will be ignored.
      *     @type array $transportConfig
      *           Configuration options that will be used to construct the transport. Options for
      *           each supported transport type should be passed in a key for that transport. For
@@ -266,8 +285,12 @@ trait GapicClientTrait
      */
     private function setClientOptions(array $options)
     {
+        // serviceAddress is now deprecated and acts as an alias for apiEndpoint
+        if (isset($options['serviceAddress'])) {
+            $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
+        }
         $this->validateNotNull($options, [
-            'serviceAddress',
+            'apiEndpoint',
             'serviceName',
             'descriptorsConfigPath',
             'clientConfig',
@@ -312,7 +335,7 @@ trait GapicClientTrait
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
-            : $this->createTransport($options['serviceAddress'], $transport, $options['transportConfig']);
+            : $this->createTransport($options['apiEndpoint'], $transport, $options['transportConfig']);
     }
 
     /**
@@ -343,13 +366,13 @@ trait GapicClientTrait
     }
 
     /**
-     * @param string $serviceAddress
+     * @param string $apiEndpoint
      * @param string $transport
      * @param array $transportConfig
      * @return TransportInterface
      * @throws ValidationException
      */
-    private function createTransport($serviceAddress, $transport, array $transportConfig)
+    private function createTransport($apiEndpoint, $transport, array $transportConfig)
     {
         if (!is_string($transport)) {
             throw new ValidationException(
@@ -357,14 +380,22 @@ trait GapicClientTrait
                 print_r($transport, true)
             );
         }
+        $supportedTransports = self::supportedTransports();
+        if (!in_array($transport, $supportedTransports)) {
+            throw new ValidationException(sprintf(
+                'Unexpected transport option "%s". Supported transports: %s',
+                $transport,
+                implode(', ', $supportedTransports)
+            ));
+        }
         $configForSpecifiedTransport = isset($transportConfig[$transport])
             ? $transportConfig[$transport]
             : [];
         switch ($transport) {
             case 'grpc':
-                return GrpcTransport::build($serviceAddress, $configForSpecifiedTransport);
+                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
-                return GrpcFallbackTransport::build($serviceAddress, $configForSpecifiedTransport);
+                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
@@ -372,7 +403,7 @@ trait GapicClientTrait
                     );
                 }
                 $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
-                return RestTransport::build($serviceAddress, $restConfigPath, $configForSpecifiedTransport);
+                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .
@@ -416,8 +447,8 @@ trait GapicClientTrait
      *     @type array $headers [optional] key-value array containing headers
      *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
      *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings $retrySettings [optional] A retry settings override
-     *           For the call.
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings
+     *           override for the call.
      * }
      * @param Message $request
      * @param int $callType
@@ -459,7 +490,9 @@ trait GapicClientTrait
                 break;
         }
 
-        return $callStack($call, $optionalArgs);
+        return $callStack($call, $optionalArgs + array_filter([
+            'audience' => self::getDefaultAudience()
+        ]));
     }
 
     /**
@@ -474,18 +507,26 @@ trait GapicClientTrait
      */
     private function createCallStack(array $callConstructionOptions)
     {
+        $quotaProject = $this->credentialsWrapper->getQuotaProject();
+        $fixedHeaders = $this->agentHeader;
+        if ($quotaProject) {
+            $fixedHeaders += [
+                'X-Goog-User-Project' => [$quotaProject]
+            ];
+        }
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-        $callStack = new FixedHeaderMiddleware($callStack, $this->agentHeader, true);
+        $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
             'timeoutMillis',
             'transportOptions',
             'metadataCallback',
+            'audience',
         ]);
 
         return $callStack;
@@ -496,8 +537,8 @@ trait GapicClientTrait
      * @param array $optionalArgs {
      *     Optional arguments
      *
-     *     @type RetrySettings $retrySettings [optional] A retry settings override
-     *           For the call.
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings
+     *           override for the call.
      * }
      *
      * @return array
@@ -507,9 +548,13 @@ trait GapicClientTrait
         $retrySettings = $this->retrySettings[$methodName];
         // Allow for retry settings to be changed at call time
         if (isset($optionalArgs['retrySettings'])) {
-            $retrySettings = $retrySettings->with(
-                $optionalArgs['retrySettings']
-            );
+            if ($optionalArgs['retrySettings'] instanceof RetrySettings) {
+                $retrySettings = $optionalArgs['retrySettings'];
+            } else {
+                $retrySettings = $retrySettings->with(
+                    $optionalArgs['retrySettings']
+                );
+            }
         }
         return [
             'retrySettings' => $retrySettings,
@@ -553,7 +598,9 @@ trait GapicClientTrait
         );
 
         $this->modifyUnaryCallable($callStack);
-        return $callStack($call, $optionalArgs);
+        return $callStack($call, $optionalArgs + array_filter([
+            'audience' => self::getDefaultAudience()
+        ]));
     }
 
     /**
@@ -589,7 +636,9 @@ trait GapicClientTrait
         );
 
         $this->modifyUnaryCallable($callStack);
-        return $callStack($call, $optionalArgs)->wait();
+        return $callStack($call, $optionalArgs + array_filter([
+            'audience' => self::getDefaultAudience()
+        ]))->wait();
     }
 
     /**
@@ -605,6 +654,26 @@ trait GapicClientTrait
             $interfaceName ?: $this->serviceName,
             $methodName
         );
+    }
+
+    /**
+     * The SERVICE_ADDRESS constant is set by GAPIC clients
+     */
+    private static function getDefaultAudience()
+    {
+        if (!defined('self::SERVICE_ADDRESS')) {
+            return null;
+        }
+        return 'https://' . self::SERVICE_ADDRESS . '/';
+    }
+
+    /**
+     * This defaults to all three transports, which One-Platform supports.
+     * Discovery clients should define this function and only return ['rest'].
+     */
+    private static function supportedTransports()
+    {
+        return ['grpc', 'grpc-fallback', 'rest'];
     }
 
     // Gapic Client Extension Points

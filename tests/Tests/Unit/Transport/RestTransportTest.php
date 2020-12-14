@@ -59,35 +59,31 @@ class RestTransportTest extends TestCase
             new MockRequest()
         );
     }
-    private function getTransport(callable $httpHandler, $serviceAddress = 'http://www.example.com')
+
+    private function getTransport(callable $httpHandler = null, $apiEndpoint = 'http://www.example.com')
     {
-        $request = new Request('POST', $serviceAddress);
+        $request = new Request('POST', $apiEndpoint);
         $requestBuilder = $this->getMockBuilder(RequestBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
         $requestBuilder->method('build')
             ->willReturn($request);
-        $credentialsLoader = $this->getMockBuilder(FetchAuthTokenInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $credentialsLoader->method('fetchAuthToken')
-            ->willReturn(['access_token' => 'abc']);
 
         return new RestTransport(
             $requestBuilder,
-            $httpHandler
+            $httpHandler ?: HttpHandlerFactory::build()
         );
     }
 
     /**
-     * @param $serviceAddress
+     * @param $apiEndpoint
      * @dataProvider startUnaryCallDataProvider
      */
-    public function testStartUnaryCall($serviceAddress)
+    public function testStartUnaryCall($apiEndpoint)
     {
         $expectedRequest = new Request(
             'POST',
-            "$serviceAddress",
+            "$apiEndpoint",
             [],
             ""
         );
@@ -105,7 +101,7 @@ class RestTransportTest extends TestCase
             );
         };
 
-        $response = $this->getTransport($httpHandler, $serviceAddress)
+        $response = $this->getTransport($httpHandler, $apiEndpoint)
             ->startUnaryCall($this->call, [])
             ->wait();
 
@@ -167,28 +163,28 @@ class RestTransportTest extends TestCase
     /**
      * @dataProvider buildDataRest
      */
-    public function testBuildRest($serviceAddress, $restConfigPath, $config, $expectedTransport)
+    public function testBuildRest($apiEndpoint, $restConfigPath, $config, $expectedTransport)
     {
-        $actualTransport = RestTransport::build($serviceAddress, $restConfigPath, $config);
+        $actualTransport = RestTransport::build($apiEndpoint, $restConfigPath, $config);
         $this->assertEquals($expectedTransport, $actualTransport);
     }
 
     public function buildDataRest()
     {
         $uri = "address.com";
-        $serviceAddress = "$uri:443";
+        $apiEndpoint = "$uri:443";
         $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
-        $requestBuilder = new RequestBuilder($serviceAddress, $restConfigPath);
+        $requestBuilder = new RequestBuilder($apiEndpoint, $restConfigPath);
         $httpHandler = [HttpHandlerFactory::build(), 'async'];
         return [
             [
-                $serviceAddress,
+                $apiEndpoint,
                 $restConfigPath,
                 ['httpHandler' => $httpHandler],
                 new RestTransport($requestBuilder, $httpHandler)
             ],
             [
-                $serviceAddress,
+                $apiEndpoint,
                 $restConfigPath,
                 [],
                 new RestTransport($requestBuilder, $httpHandler),
@@ -200,9 +196,9 @@ class RestTransportTest extends TestCase
      * @dataProvider buildInvalidData
      * @expectedException \Google\ApiCore\ValidationException
      */
-    public function testBuildInvalid($serviceAddress, $restConfigPath, $args)
+    public function testBuildInvalid($apiEndpoint, $restConfigPath, $args)
     {
-        RestTransport::build($serviceAddress, $restConfigPath, $args);
+        RestTransport::build($apiEndpoint, $restConfigPath, $args);
     }
 
     public function buildInvalidData()
@@ -239,5 +235,59 @@ class RestTransportTest extends TestCase
         $this->getTransport($httpHandler)
             ->startUnaryCall($this->call, [])
             ->wait();
+    }
+
+    public function testAudienceOption()
+    {
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
+            ->shouldBeCalledOnce()
+            ->willReturn(function() { return []; });
+
+        $options = [
+            'audience' => 'an-audience',
+            'credentialsWrapper' => $credentialsWrapper->reveal(),
+        ];
+
+        $httpHandler = function (RequestInterface $request, array $options = []) {
+            return Promise\promise_for(new Response(200, [], '{}'));
+        };
+
+        $this->getTransport($httpHandler)
+            ->startUnaryCall($this->call, $options)
+            ->wait();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The "headers" option must be an array
+     */
+    public function testNonArrayHeadersThrowsException()
+    {
+        $options = [
+            'headers' => 'not-an-array',
+        ];
+
+        $this->getTransport()
+            ->startUnaryCall($this->call, $options);
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage Expected array response from authorization header callback
+     */
+    public function testNonArrayAuthorizationHeaderThrowsException()
+    {
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getAuthorizationHeaderCallback(null)
+            ->shouldBeCalledOnce()
+            ->willReturn(function() { return ''; });
+
+        $options = [
+            'credentialsWrapper' => $credentialsWrapper->reveal(),
+        ];
+
+        $this->getTransport()
+            ->startUnaryCall($this->call, $options);
     }
 }
