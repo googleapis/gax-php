@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\PagedListResponse | Google ApiCore - 1.6.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../doctum.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_PagedListResponse" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - 1.6.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li>PagedListResponse</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            PagedListResponse
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>PagedListResponse</strong>        implements
+        <a target="_blank" rel="noopener" href="https://www.php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Response object for paged results from a list API method</p>            <p>The PagedListResponse object is returned by API methods that implement
+pagination, and makes it easier to access multiple pages of results
+without having to manually manipulate page tokens. Pages are retrieved
+lazily, with additional API calls being made as additional results
+are required.</p>
+
+<p>The list elements can be accessed in the following ways:
+ - As a single iterable used in a foreach loop or via the getIterator method
+ - As pages of elements, using the getPage and iteratePages methods
+ - As fixed size collections of elements, using the
+   getFixedSizeCollection and iterateFixedSizeCollections methods</p>
+
+<p>Example of using PagedListResponse as an iterator:</p>
+
+<pre><code>$pagedListResponse = $client-&gt;getList(...);
+foreach ($pagedListResponse as $element) {
+    // doSomethingWith($element);
+}
+</code></pre>
+
+<p>Example of iterating over each page of elements:</p>
+
+<pre><code>$pagedListResponse = $client-&gt;getList(...);
+foreach ($pagedListResponse-&gt;iteratePages() as $page) {
+    foreach ($page as $element) {
+        // doSomethingWith($element);
+    }
+}
+</code></pre>
+
+<p>Example of accessing the current page, and manually iterating
+over pages:</p>
+
+<pre><code>$pagedListResponse = $client-&gt;getList(...);
+$page = $pagedListResponse-&gt;getPage();
+// doSomethingWith($page);
+while ($page-&gt;hasNextPage()) {
+    $page = $page-&gt;getNextPage();
+    // doSomethingWith($page);
+}
+</code></pre>
+</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $firstPage)
+        
+                                            <p>PagedListResponse constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_iterateAllElements">iterateAllElements</a>()
+        
+                                            <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIterator">getIterator</a>()
+        
+                                            <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Page
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPage">getPage</a>()
+        
+                                            <p>Return the current page of results.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Page[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_iteratePages">iteratePages</a>()
+        
+                                            <p>Returns an iterator over pages of results. The pages are
+retrieved lazily from the underlying API.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    FixedSizeCollection
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_expandToFixedSizeCollection">expandToFixedSizeCollection</a>($collectionSize)
+        
+                                            <p>Returns a collection of elements with a fixed size set by
+the collectionSize parameter. The collection will only contain
+fewer than collectionSize elements if there are no more
+pages to be retrieved from the server.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|FixedSizeCollection[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_iterateFixedSizeCollections">iterateFixedSizeCollections</a>($collectionSize)
+        
+                                            <p>Returns an iterator over fixed size collections of results.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L91">at line 91</a></div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $firstPage)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>PagedListResponse constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a></td>
+                <td>$firstPage</td>
+                <td>A page containing response details.</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_iterateAllElements">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L110">at line 110</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+    <strong>iterateAllElements</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                    <p>NOTE: The result of this method is the same as getIterator().
+Prefer using getIterator(), or iterate directly on the
+PagedListResponse object.</p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIterator">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L124">at line 124</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+    <strong>getIterator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an iterator over the full list of elements. If the
+API response contains a (non-empty) next page token, then
+the PagedListResponse object will make calls to the underlying
+API to retrieve additional elements as required.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPage">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L138">at line 138</a></div>
+        <code>                    Page
+    <strong>getPage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the current page of results.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Page</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_iteratePages">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L150">at line 150</a></div>
+        <code>                    Page[]
+    <strong>iteratePages</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an iterator over pages of results. The pages are
+retrieved lazily from the underlying API.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Page[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_expandToFixedSizeCollection">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L170">at line 170</a></div>
+        <code>                    FixedSizeCollection
+    <strong>expandToFixedSizeCollection</strong>($collectionSize)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a collection of elements with a fixed size set by
+the collectionSize parameter. The collection will only contain
+fewer than collectionSize elements if there are no more
+pages to be retrieved from the server.</p>                    <p>NOTE: it is an error to call this method if an optional parameter
+to set the page size is not supported or has not been set in the
+original API call. It is also an error if the collectionSize parameter
+is less than the page size that has been set.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$collectionSize</td>
+                <td>int</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>FixedSizeCollection</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td>if a FixedSizeCollection of the specified size cannot be constructed</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_iterateFixedSizeCollections">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.6.1/src/PagedListResponse.php#L192">at line 192</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|FixedSizeCollection[]
+    <strong>iterateFixedSizeCollections</strong>($collectionSize)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an iterator over fixed size collections of results.</p>                    <p>The collections are retrieved lazily from the underlying API.</p>
+
+<p>Each collection will have collectionSize elements, with the
+exception of the final collection which may contain fewer
+elements.</p>
+
+<p>NOTE: it is an error to call this method if an optional parameter
+to set the page size is not supported or has not been set in the
+original API call. It is also an error if the collectionSize parameter
+is less than the page size that has been set.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$collectionSize</td>
+                <td>int</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|FixedSizeCollection[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td>if a FixedSizeCollection of the specified size cannot be constructed</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
+    </div>
+    </body>
+
+</html>
