@@ -112,8 +112,8 @@ class PagedListResponseTest extends TestCase
     public function testMapFieldNextPageToken()
     {
         $mockRequest = $this->createMockRequest('mockToken');
-        $mockResponse = ($this->createMockResponse('nextPageToken1'))
-            ->setResourcesMap(['key1' => 'resource1']);
+        $mockResponse = $this->createMockResponse('nextPageToken1');
+        $mockResponse->setResourcesMap(['key1' => 'resource1']);
 
         $pageAccessor = $this->makeMockMapFieldPagedCall($mockRequest, $mockResponse);
 
@@ -125,8 +125,8 @@ class PagedListResponseTest extends TestCase
     public function testMapFieldIterateAllElements()
     {
         $mockRequest = $this->createMockRequest('mockToken');
-        $mockResponse = ($this->createMockResponse())
-            ->setResourcesMap(['key1' => 'resource1']);
+        $mockResponse = $this->createMockResponse();
+        $mockResponse->setResourcesMap(['key1' => 'resource1']);
 
         $pageAccessor = $this->makeMockMapFieldPagedCall($mockRequest, $mockResponse);
 
@@ -138,8 +138,8 @@ class PagedListResponseTest extends TestCase
     public function testMapFieldIterator()
     {
         $mockRequest = $this->createMockRequest('mockToken');
-        $mockResponse = ($this->createMockResponse())
-            ->setResourcesMap(['key1' => 'resource1']);
+        $mockResponse = $this->createMockResponse();
+        $mockResponse->setResourcesMap(['key1' => 'resource1']);
 
         $pageAccessor = $this->makeMockMapFieldPagedCall($mockRequest, $mockResponse);
 
