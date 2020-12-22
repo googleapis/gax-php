@@ -81,15 +81,15 @@ class PagedListResponseTest extends TestCase
     /**
      * @param mixed $mockRequest
      * @param mixed $mockResponse
-     * @param array $options
+     * @param array $resourceField
      * @return PagedListResponse
      */
-    private function makeMockPagedCall($mockRequest, $mockResponse, $options = [])
+    private function makeMockPagedCall($mockRequest, $mockResponse, $resourceField = 'resourcesList')
     {
         $pageStreamingDescriptor = PageStreamingDescriptor::createFromFields([
             'requestPageTokenField' => 'pageToken',
             'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resourcesList'
+            'resourceField' => $resourceField,
         ]);
 
         $callable = function () use ($mockResponse) {
@@ -115,7 +115,7 @@ class PagedListResponseTest extends TestCase
         $mockResponse = $this->createMockResponse('nextPageToken1');
         $mockResponse->setResourcesMap(['key1' => 'resource1']);
 
-        $pageAccessor = $this->makeMockMapFieldPagedCall($mockRequest, $mockResponse);
+        $pageAccessor = $this->makeMockPagedCall($mockRequest, $mockResponse, 'resourcesMap');
 
         $page = $pageAccessor->getPage();
         $this->assertEquals($page->getNextPageToken(), 'nextPageToken1');
@@ -128,7 +128,7 @@ class PagedListResponseTest extends TestCase
         $mockResponse = $this->createMockResponse();
         $mockResponse->setResourcesMap(['key1' => 'resource1']);
 
-        $pageAccessor = $this->makeMockMapFieldPagedCall($mockRequest, $mockResponse);
+        $pageAccessor = $this->makeMockPagedCall($mockRequest, $mockResponse, 'resourcesMap');
 
         $result = iterator_to_array($pageAccessor->iterateAllElements());
 
@@ -141,41 +141,10 @@ class PagedListResponseTest extends TestCase
         $mockResponse = $this->createMockResponse();
         $mockResponse->setResourcesMap(['key1' => 'resource1']);
 
-        $pageAccessor = $this->makeMockMapFieldPagedCall($mockRequest, $mockResponse);
+        $pageAccessor = $this->makeMockPagedCall($mockRequest, $mockResponse, 'resourcesMap');
 
         $result = iterator_to_array($pageAccessor);
 
         $this->assertEquals(['key1' => 'resource1'], $result);
-    }
-
-    /**
-     * @param mixed $mockRequest
-     * @param mixed $mockResponse
-     * @param array $options
-     * @return PagedListResponse
-     */
-    private function makeMockMapFieldPagedCall($mockRequest, $mockResponse, $options = [])
-    {
-        $pageStreamingDescriptor = PageStreamingDescriptor::createFromFields([
-            'requestPageTokenField' => 'pageToken',
-            'responsePageTokenField' => 'nextPageToken',
-            'resourceField' => 'resourcesMap'
-        ]);
-
-        $callable = function () use ($mockResponse) {
-            return $promise = new \GuzzleHttp\Promise\Promise(function () use (&$promise, $mockResponse) {
-                $promise->resolve($mockResponse);
-            });
-        };
-
-        $call = new Call('method', [], $mockRequest);
-        $options = [];
-
-        $response = $callable($call, $options)->wait();
-
-        $page = new Page($call, $options, $callable, $pageStreamingDescriptor, $response);
-        $pageAccessor = new PagedListResponse($page);
-
-        return $pageAccessor;
     }
 }
