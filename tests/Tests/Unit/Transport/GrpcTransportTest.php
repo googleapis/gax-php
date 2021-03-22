@@ -38,6 +38,7 @@ use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Transport\GrpcTransport;
+use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -521,7 +522,9 @@ class GrpcTransportTest extends TestCase
         return [
             [
                 UnaryCall::class,
-                new TestUnaryInterceptor()
+                $this->useDeprecatedUnaryInterceptor()
+                    ? new TestUnaryInterceptorDeprecated()
+                    : new TestUnaryInterceptor()
             ],
             [
                 UnaryCall::class,
@@ -558,6 +561,13 @@ class GrpcTransportTest extends TestCase
         }
 
         return $mockCall;
+    }
+
+    private function useDeprecatedUnaryInterceptor()
+    {
+        $reflector = new \ReflectionClass(Interceptor::class);
+        $params = $reflector->getMethod('interceptUnaryUnary')->getParameters();
+        return $params[3]->getName() === 'metadata';
     }
 }
 
@@ -628,8 +638,23 @@ class TestUnaryInterceptor extends Interceptor
         $argument,
         $deserialize,
         $continuation,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $options['test-interceptor-insert'] = 'inserted-value';
+        return $continuation($method, $argument, $deserialize, $metadata, $options);
+    }
+}
+
+class TestUnaryInterceptorDeprecated implements UnaryInterceptorInterface
+{
+    public function interceptUnaryUnary(
+        $method,
+        $argument,
+        $deserialize,
         array $metadata,
-        array $options
+        array $options,
+        callable $continuation
     ) {
         $options['test-interceptor-insert'] = 'inserted-value';
         return $continuation($method, $argument, $deserialize, $metadata, $options);
