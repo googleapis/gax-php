@@ -38,7 +38,6 @@ use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Transport\GrpcTransport;
-use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -601,9 +600,9 @@ class TestInterceptor extends Interceptor
         $method,
         $argument,
         $deserialize,
+        $continuation,
         array $metadata = [],
-        array $options = [],
-        $continuation
+        array $options = []
     ) {
         $options['test-interceptor-insert'] = 'inserted-value';
         return $continuation($method, $argument, $deserialize, $metadata, $options);
@@ -613,24 +612,24 @@ class TestInterceptor extends Interceptor
         $method,
         $argument,
         $deserialize,
+        $continuation,
         array $metadata = [],
-        array $options = [],
-        $continuation
+        array $options = []
     ) {
         $options['test-interceptor-insert'] = 'inserted-value';
         return $continuation($method, $argument, $deserialize, $metadata, $options);
     }
 }
 
-class TestUnaryInterceptor implements UnaryInterceptorInterface
+class TestUnaryInterceptor extends Interceptor
 {
     public function interceptUnaryUnary(
         $method,
         $argument,
         $deserialize,
+        $continuation,
         array $metadata,
-        array $options,
-        callable $continuation
+        array $options
     ) {
         $options['test-interceptor-insert'] = 'inserted-value';
         return $continuation($method, $argument, $deserialize, $metadata, $options);
