@@ -121,8 +121,8 @@ class CredentialsWrapper
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
                 $authHttpHandler,
-                null,
-                null,
+                $args['authCacheOptions'],
+                $args['authCache'],
                 $args['quotaProject'],
                 $args['defaultScopes']
             );
