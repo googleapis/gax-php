@@ -122,7 +122,11 @@ class AgentHeaderTest extends TestCase
     public function testWithGrpcAndRest()
     {
         $expectedHeader = [AgentHeader::AGENT_HEADER_KEY => [
-            'gl-php/7.4.15 gapic/ gax/3.3.3 grpc/4.4.4 rest/5.5.5'
+            'gl-php/' . phpversion() .
+            ' gapic/' .
+            ' gax/3.3.3' .
+            ' grpc/4.4.4' .
+            ' rest/5.5.5'
         ]];
 
         $header = AgentHeader::buildAgentHeader([
@@ -137,7 +141,11 @@ class AgentHeaderTest extends TestCase
     public function testWithRestAndGaxFallback()
     {
         $expectedHeader = [AgentHeader::AGENT_HEADER_KEY => [
-            'gl-php/7.4.15 gapic/ gax/3.3.3 grpc/ rest/3.3.3'
+            'gl-php/' . phpversion() .
+            ' gapic/' .
+            ' gax/3.3.3' .
+            ' grpc/' . phpversion('grpc') .
+            ' rest/3.3.3'
         ]];
 
         $header = AgentHeader::buildAgentHeader([
