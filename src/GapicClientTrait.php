@@ -321,16 +321,15 @@ trait GapicClientTrait
 
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
-        // Note: The case where defaultTransport() returns 'rest' is implemented
-        // in the microgenerator, not in gax-php.
-        if ($this->defaultTransport() === 'rest') {
-            // TODO: If/when we support gRPC-only libraries, do not unset the grpcVersion header.
-            if (isset($options['grpcVersion'])) {
-                unset($options['grpcVersion']);
-            }
-            if (!isset($options['restVersion'])) {
-                $options['restVersion'] = Version::getApiCoreVersion();
-            }
+        if ($this->transport instanceof GrpcFallbackTransport) {
+            $options['grpcVersion'] = phpversion('grpc');
+            $options['restVersion'] = Version::getApiCoreVersion();
+        } else if ($this->transport instanceof GrpcTransport) {
+            $options['grpcVersion'] = phpversion('grpc');
+            unset($options['restVersion']);
+        } else if ($this->transport instanceof RestTransport) {
+            unset($options['grpcVersion']);
+            $options['restVersion'] = Version::getApiCoreVersion();
         }
 
         $this->agentHeader = AgentHeader::buildAgentHeader(
