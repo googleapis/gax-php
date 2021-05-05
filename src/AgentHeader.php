@@ -50,6 +50,8 @@ class AgentHeader
      *     @type string $gapicVersion the code generator version of the GAPIC library.
      *     @type string $apiCoreVersion the ApiCore version.
      *     @type string $grpcVersion the gRPC version.
+     *     @type string $restVErsion the REST transport version (typically same as the
+     *           ApiCore version).
      * }
      * @return array Agent header array
      */

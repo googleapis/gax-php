@@ -321,13 +321,11 @@ trait GapicClientTrait
 
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
-        if ($this->transport instanceof GrpcFallbackTransport) {
-            $options['grpcVersion'] = phpversion('grpc');
-            $options['restVersion'] = Version::getApiCoreVersion();
-        } else if ($this->transport instanceof GrpcTransport) {
+        if ($this->transport instanceof GrpcTransport) {
             $options['grpcVersion'] = phpversion('grpc');
             unset($options['restVersion']);
-        } else if ($this->transport instanceof RestTransport) {
+        } else if ($this->transport instanceof RestTransport 
+            || $this->transport instanceof GrpcFallbackTransport) {
             unset($options['grpcVersion']);
             $options['restVersion'] = Version::getApiCoreVersion();
         }
