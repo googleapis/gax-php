@@ -383,9 +383,7 @@ class RetrySettings
      * Creates an associative array of the {@see Google\ApiCore\RetrySettings} timeout fields configured
      * with the given timeout specified in the $timeout parameter interpreted as a logical timeout.
      *
-     * @param int $timeout {
-     *     The timeout in milliseconds to be used as a logical call timeout.
-     * }
+     * @param int $timeout The timeout in milliseconds to be used as a logical call timeout.
      * @return array
      */
     public static function logicalTimeout($timeout)
