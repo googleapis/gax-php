@@ -324,7 +324,7 @@ trait GapicClientTrait
         if ($this->transport instanceof GrpcTransport) {
             $options['grpcVersion'] = phpversion('grpc');
             unset($options['restVersion']);
-        } else if ($this->transport instanceof RestTransport 
+        } elseif ($this->transport instanceof RestTransport
             || $this->transport instanceof GrpcFallbackTransport) {
             unset($options['grpcVersion']);
             $options['restVersion'] = Version::getApiCoreVersion();
