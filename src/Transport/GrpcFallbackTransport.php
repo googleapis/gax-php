@@ -86,6 +86,7 @@ class GrpcFallbackTransport implements TransportInterface
     {
         $config += [
             'httpHandler'  => null,
+            'clientCertSource' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
@@ -177,9 +178,9 @@ class GrpcFallbackTransport implements TransportInterface
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
         }
 
-        if ($this->clientCert) {
-            $callOptions['cert'] = $this->clientCertSource;
-            $callOptions['key'] = $this->clientKeySource;
+        if ($this->certSource && $this->keySource) {
+            $callOptions['cert'] = $this->certSource;
+            $callOptions['key'] = $this->keySource;
         }
 
         return $callOptions;

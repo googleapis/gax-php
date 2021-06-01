@@ -95,7 +95,7 @@ class RestTransport implements TransportInterface
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }
-        return $transport
+        return $transport;
     }
 
     /**
