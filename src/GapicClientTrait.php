@@ -352,7 +352,12 @@ trait GapicClientTrait
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
-            : $this->createTransport($options['apiEndpoint'], $transport, $options['transportConfig'], $options['clientCertSource']);
+            : $this->createTransport(
+                $options['apiEndpoint'],
+                $transport,
+                $options['transportConfig'],
+                $options['clientCertSource']
+            );
     }
 
     /**
