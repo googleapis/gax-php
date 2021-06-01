@@ -86,11 +86,16 @@ class RestTransport implements TransportInterface
     {
         $config += [
             'httpHandler'  => null,
+            'clientCertSource' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        return new RestTransport($requestBuilder, $httpHandler);
+        $transport = new RestTransport($requestBuilder, $httpHandler);
+        if ($config['clientCertSource']) {
+            $transport->configureMtlsChannel($config['clientCertSource']);
+        }
+        return $transport
     }
 
     /**
@@ -144,6 +149,11 @@ class RestTransport implements TransportInterface
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
+        }
+
+        if ($this->certSource && $this->keySource) {
+            $callOptions['cert'] = $this->certSource;
+            $callOptions['key'] = $this->keySource;
         }
 
         return $callOptions;

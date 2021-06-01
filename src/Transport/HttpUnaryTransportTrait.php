@@ -44,6 +44,8 @@ trait HttpUnaryTransportTrait
 {
     private $httpHandler;
     private $transportName;
+    private $certSource;
+    private $keySource;
 
     /**
      * {@inheritdoc}
@@ -130,6 +132,17 @@ trait HttpUnaryTransportTrait
         } catch (Exception $ex) {
             throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
         }
+    }
+
+    /**
+     * Set the path to a client certificate.
+     *
+     * @param string $clientCertSource
+     */
+    private function configureMtlsChannel(string $clientCertSource)
+    {
+        $this->keySource = $clientCertSource;
+        $this->certSource = $clientCertSource;
     }
 
     private function throwUnsupportedException()

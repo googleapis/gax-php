@@ -115,9 +115,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
     {
         self::validateGrpcSupport();
         $config += [
-            'stubOpts'     => [],
-            'channel'      => null,
-            'interceptors' => [],
+            'stubOpts'         => [],
+            'channel'          => null,
+            'interceptors'     => [],
+            'clientCertSource' => null,
         ];
         list($addr, $port) = self::normalizeServiceAddress($apiEndpoint);
         $host = "$addr:$port";
@@ -125,7 +126,12 @@ class GrpcTransport extends BaseStub implements TransportInterface
         // Set the required 'credentials' key in stubOpts if it is not already set. Use
         // array_key_exists because null is a valid value.
         if (!array_key_exists('credentials', $stubOpts)) {
-            $stubOpts['credentials'] = ChannelCredentials::createSsl();
+            $cert = $key = null;
+            if (isset($config['clientCertSource'])) {
+                // Assume the key and the cert are in the same file
+                $cert = $key = file_get_contents($config['clientCertSource']);
+            }
+            $stubOpts['credentials'] = ChannelCredentials::createSsl(null, $key, $cert);
         }
         $channel = $config['channel'];
         if (!is_null($channel) && !($channel instanceof Channel)) {

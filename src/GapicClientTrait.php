@@ -162,6 +162,7 @@ trait GapicClientTrait
             'libName' => null,
             'libVersion' => null,
             'apiEndpoint' => null,
+            'clientCertSource' => null,
         ];
         $defaultOptions['transportConfig'] += [
             'grpc' => ['stubOpts' => ['grpc.service_config_disable_resolution' => 1]],
@@ -282,6 +283,8 @@ trait GapicClientTrait
      *           The version of the client application.
      *     @type string $gapicVersion
      *           The code generator version of the GAPIC library.
+     *     @type string $clientCertSource
+     *           The path to a client certificate file
      * }
      * @throws ValidationException
      */
@@ -337,7 +340,7 @@ trait GapicClientTrait
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
-            : $this->createTransport($options['apiEndpoint'], $transport, $options['transportConfig']);
+            : $this->createTransport($options['apiEndpoint'], $transport, $options['transportConfig'], $options['clientCertSource']);
     }
 
     /**
@@ -374,7 +377,7 @@ trait GapicClientTrait
      * @return TransportInterface
      * @throws ValidationException
      */
-    private function createTransport($apiEndpoint, $transport, array $transportConfig)
+    private function createTransport($apiEndpoint, $transport, array $transportConfig, string $clientCertSource = null)
     {
         if (!is_string($transport)) {
             throw new ValidationException(
@@ -393,6 +396,7 @@ trait GapicClientTrait
         $configForSpecifiedTransport = isset($transportConfig[$transport])
             ? $transportConfig[$transport]
             : [];
+        $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
         switch ($transport) {
             case 'grpc':
                 return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
