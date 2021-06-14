@@ -465,6 +465,7 @@ class GapicClientTraitTest extends TestCase
             'gapicVersion' => null,
             'libName' => null,
             'libVersion' => null,
+            'useJwtAccessWithScope' => true,
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -494,6 +495,74 @@ class GapicClientTraitTest extends TestCase
                         ]
                     ]
                 ], $grpcConfigOptions
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider buildClientOptionsProviderRestOnly
+     */
+    public function testBuildClientOptionsRestOnly($options, $expectedUpdatedOptions)
+    {
+        if (!extension_loaded('sysvshm')) {
+            $this->markTestSkipped('The sysvshm extension must be installed to execute this test.');
+        }
+        $client = new GapicClientTraitRestOnly();
+        $updatedOptions = $client->call('buildClientOptions', [$options]);
+        $this->assertEquals($expectedUpdatedOptions, $updatedOptions);
+    }
+
+    public function buildClientOptionsProviderRestOnly()
+    {
+        $defaultOptions = [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'disableRetries' => false,
+            'transport' => null,
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ],
+                'fake-transport' => []
+            ],
+            'credentials' => null,
+            'credentialsConfig' => [],
+            'gapicVersion' => null,
+            'libName' => null,
+            'libVersion' => null,
+            'useJwtAccessWithScope' => false,
+        ];
+
+        $restConfigOptions = $defaultOptions;
+        $restConfigOptions['transportConfig']['rest'] += [
+            'customRestConfig' => 'value'
+        ];
+
+        $fakeTransportConfigOptions = $defaultOptions;
+        $fakeTransportConfigOptions['transportConfig']['fake-transport'] += [
+            'customRestConfig' => 'value'
+        ];
+        return [
+            [[], $defaultOptions],
+            [
+                [
+                    'transportConfig' => [
+                        'rest' => [
+                            'customRestConfig' => 'value'
+                        ]
+                    ]
+                ], $restConfigOptions
+            ],
+            [
+                [
+                    'transportConfig' => [
+                        'fake-transport' => [
+                            'customRestConfig' => 'value'
+                        ]
+                    ]
+                ], $fakeTransportConfigOptions
             ],
         ];
     }
@@ -1107,7 +1176,13 @@ class GapicClientTraitRestOnly
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
                 ]
             ],
+            'useJwtAccessWithScope' => false,
         ];
+    }
+
+    public function call($fn, array $args = [])
+    {
+        return call_user_func_array([$this, $fn], $args);
     }
 
     public function getTransport()
