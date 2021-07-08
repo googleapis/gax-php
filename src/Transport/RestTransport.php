@@ -78,6 +78,7 @@ class RestTransport implements TransportInterface
      *    Config options used to construct the gRPC transport.
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
+     *    @type callable $clientCertSource A callable which returns the client cert as a string.
      * }
      * @return RestTransport
      * @throws ValidationException
@@ -151,9 +152,11 @@ class RestTransport implements TransportInterface
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
         }
 
-        if ($this->certSource && $this->keySource) {
-            $callOptions['cert'] = $this->certSource;
-            $callOptions['key'] = $this->keySource;
+        if ($this->clientCertSource) {
+            $f = tempnam(sys_get_temp_dir(), 'cert');
+            file_put_contents($f, call_user_func($this->clientCertSource));
+            $callOptions['cert'] = $f;
+            $callOptions['key'] = $f;
         }
 
         return $callOptions;

@@ -44,8 +44,7 @@ trait HttpUnaryTransportTrait
 {
     private $httpHandler;
     private $transportName;
-    private $certSource;
-    private $keySource;
+    private $clientCertSource;
 
     /**
      * {@inheritdoc}
@@ -139,10 +138,9 @@ trait HttpUnaryTransportTrait
      *
      * @param string $clientCertSource
      */
-    private function configureMtlsChannel(string $clientCertSource)
+    private function configureMtlsChannel(callable $clientCertSource)
     {
-        $this->keySource = $clientCertSource;
-        $this->certSource = $clientCertSource;
+        $this->clientCertSource = $clientCertSource;
     }
 
     private function throwUnsupportedException()

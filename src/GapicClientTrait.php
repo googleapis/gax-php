@@ -219,7 +219,46 @@ trait GapicClientTrait
             }
         }
 
+        // mTLS: detect and load the default clientCertSource if the environment variable
+        // "GOOGLE_API_USE_CLIENT_CERTIFICATE" is true, and the cert source is available
+        if (empty($options['clientCertSource']) && CredentialsLoader::shouldLoadClientCertSource()) {
+            $options['clientCertSource'] = CredentialsLoader::getDefaultClientCertSource();
+        }
+
+        // mTLS: If no apiEndpoint has been supplied by the user, and either 
+        // GOOGLE_API_USE_MTLS_ENDPOINT tells us to, or mTLS is available, use the mTLS endpoint.
+        if ($options['apiEndpoint'] === $defaultOptions['apiEndpoint']
+            && $this->shouldUseMtlsEndpoint($options)
+        ) {
+            $options['apiEndpoint'] = $this->determineMtlsEndpoint($options['apiEndpoint']);
+        }
+
         return $options;
+    }
+
+    private function shouldUseMtlsEndpoint($options)
+    {
+        if (!empty($options['apiEndpoint'])) {
+            return false;
+        }
+        $mtlsEndpointEnvVar = getenv('GOOGLE_API_USE_MTLS_ENDPOINT');
+        if ('always' === $mtlsEndpointEnvVar) {
+            return true;
+        }
+        if ('never' === $mtlsEndpointEnvVar) {
+            return false;
+        }
+        // For all other cases, assume "auto" and return true if clientCertSource exists
+        return !empty($options['clientCertSource']);
+    }
+
+    private function determineMtlsEndpoint($apiEndpoint)
+    {
+        $parts = explode('.', $apiEndpoint);
+        if (count($parts) < 3) {
+            return $apiEndpoint; // invalid endpoint!
+        }
+        return sprintf('%s.mtls.%s', array_shift($parts), implode('.', $parts));
     }
 
     /**
@@ -283,8 +322,8 @@ trait GapicClientTrait
      *           The version of the client application.
      *     @type string $gapicVersion
      *           The code generator version of the GAPIC library.
-     *     @type string $clientCertSource
-     *           The path to a client certificate file
+     *     @type callable $clientCertSource
+     *           A callable which returns the client cert as a string.
      * }
      * @throws ValidationException
      */

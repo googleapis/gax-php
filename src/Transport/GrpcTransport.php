@@ -107,6 +107,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *          release. To prepare for this, please take the time to convert
      *          `UnaryInterceptorInterface` implementations over to a class which
      *          extends {@see Grpc\Interceptor}.
+     *    @type callable $clientCertSource A callable which returns the client cert as a string.
      * }
      * @return GrpcTransport
      * @throws ValidationException
@@ -128,8 +129,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
         if (!array_key_exists('credentials', $stubOpts)) {
             $cert = $key = null;
             if (isset($config['clientCertSource'])) {
-                // Assume the key and the cert are in the same file
-                $cert = $key = file_get_contents($config['clientCertSource']);
+                // the key and the cert are returned in one string
+                $cert = $key = call_user_func($config['clientCertSource']);
             }
             $stubOpts['credentials'] = ChannelCredentials::createSsl(null, $key, $cert);
         }
