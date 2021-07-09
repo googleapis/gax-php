@@ -44,6 +44,7 @@ trait HttpUnaryTransportTrait
 {
     private $httpHandler;
     private $transportName;
+    private $clientCertSource;
 
     /**
      * {@inheritdoc}
@@ -132,10 +133,29 @@ trait HttpUnaryTransportTrait
         }
     }
 
+    /**
+     * Set the path to a client certificate.
+     *
+     * @param string $clientCertSource
+     */
+    private function configureMtlsChannel(callable $clientCertSource)
+    {
+        $this->clientCertSource = $clientCertSource;
+    }
+
     private function throwUnsupportedException()
     {
         throw new \BadMethodCallException(
             "Streaming calls are not supported while using the {$this->transportName} transport."
         );
+    }
+
+    private static function loadClientCertSource(callable $clientCertSource)
+    {
+        $f = tempnam(sys_get_temp_dir(), 'cert');
+        file_put_contents($f, call_user_func($this->clientCertSource));
+
+        // the key and the cert are returned in one temporary file
+        return [$f, $f];
     }
 }
