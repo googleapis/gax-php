@@ -428,10 +428,11 @@ trait GapicClientTrait
      * @param string $apiEndpoint
      * @param string $transport
      * @param array $transportConfig
+     * @param callable $clientCertSource
      * @return TransportInterface
      * @throws ValidationException
      */
-    private function createTransport($apiEndpoint, $transport, array $transportConfig, string $clientCertSource = null)
+    private function createTransport($apiEndpoint, $transport, array $transportConfig, callable $clientCertSource = null)
     {
         if (!is_string($transport)) {
             throw new ValidationException(
