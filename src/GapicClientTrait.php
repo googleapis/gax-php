@@ -226,7 +226,7 @@ trait GapicClientTrait
             $options['clientCertSource'] = CredentialsLoader::getDefaultClientCertSource();
         }
 
-        // mTLS: If no apiEndpoint has been supplied by the user, and either 
+        // mTLS: If no apiEndpoint has been supplied by the user, and either
         // GOOGLE_API_USE_MTLS_ENDPOINT tells us to, or mTLS is available, use the mTLS endpoint.
         if ($options['apiEndpoint'] === $defaultOptions['apiEndpoint']
             && $this->shouldUseMtlsEndpoint($options)
@@ -432,8 +432,12 @@ trait GapicClientTrait
      * @return TransportInterface
      * @throws ValidationException
      */
-    private function createTransport($apiEndpoint, $transport, array $transportConfig, callable $clientCertSource = null)
-    {
+    private function createTransport(
+        $apiEndpoint,
+        $transport,
+        array $transportConfig,
+        callable $clientCertSource = null
+    ) {
         if (!is_string($transport)) {
             throw new ValidationException(
                 "'transport' must be a string, instead got:" .
