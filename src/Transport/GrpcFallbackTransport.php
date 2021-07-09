@@ -178,9 +178,10 @@ class GrpcFallbackTransport implements TransportInterface
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
         }
 
-        if ($this->certSource && $this->keySource) {
-            $callOptions['cert'] = $this->certSource;
-            $callOptions['key'] = $this->keySource;
+        if ($this->clientCertSource) {
+            list($cert, $key) = self::loadClientCertSource();
+            $callOptions['cert'] = $cert;
+            $callOptions['key'] = $key;
         }
 
         return $callOptions;

@@ -153,10 +153,9 @@ class RestTransport implements TransportInterface
         }
 
         if ($this->clientCertSource) {
-            $f = tempnam(sys_get_temp_dir(), 'cert');
-            file_put_contents($f, call_user_func($this->clientCertSource));
-            $callOptions['cert'] = $f;
-            $callOptions['key'] = $f;
+            list($cert, $key) = self::loadClientCertSource();
+            $callOptions['cert'] = $cert;
+            $callOptions['key'] = $key;
         }
 
         return $callOptions;
