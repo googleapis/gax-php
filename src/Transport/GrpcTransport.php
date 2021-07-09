@@ -127,12 +127,12 @@ class GrpcTransport extends BaseStub implements TransportInterface
         // Set the required 'credentials' key in stubOpts if it is not already set. Use
         // array_key_exists because null is a valid value.
         if (!array_key_exists('credentials', $stubOpts)) {
-            $cert = $key = null;
             if (isset($config['clientCertSource'])) {
-                // the key and the cert are returned in one string
-                $cert = $key = call_user_func($config['clientCertSource']);
+                list($cert, $key) = self::loadClientCertSource($config['clientCertSource']);
+                $stubOpts['credentials'] = ChannelCredentials::createSsl(null, $key, $cert);
+            } else {
+                $stubOpts['credentials'] = ChannelCredentials::createSsl();
             }
-            $stubOpts['credentials'] = ChannelCredentials::createSsl(null, $key, $cert);
         }
         $channel = $config['channel'];
         if (!is_null($channel) && !($channel instanceof Channel)) {
@@ -261,5 +261,13 @@ class GrpcTransport extends BaseStub implements TransportInterface
         }
 
         return $callOptions;
+    }
+
+    private static function loadClientCertSource(callable $clientCertSource)
+    {
+        $cert = call_user_func($clientCertSource);
+
+        // the key and the cert are returned in one string
+        return [$cert, $cert];
     }
 }

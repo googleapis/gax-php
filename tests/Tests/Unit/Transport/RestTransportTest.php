@@ -192,6 +192,39 @@ class RestTransportTest extends TestCase
         ];
     }
 
+    public function testClientCertSourceOptionValid()
+    {
+        $mockClientCertSource = function () {
+            return 'MOCK_CERT_SOURCE';
+        };
+        $transport = RestTransport::build(
+            'address.com:123',
+            __DIR__ . '/../testdata/test_service_rest_client_config.php',
+            ['clientCertSource' => $mockClientCertSource]
+        );
+
+        $reflectionClass = new \ReflectionClass($transport);
+        $reflectionProp = $reflectionClass->getProperty('clientCertSource');
+        $reflectionProp->setAccessible(true);
+        $actualClientCertSource = $reflectionProp->getValue($transport);
+
+        $this->assertEquals($mockClientCertSource, $actualClientCertSource);
+    }
+
+    /**
+     * @expectedException TypeError
+     * @expectedExceptionMessage must be callable
+     */
+    public function testClientCertSourceOptionInvalid()
+    {
+        $mockClientCertSource = 'foo';
+        $transport = RestTransport::build(
+            'address.com:123',
+            __DIR__ . '/../testdata/test_service_rest_client_config.php',
+            ['clientCertSource' => $mockClientCertSource]
+        );
+    }
+
     /**
      * @dataProvider buildInvalidData
      * @expectedException \Google\ApiCore\ValidationException
