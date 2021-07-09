@@ -43,6 +43,7 @@ use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
@@ -230,7 +231,7 @@ trait GapicClientTrait
         if ($options['apiEndpoint'] === $defaultOptions['apiEndpoint']
             && $this->shouldUseMtlsEndpoint($options)
         ) {
-            $options['apiEndpoint'] = $this->determineMtlsEndpoint($options['apiEndpoint']);
+            $options['apiEndpoint'] = self::determineMtlsEndpoint($options['apiEndpoint']);
         }
 
         return $options;
@@ -238,9 +239,6 @@ trait GapicClientTrait
 
     private function shouldUseMtlsEndpoint($options)
     {
-        if (!empty($options['apiEndpoint'])) {
-            return false;
-        }
         $mtlsEndpointEnvVar = getenv('GOOGLE_API_USE_MTLS_ENDPOINT');
         if ('always' === $mtlsEndpointEnvVar) {
             return true;
@@ -252,7 +250,7 @@ trait GapicClientTrait
         return !empty($options['clientCertSource']);
     }
 
-    private function determineMtlsEndpoint($apiEndpoint)
+    private static function determineMtlsEndpoint($apiEndpoint)
     {
         $parts = explode('.', $apiEndpoint);
         if (count($parts) < 3) {
