@@ -419,6 +419,8 @@ class GrpcTransportTest extends TestCase
      */
     public function testClientCertSourceOptionInvalid()
     {
+        $this->requiresPhp7();
+
         $mockClientCertSource = 'foo';
         $transport = GrpcTransport::build(
             'address.com:123',
