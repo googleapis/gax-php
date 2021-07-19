@@ -60,7 +60,7 @@ class RestTransportTest extends TestCase
         );
     }
 
-    private function getTransport(callable $httpHandler, $apiEndpoint = 'http://www.example.com')
+    private function getTransport(callable $httpHandler = null, $apiEndpoint = 'http://www.example.com')
     {
         $request = new Request('POST', $apiEndpoint);
         $requestBuilder = $this->getMockBuilder(RequestBuilder::class)
@@ -68,15 +68,10 @@ class RestTransportTest extends TestCase
             ->getMock();
         $requestBuilder->method('build')
             ->willReturn($request);
-        $credentialsLoader = $this->getMockBuilder(FetchAuthTokenInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $credentialsLoader->method('fetchAuthToken')
-            ->willReturn(['access_token' => 'abc']);
 
         return new RestTransport(
             $requestBuilder,
-            $httpHandler
+            $httpHandler ?: HttpHandlerFactory::build()
         );
     }
 
@@ -246,5 +241,59 @@ class RestTransportTest extends TestCase
         $this->getTransport($httpHandler)
             ->startUnaryCall($this->call, [])
             ->wait();
+    }
+
+    public function testAudienceOption()
+    {
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
+            ->shouldBeCalledOnce()
+            ->willReturn(function() { return []; });
+
+        $options = [
+            'audience' => 'an-audience',
+            'credentialsWrapper' => $credentialsWrapper->reveal(),
+        ];
+
+        $httpHandler = function (RequestInterface $request, array $options = []) {
+            return Promise\promise_for(new Response(200, [], '{}'));
+        };
+
+        $this->getTransport($httpHandler)
+            ->startUnaryCall($this->call, $options)
+            ->wait();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The "headers" option must be an array
+     */
+    public function testNonArrayHeadersThrowsException()
+    {
+        $options = [
+            'headers' => 'not-an-array',
+        ];
+
+        $this->getTransport()
+            ->startUnaryCall($this->call, $options);
+    }
+
+    /**
+     * @expectedException \UnexpectedValueException
+     * @expectedExceptionMessage Expected array response from authorization header callback
+     */
+    public function testNonArrayAuthorizationHeaderThrowsException()
+    {
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getAuthorizationHeaderCallback(null)
+            ->shouldBeCalledOnce()
+            ->willReturn(function() { return ''; });
+
+        $options = [
+            'credentialsWrapper' => $credentialsWrapper->reveal(),
+        ];
+
+        $this->getTransport()
+            ->startUnaryCall($this->call, $options);
     }
 }

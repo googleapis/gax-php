@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016 Google LLC
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,26 +29,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\PageStreamingDescriptor;
-use Google\Rpc\Code;
-use PHPUnit\Framework\TestCase;
+namespace Google\ApiCore\Dev\Docs;
 
-class PageStreamingDescriptorTest extends TestCase
+use RuntimeException;
+use Doctum\Doctum;
+use Doctum\RemoteRepository\GitHubRemoteRepository;
+use Symfony\Component\Finder\Finder;
+
+
+class DoctumConfigBuilder
 {
-    use TestTrait;
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testMissingFields()
+    public static function checkPhpVersion()
     {
-        $descriptor = new PageStreamingDescriptor([
-            'requestPageTokenField' => 'getNextPageToken',
-            // Missing field
-            // 'responsePageTokenField' => 'getNextPageToken',
-            'resourceField' => 'getResourcesList'
+        // Verify that we are running PHP 7 or above
+        if (version_compare(phpversion(), '7.1', '<')) {
+            throw new RuntimeException('PHP must be >= 7.1 to build docs, found version ' . phpversion());
+        }
+    }
+
+    public static function buildConfigForVersion($version)
+    {
+        $gaxRootDir = realpath(__DIR__ . '/../../..');
+        $iterator = Finder::create()
+            ->files()
+            ->name('*.php')
+            ->exclude('GPBMetadata')
+            ->in("$gaxRootDir/src")
+        ;
+
+        return new Doctum($iterator, [
+            'title'                => "Google ApiCore - $version",
+            'version'              => $version,
+            'build_dir'            => "$gaxRootDir/tmp_gh-pages/%version%",
+            'cache_dir'            => "$gaxRootDir/cache/%version%",
+            'remote_repository'    => new GitHubRemoteRepository('googleapis/gax-php', $gaxRootDir),
+            'default_opened_level' => 1,
         ]);
     }
 }

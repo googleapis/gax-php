@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Tests\Unit\Transport;
 
 use Google\ApiCore\Call;
+use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
 use Google\ApiCore\Testing\MockRequest;
@@ -376,6 +377,28 @@ class GrpcTransportTest extends TestCase
         }
     }
 
+    public function testAudienceOption()
+    {
+        $message = $this->createMockRequest();
+
+        $call = $this->prophesize(Call::class);
+        $call->getMessage()->willReturn($message);
+        $call->getMethod()->shouldBeCalled();
+        $call->getDecodeType()->shouldBeCalled();
+
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
+            ->shouldBeCalledOnce();
+        $hostname = '';
+        $opts = ['credentials' => ChannelCredentials::createInsecure()];
+        $transport = new GrpcTransport($hostname, $opts);
+        $options = [
+            'audience' => 'an-audience',
+            'credentialsWrapper' => $credentialsWrapper->reveal(),
+        ];
+        $transport->startUnaryCall($call->reveal(), $options);
+    }
+
     /**
      * @dataProvider buildDataGrpc
      */
@@ -496,6 +519,22 @@ class GrpcTransportTest extends TestCase
 
     public function interceptorDataProvider()
     {
+        if ($this->useDeprecatedInterceptors()) {
+            return [
+                [
+                    UnaryCall::class,
+                    new TestUnaryInterceptorDeprecated()
+                ],
+                [
+                    UnaryCall::class,
+                    new TestInterceptorDeprecated()
+                ],
+                [
+                    ServerStreamingCall::class,
+                    new TestInterceptorDeprecated()
+                ]
+            ];
+        }
         return [
             [
                 UnaryCall::class,
@@ -536,6 +575,13 @@ class GrpcTransportTest extends TestCase
         }
 
         return $mockCall;
+    }
+
+    private function useDeprecatedInterceptors()
+    {
+        $reflector = new \ReflectionClass(Interceptor::class);
+        $params = $reflector->getMethod('interceptUnaryUnary')->getParameters();
+        return $params[3]->getName() === 'metadata';
     }
 }
 
@@ -578,6 +624,33 @@ class TestInterceptor extends Interceptor
         $method,
         $argument,
         $deserialize,
+        $continuation,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $options['test-interceptor-insert'] = 'inserted-value';
+        return $continuation($method, $argument, $deserialize, $metadata, $options);
+    }
+
+    public function interceptUnaryStream(
+        $method,
+        $argument,
+        $deserialize,
+        $continuation,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $options['test-interceptor-insert'] = 'inserted-value';
+        return $continuation($method, $argument, $deserialize, $metadata, $options);
+    }
+}
+
+class TestInterceptorDeprecated extends Interceptor
+{
+    public function interceptUnaryUnary(
+        $method,
+        $argument,
+        $deserialize,
         array $metadata = [],
         array $options = [],
         $continuation
@@ -599,7 +672,22 @@ class TestInterceptor extends Interceptor
     }
 }
 
-class TestUnaryInterceptor implements UnaryInterceptorInterface
+class TestUnaryInterceptor extends Interceptor
+{
+    public function interceptUnaryUnary(
+        $method,
+        $argument,
+        $deserialize,
+        $continuation,
+        array $metadata = [],
+        array $options = []
+    ) {
+        $options['test-interceptor-insert'] = 'inserted-value';
+        return $continuation($method, $argument, $deserialize, $metadata, $options);
+    }
+}
+
+class TestUnaryInterceptorDeprecated implements UnaryInterceptorInterface
 {
     public function interceptUnaryUnary(
         $method,

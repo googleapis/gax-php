@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016 Google LLC
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,26 +29,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\PageStreamingDescriptor;
-use Google\Rpc\Code;
-use PHPUnit\Framework\TestCase;
+namespace Google\ApiCore\Dev\Docs;
 
-class PageStreamingDescriptorTest extends TestCase
-{
-    use TestTrait;
+require_once __DIR__ . '../../../../vendor/autoload.php';
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testMissingFields()
-    {
-        $descriptor = new PageStreamingDescriptor([
-            'requestPageTokenField' => 'getNextPageToken',
-            // Missing field
-            // 'responsePageTokenField' => 'getNextPageToken',
-            'resourceField' => 'getResourcesList'
-        ]);
-    }
-}
+DoctumConfigBuilder::checkPhpVersion();
+
+$currentVersion = getenv('API_CORE_DOCS_VERSION');
+
+return DoctumConfigBuilder::buildConfigForVersion($currentVersion);

@@ -115,7 +115,8 @@ class RestTransport implements TransportInterface
                 /** @var Message $return */
                 $return = new $decodeType;
                 $return->mergeFromJsonString(
-                    (string) $response->getBody()
+                    (string) $response->getBody(),
+                    true
                 );
 
                 if (isset($options['metadataCallback'])) {
@@ -159,7 +160,9 @@ class RestTransport implements TransportInterface
         $body = (string) $res->getBody();
         if ($error = json_decode($body, true)['error']) {
             $basicMessage = $error['message'];
-            $code = ApiStatus::rpcCodeFromStatus($error['status']);
+            $code = isset($error['status'])
+                ? ApiStatus::rpcCodeFromStatus($error['status'])
+                : $ex->getCode();
             $metadata = isset($error['details']) ? $error['details'] : null;
             return ApiException::createFromApiResponse($basicMessage, $code, $metadata);
         }

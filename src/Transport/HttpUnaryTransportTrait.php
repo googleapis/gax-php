@@ -90,12 +90,30 @@ trait HttpUnaryTransportTrait
             ? $options['headers']
             : [];
 
+        if (!is_array($headers)) {
+            throw new \InvalidArgumentException(
+                'The "headers" option must be an array'
+            );
+        }
+
         // If not already set, add an auth header to the request
         if (!isset($headers['Authorization']) && isset($options['credentialsWrapper'])) {
-            $bearerString = $options['credentialsWrapper']->getBearerString();
-            if (!empty($bearerString)) {
-                $headers['Authorization'] = $bearerString;
+            $credentialsWrapper = $options['credentialsWrapper'];
+            $audience = isset($options['audience'])
+                ? $options['audience']
+                : null;
+            $callback = $credentialsWrapper
+                ->getAuthorizationHeaderCallback($audience);
+            // Prevent unexpected behavior, as the authorization header callback
+            // uses lowercase "authorization"
+            unset($headers['authorization']);
+            $authHeaders = $callback();
+            if (!is_array($authHeaders)) {
+                throw new \UnexpectedValueException(
+                    'Expected array response from authorization header callback'
+                );
             }
+            $headers += $authHeaders;
         }
 
         return $headers;

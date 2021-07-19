@@ -29,7 +29,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit;
+namespace Google\ApiCore\Tests\Unit\ResourceTemplate;
 
 use Google\ApiCore\ResourceTemplate\Parser;
 use Google\ApiCore\ResourceTemplate\RelativeResourceTemplate;
@@ -38,9 +38,9 @@ use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
 {
-    private static function literalSegment($value)
+    private static function literalSegment($value, $separator = '/')
     {
-        return new Segment(Segment::LITERAL_SEGMENT, $value);
+        return new Segment(Segment::LITERAL_SEGMENT, $value, null, null, $separator);
     }
 
     private static function wildcardSegment()
@@ -53,9 +53,9 @@ class ParserTest extends TestCase
         return new Segment(Segment::DOUBLE_WILDCARD_SEGMENT);
     }
 
-    private static function variableSegment($key, $template)
+    private static function variableSegment($key, $template, $separator = '/')
     {
-        return new Segment(Segment::VARIABLE_SEGMENT, null, $key, $template);
+        return new Segment(Segment::VARIABLE_SEGMENT, null, $key, $template, $separator);
     }
 
     /**
@@ -67,6 +67,88 @@ class ParserTest extends TestCase
     {
         $actualSegments = Parser::parseSegments($path);
         $this->assertEquals($expectedSegments, $actualSegments);
+    }
+
+    public function testParseBasicSegments() {
+      $this->testParseSegments("foo/bar/baz",
+        [self::literalSegment("foo"),
+        self::literalSegment("bar"),
+        self::literalSegment("baz")]);
+
+      $this->testParseSegments("foos/{foo}/bars/{bar}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*")),
+        self::literalSegment("bars"),
+        self::variableSegment("bar", new RelativeResourceTemplate("*"))]);
+    }
+
+    public function testParseBasicNonSlashSeparators() {
+      $this->testParseSegments("foos/{foo}_{oof}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '_'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"))]);
+
+      $this->testParseSegments("foos/{foo}-{oof}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '-'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"))]);
+
+      $this->testParseSegments("foos/{foo}~{oof}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '~'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"))]);
+
+      $this->testParseSegments("foos/{foo}.{oof}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"))]);
+    }
+
+    public function testParseMultipleNonSlashSeparators() {
+      $this->testParseSegments("foos/{foo}_{oof}-{bar}.{baz}~{car}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '_'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"), '-'),
+        self::variableSegment("bar", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("baz", new RelativeResourceTemplate("*"), '~'),
+        self::variableSegment("car", new RelativeResourceTemplate("*"))]);
+
+      $this->testParseSegments("foos/{foo}.{oof}_{bar}.{car}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"), '_'),
+        self::variableSegment("bar", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("car", new RelativeResourceTemplate("*"))]);
+
+      $this->testParseSegments("foos/{foo}-{oof}.{bar}~{car}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '-'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("bar", new RelativeResourceTemplate("*"), '~'),
+        self::variableSegment("car", new RelativeResourceTemplate("*"))]);
+    }
+
+    public function testParseNonSlashSeparatorsWithParents() {
+      $this->testParseSegments("foos/{foo}_{oof}-{bar}.{baz}~{car}/projects/{project}/locations/{state}~{city}.{cell}",
+        [self::literalSegment("foos"),
+        self::variableSegment("foo", new RelativeResourceTemplate("*"), '_'),
+        self::variableSegment("oof", new RelativeResourceTemplate("*"), '-'),
+        self::variableSegment("bar", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("baz", new RelativeResourceTemplate("*"), '~'),
+        self::variableSegment("car", new RelativeResourceTemplate("*")),
+        self::literalSegment("projects"),
+        self::variableSegment("project", new RelativeResourceTemplate("*")),
+        self::literalSegment("locations"),
+        self::variableSegment("state", new RelativeResourceTemplate("*"), '~'),
+        self::variableSegment("city", new RelativeResourceTemplate("*"), '.'),
+        self::variableSegment("cell", new RelativeResourceTemplate("*"))]);
+
+      $this->testParseSegments("customers/{customer_id}/userLocationViews/{country_criterion_id}~{is_targeting_location}",
+        [self::literalSegment("customers"),
+        self::variableSegment("customer_id", new RelativeResourceTemplate("*")),
+        self::literalSegment("userLocationViews"),
+        self::variableSegment("country_criterion_id", new RelativeResourceTemplate("*"), '~'),
+        self::variableSegment("is_targeting_location", new RelativeResourceTemplate("*"))]);
     }
 
     public function validPathProvider()
