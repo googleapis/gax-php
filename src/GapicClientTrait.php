@@ -162,7 +162,6 @@ trait GapicClientTrait
             'libName' => null,
             'libVersion' => null,
             'apiEndpoint' => null,
-            'useJwtAccessWithScope' => true,
         ];
 
         $supportedTransports = $this->supportedTransports();

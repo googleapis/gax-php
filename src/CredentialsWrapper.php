@@ -117,7 +117,7 @@ class CredentialsWrapper
             'authCacheOptions'  => [],
             'quotaProject'      => null,
             'defaultScopes'     => null,
-            'useJwtAccessWithScope' => false,
+            'useJwtAccessWithScope' => true,
         ];
         $keyFile = $args['keyFile'];
         $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
