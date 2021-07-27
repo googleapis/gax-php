@@ -465,7 +465,6 @@ class GapicClientTraitTest extends TestCase
             'gapicVersion' => null,
             'libName' => null,
             'libVersion' => null,
-            'useJwtAccessWithScope' => true,
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -532,7 +531,6 @@ class GapicClientTraitTest extends TestCase
             'gapicVersion' => null,
             'libName' => null,
             'libVersion' => null,
-            'useJwtAccessWithScope' => false,
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -1176,7 +1174,6 @@ class GapicClientTraitRestOnly
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
                 ]
             ],
-            'useJwtAccessWithScope' => false,
         ];
     }
 
