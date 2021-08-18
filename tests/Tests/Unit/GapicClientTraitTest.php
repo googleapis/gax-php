@@ -1099,7 +1099,7 @@ class GapicClientTraitTest extends TestCase
 
         $this->assertEquals('test.mtls.address.com:443', $options['apiEndpoint']);
         $this->assertTrue(is_callable($options['clientCertSource']));
-        $this->assertEquals('foo', $options['clientCertSource']());
+        $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
     }
 }
 
