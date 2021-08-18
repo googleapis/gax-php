@@ -152,10 +152,13 @@ trait HttpUnaryTransportTrait
 
     private static function loadClientCertSource(callable $clientCertSource)
     {
-        $f = tempnam(sys_get_temp_dir(), 'cert');
-        file_put_contents($f, call_user_func($this->clientCertSource));
+        $certFile = tempnam(sys_get_temp_dir(), 'cert');
+        $keyFile = tempnam(sys_get_temp_dir(), 'key');
+        list($cert, $key) = call_user_func($this->clientCertSource);
+        file_put_contents($certFile, $cert);
+        file_put_contents($keyFile, $key);
 
         // the key and the cert are returned in one temporary file
-        return [$f, $f];
+        return [$certFile, $keyFile];
     }
 }

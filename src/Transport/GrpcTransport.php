@@ -265,9 +265,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
     private static function loadClientCertSource(callable $clientCertSource)
     {
-        $cert = call_user_func($clientCertSource);
-
-        // the key and the cert are returned in one string
-        return [$cert, $cert];
+        return call_user_func($clientCertSource);
     }
 }

@@ -223,7 +223,12 @@ trait GapicClientTrait
         // mTLS: detect and load the default clientCertSource if the environment variable
         // "GOOGLE_API_USE_CLIENT_CERTIFICATE" is true, and the cert source is available
         if (empty($options['clientCertSource']) && CredentialsLoader::shouldLoadClientCertSource()) {
-            $options['clientCertSource'] = CredentialsLoader::getDefaultClientCertSource();
+            $options['clientCertSource'] = function () {
+                $cert = call_user_func(CredentialsLoader::getDefaultClientCertSource());
+
+                // the key and the cert are returned in one string
+                return [$cert, $cert];
+            };
         }
 
         // mTLS: If no apiEndpoint has been supplied by the user, and either
