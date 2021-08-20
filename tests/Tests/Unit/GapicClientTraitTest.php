@@ -533,6 +533,7 @@ class GapicClientTraitTest extends TestCase
             'gapicVersion' => null,
             'libName' => null,
             'libVersion' => null,
+            'clientCertSource' => null,
         ];
 
         $restConfigOptions = $defaultOptions;
