@@ -100,5 +100,8 @@ class JsonStreamDecoder {
                 yield $return;
             }
         }
+        if ($open !== 0) {
+            throw new \Exception("Broken stream");
+        }
     }
 }
