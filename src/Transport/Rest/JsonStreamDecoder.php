@@ -37,7 +37,7 @@ use Psr\Http\Message\StreamInterface;
 
 class JsonStreamDecoder
 {
-    private static $DEFAULT_BUFFER_SIZE = 4 << 20;
+    private static $DEFAULT_BUFFER_SIZE = 4 * 1024 * 1024; // 4 MB, the maximum size of gRPC message.
     private $buffer;
     private $stream;
     private $decodeType;
