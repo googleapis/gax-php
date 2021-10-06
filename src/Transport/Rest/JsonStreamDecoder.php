@@ -96,10 +96,7 @@ class JsonStreamDecoder
             // and yield it.
             if ($open === 1) {
                 $return = new $message();
-                $return->mergeFromJsonString(
-                    (string)$this->buffer,
-                    $this->ignoreUnknown,
-                );
+                $return->mergeFromJsonString((string)$this->buffer, $this->ignoreUnknown);
                 yield $return;
             }
         }
