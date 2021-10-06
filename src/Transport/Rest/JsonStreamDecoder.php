@@ -35,14 +35,16 @@ namespace Google\ApiCore\Transport\Rest;
 use GuzzleHttp\Psr7\BufferStream;
 use Psr\Http\Message\StreamInterface;
 
-class JsonStreamDecoder {
-    private static int $DEFAULT_BUFFER_SIZE = 4 << 20;
-    private BufferStream $buffer;
-    private StreamInterface $stream;
-    private string $decodeType;
-    private bool $ignoreUnknown = true;
+class JsonStreamDecoder
+{
+    private static $DEFAULT_BUFFER_SIZE = 4 << 20;
+    private $buffer;
+    private $stream;
+    private $decodeType;
+    private $ignoreUnknown = true;
 
-    public function __construct(StreamInterface $stream, string $decodeType, array $options) {
+    public function __construct(StreamInterface $stream, string $decodeType, array $options)
+    {
         $this->stream = $stream;
         $this->decodeType = $decodeType;
 
@@ -54,7 +56,8 @@ class JsonStreamDecoder {
         $this->buffer = new BufferStream($bufSize);
     }
 
-    public function decode() {
+    public function decode()
+    {
         $message = $this->decodeType;
         $open = 0;
         $str = false;
