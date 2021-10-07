@@ -49,10 +49,13 @@ class JsonStreamDecoderTest extends TestCase
             {"name": "bar"}
         ]');
         $decoder = new JsonStreamDecoder($stream, Operation::class, ['bufferSizeBytes' => 1024]);
+        $numResponses = 0;
         foreach($decoder->decode() as $op) {
             $name = $op->getName();
             $this->assertNotNull($name);
             $this->assertNotEmpty($name);
+            $numResponses++;
         }
+        $this->assertEquals(2, $numResponses);
     }
 }
