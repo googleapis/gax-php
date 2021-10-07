@@ -35,6 +35,7 @@ namespace Google\ApiCore\Tests\Unit\Transport\Rest;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\Rest\JsonStreamDecoder;
 use Google\LongRunning\Operation;
+use Google\Rpc\Status;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
@@ -44,18 +45,28 @@ class JsonStreamDecoderTest extends TestCase
     use TestTrait;
 
     public function testJsonStreamDecoder() {
-        $stream = Psr7\Utils::streamFor('[
-            {"name": "foo"},
-            {"name": "bar"}
-        ]');
-        $decoder = new JsonStreamDecoder($stream, Operation::class, ['bufferSizeBytes' => 1024]);
-        $numResponses = 0;
-        foreach($decoder->decode() as $op) {
-            $name = $op->getName();
-            $this->assertNotNull($name);
-            $this->assertNotEmpty($name);
-            $numResponses++;
+        // Using Operation because it is simple and convenient.
+        $responses = [new Operation([
+            "name" => "foo",
+        ]), new Operation([
+            "name" => "bar",
+            "done" => true,
+            "error" => new Status([
+                "code" => 1,
+                "message" => "This is an error",
+            ])
+        ])];
+        $data = [];
+        foreach($responses as $response) {
+            $data[] = $response->serializeToJsonString();
         }
-        $this->assertEquals(2, $numResponses);
+        $stream = Psr7\Utils::streamFor('['.implode(',', $data).']');
+        $decoder = new JsonStreamDecoder($stream, Operation::class, ['bufferSizeBytes' => 1024]);
+        $num = 0;
+        foreach($decoder->decode() as $op) {
+            $this->assertEquals($responses[$num], $op);
+            $num++;
+        }
+        $this->assertEquals(count($responses), $num);
     }
 }
