@@ -42,7 +42,7 @@ class JsonStreamDecoder
     private $decodeType;
     private $ignoreUnknown = true;
 
-    public function __construct(StreamInterface $stream, $decodeType, $options)
+    public function __construct(StreamInterface $stream, $decodeType, $options = [])
     {
         $this->stream = $stream;
         $this->decodeType = $decodeType;
