@@ -64,6 +64,7 @@ class JsonStreamDecoder
         $str = false;
         $escape = false;
         while (!$this->stream->eof()) {
+            // Read up to $readChunkSize bytes from the stream.
             $chunk = $this->stream->read($this->readChunkSize);
             
             foreach (str_split($chunk) as $b) {
