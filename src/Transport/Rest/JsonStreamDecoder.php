@@ -42,19 +42,19 @@ class JsonStreamDecoder
     private $decodeType;
     private $ignoreUnknown = true;
     private $readChunkSize = 1024;
+    private $messageBufferSize = 4 * 1024 * 1024; // 4 MB, the maximum size of gRPC message.
 
     public function __construct(StreamInterface $stream, $decodeType, $options = [])
     {
         $this->stream = $stream;
         $this->decodeType = $decodeType;
 
-        $bufSize = 4 * 1024 * 1024; // 4 MB, the maximum size of gRPC message.
         if (!is_null($options)) {
-            $bufSize = isset($options['bufferSizeBytes']) ? $options['bufferSizeBytes'] : $bufSize;
+            $this->messageBufferSize = isset($options['bufferSizeBytes']) ? $options['bufferSizeBytes'] : $this->messageBufferSize;
             $this->ignoreUnknown = isset($options['ignoreUnknown']) ? $options['ignoreUnknown'] : $this->ignoreUnknown;
             $this->readChunkSize = isset($options['readChunkSize']) ? $options['readChunkSize'] : $this->readChunkSize;
         }
-        $this->messageBuffer = new BufferStream($bufSize);
+        $this->messageBuffer = new BufferStream($this->messageBufferSize);
     }
 
     public function decode()
@@ -62,54 +62,59 @@ class JsonStreamDecoder
         $message = $this->decodeType;
         $open = 0;
         $str = false;
-        $escaped = false;
+        $escape = false;
         while (!$this->stream->eof()) {
             $chunk = $this->stream->read($this->readChunkSize);
             
             foreach (str_split($chunk) as $b) {
-                if ($b === '\\') {
-                    $escaped = true;
-                }
                 // Open/close double quotes of a key or value.
                 if ($b === '"') {
-                    if (!$escaped) {
+                    if (!$escape) {
                         $str = !$str;
                     }
                 }
-                // Disable escaped flag after potentially processing
-                // a double quote, the only character that needs handling.
-                $escaped = false;
+                // Disable escape flag after checking for double quote, the only
+                // escapable character that affects parsing behavior.
+                $escape = false;
 
-                // Blank space between messages.
+                // Ignore blank space between messages. Essentially minifies the
+                // JSON data.
                 if ($b === '' || (ctype_space($b) && !$str)) {
                     continue;
                 }
-                // Commas separating messages in the stream array.
+                // Ignore commas separating messages in the stream array.
                 if ($b === ',' && $open === 1) {
                     continue;
                 }
+                // Track the opening of a new array or object if not in a string
+                // value.
                 if (($b === '{' || $b === '[') && !$str) {
                     $open++;
                     // Opening of the array/root object.
-                    // Do not include it in the message messageBuffer$messageBuffer.
+                    // Do not include it in the messageBuffer.
                     if ($open === 1) {
                         continue;
                     }
                 }
+                // Track the closing of an array or object if not in a string
+                // value.
                 if (($b === '}' || $b === ']') && !$str) {
                     $open--;
-                    // Closing of the stream array. It is done.
-                    if ($open === 0) {
-                        return;
-                    }
                 }
                 $this->messageBuffer->write($b);
+
+                // Track escape character for processing the next byte.
+                if ($b === '\\') {
+                    $escape = true;
+                }
+
                 // A message-closing byte was just buffered. Decode the
-                // message with the decode type, clearing the messageBuffer$messageBuffer,
+                // message with the decode type, clearing the messageBuffer,
                 // and yield it.
                 if ($open === 1) {
+                    $json = (string)$this->messageBuffer;
                     $return = new $message();
-                    $return->mergeFromJsonString((string)$this->messageBuffer, $this->ignoreUnknown);
+                    $return->mergeFromJsonString($json, $this->ignoreUnknown);
                     yield $return;
                 }
             }

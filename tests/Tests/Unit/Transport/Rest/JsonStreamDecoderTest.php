@@ -35,6 +35,7 @@ namespace Google\ApiCore\Tests\Unit\Transport\Rest;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\Rest\JsonStreamDecoder;
 use Google\LongRunning\Operation;
+use Google\Protobuf\Any;
 use Google\Rpc\Status;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
@@ -44,29 +45,49 @@ class JsonStreamDecoderTest extends TestCase
 {
     use TestTrait;
 
-    public function testJsonStreamDecoder() {
-        // Using Operation because it is simple and convenient.
-        $responses = [new Operation([
-            "name" => "foo",
-        ]), new Operation([
-            "name" => "bar",
-            "done" => true,
-            "error" => new Status([
-                "code" => 1,
-                "message" => "This is an \"error\"",
-            ])
-        ])];
-        $data = [];
-        foreach($responses as $response) {
-            $data[] = $response->serializeToJsonString();
-        }
-        $stream = Psr7\Utils::streamFor('['.implode(',', $data).']');
-        $decoder = new JsonStreamDecoder($stream, Operation::class, ['bufferSizeBytes' => 1024]);
+    /**
+     * @dataProvider buildResponseStreams
+     */
+    public function testJsonStreamDecoder(array $responses, $decodeType, $stream) {
+        $decoder = new JsonStreamDecoder($stream, $decodeType, ['bufferSizeBytes' => 1024]);
         $num = 0;
         foreach($decoder->decode() as $op) {
             $this->assertEquals($responses[$num], $op);
             $num++;
         }
         $this->assertEquals(count($responses), $num);
+    }
+
+    public function buildResponseStreams() {
+        $any = new Any();
+        $any->pack(new Operation([
+            "name" => "any_metadata",
+        ]));
+        $operations = [new Operation([
+            "name" => "foo",
+            "done" => true,
+            "metadata" => $any,
+        ]), new Operation([
+            "name" => "bar",
+            "done" => true,
+            "error" => new Status([
+                "code" => 1,
+                "message" => "This contains an \"escaped string\"
+                             and\n'single quotes' on a new \line",
+            ])
+        ])];
+        $opStream = $this->messagesToStream($operations);
+
+        return [
+            [$operations, Operation::class, $opStream]
+        ];
+    }
+
+    private function messagesToStream(array $messages) {
+        $data = [];
+        foreach($messages as $message) {
+            $data[] = $message->serializeToJsonString();
+        }
+        return Psr7\Utils::streamFor('['.implode(',', $data).']');
     }
 }
