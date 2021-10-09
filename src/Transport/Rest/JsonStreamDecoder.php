@@ -111,6 +111,9 @@ class JsonStreamDecoder
                 // A message-closing byte was just buffered. Decode the
                 // message with the decode type, clearing the messageBuffer,
                 // and yield it.
+                //
+                // TODO(noahdietz): Support google.protobuf.*Value messages that
+                // are encoded as primitives.
                 if ($open === 1) {
                     $json = (string)$this->messageBuffer;
                     $return = new $message();
