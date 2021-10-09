@@ -37,10 +37,11 @@ use Psr\Http\Message\StreamInterface;
 
 class JsonStreamDecoder
 {
-    private $buffer;
+    private $messageBuffer;
     private $stream;
     private $decodeType;
     private $ignoreUnknown = true;
+    private $readChunkSize = 1024;
 
     public function __construct(StreamInterface $stream, $decodeType, $options = [])
     {
@@ -51,8 +52,9 @@ class JsonStreamDecoder
         if (!is_null($options)) {
             $bufSize = isset($options['bufferSizeBytes']) ? $options['bufferSizeBytes'] : $bufSize;
             $this->ignoreUnknown = isset($options['ignoreUnknown']) ? $options['ignoreUnknown'] : $this->ignoreUnknown;
+            $this->readChunkSize = isset($options['readChunkSize']) ? $options['readChunkSize'] : $this->readChunkSize;
         }
-        $this->buffer = new BufferStream($bufSize);
+        $this->messageBuffer = new BufferStream($bufSize);
     }
 
     public function decode()
@@ -60,47 +62,60 @@ class JsonStreamDecoder
         $message = $this->decodeType;
         $open = 0;
         $str = false;
+        $escaped = false;
         while (!$this->stream->eof()) {
-            $b = $this->stream->read(1);
-            // Open/close double quotes of a key or value.
-            if ($b === '"') {
-                $str = !$str;
-            }
-            // Blank space between messages.
-            if ($b === '' || (ctype_space($b) && !$str)) {
-                continue;
-            }
-            // Commas separating messages in the stream array.
-            if ($b === ',' && $open === 1) {
-                continue;
-            }
-            if (($b === '{' || $b === '[') && !$str) {
-                $open++;
-                // Opening of the array/root object.
-                // Do not include it in the message buffer.
-                if ($open === 1) {
+            $chunk = $this->stream->read($this->readChunkSize);
+            
+            foreach (str_split($chunk) as $b) {
+                if ($b === '\\') {
+                    $escaped = true;
+                }
+                // Open/close double quotes of a key or value.
+                if ($b === '"') {
+                    if (!$escaped) {
+                        $str = !$str;
+                    }
+                }
+                // Disable escaped flag after potentially processing
+                // a double quote, the only character that needs handling.
+                $escaped = false;
+
+                // Blank space between messages.
+                if ($b === '' || (ctype_space($b) && !$str)) {
                     continue;
                 }
-            }
-            if (($b === '}' || $b === ']') && !$str) {
-                $open--;
-                // Closing of the stream array. It is done.
-                if ($open === 0) {
-                    break;
+                // Commas separating messages in the stream array.
+                if ($b === ',' && $open === 1) {
+                    continue;
                 }
-            }
-            $this->buffer->write($b);
-            // A message-closing byte was just buffered. Decode the
-            // message with the decode type, clearing the buffer,
-            // and yield it.
-            if ($open === 1) {
-                $return = new $message();
-                $return->mergeFromJsonString((string)$this->buffer, $this->ignoreUnknown);
-                yield $return;
+                if (($b === '{' || $b === '[') && !$str) {
+                    $open++;
+                    // Opening of the array/root object.
+                    // Do not include it in the message messageBuffer$messageBuffer.
+                    if ($open === 1) {
+                        continue;
+                    }
+                }
+                if (($b === '}' || $b === ']') && !$str) {
+                    $open--;
+                    // Closing of the stream array. It is done.
+                    if ($open === 0) {
+                        return;
+                    }
+                }
+                $this->messageBuffer->write($b);
+                // A message-closing byte was just buffered. Decode the
+                // message with the decode type, clearing the messageBuffer$messageBuffer,
+                // and yield it.
+                if ($open === 1) {
+                    $return = new $message();
+                    $return->mergeFromJsonString((string)$this->messageBuffer, $this->ignoreUnknown);
+                    yield $return;
+                }
             }
         }
         if ($open !== 0) {
-            throw new \Exception("Broken stream");
+            throw new \Exception("Stream closed before receiving the closing byte");
         }
     }
 }

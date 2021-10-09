@@ -53,7 +53,7 @@ class JsonStreamDecoderTest extends TestCase
             "done" => true,
             "error" => new Status([
                 "code" => 1,
-                "message" => "This is an error",
+                "message" => "This is an \"error\"",
             ])
         ])];
         $data = [];
