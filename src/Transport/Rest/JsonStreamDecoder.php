@@ -64,7 +64,7 @@ class JsonStreamDecoder
     private $decodeType;
     private $ignoreUnknown = true;
     private $readChunkSize = 1024;
-    private $messageBufferSize = 4 * 1024 * 1024; // 4 MB, the maximum size of gRPC message.
+    private $messageBufferSize;
 
     public function __construct(StreamInterface $stream, $decodeType, $options = [])
     {
@@ -74,7 +74,7 @@ class JsonStreamDecoder
         if (!is_null($options)) {
             $this->messageBufferSize = isset($options['bufferSizeBytes']) ?
                                         $options['bufferSizeBytes'] :
-                                        $this->messageBufferSize;
+                                        4 * 1024 * 1024;  // 4 MB, the maximum size of gRPC message.
             $this->ignoreUnknown = isset($options['ignoreUnknown']) ?
                                     $options['ignoreUnknown'] :
                                     $this->ignoreUnknown;
