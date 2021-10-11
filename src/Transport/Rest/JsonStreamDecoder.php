@@ -35,6 +35,27 @@ namespace Google\ApiCore\Transport\Rest;
 use GuzzleHttp\Psr7\BufferStream;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * JsonStreamDecoder is a HTTP-JSON response stream decoder for JSON-ecoded
+ * protobuf messages. The response stream must be a JSON array, where the first
+ * byte is the opening of the array (i.e. '['), and the last byte is the closing
+ * of the array (i.e. ']'). Each array item must be a JSON object and comma
+ * separated.
+ * 
+ * The supported options include:
+ *     @type int $bufferSizeBytes
+ *           The size in bytes of the buffer to retain for decoding response
+ *           messages. The default is 4 MB. Change this according to the
+ *           expected size of the responses.
+ *     @type bool $ignoreUnknown
+ *           Toggles whether or not to throw an exception when an unknown field
+ *           is encountered in a response message. The default is true.
+ *     @type int $readChunkSize
+ *           The upper size limit in bytes that can be read at a time from the
+ *           response stream. The default is 1 KB.
+ * 
+ * @experimental
+ */
 class JsonStreamDecoder
 {
     const ESCAPE_CHAR = '\\';
@@ -58,6 +79,15 @@ class JsonStreamDecoder
         $this->messageBuffer = new BufferStream($this->messageBufferSize);
     }
 
+    /**
+     * Begins decoding the configured response stream. It is a generator which
+     * yields messages of the given decode type from the stream until the stream
+     * completes. Throws an Exception if the stream is closed before the closing
+     * byte is read or if it encounters an error while decoding a message.
+     *
+     * @throws Exception
+     * @return \Generator
+     */
     public function decode()
     {
         $message = $this->decodeType;
