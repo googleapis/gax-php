@@ -72,9 +72,15 @@ class JsonStreamDecoder
         $this->decodeType = $decodeType;
 
         if (!is_null($options)) {
-            $this->messageBufferSize = isset($options['bufferSizeBytes']) ? $options['bufferSizeBytes'] : $this->messageBufferSize;
-            $this->ignoreUnknown = isset($options['ignoreUnknown']) ? $options['ignoreUnknown'] : $this->ignoreUnknown;
-            $this->readChunkSize = isset($options['readChunkSizeByes']) ? $options['readChunkSizeBytes'] : $this->readChunkSize;
+            $this->messageBufferSize = isset($options['bufferSizeBytes']) ?
+                                        $options['bufferSizeBytes'] :
+                                        $this->messageBufferSize;
+            $this->ignoreUnknown = isset($options['ignoreUnknown']) ?
+                                    $options['ignoreUnknown'] :
+                                    $this->ignoreUnknown;
+            $this->readChunkSize = isset($options['readChunkSizeByes']) ?
+                                    $options['readChunkSizeBytes'] :
+                                    $this->readChunkSize;
         }
         $this->messageBuffer = new BufferStream($this->messageBufferSize);
     }
