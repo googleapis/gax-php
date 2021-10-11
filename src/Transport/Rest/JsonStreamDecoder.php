@@ -41,7 +41,7 @@ use Psr\Http\Message\StreamInterface;
  * byte is the opening of the array (i.e. '['), and the last byte is the closing
  * of the array (i.e. ']'). Each array item must be a JSON object and comma
  * separated.
- * 
+ *
  * The supported options include:
  *     @type int $bufferSizeBytes
  *           The size in bytes of the buffer to retain for decoding response
@@ -50,10 +50,10 @@ use Psr\Http\Message\StreamInterface;
  *     @type bool $ignoreUnknown
  *           Toggles whether or not to throw an exception when an unknown field
  *           is encountered in a response message. The default is true.
- *     @type int $readChunkSize
+ *     @type int $readChunkSizeBytes
  *           The upper size limit in bytes that can be read at a time from the
  *           response stream. The default is 1 KB.
- * 
+ *
  * @experimental
  */
 class JsonStreamDecoder
@@ -74,7 +74,7 @@ class JsonStreamDecoder
         if (!is_null($options)) {
             $this->messageBufferSize = isset($options['bufferSizeBytes']) ? $options['bufferSizeBytes'] : $this->messageBufferSize;
             $this->ignoreUnknown = isset($options['ignoreUnknown']) ? $options['ignoreUnknown'] : $this->ignoreUnknown;
-            $this->readChunkSize = isset($options['readChunkSize']) ? $options['readChunkSize'] : $this->readChunkSize;
+            $this->readChunkSize = isset($options['readChunkSizeByes']) ? $options['readChunkSizeBytes'] : $this->readChunkSize;
         }
         $this->messageBuffer = new BufferStream($this->messageBufferSize);
     }

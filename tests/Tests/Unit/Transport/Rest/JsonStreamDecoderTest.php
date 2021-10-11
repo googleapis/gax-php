@@ -49,7 +49,7 @@ class JsonStreamDecoderTest extends TestCase
      * @dataProvider buildResponseStreams
      */
     public function testJsonStreamDecoder(array $responses, $decodeType, $stream) {
-        $decoder = new JsonStreamDecoder($stream, $decodeType, ['bufferSizeBytes' => 1024]);
+        $decoder = new JsonStreamDecoder($stream, $decodeType, ['bufferSizeBytes' => 1024, 'readChunkSizeBytes' => 10]);
         $num = 0;
         foreach($decoder->decode() as $op) {
             $this->assertEquals($responses[$num], $op);
