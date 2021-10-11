@@ -181,9 +181,6 @@ class OperationResponse
             return $this->isDone() && !$this->hasErrors();
         }
 
-        if (!$this->hasResult()) {
-            return $this->isDone() && is_null($this->getError());
-        }
         return !is_null($this->getResult());
     }
 
