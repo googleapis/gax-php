@@ -102,6 +102,8 @@ class JsonStreamDecoder
         $prev = '';
         while (!$this->stream->eof()) {
             // Read up to $readChunkSize bytes from the stream.
+            //
+            // TODO(noahdietz): Determine if this is blocking or not.
             $chunk = $this->stream->read($this->readChunkSize);
             
             foreach (str_split($chunk) as $b) {
