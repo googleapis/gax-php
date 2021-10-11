@@ -37,6 +37,7 @@ use Psr\Http\Message\StreamInterface;
 
 class JsonStreamDecoder
 {
+    const ESCAPE_CHAR = '\\';
     private $messageBuffer;
     private $stream;
     private $decodeType;
@@ -62,29 +63,27 @@ class JsonStreamDecoder
         $message = $this->decodeType;
         $open = 0;
         $str = false;
-        $escape = false;
+        $prev = '';
         while (!$this->stream->eof()) {
             // Read up to $readChunkSize bytes from the stream.
             $chunk = $this->stream->read($this->readChunkSize);
             
             foreach (str_split($chunk) as $b) {
-                // Open/close double quotes of a key or value.
-                if ($b === '"') {
-                    if (!$escape) {
+                // Track open/close double quotes of a key or value. Do not
+                // toggle flag with the pervious byte was an escape character.
+                if ($b === '"' && $prev !== self::ESCAPE_CHAR) {
                         $str = !$str;
-                    }
                 }
-                // Disable escape flag after checking for double quote, the only
-                // escapable character that affects parsing behavior.
-                $escape = false;
 
                 // Ignore blank space between messages. Essentially minifies the
                 // JSON data.
                 if ($b === '' || (ctype_space($b) && !$str)) {
+                    $prev = $b;
                     continue;
                 }
                 // Ignore commas separating messages in the stream array.
                 if ($b === ',' && $open === 1) {
+                    $prev = $b;
                     continue;
                 }
                 // Track the opening of a new array or object if not in a string
@@ -94,6 +93,7 @@ class JsonStreamDecoder
                     // Opening of the array/root object.
                     // Do not include it in the messageBuffer.
                     if ($open === 1) {
+                        $prev = $b;
                         continue;
                     }
                 }
@@ -103,18 +103,14 @@ class JsonStreamDecoder
                     $open--;
                 }
                 $this->messageBuffer->write($b);
-
-                // Track escape character for processing the next byte.
-                if ($b === '\\') {
-                    $escape = true;
-                }
+                $prev = $b;
 
                 // A message-closing byte was just buffered. Decode the
                 // message with the decode type, clearing the messageBuffer,
                 // and yield it.
                 //
                 // TODO(noahdietz): Support google.protobuf.*Value messages that
-                // are encoded as primitives.
+                // are encoded as primitives and separated by commas.
                 if ($open === 1) {
                     $json = (string)$this->messageBuffer;
                     $return = new $message();
@@ -124,7 +120,7 @@ class JsonStreamDecoder
             }
         }
         if ($open !== 0) {
-            throw new \Exception("Stream closed before receiving the closing byte");
+            throw new \Exception('Unexpected stream close before receiving the closing byte');
         }
     }
 }
