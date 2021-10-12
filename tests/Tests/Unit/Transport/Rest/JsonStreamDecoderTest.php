@@ -151,4 +151,18 @@ class JsonStreamDecoderTest extends TestCase
             ['[{"name": "foo"},{]'],
         ];
     }
+
+    public function testJsonStreamDecoderClosed() {
+        $stream = new BufferStream();
+        $stream->write('[{"name": "foo"},{');
+        $decoder = new JsonStreamDecoder($stream, Operation::class, ['readChunkSizeBytes' => 10]);
+        $count = 0;
+        foreach($decoder->decode() as $op) {
+            $this->assertEquals('foo', $op->getName());
+            $count++;
+            $decoder->close();
+        }
+
+        $this->assertEquals(1, $count);
+    }
 }

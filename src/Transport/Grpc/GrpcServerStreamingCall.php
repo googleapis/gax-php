@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2016 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,61 +30,85 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Testing;
+namespace Google\ApiCore\Transport\Grpc;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\ApiStatus;
-use Google\Rpc\Code;
+use Google\ApiCore\ServerStreamingCall;
 
 /**
- * The MockServerStreamingCall class is used to mock out the \Grpc\ServerStreamingCall class
- * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/ServerStreamingCall.php)
+ * Class GrpcServerStreamingCall implements \Google\ApiCore\ServerStreamingCall.
+ * This is essentially a wrapper class around the \Grpc\ServerStreamingCall.
  */
-class MockServerStreamingCall extends \Grpc\ServerStreamingCall
+class GrpcServerStreamingCall implements ServerStreamingCall
 {
-    use SerializationTrait;
+    private $stream;
 
-    private $responses;
-    private $status;
-
-    /**
-     * MockServerStreamingCall constructor.
-     * @param mixed[] $responses A list of response objects.
-     * @param callable|null $deserialize An optional deserialize method for the response object.
-     * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
-     */
-    public function __construct($responses, $deserialize = null, $status = null)
+    public function __construct($stream)
     {
-        $this->responses = $responses;
-        $this->deserialize = $deserialize;
-        if (is_null($status)) {
-            $status = new MockStatus(Code::OK);
-        }
-        $this->status = $status;
+        $this->stream = $stream;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function start($data, array $metadata = [], array $callOptions = [])
+    {
+        $this->stream->start($data, $metadata, $callOptions);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function responses()
     {
-        while (count($this->responses) > 0) {
-            $resp = array_shift($this->responses);
-            $obj = $this->deserializeMessage($resp, $this->deserialize);
-            yield $obj;
-        }
+        $this->stream->responses();
     }
 
     /**
-     * @return MockStatus|null|\stdClass
-     * @throws ApiException
+     * {@inheritdoc}
      */
     public function getStatus()
     {
-        if (count($this->responses) > 0) {
-            throw new ApiException(
-                "Calls to getStatus() will block if all responses are not read",
-                Code::INTERNAL,
-                ApiStatus::INTERNAL
-            );
-        }
-        return ApiException::createFromStdClass($this->status);
+        return ApiException::createFromStdClass($this->stream->getStatus());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadata()
+    {
+        return $this->stream->getMetadata();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTrailingMetadata()
+    {
+        return $this->stream->getTrailingMetadata();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPeer()
+    {
+        return $this->stream->getPeer();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cancel()
+    {
+        $this->stream->cancel();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCallCredentials($call_credentials)
+    {
+        $this->stream->setCallCredentials($call_credentials);
     }
 }

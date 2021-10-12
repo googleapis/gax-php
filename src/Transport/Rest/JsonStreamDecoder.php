@@ -38,6 +38,7 @@ class JsonStreamDecoder
 {
     const ESCAPE_CHAR = '\\';
     private $stream;
+    private $closeCalled = false;
     private $decodeType;
     private $ignoreUnknown = true;
     private $readChunkSize = 1024;
@@ -179,8 +180,17 @@ class JsonStreamDecoder
                 break;
             }
         }
-        if ($level > 0) {
+        if ($level > 0 && !$this->closeCalled) {
             throw new \Exception('Unexpected stream close before receiving the closing byte');
         }
+    }
+
+    /**
+     * Closes the underlying stream. If the stream is actively being decoded, an
+     * exception will not be thrown due to the interruption.
+     */
+    public function close() {
+        $this->closeCalled = true;
+        $this->stream->close();
     }
 }
