@@ -48,8 +48,8 @@ class JsonStreamDecoderTest extends TestCase
     /**
      * @dataProvider buildResponseStreams
      */
-    public function testJsonStreamDecoder(array $responses, $decodeType, $stream) {
-        $decoder = new JsonStreamDecoder($stream, $decodeType, ['bufferSizeBytes' => 1024, 'readChunkSizeBytes' => 10]);
+    public function testJsonStreamDecoder(array $responses, $decodeType, $stream, $readChunkSizeBytes) {
+        $decoder = new JsonStreamDecoder($stream, $decodeType, ['readChunkSizeBytes' => $readChunkSizeBytes]);
         $num = 0;
         foreach($decoder->decode() as $op) {
             $this->assertEquals($responses[$num], $op);
@@ -72,14 +72,15 @@ class JsonStreamDecoderTest extends TestCase
             "done" => true,
             "error" => new Status([
                 "code" => 1,
-                "message" => "This contains an \"escaped string\"
-                             and\n'single quotes' on a new \line",
+                "message" => "This contains an \"escaped string\" and\n'single quotes' on a new \line",
             ])
         ])];
-        $opStream = $this->messagesToStream($operations);
-
+        
+        $stream = function($data) {return $this->messagesToStream($data);};
         return [
-            [$operations, Operation::class, $opStream]
+            [$operations, Operation::class, $stream($operations), /*readChunkSizeBytes*/ 10],
+            [$operations, Operation::class, $stream($operations), /*readChunkSizeBytes*/ 1024],
+            [$operations, Operation::class, $stream($operations), /*readChunkSizeBytes*/ 1]
         ];
     }
 

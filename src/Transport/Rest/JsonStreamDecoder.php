@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\Transport\Rest;
 
-use GuzzleHttp\Psr7\BufferStream;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -43,10 +42,6 @@ use Psr\Http\Message\StreamInterface;
  * separated.
  *
  * The supported options include:
- *     @type int $bufferSizeBytes
- *           The size in bytes of the buffer to retain for decoding response
- *           messages. The default is 4 MB. Change this according to the
- *           expected size of the responses.
  *     @type bool $ignoreUnknown
  *           Toggles whether or not to throw an exception when an unknown field
  *           is encountered in a response message. The default is true.
@@ -59,12 +54,10 @@ use Psr\Http\Message\StreamInterface;
 class JsonStreamDecoder
 {
     const ESCAPE_CHAR = '\\';
-    private $messageBuffer;
     private $stream;
     private $decodeType;
     private $ignoreUnknown = true;
     private $readChunkSize = 1024;
-    private $messageBufferSize;
 
     public function __construct(StreamInterface $stream, $decodeType, $options = [])
     {
@@ -72,17 +65,13 @@ class JsonStreamDecoder
         $this->decodeType = $decodeType;
 
         if (!is_null($options)) {
-            $this->messageBufferSize = isset($options['bufferSizeBytes']) ?
-                                        $options['bufferSizeBytes'] :
-                                        4 * 1024 * 1024;  // 4 MB, the maximum size of gRPC message.
-            $this->ignoreUnknown = isset($options['ignoreUnknown']) ?
+            $this->ignoreUnknown = array_key_exists('ignoreUnknown', $options) ?
                                     $options['ignoreUnknown'] :
                                     $this->ignoreUnknown;
-            $this->readChunkSize = isset($options['readChunkSizeByes']) ?
+            $this->readChunkSize = array_key_exists('readChunkSizeBytes', $options) ?
                                     $options['readChunkSizeBytes'] :
                                     $this->readChunkSize;
         }
-        $this->messageBuffer = new BufferStream($this->messageBufferSize);
     }
 
     /**
@@ -97,51 +86,60 @@ class JsonStreamDecoder
     public function decode()
     {
         $message = $this->decodeType;
-        $open = 0;
+        $level = 0;
         $str = false;
         $prev = '';
-        while (!$this->stream->eof()) {
+        $chunk = '';
+        $cursor = 0;
+        $start = 0;
+        $end = 0;
+        while ($chunk !== '' || !$this->stream->eof()) {
             // Read up to $readChunkSize bytes from the stream.
             //
             // TODO(noahdietz): Determine if this is blocking or not.
-            $chunk = $this->stream->read($this->readChunkSize);
+            $chunk .= $this->stream->read($this->readChunkSize);
             
-            foreach (str_split($chunk) as $b) {
+            // If the response stream has been closed and the only byte
+            // remaining is the closing array bracket, we are done.
+            if ($this->stream->eof() && $chunk === ']') {
+                $level--;
+                break;
+            }
+            
+            // Parse the freshly read data available in $chunk.
+            $len = strlen($chunk);
+            while ($cursor < $len) {
+                // Access the next byte for processing.
+                $b = $chunk[$cursor];
+
                 // Track open/close double quotes of a key or value. Do not
                 // toggle flag with the pervious byte was an escape character.
                 if ($b === '"' && $prev !== self::ESCAPE_CHAR) {
                         $str = !$str;
                 }
 
-                // Ignore blank space between messages. Essentially minifies the
-                // JSON data.
-                if ($b === '' || (ctype_space($b) && !$str)) {
-                    $prev = $b;
-                    continue;
-                }
                 // Ignore commas separating messages in the stream array.
-                if ($b === ',' && $open === 1) {
-                    $prev = $b;
-                    continue;
+                if ($b === ',' && $level === 1) {
+                    $start++;
                 }
                 // Track the opening of a new array or object if not in a string
                 // value.
                 if (($b === '{' || $b === '[') && !$str) {
-                    $open++;
+                    $level++;
                     // Opening of the array/root object.
                     // Do not include it in the messageBuffer.
-                    if ($open === 1) {
-                        $prev = $b;
-                        continue;
+                    if ($level === 1) {
+                        $start++;
                     }
                 }
                 // Track the closing of an array or object if not in a string
                 // value.
                 if (($b === '}' || $b === ']') && !$str) {
-                    $open--;
+                    $level--;
+                    if ($level === 1) {
+                        $end = $cursor+1;
+                    }
                 }
-                $this->messageBuffer->write($b);
-                $prev = $b;
 
                 // A message-closing byte was just buffered. Decode the
                 // message with the decode type, clearing the messageBuffer,
@@ -149,15 +147,32 @@ class JsonStreamDecoder
                 //
                 // TODO(noahdietz): Support google.protobuf.*Value messages that
                 // are encoded as primitives and separated by commas.
-                if ($open === 1) {
-                    $json = (string)$this->messageBuffer;
+                if ($end !== 0) {
+                    $length = $end - $start;
                     $return = new $message();
-                    $return->mergeFromJsonString($json, $this->ignoreUnknown);
+                    $return->mergeFromJsonString(
+                        substr($chunk, $start, $length),
+                        $this->ignoreUnknown
+                    );
                     yield $return;
+                    
+                    // Dump the part of the chunk used for parsing the message
+                    // and use the remaining for the next message.
+                    $remaining = strlen($chunk)-$length;
+                    $chunk = substr($chunk, $end, $remaining);
+                    
+                    // Reset all indices and exit chunk processing.
+                    $start = 0;
+                    $end = 0;
+                    $cursor = 0;
+                    break;
                 }
+                
+                $cursor++;
+                $prev = $b;
             }
         }
-        if ($open !== 0) {
+        if ($level > 0) {
             throw new \Exception('Unexpected stream close before receiving the closing byte');
         }
     }
