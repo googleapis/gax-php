@@ -107,8 +107,8 @@ class JsonStreamDecoder
             }
             
             // Parse the freshly read data available in $chunk.
-            $len = strlen($chunk);
-            while ($cursor < $len) {
+            $chunkLength = strlen($chunk);
+            while ($cursor < $chunkLength) {
                 // Access the next byte for processing.
                 $b = $chunk[$cursor];
 
@@ -158,7 +158,7 @@ class JsonStreamDecoder
                     
                     // Dump the part of the chunk used for parsing the message
                     // and use the remaining for the next message.
-                    $remaining = strlen($chunk)-$length;
+                    $remaining = $chunkLength-$length;
                     $chunk = substr($chunk, $end, $remaining);
                     
                     // Reset all indices and exit chunk processing.
