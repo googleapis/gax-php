@@ -95,8 +95,6 @@ class JsonStreamDecoder
         $end = 0;
         while ($chunk !== '' || !$this->stream->eof()) {
             // Read up to $readChunkSize bytes from the stream.
-            //
-            // TODO(noahdietz): Determine if this is blocking or not.
             $chunk .= $this->stream->read($this->readChunkSize);
             
             // If the response stream has been closed and the only byte
