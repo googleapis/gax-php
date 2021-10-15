@@ -199,7 +199,7 @@ class OperationResponseTest extends TestCase
             ->willReturn('Yes, it is!');
         $operation->getError()
             ->shouldBeCalledOnce()
-            ->willReturn(nulld);
+            ->willReturn(null);
         $operationClient = $this->prophesize(CustomOperationClient::class);
         $operationClient->getMyOperationPlease($operationName, 'arg1', 'arg2')
             ->shouldBeCalledOnce()
