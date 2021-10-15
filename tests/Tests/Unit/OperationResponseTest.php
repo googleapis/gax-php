@@ -197,9 +197,9 @@ class OperationResponseTest extends TestCase
         $operation->isThisOperationDoneOrWhat()
             ->shouldBeCalledTimes(2)
             ->willReturn('Yes, it is!');
-        $operation->itHasAnError()
+        $operation->getError()
             ->shouldBeCalledOnce()
-            ->willReturn(true);
+            ->willReturn(nulld);
         $operationClient = $this->prophesize(CustomOperationClient::class);
         $operationClient->getMyOperationPlease($operationName, 'arg1', 'arg2')
             ->shouldBeCalledOnce()
@@ -217,7 +217,6 @@ class OperationResponseTest extends TestCase
             'additionalOperationArguments' => ['arg1', 'arg2'],
             'operationStatusMethod' => 'isThisOperationDoneOrWhat',
             'operationStatusDoneValue' => 'Yes, it is!',
-            'operationErrorCodeMethod' => 'itHasAnError',
         ];
         $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
 
@@ -227,13 +226,90 @@ class OperationResponseTest extends TestCase
         // Test operationStatusMethod and operationStatusDoneValue
         $this->assertTrue($operationResponse->isDone());
 
-        $this->assertFalse($operationResponse->operationSucceeded());
+        $this->assertTrue($operationResponse->operationSucceeded());
 
         // test cancelOperationMethod
         $operationResponse->cancel();
 
         // test deleteOperationMethod
         $operationResponse->delete();
+    }
+
+    public function testCustomOperationError()
+    {
+        $operationName = 'test-123';
+        $operation = $this->prophesize(CustomOperationWithErrorAnnotations::class);
+        $operation->isThisOperationDoneOrWhat()
+            ->shouldBeCalledTimes(2)
+            ->willReturn('Yes, it is!');
+        $operation->getTheErrorCode()
+            ->shouldBeCalledTimes(2)
+            ->willReturn(500);
+        $operation->getTheErrorMessage()
+            ->shouldBeCalledOnce()
+            ->willReturn('It failed, sorry :(');
+        $operationClient = $this->prophesize(CustomOperationClient::class);
+        $options = [
+            'operationStatusMethod' => 'isThisOperationDoneOrWhat',
+            'operationStatusDoneValue' => 'Yes, it is!',
+            'operationErrorCodeMethod' => 'getTheErrorCode',
+            'operationErrorMessageMethod' => 'getTheErrorMessage',
+            'lastProtoResponse' => $operation->reveal(),
+        ];
+        $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
+
+        $this->assertFalse($operationResponse->operationSucceeded());
+
+        $error = $operationResponse->getError();
+
+        $this->assertNotNull($error);
+        $this->assertEquals(500, $error->getCode());
+        $this->assertEquals('It failed, sorry :(', $error->getMessage());
+    }
+
+    public function testEmptyCustomOperationErrorIsSuccessful()
+    {
+        $operationName = 'test-123';
+        $operation = $this->prophesize(CustomOperationWithErrorAnnotations::class);
+        $operation->isThisOperationDoneOrWhat()
+            ->shouldBeCalledOnce()
+            ->willReturn('Yes, it is!');
+        $operation->getTheErrorCode()
+            ->shouldBeCalledOnce()
+            ->willReturn(null);
+        $operationClient = $this->prophesize(CustomOperationClient::class);
+        $options = [
+            'operationStatusMethod' => 'isThisOperationDoneOrWhat',
+            'operationStatusDoneValue' => 'Yes, it is!',
+            'operationErrorCodeMethod' => 'getTheErrorCode',
+            'lastProtoResponse' => $operation->reveal(),
+        ];
+        $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
+
+        $this->assertTrue($operationResponse->operationSucceeded());
+    }
+
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Unable to determine operation error status for this service
+     */
+    public function testMisconfiguredCustomOperationThrowsException()
+    {
+        $operationName = 'test-123';
+        $operation = $this->prophesize(CustomOperationWithErrorAnnotations::class);
+        $operation->isThisOperationDoneOrWhat()
+            ->shouldBeCalledOnce()
+            ->willReturn('Yes, it is!');
+        $operationClient = $this->prophesize(CustomOperationClient::class);
+        $options = [
+            'operationStatusMethod' => 'isThisOperationDoneOrWhat',
+            'operationStatusDoneValue' => 'Yes, it is!',
+            'operationErrorCodeMethod' => null, // The OperationResponse has no way to determine error status
+            'lastProtoResponse' => $operation->reveal(),
+        ];
+        $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
+
+        $this->assertTrue($operationResponse->operationSucceeded());
     }
 
     /**
@@ -327,5 +403,12 @@ interface CustomOperationClient
 interface CustomOperation
 {
     public function isThisOperationDoneOrWhat();
-    public function itHasAnError();
+    public function getError();
+}
+
+interface CustomOperationWithErrorAnnotations
+{
+    public function isThisOperationDoneOrWhat();
+    public function getTheErrorCode();
+    public function getTheErrorMessage();
 }

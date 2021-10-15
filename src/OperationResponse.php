@@ -83,24 +83,31 @@ class OperationResponse
     private $operationStatusMethod;
     private $operationStatusDoneValue;
     private $operationErrorCodeMethod;
+    private $operationErrorMessageMethod;
 
     /**
      * OperationResponse constructor.
      *
      * @param string $operationName
-     * @param $operationsClient
+     * @param object $operationsClient
      * @param array $options {
-     *                       Optional. Options for configuring the Operation response object.
+     *                       Optional. Options for configuring the operation response object.
      *
      *     @type string $operationReturnType The return type of the longrunning operation.
-     *     @type string $metadataReturnType The type of the metadata returned in the Operation response.
+     *     @type string $metadataReturnType The type of the metadata returned in the operation response.
      *     @type int $initialPollDelayMillis    The initial polling interval to use, in milliseconds.
      *     @type int $pollDelayMultiplier Multiplier applied to the polling interval on each retry.
      *     @type int $maxPollDelayMillis The maximum polling interval to use, in milliseconds.
      *     @type int $totalPollTimeoutMillis The maximum amount of time to continue polling.
-     *     @type Operation $lastProtoResponse A response already received from the server.
-     *     @type array $callOptions instructions on how to call the OperationsClient
-     *     @type array $additionalArgs args to pass to the OperationsClient calls
+     *     @type object $lastProtoResponse A response already received from the server.
+     *     @type string $getOperationMethod The method on $operationsClient to get the operation.
+     *     @type string $cancelOperationMethod The method on $operationsClient to cancel the operation.
+     *     @type string $deleteOperationMethod The method on $operationsClient to delete the operation.
+     *     @type string $operationStatusMethod The method on the operation to get the status.
+     *     @type string $operationStatusDoneValue The method on the operation to determine if the status is done.
+     *     @type array $additionalOperationArguments Additional arguments to pass to $operationsClient methods.
+     *     @type string $operationErrorCodeMethod The method on the operation to get the error code
+     *     @type string $operationErrorMessageMethod The method on the operation to get the error status
      * }
      */
     public function __construct($operationName, $operationsClient, $options = [])
@@ -118,6 +125,7 @@ class OperationResponse
             'operationStatusDoneValue' => true,
             'additionalOperationArguments' => [],
             'operationErrorCodeMethod' => null,
+            'operationErrorMessageMethod' => null,
         ];
         $this->operationReturnType = $options['operationReturnType'];
         $this->metadataReturnType = $options['metadataReturnType'];
@@ -129,6 +137,7 @@ class OperationResponse
         $this->operationStatusMethod = $options['operationStatusMethod'];
         $this->operationStatusDoneValue = $options['operationStatusDoneValue'];
         $this->operationErrorCodeMethod = $options['operationErrorCodeMethod'];
+        $this->operationErrorMessageMethod = $options['operationErrorMessageMethod'];
 
         if (isset($options['initialPollDelayMillis'])) {
             $this->defaultPollSettings['initialPollDelayMillis'] = $options['initialPollDelayMillis'];
@@ -227,14 +236,14 @@ class OperationResponse
      */
     public function pollUntilComplete($options = [])
     {
-        if ($this->isDone() || $this->hasErrors()) {
+        if ($this->isDone()) {
             return true;
         }
 
         $pollSettings = array_merge($this->defaultPollSettings, $options);
         return $this->poll(function () {
             $this->reload();
-            return $this->isDone() || $this->hasErrors();
+            return $this->isDone();
         }, $pollSettings);
     }
 
@@ -301,7 +310,24 @@ class OperationResponse
         if (!$this->hasProtoResponse() || !$this->isDone()) {
             return null;
         }
-        return $this->lastProtoResponse->getError();
+
+        if ($this->operationErrorCodeMethod || $this->operationErrorMessageMethod) {
+            $errorCode = $this->operationErrorCodeMethod
+                ? call_user_func([$this->lastProtoResponse, $this->operationErrorCodeMethod])
+                : null;
+            $errorMessage = $this->operationErrorMessageMethod
+                ? call_user_func([$this->lastProtoResponse, $this->operationErrorMessageMethod])
+                : null;
+            return (new Status())
+                ->setCode($errorCode)
+                ->setMessage($errorMessage);
+        }
+
+        if (method_exists($this->lastProtoResponse, 'getError')) {
+            return $this->lastProtoResponse->getError();
+        }
+
+        return null;
     }
 
     /**
@@ -321,7 +347,7 @@ class OperationResponse
     }
 
     /**
-     * @return Operation|null The last Operation object received from the server.
+     * @return Operation|mixed|null The last Operation object received from the server.
      */
     public function getLastProtoResponse()
     {
@@ -329,7 +355,7 @@ class OperationResponse
     }
 
     /**
-     * @return The OperationsClient object used to make
+     * @return object The OperationsClient object used to make
      * requests to the operations API.
      */
     public function getOperationsClient()
@@ -417,7 +443,7 @@ class OperationResponse
 
     private function canHaveResult()
     {
-        // The call to getResult is only for OnePlatform LROs, and is not
+        // The call to getResponse is only for OnePlatform LROs, and is not
         // supported by other LRO GAPIC clients (e.g. Compute)
         return method_exists($this->lastProtoResponse, 'getResponse');
     }
@@ -428,9 +454,17 @@ class OperationResponse
             return false;
         }
 
-        $errorMethod = $this->operationErrorCodeMethod ?: 'getError';
-        $errorCodeOrObject = call_user_func([$this->lastProtoResponse, $errorMethod]);
-        return !empty($errorCodeOrObject);
+        if (method_exists($this->lastProtoResponse, 'getError')) {
+            return !empty($this->lastProtoResponse->getError());
+        }
+
+        if ($this->operationErrorCodeMethod) {
+            $errorCode = call_user_func([$this->lastProtoResponse, $this->operationErrorCodeMethod]);
+            return !empty($errorCode);
+        }
+
+        // This should never happen unless an API is misconfigured
+        throw new LogicException('Unable to determine operation error status for this service');
     }
 
     private function hasProtoResponse()

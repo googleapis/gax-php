@@ -660,8 +660,10 @@ trait GapicClientTrait
      *     @type array $transportOptions [optional] transport-specific call options
      * }
      * @param Message $request
-     * @param OperationsClient $client
+     * @param OperationsClient|object $client
      * @param string $interfaceName
+     * @param string $operationClass If provided, will be used instead of the default
+     *                               operation response class of {@see Google\LongRunning\Operation}.
      *
      * @return PromiseInterface
      */
