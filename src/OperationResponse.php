@@ -364,7 +364,10 @@ class OperationResponse
     }
 
     /**
-     * Starts asynchronous cancellation on a long-running operation. The server
+     * Cancel the long-running operation.
+     *
+     * For operations of type Google\LongRunning\Operation, this method starts
+     * asynchronous cancellation on a long-running operation. The server
      * makes a best effort to cancel the operation, but success is not
      * guaranteed. If the server doesn't support this method, it will throw an
      * ApiException with code \Google\Rpc\Code::UNIMPLEMENTED. Clients can continue
@@ -375,6 +378,7 @@ class OperationResponse
      * corresponding to \Google\Rpc\Code::CANCELLED.
      *
      * @throws ApiException If the API call fails.
+     * @throws LogicException If the API call method has not been configured
      */
     public function cancel()
     {
@@ -385,12 +389,15 @@ class OperationResponse
     }
 
     /**
-     * Delete the long-running operation. This method indicates that the client is
-     * no longer interested in the operation result. It does not cancel the operation.
-     * If the server doesn't support this method, it will throw an ApiException with
-     * code \Google\Rpc\Code::UNIMPLEMENTED.
+     * Delete the long-running operation.
+     *
+     * For operations of type Google\LongRunning\Operation, this method
+     * indicates that the client is no longer interested in the operation result.
+     * It does not cancel the operation. If the server doesn't support this method,
+     * it will throw an ApiException with code \Google\Rpc\Code::UNIMPLEMENTED.
      *
      * @throws ApiException If the API call fails.
+     * @throws LogicException If the API call method has not been configured
      */
     public function delete()
     {
