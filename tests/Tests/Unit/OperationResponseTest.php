@@ -37,6 +37,7 @@ use Google\ApiCore\OperationResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
 use PHPUnit\Framework\TestCase;
+use Google\Rpc\Code;
 
 class OperationResponseTest extends TestCase
 {
@@ -263,7 +264,7 @@ class OperationResponseTest extends TestCase
         $error = $operationResponse->getError();
 
         $this->assertNotNull($error);
-        $this->assertEquals(500, $error->getCode());
+        $this->assertEquals(Code::INTERNAL, $error->getCode());
         $this->assertEquals('It failed, sorry :(', $error->getMessage());
     }
 

@@ -319,7 +319,7 @@ class OperationResponse
                 ? call_user_func([$this->lastProtoResponse, $this->operationErrorMessageMethod])
                 : null;
             return (new Status())
-                ->setCode($errorCode)
+                ->setCode(ApiStatus::rpcCodeFromHttpStatusCode($errorCode))
                 ->setMessage($errorMessage);
         }
 
