@@ -88,7 +88,7 @@ class JsonStreamDecoder
      */
     public function decode()
     {
-        $message = $this->decodeType;
+        $decodeType = $this->decodeType;
         $level = 0;
         $str = false;
         $prev = '';
@@ -150,7 +150,7 @@ class JsonStreamDecoder
                 // are encoded as primitives and separated by commas.
                 if ($end !== 0) {
                     $length = $end - $start;
-                    $return = new $message();
+                    $return = new $decodeType();
                     $return->mergeFromJsonString(
                         substr($chunk, $start, $length),
                         $this->ignoreUnknown
