@@ -34,23 +34,6 @@ namespace Google\ApiCore\Transport\Rest;
 
 use Psr\Http\Message\StreamInterface;
 
-/**
- * JsonStreamDecoder is a HTTP-JSON response stream decoder for JSON-ecoded
- * protobuf messages. The response stream must be a JSON array, where the first
- * byte is the opening of the array (i.e. '['), and the last byte is the closing
- * of the array (i.e. ']'). Each array item must be a JSON object and comma
- * separated.
- *
- * The supported options include:
- *     @type bool $ignoreUnknown
- *           Toggles whether or not to throw an exception when an unknown field
- *           is encountered in a response message. The default is true.
- *     @type int $readChunkSizeBytes
- *           The upper size limit in bytes that can be read at a time from the
- *           response stream. The default is 1 KB.
- *
- * @experimental
- */
 class JsonStreamDecoder
 {
     const ESCAPE_CHAR = '\\';
@@ -59,6 +42,28 @@ class JsonStreamDecoder
     private $ignoreUnknown = true;
     private $readChunkSize = 1024;
 
+    /**
+     * JsonStreamDecoder is a HTTP-JSON response stream decoder for JSON-ecoded
+     * protobuf messages. The response stream must be a JSON array, where the first
+     * byte is the opening of the array (i.e. '['), and the last byte is the closing
+     * of the array (i.e. ']'). Each array item must be a JSON object and comma
+     * separated.
+     *
+     * @param StreamInterface $stream The stream to decode.
+     * @param string $decodeType The type name of response messages to decode.
+     * @param array $options {
+     *     An array of optional arguments.
+     *
+     *     @type bool $ignoreUnknown
+     *           Toggles whether or not to throw an exception when an unknown field
+     *           is encountered in a response message. The default is true.
+     *     @type int $readChunkSizeBytes
+     *           The upper size limit in bytes that can be read at a time from the
+     *           response stream. The default is 1 KB.
+     * }
+     *
+     * @experimental
+     */
     public function __construct(StreamInterface $stream, $decodeType, $options = [])
     {
         $this->stream = $stream;
@@ -113,7 +118,7 @@ class JsonStreamDecoder
                 // Track open/close double quotes of a key or value. Do not
                 // toggle flag with the pervious byte was an escape character.
                 if ($b === '"' && $prev !== self::ESCAPE_CHAR) {
-                        $str = !$str;
+                    $str = !$str;
                 }
 
                 // Ignore commas separating messages in the stream array.
