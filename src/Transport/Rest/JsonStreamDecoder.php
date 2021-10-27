@@ -166,6 +166,11 @@ class JsonStreamDecoder
                 }
                 
                 $cursor++;
+
+                // An escaped back slash should not escape the following character.
+                if ($b === self::ESCAPE_CHAR && $prev === self::ESCAPE_CHAR) {
+                    $b = '';
+                }
                 $prev = $b;
             }
         }

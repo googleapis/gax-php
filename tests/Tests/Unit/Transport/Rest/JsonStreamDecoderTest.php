@@ -63,18 +63,53 @@ class JsonStreamDecoderTest extends TestCase
         $any->pack(new Operation([
             "name" => "any_metadata",
         ]));
-        $operations = [new Operation([
-            "name" => "foo",
-            "done" => true,
-            "metadata" => $any,
-        ]), new Operation([
-            "name" => "bar",
-            "done" => true,
-            "error" => new Status([
-                "code" => 1,
-                "message" => "This contains an \"escaped string\" and\n'single quotes' on a new \line",
-            ])
-        ])];
+        $operations = [
+            new Operation([
+                "name" => "foo",
+                "done" => true,
+                "metadata" => $any,
+            ]),
+            new Operation([
+                "name" => "bar",
+                "done" => true,
+                "error" => new Status([
+                    "code" => 1,
+                    "message" => "This contains an \"escaped string\" and\n'single quotes' on a new \line",
+                ]),
+            ]),
+            new Operation([
+                "name" => "foo",
+                "done" => true,
+                "error" => new Status([
+                    "code" => 1,
+                    "message" => "This contains \\escaped slashes\\",
+                ]),
+            ]),
+            new Operation([
+                "name" => "foo",
+                "done" => true,
+                "error" => new Status([
+                    "code" => 1,
+                    "message" => "This contains [brackets]",
+                ]),
+            ]),
+            new Operation([
+                "name" => "foo",
+                "done" => true,
+                "error" => new Status([
+                    "code" => 1,
+                    "message" => "This contains {braces}",
+                ]),
+            ]),
+            new Operation([
+                "name" => "foo",
+                "done" => true,
+                "error" => new Status([
+                    "code" => 1,
+                    "message" => "This contains everything \\\"{['\'",
+                ]),
+            ]),
+        ];
         
         $stream = function($data) {return $this->messagesToStream($data);};
         return [
