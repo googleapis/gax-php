@@ -69,13 +69,11 @@ class JsonStreamDecoder
         $this->stream = $stream;
         $this->decodeType = $decodeType;
 
-        if (!is_null($options)) {
-            $this->ignoreUnknown = array_key_exists('ignoreUnknown', $options) ?
-                                    $options['ignoreUnknown'] :
-                                    $this->ignoreUnknown;
-            $this->readChunkSize = array_key_exists('readChunkSizeBytes', $options) ?
-                                    $options['readChunkSizeBytes'] :
-                                    $this->readChunkSize;
+        if (isset($options['ignoreUnknown'])) {
+            $this->ignoreUnknown = $options['ignoreUnknown'];
+        }
+        if (isset($options['readChunkSize'])) {
+            $this->readChunkSize = $options['readChunkSizeBytes'];
         }
     }
 
