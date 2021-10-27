@@ -89,13 +89,9 @@ class JsonStreamDecoder
     public function decode()
     {
         $decodeType = $this->decodeType;
-        $level = 0;
         $str = false;
-        $prev = '';
-        $chunk = '';
-        $cursor = 0;
-        $start = 0;
-        $end = 0;
+        $prev = $chunk = '';
+        $start = $end = $cursor = $level = 0;
         while ($chunk !== '' || !$this->stream->eof()) {
             // Read up to $readChunkSize bytes from the stream.
             $chunk .= $this->stream->read($this->readChunkSize);
