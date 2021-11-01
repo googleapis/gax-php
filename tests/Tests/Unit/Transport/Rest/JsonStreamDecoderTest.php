@@ -61,52 +61,52 @@ class JsonStreamDecoderTest extends TestCase
     public function buildResponseStreams() {
         $any = new Any();
         $any->pack(new Operation([
-            "name" => "any_metadata",
+            'name' => 'any_metadata',
         ]));
         $operations = [
             new Operation([
-                "name" => "foo",
-                "done" => true,
-                "metadata" => $any,
+                'name' => 'foo',
+                'done' => true,
+                'metadata' => $any,
             ]),
             new Operation([
-                "name" => "bar",
-                "done" => true,
-                "error" => new Status([
-                    "code" => 1,
-                    "message" => "This contains an \"escaped string\" and\n'single quotes' on a new \line",
+                'name' => 'bar',
+                'done' => true,
+                'error' => new Status([
+                    'code' => 1,
+                    'message' => "This contains an \"escaped string\" and\n'single quotes' on a new \line",
                 ]),
             ]),
             new Operation([
-                "name" => "foo",
-                "done" => true,
-                "error" => new Status([
-                    "code" => 1,
-                    "message" => "This contains \\escaped slashes\\",
+                'name' => 'foo',
+                'done' => true,
+                'error' => new Status([
+                    'code' => 1,
+                    'message' => 'This contains \\escaped slashes\\',
                 ]),
             ]),
             new Operation([
-                "name" => "foo",
-                "done" => true,
-                "error" => new Status([
-                    "code" => 1,
-                    "message" => "This contains [brackets]",
+                'name' => 'foo',
+                'done' => true,
+                'error' => new Status([
+                    'code' => 1,
+                    'message' => 'This contains [brackets]',
                 ]),
             ]),
             new Operation([
-                "name" => "foo",
-                "done" => true,
-                "error" => new Status([
-                    "code" => 1,
-                    "message" => "This contains {braces}",
+                'name' => 'foo',
+                'done' => true,
+                'error' => new Status([
+                    'code' => 1,
+                    'message' => 'This contains {braces}',
                 ]),
             ]),
             new Operation([
-                "name" => "foo",
-                "done" => true,
-                "error" => new Status([
-                    "code" => 1,
-                    "message" => "This contains everything \\\"{['\'",
+                'name' => 'foo',
+                'done' => true,
+                'error' => new Status([
+                    'code' => 1,
+                    'message' => "This contains everything \\\"{['\'",
                 ]),
             ]),
         ];
