@@ -173,6 +173,11 @@ class JsonStreamDecoder
                 }
                 $prev = $b;
             }
+            // If after attempting to process the chunk, no progress was made and the
+            // stream is closed, we must break as the stream has closed prematurely.
+            if ($cursor === $chunkLength && $this->stream->eof()) {
+                break;
+            }
         }
         if ($level > 0) {
             throw new \Exception('Unexpected stream close before receiving the closing byte');

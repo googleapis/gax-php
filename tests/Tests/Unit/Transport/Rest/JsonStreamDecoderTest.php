@@ -38,6 +38,7 @@ use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
 use Google\Rpc\Status;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\BufferStream;
 use PHPUnit\Framework\TestCase;
 
 
@@ -125,5 +126,29 @@ class JsonStreamDecoderTest extends TestCase
             $data[] = $message->serializeToJsonString();
         }
         return Psr7\Utils::streamFor('['.implode(',', $data).']');
+    }
+
+    /**
+     * @dataProvider buildBadPayloads
+     * @expectedException \Exception
+     */
+    public function testJsonStreamDecoderBadClose($payload) {
+        $stream = new BufferStream();
+        $stream->write($payload);
+        $decoder = new JsonStreamDecoder($stream, Operation::class, ['readChunkSizeBytes' => 10]);
+        foreach($decoder->decode() as $op) {
+            $this->assertEquals('foo', $op->getName());
+            $stream->close();
+        }
+    }
+
+    public function buildBadPayloads() {
+        return
+        [
+            ['[{"name": "foo"},{'],
+            ['[{"name": "foo"},'],
+            ['[{"name": "foo"},{"name":'],
+            ['[{"name": "foo"},{]'],
+        ];
     }
 }
