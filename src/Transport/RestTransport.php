@@ -158,9 +158,9 @@ class RestTransport implements TransportInterface
         $request = $this->requestBuilder->build(
             $call->getMethod(),
             $call->getMessage()
+            // Exclude headers here because they will be added in _serverStreamRequest().
         );
-        // Exclude headers here because they will be added in _serverStreamRequest().
-
+        
         $decoderOptions = [];
         if (isset($options['decoderOptions'])) {
             $decoderOptions = $options['decoderOptions'];
