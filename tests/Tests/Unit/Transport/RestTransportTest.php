@@ -162,23 +162,11 @@ class RestTransportTest extends TestCase
             ->startUnaryCall($this->call, [])
             ->wait();
     }
-
-    public function testStartServerStreamingCall()
+    /**
+     * @dataProvider buildServerStreamMessages
+     */
+    public function testStartServerStreamingCall($messages)
     {
-        $messages = [
-            new MockResponse([
-                'name' => 'foo',
-                'number' => 1,
-            ]),
-            new MockResponse([
-                'name' => 'bar',
-                'number' => 2,
-            ]),
-            new MockResponse([
-                'name' => 'baz',
-                'number' => 3,
-            ]),
-        ];
         $apiEndpoint = 'www.example.com';
         $expectedRequest = new Request(
             'POST',
@@ -209,12 +197,73 @@ class RestTransportTest extends TestCase
         $this->assertEquals(count($messages), $num);
     }
 
+    /**
+     * @dataProvider buildServerStreamMessages
+     */
+    public function testCancelServerStreamingCall($messages)
+    {
+        $apiEndpoint = 'www.example.com';
+        $expectedRequest = new Request(
+            'POST',
+            $apiEndpoint,
+            [],
+            ""
+        );
+
+        $httpHandler = function (RequestInterface $request, array $options = []) use ($messages, $expectedRequest) {
+            $this->assertEquals($expectedRequest, $request);
+            return Create::promiseFor(
+                new Response(
+                    200,
+                    [],
+                    $this->encodeMessages($messages),
+                )
+            );
+        };
+
+        $stream = $this->getTransport($httpHandler, $apiEndpoint)
+            ->startServerStreamingCall($this->call, []);
+
+        $num = 0;
+        foreach($stream->readAll() as $m) {
+            $this->assertEquals($messages[$num], $m);
+            $num++;
+
+            // Intentionally cancel the stream mid way through processing.
+            $stream->getServerStreamingCall()->cancel();
+        }
+
+        // Ensure only one message was ever yielded.
+        $this->assertEquals(1, $num);
+    }
+
     private function encodeMessages(array $messages) {
         $data = [];
         foreach($messages as $message) {
             $data[] = $message->serializeToJsonString();
         }
         return '['.implode(',', $data).']';
+    }
+
+    public function buildServerStreamMessages() {
+        return[
+            [
+                [
+                    new MockResponse([
+                        'name' => 'foo',
+                        'number' => 1,
+                    ]),
+                    new MockResponse([
+                        'name' => 'bar',
+                        'number' => 2,
+                    ]),
+                    new MockResponse([
+                        'name' => 'baz',
+                        'number' => 3,
+                    ]),
+                ]
+            ]
+        ];
     }
 
     /**

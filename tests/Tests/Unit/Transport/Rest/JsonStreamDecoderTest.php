@@ -130,7 +130,7 @@ class JsonStreamDecoderTest extends TestCase
 
     /**
      * @dataProvider buildBadPayloads
-     * @expectedException \Exception
+     * @expectedException \RuntimeException
      */
     public function testJsonStreamDecoderBadClose($payload) {
         $stream = new BufferStream();
