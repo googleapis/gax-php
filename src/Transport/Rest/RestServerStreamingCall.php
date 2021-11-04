@@ -51,7 +51,7 @@ class RestServerStreamingCall implements ServerStreamingCall
     private $response;
     private $status;
 
-    public function __construct($httpHandler, string $decodeType, array $decoderOptions)
+    public function __construct($httpHandler, $decodeType, array $decoderOptions)
     {
         $this->httpHandler = $httpHandler;
         $this->decodeType = $decodeType;
