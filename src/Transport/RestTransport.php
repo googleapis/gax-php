@@ -173,7 +173,7 @@ class RestTransport implements TransportInterface
                 $headers,
                 $call->getDecodeType(),
                 $callOptions,
-                $decoderOptions,
+                $decoderOptions
             ),
             $call->getDescriptor()
         );
