@@ -61,7 +61,9 @@ class GrpcServerStreamingCall implements ServerStreamingCall
      */
     public function responses()
     {
-        $this->stream->responses();
+        foreach ($this->stream->responses() as $response) {
+            yield $response;
+        }
     }
 
     /**
