@@ -34,6 +34,7 @@ namespace Google\ApiCore\Transport\Grpc;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ServerStreamingCall;
+use Google\Rpc\Code;
 
 /**
  * Class GrpcServerStreamingCall implements \Google\ApiCore\ServerStreamingCall.
@@ -71,7 +72,11 @@ class GrpcServerStreamingCall implements ServerStreamingCall
      */
     public function getStatus()
     {
-        return ApiException::createFromStdClass($this->stream->getStatus());
+        $status = $this->stream->getStatus();
+        if (!($status->code == Code::OK)) {
+            return ApiException::createFromStdClass($status);
+        }
+        return new ApiException('OK', 0, 'OK');
     }
 
     /**
