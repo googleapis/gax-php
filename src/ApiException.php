@@ -160,7 +160,7 @@ class ApiException extends Exception
 
     /**
      * Creates an ApiException from a GuzzleHttp RequestException.
-     * 
+     *
      * @param RequestException $ex
      * @return ApiException
      * @throws ValidationException

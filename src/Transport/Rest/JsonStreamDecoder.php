@@ -94,7 +94,7 @@ class JsonStreamDecoder
             foreach ($this->_decode() as $response) {
                 yield $response;
             }
-        } catch(RuntimeException $re) {
+        } catch (RuntimeException $re) {
             $msg = $re->getMessage();
             $streamClosedException =
                 strpos($msg, 'Stream is detached') ||
@@ -218,7 +218,8 @@ class JsonStreamDecoder
      * Closes the underlying stream. If the stream is actively being decoded, an
      * exception will not be thrown due to the interruption.
      */
-    public function close() {
+    public function close()
+    {
         $this->closeCalled = true;
         $this->stream->close();
     }
