@@ -216,7 +216,7 @@ class RestTransportTest extends TestCase
                 new Response(
                     200,
                     [],
-                    $this->encodeMessages($messages),
+                    $this->encodeMessages($messages)
                 )
             );
         };
