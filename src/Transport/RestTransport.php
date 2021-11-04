@@ -32,7 +32,6 @@
 namespace Google\ApiCore\Transport;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\ServerStream;
@@ -149,7 +148,6 @@ class RestTransport implements TransportInterface
      */
     public function startServerStreamingCall(Call $call, array $options)
     {
-        
         $message = $call->getMessage();
         if (!$message) {
             throw new \InvalidArgumentException('A message is required for ServerStreaming calls.');
@@ -159,9 +157,9 @@ class RestTransport implements TransportInterface
         $callOptions = $this->getCallOptions($options);
         $request = $this->requestBuilder->build(
             $call->getMethod(),
-            $call->getMessage(),
-            // Exclude headers here because they will be added in _serverStreamRequest().
+            $call->getMessage()
         );
+        // Exclude headers here because they will be added in _serverStreamRequest().
 
         $decoderOptions = [];
         if (isset($options['decoderOptions'])) {
