@@ -33,18 +33,19 @@
 namespace Google\ApiCore\Transport\Grpc;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\ServerStreamingCall;
+use Google\ApiCore\ServerStreamingCallInterface;
 use Google\Rpc\Code;
+use Grpc\ServerStreamingCall;
 
 /**
- * Class GrpcServerStreamingCall implements \Google\ApiCore\ServerStreamingCall.
+ * Class ServerStreamingCallWrapper implements \Google\ApiCore\ServerStreamingCallInterface.
  * This is essentially a wrapper class around the \Grpc\ServerStreamingCall.
  */
-class GrpcServerStreamingCall implements ServerStreamingCall
+class ServerStreamingCallWrapper implements ServerStreamingCallInterface
 {
     private $stream;
 
-    public function __construct($stream)
+    public function __construct(ServerStreamingCall $stream)
     {
         $this->stream = $stream;
     }
@@ -73,7 +74,7 @@ class GrpcServerStreamingCall implements ServerStreamingCall
     public function getStatus()
     {
         $status = $this->stream->getStatus();
-        if (!($status->code == Code::OK)) {
+        if ($status->code != Code::OK) {
             return ApiException::createFromStdClass($status);
         }
         return new ApiException('OK', 0, 'OK');

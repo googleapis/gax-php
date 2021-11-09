@@ -167,7 +167,7 @@ class RestTransport implements TransportInterface
         }
 
         return new ServerStream(
-            $this->_serverStreamingRequest(
+            $this->_serverStreamRequest(
                 $this->httpHandler,
                 $request,
                 $headers,
@@ -190,7 +190,7 @@ class RestTransport implements TransportInterface
      * @param array $decoderOptions The options to use for the JsonStreamDecoder.
      *
      */
-    private function _serverStreamingRequest(
+    private function _serverStreamRequest(
         $httpHandler,
         $request,
         $headers,

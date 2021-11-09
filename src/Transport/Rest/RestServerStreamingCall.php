@@ -33,15 +33,15 @@
 namespace Google\ApiCore\Transport\Rest;
 
 use Google\ApiCore\ApiException;
-use Google\ApiCore\ServerStreamingCall;
+use Google\ApiCore\ServerStreamingCallInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Class RestServerStreamingCall implements \Google\ApiCore\ServerStreamingCall.
+ * Class RestServerStreamingCall implements \Google\ApiCore\ServerStreamingCallInterface.
  *
  * @experimental
  */
-class RestServerStreamingCall implements ServerStreamingCall
+class RestServerStreamingCall implements ServerStreamingCallInterface
 {
     private $httpHandler;
     private $originalRequest;
@@ -159,11 +159,9 @@ class RestServerStreamingCall implements ServerStreamingCall
      */
     public function cancel()
     {
-        if (is_null($this->decoder)) {
-            throw new \Exception('Stream has not been started.');
+        if (!is_null($this->decoder)) {
+            $this->decoder->close();
         }
-
-        $this->decoder->close();
     }
 
     /**

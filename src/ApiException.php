@@ -175,11 +175,11 @@ class ApiException extends Exception
                 ? ApiStatus::rpcCodeFromStatus($error['status'])
                 : $ex->getCode();
             $metadata = isset($error['details']) ? $error['details'] : null;
-            return ApiException::createFromApiResponse($basicMessage, $code, $metadata);
+            return static::createFromApiResponse($basicMessage, $code, $metadata);
         }
         // Use the RPC code instead of the HTTP Status Code.
         $code = ApiStatus::rpcCodeFromHttpStatusCode($res->getStatusCode());
-        return ApiException::createFromApiResponse($body, $code);
+        return static::createFromApiResponse($body, $code);
     }
 
     /**

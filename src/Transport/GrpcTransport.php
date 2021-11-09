@@ -41,7 +41,7 @@ use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
-use Google\ApiCore\Transport\Grpc\GrpcServerStreamingCall;
+use Google\ApiCore\Transport\Grpc\ServerStreamingCallWrapper;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
@@ -205,7 +205,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $this->getCallOptions($options)
         );
         return new ServerStream(
-            new GrpcServerStreamingCall($stream),
+            new ServerStreamingCallWrapper($stream),
             $call->getDescriptor()
         );
     }
