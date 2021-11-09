@@ -78,7 +78,7 @@ class ServerStream
         }
         $status = $this->call->getStatus();
         if ($status->getCode() !== Code::OK) {
-            throw $status;
+            throw ApiException::createFromRpcStatus($status);
         }
     }
 

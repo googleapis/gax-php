@@ -39,16 +39,11 @@ class MockStatus
     /** @var Code $code */
     public $code;
     public $details;
-    public $metadata;
-    public function __construct($code, $details = null, $metadata = null)
+    public array $metadata;
+    public function __construct($code, $details = null, array $metadata = [])
     {
         $this->code = $code;
         $this->details = $details;
         $this->metadata = $metadata;
-    }
-
-    public function getCode()
-    {
-        return $this->code;
     }
 }

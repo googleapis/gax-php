@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
+use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\RequestBuilder;
@@ -41,6 +42,8 @@ use Google\ApiCore\Testing\MockResponse;
 use Google\ApiCore\Transport\RestTransport;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\Protobuf\Any;
+use Google\Rpc\ErrorInfo;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Request;
@@ -268,11 +271,15 @@ class RestTransportTest extends TestCase
 
     /**
      * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionCode 5
+     * @expectedExceptionMessage Ruh-roh.
      */
     public function testStartServerStreamingCallThrowsRequestException()
     {
         $apiEndpoint = 'http://www.example.com';
-        $httpHandler = function (RequestInterface $request, array $options = []) use ($apiEndpoint) {
+        $errorInfo = new Any();
+        $errorInfo->pack(new ErrorInfo(['domain' => 'googleapis.com']));
+        $httpHandler = function (RequestInterface $request, array $options = []) use ($apiEndpoint, $errorInfo) {
             return Create::rejectionFor(
                 RequestException::create(
                     new Request('POST', $apiEndpoint),
@@ -282,7 +289,8 @@ class RestTransportTest extends TestCase
                         json_encode([
                             'error' => [
                                 'status' => 'NOT_FOUND',
-                                'message' => 'Ruh-roh.'
+                                'message' => 'Ruh-roh.',
+                                'details' => [$errorInfo]
                             ]
                         ])
                     )
@@ -290,8 +298,14 @@ class RestTransportTest extends TestCase
             );
         };
 
-        $this->getTransport($httpHandler, $apiEndpoint)
-            ->startServerStreamingCall($this->call, []);
+        try {
+            $this->getTransport($httpHandler, $apiEndpoint)
+                ->startServerStreamingCall($this->call, []);
+        } catch(ApiException $ae) {
+            $this->assertSame([$errorInfo], $ae->getMetadata());
+            throw $ae;
+        }
+        
     }
 
     /**

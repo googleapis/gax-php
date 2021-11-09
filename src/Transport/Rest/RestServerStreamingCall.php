@@ -33,7 +33,10 @@
 namespace Google\ApiCore\Transport\Rest;
 
 use Google\ApiCore\ApiException;
+use Google\ApiCore\ApiStatus;
 use Google\ApiCore\ServerStreamingCallInterface;
+use Google\Rpc\Code;
+use Google\Rpc\Status;
 use GuzzleHttp\Exception\RequestException;
 
 /**
@@ -74,14 +77,26 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
         } catch (\Exception $ex) {
             if ($ex instanceof RequestException && $ex->hasResponse()) {
                 $ex = ApiException::createFromRequestException($ex);
-                $this->status = $ex;
+                $this->status = new Status(
+                    [
+                        'code' => $ex->getCode(),
+                        'message' => $ex->getBasicMessage(),
+                        'details' => $ex->getMetadata()
+                    ]
+                );
             }
             throw $ex;
         }
 
-        // Create an OK ApiException for a successful request just so that it
+        // Create an OK Status for a successful request just so that it
         // has a return value.
-        $this->status = new ApiException('OK', 0, 'OK');
+        $this->status = new Status(
+            [
+                'code' => Code::OK,
+                'message' => ApiStatus::OK,
+                'details' => null
+            ]
+        );
         $this->response = $response;
     }
 
@@ -121,7 +136,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
      * Return the status of the server stream. If the call has not been started
      * this will be null.
      *
-     * @return \ApiException The status, with integer $code, string
+     * @return \Google\Rpc\Status The status, with integer $code, string
      *                   $details, and array $metadata members
      */
     public function getStatus()
