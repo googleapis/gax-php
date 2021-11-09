@@ -97,12 +97,12 @@ class JsonStreamDecoder
         } catch (RuntimeException $re) {
             $msg = $re->getMessage();
             $streamClosedException =
-                strpos($msg, 'Stream is detached') ||
-                strpos($msg, 'Unexpected stream close');
+                strpos($msg, 'Stream is detached') !== false ||
+                strpos($msg, 'Unexpected stream close') !== false;
             
             // Only throw the exception if close() was not called and it was not
             // a closing-related exception.
-            if (!$this->closeCalled && !$streamClosedException) {
+            if (!$this->closeCalled || !$streamClosedException) {
                 throw $re;
             }
         }

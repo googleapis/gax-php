@@ -77,7 +77,9 @@ class ServerStreamingCallWrapper implements ServerStreamingCallInterface
         if ($status->code != Code::OK) {
             return ApiException::createFromStdClass($status);
         }
-        return new ApiException('OK', 0, 'OK');
+        // Return an ApiException with OK status, so that getCode() returns
+        // something to compare to.
+        return new ApiException('OK', Code::OK, 'OK');
     }
 
     /**
