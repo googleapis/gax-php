@@ -44,7 +44,7 @@ class ServerStream
     /**
      * ServerStream constructor.
      *
-     * @param ServerStreamingCall $serverStreamingCall The server streaming call object
+     * @param ServerStreamingCallInterface $serverStreamingCall The server streaming call object
      * @param array $streamingDescriptor
      */
     public function __construct($serverStreamingCall, array $streamingDescriptor = [])
@@ -85,7 +85,7 @@ class ServerStream
     /**
      * Return the underlying call object.
      *
-     * @return ServerStreamingCall
+     * @return ServerStreamingCallInterface
      */
     public function getServerStreamingCall()
     {
