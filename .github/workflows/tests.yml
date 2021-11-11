@@ -35,6 +35,8 @@ jobs:
                 timeout_minutes: 10
                 max_attempts: 3
                 command: composer install
+            - name: Lint code
+              run: vendor/bin/parallel-lint --exclude dev --exclude vendor .
             - name: Run script
               env:
                 GOOGLE_APPLICATION_CREDENTIALS: ${{github.workspace}}/tests/Tests/Unit/testdata/json-key-file.json
