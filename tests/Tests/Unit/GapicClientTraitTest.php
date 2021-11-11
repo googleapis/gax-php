@@ -639,7 +639,7 @@ class GapicClientTraitTest extends TestCase
         $updatedOptions = $client->call('buildClientOptions', [$options]);
 
         $this->assertArrayHasKey('addNewOption', $updatedOptions);
-        $this->assertSame(true, $updatedOptions['disableRetries']);
+        $this->assertTrue($updatedOptions['disableRetries']);
     }
 
     private function buildClientToTestModifyCallMethods()
