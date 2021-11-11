@@ -76,7 +76,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
             )->wait();
         } catch (\Exception $ex) {
             if ($ex instanceof RequestException && $ex->hasResponse()) {
-                $ex = ApiException::createFromRequestException($ex); 
+                $ex = ApiException::createFromRequestException($ex);
             }
             throw $ex;
         }
