@@ -205,7 +205,7 @@ class RetryMiddlewareTest extends TestCase
 
         $this->assertSame('Ok!', $response);
         $this->assertEquals(3, $callCount);
-        $this->assertEquals(3, count($observedTimeouts));
+        $this->assertCount(3, $observedTimeouts);
         $this->assertEquals($observedTimeouts[0], $timeout);
         for ($i = 1; $i < count($observedTimeouts); $i++) {
             $this->assertTrue($observedTimeouts[$i-1] > $observedTimeouts[$i]);
