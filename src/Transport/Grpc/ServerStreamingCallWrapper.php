@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Transport\Grpc;
 
 use Google\ApiCore\ServerStreamingCallInterface;
+use Google\Rpc\Code;
 use Google\Rpc\Status;
 use Grpc\ServerStreamingCall;
 
@@ -76,11 +77,11 @@ class ServerStreamingCallWrapper implements ServerStreamingCallInterface
         $st = $this->stream->getStatus();
         return new Status(
             [
-                'code' => $st->code,
+                'code' => property_exists($st, 'code') ? $st->code : Code::OK,
                 // Field 'details' is actually a string in this \stdClass.
-                'message' => $st->details,
+                'message' => property_exists($st, 'details') ? $st->details : '',
                 // Field 'metadata' is actually an array of objects in this \stdClass.
-                'details' => $st->metadata
+                'details' => property_exists($st, 'metadata') ? $st->metadata : []
             ]
         );
     }
