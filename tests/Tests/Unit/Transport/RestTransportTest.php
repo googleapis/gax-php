@@ -298,13 +298,8 @@ class RestTransportTest extends TestCase
             );
         };
 
-        try {
-            $this->getTransport($httpHandler, $apiEndpoint)
-                ->startServerStreamingCall($this->call, []);
-        } catch(ApiException $ae) {
-            $this->assertSame([$errorInfo], $ae->getMetadata());
-            throw $ae;
-        }
+        $this->getTransport($httpHandler, $apiEndpoint)
+            ->startServerStreamingCall($this->call, []);
         
     }
 

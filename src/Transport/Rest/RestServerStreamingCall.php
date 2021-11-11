@@ -76,14 +76,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
             )->wait();
         } catch (\Exception $ex) {
             if ($ex instanceof RequestException && $ex->hasResponse()) {
-                $ex = ApiException::createFromRequestException($ex);
-                $this->status = new Status(
-                    [
-                        'code' => $ex->getCode(),
-                        'message' => $ex->getBasicMessage(),
-                        'details' => $ex->getMetadata()
-                    ]
-                );
+                $ex = ApiException::createFromRequestException($ex); 
             }
             throw $ex;
         }
@@ -94,7 +87,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
             [
                 'code' => Code::OK,
                 'message' => ApiStatus::OK,
-                'details' => null
+                'details' => []
             ]
         );
         $this->response = $response;
