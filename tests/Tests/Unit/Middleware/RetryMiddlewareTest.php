@@ -94,7 +94,7 @@ class RetryMiddlewareTest extends TestCase
             []
         )->wait();
 
-        $this->assertEquals('Ok!', $response);
+        $this->assertSame('Ok!', $response);
         $this->assertEquals(3, $callCount);
     }
 
@@ -203,7 +203,7 @@ class RetryMiddlewareTest extends TestCase
             []
         )->wait();
 
-        $this->assertEquals('Ok!', $response);
+        $this->assertSame('Ok!', $response);
         $this->assertEquals(3, $callCount);
         $this->assertEquals(3, count($observedTimeouts));
         $this->assertEquals($observedTimeouts[0], $timeout);
@@ -231,7 +231,7 @@ class RetryMiddlewareTest extends TestCase
             []
         )->wait();
 
-        $this->assertEquals('Ok!', $response);
+        $this->assertSame('Ok!', $response);
         $this->assertEquals($observedTimeout, $timeout);
     }
 }
