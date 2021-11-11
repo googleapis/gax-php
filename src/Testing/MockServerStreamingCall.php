@@ -59,7 +59,7 @@ class MockServerStreamingCall extends \Grpc\ServerStreamingCall
         $this->responses = $responses;
         $this->deserialize = $deserialize;
         if (is_null($status)) {
-            $status = new MockStatus(Code::OK);
+            $status = new MockStatus(Code::OK, 'OK', []);
         }
         $this->status = $status;
     }
