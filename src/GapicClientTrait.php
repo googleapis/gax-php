@@ -164,6 +164,7 @@ trait GapicClientTrait
             'libVersion' => null,
             'apiEndpoint' => null,
             'clientCertSource' => null,
+            'apiKey' => null,
         ];
 
         $supportedTransports = $this->supportedTransports();
@@ -423,7 +424,20 @@ trait GapicClientTrait
     private function createCredentialsWrapper($credentials, array $credentialsConfig)
     {
         if (is_null($credentials)) {
-            return CredentialsWrapper::build($credentialsConfig);
+            // If the user has explicitly set the apiKey option, use Api Key credentials
+            if (isset($credentialsConfig['apiKey'])) {
+                return new ApiKeyHeaderCredentials($credentialsConfig['apiKey']);
+            }
+            try {
+                return CredentialsWrapper::build($credentialsConfig);
+            } catch (ValidationException $e) {
+                // If Application Default Credentials don't exist, look for the
+                // API Key environment variable
+                if ($apiKey = getenv('GOOGLE_API_KEY')) {
+                    return new ApiKeyHeaderCredentials($apiKey);
+                }
+                throw $e;
+            }
         } elseif (is_string($credentials) || is_array($credentials)) {
             return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig);
         } elseif ($credentials instanceof FetchAuthTokenInterface) {
@@ -596,19 +610,12 @@ trait GapicClientTrait
      */
     private function createCallStack(array $callConstructionOptions)
     {
-        $quotaProject = $this->credentialsWrapper->getQuotaProject();
-        $fixedHeaders = $this->agentHeader;
-        if ($quotaProject) {
-            $fixedHeaders += [
-                'X-Goog-User-Project' => [$quotaProject]
-            ];
-        }
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-        $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
+        $callStack = new FixedHeaderMiddleware($callStack, $this->agentHeader, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',

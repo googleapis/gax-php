@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,36 +29,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
+namespace Google\ApiCore;
 
-use Google\ApiCore\HeaderCredentialsInterface;
-use Google\ApiCore\Call;
-
-/**
-* Middleware which adds a CredentialsWrapper object to the call options.
-*/
-class CredentialsWrapperMiddleware
+interface HeaderCredentialsInterface
 {
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var CredentialsWrapper */
-    private $credentialsWrapper;
-
-    public function __construct(
-        callable $nextHandler,
-        HeaderCredentialsInterface $credentialsWrapper
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->credentialsWrapper = $credentialsWrapper;
-    }
-
-    public function __invoke(Call $call, array $options)
-    {
-        $next = $this->nextHandler;
-        return $next(
-            $call,
-            $options + ['credentialsWrapper' => $this->credentialsWrapper]
-        );
-    }
+    /**
+     * @param string $audience optional audience for self-signed JWTs.
+     * @return callable Callable function that returns an authorization header.
+     */
+    public function getAuthorizationHeaderCallback($audience = null);
 }

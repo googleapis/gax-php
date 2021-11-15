@@ -531,6 +531,7 @@ class GapicClientTraitTest extends TestCase
             'libName' => null,
             'libVersion' => null,
             'clientCertSource' => null,
+            'apiKey' => null,
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -598,6 +599,7 @@ class GapicClientTraitTest extends TestCase
             'libName' => null,
             'libVersion' => null,
             'clientCertSource' => null,
+            'apiKey' => null,
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -854,47 +856,6 @@ class GapicClientTraitTest extends TestCase
         $client = new GapicClientTraitStub();
         $client->set('credentialsWrapper', $credentialsWrapper);
         $this->assertEquals($credentialsWrapper, $client->call('getCredentialsWrapper'));
-    }
-
-    public function testUserProjectHeaderIsSetWhenProvidingQuotaProject()
-    {
-        $quotaProject = 'test-quota-project';
-        $credentialsWrapper = $this->getMockBuilder(CredentialsWrapper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $credentialsWrapper->expects($this->once())
-            ->method('getQuotaProject')
-            ->willReturn($quotaProject);
-        $transport = $this->getMock(TransportInterface::class);
-        $transport->expects($this->once())
-            ->method('startUnaryCall')
-            ->with(
-                $this->isInstanceOf(Call::class),
-                $this->equalTo([
-                    'headers' => AgentHeader::buildAgentHeader([]) + [
-                        'X-Goog-User-Project' => [$quotaProject]
-                    ],
-                    'credentialsWrapper' => $credentialsWrapper
-                ])
-            );
-        $client = new GapicClientTraitStub();
-        $updatedOptions = $client->call('buildClientOptions', [
-            [
-                'transport' => $transport,
-                'credentials' => $credentialsWrapper,
-            ]
-        ]);
-        $client->call('setClientOptions', [$updatedOptions]);
-        $client->set('retrySettings', [
-            'method' => $this->getMockBuilder(RetrySettings::class)
-                ->disableOriginalConstructor()
-                ->getMock()
-            ]
-        );
-        $client->call('startCall', [
-            'method',
-            'decodeType'
-        ]);
     }
 
     public function testDefaultScopes()
@@ -1232,6 +1193,57 @@ class GapicClientTraitTest extends TestCase
         $this->assertEquals('test.mtls.address.com:443', $options['apiEndpoint']);
         $this->assertTrue(is_callable($options['clientCertSource']));
         $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
+    }
+
+    public function testApiKeyOption()
+    {
+        $apiKey = 'abc-123';
+        $client = new GapicClientTraitStub();
+        $updatedOptions = $client->call('buildClientOptions', [
+            ['credentialsConfig' => ['apiKey' => $apiKey]],
+        ]);
+        $client->call('setClientOptions', [$updatedOptions]);
+        $credentialsWrapper = $client->get('credentialsWrapper');
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
+        $headers = $callback();
+        $this->assertEquals(['x-goog-api-key' => [$apiKey]], $headers);
+    }
+
+    public function testApiKeyOptionIsIgnoredWhenCredentialsAreSupplied()
+    {
+        $apiKey = 'abc-123';
+        $credentials = $this->prophesize(FetchAuthTokenInterface::class);
+        $client = new GapicClientTraitStub();
+        $updatedOptions = $client->call('buildClientOptions', [
+            [
+                'credentialsConfig' => ['apiKey' => $apiKey],
+                'credentials' => $credentials->reveal(),
+            ]
+        ]);
+        $client->call('setClientOptions', [$updatedOptions]);
+        $credentialsWrapper = $client->get('credentialsWrapper');
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
+        $headers = $callback();
+        $this->assertEquals([], $headers);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testApiKeyOptionWithApiKey()
+    {
+        $apiKey = 'abc-123';
+        putenv('GOOGLE_API_KEY=' . $apiKey);
+
+        $client = new GapicClientTraitStub();
+        $updatedOptions = $client->call('buildClientOptions', [
+            ['credentialsConfig' => ['apiKey' => $apiKey]],
+        ]);
+        $client->call('setClientOptions', [$updatedOptions]);
+        $credentialsWrapper = $client->get('credentialsWrapper');
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
+        $headers = $callback();
+        $this->assertEquals(['x-goog-api-key' => [$apiKey]], $headers);
     }
 }
 

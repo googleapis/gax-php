@@ -49,7 +49,7 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * The CredentialsWrapper object provides a wrapper around a FetchAuthTokenInterface.
  */
-class CredentialsWrapper
+class CredentialsWrapper implements HeaderCredentialsInterface
 {
     use ValidationTrait;
 
@@ -201,25 +201,31 @@ class CredentialsWrapper
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
         return function () use ($credentialsFetcher, $authHttpHandler, $audience) {
+            $metadata = [];
+            if ($quotaProject = $this->getQuotaProject()) {
+                $metadata += [
+                    'X-Goog-User-Project' => [$quotaProject]
+                ];
+            }
             $token = $credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
                 // Call updateMetadata to take advantage of self-signed JWTs
                 if ($credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $credentialsFetcher->updateMetadata([], $audience);
+                    return $credentialsFetcher->updateMetadata($metadata, $audience);
                 }
 
                 // In case a custom fetcher is provided (unlikely) which doesn't
                 // implement UpdateMetadataInterface
                 $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
                 if (!self::isValid($token)) {
-                    return [];
+                    return $metadata;
                 }
             }
             $tokenString = $token['access_token'];
             if (!empty($tokenString)) {
-                return ['authorization' => ["Bearer $tokenString"]];
+                $metadata += ['authorization' => ["Bearer $tokenString"]];
             }
-            return [];
+            return $metadata;
         };
     }
 

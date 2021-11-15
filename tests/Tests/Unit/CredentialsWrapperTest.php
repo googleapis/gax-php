@@ -38,6 +38,7 @@ use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Cache\SysVCacheItemPool;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
+use Google\Auth\GetQuotaProjectInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\UpdateMetadataInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -302,5 +303,29 @@ class CredentialsWrapperTest extends TestCase
             [$nullFetcher->reveal(), []],
             [$customFetcher->reveal(), ['authorization' => ['Bearer 123']]],
         ];
+    }
+
+    public function testUserProjectHeaderIsSetWhenProvidingQuotaProject()
+    {
+        $quotaProject = 'test-quota-project';
+        $credentialsFetcher = $this->prophesize();
+        $credentialsFetcher->willImplement(FetchAuthTokenInterface::class);
+        $credentialsFetcher->willImplement(GetQuotaProjectInterface::class);
+        $credentialsFetcher->getLastReceivedToken()
+            ->shouldBeCalledOnce()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() + 100
+            ]);
+        $credentialsFetcher->getQuotaProject()
+            ->shouldBeCalledOnce()
+            ->willReturn($quotaProject);
+        $credentialsWrapper = new CredentialsWrapper($credentialsFetcher->reveal());
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
+        $headers = $callback();
+        $this->assertEquals($headers, [
+            'X-Goog-User-Project' => [$quotaProject],
+            'authorization' => ['Bearer 123']
+        ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,36 +29,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
+namespace Google\ApiCore;
 
-use Google\ApiCore\HeaderCredentialsInterface;
-use Google\ApiCore\Call;
+use InvalidArgumentException;
 
 /**
-* Middleware which adds a CredentialsWrapper object to the call options.
-*/
-class CredentialsWrapperMiddleware
+ * The ApiKeyHeaderCredentials object provides a wrapper around an API key.
+ */
+class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
 {
-    /** @var callable */
-    private $nextHandler;
+    private $apiKey;
 
-    /** @var CredentialsWrapper */
-    private $credentialsWrapper;
-
-    public function __construct(
-        callable $nextHandler,
-        HeaderCredentialsInterface $credentialsWrapper
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->credentialsWrapper = $credentialsWrapper;
+    /**
+     * ApiKeyHeaderCredentials constructor.
+     * @param string $apiKey The API key to set in the header for the request
+     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
+     *        specifically for authentication. Should match a signature of
+     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
+     * @throws ValidationException
+     */
+    public function __construct($apiKey)
+    {
+        if (empty($apiKey) || !is_string($apiKey)) {
+            throw new InvalidArgumentException('API key must be a string');
+        }
+        $this->apiKey = $apiKey;
     }
 
-    public function __invoke(Call $call, array $options)
+    /**
+     * @param string $unusedAudience audiences are not supported for API keys.
+     *
+     * @return callable Callable function that returns the API key header.
+     */
+    public function getAuthorizationHeaderCallback($unusedAudience = null)
     {
-        $next = $this->nextHandler;
-        return $next(
-            $call,
-            $options + ['credentialsWrapper' => $this->credentialsWrapper]
-        );
+        $apiKey = $this->apiKey;
+
+        // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
+        // be passed into the gRPC c extension, and changes have the potential to trigger very
+        // difficult-to-diagnose segmentation faults.
+        return function () use ($apiKey) {
+            return ['x-goog-api-key' => [$apiKey]];
+        };
     }
 }
