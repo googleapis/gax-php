@@ -286,13 +286,13 @@ class RestTransportTest extends TestCase
                     new Response(
                         404,
                         [],
-                        json_encode([
+                        json_encode([[
                             'error' => [
                                 'status' => 'NOT_FOUND',
                                 'message' => 'Ruh-roh.',
                                 'details' => [$errorInfo]
                             ]
-                        ])
+                        ]])
                     )
                 )
             );
