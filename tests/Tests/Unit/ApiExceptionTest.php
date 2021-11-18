@@ -250,13 +250,15 @@ class ApiExceptionTest extends TestCase
     /**
      * @dataProvider buildRequestExceptions
      */
-    public function testCreateFromRequestException($re, $stream, $expectedCode) {
+    public function testCreateFromRequestException($re, $stream, $expectedCode)
+    {
         
         $ae = ApiException::createFromRequestException($re, $stream);
         $this->assertSame($expectedCode, $ae->getCode());
     }
 
-    public function buildRequestExceptions() { 
+    public function buildRequestExceptions()
+    { 
         $error = [
             'error' => [
                 'status' => 'NOT_FOUND',
