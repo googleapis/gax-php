@@ -173,8 +173,8 @@ class ApiException extends Exception
         $decoded = json_decode($body, true);
         
         // A streaming response body will return one error in an array. Parse
-        // that first (and only) error message.
-        if ($stream) {
+        // that first (and only) error message, if provided.
+        if ($stream && isset($decoded[0])) {
             $decoded = $decoded[0];
         }
 
