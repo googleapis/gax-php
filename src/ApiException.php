@@ -162,14 +162,23 @@ class ApiException extends Exception
      * Creates an ApiException from a GuzzleHttp RequestException.
      *
      * @param RequestException $ex
+     * @param boolean $stream
      * @return ApiException
      * @throws ValidationException
      */
-    public static function createFromRequestException(RequestException $ex)
+    public static function createFromRequestException(RequestException $ex, $stream = false)
     {
         $res = $ex->getResponse();
         $body = (string) $res->getBody();
-        if ($error = json_decode($body, true)['error']) {
+        $decoded = json_decode($body, true);
+        
+        // A streaming response body will return one error in an array. Parse
+        // that first (and only) error message.
+        if ($stream) {
+            $decoded = $decoded[0];
+        }
+
+        if ($error = $decoded['error']) {
             $basicMessage = $error['message'];
             $code = isset($error['status'])
                 ? ApiStatus::rpcCodeFromStatus($error['status'])
