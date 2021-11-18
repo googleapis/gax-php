@@ -137,6 +137,11 @@ class JsonStreamDecoder
                     $str = !$str;
                 }
 
+                // Skip over new lines that break up items.
+                if ($b === "\n" && $level === 1) {
+                    $start++;
+                }
+
                 // Ignore commas separating messages in the stream array.
                 if ($b === ',' && $level === 1) {
                     $start++;
