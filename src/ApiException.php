@@ -182,7 +182,7 @@ class ApiException extends Exception
             $messageData = [
                 'message' => $basicMessage,
                 'domain' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['domain'],
-                'reason' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['type'],
+                'reason' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['reason'],
                 'metadata' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['metadata'],
                 'code' => $rpcCode,
                 'status' => $rpcStatus,
