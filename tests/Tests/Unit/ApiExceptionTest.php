@@ -37,6 +37,7 @@ use Google\Protobuf\Duration;
 use Google\Rpc\BadRequest;
 use Google\Rpc\Code;
 use Google\Rpc\DebugInfo;
+use Google\Rpc\ErrorInfo;
 use Google\Rpc\Help;
 use Google\Rpc\LocalizedMessage;
 use Google\Rpc\QuotaFailure;
@@ -74,7 +75,7 @@ class ApiExceptionTest extends TestCase
     /**
      * @dataProvider getMetadata
      */
-    public function testWithMetadata($metadata, $metadataArray)
+    public function testWithMetadataWithoutErrorInfo($metadata, $metadataArray)
     {
         $status = new \stdClass();
         $status->code = Code::OK;
@@ -83,8 +84,35 @@ class ApiExceptionTest extends TestCase
 
         $apiException = ApiException::createFromStdClass($status);
 
-        $expectedMessage = json_encode([
+        $expectedMessageWithoutErrorDetails = json_encode([
             'message' => 'testWithMetadata',
+            'code' => Code::OK,
+            'status' => 'OK',
+            'details' => $metadataArray
+        ], JSON_PRETTY_PRINT);
+
+        $this->assertSame(Code::OK, $apiException->getCode());
+        $this->assertSame($expectedMessageWithoutErrorDetails, $apiException->getMessage());
+        $this->assertSame($metadata, $apiException->getMetadata());
+    }
+
+    /**
+     * @dataProvider getMetadataWithErrorInfo
+     */
+    public function testWithMetadataWithErrorInfo($metadata, $metadataArray)
+    {
+        $status = new \stdClass();
+        $status->code = Code::OK;
+        $status->details = 'testWithMetadataWithErrorInfo';
+        $status->metadata = $metadata;
+
+        $apiException = ApiException::createFromStdClass($status);
+
+        $expectedMessage = json_encode([
+            'message' => 'testWithMetadataWithErrorInfo',
+            'domain' => '',
+            'reason' => '',
+            'metadata' => [],
             'code' => Code::OK,
             'status' => 'OK',
             'details' => $metadataArray
@@ -95,6 +123,107 @@ class ApiExceptionTest extends TestCase
         $this->assertSame($metadata, $apiException->getMetadata());
     }
 
+    /**
+     * Test whether metadata array includes ErrorInfo
+     * @dataProvider getMixedMetadata
+     */
+    public function testContainsErrorInfo($metadataArray, $errorInfoResult)
+    {
+        $this->assertSame(ApiException::containsErrorInfo($metadataArray), $errorInfoResult);
+    }
+    
+    public function getMixedMetadata()
+    {
+        $allKnownTypesDataWithoutError = [
+            [
+                '@type' => 'google.rpc.retryinfo-bin',
+            ],
+            [
+                '@type' => 'google.rpc.debuginfo-bin',
+                "stackEntries" => [],
+                "detail" => ""
+            ],
+            [
+                '@type' => 'google.rpc.quotafailure-bin',
+                'violations' => [],
+            ],
+            [
+                '@type' => 'google.rpc.badrequest-bin',
+                'fieldViolations' => []
+            ],
+            [
+                '@type' => 'google.rpc.requestinfo-bin',
+                'requestId' => '',
+                'servingData' => '',
+            ],
+            [
+                '@type' => 'google.rpc.resourceinfo-bin',
+                'resourceType' => '',
+                'resourceName' => '',
+                'owner' => '',
+                'description' => '',
+            ],
+            [
+                '@type' => 'google.rpc.help-bin',
+                'links' => [],
+            ],
+            [
+                '@type' => 'google.rpc.localizedmessage-bin',
+                'locale' => '',
+                'message' => '',
+            ],
+        ];
+        $allKnownTypesDataWithError = [
+            [
+                '@type' => 'google.rpc.retryinfo-bin',
+            ],
+            [
+                '@type' => 'google.rpc.debuginfo-bin',
+                "stackEntries" => [],
+                "detail" => ""
+            ],
+            [
+                '@type' => 'google.rpc.quotafailure-bin',
+                'violations' => [],
+            ],
+            [
+                '@type' => 'google.rpc.badrequest-bin',
+                'fieldViolations' => []
+            ],
+            [
+                '@type' => 'google.rpc.requestinfo-bin',
+                'requestId' => '',
+                'servingData' => '',
+            ],
+            [
+                '@type' => 'google.rpc.resourceinfo-bin',
+                'resourceType' => '',
+                'resourceName' => '',
+                'owner' => '',
+                'description' => '',
+            ],
+            [
+                '@type' => 'google.rpc.errorinfo-bin',
+                'type' => '',
+                'domain' => '',
+                'metadata' => [],
+            ],
+            [
+                '@type' => 'google.rpc.help-bin',
+                'links' => [],
+            ],
+            [
+                '@type' => 'google.rpc.localizedmessage-bin',
+                'locale' => '',
+                'message' => '',
+            ],
+        ];
+        return [
+            [$allKnownTypesDataWithError, ['containsErrorInfo' => true, 'keyOfErrorInfo' => 6]],
+            [$allKnownTypesDataWithoutError, ['containsErrorInfo' => false]]
+        ];
+    }
+    
     public function getMetadata()
     {
         $retryInfo = new RetryInfo();
@@ -163,7 +292,6 @@ class ApiExceptionTest extends TestCase
                 'message' => '',
             ],
         ];
-
         return [
             [['unknown-bin' => ['some-data-that-should-not-appear']], $unknownBinData],
             [['ascii' => ['ascii-data']], $asciiData],
@@ -181,7 +309,70 @@ class ApiExceptionTest extends TestCase
         ];
     }
 
+    public function getMetadataWithErrorInfo()
+    {
+        $allKnownTypesData = [
+            [
+                '@type' => 'google.rpc.retryinfo-bin',
+            ],
+            [
+                '@type' => 'google.rpc.debuginfo-bin',
+                "stackEntries" => [],
+                "detail" => ""
+            ],
+            [
+                '@type' => 'google.rpc.quotafailure-bin',
+                'violations' => [],
+            ],
+            [
+                '@type' => 'google.rpc.badrequest-bin',
+                'fieldViolations' => []
+            ],
+            [
+                '@type' => 'google.rpc.requestinfo-bin',
+                'requestId' => '',
+                'servingData' => '',
+            ],
+            [
+                '@type' => 'google.rpc.resourceinfo-bin',
+                'resourceType' => '',
+                'resourceName' => '',
+                'owner' => '',
+                'description' => '',
+            ],
+            [
+                '@type' => 'google.rpc.errorinfo-bin',
+                'type' => '',
+                'domain' => '',
+                'metadata' => [],
+            ],
+            [
+                '@type' => 'google.rpc.help-bin',
+                'links' => [],
+            ],
+            [
+                '@type' => 'google.rpc.localizedmessage-bin',
+                'locale' => '',
+                'message' => '',
+            ],
+        ];
+        return [
+            [[
+                'google.rpc.retryinfo-bin' => [(new RetryInfo())->serializeToString()],
+                'google.rpc.debuginfo-bin' => [(new DebugInfo())->serializeToString()],
+                'google.rpc.quotafailure-bin' => [(new QuotaFailure())->serializeToString()],
+                'google.rpc.badrequest-bin' => [(new BadRequest())->serializeToString()],
+                'google.rpc.requestinfo-bin' => [(new RequestInfo())->serializeToString()],
+                'google.rpc.resourceinfo-bin' => [(new ResourceInfo())->serializeToString()],
+                'google.rpc.errorinfo-bin' => [(new ErrorInfo())->serializeToString()],
+                'google.rpc.help-bin' => [(new Help())->serializeToString()],
+                'google.rpc.localizedmessage-bin' => [(new LocalizedMessage())->serializeToString()],
+            ], $allKnownTypesData],
+        ];
+    }
+
     /**
+     * Test without ErrorInfo in Metadata
      * @dataProvider getMetadata
      */
     public function testCreateFromApiResponse($metadata, $metadataArray)
@@ -300,6 +491,33 @@ class ApiExceptionTest extends TestCase
     }
 
     /**
+     * Test with ErrorInfo in Metadata
+     * @dataProvider getMetadataWithErrorInfo
+     */
+    // public function testCreateFromApiResponseWithErrorInfo($metadata, $metadataArray) {
+    //     $basicMessage = 'testWithMetadataWithErrorInfo';
+    //     $code = Code::OK;
+    //     $status = 'OK';
+
+    //     $apiException = ApiException::createFromApiResponse($basicMessage, $code, $metadata);
+
+    //     $expectedMessage = json_encode([
+    //         'message' => $basicMessage,
+    //         'domain' => '',
+    //         'reason' => '',
+    //         'metadata' => [],
+    //         'code' => $code,
+    //         'status' => $status,
+    //         'details' => $metadataArray
+    //     ], JSON_PRETTY_PRINT);
+
+    //     $this->assertSame(Code::OK, $apiException->getCode());
+    //     $this->assertSame($expectedMessage, $apiException->getMessage());
+    //     $this->assertSame($metadata, $apiException->getMetadata());
+    // }
+
+    /**
+     * Test without ErrorInfo
      * @dataProvider getRpcStatusData
      */
     public function testCreateFromRpcStatus($status, $expectedApiException)
@@ -387,4 +605,57 @@ class ApiExceptionTest extends TestCase
             [$unary, false, Code::NOT_FOUND]
         ];
     }
+    /**
+     * Test with ErrorInfo
+     * @dataProvider getRpcStatusDataWithErrorInfo
+     */
+    // public function testCreateFromRpcStatusWithErrorInfo($status, $expectedApiException)
+    // {
+    //     $actualApiException = ApiException::createFromRpcStatus($status);
+    //     $this->assertEquals($expectedApiException, $actualApiException);
+    // }
+
+    // public function getRpcStatusDataWithErrorInfo()
+    // {
+    //     $errorInfo = new ErrorInfo();
+    //     $errorInfo->setDomain('googleapis.com');
+    //     $any = new Any();
+    //     $any->pack($errorInfo);
+
+    //     $status = new Status();
+    //     $status->setMessage("status string");
+    //     $status->setCode(Code::OK);
+    //     $status->setDetails([$any]);
+
+    //     $expectedMessage = json_encode([
+    //         'message' => $status->getMessage(),
+    //         'domain' => 'googleapis.com',
+    //         'reason' => '',
+    //         'metadata' => [],
+    //         'code' => $status->getCode(),
+    //         'status' => 'OK',
+    //         'details' => [
+    //             [
+    //                 'type' => '',
+    //                 'domain' => 'googleapis.com',
+    //                 'metadata' => []
+    //             ]
+    //         ],
+    //     ], JSON_PRETTY_PRINT);
+
+    //     return [
+    //         [
+    //             $status,
+    //             new ApiException(
+    //                 $expectedMessage,
+    //                 Code::OK,
+    //                 'OK',
+    //                 [
+    //                     'metadata' => $status->getDetails(),
+    //                     'basicMessage' => $status->getMessage(),
+    //                 ]
+    //             )
+    //         ]
+    //     ];
+    // }
 }

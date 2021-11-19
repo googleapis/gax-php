@@ -110,6 +110,7 @@ class ApiException extends Exception
             $basicMessage,
             $rpcCode,
             $metadata,
+            //$metadata,
             Serializer::decodeMetadata($metadata),
             $previous
         );
@@ -138,9 +139,33 @@ class ApiException extends Exception
             $previous
         );
     }
+    
+    /**
+     * Checks if decoded metadata includes errorInfo message.
+     * @param array $decodedMetadata
+     * @return array $errorInfo {
+     *     @type boolean $containsErrorInfo
+     *     @type int|null $keyOfErrorInfo
+     * }
+     */
+    public static function containsErrorInfo(array $decodedMetadata)
+    {
+        $errorInfo = array();
+        $errorInfo['containsErrorInfo'] = false;
+        foreach ($decodedMetadata as $key=>$value) {
+            if (array_key_exists('@type', $value) and ($value['@type'] === 'google.rpc.errorinfo-bin' or $value['@type'] === 'type.googleapis.com\/google.rpc.ErrorInfo')) {
+                $errorInfo['containsErrorInfo'] = true;
+                $errorInfo['keyOfErrorInfo'] = $key;
+                return $errorInfo;
+            }
+        }
+        return $errorInfo;
+    }
 
     /**
      * Construct an ApiException with a useful message, including decoded metadata.
+     * If the decoded metadata includes an errorInfo message, then the domain, reason,
+     * and metadata fields from that message are hoisted directly into the error.
      *
      * @param string $basicMessage
      * @param int $rpcCode
@@ -151,13 +176,26 @@ class ApiException extends Exception
      */
     private static function create($basicMessage, $rpcCode, $metadata, array $decodedMetadata, $previous = null)
     {
+        $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
         $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
-        $messageData = [
-            'message' => $basicMessage,
-            'code' => $rpcCode,
-            'status' => $rpcStatus,
-            'details' => $decodedMetadata
-        ];
+        if ($containsErrorInfo['containsErrorInfo'] === true) {
+            $messageData = [
+                'message' => $basicMessage,
+                'domain' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['domain'],
+                'reason' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['type'],
+                'metadata' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['metadata'],
+                'code' => $rpcCode,
+                'status' => $rpcStatus,
+                'details' => $decodedMetadata
+            ];
+        } else {
+            $messageData = [
+                'message' => $basicMessage,
+                'code' => $rpcCode,
+                'status' => $rpcStatus,
+                'details' => $decodedMetadata
+            ];
+        }
 
         $message = json_encode($messageData, JSON_PRETTY_PRINT);
 
@@ -171,7 +209,7 @@ class ApiException extends Exception
             'basicMessage' => $basicMessage,
         ]);
     }
-
+    
     /**
      * @param Status $status
      * @return ApiException
