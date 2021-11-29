@@ -116,6 +116,39 @@ class ApiException extends Exception
     }
 
     /**
+     * @param string $basicMessage
+     * @param int $rpcCode
+     * @param array|null $metadata
+     * @param \Exception $previous
+     * @return ApiException
+     */
+    public static function createFromApiResponseREST(
+        $basicMessage,
+        $rpcCode,
+        array $metadata = null,
+        \Exception $previous = null
+    ) {
+        if (empty($metadata)) {
+            $decodedMetadata = [];
+            return self::create(
+                $basicMessage,
+                $rpcCode,
+                $metadata,
+                $decodedMetadata,
+                $previous
+            );
+        } else {
+            return self::create(
+                $basicMessage,
+                $rpcCode,
+                $metadata,
+                $metadata,
+                $previous
+            );
+        }
+    }
+
+    /**
      * Construct an ApiException with a useful message, including decoded metadata.
      *
      * @param string $basicMessage
