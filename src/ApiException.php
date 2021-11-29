@@ -115,13 +115,15 @@ class ApiException extends Exception
     }
 
     /**
+     * For REST-based responses, the metadata does not need to be decoded.
+     *
      * @param string $basicMessage
      * @param int $rpcCode
      * @param array|null $metadata
      * @param \Exception $previous
      * @return ApiException
      */
-    public static function createFromApiResponseREST(
+    public static function createFromRestApiResponse(
         $basicMessage,
         $rpcCode,
         array $metadata = null,
@@ -136,15 +138,14 @@ class ApiException extends Exception
                 $decodedMetadata,
                 $previous
             );
-        } else {
-            return self::create(
-                $basicMessage,
-                $rpcCode,
-                $metadata,
-                $metadata,
-                $previous
-            );
         }
+        return self::create(
+            $basicMessage,
+            $rpcCode,
+            $metadata,
+            $metadata,
+            $previous
+        );
     }
 
     /**

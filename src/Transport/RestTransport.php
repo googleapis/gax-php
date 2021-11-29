@@ -176,7 +176,7 @@ class RestTransport implements TransportInterface
                 ? ApiStatus::rpcCodeFromStatus($error['status'])
                 : $ex->getCode();
             $metadata = isset($error['details']) ? $error['details'] : null;
-            return ApiException::createFromApiResponseREST($basicMessage, $code, $metadata);
+            return ApiException::createFromRestApiResponse($basicMessage, $code, $metadata);
         }
         // Use the RPC code instead of the HTTP Status Code.
         $code = ApiStatus::rpcCodeFromHttpStatusCode($res->getStatusCode());
