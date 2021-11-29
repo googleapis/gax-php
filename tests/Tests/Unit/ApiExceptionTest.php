@@ -204,7 +204,7 @@ class ApiExceptionTest extends TestCase
             ],
             [
                 '@type' => 'google.rpc.errorinfo-bin',
-                'type' => '',
+                'reason' => '',
                 'domain' => '',
                 'metadata' => [],
             ],
@@ -342,7 +342,7 @@ class ApiExceptionTest extends TestCase
             ],
             [
                 '@type' => 'google.rpc.errorinfo-bin',
-                'type' => '',
+                'reason' => '',
                 'domain' => '',
                 'metadata' => [],
             ],
@@ -494,27 +494,28 @@ class ApiExceptionTest extends TestCase
      * Test with ErrorInfo in Metadata
      * @dataProvider getMetadataWithErrorInfo
      */
-    // public function testCreateFromApiResponseWithErrorInfo($metadata, $metadataArray) {
-    //     $basicMessage = 'testWithMetadataWithErrorInfo';
-    //     $code = Code::OK;
-    //     $status = 'OK';
+    public function testCreateFromApiResponseWithErrorInfo($metadata, $metadataArray)
+    {
+        $basicMessage = 'testWithMetadataWithErrorInfo';
+        $code = Code::OK;
+        $status = 'OK';
 
-    //     $apiException = ApiException::createFromApiResponse($basicMessage, $code, $metadata);
+        $apiException = ApiException::createFromApiResponse($basicMessage, $code, $metadata);
 
-    //     $expectedMessage = json_encode([
-    //         'message' => $basicMessage,
-    //         'domain' => '',
-    //         'reason' => '',
-    //         'metadata' => [],
-    //         'code' => $code,
-    //         'status' => $status,
-    //         'details' => $metadataArray
-    //     ], JSON_PRETTY_PRINT);
+        $expectedMessage = json_encode([
+            'message' => $basicMessage,
+            'domain' => '',
+            'reason' => '',
+            'metadata' => [],
+            'code' => $code,
+            'status' => $status,
+            'details' => $metadataArray
+        ], JSON_PRETTY_PRINT);
 
-    //     $this->assertSame(Code::OK, $apiException->getCode());
-    //     $this->assertSame($expectedMessage, $apiException->getMessage());
-    //     $this->assertSame($metadata, $apiException->getMetadata());
-    // }
+        $this->assertSame(Code::OK, $apiException->getCode());
+        $this->assertSame($expectedMessage, $apiException->getMessage());
+        $this->assertSame($metadata, $apiException->getMetadata());
+    }
 
     /**
      * Test without ErrorInfo
@@ -609,53 +610,53 @@ class ApiExceptionTest extends TestCase
      * Test with ErrorInfo
      * @dataProvider getRpcStatusDataWithErrorInfo
      */
-    // public function testCreateFromRpcStatusWithErrorInfo($status, $expectedApiException)
-    // {
-    //     $actualApiException = ApiException::createFromRpcStatus($status);
-    //     $this->assertEquals($expectedApiException, $actualApiException);
-    // }
+    public function testCreateFromRpcStatusWithErrorInfo($status, $expectedApiException)
+    {
+        $actualApiException = ApiException::createFromRpcStatus($status);
+        $this->assertEquals($expectedApiException, $actualApiException);
+    }
 
-    // public function getRpcStatusDataWithErrorInfo()
-    // {
-    //     $errorInfo = new ErrorInfo();
-    //     $errorInfo->setDomain('googleapis.com');
-    //     $any = new Any();
-    //     $any->pack($errorInfo);
+    public function getRpcStatusDataWithErrorInfo()
+    {
+        $errorInfo = new ErrorInfo();
+        $errorInfo->setDomain('googleapis.com');
+        $any = new Any();
+        $any->pack($errorInfo);
 
-    //     $status = new Status();
-    //     $status->setMessage("status string");
-    //     $status->setCode(Code::OK);
-    //     $status->setDetails([$any]);
+        $status = new Status();
+        $status->setMessage("status string");
+        $status->setCode(Code::OK);
+        $status->setDetails([$any]);
 
-    //     $expectedMessage = json_encode([
-    //         'message' => $status->getMessage(),
-    //         'domain' => 'googleapis.com',
-    //         'reason' => '',
-    //         'metadata' => [],
-    //         'code' => $status->getCode(),
-    //         'status' => 'OK',
-    //         'details' => [
-    //             [
-    //                 'type' => '',
-    //                 'domain' => 'googleapis.com',
-    //                 'metadata' => []
-    //             ]
-    //         ],
-    //     ], JSON_PRETTY_PRINT);
+        $expectedMessage = json_encode([
+            'message' => $status->getMessage(),
+            // 'domain' => 'googleapis.com',
+            // 'reason' => '',
+            // 'metadata' => [],
+            'code' => $status->getCode(),
+            'status' => 'OK',
+            'details' => [
+                [
+                    'reason' => '',
+                    'domain' => 'googleapis.com',
+                    'metadata' => []
+                ]
+            ],
+        ], JSON_PRETTY_PRINT);
 
-    //     return [
-    //         [
-    //             $status,
-    //             new ApiException(
-    //                 $expectedMessage,
-    //                 Code::OK,
-    //                 'OK',
-    //                 [
-    //                     'metadata' => $status->getDetails(),
-    //                     'basicMessage' => $status->getMessage(),
-    //                 ]
-    //             )
-    //         ]
-    //     ];
-    // }
+        return [
+            [
+                $status,
+                new ApiException(
+                    $expectedMessage,
+                    Code::OK,
+                    'OK',
+                    [
+                        'metadata' => $status->getDetails(),
+                        'basicMessage' => $status->getMessage(),
+                    ]
+                )
+            ]
+        ];
+    }
 }
