@@ -39,10 +39,9 @@ use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Testing\MockResponse;
 use Google\ApiCore\Transport\RestTransport;
-use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -95,7 +94,7 @@ class RestTransportTest extends TestCase
 
         $httpHandler = function (RequestInterface $request, array $options = []) use ($body, $expectedRequest) {
             $this->assertEquals($expectedRequest, $request);
-            return Promise\promise_for(
+            return Create::promiseFor(
                 new Response(
                     200,
                     [],
@@ -127,7 +126,7 @@ class RestTransportTest extends TestCase
     public function testStartUnaryCallThrowsException()
     {
         $httpHandler = function (RequestInterface $request, array $options = []) {
-            return Promise\rejection_for(new \Exception());
+            return Create::rejectionFor(new \Exception());
         };
 
         $this->getTransport($httpHandler)
@@ -141,7 +140,7 @@ class RestTransportTest extends TestCase
     public function testStartUnaryCallThrowsRequestException()
     {
         $httpHandler = function (RequestInterface $request, array $options = []) {
-            return Promise\rejection_for(
+            return Create::rejectionFor(
                 RequestException::create(
                     new Request('POST', 'http://www.example.com'),
                     new Response(
@@ -264,7 +263,7 @@ class RestTransportTest extends TestCase
     public function testNonJsonResponseException()
     {
         $httpHandler = function (RequestInterface $request, array $options = []) {
-            return Promise\rejection_for(
+            return Create::rejectionFor(
                 RequestException::create(
                     new Request('POST', 'http://www.example.com'),
                     new Response(
@@ -286,7 +285,9 @@ class RestTransportTest extends TestCase
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
         $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
             ->shouldBeCalledOnce()
-            ->willReturn(function() { return []; });
+            ->willReturn(function () {
+                return [];
+            });
 
         $options = [
             'audience' => 'an-audience',
@@ -294,7 +295,7 @@ class RestTransportTest extends TestCase
         ];
 
         $httpHandler = function (RequestInterface $request, array $options = []) {
-            return Promise\promise_for(new Response(200, [], '{}'));
+            return Create::promiseFor(new Response(200, [], '{}'));
         };
 
         $this->getTransport($httpHandler)
@@ -325,7 +326,9 @@ class RestTransportTest extends TestCase
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
         $credentialsWrapper->getAuthorizationHeaderCallback(null)
             ->shouldBeCalledOnce()
-            ->willReturn(function() { return ''; });
+            ->willReturn(function () {
+                return '';
+            });
 
         $options = [
             'credentialsWrapper' => $credentialsWrapper->reveal(),
