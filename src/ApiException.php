@@ -130,21 +130,11 @@ class ApiException extends Exception
         array $metadata = null,
         \Exception $previous = null
     ) {
-        if (empty($metadata)) {
-            $decodedMetadata = [];
-            return self::create(
-                $basicMessage,
-                $rpcCode,
-                $metadata,
-                $decodedMetadata,
-                $previous
-            );
-        }
         return self::create(
             $basicMessage,
             $rpcCode,
             $metadata,
-            $metadata,
+            is_null($metadata) ? [] : $metadata,
             $previous
         );
     }

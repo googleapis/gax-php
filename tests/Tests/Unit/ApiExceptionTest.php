@@ -269,10 +269,11 @@ class ApiExceptionTest extends TestCase
 
         return [
             [
-                [[]], [[]],
-                [$unknownBinData, $unknownBinData],
-                [$asciiData, $asciiData],
-                [$allKnownTypesData, $allKnownTypesData]
+                [[]],
+                [[null]],
+                [$unknownBinData],
+                [$asciiData],
+                [$allKnownTypesData]
             ]
         ];
     }
