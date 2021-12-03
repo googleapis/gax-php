@@ -112,7 +112,7 @@ class ApiExceptionTest extends TestCase
             'message' => 'testWithMetadataWithErrorInfo',
             'domain' => '',
             'reason' => '',
-            'metadata' => [],
+            'errorInfoMetadata' => [],
             'code' => Code::OK,
             'status' => 'OK',
             'details' => $metadataArray
@@ -464,6 +464,7 @@ class ApiExceptionTest extends TestCase
                 [[null]],
                 [$unknownBinData],
                 [$asciiData],
+                [$retryInfoData],
                 [$allKnownTypesData]
             ]
         ];
@@ -506,7 +507,7 @@ class ApiExceptionTest extends TestCase
             'message' => $basicMessage,
             'domain' => '',
             'reason' => '',
-            'metadata' => [],
+            'errorInfoMetadata' => [],
             'code' => $code,
             'status' => $status,
             'details' => $metadataArray
@@ -568,6 +569,61 @@ class ApiExceptionTest extends TestCase
     }
 
     /**
+     * Test with ErrorInfo
+     * @dataProvider getRpcStatusDataWithErrorInfo
+     */
+    public function testCreateFromRpcStatusWithErrorInfo($status, $expectedApiException)
+    {
+        $actualApiException = ApiException::createFromRpcStatus($status);
+        $this->assertEquals($expectedApiException, $actualApiException);
+    }
+
+    public function getRpcStatusDataWithErrorInfo()
+    {
+        $errorInfo = new ErrorInfo();
+        $errorInfo->setDomain('googleapis.com');
+        $errorInfo->setReason('SERVICE_DISABLED');
+        $any = new Any();
+        $any->pack($errorInfo);
+
+        $status = new Status();
+        $status->setMessage("status string");
+        $status->setCode(Code::OK);
+        $status->setDetails([$any]);
+
+        $expectedMessage = json_encode([
+            'message' => $status->getMessage(),
+            'domain' => $errorInfo->getDomain(),
+            'reason' => $errorInfo->getReason(),
+            'errorInfoMetadata' => [],
+            'code' => $status->getCode(),
+            'status' => 'OK',
+            'details' => [
+                [
+                    'reason' => 'SERVICE_DISABLED',
+                    'domain' => 'googleapis.com',
+                    'metadata' => []
+                ]
+            ],
+        ], JSON_PRETTY_PRINT);
+
+        return [
+            [
+                $status,
+                new ApiException(
+                    $expectedMessage,
+                    Code::OK,
+                    'OK',
+                    [
+                        'metadata' => $status->getDetails(),
+                        'basicMessage' => $status->getMessage(),
+                    ]
+                )
+            ]
+        ];
+    }
+
+    /**
      * @dataProvider buildRequestExceptions
      */
     public function testCreateFromRequestException($re, $stream, $expectedCode)
@@ -600,63 +656,9 @@ class ApiExceptionTest extends TestCase
                 json_encode($error)
             )
         );
-        
         return [
             [$stream, true, Code::NOT_FOUND],
             [$unary, false, Code::NOT_FOUND]
-        ];
-    }
-    /**
-     * Test with ErrorInfo
-     * @dataProvider getRpcStatusDataWithErrorInfo
-     */
-    public function testCreateFromRpcStatusWithErrorInfo($status, $expectedApiException)
-    {
-        $actualApiException = ApiException::createFromRpcStatus($status);
-        $this->assertEquals($expectedApiException, $actualApiException);
-    }
-
-    public function getRpcStatusDataWithErrorInfo()
-    {
-        $errorInfo = new ErrorInfo();
-        $errorInfo->setDomain('googleapis.com');
-        $any = new Any();
-        $any->pack($errorInfo);
-
-        $status = new Status();
-        $status->setMessage("status string");
-        $status->setCode(Code::OK);
-        $status->setDetails([$any]);
-
-        $expectedMessage = json_encode([
-            'message' => $status->getMessage(),
-            // 'domain' => 'googleapis.com',
-            // 'reason' => '',
-            // 'metadata' => [],
-            'code' => $status->getCode(),
-            'status' => 'OK',
-            'details' => [
-                [
-                    'reason' => '',
-                    'domain' => 'googleapis.com',
-                    'metadata' => []
-                ]
-            ],
-        ], JSON_PRETTY_PRINT);
-
-        return [
-            [
-                $status,
-                new ApiException(
-                    $expectedMessage,
-                    Code::OK,
-                    'OK',
-                    [
-                        'metadata' => $status->getDetails(),
-                        'basicMessage' => $status->getMessage(),
-                    ]
-                )
-            ]
         ];
     }
 }
