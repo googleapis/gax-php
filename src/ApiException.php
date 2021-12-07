@@ -81,48 +81,78 @@ class ApiException extends Exception
     public function getDomain()
     {
         $metadata = $this->metadata;
-        // For REST-based responses, the $metadata does not need to be decoded.
-        $detailsRest = self::containsErrorInfo($metadata);
+        // For the createFromRpcStatus() method, $metadata is an object and not an array so 'containsErrorInfo' causes a type error.
+        if (is_object($metadata)) {
+            $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
+            $detailsRpcStatus = self::containsErrorInfo($metadataRpcStatus);
+            if ($detailsRpcStatus['containsErrorInfo']) {
+                return $metadataRpcStatus[$detailsRpcStatus['keyOfErrorInfo']]['domain'];
+            }
+        } elseif (is_Array($metadata)) {
+            // For REST-based responses, the $metadata does not need to be decoded.
+            $detailsRest = self::containsErrorInfo($metadata);
+            if ($detailsRest['containsErrorInfo']) {
+                return $metadata[$detailsRest['keyOfErrorInfo']]['domain'];
+            }
+        }
         $metadataGrpc = Serializer::decodeMetadata($metadata);
         $detailsGrpc = self::containsErrorInfo($metadataGrpc);
         if ($detailsGrpc['containsErrorInfo']) {
             return $metadataGrpc[$detailsGrpc['keyOfErrorInfo']]['domain'];
-        } elseif ($detailsRest['containsErrorInfo']) {
-            return $metadata[$detailsRest['keyOfErrorInfo']]['domain'];
         } else {
-            return '';
+            return null;
         }
     }
 
     public function getReason()
     {
         $metadata = $this->metadata;
-        // For REST-based responses, the $metadata does not need to be decoded.
-        $detailsRest = self::containsErrorInfo($metadata);
+        // For the createFromRpcStatus() method, $metadata is an object and not an array so 'containsErrorInfo' causes a type error.
+        if (is_object($metadata)) {
+            $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
+            $detailsRpcStatus = self::containsErrorInfo($metadataRpcStatus);
+            if ($detailsRpcStatus['containsErrorInfo']) {
+                return $metadataRpcStatus[$detailsRpcStatus['keyOfErrorInfo']]['reason'];
+            }
+        } elseif (is_Array($metadata)) {
+            // For REST-based responses, the $metadata does not need to be decoded.
+            $detailsRest = self::containsErrorInfo($metadata);
+            if ($detailsRest['containsErrorInfo']) {
+                return $metadata[$detailsRest['keyOfErrorInfo']]['reason'];
+            }
+        }
         $metadataGrpc = Serializer::decodeMetadata($metadata);
         $detailsGrpc = self::containsErrorInfo($metadataGrpc);
         if ($detailsGrpc['containsErrorInfo']) {
             return $metadataGrpc[$detailsGrpc['keyOfErrorInfo']]['reason'];
-        } elseif ($detailsRest['containsErrorInfo']) {
-            return $metadata[$detailsRest['keyOfErrorInfo']]['reason'];
         } else {
-            return '';
+            return null;
         }
     }
 
     public function getErrorInfoMetadata()
     {
         $metadata = $this->metadata;
-        // For REST-based responses, the $metadata does not need to be decoded.
-        $detailsRest = self::containsErrorInfo($metadata);
+        // For the createFromRpcStatus() method, $metadata is an object and not an array so 'containsErrorInfo' causes a type error.
+        if (is_object($metadata)) {
+            $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
+            $detailsRpcStatus = self::containsErrorInfo($metadataRpcStatus);
+            if ($detailsRpcStatus['containsErrorInfo']) {
+                return $metadataRpcStatus[$detailsRpcStatus['keyOfErrorInfo']]['metadata'];
+            }
+        } elseif (is_Array($metadata)) {
+            // For REST-based responses, the $metadata does not need to be decoded.
+            $detailsRest = self::containsErrorInfo($metadata);
+            if ($detailsRest['containsErrorInfo']) {
+                return $metadata[$detailsRest['keyOfErrorInfo']]['metadata'];
+            }
+        }
         $metadataGrpc = Serializer::decodeMetadata($metadata);
         $detailsGrpc = self::containsErrorInfo($metadataGrpc);
         if ($detailsGrpc['containsErrorInfo']) {
             return $metadataGrpc[$detailsGrpc['keyOfErrorInfo']]['metadata'];
-        } elseif ($detailsRest['containsErrorInfo']) {
-            return $metadata[$detailsRest['keyOfErrorInfo']]['metadata'];
         } else {
-            return '';
+            return null;
         }
     }
 
