@@ -78,82 +78,44 @@ class ApiException extends Exception
         return $this->status;
     }
 
-    public function getDomain()
+    // Returns null if metadata does not contain error info, or return containsErrorInfo() array if the metadata does contain error info.
+    public static function decodeMetadataErrorInfo($metadata)
     {
-        $metadata = $this->metadata;
-        // For the createFromRpcStatus() method, $metadata is an object and not an array so 'containsErrorInfo' causes a type error.
+        // For the createFromRpcStatus() method, $metadata is an object.
         if (is_object($metadata)) {
             $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
             $detailsRpcStatus = self::containsErrorInfo($metadataRpcStatus);
             if ($detailsRpcStatus['containsErrorInfo']) {
-                return $metadataRpcStatus[$detailsRpcStatus['keyOfErrorInfo']]['domain'];
+                return  $detailsRpcStatus;
             }
         } elseif (is_Array($metadata)) {
             // For REST-based responses, the $metadata does not need to be decoded.
             $detailsRest = self::containsErrorInfo($metadata);
             if ($detailsRest['containsErrorInfo']) {
-                return $metadata[$detailsRest['keyOfErrorInfo']]['domain'];
+                return $detailsRest;
             }
         }
         $metadataGrpc = Serializer::decodeMetadata($metadata);
         $detailsGrpc = self::containsErrorInfo($metadataGrpc);
-        if ($detailsGrpc['containsErrorInfo']) {
-            return $metadataGrpc[$detailsGrpc['keyOfErrorInfo']]['domain'];
-        } else {
-            return null;
-        }
+        return $detailsGrpc['containsErrorInfo'] ? $detailsGrpc : null;
+    }
+    
+    public function getDomain()
+    {
+        $metadata = $this->metadata;
+        return self::decodeMetadataErrorInfo($metadata)['domain'] ?? null;
     }
 
     public function getReason()
     {
         $metadata = $this->metadata;
-        // For the createFromRpcStatus() method, $metadata is an object and not an array so 'containsErrorInfo' causes a type error.
-        if (is_object($metadata)) {
-            $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
-            $detailsRpcStatus = self::containsErrorInfo($metadataRpcStatus);
-            if ($detailsRpcStatus['containsErrorInfo']) {
-                return $metadataRpcStatus[$detailsRpcStatus['keyOfErrorInfo']]['reason'];
-            }
-        } elseif (is_Array($metadata)) {
-            // For REST-based responses, the $metadata does not need to be decoded.
-            $detailsRest = self::containsErrorInfo($metadata);
-            if ($detailsRest['containsErrorInfo']) {
-                return $metadata[$detailsRest['keyOfErrorInfo']]['reason'];
-            }
-        }
-        $metadataGrpc = Serializer::decodeMetadata($metadata);
-        $detailsGrpc = self::containsErrorInfo($metadataGrpc);
-        if ($detailsGrpc['containsErrorInfo']) {
-            return $metadataGrpc[$detailsGrpc['keyOfErrorInfo']]['reason'];
-        } else {
-            return null;
-        }
+        return self::decodeMetadataErrorInfo($metadata)['reason'] ?? null;
     }
 
     public function getErrorInfoMetadata()
     {
         $metadata = $this->metadata;
-        // For the createFromRpcStatus() method, $metadata is an object and not an array so 'containsErrorInfo' causes a type error.
-        if (is_object($metadata)) {
-            $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
-            $detailsRpcStatus = self::containsErrorInfo($metadataRpcStatus);
-            if ($detailsRpcStatus['containsErrorInfo']) {
-                return $metadataRpcStatus[$detailsRpcStatus['keyOfErrorInfo']]['metadata'];
-            }
-        } elseif (is_Array($metadata)) {
-            // For REST-based responses, the $metadata does not need to be decoded.
-            $detailsRest = self::containsErrorInfo($metadata);
-            if ($detailsRest['containsErrorInfo']) {
-                return $metadata[$detailsRest['keyOfErrorInfo']]['metadata'];
-            }
-        }
-        $metadataGrpc = Serializer::decodeMetadata($metadata);
-        $detailsGrpc = self::containsErrorInfo($metadataGrpc);
-        if ($detailsGrpc['containsErrorInfo']) {
-            return $metadataGrpc[$detailsGrpc['keyOfErrorInfo']]['metadata'];
-        } else {
-            return null;
-        }
+        return self::decodeMetadataErrorInfo($metadata)['errorInfoMetadata'] ?? null;
     }
 
     /**
@@ -222,20 +184,26 @@ class ApiException extends Exception
      * @param array $decodedMetadata
      * @return array $errorInfo {
      *     @type boolean $containsErrorInfo
-     *     @type int|null $keyOfErrorInfo
+     *     @type string $reason
+     *     @type string $domain
+     *     @type array $errorInfoMetadata
      * }
      */
     public static function containsErrorInfo(array $decodedMetadata)
     {
-        $errorInfo = array();
+        $errorInfo = [];
         $errorInfo['containsErrorInfo'] = false;
         if (empty($decodedMetadata)) {
             return $errorInfo;
         }
-        foreach ($decodedMetadata as $key=>$value) {
-            if (array_key_exists('@type', $value) and ($value['@type'] === 'google.rpc.errorinfo-bin' or $value['@type'] === 'type.googleapis.com/google.rpc.ErrorInfo') or (array_key_exists('reason', $value) && array_key_exists('domain', $value) && array_key_exists('metadata', $value))) {
+        foreach ($decodedMetadata as $value) {
+            $isErrorInfoAny = array_key_exists('@type', $value) && ($value['@type'] === 'google.rpc.errorinfo-bin' || $value['@type'] === 'type.googleapis.com/google.rpc.ErrorInfo');
+            $isErrorInfoArray = array_key_exists('reason', $value) && array_key_exists('domain', $value) && array_key_exists('metadata', $value);
+            if ($isErrorInfoAny || $isErrorInfoArray) {
                 $errorInfo['containsErrorInfo'] = true;
-                $errorInfo['keyOfErrorInfo'] = $key;
+                $errorInfo['reason'] = $value['reason'];
+                $errorInfo['domain'] = $value['domain'];
+                $errorInfo['errorInfoMetadata'] = $value['metadata'];
                 return $errorInfo;
             }
         }
@@ -258,12 +226,12 @@ class ApiException extends Exception
     {
         $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
         $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
-        if ($containsErrorInfo['containsErrorInfo'] === true) {
+        if ($containsErrorInfo['containsErrorInfo']) {
             $messageData = [
                 'message' => $basicMessage,
-                'domain' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['domain'],
-                'reason' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['reason'],
-                'errorInfoMetadata' => $decodedMetadata[$containsErrorInfo['keyOfErrorInfo']]['metadata'],
+                'domain' => $containsErrorInfo['domain'],
+                'reason' => $containsErrorInfo['reason'],
+                'errorInfoMetadata' => $containsErrorInfo['errorInfoMetadata'],
                 'code' => $rpcCode,
                 'status' => $rpcStatus,
                 'details' => $decodedMetadata

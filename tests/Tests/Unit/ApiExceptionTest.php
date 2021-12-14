@@ -420,7 +420,7 @@ class ApiExceptionTest extends TestCase
             ],
         ];
         return [
-            [$allKnownTypesDataWithError, ['containsErrorInfo' => true, 'keyOfErrorInfo' => 6]],
+            [$allKnownTypesDataWithError, ['containsErrorInfo' => true, 'reason' => '', 'domain' => '', 'errorInfoMetadata' => []]],
             [$allKnownTypesDataWithoutError, ['containsErrorInfo' => false]]
         ];
     }
