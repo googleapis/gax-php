@@ -78,7 +78,8 @@ class ApiException extends Exception
         return $this->status;
     }
 
-    // Returns null if metadata does not contain error info, or return containsErrorInfo() array if the metadata does contain error info.
+    // Returns null if metadata does not contain error info, or return containsErrorInfo() array
+    // if the metadata does contain error info.
     public static function decodeMetadataErrorInfo($metadata)
     {
         // For the createFromRpcStatus() method, $metadata is an object.
@@ -197,8 +198,10 @@ class ApiException extends Exception
             return $errorInfo;
         }
         foreach ($decodedMetadata as $value) {
-            $isErrorInfoAny = array_key_exists('@type', $value) && ($value['@type'] === 'google.rpc.errorinfo-bin' || $value['@type'] === 'type.googleapis.com/google.rpc.ErrorInfo');
-            $isErrorInfoArray = array_key_exists('reason', $value) && array_key_exists('domain', $value) && array_key_exists('metadata', $value);
+            $isErrorInfoAny = array_key_exists('@type', $value) && ($value['@type'] === 'google.rpc.errorinfo-bin'
+                || $value['@type'] === 'type.googleapis.com/google.rpc.ErrorInfo');
+            $isErrorInfoArray = array_key_exists('reason', $value) && array_key_exists('domain', $value)
+                && array_key_exists('metadata', $value);
             if ($isErrorInfoAny || $isErrorInfoArray) {
                 $errorInfo['containsErrorInfo'] = true;
                 $errorInfo['reason'] = $value['reason'];
