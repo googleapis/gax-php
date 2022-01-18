@@ -680,9 +680,9 @@ class TestInterceptorDeprecated extends Interceptor
         $method,
         $argument,
         $deserialize,
+        $continuation,
         array $metadata = [],
-        array $options = [],
-        $continuation
+        array $options = []
     ) {
         $options['test-interceptor-insert'] = 'inserted-value';
         return $continuation($method, $argument, $deserialize, $metadata, $options);
@@ -692,9 +692,9 @@ class TestInterceptorDeprecated extends Interceptor
         $method,
         $argument,
         $deserialize,
+        $continuation,
         array $metadata = [],
-        array $options = [],
-        $continuation
+        array $options = []
     ) {
         $options['test-interceptor-insert'] = 'inserted-value';
         return $continuation($method, $argument, $deserialize, $metadata, $options);
