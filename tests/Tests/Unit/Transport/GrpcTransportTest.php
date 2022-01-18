@@ -39,6 +39,7 @@ use Google\ApiCore\Testing\MockGrpcTransport;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
+use Google\Auth\CredentialsLoader;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -188,8 +189,7 @@ class GrpcTransportTest extends TestCase
 
         $transport = new MockGrpcTransport($call);
 
-        $call = new Call(
-            'takeAction',
+        $call = new Call('takeAction',
             null,
             $message,
             ['resourcesGetMethod' => 'getResourcesList']
