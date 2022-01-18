@@ -104,19 +104,22 @@ class ApiException extends Exception
     public function getDomain()
     {
         $metadata = $this->metadata;
-        return self::decodeMetadataErrorInfo($metadata)['domain'] ?? null;
+        return isset(self::decodeMetadataErrorInfo($metadata)['domain'])
+        ? self::decodeMetadataErrorInfo($metadata)['domain'] : null;
     }
 
     public function getReason()
     {
         $metadata = $this->metadata;
-        return self::decodeMetadataErrorInfo($metadata)['reason'] ?? null;
+        return isset(self::decodeMetadataErrorInfo($metadata)['reason'])
+        ? self::decodeMetadataErrorInfo($metadata)['reason'] : null;
     }
 
     public function getErrorInfoMetadata()
     {
         $metadata = $this->metadata;
-        return self::decodeMetadataErrorInfo($metadata)['errorInfoMetadata'] ?? null;
+        return isset(self::decodeMetadataErrorInfo($metadata)['errorInfoMetadata'])
+        ? self::decodeMetadataErrorInfo($metadata)['errorInfoMetadata'] : null;
     }
 
     /**
