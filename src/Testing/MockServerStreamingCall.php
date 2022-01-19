@@ -63,7 +63,7 @@ class MockServerStreamingCall extends \Grpc\ServerStreamingCall
             $status = new MockStatus(Code::OK, 'OK', []);
         } elseif ($status instanceof stdClass) {
             if (!property_exists($status, 'metadata')) {
-                $status->metadata = null;
+                $status->metadata = [];
             }
         }
         $this->status = $status;
