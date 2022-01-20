@@ -36,6 +36,8 @@ use Google\ApiCore\Serializer;
 use Google\ApiCore\ServerStreamingCallInterface;
 use Google\Rpc\Code;
 use Google\Rpc\Status;
+use Grpc\ServerStreamingCall;
+use Grpc\Gcp\GCPServerStreamCall;
 
 /**
  * Class ServerStreamingCallWrapper implements \Google\ApiCore\ServerStreamingCallInterface.
