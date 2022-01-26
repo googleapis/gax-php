@@ -42,7 +42,6 @@ use Google\ApiCore\ValidationTrait;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
-use BadMethodCallException;
 
 /**
  * A REST based transport implementation.
@@ -51,7 +50,9 @@ class RestTransport implements TransportInterface
 {
     use ValidationTrait;
     use ServiceAddressTrait;
-    use HttpUnaryTransportTrait;
+    use HttpUnaryTransportTrait {
+        startServerStreamingCall as protected unsupportedServerStreamingCall;
+    }
 
     private $requestBuilder;
 
@@ -158,7 +159,7 @@ class RestTransport implements TransportInterface
         // Maintain forwards compatibility with older GAPIC clients not configured for REST server streaming
         // @see https://github.com/googleapis/gax-php/issues/370
         if (!$this->requestBuilder->pathExists($call->getMethod())) {
-            throw new BadMethodCallException('Streaming calls are not supported while using the REST transport');
+            $this->unsupportedServerStreamingCall($call, $options);
         }
 
         $headers = self::buildCommonHeaders($options);

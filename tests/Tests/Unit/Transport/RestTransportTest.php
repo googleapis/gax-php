@@ -140,6 +140,23 @@ class RestTransportTest extends TestCase
     }
 
     /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testServerStreamingCallThrowsBadMethodCallException()
+    {
+        $request = new Request('POST', 'http://www.example.com');
+        $requestBuilder = $this->getMockBuilder(RequestBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $requestBuilder->method('pathExists')
+            ->willReturn(false);
+
+        $transport = new RestTransport($requestBuilder, HttpHandlerFactory::build());
+
+        $transport->startServerStreamingCall($this->call, []);
+    }
+
+    /**
      * @expectedException \Google\ApiCore\ApiException
      */
     public function testStartUnaryCallThrowsRequestException()
