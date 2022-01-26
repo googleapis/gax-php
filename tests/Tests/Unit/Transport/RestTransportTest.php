@@ -73,6 +73,8 @@ class RestTransportTest extends TestCase
             ->getMock();
         $requestBuilder->method('build')
             ->willReturn($request);
+        $requestBuilder->method('pathExists')
+            ->willReturn(true);
 
         return new RestTransport(
             $requestBuilder,
