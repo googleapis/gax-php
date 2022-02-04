@@ -217,15 +217,18 @@ class ApiExceptionTest extends TestCase
 
         $apiException = ApiException::createFromStdClass($status);
 
-        $expectedMessage = json_encode([
-            'message' => 'testWithMetadataWithErrorInfo',
+        $expectedMessage = json_encode(
+            [
             'domain' => '',
             'reason' => '',
             'errorInfoMetadata' => [],
+            'message' => 'testWithMetadataWithErrorInfo',
             'code' => Code::OK,
             'status' => 'OK',
-            'details' => $metadataArray
-        ], JSON_PRETTY_PRINT);
+            'details' => $metadataArray,
+        ],
+            JSON_PRETTY_PRINT
+        );
 
         $this->assertSame(Code::OK, $apiException->getCode());
         $this->assertSame($expectedMessage, $apiException->getMessage());
@@ -245,13 +248,13 @@ class ApiExceptionTest extends TestCase
         $apiException = ApiException::createFromApiResponse($basicMessage, $code, $metadata);
 
         $expectedMessage = json_encode([
-            'message' => $basicMessage,
             'domain' => '',
             'reason' => '',
             'errorInfoMetadata' => [],
+            'message' => $basicMessage,
             'code' => $code,
             'status' => $status,
-            'details' => $metadataArray
+            'details' => $metadataArray,
         ], JSON_PRETTY_PRINT);
 
         $this->assertSame(Code::OK, $apiException->getCode());
@@ -604,19 +607,18 @@ class ApiExceptionTest extends TestCase
         $status->setDetails([$any]);
 
         $expectedMessage = json_encode([
-            'message' => $status->getMessage(),
             'domain' => $errorInfo->getDomain(),
             'reason' => $errorInfo->getReason(),
             'errorInfoMetadata' => [],
+            'message' => $status->getMessage(),
             'code' => $status->getCode(),
             'status' => 'OK',
             'details' => [
                 [
                     'reason' => 'SERVICE_DISABLED',
                     'domain' => 'googleapis.com',
-                    'metadata' => []
+                    'metadata' => []],
                 ]
-            ],
         ], JSON_PRETTY_PRINT);
 
         return [
@@ -627,7 +629,7 @@ class ApiExceptionTest extends TestCase
                     Code::OK,
                     'OK',
                     [
-                        'metadata' => $status->getDetails(),
+                        'metadata' => [$any],
                         'basicMessage' => $status->getMessage(),
                     ]
                 )
