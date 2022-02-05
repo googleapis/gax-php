@@ -83,8 +83,6 @@ class ApiException extends Exception
     public static function decodeMetadataErrorInfo($metadata)
     {
         $details = [];
-        // For REST-based responses, the $metadata does not need to be decoded.
-        $details = self::containsErrorInfo($metadata);
         // ApiExceptions created from RPC status have metadata that is an array of objects.
         if (is_object(reset($metadata))) {
             $metadataRpcStatus = Serializer::decodeAnyMessages($metadata);
@@ -94,6 +92,9 @@ class ApiException extends Exception
             $metadataGrpc = Serializer::decodeMetadata($metadata);
             if (reset($metadataGrpc)) {
                 $details = self::containsErrorInfo($metadataGrpc);
+            } else {
+                // For REST-based responses, the $metadata does not need to be decoded.
+                $details = self::containsErrorInfo($metadata);
             }
         }
         return $details['containsErrorInfo'] ? $details : null;
