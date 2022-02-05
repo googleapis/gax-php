@@ -200,7 +200,7 @@ class ApiException extends Exception
             return $errorInfo;
         }
         foreach ($decodedMetadata as $value) {
-            $isErrorInfoArray = array_key_exists('reason', $value) && array_key_exists('domain', $value);
+            $isErrorInfoArray = array_key_exists('reason', $value);
             if ($isErrorInfoArray) {
                 $errorInfo['containsErrorInfo'] = true;
                 $errorInfo['reason'] = $value['reason'];
