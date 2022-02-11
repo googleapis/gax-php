@@ -78,9 +78,18 @@ class ApiException extends Exception
         return $this->status;
     }
 
-    // Returns null if metadata does not contain error info, or return containsErrorInfo() array
-    // if the metadata does contain error info.
-    public static function decodeMetadataErrorInfo($metadata)
+    /**
+     * Returns null if metadata does not contain error info, or returns containsErrorInfo() array
+     * if the metadata does contain error info.
+     * @param array $metadata
+     * @return array|null $details {
+     *     @type bool $containsErrorInfo
+     *     @type string|null $reason
+     *     @type string|null $domain
+     *     @type array|null $errorInfoMetadata
+     * }
+     */
+    private static function decodeMetadataErrorInfo($metadata)
     {
         $details = [];
         // ApiExceptions created from RPC status have metadata that is an array of objects.
@@ -90,16 +99,19 @@ class ApiException extends Exception
         } else {
             // For GRPC-based responses, the $metadata needs to be decoded.
             $metadataGrpc = Serializer::decodeMetadata($metadata);
-            if (reset($metadataGrpc)) {
-                $details = self::containsErrorInfo($metadataGrpc);
-            } else {
-                // For REST-based responses, the $metadata does not need to be decoded.
+            $details = self::containsErrorInfo($metadataGrpc);
+            // For REST-based responses, the $metadata does not need to be decoded.
+            if (!$details['containsErrorInfo']) {
                 $details = self::containsErrorInfo($metadata);
             }
         }
         return $details['containsErrorInfo'] ? $details : null;
     }
-    
+
+    /**
+     * Returns the `reason` in ErrorInfo for an exception, or null if there is no ErrorInfo.
+     * @return string|null $reason
+     */
     public function getReason()
     {
         $metadata = $this->metadata;
@@ -107,6 +119,10 @@ class ApiException extends Exception
         return isset($decodedMetadata['reason']) ? $decodedMetadata['reason'] : null;
     }
 
+    /**
+     * Returns the `domain` in ErrorInfo for an exception, or null if there is no ErrorInfo.
+     * @return string|null $domain
+     */
     public function getDomain()
     {
         $metadata = $this->metadata;
@@ -114,6 +130,10 @@ class ApiException extends Exception
         return isset($decodedMetadata['domain']) ? $decodedMetadata['domain'] : null;
     }
 
+    /**
+     * Returns the `metadata` in ErrorInfo for an exception, or null if there is no ErrorInfo.
+     * @return array|null $errorInfoMetadata
+     */
     public function getErrorInfoMetadata()
     {
         $metadata = $this->metadata;
@@ -184,6 +204,7 @@ class ApiException extends Exception
     
     /**
      * Checks if decoded metadata includes errorInfo message.
+     * If errorInfo is set, it will always contain `reason`, `domain`, and `metadata` keys.
      * @param array $decodedMetadata
      * @return array $errorInfo {
      *     @type boolean $containsErrorInfo
@@ -192,7 +213,7 @@ class ApiException extends Exception
      *     @type array $errorInfoMetadata
      * }
      */
-    public static function containsErrorInfo(array $decodedMetadata)
+    private static function containsErrorInfo(array $decodedMetadata)
     {
         $errorInfo = [];
         $errorInfo['containsErrorInfo'] = false;
@@ -200,12 +221,12 @@ class ApiException extends Exception
             return $errorInfo;
         }
         foreach ($decodedMetadata as $value) {
-            $isErrorInfoArray = array_key_exists('reason', $value);
+            $isErrorInfoArray = isset($value['reason']) && isset($value['domain']) && isset($value['metadata']);
             if ($isErrorInfoArray) {
                 $errorInfo['containsErrorInfo'] = true;
                 $errorInfo['reason'] = $value['reason'];
                 $errorInfo['domain'] = $value['domain'];
-                $errorInfo['errorInfoMetadata'] = isset($value['metadata']) ? $value['metadata'] : null;
+                $errorInfo['errorInfoMetadata'] = $value['metadata'];
                 return $errorInfo;
             }
         }
