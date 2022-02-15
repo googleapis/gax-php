@@ -219,8 +219,8 @@ class ApiExceptionTest extends TestCase
 
         $expectedMessage = json_encode(
             [
-            'domain' => '',
             'reason' => '',
+            'domain' => '',
             'errorInfoMetadata' => [],
             'message' => 'testWithMetadataWithErrorInfo',
             'code' => Code::OK,
@@ -248,8 +248,8 @@ class ApiExceptionTest extends TestCase
         $apiException = ApiException::createFromApiResponse($basicMessage, $code, $metadata);
 
         $expectedMessage = json_encode([
-            'domain' => '',
             'reason' => '',
+            'domain' => '',
             'errorInfoMetadata' => [],
             'message' => $basicMessage,
             'code' => $code,
@@ -438,8 +438,8 @@ class ApiExceptionTest extends TestCase
         $apiException = ApiException::createFromRestApiResponse($basicMessage, $code, $metadata);
 
         $expectedMessage = json_encode([
-            'domain' => '',
             'reason' => '',
+            'domain' => '',
             'errorInfoMetadata' => [],
             'message' => $basicMessage,
             'code' => $code,
@@ -586,8 +586,8 @@ class ApiExceptionTest extends TestCase
         $status->setDetails([$any]);
 
         $expectedMessage = json_encode([
-            'domain' => $errorInfo->getDomain(),
             'reason' => $errorInfo->getReason(),
+            'domain' => $errorInfo->getDomain(),
             'errorInfoMetadata' => [],
             'message' => $status->getMessage(),
             'code' => $status->getCode(),
