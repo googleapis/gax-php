@@ -110,7 +110,7 @@ class RestTransport implements TransportInterface
             $client = new Client(['handler' => $stack]);
             $httpHandler = self::buildHttpHandlerAsync($client);
         } else {
-            $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
+            $httpHandler = $config['httpHandler'] ? $config['httpHandler'] : self::buildHttpHandlerAsync();
         }
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
