@@ -126,7 +126,7 @@ trait HttpUnaryTransportTrait
     * @return callable
      * @throws ValidationException
      */
-    private static function buildHttpHandlerAsync(?Client $client = null)
+    private static function buildHttpHandlerAsync(Client $client = null)
     {
         try {
             return [HttpHandlerFactory::build($client), 'async'];
