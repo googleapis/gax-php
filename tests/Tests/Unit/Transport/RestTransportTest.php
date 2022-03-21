@@ -80,7 +80,7 @@ class RestTransportTest extends TestCase
 
         return new RestTransport(
             $requestBuilder,
-            $httpHandler ?: HttpHandlerFactory::build(),
+            $httpHandler ?: HttpHandlerFactory::build()
         );
     }
 
