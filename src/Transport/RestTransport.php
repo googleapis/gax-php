@@ -42,6 +42,8 @@ use Google\ApiCore\ValidationTrait;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Client;
 
 /**
  * A REST based transport implementation.
@@ -82,6 +84,10 @@ class RestTransport implements TransportInterface
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
+     *    @type RestInterceptor[] $interceptors Interceptors used to intercept RPC invocations before a call starts.
+     *        See the {@see Google\ApiCore\Transport\Rest\RestInterceptor} class to see how REST-based interceptors
+     *        should be structured. Note if $httpHandler is set, then it overrides any interceptors
+     *        (e.g. $interceptors are ignored).
      * }
      * @return RestTransport
      * @throws ValidationException
@@ -91,10 +97,21 @@ class RestTransport implements TransportInterface
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,
+            'interceptors' => []
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
+        $interceptors = $config['interceptors'];
+        if (!$config['httpHandler'] && !empty($interceptors)) {
+            $stack = HandlerStack::create();
+            foreach ($interceptors as $interceptor) {
+                $stack->push($interceptor);
+            }
+            $client = new Client(['handler' => $stack]);
+            $httpHandler = self::buildHttpHandlerAsync($client);
+        } else {
+            $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
+        }
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);

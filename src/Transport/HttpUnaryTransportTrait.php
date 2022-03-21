@@ -32,6 +32,7 @@
 namespace Google\ApiCore\Transport;
 
 use Exception;
+use GuzzleHttp\Client;
 use Google\ApiCore\Call;
 use Google\ApiCore\ValidationException;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -121,13 +122,14 @@ trait HttpUnaryTransportTrait
     }
 
     /**
-     * @return callable
+    * @param Client|null $client
+    * @return callable
      * @throws ValidationException
      */
-    private static function buildHttpHandlerAsync()
+    private static function buildHttpHandlerAsync(?Client $client = null)
     {
         try {
-            return [HttpHandlerFactory::build(), 'async'];
+            return [HttpHandlerFactory::build($client), 'async'];
         } catch (Exception $ex) {
             throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
         }
