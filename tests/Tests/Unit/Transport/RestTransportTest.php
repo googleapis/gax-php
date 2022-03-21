@@ -38,6 +38,7 @@ use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Testing\MockResponse;
+use Google\ApiCore\Transport\Rest\RestInterceptor;
 use Google\ApiCore\Transport\RestTransport;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Protobuf\Any;
@@ -48,6 +49,8 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
 
 class RestTransportTest extends TestCase
 {
@@ -337,6 +340,13 @@ class RestTransportTest extends TestCase
         $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
         $requestBuilder = new RequestBuilder($apiEndpoint, $restConfigPath);
         $httpHandler = [HttpHandlerFactory::build(), 'async'];
+        $interceptors = [new RestInterceptor, new RestInterceptor, new RestInterceptor];
+        $stack = HandlerStack::create();
+            foreach ($interceptors as $interceptor) {
+                $stack->push($interceptor);
+            }
+        $client = new Client(['handler' => $stack]);
+        $httpHandlerInterceptor = [HttpHandlerFactory::build($client), 'async'];
         return [
             [
                 $apiEndpoint,
@@ -349,6 +359,18 @@ class RestTransportTest extends TestCase
                 $restConfigPath,
                 [],
                 new RestTransport($requestBuilder, $httpHandler),
+            ],
+            [
+                $apiEndpoint,
+                $restConfigPath,
+                ['httpHandler' => $httpHandler, 'interceptors' => $interceptors],
+                new RestTransport($requestBuilder, $httpHandler)
+            ],
+            [
+                $apiEndpoint,
+                $restConfigPath,
+                ['interceptors' => $interceptors],
+                new RestTransport($requestBuilder, $httpHandlerInterceptor)
             ],
         ];
     }
@@ -495,5 +517,120 @@ class RestTransportTest extends TestCase
 
         $this->getTransport()
             ->startUnaryCall($this->call, $options);
+    }
+
+    public function testStartUnaryCallWithInterceptor()
+    {
+        $expectedBody = ['name' => 'first-inserted-value', 'number' => 15];
+
+        $mock = function (RequestInterface $req, array $options)
+        {
+            $body = ['name' => $options['first-test-interceptor-insert'], 'number' => $options['second-test-interceptor-insert']];
+            return Create::promiseFor(
+                new Response(
+                    200,
+                    [],
+                    json_encode($body)
+                )
+            );
+        };
+        $handler = HandlerStack :: create ($mock);
+        $handler->push(new FirstTestRestInterceptor);
+        $handler->push(new SecondTestRestInterceptor);
+
+        $response = $this->getTransport($handler)
+            ->startUnaryCall($this->call, [])
+            ->wait();
+
+        $this->assertEquals($expectedBody['name'], $response->getName());
+        $this->assertEquals($expectedBody['number'], $response->getNumber());
+    }
+
+/**
+     * @dataProvider buildServerStreamWithInterceptorMessages
+     */
+    public function testStartServerStreamingCallWithInterceptor($messages)
+    {
+        $mock = function (RequestInterface $request, array $options = []) {
+            $messagesToUse = [
+                new MockResponse([
+                    'name' => $options['first-test-interceptor-insert'],
+                    'number' => 1,
+                ]),
+                new MockResponse([
+                    'name' => 'bar',
+                    'number' => $options['second-test-interceptor-insert'],
+                ]),
+                new MockResponse([
+                    'name' => $options['first-test-interceptor-insert'],
+                    'number' => $options['second-test-interceptor-insert'],
+                ]),
+            ];
+            return Create::promiseFor(
+                new Response(
+                    200,
+                    [],
+                    $this->encodeMessages($messagesToUse)
+                )
+            );
+        };
+
+        $handler = HandlerStack :: create ($mock);
+        $handler->push(new FirstTestRestInterceptor);
+        $handler->push(new SecondTestRestInterceptor);
+
+        $stream = $this->getTransport($handler)
+            ->startServerStreamingCall($this->call, []);
+
+        $num = 0;
+        foreach ($stream->readAll() as $m) {
+            $this->assertEquals($messages[$num], $m);
+            $num++;
+        }
+        $this->assertEquals(count($messages), $num);
+    }
+
+    public function buildServerStreamWithInterceptorMessages()
+    {
+        return[
+            [
+                [
+                    new MockResponse([
+                        'name' => 'first-inserted-value',
+                        'number' => 1,
+                    ]),
+                    new MockResponse([
+                        'name' => 'bar',
+                        'number' => 15,
+                    ]),
+                    new MockResponse([
+                        'name' => 'first-inserted-value',
+                        'number' => 15,
+                    ]),
+                ]
+            ]
+        ];
+    }
+}
+
+class FirstTestRestInterceptor extends RestInterceptor{
+
+    public function __invoke(callable $nextHandler)
+    {
+        return function (RequestInterface $request, array $options) use ($nextHandler) {
+            $options['first-test-interceptor-insert'] = 'first-inserted-value';
+            return $nextHandler($request, $options);
+        };
+    }
+}
+
+class SecondTestRestInterceptor extends RestInterceptor{
+
+    public function __invoke(callable $nextHandler)
+    {
+        return function (RequestInterface $request, array $options) use ($nextHandler) {
+            $options['second-test-interceptor-insert'] = 15;
+            return $nextHandler($request, $options);
+        };
     }
 }
