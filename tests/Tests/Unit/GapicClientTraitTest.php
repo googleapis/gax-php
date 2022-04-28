@@ -79,14 +79,21 @@ class GapicClientTraitTest extends TestCase
             'gapicVersion' => '0.9.0',
             'apiCoreVersion' => '1.0.0',
             'phpVersion' => '5.5.0',
-            'grpcVersion' => '1.0.1'
+            'grpcVersion' => '1.0.1',
+            'customKeyValues' => [
+                'customKey1' => 'customValue1',
+                'customKey2' => 'customValue2'
+            ]
         ]);
         $headers = [
             'x-goog-api-client' => ['this-should-not-be-used'],
             'new-header' => ['this-should-be-used']
         ];
         $expectedHeaders = [
-            'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1 rest/1.0.0'],
+            'x-goog-api-client' => [
+                'gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1 rest/1.0.0' .
+                ' customKey1/customValue1 customKey2/customValue2'
+            ],
             'new-header' => ['this-should-be-used'],
         ];
         $transport = $this->getMock(TransportInterface::class);

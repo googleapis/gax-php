@@ -162,6 +162,7 @@ trait GapicClientTrait
             'gapicVersion' => self::getGapicVersion($options),
             'libName' => null,
             'libVersion' => null,
+            'customAgentHeaderKeyValues' => [],
             'apiEndpoint' => null,
             'clientCertSource' => null,
         ];
@@ -339,6 +340,8 @@ trait GapicClientTrait
      *           The code generator version of the GAPIC library.
      *     @type callable $clientCertSource
      *           A callable which returns the client cert as a string.
+     *     @type array $customAgentHeaderKeyValues
+     *           Custom key values to add to the agent header.
      * }
      * @throws ValidationException
      */
@@ -363,6 +366,7 @@ trait GapicClientTrait
             'gapicVersion',
             'libName',
             'libVersion',
+            'customAgentHeaderKeyValues'
         ]);
 
         $clientConfig = $options['clientConfig'];
@@ -392,7 +396,9 @@ trait GapicClientTrait
                 'libName',
                 'libVersion',
                 'gapicVersion'
-            ], $options)
+            ], $options) + [
+                'customKeyValues' => $options['customAgentHeaderKeyValues']
+            ]
         );
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);

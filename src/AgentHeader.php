@@ -52,6 +52,9 @@ class AgentHeader
      *     @type string $grpcVersion the gRPC version.
      *     @type string $restVersion the REST transport version (typically same as the
      *           ApiCore version).
+     *     @type array $customKeyValues custom key values to add to the agent header info. They are
+     *           added after the default ones. Any key that has the same name as a default one is
+     *           ignored (no override).
      * }
      * @return array Agent header array
      */
@@ -67,6 +70,7 @@ class AgentHeader
         //      - apiCoreVersion (gax/)
         //      - grpcVersion (grpc/)
         //      - restVersion (rest/)
+        //      - ...customKeyValues (in no specific other)
 
         $phpVersion = isset($headerInfo['phpVersion'])
             ? $headerInfo['phpVersion']
@@ -106,6 +110,15 @@ class AgentHeader
             ? $headerInfo['restVersion']
             : $apiCoreVersion;
         $metricsHeaders['rest'] = $restVersion;
+
+        if (isset($headerInfo['customKeyValues'])) {
+            foreach ($headerInfo['customKeyValues'] as $customKey => $customValue) {
+                // Only adds if not already set.
+                if (!isset($metricsHeaders[$customKey])) {
+                    $metricsHeaders[$customKey] = $customValue;
+                }
+            }
+        }
 
         $metricsList = [];
         foreach ($metricsHeaders as $key => $value) {

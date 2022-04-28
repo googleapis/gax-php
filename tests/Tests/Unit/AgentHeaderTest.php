@@ -54,7 +54,8 @@ class AgentHeaderTest extends TestCase
     public function testWithInput()
     {
         $expectedHeader = [AgentHeader::AGENT_HEADER_KEY => [
-            'gl-php/4.4.4 gccl/1.1.1 gapic/2.2.2 gax/3.3.3 grpc/5.5.5 rest/3.3.3'
+            'gl-php/4.4.4 gccl/1.1.1 gapic/2.2.2 gax/3.3.3 grpc/5.5.5 rest/3.3.3' .
+            ' customKey1/customValue1 customKey2/customValue2'
         ]];
 
         $header = AgentHeader::buildAgentHeader([
@@ -64,6 +65,10 @@ class AgentHeaderTest extends TestCase
             'apiCoreVersion' => '3.3.3',
             'phpVersion' => '4.4.4',
             'grpcVersion' => '5.5.5',
+            'customKeyValues' => [
+                'customKey1' => 'customValue1',
+                'customKey2' => 'customValue2'
+            ]
         ]);
 
         $this->assertSame($expectedHeader, $header);
@@ -151,6 +156,30 @@ class AgentHeaderTest extends TestCase
         $header = AgentHeader::buildAgentHeader([
             'apiCoreVersion' => '3.3.3',
             'restVersion' => null,
+        ]);
+
+        $this->assertSame($expectedHeader, $header);
+    }
+
+    public function testWithConflictingCustomKey()
+    {
+        $expectedHeader = [AgentHeader::AGENT_HEADER_KEY => [
+            'gl-php/' . phpversion() .
+            ' gapic/' .
+            ' gax/value' .
+            ' grpc/4.4.4' .
+            ' rest/5.5.5' .
+            ' customKey1/customValue1'
+        ]];
+
+        $header = AgentHeader::buildAgentHeader([
+            'apiCoreVersion' => 'value',
+            'grpcVersion' => '4.4.4',
+            'restVersion' => '5.5.5',
+            'customKeyValues' => [
+                'customKey1' => 'customValue1',
+                'apiCoreVersion' => 'newValue'
+            ]
         ]);
 
         $this->assertSame($expectedHeader, $header);
