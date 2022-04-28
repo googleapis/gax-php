@@ -178,7 +178,7 @@ class AgentHeaderTest extends TestCase
             'restVersion' => '5.5.5',
             'customKeyValues' => [
                 'customKey1' => 'customValue1',
-                'apiCoreVersion' => 'newValue'
+                'gax' => 'newValue'
             ]
         ]);
 
