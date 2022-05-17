@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
-use Google\ApiCore\ApiException;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
 use Google\ApiCore\RequestBuilder;
@@ -73,6 +72,8 @@ class RestTransportTest extends TestCase
             ->getMock();
         $requestBuilder->method('build')
             ->willReturn($request);
+        $requestBuilder->method('pathExists')
+            ->willReturn(true);
 
         return new RestTransport(
             $requestBuilder,
@@ -138,6 +139,23 @@ class RestTransportTest extends TestCase
     }
 
     /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testServerStreamingCallThrowsBadMethodCallException()
+    {
+        $request = new Request('POST', 'http://www.example.com');
+        $requestBuilder = $this->getMockBuilder(RequestBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $requestBuilder->method('pathExists')
+            ->willReturn(false);
+
+        $transport = new RestTransport($requestBuilder, HttpHandlerFactory::build());
+
+        $transport->startServerStreamingCall($this->call, []);
+    }
+
+    /**
      * @expectedException \Google\ApiCore\ApiException
      */
     public function testStartUnaryCallThrowsRequestException()
@@ -192,7 +210,7 @@ class RestTransportTest extends TestCase
             ->startServerStreamingCall($this->call, []);
 
         $num = 0;
-        foreach($stream->readAll() as $m) {
+        foreach ($stream->readAll() as $m) {
             $this->assertEquals($messages[$num], $m);
             $num++;
         }
@@ -227,7 +245,7 @@ class RestTransportTest extends TestCase
             ->startServerStreamingCall($this->call, []);
 
         $num = 0;
-        foreach($stream->readAll() as $m) {
+        foreach ($stream->readAll() as $m) {
             $this->assertEquals($messages[$num], $m);
             $num++;
 
@@ -239,15 +257,17 @@ class RestTransportTest extends TestCase
         $this->assertEquals(1, $num);
     }
 
-    private function encodeMessages(array $messages) {
+    private function encodeMessages(array $messages)
+    {
         $data = [];
-        foreach($messages as $message) {
+        foreach ($messages as $message) {
             $data[] = $message->serializeToJsonString();
         }
         return '['.implode(',', $data).']';
     }
 
-    public function buildServerStreamMessages() {
+    public function buildServerStreamMessages()
+    {
         return[
             [
                 [
@@ -299,7 +319,6 @@ class RestTransportTest extends TestCase
 
         $this->getTransport($httpHandler, $apiEndpoint)
             ->startServerStreamingCall($this->call, []);
-        
     }
 
     /**
