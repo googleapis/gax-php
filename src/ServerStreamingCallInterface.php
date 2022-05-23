@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,47 +32,56 @@
 
 namespace Google\ApiCore;
 
-/**
- * Encapsulates request params header metadata.
- */
-class RequestParamsHeaderDescriptor
+interface ServerStreamingCallInterface
 {
-    const HEADER_KEY = 'x-goog-request-params';
 
     /**
-     * @var array
-     */
-    private $header;
-
-    /**
-     * RequestParamsHeaderDescriptor constructor.
+     * Start the call.
      *
-     * @param array $requestParams An associative array which contains request params header data in
-     * a form ['field_name.subfield_name' => value].
+     * @param mixed $data     The data to send
+     * @param array $metadata Metadata to send with the call, if applicable
+     *                        (optional)
+     * @param array $options  An array of options, possible keys:
+     *                        'flags' => a number (optional)
      */
-    public function __construct($requestParams)
-    {
-        $headerKey = self::HEADER_KEY;
-
-        $headerValue = '';
-        foreach ($requestParams as $key => $value) {
-            if ('' !== $headerValue) {
-                $headerValue .= '&';
-            }
-
-            $headerValue .= $key . '=' . urlencode(strval($value));
-        }
-
-        $this->header = [$headerKey => [$headerValue]];
-    }
+    public function start($data, array $metadata = [], array $options = []);
 
     /**
-     * Returns an associative array that contains request params header metadata.
-     *
-     * @return array
+     * @return mixed An iterator of response values.
      */
-    public function getHeader()
-    {
-        return $this->header;
-    }
+    public function responses();
+
+    /**
+     * Return the status of the server stream.
+     *
+     * @return \stdClass The API status.
+     */
+    public function getStatus();
+
+    /**
+     * @return mixed The metadata sent by the server.
+     */
+    public function getMetadata();
+
+    /**
+     * @return mixed The trailing metadata sent by the server.
+     */
+    public function getTrailingMetadata();
+
+    /**
+     * @return string The URI of the endpoint.
+     */
+    public function getPeer();
+
+    /**
+     * Cancels the call.
+     */
+    public function cancel();
+
+    /**
+     * Set the CallCredentials for the underlying Call.
+     *
+     * @param mixed $call_credentials The CallCredentials object
+     */
+    public function setCallCredentials($call_credentials);
 }

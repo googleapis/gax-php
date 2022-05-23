@@ -34,8 +34,8 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\ResourceTemplate\AbsoluteResourceTemplate;
 use Google\Protobuf\Internal\Message;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -63,6 +63,16 @@ class RequestBuilder
         self::validateFileExists($restConfigPath);
         $this->baseUri = $baseUri;
         $this->restConfig = require($restConfigPath);
+    }
+
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public function pathExists($path)
+    {
+        list($interface, $method) = explode('/', $path);
+        return isset($this->restConfig['interfaces'][$interface][$method]);
     }
 
     /**
@@ -177,6 +187,18 @@ class RequestBuilder
             }
         }
 
+        // Ensures required query params with default values are always sent
+        // over the wire.
+        if (isset($config['queryParams'])) {
+            foreach ($config['queryParams'] as $requiredQueryParam) {
+                $requiredQueryParam = Serializer::toCamelCase($requiredQueryParam);
+                if (!array_key_exists($requiredQueryParam, $queryParams)) {
+                    $getter = Serializer::getGetter($requiredQueryParam);
+                    $queryParams[$requiredQueryParam] = $message->$getter();
+                }
+            }
+        }
+
         return [$body, $queryParams];
     }
 
@@ -230,7 +252,7 @@ class RequestBuilder
      */
     private function buildUri($path, $queryParams)
     {
-        $uri = Psr7\uri_for(
+        $uri = Utils::uriFor(
             sprintf(
                 'https://%s%s',
                 $this->baseUri,

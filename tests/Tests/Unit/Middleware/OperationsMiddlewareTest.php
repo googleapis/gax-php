@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,49 +30,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore;
+namespace Google\ApiCore\Tests\Unit\Middleware;
 
-/**
- * Encapsulates request params header metadata.
- */
-class RequestParamsHeaderDescriptor
+use Google\ApiCore\Call;
+use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\Middleware\OperationsMiddleware;
+use Google\ApiCore\Testing\MockResponse;
+use GuzzleHttp\Promise\Promise;
+use PHPUnit\Framework\TestCase;
+
+class OperationsMiddlewareTest extends TestCase
 {
-    const HEADER_KEY = 'x-goog-request-params';
-
-    /**
-     * @var array
-     */
-    private $header;
-
-    /**
-     * RequestParamsHeaderDescriptor constructor.
-     *
-     * @param array $requestParams An associative array which contains request params header data in
-     * a form ['field_name.subfield_name' => value].
-     */
-    public function __construct($requestParams)
+    public function testOperationNameMethodDescriptor()
     {
-        $headerKey = self::HEADER_KEY;
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $operationsClient = $this->getMockBuilder(OperationsClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $descriptor = [
+            'operationNameMethod' => 'getNumber'
+        ];
+        $handler = function(Call $call, $options) use (&$callCount) {
+            return $promise = new Promise(function () use (&$promise) {
+                $response = new MockResponse(['number' => 123]);
+                $promise->resolve($response);
+            });
+        };
+        $middleware = new OperationsMiddleware($handler, $operationsClient, $descriptor);
+        $response = $middleware(
+            $call,
+            []
+        )->wait();
 
-        $headerValue = '';
-        foreach ($requestParams as $key => $value) {
-            if ('' !== $headerValue) {
-                $headerValue .= '&';
-            }
-
-            $headerValue .= $key . '=' . urlencode(strval($value));
-        }
-
-        $this->header = [$headerKey => [$headerValue]];
-    }
-
-    /**
-     * Returns an associative array that contains request params header metadata.
-     *
-     * @return array
-     */
-    public function getHeader()
-    {
-        return $this->header;
+        $this->assertEquals(123, $response->getName());
     }
 }
