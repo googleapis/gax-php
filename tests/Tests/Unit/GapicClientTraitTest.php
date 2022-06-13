@@ -33,7 +33,6 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeader;
-use Google\ApiCore\AgentHeaderDescriptor;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
@@ -52,11 +51,9 @@ use Google\ApiCore\ValidationException;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
-use GPBMetadata\Google\Api\Auth;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use Prophecy\Argument;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;

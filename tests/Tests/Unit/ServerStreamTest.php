@@ -31,7 +31,6 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
-use Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockServerStreamingCall;

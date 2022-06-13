@@ -32,16 +32,12 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
-use Google\ApiCore\CredentialsWrapper;
 use Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
-use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Testing\MockResponse;
 use Google\ApiCore\Transport\GrpcFallbackTransport;
-use Google\ApiCore\Transport\RestTransport;
-use Google\Auth\FetchAuthTokenInterface;
 use Google\ApiCore\ValidationException;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Rpc\Code;

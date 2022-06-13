@@ -35,12 +35,10 @@ namespace Google\ApiCore\Tests\Unit\Transport;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
 use Google\ApiCore\Testing\MockRequest;
+use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\GrpcTransport;
-use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
-use Google\Auth\CredentialsLoader;
 use Google\ApiCore\ValidationException;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
@@ -51,11 +49,10 @@ use Grpc\BaseStub;
 use Grpc\CallInvoker;
 use Grpc\ChannelCredentials;
 use Grpc\ClientStreamingCall;
-use Grpc\Interceptor;
 use Grpc\ServerStreamingCall;
 use Grpc\UnaryCall;
-use TypeError;
 use stdClass;
+use TypeError;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class GrpcTransportTest extends TestCase

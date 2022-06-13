@@ -40,8 +40,8 @@ use Google\Protobuf\Any;
 use Google\Rpc\Status;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\BufferStream;
-use RuntimeException;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 

@@ -33,8 +33,8 @@
 $loader = require_once __DIR__ . '/../vendor/autoload.php';
 
 use Google\ApiCore\Testing\MessageAwareArrayComparator;
-use Google\ApiCore\Testing\ProtobufMessageComparator;
 use Google\ApiCore\Testing\ProtobufGPBEmptyComparator;
+use Google\ApiCore\Testing\ProtobufMessageComparator;
 use Grpc\Interceptor;
 
 // This is a long line, but better not set some temporary variables that get picked up by something later

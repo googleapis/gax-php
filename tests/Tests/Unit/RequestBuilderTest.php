@@ -29,7 +29,6 @@ use Google\Protobuf\StringValue;
 use Google\Protobuf\Struct;
 use Google\Protobuf\Timestamp;
 use Google\Protobuf\Value;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Query;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 

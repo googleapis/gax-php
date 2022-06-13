@@ -32,7 +32,6 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\PageStreamingDescriptor;
-use Google\Rpc\Code;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;

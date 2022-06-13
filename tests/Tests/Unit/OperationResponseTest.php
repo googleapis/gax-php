@@ -31,14 +31,13 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\LongRunning\Gapic\OperationsGapicClient;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
+use Google\Rpc\Code;
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Google\Rpc\Code;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class OperationResponseTest extends TestCase

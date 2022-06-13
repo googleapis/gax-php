@@ -32,9 +32,7 @@
 
 namespace Google\ApiCore\Tests\Unit\Middleware;
 
-use Google\ApiCore\AgentHeader;
 use Google\ApiCore\Call;
-use Google\ApiCore\Middleware\AgentHeaderMiddleware;
 use Google\ApiCore\Middleware\FixedHeaderMiddleware;
 use PHPUnit\Framework\TestCase;
 

@@ -35,12 +35,12 @@ namespace Google\ApiCore\Tests\Unit\Transport;
 use BadMethodCallException;
 use Exception;
 use Google\ApiCore\ApiException;
-use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Call;
+use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\RequestBuilder;
-use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Testing\MockResponse;
+use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\ValidationException;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -51,9 +51,9 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
+use Psr\Http\Message\RequestInterface;
 use TypeError;
 use UnexpectedValueException;
-use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class RestTransportTest extends TestCase

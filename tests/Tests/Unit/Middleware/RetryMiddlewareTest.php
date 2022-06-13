@@ -37,11 +37,9 @@ use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\RetrySettings;
-use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class RetryMiddlewareTest extends TestCase
