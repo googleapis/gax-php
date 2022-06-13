@@ -36,11 +36,14 @@ use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Google\Rpc\Code;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class OperationResponseTest extends TestCase
 {
+    use ExpectException;
     use TestTrait;
 
     public function testBasic()
@@ -290,10 +293,6 @@ class OperationResponseTest extends TestCase
         $this->assertTrue($operationResponse->operationSucceeded());
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Unable to determine operation error status for this service
-     */
     public function testMisconfiguredCustomOperationThrowsException()
     {
         $operationName = 'test-123';
@@ -310,13 +309,12 @@ class OperationResponseTest extends TestCase
         ];
         $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
 
-        $this->assertTrue($operationResponse->operationSucceeded());
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Unable to determine operation error status for this service');
+
+        $operationResponse->operationSucceeded();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage The cancel operation is not supported by this API
-     */
     public function testNoCancelOperation()
     {
         $operationClient = $this->prophesize(CustomOperationClient::class);
@@ -324,13 +322,13 @@ class OperationResponseTest extends TestCase
             'cancelOperationMethod' => null,
         ];
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal(), $options);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The cancel operation is not supported by this API');
+
         $operationResponse->cancel();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage The delete operation is not supported by this API
-     */
     public function testNoDeleteOperation()
     {
         $operationClient = $this->prophesize(CustomOperationClient::class);
@@ -338,6 +336,9 @@ class OperationResponseTest extends TestCase
             'deleteOperationMethod' => null,
         ];
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal(), $options);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The delete operation is not supported by this API');
         $operationResponse->delete();
     }
 
@@ -349,14 +350,14 @@ class OperationResponseTest extends TestCase
 
     private function createOperationClient($reloadCount)
     {
-        $opClient = $this->getMock(
-            OperationsClient::class,
-            ['getOperation'],
-            [[
+        $opClient = $this->getMockBuilder(OperationsClient::class)
+            ->setConstructorArgs([[
                 'apiEndpoint' => '',
                 'scopes' => [],
-            ]]
-        );
+            ]])
+            ->setMethods(['getOperation'])
+            ->getMock();
+
         for ($i = 0; $i < $reloadCount - 1; $i++) {
             $opClient->expects($this->at($i))
                 ->method('getOperation')

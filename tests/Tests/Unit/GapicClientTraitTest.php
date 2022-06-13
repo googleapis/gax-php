@@ -57,14 +57,15 @@ use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
-use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
 use Prophecy\Argument;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class GapicClientTraitTest extends TestCase
 {
     use TestTrait;
 
-    public function tearDown()
+    public function tear_down()
     {
         // Reset the static gapicVersion field between tests
         $client = new GapicClientTraitStub();
@@ -90,7 +91,7 @@ class GapicClientTraitTest extends TestCase
             'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1 rest/1.0.0 pb/6.6.6'],
             'new-header' => ['this-should-be-used'],
         ];
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->getMockBuilder(TransportInterface::class)->disableOriginalConstructor()->getMock();
         $credentialsWrapper = CredentialsWrapper::build([
             'keyFile' => __DIR__ . '/testdata/json-key-file.json'
         ]);
@@ -171,7 +172,7 @@ class GapicClientTraitTest extends TestCase
             ]
         ];
         $expectedPromise = new FulfilledPromise(new Operation());
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->will($this->returnValue($expectedPromise));
@@ -185,7 +186,9 @@ class GapicClientTraitTest extends TestCase
         $message = new MockRequest();
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
+            ->setMethodsExcept(['validate'])
             ->getMock();
+
         $response = $client->call('startOperationsCall', [
             'method',
             [],
@@ -258,11 +261,13 @@ class GapicClientTraitTest extends TestCase
 
     /**
      * @dataProvider createCredentialsWrapperValidationExceptionData
-     * @expectedException \Google\ApiCore\ValidationException
      */
     public function testCreateCredentialsWrapperValidationException($auth, $authConfig)
     {
         $client = new GapicClientTraitStub();
+
+        $this->expectException(ValidationException::class);
+
         $client->call('createCredentialsWrapper', [
             $auth,
             $authConfig,
@@ -279,11 +284,13 @@ class GapicClientTraitTest extends TestCase
 
     /**
      * @dataProvider createCredentialsWrapperInvalidArgumentExceptionData
-     * @expectedException \InvalidArgumentException
      */
     public function testCreateCredentialsWrapperInvalidArgumentException($auth, $authConfig)
     {
         $client = new GapicClientTraitStub();
+
+        $this->expectException(InvalidArgumentException::class);
+
         $client->call('createCredentialsWrapper', [
             $auth,
             $authConfig,
@@ -339,11 +346,13 @@ class GapicClientTraitTest extends TestCase
 
     /**
      * @dataProvider createTransportDataInvalid
-     * @expectedException \Google\ApiCore\ValidationException
      */
     public function testCreateTransportInvalid($apiEndpoint, $transport, $transportConfig)
     {
         $client = new GapicClientTraitStub();
+
+        $this->expectException(ValidationException::class);
+
         $client->call('createTransport', [
             $apiEndpoint,
             $transport,
@@ -666,7 +675,7 @@ class GapicClientTraitTest extends TestCase
                 'resourcesGetMethod' => 'getResources',
             ],
         ];
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->getMockBuilder(TransportInterface::class)->disableOriginalConstructor()->getMock();
         $credentialsWrapper = CredentialsWrapper::build([
             'keyFile' => __DIR__ . '/testdata/json-key-file.json'
         ]);
@@ -734,8 +743,9 @@ class GapicClientTraitTest extends TestCase
             )
             ->willReturn(new FulfilledPromise(new Operation()));
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+                ->disableOriginalConstructor()
+                ->setMethodsExcept(['validate'])
+                ->getMock();
         $client->call('startOperationsCall', [
             'longRunningMethod',
             [],
@@ -841,7 +851,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testGetTransport()
     {
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
         $this->assertEquals($transport, $client->call('getTransport'));
@@ -866,7 +876,7 @@ class GapicClientTraitTest extends TestCase
         $credentialsWrapper->expects($this->once())
             ->method('getQuotaProject')
             ->willReturn($quotaProject);
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transport->expects($this->once())
             ->method('startUnaryCall')
             ->with(
@@ -1017,6 +1027,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('descriptors', ['method.name' => $longRunningDescriptors]);
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
+            ->setMethodsExcept(['validate'])
             ->getMock();
 
         // Test startOperationsCall with default audience
@@ -1078,11 +1089,10 @@ class GapicClientTraitTest extends TestCase
 
     public function testSupportedTransportOverrideWithInvalidTransport()
     {
-        $this->setExpectedException(
-            ValidationException::class,
-            'Unexpected transport option "grpc". Supported transports: rest'
-        );
-        $client = new GapicClientTraitRestOnly(['transport' => 'grpc']);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Unexpected transport option "grpc". Supported transports: rest');
+
+        new GapicClientTraitRestOnly(['transport' => 'grpc']);
     }
 
     public function testSupportedTransportOverrideWithDefaultTransport()
