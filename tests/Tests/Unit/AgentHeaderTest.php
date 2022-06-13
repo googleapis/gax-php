@@ -45,7 +45,7 @@ class AgentHeaderTest extends TestCase
             ' gax/' . Version::getApiCoreVersion() .
             ' grpc/' . phpversion('grpc') .
             ' rest/' . Version::getApiCoreVersion() .
-            ' pb/' . (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '')
+            ' pb/' . (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '+n')
         ]];
 
         $header = AgentHeader::buildAgentHeader([]);
@@ -78,7 +78,7 @@ class AgentHeaderTest extends TestCase
             ' gccl/ gapic/ gax/' . Version::getApiCoreVersion() .
             ' grpc/' . phpversion('grpc') .
             ' rest/' . Version::getApiCoreVersion() .
-            ' pb/' . (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '')
+            ' pb/' . (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '+n')
         ]];
 
         $header = AgentHeader::buildAgentHeader([
@@ -95,7 +95,7 @@ class AgentHeaderTest extends TestCase
             ' gccl/ gapic/ gax/' . Version::getApiCoreVersion() .
             ' grpc/' . phpversion('grpc') .
             ' rest/' . Version::getApiCoreVersion() .
-            ' pb/' . (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '')
+            ' pb/' . (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '+n')
         ]];
 
         $header = AgentHeader::buildAgentHeader([
