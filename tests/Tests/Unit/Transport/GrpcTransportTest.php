@@ -549,22 +549,6 @@ class GrpcTransportTest extends TestCase
 
     public function interceptorDataProvider()
     {
-        if ($this->useDeprecatedInterceptors()) {
-            return [
-                [
-                    UnaryCall::class,
-                    new TestUnaryInterceptorDeprecated()
-                ],
-                [
-                    UnaryCall::class,
-                    new TestInterceptorDeprecated()
-                ],
-                [
-                    ServerStreamingCall::class,
-                    new TestInterceptorDeprecated()
-                ]
-            ];
-        }
         return [
             [
                 UnaryCall::class,
@@ -606,13 +590,6 @@ class GrpcTransportTest extends TestCase
 
         return $mockCall;
     }
-
-    private function useDeprecatedInterceptors()
-    {
-        $reflector = new \ReflectionClass(Interceptor::class);
-        $params = $reflector->getMethod('interceptUnaryUnary')->getParameters();
-        return $params[3]->getName() === 'metadata';
-    }
 }
 
 class MockCallInvoker implements CallInvoker
@@ -648,86 +625,3 @@ class MockCallInvoker implements CallInvoker
     }
 }
 
-class TestInterceptor extends Interceptor
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        $continuation,
-        array $metadata = [],
-        array $options = []
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-
-    public function interceptUnaryStream(
-        $method,
-        $argument,
-        $deserialize,
-        $continuation,
-        array $metadata = [],
-        array $options = []
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}
-
-class TestInterceptorDeprecated extends Interceptor
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        array $metadata = [],
-        array $options = [],
-        $continuation
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-
-    public function interceptUnaryStream(
-        $method,
-        $argument,
-        $deserialize,
-        array $metadata = [],
-        array $options = [],
-        $continuation
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}
-
-class TestUnaryInterceptor extends Interceptor
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        $continuation,
-        array $metadata = [],
-        array $options = []
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}
-
-class TestUnaryInterceptorDeprecated implements UnaryInterceptorInterface
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        array $metadata,
-        array $options,
-        callable $continuation
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}
