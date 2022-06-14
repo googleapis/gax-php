@@ -140,7 +140,7 @@ class RetryMiddlewareTest extends TestCase
             return new Promise(function () use ($options) {
                 // sleep for the duration of the timeout
                 if (isset($options['timeoutMillis'])) {
-                    usleep($options['timeoutMillis'] * 1000);
+                    usleep(intval($options['timeoutMillis'] * 1000));
                 }
                 throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
             });
