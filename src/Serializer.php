@@ -361,9 +361,6 @@ class Serializer
                 $messageType = $field->getMessageType();
                 $messageTypeName = $messageType->getFullName();
                 $klass = $messageType->getClass();
-                if ($klass === 'Google\Cloud\Spanner\V1\TransactionOptions\PBReadOnly') {
-                    $klass = 'Google\Cloud\Spanner\V1\TransactionOptions\ReadOnly';
-                }
                 $msg = new $klass();
                 if (isset($this->decodeMessageTypeTransformers[$messageTypeName])) {
                     $data = $this->decodeMessageTypeTransformers[$messageTypeName]($data);
