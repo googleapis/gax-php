@@ -92,6 +92,7 @@ class RequestBuilder
             );
         }
 
+        $numericEnums = isset($this->restConfig['numericEnums']);
         $methodConfig = $this->restConfig['interfaces'][$interface][$method] + [
             'placeholders' => [],
             'body' => null,
@@ -107,6 +108,12 @@ class RequestBuilder
                 // We found a valid uriTemplate - now build and return the Request
 
                 list($body, $queryParams) = $this->constructBodyAndQueryParameters($message, $config);
+                
+                // Request enum fields be encoded as numbers rather than strings.
+                if ($numericEnums) {
+                    $queryParams['$alt'] = "json;enum-encoding=int";
+                }
+                
                 $uri = $this->buildUri($pathTemplate, $queryParams);
 
                 return new Request(
