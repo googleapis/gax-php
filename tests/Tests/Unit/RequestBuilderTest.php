@@ -388,7 +388,7 @@ class RequestBuilderTest extends TestCase
             ->setName('')
             ->setNumber(0);
 
-        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithNumericEnumsQueryParam', $message);
+        $request = $this->numericEnumsBuilder->build(self::SERVICE_NAME . '/MethodWithNumericEnumsQueryParam', $message);
         $query = Query::parse($request->getUri()->getQuery());
 
         $this->assertSame('', $query['name']);
