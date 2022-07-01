@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'numerEnums' => true,
+    'numericEnums' => true,
     'interfaces' => [
         'test.interface.v1.api' => [
             'MethodWithNumericEnumsQueryParam' => [
