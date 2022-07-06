@@ -92,7 +92,7 @@ class RequestBuilder
             );
         }
 
-        $numericEnums = isset($this->restConfig['numericEnums']);
+        $numericEnums = isset($this->restConfig['numericEnums']) && $this->restConfig['numericEnums'];
         $methodConfig = $this->restConfig['interfaces'][$interface][$method] + [
             'placeholders' => [],
             'body' => null,
