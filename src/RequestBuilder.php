@@ -109,7 +109,7 @@ class RequestBuilder
 
                 list($body, $queryParams) = $this->constructBodyAndQueryParameters($message, $config);
                 
-                // Request enum fields will be encoded as numbers rather than strings.
+                // Request enum fields will be encoded as numbers rather than strings  (in the response).
                 if ($numericEnums) {
                     $queryParams['$alt'] = "json;enum-encoding=int";
                 }
