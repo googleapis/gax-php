@@ -384,15 +384,9 @@ class RequestBuilderTest extends TestCase
 
     public function testMethodWithNumericEnumsQueryParam()
     {
-        $message = (new MockRequestBody())
-            ->setName('')
-            ->setNumber(0);
-
-        $request = $this->numericEnumsBuilder->build(self::SERVICE_NAME . '/MethodWithNumericEnumsQueryParam', $message);
+        $request = $this->numericEnumsBuilder->build(self::SERVICE_NAME . '/MethodWithNumericEnumsQueryParam', new MockRequestBody());
         $query = Query::parse($request->getUri()->getQuery());
 
-        $this->assertSame('', $query['name']);
-        $this->assertEquals(0, $query['number']);
         $this->assertEquals('json;enum-encoding=int', $query['$alt']);
     }
 
