@@ -34,13 +34,16 @@ namespace Google\ApiCore\Testing;
 
 use Google\Rpc\Code;
 
+/**
+ * @internal
+ */
 class MockStatus
 {
-    /** @var Code $code */
+    /** @var Code|int $code */
     public $code;
     public $details;
     public $metadata;
-    public function __construct($code, $details = null, array $metadata = [])
+    public function __construct($code, string $details = null, array $metadata = [])
     {
         $this->code = $code;
         $this->details = $details;

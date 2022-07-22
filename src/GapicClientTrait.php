@@ -53,6 +53,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Common functions used to work with various clients.
+ *
+ * @internal
  */
 trait GapicClientTrait
 {
@@ -126,7 +128,7 @@ trait GapicClientTrait
         }
     }
 
-    private static function initGrpcGcpConfig($hostName, $confPath)
+    private static function initGrpcGcpConfig(string $hostName, string $confPath)
     {
         $apiConfig = new ApiConfig();
         $apiConfig->mergeFromJsonString(file_get_contents($confPath));
@@ -253,7 +255,7 @@ trait GapicClientTrait
         return $options;
     }
 
-    private function shouldUseMtlsEndpoint($options)
+    private function shouldUseMtlsEndpoint(array $options)
     {
         $mtlsEndpointEnvVar = getenv('GOOGLE_API_USE_MTLS_ENDPOINT');
         if ('always' === $mtlsEndpointEnvVar) {
@@ -266,7 +268,7 @@ trait GapicClientTrait
         return !empty($options['clientCertSource']);
     }
 
-    private static function determineMtlsEndpoint($apiEndpoint)
+    private static function determineMtlsEndpoint(string $apiEndpoint)
     {
         $parts = explode('.', $apiEndpoint);
         if (count($parts) < 3) {
@@ -449,7 +451,7 @@ trait GapicClientTrait
      * @throws ValidationException
      */
     private function createTransport(
-        $apiEndpoint,
+        string $apiEndpoint,
         $transport,
         array $transportConfig,
         callable $clientCertSource = null
@@ -545,12 +547,12 @@ trait GapicClientTrait
      * @return PromiseInterface|BidiStream|ClientStream|ServerStream
      */
     private function startCall(
-        $methodName,
-        $decodeType,
+        string $methodName,
+        string $decodeType,
         array $optionalArgs = [],
         Message $request = null,
-        $callType = Call::UNARY_CALL,
-        $interfaceName = null
+        int $callType = Call::UNARY_CALL,
+        string $interfaceName = null
     ) {
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
@@ -631,7 +633,7 @@ trait GapicClientTrait
      *
      * @return array
      */
-    private function configureCallConstructionOptions($methodName, array $optionalArgs)
+    private function configureCallConstructionOptions(string $methodName, array $optionalArgs)
     {
         $retrySettings = $this->retrySettings[$methodName];
         // Allow for retry settings to be changed at call time
@@ -667,12 +669,12 @@ trait GapicClientTrait
      * @return PromiseInterface
      */
     private function startOperationsCall(
-        $methodName,
+        string $methodName,
         array $optionalArgs,
         Message $request,
         $client,
-        $interfaceName = null,
-        $operationClass = null
+        string $interfaceName = null,
+        string $operationClass = null
     ) {
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
@@ -717,11 +719,11 @@ trait GapicClientTrait
      * @return PagedListResponse
      */
     private function getPagedListResponse(
-        $methodName,
+        string $methodName,
         array $optionalArgs,
-        $decodeType,
+        string $decodeType,
         Message $request,
-        $interfaceName = null
+        string $interfaceName = null
     ) {
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
@@ -751,7 +753,7 @@ trait GapicClientTrait
      *
      * @return string
      */
-    private function buildMethod($interfaceName, $methodName)
+    private function buildMethod(string $interfaceName = null, string $methodName = null)
     {
         return sprintf(
             '%s/%s',

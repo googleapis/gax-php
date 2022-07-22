@@ -37,8 +37,15 @@ use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 abstract class GeneratedTest extends TestCase
 {
+    /**
+     * @param mixed $expected
+     * @param mixed $actual
+     */
     public function assertProtobufEquals(&$expected, &$actual)
     {
         if ($expected === $actual) {
@@ -81,6 +88,9 @@ abstract class GeneratedTest extends TestCase
         }
     }
 
+    /**
+     * @param \Traversable|array $field
+     */
     private function getValues($field)
     {
         return array_values(

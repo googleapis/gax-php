@@ -40,6 +40,8 @@ use stdClass;
 /**
  * The MockServerStreamingCall class is used to mock out the \Grpc\ServerStreamingCall class
  * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/ServerStreamingCall.php)
+ *
+ * @internal
  */
 class MockServerStreamingCall extends \Grpc\ServerStreamingCall
 {
@@ -51,10 +53,10 @@ class MockServerStreamingCall extends \Grpc\ServerStreamingCall
     /**
      * MockServerStreamingCall constructor.
      * @param mixed[] $responses A list of response objects.
-     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param callable|array|null $deserialize An optional deserialize method for the response object.
      * @param MockStatus|stdClass|null $status An optional status object. If set to null, a status of OK is used.
      */
-    public function __construct($responses, $deserialize = null, $status = null)
+    public function __construct(array $responses, $deserialize = null, MockStatus $status = null)
     {
         $this->responses = $responses;
         $this->deserialize = $deserialize;

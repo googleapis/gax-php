@@ -46,6 +46,8 @@ use Grpc;
  * method, and an optional status. The response object and status are returned immediately from the
  * wait() method. It also provides a write() method that accepts request objects, and a
  * getAllRequests() method that returns all request objects passed to write(), and clears them.
+ *
+ * @internal
  */
 class MockClientStreamingCall extends Grpc\ClientStreamingCall
 {
@@ -55,11 +57,11 @@ class MockClientStreamingCall extends Grpc\ClientStreamingCall
 
     /**
      * MockClientStreamingCall constructor.
-     * @param Message $response The response object.
-     * @param callable|null $deserialize An optional deserialize method for the response object.
+     * @param Message|string $response The response object.
+     * @param callable|array|null $deserialize An optional deserialize method for the response object.
      * @param MockStatus|null $status An optional status object. If set to null, a status of OK is used.
      */
-    public function __construct($response, $deserialize = null, $status = null)
+    public function __construct($response, $deserialize = null, MockStatus $status = null)
     {
         $this->mockUnaryCall = new MockUnaryCall($response, $deserialize, $status);
     }
@@ -76,7 +78,7 @@ class MockClientStreamingCall extends Grpc\ClientStreamingCall
 
     /**
      * Save the request object, to be retrieved via getReceivedCalls()
-     * @param \Google\Protobuf\Internal\Message|mixed $request The request object
+     * @param Message|mixed $request The request object
      * @param array $options An array of options
      * @throws ApiException
      */
