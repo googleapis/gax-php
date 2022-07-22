@@ -231,7 +231,7 @@ class Serializer
 
     /**
      * @param FieldDescriptor $field
-     * @param array|string $data
+     * @param Message|array|string $data
      * @return mixed
      * @throws \Exception
      */

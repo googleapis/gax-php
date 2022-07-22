@@ -32,6 +32,7 @@
 namespace Google\ApiCore;
 
 use Google\Rpc\Code;
+use Google\ApiCore\Testing\MockServerStreamingCall;
 
 /**
  * ServerStream is the response object from a server streaming API call.

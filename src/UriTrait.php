@@ -48,7 +48,7 @@ trait UriTrait
      * @param array $query
      * @return UriInterface
      */
-    public function buildUriWithQuery(string $uri, array $query)
+    public function buildUriWithQuery($uri, array $query)
     {
         $query = array_filter($query, function ($v) {
             return $v !== null;
