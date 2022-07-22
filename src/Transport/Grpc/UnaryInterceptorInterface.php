@@ -37,14 +37,14 @@ namespace Google\ApiCore\Transport\Grpc;
  * available.
  *
  * @experimental
- * @deprecated Deprecated in favor of implementations extending {@see Grpc\Interceptor}.
+ * @deprecated Deprecated in favor of implementations extending {@see \Grpc\Interceptor}.
  */
 interface UnaryInterceptorInterface
 {
     /**
-     * @param $method
-     * @param $argument
-     * @param $deserialize
+     * @param string $method
+     * @param \Google\Protobuf\Internal\Message $argument
+     * @param callable $deserialize
      * @param array $metadata
      * @param array $options
      * @param callable $continuation

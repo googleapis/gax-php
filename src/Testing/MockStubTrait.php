@@ -50,7 +50,7 @@ trait MockStubTrait
     private $callObjects = [];
     private $deserialize;
 
-    public function __construct($deserialize = null)
+    public function __construct(callable $deserialize = null)
     {
         $this->deserialize = $deserialize;
     }
@@ -142,7 +142,7 @@ trait MockStubTrait
             $argument = $newArgument;
         }
         $this->receivedFuncCalls[] = new ReceivedRequest($method, $argument, $deserialize, $metadata, $options);
-        $responses = MockStubTrait::stripStatusFromResponses($this->responses);
+        $responses = self::stripStatusFromResponses($this->responses);
         $this->responses = [];
         $call = new MockServerStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
         $this->callObjects[] = $call;
@@ -171,7 +171,7 @@ trait MockStubTrait
     ) {
 
         $this->receivedFuncCalls[] = new ReceivedRequest($method, null, $deserialize, $metadata, $options);
-        $responses = MockStubTrait::stripStatusFromResponses($this->responses);
+        $responses = self::stripStatusFromResponses($this->responses);
         $this->responses = [];
         $call = new MockBidiStreamingCall($responses, $deserialize, $this->serverStreamingStatus);
         $this->callObjects[] = $call;
@@ -257,13 +257,13 @@ trait MockStubTrait
 
     /**
      * @param mixed $responseObject
-     * @param $status
+     * @param Status|null $status
      * @param callable $deserialize
      * @return static An instance of the current class type.
      */
     public static function create($responseObject, $status = null, $deserialize = null)
     {
-        $stub = new static($deserialize);
+        $stub = new static($deserialize); // @phpstan-ignore-line
         $stub->addResponse($responseObject, $status);
         return $stub;
     }
@@ -277,7 +277,7 @@ trait MockStubTrait
      */
     public static function createWithResponseSequence($sequence, $deserialize = null, $finalStatus = null)
     {
-        $stub = new static($deserialize);
+        $stub = new static($deserialize); // @phpstan-ignore-line
         foreach ($sequence as $elem) {
             if (count($elem) == 1) {
                 list($resp, $status) = [$elem, null];

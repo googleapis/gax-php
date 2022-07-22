@@ -50,7 +50,6 @@ use Google\Protobuf\Internal\Message;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\PromiseInterface;
-use LogicException;
 
 /**
  * Common functions used to work with various clients.
@@ -183,7 +182,7 @@ trait GapicClientTrait
         // we will not encounter missing keys
         $options += $defaultOptions;
         $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];
-        $options['transportConfig'] += $defaultOptions['transportConfig'];
+        $options['transportConfig'] += $defaultOptions['transportConfig'];  // @phpstan-ignore-line
         if (isset($options['transportConfig']['grpc'])) {
             $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
             $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
@@ -663,7 +662,7 @@ trait GapicClientTrait
      * @param OperationsClient|object $client
      * @param string $interfaceName
      * @param string $operationClass If provided, will be used instead of the default
-     *                               operation response class of {@see Google\LongRunning\Operation}.
+     *                               operation response class of {@see \Google\LongRunning\Operation}.
      *
      * @return PromiseInterface
      */
@@ -769,7 +768,7 @@ trait GapicClientTrait
         if (!defined('self::SERVICE_ADDRESS')) {
             return null;
         }
-        return 'https://' . self::SERVICE_ADDRESS . '/';
+        return 'https://' . self::SERVICE_ADDRESS . '/'; // @phpstan-ignore-line
     }
 
     /**

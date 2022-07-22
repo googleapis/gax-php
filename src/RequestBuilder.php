@@ -92,6 +92,7 @@ class RequestBuilder
             );
         }
 
+        $numericEnums = isset($this->restConfig['numericEnums']) && $this->restConfig['numericEnums'];
         $methodConfig = $this->restConfig['interfaces'][$interface][$method] + [
             'placeholders' => [],
             'body' => null,
@@ -107,6 +108,12 @@ class RequestBuilder
                 // We found a valid uriTemplate - now build and return the Request
 
                 list($body, $queryParams) = $this->constructBodyAndQueryParameters($message, $config);
+                
+                // Request enum fields will be encoded as numbers rather than strings  (in the response).
+                if ($numericEnums) {
+                    $queryParams['$alt'] = "json;enum-encoding=int";
+                }
+                
                 $uri = $this->buildUri($pathTemplate, $queryParams);
 
                 return new Request(
@@ -149,8 +156,8 @@ class RequestBuilder
     }
 
     /**
-     * @param $message
-     * @param $config
+     * @param Message $message
+     * @param array $config
      * @return array Tuple [$body, $queryParams]
      */
     private function constructBodyAndQueryParameters(Message $message, $config)
@@ -229,7 +236,7 @@ class RequestBuilder
     /**
      * Try to render the resource name. The rendered resource name will always contain a leading '/'
      *
-     * @param $uriTemplate
+     * @param string $uriTemplate
      * @param array $bindings
      * @return null|string
      * @throws ValidationException
@@ -246,8 +253,8 @@ class RequestBuilder
     }
 
     /**
-     * @param $path
-     * @param $queryParams
+     * @param string $path
+     * @param array $queryParams
      * @return UriInterface
      */
     private function buildUri($path, $queryParams)

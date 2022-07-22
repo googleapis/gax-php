@@ -40,10 +40,10 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\UpdateMetadataInterface;
 use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -176,6 +176,7 @@ class CredentialsWrapper
         if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
             return $this->credentialsFetcher->getQuotaProject();
         }
+        return null;
     }
 
     /**
@@ -243,7 +244,7 @@ class CredentialsWrapper
      * @param CacheItemPoolInterface $authCache
      * @param string $quotaProject
      * @param array $defaultScopes
-     * @return CredentialsLoader
+     * @return FetchAuthTokenInterface
      * @throws ValidationException
      */
     private static function buildApplicationDefaultCredentials(

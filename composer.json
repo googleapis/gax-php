@@ -6,7 +6,7 @@
     "homepage": "https://github.com/googleapis/gax-php",
     "license": "BSD-3-Clause",
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.6",
         "google/auth": "^1.18.0",
         "google/grpc-gcp": "^0.2",
         "grpc/grpc": "^1.13",
@@ -16,8 +16,9 @@
         "google/common-protos": "^1.0||^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.36",
-        "squizlabs/php_codesniffer": "3.*"
+        "phpunit/phpunit": "^5.5||^8.5",
+        "squizlabs/php_codesniffer": "3.*",
+        "yoast/phpunit-polyfills": "^1.0"
     },
     "conflict": {
         "ext-protobuf": "<3.7.0"

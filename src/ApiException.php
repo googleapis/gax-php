@@ -50,7 +50,7 @@ class ApiException extends Exception
      * ApiException constructor.
      * @param string $message
      * @param int $code
-     * @param string $status
+     * @param string|null $status
      * @param array $optionalArgs {
      *     @type Exception|null $previous
      *     @type array|null $metadata
@@ -86,7 +86,7 @@ class ApiException extends Exception
      * Returns null if metadata does not contain error info, or returns containsErrorInfo() array
      * if the metadata does contain error info.
      * @param array $metadata
-     * @return array|null $details {
+     * @return array $details {
      *     @type string|null $reason
      *     @type string|null $domain
      *     @type array|null $errorInfoMetadata
@@ -155,14 +155,14 @@ class ApiException extends Exception
      * @param string $basicMessage
      * @param int $rpcCode
      * @param array|null $metadata
-     * @param \Exception $previous
+     * @param Exception $previous
      * @return ApiException
      */
     public static function createFromApiResponse(
         $basicMessage,
         $rpcCode,
         array $metadata = null,
-        \Exception $previous = null
+        Exception $previous = null
     ) {
         return self::create(
             $basicMessage,
@@ -179,14 +179,14 @@ class ApiException extends Exception
      * @param string $basicMessage
      * @param int $rpcCode
      * @param array|null $metadata
-     * @param \Exception $previous
+     * @param Exception $previous
      * @return ApiException
      */
     public static function createFromRestApiResponse(
         $basicMessage,
         $rpcCode,
         array $metadata = null,
-        \Exception $previous = null
+        Exception $previous = null
     ) {
         return self::create(
             $basicMessage,
@@ -196,7 +196,7 @@ class ApiException extends Exception
             $previous
         );
     }
-    
+
     /**
      * Checks if decoded metadata includes errorInfo message.
      * If errorInfo is set, it will always contain `reason`, `domain`, and `metadata` keys.
@@ -222,6 +222,7 @@ class ApiException extends Exception
                 ];
             }
         }
+        return [];
     }
 
     /**
@@ -231,9 +232,9 @@ class ApiException extends Exception
      *
      * @param string $basicMessage
      * @param int $rpcCode
-     * @param mixed[]|RepeatedField $metadata
+     * @param array<mixed>|RepeatedField $metadata
      * @param array $decodedMetadata
-     * @param \Exception|null $previous
+     * @param Exception|null $previous
      * @return ApiException
      */
     private static function create($basicMessage, $rpcCode, $metadata, array $decodedMetadata, $previous = null)
@@ -290,15 +291,16 @@ class ApiException extends Exception
         $res = $ex->getResponse();
         $body = (string) $res->getBody();
         $decoded = json_decode($body, true);
-        
+
         // A streaming response body will return one error in an array. Parse
         // that first (and only) error message, if provided.
         if ($isStream && isset($decoded[0])) {
             $decoded = $decoded[0];
         }
 
-        if ($error = $decoded['error']) {
-            $basicMessage = $error['message'];
+        if (isset($decoded['error']) && $decoded['error']) {
+            $error = $decoded['error'];
+            $basicMessage = isset($error['message']) ? $error['message'] : null;
             $code = isset($error['status'])
                 ? ApiStatus::rpcCodeFromStatus($error['status'])
                 : $ex->getCode();
