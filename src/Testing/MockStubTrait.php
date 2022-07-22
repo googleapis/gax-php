@@ -211,7 +211,7 @@ trait MockStubTrait
      *
      * @param Status $status
      */
-    public function setStreamingStatus($status)
+    public function setStreamingStatus(Status $status)
     {
         $this->serverStreamingStatus = $status;
     }
@@ -261,7 +261,7 @@ trait MockStubTrait
      * @param callable $deserialize
      * @return static An instance of the current class type.
      */
-    public static function create($responseObject, $status = null, $deserialize = null)
+    public static function create($responseObject, Status $status = null, callable $deserialize = null)
     {
         $stub = new static($deserialize); // @phpstan-ignore-line
         $stub->addResponse($responseObject, $status);
@@ -275,7 +275,7 @@ trait MockStubTrait
      * @param Status $finalStatus
      * @return static An instance of the current class type.
      */
-    public static function createWithResponseSequence($sequence, $deserialize = null, $finalStatus = null)
+    public static function createWithResponseSequence(array $sequence, callable $deserialize = null, Status $finalStatus = null)
     {
         $stub = new static($deserialize); // @phpstan-ignore-line
         foreach ($sequence as $elem) {

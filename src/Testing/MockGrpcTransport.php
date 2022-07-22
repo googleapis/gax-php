@@ -40,6 +40,9 @@ class MockGrpcTransport extends GrpcTransport
     private $requestArguments;
     private $mockCall;
 
+    /**
+     * @param mixed $mockCall
+     */
     public function __construct($mockCall = null)
     {
         $this->mockCall = $mockCall;
@@ -47,6 +50,11 @@ class MockGrpcTransport extends GrpcTransport
         parent::__construct('', $opts);
     }
 
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @param callable $deserialize
+     */
     protected function _simpleRequest(
         $method,
         $arguments,
@@ -58,6 +66,10 @@ class MockGrpcTransport extends GrpcTransport
         return $this->mockCall;
     }
 
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     */
     protected function _clientStreamRequest(
         $method,
         $deserialize,
@@ -68,6 +80,11 @@ class MockGrpcTransport extends GrpcTransport
         return $this->mockCall;
     }
 
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @param callable $deserialize
+     */
     protected function _serverStreamRequest(
         $method,
         $arguments,
@@ -79,6 +96,10 @@ class MockGrpcTransport extends GrpcTransport
         return $this->mockCall;
     }
 
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     */
     protected function _bidiRequest(
         $method,
         $deserialize,
@@ -89,11 +110,16 @@ class MockGrpcTransport extends GrpcTransport
         return $this->mockCall;
     }
 
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     * @param array $arguments
+     */
     private function logCall(
         $method,
         $deserialize,
-        $metadata = [],
-        $options = [],
+        array $metadata = [],
+        array $options = [],
         $arguments = null
     ) {
         $this->requestArguments = [

@@ -74,7 +74,7 @@ interface ResourceTemplateInterface
      * @param string $path A resource string.
      * @return bool
      */
-    public function matches($path);
+    public function matches(string $path);
 
     /**
      * Matches a given $path to a resource template, and returns an array of bindings between
@@ -85,5 +85,5 @@ interface ResourceTemplateInterface
      * @throws ValidationException if path can't be matched to the template.
      * @return array Array matching var names to binding values.
      */
-    public function match($path);
+    public function match(string $path);
 }
