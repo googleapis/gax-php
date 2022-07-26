@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\Page | Google ApiCore - 1.14.0</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../doctum.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_Page" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - 1.14.0</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li>Page</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Page
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Page</strong>        implements
+        <a target="_blank" rel="noopener" href="https://www.php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>A Page object wraps an API list method response and provides methods
+to retrieve additional pages using the page token.</p>                                </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>FINAL_PAGE_TOKEN</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options, callable $callable, <a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a> $pageStreamingDescriptor, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response)
+        
+                                            <p>Page constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_hasNextPage">hasNextPage</a>()
+        
+                                            <p>Returns true if there are more pages that can be retrieved from the
+API.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNextPageToken">getNextPageToken</a>()
+        
+                                            <p>Returns the next page token from the response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    Page
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNextPage">getNextPage</a>(int|null $pageSize = null)
+        
+                                            <p>Retrieves the next Page object using the next page token.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPageElementCount">getPageElementCount</a>()
+        
+                                            <p>Return the number of elements in the response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIterator">getIterator</a>()
+        
+                                            <p>Return an iterator over the elements in the response.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|Page[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_iteratePages">iteratePages</a>()
+        
+                                            <p>Return an iterator over Page objects, beginning with this object.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed|Message
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRequestObject">getRequestObject</a>()
+        
+                                            <p>Gets the request object used to generate the Page.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed|Message
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResponseObject">getResponseObject</a>()
+        
+                                            <p>Gets the API response object.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    FixedSizeCollection
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_expandToFixedSizeCollection">expandToFixedSizeCollection</a>(int $collectionSize)
+        
+                                            <p>Returns a collection of elements with a fixed size set by
+the collectionSize parameter. The collection will only contain
+fewer than collectionSize elements if there are no more
+pages to be retrieved from the server.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L65">at line 65</a></div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options, callable $callable, <a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a> $pageStreamingDescriptor, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Page constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a></td>
+                <td>$call</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$callable</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a></td>
+                <td>$pageStreamingDescriptor</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$response</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasNextPage">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L88">at line 88</a></div>
+        <code>                    bool
+    <strong>hasNextPage</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns true if there are more pages that can be retrieved from the
+API.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNextPageToken">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L98">at line 98</a></div>
+        <code>                    string
+    <strong>getNextPageToken</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the next page token from the response.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNextPage">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L113">at line 113</a></div>
+        <code>                    Page
+    <strong>getNextPage</strong>(int|null $pageSize = null)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieves the next Page object using the next page token.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int|null</td>
+                <td>$pageSize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>Page</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td>if there are no pages remaining, or if pageSize is supplied but
+is not supported by the API</td>
+            </tr>
+                    <tr>
+                <td>ApiException</td>
+                <td>if the call to fetch the next page fails.</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPageElementCount">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L162">at line 162</a></div>
+        <code>                    int
+    <strong>getPageElementCount</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the number of elements in the response.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIterator">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L174">at line 174</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+    <strong>getIterator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return an iterator over the elements in the response.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_iteratePages">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L196">at line 196</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|Page[]
+    <strong>iteratePages</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return an iterator over Page objects, beginning with this object.</p>                    <p>Additional Page objects are retrieved lazily via API calls until
+all elements have been retrieved.</p>                            </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|Page[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>ApiException</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRequestObject">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L211">at line 211</a></div>
+        <code>                    mixed|Message
+    <strong>getRequestObject</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the request object used to generate the Page.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed|Message</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResponseObject">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L221">at line 221</a></div>
+        <code>                    mixed|Message
+    <strong>getResponseObject</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the API response object.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed|Message</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_expandToFixedSizeCollection">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.14.0/src/Page.php#L242">at line 242</a></div>
+        <code>                    FixedSizeCollection
+    <strong>expandToFixedSizeCollection</strong>(int $collectionSize)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a collection of elements with a fixed size set by
+the collectionSize parameter. The collection will only contain
+fewer than collectionSize elements if there are no more
+pages to be retrieved from the server.</p>                    <p>NOTE: it is an error to call this method if an optional parameter
+to set the page size is not supported or has not been set in the
+API call that was used to create this page. It is also an error
+if the collectionSize parameter is less than the page size that
+has been set.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$collectionSize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>FixedSizeCollection</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ValidationException</td>
+                <td>if a FixedSizeCollection of the specified size cannot be constructed</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.
+    </div></div>
+    </div>
+    </body>
+
+</html>
