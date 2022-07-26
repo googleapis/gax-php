@@ -33,11 +33,12 @@
 namespace Google\ApiCore\Testing;
 
 use Google\Rpc\Code;
+use stdClass;
 
 /**
  * @internal
  */
-class MockStatus
+class MockStatus extends stdClass
 {
     /** @var Code|int $code */
     public $code;

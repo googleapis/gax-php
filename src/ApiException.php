@@ -139,10 +139,10 @@ class ApiException extends Exception
     }
 
     /**
-     * @param stdClass|MockStatus $status
+     * @param stdClass $status
      * @return ApiException
      */
-    public static function createFromStdClass($status)
+    public static function createFromStdClass(stdClass $status)
     {
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
         return self::create(
