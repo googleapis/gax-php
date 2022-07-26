@@ -127,9 +127,9 @@ class Segment
             case Segment::LITERAL_SEGMENT:
                 return $this->value === $value;
             case Segment::WILDCARD_SEGMENT:
-                return self::isValidBinding($value);
+                return self::isValidBinding((string) $value);
             case Segment::DOUBLE_WILDCARD_SEGMENT:
-                return self::isValidDoubleWildcardBinding($value);
+                return self::isValidDoubleWildcardBinding((string) $value);
             case Segment::VARIABLE_SEGMENT:
                 return $this->template->matches($value);
             default:
@@ -195,10 +195,10 @@ class Segment
      * Check if $binding is a valid double wildcard binding. Segment bindings may contain any
      * characters, but may not be empty.
      *
-     * @param string|null $binding
+     * @param string $binding
      * @return bool
      */
-    private static function isValidDoubleWildcardBinding(string $binding = null)
+    private static function isValidDoubleWildcardBinding(string $binding)
     {
         return preg_match("-^.+$-", $binding) === 1;
     }

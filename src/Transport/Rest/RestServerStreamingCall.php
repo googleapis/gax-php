@@ -166,7 +166,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
      * Return the status of the server stream. If the call has not been started
      * this will be null.
      *
-     * @return \stdClass The status, with integer $code, string
+     * @return stdClass The status, with integer $code, string
      *                   $details, and array $metadata members
      */
     public function getStatus()

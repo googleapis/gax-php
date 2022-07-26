@@ -89,7 +89,7 @@ abstract class GeneratedTest extends TestCase
     }
 
     /**
-     * @param \Traversable|array $field
+     * @param iterable $field
      */
     private function getValues($field)
     {

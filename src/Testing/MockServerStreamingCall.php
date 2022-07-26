@@ -34,6 +34,7 @@ namespace Google\ApiCore\Testing;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
+use Google\ApiCore\ServerStreamingCallInterface;
 use Google\Rpc\Code;
 use stdClass;
 
@@ -43,7 +44,7 @@ use stdClass;
  *
  * @internal
  */
-class MockServerStreamingCall extends \Grpc\ServerStreamingCall
+class MockServerStreamingCall extends \Grpc\ServerStreamingCall implements ServerStreamingCallInterface
 {
     use SerializationTrait;
 
@@ -80,7 +81,7 @@ class MockServerStreamingCall extends \Grpc\ServerStreamingCall
     }
 
     /**
-     * @return MockStatus|null|\stdClass
+     * @return stdClass|null
      * @throws ApiException
      */
     public function getStatus()

@@ -45,7 +45,7 @@ class ServerStream
     /**
      * ServerStream constructor.
      *
-     * @param ServerStreamingCallInterface|MockServerStreamingCall $serverStreamingCall The server streaming call object
+     * @param ServerStreamingCallInterface $serverStreamingCall The server streaming call object
      * @param array $streamingDescriptor
      */
     public function __construct($serverStreamingCall, array $streamingDescriptor = [])
