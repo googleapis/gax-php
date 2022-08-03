@@ -573,7 +573,8 @@ trait GapicClientTrait
         $callType = $method['callType'];
         if ($callType == Call::LONGRUNNING_CALL) {
             if (!method_exists($this, 'getOperationsClient')) {
-                throw new ValidationException("Client missing required getOperationsClient for longrunning call '$methodName'");
+                throw new ValidationException("Client missing required getOperationsClient
+                    for longrunning call '$methodName'");
             }
             return $this->startOperationsCall(
                 $methodName,
