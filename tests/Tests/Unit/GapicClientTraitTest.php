@@ -330,7 +330,7 @@ class GapicClientTraitTest extends TestCase
             ],
         ];
     }
-    
+
     public function testStartApiCallUnary()
     {
         $header = AgentHeader::buildAgentHeader([]);

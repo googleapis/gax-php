@@ -542,7 +542,7 @@ trait GapicClientTrait
      *           override for the call.
      * }
      *
-     * @return PromiseInterface|BidiStream|ClientStream|ServerStream
+     * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
      */
     private function startApiCall(
         $methodName,
