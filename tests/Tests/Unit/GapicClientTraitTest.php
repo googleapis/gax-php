@@ -287,6 +287,45 @@ class GapicClientTraitTest extends TestCase
         ])->wait();
     }
 
+    public function testStartApiCallPaged()
+    {
+        $header = AgentHeader::buildAgentHeader([]);
+        $retrySettings = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pagedDescriptors = [
+            'callType' => Call::PAGINATED_CALL,
+            'responseType' => 'Google\Longrunning\ListOperationsResponse::class',
+            'pageStreaming' => [
+                'requestPageTokenGetMethod' => 'getPageToken',
+                'requestPageTokenSetMethod' => 'setPageToken',
+                'requestPageSizeGetMethod' => 'getPageSize',
+                'requestPageSizeSetMethod' => 'setPageSize',
+                'responsePageTokenGetMethod' => 'getNextPageToken',
+                'resourcesGetMethod' => 'getOperations',
+            ],
+        ];
+        $expectedPromise = new FulfilledPromise(new Operation());
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
+        $transport->expects($this->once())
+             ->method('startUnaryCall')
+             ->will($this->returnValue($expectedPromise));
+        $credentialsWrapper = CredentialsWrapper::build([]);
+        $client = new GapicClientTraitStub();
+        $client->set('transport', $transport);
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', $header);
+        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('descriptors', ['method' => $pagedDescriptors]);
+
+        $request = new MockRequest();
+        $client->call('startApiCall', [
+            'method',
+            /* interfaceName */ null,
+            $request
+        ]);
+    }
+
     public function testGetGapicVersionWithVersionFile()
     {
         require_once __DIR__ . '/testdata/src/GapicClientStub.php';
