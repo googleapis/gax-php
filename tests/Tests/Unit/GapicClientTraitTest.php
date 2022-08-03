@@ -40,9 +40,11 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
+use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockRequest;
+use Google\ApiCore\Testing\MockRequestBody;
 use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
@@ -635,6 +637,65 @@ class GapicClientTraitTest extends TestCase
                         ]
                     ]
                 ], $fakeTransportConfigOptions
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider buildRequestHeaderParams
+     */
+    public function testBuildRequestHeaders($headerParams, $request, $expected)
+    {
+        $client = new GapicClientTraitRestOnly();
+        $actual = $client->buildRequestParamsHeader($headerParams, $request);
+        $this->assertEquals($actual[RequestParamsHeaderDescriptor::HEADER_KEY], $expected);
+    }
+
+    public function buildRequestHeaderParams()
+    {
+        $simple = new MockRequestBody([
+            'name' => 'foos/123/bars/456'
+        ]);
+        $nested = new MockRequestBody([
+            'nested_message' => new MockRequestBody([
+                'name' => 'foos/123/bars/456'
+            ])
+        ]);
+        $unsetNested = new MockRequestBody([]);
+
+        return [
+            [
+                /* $headerParams */ [
+                    [
+                        'fieldAccessors' => ['getName'],
+                        'keyName' => 'name_field'
+                    ],
+                ],
+                /* $request */ $simple,
+                /* $expected */ ['name_field=foos%2F123%2Fbars%2F456']
+            ],
+            [
+                /* $headerParams */ [
+                    [
+                        'fieldAccessors' => ['getNestedMessage','getName'],
+                        'keyName' => 'name_field'
+                    ],
+                ],
+                /* $request */ $nested,
+                /* $expected */ ['name_field=foos%2F123%2Fbars%2F456']
+            ],
+            [
+                /* $headerParams */ [
+                    [
+                        'fieldAccessors' => ['getNestedMessage','getName'],
+                        'keyName' => 'name_field'
+                    ],
+                ],
+                /* $request */ $unsetNested,
+                
+                // For some reason RequestParamsHeaderDescriptor creates an array
+                // with an empty string if there are no headers set in it.
+                /* $expected */ ['']
             ],
         ];
     }

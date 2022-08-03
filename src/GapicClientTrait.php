@@ -528,6 +528,64 @@ trait GapicClientTrait
 
     /**
      * @param string $methodName
+     * @param string $interfaceName
+     * @param Message $request
+     * @param array $optionalArgs {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings
+     *           override for the call.
+     * }
+     *
+     * @return PromiseInterface|BidiStream|ClientStream|ServerStream
+     */
+    private function startApiCall(
+        $methodName,
+        $interfaceName = null,
+        Message $request = null,
+        array $optionalArgs = []
+    ) {
+        // Ensure a method descriptor exists for the target method.
+        $method = isset($this->descriptors[$methodName]) ?
+            $this->descriptors[$methodName] :
+            throw new ValidationException("Requested method '$methodName' does not exist in descriptor configuration.");
+        
+        // Prepare request-based headers, merge with user-provided headers,
+        // which take precedence.
+        $headerParams = isset($method['headerParams']) ?
+            $method['headerParams'] :
+            [];
+        $requestHeaders = $this->buildRequestParamsHeader($headerParams, $request);
+        $optionalArgs['headers'] = isset($optionalArgs['headers']) ?
+            array_merge($requestHeaders, $optionalArgs['headers']) :
+            $requestHeaders;
+
+        // Default the interface name, if not set, to the client's protobuf service name.
+        $interfaceName = $interfaceName ?: $this->serviceName;
+
+        // Handle call based on call type configured in the method descriptor config.
+        $callType = $method['callType'];
+        if ($callType == Call::LONGRUNNING_CALL) {
+            // TODO(noahdietz): Validate that $this fulfills the lro interface/has an operationsClient.
+            return $this->startOperationsCall($methodName, $optionalArgs, $request, $interfaceName, $this->getOperationsClient());
+        }
+
+        // Fully-qualified name of the response message PHP class.
+        $decodeType = $method['responseType'];
+
+        if ($callType = Call::PAGINATED_CALL) {
+            return $this->getPagedListResponse($methodName, $optionalArgs, $decodeType, $request, $interfaceName);
+        }
+
+        // Unary, and all Streaming types handled by startCall.
+        return $this->startCall($methodName, $decodeType, $optionalArgs, $request, $callType, $interfaceName);
+    }
+
+    /**
+     * @param string $methodName
      * @param string $decodeType
      * @param array $optionalArgs {
      *     Call Options
@@ -758,6 +816,67 @@ trait GapicClientTrait
             $interfaceName ?: $this->serviceName,
             $methodName
         );
+    }
+
+    /**
+     * @param array $headerParams
+     * @param Message $request
+     * 
+     * @return array
+     * 
+     * @internal
+     */
+    public function buildRequestParamsHeader($headerParams, $request)
+    {
+        $headers = [];
+        
+        // No request message means no request-based headers.
+        if (!$request) {
+            return $headers;
+        }
+        
+        foreach($headerParams as $headerParam) {
+            $msg = $request;
+            $value = null;
+            foreach($headerParam['fieldAccessors'] as $accessor) {
+                $value = $msg->$accessor();
+                
+                // In case the field in question is nested in another message,
+                // skip the header param when the nested message field is unset.
+                $msg = $value;
+                if (is_null($msg)) {
+                    break;   
+                }
+            }
+
+            $keyName = $headerParam['keyName'];
+            
+            // If there are value pattern matchers configured and the target
+            // field was set, evaluate the matchers in the order that they were
+            // annotated in with last one matching wins. 
+            $original = $value;
+            $matchers = isset($headerParam['matchers']) && !is_null($value) ?
+                $headerParam['matchers'] :
+                [];
+            foreach($matchers as $matcher) {
+                $matches = [];
+                if(preg_match($matcher, $original, $matches)) {
+                    $value = $matches[$keyName];
+                }
+            }
+
+            // If there are no matches or the target field was unset, skip this
+            // header param.
+            if (is_null($value)) {
+                continue;   
+            }
+
+            $headers[$keyName] = $value;
+        }
+
+        $requestParams = new RequestParamsHeaderDescriptor($headers);
+
+        return $requestParams->getHeader();
     }
 
     /**
