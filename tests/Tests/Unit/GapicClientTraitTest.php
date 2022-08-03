@@ -74,6 +74,17 @@ class GapicClientTraitTest extends TestCase
 
     public function testHeadersOverwriteBehavior()
     {
+        $unaryDescriptors = [
+            'callType' => Call::UNARY_CALL,
+            'responseType' => 'decodeType',
+            'headerParams' => [
+                [
+                    'fieldAccessors' => ['getName'],
+                    'keyName' => 'name'
+                ]
+            ]
+        ];
+        $request = new MockRequestBody(['name' => 'foos/123/bars/456']);
         $header = AgentHeader::buildAgentHeader([
             'libName' => 'gccl',
             'libVersion' => '0.0.0',
@@ -90,6 +101,7 @@ class GapicClientTraitTest extends TestCase
         $expectedHeaders = [
             'x-goog-api-client' => ['gl-php/5.5.0 gccl/0.0.0 gapic/0.9.0 gax/1.0.0 grpc/1.0.1 rest/1.0.0 pb/6.6.6'],
             'new-header' => ['this-should-be-used'],
+            'x-goog-request-params' => ['name=foos%2F123%2Fbars%2F456']
         ];
         $transport = $this->getMockBuilder(TransportInterface::class)->disableOriginalConstructor()->getMock();
         $credentialsWrapper = CredentialsWrapper::build([
@@ -114,9 +126,11 @@ class GapicClientTraitTest extends TestCase
         );
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
-        $client->call('startCall', [
+        $client->set('descriptors', ['method' => $unaryDescriptors]);
+        $client->call('startApiCall', [
             'method',
-            'decodeType',
+            null,
+            $request,
             ['headers' => $headers]
         ]);
     }
