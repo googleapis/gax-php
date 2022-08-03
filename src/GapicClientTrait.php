@@ -573,7 +573,13 @@ trait GapicClientTrait
         $callType = $method['callType'];
         if ($callType == Call::LONGRUNNING_CALL) {
             // TODO(noahdietz): Validate that $this fulfills the lro interface/has an operationsClient.
-            return $this->startOperationsCall($methodName, $optionalArgs, $request, $interfaceName, $this->getOperationsClient());
+            return $this->startOperationsCall(
+                $methodName,
+                $optionalArgs,
+                $request,
+                $interfaceName,
+                $this->getOperationsClient()
+            );
         }
 
         // Fully-qualified name of the response message PHP class.
@@ -824,9 +830,9 @@ trait GapicClientTrait
     /**
      * @param array $headerParams
      * @param Message $request
-     * 
+     *
      * @return array
-     * 
+     *
      * @internal
      */
     public function buildRequestParamsHeader($headerParams, $request)
@@ -838,17 +844,17 @@ trait GapicClientTrait
             return $headers;
         }
         
-        foreach($headerParams as $headerParam) {
+        foreach ($headerParams as $headerParam) {
             $msg = $request;
             $value = null;
-            foreach($headerParam['fieldAccessors'] as $accessor) {
+            foreach ($headerParam['fieldAccessors'] as $accessor) {
                 $value = $msg->$accessor();
                 
                 // In case the field in question is nested in another message,
                 // skip the header param when the nested message field is unset.
                 $msg = $value;
                 if (is_null($msg)) {
-                    break;   
+                    break;
                 }
             }
 
@@ -856,14 +862,14 @@ trait GapicClientTrait
             
             // If there are value pattern matchers configured and the target
             // field was set, evaluate the matchers in the order that they were
-            // annotated in with last one matching wins. 
+            // annotated in with last one matching wins.
             $original = $value;
             $matchers = isset($headerParam['matchers']) && !is_null($value) ?
                 $headerParam['matchers'] :
                 [];
-            foreach($matchers as $matcher) {
+            foreach ($matchers as $matcher) {
                 $matches = [];
-                if(preg_match($matcher, $original, $matches)) {
+                if (preg_match($matcher, $original, $matches)) {
                     $value = $matches[$keyName];
                 }
             }
@@ -871,7 +877,7 @@ trait GapicClientTrait
             // If there are no matches or the target field was unset, skip this
             // header param.
             if (is_null($value)) {
-                continue;   
+                continue;
             }
 
             $headers[$keyName] = $value;
