@@ -551,9 +551,10 @@ trait GapicClientTrait
         array $optionalArgs = []
     ) {
         // Ensure a method descriptor exists for the target method.
-        $method = isset($this->descriptors[$methodName]) ?
-            $this->descriptors[$methodName] :
+        if (!isset($this->descriptors[$methodName])) {
             throw new ValidationException("Requested method '$methodName' does not exist in descriptor configuration.");
+        }
+        $method = $this->descriptors[$methodName];
         
         // Prepare request-based headers, merge with user-provided headers,
         // which take precedence.
