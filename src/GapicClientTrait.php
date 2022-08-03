@@ -853,10 +853,8 @@ trait GapicClientTrait
      * @param Message $request
      *
      * @return array
-     *
-     * @internal
      */
-    public function buildRequestParamsHeader($headerParams, $request)
+    private function buildRequestParamsHeader($headerParams, $request)
     {
         $headers = [];
         
