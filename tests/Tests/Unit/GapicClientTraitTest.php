@@ -204,6 +204,89 @@ class GapicClientTraitTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 
+    public function testStartApiCallOperation()
+    {
+        $header = AgentHeader::buildAgentHeader([]);
+        $retrySettings = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $longRunningDescriptors = [
+            'callType' => Call::LONGRUNNING_CALL,
+            'longRunning' => [
+                'operationReturnType' => 'operationType',
+                'metadataReturnType' => 'metadataType',
+                'initialPollDelayMillis' => 100,
+                'pollDelayMultiplier' => 1.0,
+                'maxPollDelayMillis' => 200,
+                'totalPollTimeoutMillis' => 300,
+            ]
+        ];
+        $expectedPromise = new FulfilledPromise(new Operation());
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
+        $transport->expects($this->once())
+             ->method('startUnaryCall')
+             ->will($this->returnValue($expectedPromise));
+        $credentialsWrapper = CredentialsWrapper::build([]);
+        $client = new GapicClientTraitStub();
+        $client->set('transport', $transport);
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', $header);
+        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('descriptors', ['method' => $longRunningDescriptors]);
+        $operationsClient = $this->getMockBuilder(OperationsClient::class)
+            ->disableOriginalConstructor()
+            ->setMethodsExcept(['validate'])
+            ->getMock();
+        $client->set('operationsClient', $operationsClient);
+
+        $request = new MockRequest();
+        $response = $client->call('startApiCall', [
+            'method',
+            /* interfaceName */ null,
+            $request
+        ])->wait();
+
+        $expectedResponse = new OperationResponse(
+            '',
+            $operationsClient,
+            $longRunningDescriptors['longRunning'] + ['lastProtoResponse' => new Operation()]
+        );
+
+        $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function testStartApiCallUnary()
+    {
+        $header = AgentHeader::buildAgentHeader([]);
+        $retrySettings = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $unaryDescriptors = [
+            'callType' => Call::UNARY_CALL,
+            'responseType' => 'Google\Longrunning\Operation::class'
+        ];
+        $expectedPromise = new FulfilledPromise(new Operation());
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
+        $transport->expects($this->once())
+             ->method('startUnaryCall')
+             ->will($this->returnValue($expectedPromise));
+        $credentialsWrapper = CredentialsWrapper::build([]);
+        $client = new GapicClientTraitStub();
+        $client->set('transport', $transport);
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', $header);
+        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('descriptors', ['method' => $unaryDescriptors]);
+
+        $request = new MockRequest();
+        $client->call('startApiCall', [
+            'method',
+            /* interfaceName */ null,
+            $request
+        ])->wait();
+    }
+
     public function testGetGapicVersionWithVersionFile()
     {
         require_once __DIR__ . '/testdata/src/GapicClientStub.php';
@@ -1307,6 +1390,13 @@ class GapicClientTraitTest extends TestCase
 class GapicClientTraitStub
 {
     use GapicClientTrait;
+
+    private $operationsClient;
+
+    public function getOperationsClient()
+    {
+        return $this->operationsClient;
+    }
 
     public static function getClientDefaults()
     {

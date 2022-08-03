@@ -577,15 +577,15 @@ trait GapicClientTrait
                 $methodName,
                 $optionalArgs,
                 $request,
-                $interfaceName,
-                $this->getOperationsClient()
+                $this->getOperationsClient(),
+                $interfaceName
             );
         }
 
         // Fully-qualified name of the response message PHP class.
         $decodeType = $method['responseType'];
 
-        if ($callType = Call::PAGINATED_CALL) {
+        if ($callType == Call::PAGINATED_CALL) {
             return $this->getPagedListResponse($methodName, $optionalArgs, $decodeType, $request, $interfaceName);
         }
 
