@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
+use GapicClientStub;
 use Google\ApiCore\AgentHeader;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
@@ -228,7 +229,7 @@ class GapicClientTraitTest extends TestCase
              ->method('startUnaryCall')
              ->will($this->returnValue($expectedPromise));
         $credentialsWrapper = CredentialsWrapper::build([]);
-        $client = new GapicClientTraitStub();
+        $client = new GapicClientTraitOperationsStub();
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
@@ -254,6 +255,39 @@ class GapicClientTraitTest extends TestCase
         );
 
         $this->assertEquals($expectedResponse, $response);
+    }
+
+    public function testStartApiCallOperationException()
+    {
+        $longRunningDescriptors = [
+            'callType' => Call::LONGRUNNING_CALL,
+        ];
+        $client = new GapicClientTraitStub();
+        $client->set('descriptors', ['method' => $longRunningDescriptors]);
+
+        // Missing method 'getOperationsClient'.
+        $this->expectException(ValidationException::class);
+
+        $client->call('startApiCall', [
+            'method',
+            /* interfaceName */ null,
+            new MockRequest()
+        ])->wait();
+    }
+
+    public function testStartApiCallException()
+    {
+        $client = new GapicClientTraitStub();
+        $client->set('descriptors', []);
+
+        // Missing descriptor for method.
+        $this->expectException(ValidationException::class);
+
+        $client->call('startApiCall', [
+            'method',
+            /* interfaceName */ null,
+            new MockRequest()
+        ])->wait();
     }
 
     public function testStartApiCallUnary()
@@ -1430,13 +1464,6 @@ class GapicClientTraitStub
 {
     use GapicClientTrait;
 
-    private $operationsClient;
-
-    public function getOperationsClient()
-    {
-        return $this->operationsClient;
-    }
-
     public static function getClientDefaults()
     {
         return [
@@ -1596,6 +1623,16 @@ class GapicClientTraitRestOnly
     private static function defaultTransport()
     {
         return 'rest';
+    }
+}
+
+class GapicClientTraitOperationsStub extends GapicClientTraitStub
+{
+    public $operationsClient;
+
+    public function getOperationsClient()
+    {
+        return $this->operationsClient;
     }
 }
 

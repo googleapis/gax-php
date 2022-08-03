@@ -572,7 +572,9 @@ trait GapicClientTrait
         // Handle call based on call type configured in the method descriptor config.
         $callType = $method['callType'];
         if ($callType == Call::LONGRUNNING_CALL) {
-            // TODO(noahdietz): Validate that $this fulfills the lro interface/has an operationsClient.
+            if (!method_exists($this, 'getOperationsClient')) {
+                throw new ValidationException("Client missing required getOperationsClient for longrunning call '$methodName'");
+            }
             return $this->startOperationsCall(
                 $methodName,
                 $optionalArgs,
