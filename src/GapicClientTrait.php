@@ -570,11 +570,20 @@ trait GapicClientTrait
         $interfaceName = $interfaceName ?: $this->serviceName;
 
         // Handle call based on call type configured in the method descriptor config.
+        if (!isset($method['callType'])) {
+            throw new ValidationException("Requested method '$methodName' does not have a callType " .
+                "in descriptor configuration.");
+        }
         $callType = $method['callType'];
+        
         if ($callType == Call::LONGRUNNING_CALL) {
+            if (!isset($method['longRunning'])) {
+                throw new ValidationException("Requested method '$methodName' does not have a longRunning config " .
+                    "in descriptor configuration.");
+            }
             if (!method_exists($this, 'getOperationsClient')) {
-                throw new ValidationException("Client missing required getOperationsClient
-                    for longrunning call '$methodName'");
+                throw new ValidationException("Client missing required getOperationsClient " .
+                    "for longrunning call '$methodName'");
             }
             return $this->startOperationsCall(
                 $methodName,
@@ -586,9 +595,18 @@ trait GapicClientTrait
         }
 
         // Fully-qualified name of the response message PHP class.
+        if (!isset($method['responseType'])) {
+            throw new ValidationException("Requested method '$methodName' does not have a responseType " .
+                "in descriptor configuration.");
+        }
         $decodeType = $method['responseType'];
 
         if ($callType == Call::PAGINATED_CALL) {
+            if (!isset($method['pageStreaming'])) {
+                throw new ValidationException("Requested method '$methodName' with callType PAGINATED_CALL does not " .
+                    "have a pageStreaming in descriptor configuration.");
+            }
+
             return $this->getPagedListResponse($methodName, $optionalArgs, $decodeType, $request, $interfaceName);
         }
 

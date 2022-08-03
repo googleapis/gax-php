@@ -257,39 +257,66 @@ class GapicClientTraitTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 
-    public function testStartApiCallOperationException()
+    /**
+     * @dataProvider startApiCallExceptions
+     */
+    public function testStartApiCallException($descriptor, $expected)
     {
-        $longRunningDescriptors = [
-            'callType' => Call::LONGRUNNING_CALL,
+        $client = new GapicClientTraitStub();
+        $client->set('descriptors', $descriptor);
+
+        // All descriptor config checks throw Validation exceptions
+        $this->expectException(ValidationException::class);
+        // Check that the proper exception is being thrown for the given descriptor.
+        $this->expectExceptionMessage($expected);
+
+        $client->call('startApiCall', [
+            'method',
+            /* interfaceName */ null,
+            new MockRequest()
+        ])->wait();
+    }
+
+    public function startApiCallExceptions()
+    {
+        return [
+            [
+                [],
+                'does not exist'
+            ],
+            [
+                [
+                    'method' => []
+                ],
+                'does not have a callType' 
+            ],
+            [
+                [
+                    'method' => ['callType' => Call::LONGRUNNING_CALL]
+                ],
+                'does not have a longRunning config' 
+            ],
+            [
+                [
+                    'method' => ['callType' => Call::LONGRUNNING_CALL, 'longRunning' => []]
+                ],
+                'missing required getOperationsClient'
+            ],
+            [
+                [
+                    'method'=> ['callType' => Call::UNARY_CALL]
+                ],
+                'does not have a responseType'
+            ],
+            [
+                [
+                    'method'=> ['callType' => Call::PAGINATED_CALL, 'responseType' => 'foo']
+                ],
+                'does not have a pageStreaming'
+            ],
         ];
-        $client = new GapicClientTraitStub();
-        $client->set('descriptors', ['method' => $longRunningDescriptors]);
-
-        // Missing method 'getOperationsClient'.
-        $this->expectException(ValidationException::class);
-
-        $client->call('startApiCall', [
-            'method',
-            /* interfaceName */ null,
-            new MockRequest()
-        ])->wait();
     }
-
-    public function testStartApiCallException()
-    {
-        $client = new GapicClientTraitStub();
-        $client->set('descriptors', []);
-
-        // Missing descriptor for method.
-        $this->expectException(ValidationException::class);
-
-        $client->call('startApiCall', [
-            'method',
-            /* interfaceName */ null,
-            new MockRequest()
-        ])->wait();
-    }
-
+    
     public function testStartApiCallUnary()
     {
         $header = AgentHeader::buildAgentHeader([]);
