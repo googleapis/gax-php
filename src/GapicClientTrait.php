@@ -897,7 +897,7 @@ trait GapicClientTrait
 
             // If there are no matches or the target field was unset, skip this
             // header param.
-            if (is_null($value)) {
+            if (!$value) {
                 continue;
             }
 

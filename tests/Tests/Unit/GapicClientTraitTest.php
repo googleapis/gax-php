@@ -853,12 +853,16 @@ class GapicClientTraitTest extends TestCase
         $simple = new MockRequestBody([
             'name' => 'foos/123/bars/456'
         ]);
+        $simpleNull = new MockRequestBody();
         $nested = new MockRequestBody([
             'nested_message' => new MockRequestBody([
                 'name' => 'foos/123/bars/456'
             ])
         ]);
         $unsetNested = new MockRequestBody([]);
+        $nestedNull = new MockRequestBody([
+            'nested_message' => new MockRequestBody()
+        ]);
 
         return [
             [
@@ -870,6 +874,19 @@ class GapicClientTraitTest extends TestCase
                 ],
                 /* $request */ $simple,
                 /* $expected */ ['name_field=foos%2F123%2Fbars%2F456']
+            ],
+            [
+                /* $headerParams */ [
+                    [
+                        'fieldAccessors' => ['getName'],
+                        'keyName' => 'name_field'
+                    ],
+                ],
+                /* $request */ $simpleNull,
+
+                // For some reason RequestParamsHeaderDescriptor creates an array
+                // with an empty string if there are no headers set in it.
+                /* $expected */ ['']
             ],
             [
                 /* $headerParams */ [
@@ -889,9 +906,16 @@ class GapicClientTraitTest extends TestCase
                     ],
                 ],
                 /* $request */ $unsetNested,
-                
-                // For some reason RequestParamsHeaderDescriptor creates an array
-                // with an empty string if there are no headers set in it.
+                /* $expected */ ['']
+            ],
+            [
+                /* $headerParams */ [
+                    [
+                        'fieldAccessors' => ['getNestedMessage','getName'],
+                        'keyName' => 'name_field'
+                    ],
+                ],
+                /* $request */ $nestedNull,
                 /* $expected */ ['']
             ],
         ];
