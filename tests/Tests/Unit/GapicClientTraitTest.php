@@ -844,7 +844,7 @@ class GapicClientTraitTest extends TestCase
     public function testBuildRequestHeaders($headerParams, $request, $expected)
     {
         $client = new GapicClientTraitStub();
-        $actual = $client->buildRequestParamsHeaderHelper($headerParams, $request);
+        $actual = $client->call('buildRequestParamsHeader', [$headerParams, $request]);
         $this->assertEquals($actual[RequestParamsHeaderDescriptor::HEADER_KEY], $expected);
     }
 
@@ -1572,11 +1572,6 @@ class GapicClientTraitStub
             throw new \InvalidArgumentException("Property not found: $name");
         }
         return $this->$name;
-    }
-
-    public function buildRequestParamsHeaderHelper($headerParams, $request)
-    {
-        return call_user_func_array([$this, 'buildRequestParamsHeader'], [$headerParams, $request]);
     }
 }
 
