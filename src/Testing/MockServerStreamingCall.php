@@ -41,6 +41,8 @@ use stdClass;
 /**
  * The MockServerStreamingCall class is used to mock out the \Grpc\ServerStreamingCall class
  * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/ServerStreamingCall.php)
+ *
+ * @internal
  */
 class MockServerStreamingCall extends \Grpc\ServerStreamingCall implements ServerStreamingCallInterface
 {

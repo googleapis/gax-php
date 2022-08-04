@@ -41,6 +41,8 @@ use stdClass;
 /**
  * The MockBidiStreamingCall class is used to mock out the \Grpc\BidiStreamingCall class
  * (https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BidiStreamingCall.php)
+ *
+ * @internal
  */
 class MockBidiStreamingCall extends Grpc\BidiStreamingCall
 {
