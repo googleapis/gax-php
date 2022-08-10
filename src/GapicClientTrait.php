@@ -851,7 +851,7 @@ trait GapicClientTrait
 
     /**
      * @param array $headerParams
-     * @param Message $request
+     * @param Message|null $request
      *
      * @return array
      */
