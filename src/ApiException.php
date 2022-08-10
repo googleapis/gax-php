@@ -234,7 +234,7 @@ class ApiException extends Exception
      *
      * @param string $basicMessage
      * @param int $rpcCode
-     * @param array<mixed>|RepeatedField $metadata
+     * @param iterable|null $metadata
      * @param array $decodedMetadata
      * @param Exception|null $previous
      * @return ApiException
@@ -242,8 +242,8 @@ class ApiException extends Exception
     private static function create(
         string $basicMessage,
         int $rpcCode,
-        $metadata = null,
-        array $decodedMetadata = null,
+        $metadata,
+        array $decodedMetadata,
         Exception $previous = null
     ) {
         $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
