@@ -581,6 +581,7 @@ trait GapicClientTrait
                 throw new ValidationException("Requested method '$methodName' does not have a longRunning config " .
                     "in descriptor configuration.");
             }
+            // @TODO: check if the client implements `OperationsClientInterface` instead
             if (!method_exists($this, 'getOperationsClient')) {
                 throw new ValidationException("Client missing required getOperationsClient " .
                     "for longrunning call '$methodName'");
