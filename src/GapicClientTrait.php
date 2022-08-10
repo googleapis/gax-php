@@ -541,7 +541,7 @@ trait GapicClientTrait
      *     @type RetrySettings|array $retrySettings [optional] A retry settings
      *           override for the call.
      * }
-     * 
+     *
      * @experimental
      *
      * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
@@ -560,13 +560,9 @@ trait GapicClientTrait
         
         // Prepare request-based headers, merge with user-provided headers,
         // which take precedence.
-        $headerParams = isset($method['headerParams']) ?
-            $method['headerParams'] :
-            [];
+        $headerParams = $method['headerParams'] ?? [];
         $requestHeaders = $this->buildRequestParamsHeader($headerParams, $request);
-        $optionalArgs['headers'] = isset($optionalArgs['headers']) ?
-            array_merge($requestHeaders, $optionalArgs['headers']) :
-            $requestHeaders;
+        $optionalArgs['headers'] = array_merge($requestHeaders, $optionalArgs['headers'] ?? []);
 
         // Default the interface name, if not set, to the client's protobuf service name.
         $interfaceName = $interfaceName ?: $this->serviceName;
