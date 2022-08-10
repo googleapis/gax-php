@@ -62,14 +62,10 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
      * @param string $path
      * @throws ValidationException
      */
-    public function __construct(string $path = null)
+    public function __construct(string $path)
     {
         if (empty($path)) {
-            $msg = sprintf(
-                "Cannot construct RelativeResourceTemplate from %s string",
-                is_null($path) ? "null" : "empty"
-            );
-            throw new ValidationException($msg);
+            throw new ValidationException('Cannot construct RelativeResourceTemplate from empty string');
         }
         $this->segments = Parser::parseSegments($path);
 
@@ -119,7 +115,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
                 throw $this->renderingException($bindings, "missing required binding '$key' for segment '$segment'");
             }
             $value = $bindings[$key];
-            if ($segment->matches($value)) {
+            if (!is_null($value) && $segment->matches($value)) {
                 $literalSegments[] = new Segment(
                     Segment::LITERAL_SEGMENT,
                     $value,
@@ -141,7 +137,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
     /**
      * @inheritdoc
      */
-    public function matches(string $path = null)
+    public function matches(string $path)
     {
         try {
             $this->match($path);
@@ -154,7 +150,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
     /**
      * @inheritdoc
      */
-    public function match(string $path = null)
+    public function match(string $path)
     {
         // High level strategy for matching:
         // - Build a list of Segments from our template, where any variable segments are
@@ -272,10 +268,7 @@ class RelativeResourceTemplate implements ResourceTemplateInterface
         return $collapsedBindings;
     }
 
-    /**
-     * @param string|null $path
-     */
-    private function matchException($path, string $reason)
+    private function matchException(string $path, string $reason)
     {
         return new ValidationException("Could not match path '$path' to template '$this': $reason");
     }

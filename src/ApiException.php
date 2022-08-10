@@ -149,7 +149,7 @@ class ApiException extends Exception
             $status->details,
             $status->code,
             $metadata,
-            Serializer::decodeMetadata($metadata)
+            Serializer::decodeMetadata((array) $metadata)
         );
     }
 
@@ -170,7 +170,7 @@ class ApiException extends Exception
             $basicMessage,
             $rpcCode,
             $metadata,
-            Serializer::decodeMetadata($metadata),
+            Serializer::decodeMetadata((array) $metadata),
             $previous
         );
     }

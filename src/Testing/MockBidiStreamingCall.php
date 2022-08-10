@@ -56,7 +56,7 @@ class MockBidiStreamingCall extends Grpc\BidiStreamingCall
     /**
      * MockBidiStreamingCall constructor.
      * @param mixed[] $responses A list of response objects.
-     * @param callable|array|null $deserialize An optional deserialize method for the response object.
+     * @param mixed|null $deserialize An optional deserialize method for the response object.
      * @param stdClass|null $status An optional status object. If set to null, a status of OK is used.
      */
     public function __construct(array $responses, $deserialize = null, stdClass $status = null)

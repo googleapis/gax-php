@@ -160,9 +160,9 @@ class Serializer
      * @param array $metadata
      * @return array
      */
-    public static function decodeMetadata(array $metadata = null)
+    public static function decodeMetadata(array $metadata)
     {
-        if (is_null($metadata) || count($metadata) == 0) {
+        if (count($metadata) == 0) {
             return [];
         }
         $result = [];

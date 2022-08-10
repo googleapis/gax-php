@@ -61,13 +61,13 @@ class AbsoluteResourceTemplate implements ResourceTemplateInterface
 
     /**
      * AbsoluteResourceTemplate constructor.
-     * @param string|null $path
+     * @param string $path
      * @throws ValidationException
      */
-    public function __construct(string $path = null)
+    public function __construct(string $path)
     {
         if (empty($path)) {
-            throw new ValidationException("Cannot construct AbsoluteResourceTemplate from empty string");
+            throw new ValidationException('Cannot construct AbsoluteResourceTemplate from empty string');
         }
         if ($path[0] !== '/') {
             throw new ValidationException(

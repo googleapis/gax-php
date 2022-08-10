@@ -118,19 +118,19 @@ class Segment
     /**
      * Checks if $value matches this Segment.
      *
-     * @param string|null $value
+     * @param string $value
      * @return bool
      * @throws ValidationException
      */
-    public function matches(string $value = null)
+    public function matches(string $value)
     {
         switch ($this->segmentType) {
             case Segment::LITERAL_SEGMENT:
                 return $this->value === $value;
             case Segment::WILDCARD_SEGMENT:
-                return self::isValidBinding((string) $value);
+                return self::isValidBinding($value);
             case Segment::DOUBLE_WILDCARD_SEGMENT:
-                return self::isValidDoubleWildcardBinding((string) $value);
+                return self::isValidDoubleWildcardBinding($value);
             case Segment::VARIABLE_SEGMENT:
                 return $this->template->matches($value);
             default:
