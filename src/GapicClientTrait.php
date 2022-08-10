@@ -541,6 +541,8 @@ trait GapicClientTrait
      *     @type RetrySettings|array $retrySettings [optional] A retry settings
      *           override for the call.
      * }
+     * 
+     * @experimental
      *
      * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
      */
