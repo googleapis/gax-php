@@ -545,8 +545,8 @@ trait GapicClientTrait
      * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
      */
     private function startApiCall(
-        $methodName,
-        $interfaceName = null,
+        string $methodName,
+        string $interfaceName = null,
         Message $request = null,
         array $optionalArgs = []
     ) {
