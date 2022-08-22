@@ -43,6 +43,8 @@ class Call
     const BIDI_STREAMING_CALL = 1;
     const CLIENT_STREAMING_CALL = 2;
     const SERVER_STREAMING_CALL = 3;
+    const LONGRUNNING_CALL = 4;
+    const PAGINATED_CALL = 5;
 
     private $method;
     private $callType;
@@ -54,15 +56,15 @@ class Call
      * @param string $method
      * @param string $decodeType
      * @param mixed|Message $message
-     * @param array $descriptor
+     * @param array|null $descriptor
      * @param int $callType
      */
     public function __construct(
-        $method,
-        $decodeType,
+        string $method,
+        string $decodeType = null,
         $message = null,
         $descriptor = [],
-        $callType = Call::UNARY_CALL
+        int $callType = Call::UNARY_CALL
     ) {
         $this->method = $method;
         $this->decodeType = $decodeType;

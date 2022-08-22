@@ -269,7 +269,7 @@ class CredentialsWrapper
         }
     }
 
-    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, $authHttpHandler)
+    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler)
     {
         $token = $credentialsFetcher->getLastReceivedToken();
         if (self::isExpired($token)) {
@@ -281,12 +281,18 @@ class CredentialsWrapper
         return $token['access_token'];
     }
 
+    /**
+     * @param mixed $token
+     */
     private static function isValid($token)
     {
         return is_array($token)
             && array_key_exists('access_token', $token);
     }
 
+    /**
+     * @param mixed $token
+     */
     private static function isExpired($token)
     {
         return !(self::isValid($token)

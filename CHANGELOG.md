@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.16.2](https://github.com/googleapis/gax-php/compare/v1.16.1...v1.16.2) (2022-08-16)
+
+
+### Bug Fixes
+
+* use responseType for custom operations ([#413](https://github.com/googleapis/gax-php/issues/413)) ([b643adf](https://github.com/googleapis/gax-php/commit/b643adfc44dd9fe82b0919e5b34edd00c7cdbb1f))
+
+## [1.16.1](https://github.com/googleapis/gax-php/compare/v1.16.0...v1.16.1) (2022-08-11)
+
+
+### Bug Fixes
+
+* remove typehint from extended method ([#411](https://github.com/googleapis/gax-php/issues/411)) ([fb37f73](https://github.com/googleapis/gax-php/commit/fb37f7365e888465d84fca304ca83360ddbae6c3))
+
+## [1.16.0](https://github.com/googleapis/gax-php/compare/v1.15.0...v1.16.0) (2022-08-10)
+
+
+### Features
+
+* additional typehinting ([#403](https://github.com/googleapis/gax-php/issues/403)) ([6597a07](https://github.com/googleapis/gax-php/commit/6597a07019665d91e07ea0a016c7d99c8a099cd2))
+* drop support for PHP 5.6 ([#397](https://github.com/googleapis/gax-php/issues/397)) ([b888b24](https://github.com/googleapis/gax-php/commit/b888b24e0e223784e22dbbbe27fe0284cdcdfc35))
+* introduce startApiCall ([#406](https://github.com/googleapis/gax-php/issues/406)) ([1cfeb62](https://github.com/googleapis/gax-php/commit/1cfeb628070c9c6e57b2dde854b0a973a888a2bc))
+
+
+### Bug Fixes
+
+* **deps:** update dependency google/longrunning to ^0.2 ([#407](https://github.com/googleapis/gax-php/issues/407)) ([54d4f32](https://github.com/googleapis/gax-php/commit/54d4f32ba5464d1f5da33e1c99a020174cae367c))
+
 ## [1.15.0](https://github.com/googleapis/gax-php/compare/v1.14.0...v1.15.0) (2022-08-02)
 
 
