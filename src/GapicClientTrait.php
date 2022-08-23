@@ -590,7 +590,7 @@ trait GapicClientTrait
      */
     private function startAsyncCall(
         string $methodName,
-        Message $request = null,
+        Message $request,
         array $optionalArgs = []
     ) {
         $this->validateCallConfig($methodName);
