@@ -573,7 +573,6 @@ trait GapicClientTrait
 
     /**
      * @param string $methodName
-     * @param string $interfaceName
      * @param Message $request
      * @param array $optionalArgs {
      *     Call Options
@@ -591,7 +590,6 @@ trait GapicClientTrait
      */
     private function startAsyncCall(
         string $methodName,
-        string $interfaceName = null,
         Message $request = null,
         array $optionalArgs = []
     ) {
@@ -605,7 +603,7 @@ trait GapicClientTrait
                     "'$methodName' is not supported for async execution.");
         }
 
-        return $this->startApiCall($methodName, $interfaceName, $request, $optionalArgs);
+        return $this->startApiCall($methodName, $this->serviceName, $request, $optionalArgs);
     }
 
     /**

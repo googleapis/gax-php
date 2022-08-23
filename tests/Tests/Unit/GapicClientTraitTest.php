@@ -481,7 +481,6 @@ class GapicClientTraitTest extends TestCase
         $request = new MockRequest();
         $client->call('startAsyncCall', [
             'method',
-            /* interfaceName */ null,
             $request
         ])->wait();
     }
@@ -501,7 +500,6 @@ class GapicClientTraitTest extends TestCase
 
         $client->call('startAsyncCall', [
             'method',
-            /* interfaceName */ null,
             new MockRequest()
         ])->wait();
     }
