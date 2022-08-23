@@ -455,6 +455,100 @@ class GapicClientTraitTest extends TestCase
         ]);
     }
 
+    public function testStartAsyncCall()
+    {
+        $header = AgentHeader::buildAgentHeader([]);
+        $retrySettings = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $unaryDescriptors = [
+            'callType' => Call::UNARY_CALL,
+            'responseType' => 'Google\Longrunning\Operation'
+        ];
+        $expectedPromise = new FulfilledPromise(new Operation());
+        $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
+        $transport->expects($this->once())
+             ->method('startUnaryCall')
+             ->will($this->returnValue($expectedPromise));
+        $credentialsWrapper = CredentialsWrapper::build([]);
+        $client = new GapicClientTraitStub();
+        $client->set('transport', $transport);
+        $client->set('credentialsWrapper', $credentialsWrapper);
+        $client->set('agentHeader', $header);
+        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('descriptors', ['method' => $unaryDescriptors]);
+
+        $request = new MockRequest();
+        $client->call('startAsyncCall', [
+            'method',
+            /* interfaceName */ null,
+            $request
+        ])->wait();
+    }
+
+    /**
+     * @dataProvider startAsyncCallExceptions
+     */
+    public function testStartAsyncCallException($descriptor, $expected)
+    {
+        $client = new GapicClientTraitStub();
+        $client->set('descriptors', $descriptor);
+
+        // All descriptor config checks throw Validation exceptions
+        $this->expectException(ValidationException::class);
+        // Check that the proper exception is being thrown for the given descriptor.
+        $this->expectExceptionMessage($expected);
+
+        $client->call('startAsyncCall', [
+            'method',
+            /* interfaceName */ null,
+            new MockRequest()
+        ])->wait();
+    }
+
+    public function startAsyncCallExceptions()
+    {
+        return [
+            [
+                [],
+                'does not exist'
+            ],
+            [
+                [
+                    'method' => []
+                ],
+                'does not have a callType' 
+            ],
+            [
+                [
+                    'method' => [
+                        'callType' => Call::SERVER_STREAMING_CALL,
+                        'responseType' => 'Google\Longrunning\Operation'
+                    ]
+                ],
+                'not supported for async execution'
+            ],
+            [
+                [
+                    'method' => [
+                        'callType' => Call::CLIENT_STREAMING_CALL, 'longRunning' => [],
+                        'responseType' => 'Google\Longrunning\Operation'
+                    ]
+                ],
+                'not supported for async execution'
+            ],
+            [
+                [
+                    'method'=> [
+                        'callType' => Call::BIDI_STREAMING_CALL,
+                        'responseType' => 'Google\Longrunning\Operation'
+                    ]
+                ],
+                'not supported for async execution'
+            ],
+        ];
+    }
+
     public function testGetGapicVersionWithVersionFile()
     {
         require_once __DIR__ . '/testdata/src/GapicClientStub.php';
