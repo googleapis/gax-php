@@ -554,7 +554,7 @@ trait GapicClientTrait
                 throw new ValidationException("Client missing required getOperationsClient " .
                     "for longrunning call '$methodName'");
             }
-        } else if ($callType == Call::PAGINATED_CALL) {
+        } elseif ($callType == Call::PAGINATED_CALL) {
             if (!isset($method['pageStreaming'])) {
                 throw new ValidationException("Requested method '$methodName' with callType PAGINATED_CALL does not " .
                     "have a pageStreaming in descriptor configuration.");
@@ -569,8 +569,6 @@ trait GapicClientTrait
                     "in descriptor configuration.");
             }
         }
-        
-        
     }
 
     /**
