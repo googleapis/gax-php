@@ -597,8 +597,18 @@ trait GapicClientTrait
         // in order to find the method in the descriptor config.
         $methodName = ucfirst($methodName);
         $this->validateCallConfig($methodName);
-        $callType = $this->descriptors[$methodName]['callType'];
+        
+        $method = $this->descriptors[$methodName];
+        $callType = $method['callType'];
+        
         switch ($callType) {
+            case Call::PAGINATED_CALL:
+                return $this->getPagedListResponseAsync(
+                    $methodName,
+                    $optionalArgs,
+                    $method['responseType'],
+                    $request
+                );
             case Call::SERVER_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
             case Call::BIDI_STREAMING_CALL:
@@ -868,6 +878,31 @@ trait GapicClientTrait
         Message $request,
         string $interfaceName = null
     ) {
+        return $this->getPagedListResponseAsync(
+            $methodName,
+            $optionalArgs,
+            $decodeType,
+            $request,
+            $interfaceName
+        )->wait();
+    }
+
+    /**
+     * @param string $methodName
+     * @param array $optionalArgs
+     * @param string $decodeType
+     * @param Message $request
+     * @param string $interfaceName
+     *
+     * @return PromiseInterface
+     */
+    private function getPagedListResponseAsync(
+        string $methodName,
+        array $optionalArgs,
+        string $decodeType,
+        Message $request,
+        string $interfaceName = null
+    ) {
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
@@ -887,7 +922,7 @@ trait GapicClientTrait
         $this->modifyUnaryCallable($callStack);
         return $callStack($call, $optionalArgs + array_filter([
             'audience' => self::getDefaultAudience()
-        ]))->wait();
+        ]));
     }
 
     /**
