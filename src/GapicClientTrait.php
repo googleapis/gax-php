@@ -593,6 +593,9 @@ trait GapicClientTrait
         Message $request,
         array $optionalArgs = []
     ) {
+        // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
+        // in order to find the method in the descriptor config.
+        $methodName = ucfirst($methodName);
         $this->validateCallConfig($methodName);
         $callType = $this->descriptors[$methodName]['callType'];
         switch ($callType) {

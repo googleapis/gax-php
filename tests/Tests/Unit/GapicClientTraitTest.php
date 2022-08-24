@@ -475,8 +475,8 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['method' => $retrySettings]);
-        $client->set('descriptors', ['method' => $unaryDescriptors]);
+        $client->set('retrySettings', ['Method' => $retrySettings]);
+        $client->set('descriptors', ['Method' => $unaryDescriptors]);
 
         $request = new MockRequest();
         $client->call('startAsyncCall', [
@@ -513,13 +513,13 @@ class GapicClientTraitTest extends TestCase
             ],
             [
                 [
-                    'method' => []
+                    'Method' => []
                 ],
                 'does not have a callType' 
             ],
             [
                 [
-                    'method' => [
+                    'Method' => [
                         'callType' => Call::SERVER_STREAMING_CALL,
                         'responseType' => 'Google\Longrunning\Operation'
                     ]
@@ -528,7 +528,7 @@ class GapicClientTraitTest extends TestCase
             ],
             [
                 [
-                    'method' => [
+                    'Method' => [
                         'callType' => Call::CLIENT_STREAMING_CALL, 'longRunning' => [],
                         'responseType' => 'Google\Longrunning\Operation'
                     ]
@@ -537,7 +537,7 @@ class GapicClientTraitTest extends TestCase
             ],
             [
                 [
-                    'method'=> [
+                    'Method'=> [
                         'callType' => Call::BIDI_STREAMING_CALL,
                         'responseType' => 'Google\Longrunning\Operation'
                     ]
