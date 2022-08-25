@@ -607,7 +607,8 @@ trait GapicClientTrait
                     $methodName,
                     $optionalArgs,
                     $method['responseType'],
-                    $request
+                    $request,
+                    $method['interfaceOverride'] ?? $this->serviceName
                 );
             case Call::SERVER_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
@@ -616,7 +617,7 @@ trait GapicClientTrait
                     "'$methodName' is not supported for async execution.");
         }
 
-        return $this->startApiCall($methodName, $this->serviceName, $request, $optionalArgs);
+        return $this->startApiCall($methodName, $request, $optionalArgs);
     }
 
     /**
