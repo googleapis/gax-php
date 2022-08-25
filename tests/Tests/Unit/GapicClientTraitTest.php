@@ -495,6 +495,7 @@ class GapicClientTraitTest extends TestCase
         $pagedDescriptors = [
             'callType' => Call::PAGINATED_CALL,
             'responseType' => 'Google\Longrunning\ListOperationsResponse',
+            'interfaceOverride' => 'google.cloud.foo.v1.Foo',
             'pageStreaming' => [
                 'requestPageTokenGetMethod' => 'getPageToken',
                 'requestPageTokenSetMethod' => 'setPageToken',
@@ -508,6 +509,12 @@ class GapicClientTraitTest extends TestCase
         $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transport->expects($this->once())
              ->method('startUnaryCall')
+             ->with(
+                $this->callback(function($call) use ($pagedDescriptors) {
+                    return strpos($call->getMethod(), $pagedDescriptors['interfaceOverride']) !== false;
+                }),
+                $this->anything()
+            )
              ->will($this->returnValue($expectedPromise));
         $credentialsWrapper = CredentialsWrapper::build([]);
         $client = new GapicClientTraitStub();
