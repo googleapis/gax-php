@@ -398,7 +398,7 @@ class GapicClientTraitTest extends TestCase
              ->method('startUnaryCall')
              ->with(
                 $this->callback(function($call) use ($unaryDescriptors) {
-                    return str_contains($call->getMethod(), $unaryDescriptors['interfaceOverride']);
+                    return strpos($call->getMethod(), $unaryDescriptors['interfaceOverride']) !== false;
                 }),
                 $this->anything()
             )
