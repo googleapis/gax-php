@@ -577,11 +577,10 @@ trait GapicClientTrait
      * @param array $optionalArgs {
      *     Call Options
      *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings|array $retrySettings [optional] A retry settings
-     *           override for the call.
+     *     @type array $headers                     [optional] key-value array containing headers
+     *     @type int $timeoutMillis                 [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions            [optional] transport-specific call options
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings override for the call.
      * }
      *
      * @experimental
