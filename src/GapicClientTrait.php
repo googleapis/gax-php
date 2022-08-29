@@ -534,18 +534,18 @@ trait GapicClientTrait
         if (!isset($this->descriptors[$methodName])) {
             throw new ValidationException("Requested method '$methodName' does not exist in descriptor configuration.");
         }
-        $method = $this->descriptors[$methodName];
+        $methodDescriptors = $this->descriptors[$methodName];
 
         // Ensure required descriptor configuration exists.
-        if (!isset($method['callType'])) {
+        if (!isset($methodDescriptors['callType'])) {
             throw new ValidationException("Requested method '$methodName' does not have a callType " .
                 "in descriptor configuration.");
         }
-        $callType = $method['callType'];
+        $callType = $methodDescriptors['callType'];
 
         // Validate various callType specific configurations.
         if ($callType == Call::LONGRUNNING_CALL) {
-            if (!isset($method['longRunning'])) {
+            if (!isset($methodDescriptors['longRunning'])) {
                 throw new ValidationException("Requested method '$methodName' does not have a longRunning config " .
                     "in descriptor configuration.");
             }
@@ -555,7 +555,7 @@ trait GapicClientTrait
                     "for longrunning call '$methodName'");
             }
         } elseif ($callType == Call::PAGINATED_CALL) {
-            if (!isset($method['pageStreaming'])) {
+            if (!isset($methodDescriptors['pageStreaming'])) {
                 throw new ValidationException("Requested method '$methodName' with callType PAGINATED_CALL does not " .
                     "have a pageStreaming in descriptor configuration.");
             }
@@ -564,11 +564,13 @@ trait GapicClientTrait
         // LRO are either Standard LRO response type or custom, which are handled by
         // startOperationCall, so no need to validate responseType for those callType.
         if ($callType != Call::LONGRUNNING_CALL) {
-            if (!isset($method['responseType'])) {
+            if (!isset($methodDescriptors['responseType'])) {
                 throw new ValidationException("Requested method '$methodName' does not have a responseType " .
                     "in descriptor configuration.");
             }
         }
+
+        return $methodDescriptors;
     }
 
     /**
@@ -595,19 +597,18 @@ trait GapicClientTrait
         // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
         // in order to find the method in the descriptor config.
         $methodName = ucfirst($methodName);
-        $this->validateCallConfig($methodName);
+        $methodDescriptors = $this->validateCallConfig($methodName);
         
-        $method = $this->descriptors[$methodName];
-        $callType = $method['callType'];
+        $callType = $methodDescriptors['callType'];
         
         switch ($callType) {
             case Call::PAGINATED_CALL:
                 return $this->getPagedListResponseAsync(
                     $methodName,
                     $optionalArgs,
-                    $method['responseType'],
+                    $methodDescriptors['responseType'],
                     $request,
-                    $method['interfaceOverride'] ?? $this->serviceName
+                    $methodDescriptors['interfaceOverride'] ?? $this->serviceName
                 );
             case Call::SERVER_STREAMING_CALL:
             case Call::CLIENT_STREAMING_CALL:
@@ -641,18 +642,17 @@ trait GapicClientTrait
         Message $request = null,
         array $optionalArgs = []
     ) {
-        $this->validateCallConfig($methodName);
-        $method = $this->descriptors[$methodName];
-        $callType = $method['callType'];
+        $methodDescriptors =$this->validateCallConfig($methodName);
+        $callType = $methodDescriptors['callType'];
         
         // Prepare request-based headers, merge with user-provided headers,
         // which take precedence.
-        $headerParams = $method['headerParams'] ?? [];
+        $headerParams = $methodDescriptors['headerParams'] ?? [];
         $requestHeaders = $this->buildRequestParamsHeader($headerParams, $request);
         $optionalArgs['headers'] = array_merge($requestHeaders, $optionalArgs['headers'] ?? []);
 
         // Default the interface name, if not set, to the client's protobuf service name.
-        $interfaceName = $method['interfaceOverride'] ?? $this->serviceName;
+        $interfaceName = $methodDescriptors['interfaceOverride'] ?? $this->serviceName;
 
         // Handle call based on call type configured in the method descriptor config.
         if ($callType == Call::LONGRUNNING_CALL) {
@@ -664,12 +664,12 @@ trait GapicClientTrait
                 $interfaceName,
                 // Custom operations will define their own operation response type, whereas standard
                 // LRO defaults to the same type.
-                $method['responseType'] ?? null
+                $methodDescriptors['responseType'] ?? null
             );
         }
 
         // Fully-qualified name of the response message PHP class.
-        $decodeType = $method['responseType'];
+        $decodeType = $methodDescriptors['responseType'];
 
         if ($callType == Call::PAGINATED_CALL) {
             return $this->getPagedListResponse($methodName, $optionalArgs, $decodeType, $request, $interfaceName);
