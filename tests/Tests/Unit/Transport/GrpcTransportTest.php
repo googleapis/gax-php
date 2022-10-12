@@ -32,14 +32,14 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport;
 
+use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Testing\MockGrpcTransport;
 use Google\ApiCore\Testing\MockRequest;
+use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\GrpcTransport;
-use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
-use Google\Auth\CredentialsLoader;
+use Google\ApiCore\ValidationException;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -49,17 +49,17 @@ use Grpc\BaseStub;
 use Grpc\CallInvoker;
 use Grpc\ChannelCredentials;
 use Grpc\ClientStreamingCall;
-use Grpc\Interceptor;
 use Grpc\ServerStreamingCall;
 use Grpc\UnaryCall;
-use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypeError;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class GrpcTransportTest extends TestCase
 {
     use TestTrait;
 
-    public function setUp()
+    public function set_up()
     {
         $this->requiresGrpcExtension();
     }
@@ -102,10 +102,6 @@ class GrpcTransportTest extends TestCase
         $this->assertEquals($response, $actualResponse);
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ApiException
-     * @expectedExceptionMessage client streaming failure
-     */
     public function testClientStreamingFailure()
     {
         $request = "request";
@@ -127,6 +123,9 @@ class GrpcTransportTest extends TestCase
             new Call('takeAction', null),
             []
         );
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('client streaming failure');
 
         $stream->readResponse();
     }
@@ -209,10 +208,6 @@ class GrpcTransportTest extends TestCase
         $this->assertEquals($responses, $actualResponsesArray);
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ApiException
-     * @expectedExceptionMessage server streaming failure
-     */
     public function testServerStreamingFailure()
     {
         $status = new stdClass;
@@ -236,6 +231,9 @@ class GrpcTransportTest extends TestCase
             new Call('takeAction', null, $message),
             []
         );
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('server streaming failure');
 
         foreach ($stream->readAll() as $actualResponse) {
             // for loop to trigger generator and API exception
@@ -346,10 +344,6 @@ class GrpcTransportTest extends TestCase
         $this->assertEquals($responses, $actualResponsesArray);
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ApiException
-     * @expectedExceptionMessage bidi failure
-     */
     public function testBidiStreamingFailure()
     {
         $response = "response";
@@ -372,6 +366,9 @@ class GrpcTransportTest extends TestCase
             new Call('takeAction', null),
             []
         );
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('bidi failure');
 
         foreach ($stream->closeWriteAndReadAll() as $actualResponse) {
             // for loop to trigger generator and API exception
@@ -413,16 +410,16 @@ class GrpcTransportTest extends TestCase
         $this->assertNotNull($transport);
     }
 
-    /**
-     * @expectedException TypeError
-     * @expectedExceptionMessage must be callable
-     */
     public function testClientCertSourceOptionInvalid()
     {
         $this->requiresPhp7();
 
         $mockClientCertSource = 'foo';
-        $transport = GrpcTransport::build(
+
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessageMatches('/must be.+callable/i');
+
+        GrpcTransport::build(
             'address.com:123',
             ['clientCertSource' => $mockClientCertSource]
         );
@@ -475,10 +472,11 @@ class GrpcTransportTest extends TestCase
 
     /**
      * @dataProvider buildInvalidData
-     * @expectedException \Google\ApiCore\ValidationException
      */
     public function testBuildInvalid($apiEndpoint, $args)
     {
+        $this->expectException(ValidationException::class);
+
         GrpcTransport::build($apiEndpoint, $args);
     }
 
@@ -511,59 +509,32 @@ class GrpcTransportTest extends TestCase
             null,
             [$interceptor]
         );
+
+        $mockCallInvoker = new MockCallInvoker($this->buildMockCallForInterceptor($callType));
+
         $r = new \ReflectionProperty(BaseStub::class, 'call_invoker');
         $r->setAccessible(true);
         $r->setValue(
             $transport,
-            new MockCallInvoker(
-                $this->buildMockCallForInterceptor($callType)
-            )
-        );
-        $call = new Call(
-            'method1',
-            '',
-            new MockRequest()
+            $mockCallInvoker
         );
 
-        if ($callType === UnaryCall::class) {
-            $transport->startUnaryCall($call, [
-                'transportOptions' => [
-                    'grpcOptions' => [
-                        'call-option' => 'call-option-value'
-                    ]
-                ]
-            ]);
+        $call = new Call('method1', '', new MockRequest());
 
-            return;
-        }
-
-        $transport->startServerStreamingCall($call, [
+        $callMethod = $callType == UnaryCall::class ? 'startUnaryCall' : 'startServerStreamingCall';
+        $transport->$callMethod($call, [
             'transportOptions' => [
                 'grpcOptions' => [
                     'call-option' => 'call-option-value'
                 ]
             ]
         ]);
+
+        $this->assertTrue($mockCallInvoker->wasCalled());
     }
 
     public function interceptorDataProvider()
     {
-        if ($this->useDeprecatedInterceptors()) {
-            return [
-                [
-                    UnaryCall::class,
-                    new TestUnaryInterceptorDeprecated()
-                ],
-                [
-                    UnaryCall::class,
-                    new TestInterceptorDeprecated()
-                ],
-                [
-                    ServerStreamingCall::class,
-                    new TestInterceptorDeprecated()
-                ]
-            ];
-        }
         return [
             [
                 UnaryCall::class,
@@ -605,17 +576,12 @@ class GrpcTransportTest extends TestCase
 
         return $mockCall;
     }
-
-    private function useDeprecatedInterceptors()
-    {
-        $reflector = new \ReflectionClass(Interceptor::class);
-        $params = $reflector->getMethod('interceptUnaryUnary')->getParameters();
-        return $params[3]->getName() === 'metadata';
-    }
 }
 
 class MockCallInvoker implements CallInvoker
 {
+    private $called = false;
+
     public function __construct($mockCall)
     {
         $this->mockCall = $mockCall;
@@ -628,11 +594,13 @@ class MockCallInvoker implements CallInvoker
 
     public function UnaryCall($channel, $method, $deserialize, $options)
     {
+        $this->called = true;
         return $this->mockCall;
     }
 
     public function ServerStreamingCall($channel, $method, $deserialize, $options)
     {
+        $this->called = true;
         return $this->mockCall;
     }
 
@@ -645,88 +613,10 @@ class MockCallInvoker implements CallInvoker
     {
         // no-op
     }
-}
 
-class TestInterceptor extends Interceptor
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        $continuation,
-        array $metadata = [],
-        array $options = []
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-
-    public function interceptUnaryStream(
-        $method,
-        $argument,
-        $deserialize,
-        $continuation,
-        array $metadata = [],
-        array $options = []
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
+    public function wasCalled()
+    {
+        return $this->called;
     }
 }
 
-class TestInterceptorDeprecated extends Interceptor
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        array $metadata = [],
-        array $options = [],
-        $continuation
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-
-    public function interceptUnaryStream(
-        $method,
-        $argument,
-        $deserialize,
-        array $metadata = [],
-        array $options = [],
-        $continuation
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}
-
-class TestUnaryInterceptor extends Interceptor
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        $continuation,
-        array $metadata = [],
-        array $options = []
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}
-
-class TestUnaryInterceptorDeprecated implements UnaryInterceptorInterface
-{
-    public function interceptUnaryUnary(
-        $method,
-        $argument,
-        $deserialize,
-        array $metadata,
-        array $options,
-        callable $continuation
-    ) {
-        $options['test-interceptor-insert'] = 'inserted-value';
-        return $continuation($method, $argument, $deserialize, $metadata, $options);
-    }
-}

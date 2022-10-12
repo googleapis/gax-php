@@ -37,21 +37,20 @@ use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\RetrySettings;
-use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
-use stdClass;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class RetryMiddlewareTest extends TestCase
 {
-    /**
-     * @expectedException Google\ApiCore\ApiException
-     * @expectedExceptionMessage Call Count: 1
-     */
+    use ExpectException;
+
     public function testRetryNoRetryableCode()
     {
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => false,
@@ -64,15 +63,18 @@ class RetryMiddlewareTest extends TestCase
             });
         };
         $middleware = new RetryMiddleware($handler, $retrySettings);
-        $response = $middleware(
-            $call,
-            []
-        )->wait();
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('Call Count: 1');
+
+        $middleware($call, [])->wait();
     }
 
     public function testRetryBackoff()
     {
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
@@ -94,17 +96,15 @@ class RetryMiddlewareTest extends TestCase
             []
         )->wait();
 
-        $this->assertEquals('Ok!', $response);
+        $this->assertSame('Ok!', $response);
         $this->assertEquals(3, $callCount);
     }
 
-    /**
-     * @expectedException Google\ApiCore\ApiException
-     * @expectedExceptionMessage Retry total timeout exceeded.
-     */
     public function testRetryTimeoutExceedsMaxTimeout()
     {
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
@@ -117,19 +117,18 @@ class RetryMiddlewareTest extends TestCase
             });
         };
         $middleware = new RetryMiddleware($handler, $retrySettings);
-        $response = $middleware(
-            $call,
-            []
-        )->wait();
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('Retry total timeout exceeded.');
+
+        $middleware($call, [])->wait();
     }
 
-    /**
-     * @expectedException Google\ApiCore\ApiException
-     * @expectedExceptionMessage Retry total timeout exceeded.
-     */
     public function testRetryTimeoutExceedsRealTime()
     {
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
@@ -141,16 +140,17 @@ class RetryMiddlewareTest extends TestCase
             return new Promise(function () use ($options) {
                 // sleep for the duration of the timeout
                 if (isset($options['timeoutMillis'])) {
-                    usleep($options['timeoutMillis'] * 1000);
+                    usleep(intval($options['timeoutMillis'] * 1000));
                 }
                 throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
             });
         };
         $middleware = new RetryMiddleware($handler, $retrySettings);
-        $response = $middleware(
-            $call,
-            []
-        )->wait();
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('Retry total timeout exceeded.');
+
+        $middleware($call, [])->wait();
     }
 
     public function testTimeoutMillisCallSettingsOverwrite()
@@ -160,7 +160,9 @@ class RetryMiddlewareTest extends TestCase
         $handler = function (Call $call, array $options) use (&$handlerCalled, $timeout) {
             $handlerCalled = true;
             $this->assertEquals($timeout, $options['timeoutMillis']);
-            return $this->getMock(Promise::class);
+            return $this->getMockBuilder(Promise::class)
+                ->disableOriginalConstructor()
+                ->getMock();
         };
         $retrySettings = RetrySettings::constructDefault()
             ->with([
@@ -169,7 +171,9 @@ class RetryMiddlewareTest extends TestCase
             ]);
         $middleware = new RetryMiddleware($handler, $retrySettings);
 
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $options = ['timeoutMillis' => $timeout];
         $middleware($call, $options);
         $this->assertTrue($handlerCalled);
@@ -178,7 +182,9 @@ class RetryMiddlewareTest extends TestCase
     public function testRetryLogicalTimeout()
     {
         $timeout = 2000;
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
@@ -203,9 +209,9 @@ class RetryMiddlewareTest extends TestCase
             []
         )->wait();
 
-        $this->assertEquals('Ok!', $response);
+        $this->assertSame('Ok!', $response);
         $this->assertEquals(3, $callCount);
-        $this->assertEquals(3, count($observedTimeouts));
+        $this->assertCount(3, $observedTimeouts);
         $this->assertEquals($observedTimeouts[0], $timeout);
         for ($i = 1; $i < count($observedTimeouts); $i++) {
             $this->assertTrue($observedTimeouts[$i-1] > $observedTimeouts[$i]);
@@ -215,7 +221,9 @@ class RetryMiddlewareTest extends TestCase
     public function testNoRetryLogicalTimeout()
     {
         $timeout = 2000;
-        $call = $this->getMock(Call::class, [], [], '', false);
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $retrySettings = RetrySettings::constructDefault()
             ->with(RetrySettings::logicalTimeout($timeout));
         $observedTimeout = 0;
@@ -231,7 +239,7 @@ class RetryMiddlewareTest extends TestCase
             []
         )->wait();
 
-        $this->assertEquals('Ok!', $response);
+        $this->assertSame('Ok!', $response);
         $this->assertEquals($observedTimeout, $timeout);
     }
 }

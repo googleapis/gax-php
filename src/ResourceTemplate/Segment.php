@@ -37,6 +37,7 @@ use Google\ApiCore\ValidationException;
 /**
  * Represents a segment in a resource template. This is used internally by RelativeResourceTemplate,
  * but is not intended for public use and may change without notice.
+ *
  * @internal
  */
 class Segment
@@ -74,11 +75,11 @@ class Segment
      * @throws ValidationException
      */
     public function __construct(
-        $segmentType,
-        $value = null,
-        $key = null,
+        int $segmentType,
+        string $value = null,
+        string $key = null,
         RelativeResourceTemplate $template = null,
-        $separator = '/'
+        string $separator = '/'
     ) {
         $this->segmentType = $segmentType;
         $this->value = $value;
@@ -121,7 +122,7 @@ class Segment
      * @return bool
      * @throws ValidationException
      */
-    public function matches($value)
+    public function matches(string $value)
     {
         switch ($this->segmentType) {
             case Segment::LITERAL_SEGMENT:
@@ -183,10 +184,10 @@ class Segment
      * Check if $binding is a valid segment binding. Segment bindings may contain any characters
      * except a forward slash ('/'), and may not be empty.
      *
-     * @param $binding
+     * @param string $binding
      * @return bool
      */
-    private static function isValidBinding($binding)
+    private static function isValidBinding(string $binding)
     {
         return preg_match("-^[^/]+$-", $binding) === 1;
     }
@@ -195,10 +196,10 @@ class Segment
      * Check if $binding is a valid double wildcard binding. Segment bindings may contain any
      * characters, but may not be empty.
      *
-     * @param $binding
+     * @param string $binding
      * @return bool
      */
-    private static function isValidDoubleWildcardBinding($binding)
+    private static function isValidDoubleWildcardBinding(string $binding)
     {
         return preg_match("-^.+$-", $binding) === 1;
     }

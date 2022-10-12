@@ -40,10 +40,10 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\UpdateMetadataInterface;
 use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -56,6 +56,9 @@ class CredentialsWrapper implements HeaderCredentialsInterface
     /** @var FetchAuthTokenInterface $credentialsFetcher */
     private $credentialsFetcher;
     private $authHttpHandler;
+
+    /** @var int */
+    private static $eagerRefreshThresholdSeconds = 10;
 
     /**
      * CredentialsWrapper constructor.
@@ -176,6 +179,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface
         if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
             return $this->credentialsFetcher->getQuotaProject();
         }
+        return null;
     }
 
     /**
@@ -249,7 +253,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface
      * @param CacheItemPoolInterface $authCache
      * @param string $quotaProject
      * @param array $defaultScopes
-     * @return CredentialsLoader
+     * @return FetchAuthTokenInterface
      * @throws ValidationException
      */
     private static function buildApplicationDefaultCredentials(
@@ -274,7 +278,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface
         }
     }
 
-    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, $authHttpHandler)
+    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler)
     {
         $token = $credentialsFetcher->getLastReceivedToken();
         if (self::isExpired($token)) {
@@ -286,16 +290,22 @@ class CredentialsWrapper implements HeaderCredentialsInterface
         return $token['access_token'];
     }
 
+    /**
+     * @param mixed $token
+     */
     private static function isValid($token)
     {
         return is_array($token)
             && array_key_exists('access_token', $token);
     }
 
+    /**
+     * @param mixed $token
+     */
     private static function isExpired($token)
     {
         return !(self::isValid($token)
             && array_key_exists('expires_at', $token)
-            && $token['expires_at'] > time());
+            && $token['expires_at'] > time() + self::$eagerRefreshThresholdSeconds);
     }
 }

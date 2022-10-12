@@ -24,8 +24,8 @@ function downloadDoctum() {
   # https://doctum.long-term.support/releases/5.1/VERSION
   rm -f "${DOCTUM_EXECUTABLE}"
   rm -f "${DOCTUM_EXECUTABLE}.sha256"
-  curl -# https://doctum.long-term.support/releases/5.1/doctum.phar -o "${DOCTUM_EXECUTABLE}"
-  curl -# https://doctum.long-term.support/releases/5.1/doctum.phar.sha256  -o "${DOCTUM_EXECUTABLE}.sha256"
+  curl -# https://doctum.long-term.support/releases/5.5/doctum.phar -o "${DOCTUM_EXECUTABLE}"
+  curl -# https://doctum.long-term.support/releases/5.5/doctum.phar.sha256  -o "${DOCTUM_EXECUTABLE}.sha256"
   sha256sum --strict --check "${DOCTUM_EXECUTABLE}.sha256"
   rm -f "${DOCTUM_EXECUTABLE}.sha256"
 }
@@ -47,8 +47,14 @@ function buildDocs() {
   API_CORE_DOCS_VERSION=${GIT_TAG_NAME} php ${DOCTUM_EXECUTABLE} update ${DOCTUM_CONFIG} -v
 }
 
-downloadDoctum
+# Remove "v" from start of string if it exists
+if [[ ${GIT_TAG_NAME::1} == "v" ]]
+then
+  GIT_TAG_NAME="${GIT_TAG_NAME:1}"
+fi
+
 checkVersionFile ${GIT_TAG_NAME}
+downloadDoctum
 buildDocs ${GIT_TAG_NAME}
 
 # Construct the base index file to redirect to the latest version of the docs.

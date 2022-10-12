@@ -34,10 +34,14 @@ namespace Google\ApiCore\Tests\Unit\ResourceTemplate;
 use Google\ApiCore\ResourceTemplate\Parser;
 use Google\ApiCore\ResourceTemplate\RelativeResourceTemplate;
 use Google\ApiCore\ResourceTemplate\Segment;
+use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class ParserTest extends TestCase
 {
+    use ExpectException;
+
     private static function literalSegment($value, $separator = '/')
     {
         return new Segment(Segment::LITERAL_SEGMENT, $value, null, null, $separator);
@@ -243,11 +247,12 @@ class ParserTest extends TestCase
 
     /**
      * @dataProvider invalidPathProvider
-     * @expectedException \Google\ApiCore\ValidationException
      * @param string $path
      */
     public function testParseInvalid($path)
     {
+        $this->expectException(ValidationException::class);
+
         Parser::parseSegments($path);
     }
 
@@ -303,7 +308,6 @@ class ParserTest extends TestCase
     public function invalidLiterals()
     {
         return [
-            [null],
             [""],
             ["fo\$o"],
             ["fo{o"],
@@ -361,7 +365,6 @@ class ParserTest extends TestCase
     public function invalidBindings()
     {
         return [
-            [null],
             [""],
             ["fo/o"],
         ];
@@ -398,7 +401,6 @@ class ParserTest extends TestCase
     public function invalidDoubleWildcardBindings()
     {
         return [
-            [null],
             [""],
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,34 +32,92 @@
 
 namespace Google\ApiCore\Transport\Grpc;
 
+use Google\ApiCore\ServerStreamingCallInterface;
+use Grpc\Gcp\GCPServerStreamCall;
+use Grpc\ServerStreamingCall;
+
 /**
- * Class ForwardingServerStreamingCall wraps a \Grpc\ServerStreamingCall.
- *
- * @experimental
+ * Class ServerStreamingCallWrapper implements \Google\ApiCore\ServerStreamingCallInterface.
+ * This is essentially a wrapper class around the \Grpc\ServerStreamingCall.
  */
-class ForwardingServerStreamingCall extends ForwardingCall
+class ServerStreamingCallWrapper implements ServerStreamingCallInterface
 {
     /**
-     * @var \Grpc\ServerStreamingCall
+     * @var ServerStreamingCall|GCPServerStreamCall
      */
-    protected $innerCall;
+    private $stream;
 
     /**
-     * @return mixed An iterator of response values
+     * @param ServerStreamingCall|GCPServerStreamCall $stream
      */
-    public function responses()
+    public function __construct($stream)
     {
-        return $this->innerCall->responses();
+        $this->stream = $stream;
     }
 
     /**
-     * Wait for the server to send the status, and return it.
-     *
-     * @return \stdClass The status object, with integer $code, string
-     *                   $details, and array $metadata members
+     * {@inheritdoc}
+     */
+    public function start($data, array $metadata = [], array $callOptions = [])
+    {
+        $this->stream->start($data, $metadata, $callOptions);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function responses()
+    {
+        foreach ($this->stream->responses() as $response) {
+            yield $response;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getStatus()
     {
-        return $this->innerCall->getStatus();
+        return $this->stream->getStatus();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadata()
+    {
+        return $this->stream->getMetadata();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTrailingMetadata()
+    {
+        return $this->stream->getTrailingMetadata();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPeer()
+    {
+        return $this->stream->getPeer();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cancel()
+    {
+        $this->stream->cancel();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCallCredentials($call_credentials)
+    {
+        $this->stream->setCallCredentials($call_credentials);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2021 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,27 +30,66 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Transport\Grpc;
+namespace Google\ApiCore;
 
 /**
- * Class ForwardingUnaryCall wraps a \Grpc\UnaryCall.
- *
- * @experimental
+ * @internal
  */
-class ForwardingUnaryCall extends ForwardingCall
+interface ServerStreamingCallInterface
 {
-    /**
-     * @var \Grpc\UnaryCall
-     */
-    protected $innerCall;
 
     /**
-     * Wait for the server to respond with data and a status.
+     * Start the call.
      *
-     * @return array [response data, status]
+     * @param mixed $data     The data to send
+     * @param array<mixed> $metadata Metadata to send with the call, if applicable
+     *                        (optional)
+     * @param array<mixed> $options  An array of options, possible keys:
+     *                        'flags' => a number (optional)
+     * @return void
      */
-    public function wait()
-    {
-        return $this->innerCall->wait();
-    }
+    public function start($data, array $metadata = [], array $options = []);
+
+    /**
+     * @return mixed An iterator of response values.
+     */
+    public function responses();
+
+    /**
+     * Return the status of the server stream.
+     *
+     * @return \stdClass The API status.
+     */
+    public function getStatus();
+
+    /**
+     * @return mixed The metadata sent by the server.
+     */
+    public function getMetadata();
+
+    /**
+     * @return mixed The trailing metadata sent by the server.
+     */
+    public function getTrailingMetadata();
+
+    /**
+     * @return string The URI of the endpoint.
+     */
+    public function getPeer();
+
+    /**
+     * Cancels the call.
+     *
+     * @return void
+     */
+    public function cancel();
+
+    /**
+     * Set the CallCredentials for the underlying Call.
+     *
+     * @param mixed $call_credentials The CallCredentials object
+     *
+     * @return void
+     */
+    public function setCallCredentials($call_credentials);
 }

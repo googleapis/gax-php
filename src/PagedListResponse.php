@@ -121,6 +121,7 @@ class PagedListResponse implements IteratorAggregate
      * @return Generator
      * @throws ValidationException
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         foreach ($this->iteratePages() as $page) {
@@ -163,11 +164,11 @@ class PagedListResponse implements IteratorAggregate
      * original API call. It is also an error if the collectionSize parameter
      * is less than the page size that has been set.
      *
-     * @param $collectionSize int
+     * @param int $collectionSize
      * @throws ValidationException if a FixedSizeCollection of the specified size cannot be constructed
      * @return FixedSizeCollection
      */
-    public function expandToFixedSizeCollection($collectionSize)
+    public function expandToFixedSizeCollection(int $collectionSize)
     {
         return $this->getPage()->expandToFixedSizeCollection($collectionSize);
     }
@@ -185,11 +186,11 @@ class PagedListResponse implements IteratorAggregate
      * original API call. It is also an error if the collectionSize parameter
      * is less than the page size that has been set.
      *
-     * @param $collectionSize int
+     * @param int $collectionSize
      * @throws ValidationException if a FixedSizeCollection of the specified size cannot be constructed
      * @return Generator|FixedSizeCollection[]
      */
-    public function iterateFixedSizeCollections($collectionSize)
+    public function iterateFixedSizeCollections(int $collectionSize)
     {
         return $this->expandToFixedSizeCollection($collectionSize)->iterateCollections();
     }

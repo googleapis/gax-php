@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore\Tests\Unit\Transport\Rest;
 
+use Google\ApiCore\Testing\MockResponse;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\Rest\JsonStreamDecoder;
 use Google\LongRunning\Operation;
@@ -40,16 +41,20 @@ use Google\Rpc\Status;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\BufferStream;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 
 class JsonStreamDecoderTest extends TestCase
 {
+    use ExpectException;
     use TestTrait;
 
     /**
      * @dataProvider buildResponseStreams
      */
-    public function testJsonStreamDecoder(array $responses, $decodeType, $stream, $readChunkSizeBytes) {
+    public function testJsonStreamDecoder(array $responses, $decodeType, $stream, $readChunkSizeBytes)
+    {
         $decoder = new JsonStreamDecoder($stream, $decodeType, ['readChunkSizeBytes' => $readChunkSizeBytes]);
         $num = 0;
         foreach($decoder->decode() as $op) {
@@ -59,7 +64,8 @@ class JsonStreamDecoderTest extends TestCase
         $this->assertEquals(count($responses), $num);
     }
 
-    public function buildResponseStreams() {
+    public function buildResponseStreams()
+    {
         $any = new Any();
         $any->pack(new Operation([
             'name' => 'any_metadata',
@@ -120,7 +126,8 @@ class JsonStreamDecoderTest extends TestCase
         ];
     }
 
-    private function messagesToStream(array $messages) {
+    private function messagesToStream(array $messages)
+    {
         $data = [];
         foreach($messages as $message) {
             $data[] = $message->serializeToJsonString();
@@ -129,20 +136,60 @@ class JsonStreamDecoderTest extends TestCase
     }
 
     /**
-     * @dataProvider buildBadPayloads
-     * @expectedException \Exception
+     * @dataProvider buildAlternateStreams
      */
-    public function testJsonStreamDecoderBadClose($payload) {
-        $stream = new BufferStream();
-        $stream->write($payload);
-        $decoder = new JsonStreamDecoder($stream, Operation::class, ['readChunkSizeBytes' => 10]);
+    public function testJsonStreamDecoderAlternate(array $responses, $decodeType, $stream)
+    {
+        $decoder = new JsonStreamDecoder($stream, $decodeType);
+        $num = 0;
         foreach($decoder->decode() as $op) {
-            $this->assertEquals('foo', $op->getName());
+            $this->assertEquals($responses[$num], $op);
+            $num++;
+        }
+        $this->assertEquals(count($responses), $num);
+    }
+
+    public function buildAlternateStreams()
+    {
+        $res1 = new MockResponse(['name' => 'foo']);
+        $res1Str = $res1->serializeToJsonString();
+        $res2 = new MockResponse(['name' => 'bar']);
+        $res2Str = $res2->serializeToJsonString();
+        $responses = [$res1, $res2];
+
+        $newlines = "[\n\n\n".$res1Str."\n\n\n,\n\n\n".$res2Str."\n\n\n]";
+        $commas = "[".$res1Str.",\n,\n,\n,".$res2Str."]";
+        $blankspace = "[".$res1Str.",           ".$res2Str."]";
+
+        return [
+            [$responses, MockResponse::class, $this->initBufferStream($newlines)],
+            [$responses, MockResponse::class, $this->initBufferStream($commas)],
+            [$responses, MockResponse::class, $this->initBufferStream($blankspace)]
+        ];
+    }
+
+    /**
+     * @dataProvider buildBadPayloads
+     */
+    public function testJsonStreamDecoderBadClose($payload)
+    {
+        $stream = $this->initBufferStream($payload);
+        $decoder = new JsonStreamDecoder($stream, Operation::class, ['readChunkSizeBytes' => 10]);
+
+        $this->expectException(RuntimeException::class);
+
+        try {
+            // Just iterating the stream will throw the exception
+            foreach($decoder->decode() as $op) {
+
+            }
+        } finally {
             $stream->close();
         }
     }
 
-    public function buildBadPayloads() {
+    public function buildBadPayloads()
+    {
         return
         [
             ['[{"name": "foo"},{'],
@@ -150,5 +197,27 @@ class JsonStreamDecoderTest extends TestCase
             ['[{"name": "foo"},{"name":'],
             ['[{"name": "foo"},{]'],
         ];
+    }
+
+    public function testJsonStreamDecoderClosed()
+    {
+        $stream = new BufferStream();
+        $stream->write('[{"name": "foo"},{');
+        $decoder = new JsonStreamDecoder($stream, Operation::class, ['readChunkSizeBytes' => 10]);
+        $count = 0;
+        foreach($decoder->decode() as $op) {
+            $this->assertEquals('foo', $op->getName());
+            $count++;
+            $decoder->close();
+        }
+
+        $this->assertEquals(1, $count);
+    }
+
+    private function initBufferStream($data)
+    {
+        $stream = new BufferStream();
+        $stream->write($data);
+        return $stream;
     }
 }

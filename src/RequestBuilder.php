@@ -58,11 +58,21 @@ class RequestBuilder
      * @param string $restConfigPath
      * @throws ValidationException
      */
-    public function __construct($baseUri, $restConfigPath)
+    public function __construct(string $baseUri, string $restConfigPath)
     {
         self::validateFileExists($restConfigPath);
         $this->baseUri = $baseUri;
         $this->restConfig = require($restConfigPath);
+    }
+
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public function pathExists(string $path)
+    {
+        list($interface, $method) = explode('/', $path);
+        return isset($this->restConfig['interfaces'][$interface][$method]);
     }
 
     /**
@@ -72,7 +82,7 @@ class RequestBuilder
      * @return RequestInterface
      * @throws ValidationException
      */
-    public function build($path, Message $message, array $headers = [])
+    public function build(string $path, Message $message, array $headers = [])
     {
         list($interface, $method) = explode('/', $path);
 
@@ -82,6 +92,7 @@ class RequestBuilder
             );
         }
 
+        $numericEnums = isset($this->restConfig['numericEnums']) && $this->restConfig['numericEnums'];
         $methodConfig = $this->restConfig['interfaces'][$interface][$method] + [
             'placeholders' => [],
             'body' => null,
@@ -97,6 +108,12 @@ class RequestBuilder
                 // We found a valid uriTemplate - now build and return the Request
 
                 list($body, $queryParams) = $this->constructBodyAndQueryParameters($message, $config);
+
+                // Request enum fields will be encoded as numbers rather than strings  (in the response).
+                if ($numericEnums) {
+                    $queryParams['$alt'] = "json;enum-encoding=int";
+                }
+
                 $uri = $this->buildUri($pathTemplate, $queryParams);
 
                 return new Request(
@@ -125,7 +142,7 @@ class RequestBuilder
      * @param array $config
      * @return array[] An array of configs
      */
-    private function getConfigsForUriTemplates($config)
+    private function getConfigsForUriTemplates(array $config)
     {
         $configs = [$config];
 
@@ -139,11 +156,11 @@ class RequestBuilder
     }
 
     /**
-     * @param $message
-     * @param $config
+     * @param Message $message
+     * @param array $config
      * @return array Tuple [$body, $queryParams]
      */
-    private function constructBodyAndQueryParameters(Message $message, $config)
+    private function constructBodyAndQueryParameters(Message $message, array $config)
     {
         $messageDataJson = $message->serializeToJsonString();
 
@@ -219,12 +236,12 @@ class RequestBuilder
     /**
      * Try to render the resource name. The rendered resource name will always contain a leading '/'
      *
-     * @param $uriTemplate
+     * @param string $uriTemplate
      * @param array $bindings
      * @return null|string
      * @throws ValidationException
      */
-    private function tryRenderPathTemplate($uriTemplate, array $bindings)
+    private function tryRenderPathTemplate(string $uriTemplate, array $bindings)
     {
         $template = new AbsoluteResourceTemplate($uriTemplate);
 
@@ -236,11 +253,11 @@ class RequestBuilder
     }
 
     /**
-     * @param $path
-     * @param $queryParams
+     * @param string $path
+     * @param array $queryParams
      * @return UriInterface
      */
-    private function buildUri($path, $queryParams)
+    private function buildUri(string $path, array $queryParams)
     {
         $uri = Utils::uriFor(
             sprintf(
