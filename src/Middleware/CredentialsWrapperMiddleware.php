@@ -43,7 +43,7 @@ class CredentialsWrapperMiddleware
     /** @var callable */
     private $nextHandler;
 
-    /** @var CredentialsWrapper */
+    /** @var HeaderCredentialsInterface */
     private $credentialsWrapper;
 
     public function __construct(
