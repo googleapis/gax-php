@@ -70,8 +70,6 @@ class DoctumConfigBuilder
         ]);
     }
 
-
-
     public static function buildProtobufConfigForVersion($version)
     {
         $gaxRootDir = realpath(__DIR__ . '/../../..');
