@@ -97,6 +97,11 @@ class ResourceHelperTraitStub{
         self::loadTemplates(self::$CONFIG_PATH, self::$SERVICE_NAME);
     }
 
+    public static function parseName($formattedName, $template = null)
+    {
+        return self::parse($formattedName, $template);
+    }
+
     public static function testLoadTemplates()
     {
         self::loadTemplates(self::$CONFIG_PATH, self::$SERVICE_NAME);
