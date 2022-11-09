@@ -34,10 +34,11 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\ValidationException;
 
-trait ResourceHelperTrait {
+trait ResourceHelperTrait
+{
     private static $templateMap;
 
-    public static abstract function registerTemplates();
+    abstract public static function registerTemplates();
 
     private static function loadTemplates(string $configPath, string $serviceName)
     {
