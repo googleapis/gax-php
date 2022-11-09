@@ -37,7 +37,7 @@ use Google\ApiCore\ValidationException;
 trait ResourceHelperTrait {
     private static $templateMap;
 
-    private static abstract function registerTemplates();
+    public static abstract function registerTemplates();
 
     private static function loadTemplates(string $configPath, string $serviceName)
     {
