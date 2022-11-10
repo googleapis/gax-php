@@ -38,7 +38,11 @@ trait ResourceHelperTrait
 {
     private static $templateMap;
 
-    abstract public static function registerTemplates();
+    // Must be implemented by extendees to call loadTemplates.
+    private static function registerTemplates()
+    {
+        self::$templateMap = [];
+    }
 
     private static function loadTemplates(string $configPath, string $serviceName)
     {

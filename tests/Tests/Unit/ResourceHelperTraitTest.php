@@ -92,7 +92,7 @@ class ResourceHelperTraitStub{
     public static $CONFIG_PATH = __DIR__ . '/testdata/test_service_descriptor_config.php';
     public static $SERVICE_NAME = 'test.interface.v1.api';
 
-    public static function registerTemplates()
+    private static function registerTemplates()
     {
         self::loadTemplates(self::$CONFIG_PATH, self::$SERVICE_NAME);
     }
