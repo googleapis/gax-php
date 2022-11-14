@@ -60,6 +60,7 @@ trait ResourceHelperTrait
 
     private static function getTemplate(string $key)
     {
+        // TODO: Add nullable return type reference once PHP 7.1 is minimum.
         if (is_null(self::$templateMap)) {
             self::registerTemplates();
         }
