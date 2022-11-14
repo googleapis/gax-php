@@ -46,15 +46,13 @@ trait ResourceHelperTrait
 
     private static function loadTemplates(string $configPath, string $serviceName): void
     {
-        if (!is_null(self::$templateMap)) {
-            return;
-        }
-
-        $descriptors = require($configPath);
-        $templates = $descriptors['interfaces'][$serviceName]['templateMap'] ?? [];
-        self::$templateMap = [];
-        foreach ($templates as $name => $template) {
-             self::$templateMap[$name] = new PathTemplate($template);
+        if (is_null(self::$templateMap)) {
+            $descriptors = require($configPath);
+            $templates = $descriptors['interfaces'][$serviceName]['templateMap'] ?? [];
+            self::$templateMap = [];
+            foreach ($templates as $name => $template) {
+                self::$templateMap[$name] = new PathTemplate($template);
+            }
         }
     }
 
