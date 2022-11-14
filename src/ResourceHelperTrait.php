@@ -58,7 +58,7 @@ trait ResourceHelperTrait
         }
     }
 
-    private static function getTemplate(string $key): PathTemplate|null
+    private static function getTemplate(string $key)
     {
         if (is_null(self::$templateMap)) {
             self::registerTemplates();
