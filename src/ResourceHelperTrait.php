@@ -39,12 +39,12 @@ trait ResourceHelperTrait
     private static $templateMap;
 
     // Must be implemented by extendees to call loadTemplates.
-    private static function registerTemplates()
+    private static function registerTemplates(): void
     {
         self::$templateMap = [];
     }
 
-    private static function loadTemplates(string $configPath, string $serviceName)
+    private static function loadTemplates(string $configPath, string $serviceName): void
     {
         if (!is_null(self::$templateMap)) {
             return;
@@ -58,7 +58,7 @@ trait ResourceHelperTrait
         }
     }
 
-    private static function getTemplate($key)
+    private static function getTemplate(string $key): PathTemplate|null
     {
         if (is_null(self::$templateMap)) {
             self::registerTemplates();
@@ -66,7 +66,7 @@ trait ResourceHelperTrait
         return self::$templateMap[$key] ?? null;
     }
 
-    private static function parse($formattedName, $template = null)
+    private static function parse(string $formattedName, string $template = null): array
     {
         if (is_null(self::$templateMap)) {
             self::registerTemplates();
