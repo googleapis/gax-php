@@ -39,20 +39,24 @@ trait ResourceHelperTrait
     private static $templateMap;
 
     // Must be implemented by extendees to call loadTemplates.
-    private static function registerTemplates(): void
+    private static function registerTemplates()
     {
+        // TODO: Add void return type hint.
         self::$templateMap = [];
     }
 
-    private static function loadTemplates(string $configPath, string $serviceName): void
+    private static function loadTemplates(string $configPath, string $serviceName)
     {
-        if (is_null(self::$templateMap)) {
-            $descriptors = require($configPath);
-            $templates = $descriptors['interfaces'][$serviceName]['templateMap'] ?? [];
-            self::$templateMap = [];
-            foreach ($templates as $name => $template) {
-                self::$templateMap[$name] = new PathTemplate($template);
-            }
+        // TODO: Add void return type hint.
+        if (!is_null(self::$templateMap)) {
+            return;
+        }
+
+        $descriptors = require($configPath);
+        $templates = $descriptors['interfaces'][$serviceName]['templateMap'] ?? [];
+        self::$templateMap = [];
+        foreach ($templates as $name => $template) {
+            self::$templateMap[$name] = new PathTemplate($template);
         }
     }
 
