@@ -90,8 +90,8 @@ class ResourceHelperTraitStub
 {
     use ResourceHelperTrait;
 
-    private const CONFIG_PATH = __DIR__ . '/testdata/test_service_descriptor_config.php';
-    private const SERVICE_NAME = 'test.interface.v1.api';
+    const CONFIG_PATH = __DIR__ . '/testdata/test_service_descriptor_config.php';
+    const SERVICE_NAME = 'test.interface.v1.api';
 
     private static function registerPathTemplates()
     {
