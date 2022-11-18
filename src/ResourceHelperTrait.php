@@ -38,14 +38,14 @@ trait ResourceHelperTrait
 {
     private static $templateMap;
 
-    // Must be implemented by extendees to call loadTemplates.
-    private static function registerTemplates()
+    // Must be implemented by extendees to call loadPathTemplates.
+    private static function registerPathTemplates()
     {
         // TODO: Add void return type hint.
         self::$templateMap = [];
     }
 
-    private static function loadTemplates(string $configPath, string $serviceName)
+    private static function loadPathTemplates(string $configPath, string $serviceName)
     {
         // TODO: Add void return type hint.
         if (!is_null(self::$templateMap)) {
@@ -60,11 +60,11 @@ trait ResourceHelperTrait
         }
     }
 
-    private static function getTemplate(string $key)
+    private static function getPathTemplate(string $key)
     {
         // TODO: Add nullable return type reference once PHP 7.1 is minimum.
         if (is_null(self::$templateMap)) {
-            self::registerTemplates();
+            self::registerPathTemplates();
         }
         return self::$templateMap[$key] ?? null;
     }
@@ -72,7 +72,7 @@ trait ResourceHelperTrait
     private static function parse(string $formattedName, string $template = null): array
     {
         if (is_null(self::$templateMap)) {
-            self::registerTemplates();
+            self::registerPathTemplates();
         }
         if ($template) {
             if (!isset(self::$templateMap[$template])) {

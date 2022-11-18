@@ -41,23 +41,23 @@ class ResourceHelperTraitTest extends TestCase
 {
     use ExpectException;
 
-    public function testLoadTemplates()
+    public function testLoadPathTemplates()
     {
-        $got = ResourceHelperTraitStub::testLoadTemplates();
+        $got = ResourceHelperTraitStub::testLoadPathTemplates();
         $this->assertEquals(count($got), 4);
         $this->assertTrue($got['project'] instanceof PathTemplate);
     }
 
-    public function testGetTemplate()
+    public function testGetPathTemplate()
     {
-        $got = ResourceHelperTraitStub::testGetTemplate('project');
+        $got = ResourceHelperTraitStub::testGetPathTemplate('project');
         $this->assertNotNull($got);
         $this->assertTrue($got instanceof PathTemplate);
     }
 
-    public function testGetTemplateNull()
+    public function testGetPathTemplateNull()
     {
-        $got = ResourceHelperTraitStub::testGetTemplate('does_not_exist');
+        $got = ResourceHelperTraitStub::testGetPathTemplate('does_not_exist');
         $this->assertNull($got);
     }
 
@@ -86,15 +86,16 @@ class ResourceHelperTraitTest extends TestCase
     
 }
 
-class ResourceHelperTraitStub{
+class ResourceHelperTraitStub
+{
     use ResourceHelperTrait;
 
-    public static $CONFIG_PATH = __DIR__ . '/testdata/test_service_descriptor_config.php';
-    public static $SERVICE_NAME = 'test.interface.v1.api';
+    private const CONFIG_PATH = __DIR__ . '/testdata/test_service_descriptor_config.php';
+    private const SERVICE_NAME = 'test.interface.v1.api';
 
-    private static function registerTemplates()
+    private static function registerPathTemplates()
     {
-        self::loadTemplates(self::$CONFIG_PATH, self::$SERVICE_NAME);
+        self::loadPathTemplates(self::CONFIG_PATH, self::SERVICE_NAME);
     }
 
     public static function parseName($formattedName, $template = null)
@@ -102,14 +103,14 @@ class ResourceHelperTraitStub{
         return self::parse($formattedName, $template);
     }
 
-    public static function testLoadTemplates()
+    public static function testLoadPathTemplates()
     {
-        self::loadTemplates(self::$CONFIG_PATH, self::$SERVICE_NAME);
+        self::loadPathTemplates(self::CONFIG_PATH, self::SERVICE_NAME);
         return self::$templateMap;
     }
 
-    public static function testGetTemplate($key)
+    public static function testGetPathTemplate($key)
     {
-        return self::getTemplate($key);
+        return self::getPathTemplate($key);
     }
 }
