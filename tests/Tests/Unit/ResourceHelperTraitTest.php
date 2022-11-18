@@ -100,7 +100,7 @@ class ResourceHelperTraitStub
 
     public static function parseName($formattedName, $template = null)
     {
-        return self::parse($formattedName, $template);
+        return self::parseFormattedName($formattedName, $template);
     }
 
     public static function testLoadPathTemplates()
