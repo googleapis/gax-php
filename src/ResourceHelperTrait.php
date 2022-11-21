@@ -42,6 +42,7 @@ use Google\ApiCore\ValidationException;
  */
 trait ResourceHelperTrait
 {
+    /** @var array|null */
     private static $templateMap;
 
     // Must be implemented by extendees to call loadPathTemplates.
