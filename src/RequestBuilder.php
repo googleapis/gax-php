@@ -202,17 +202,18 @@ class RequestBuilder
                 if (!array_key_exists($requiredQueryParam, $queryParams)) {
                     $getter = Serializer::getGetter($requiredQueryParam);
                     $queryParamValue = $message->$getter();
-
                     if ($queryParamValue instanceof Message) {
-                        $queryParamValue = json_decode($queryParamValue->serializeToJsonString(), true);
-                        if (is_array($queryParamValue)) {
-                            foreach ($queryParamValue as $key => $value) {
+                        $param = json_decode($queryParamValue->serializeToJsonString(), true);
+                        if (is_array($param)) {
+                            foreach ($param as $key => $value) {
                                 $queryParams[$requiredQueryParam . '.' . $key] = $value;
                             }
-                            continue;
+                        } else {
+                            $queryParams[$requiredQueryParam] = $param;
                         }
+                    } else {
+                        $queryParams[$requiredQueryParam] = $queryParamValue;
                     }
-                    $queryParams[$requiredQueryParam] = $queryParamValue;
                 }
             }
         }

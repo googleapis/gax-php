@@ -348,6 +348,35 @@ class RequestBuilderTest extends TestCase
         $this->assertEquals(0, $query['number']);
     }
 
+
+    public function testMethodWithRequiredNestedQueryParameters()
+    {
+        $nestedMessage = (new MockRequestBody())
+            ->setName('some-name')
+            ->setNumber(123);
+        $message = (new MockRequestBody())
+            ->setNestedMessage($nestedMessage);
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredNestedQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $this->assertSame('some-name', $query['nestedMessage.name']);
+        $this->assertEquals(123, $query['nestedMessage.number']);
+    }
+
+
+    public function testMethodWithRequiredTimestampQueryParameters()
+    {
+        $message = (new MockRequestBody())
+            ->setTimestampValue(new Timestamp(['seconds' => 1234567]));
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredTimestampQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $dateTime = (new \DateTime)->setTimestamp(1234567);
+        $this->assertSame($dateTime->format('Y-m-d\TH:i:s\Z'), $query['timestampValue']);
+    }
+
     public function testMethodWithComplexMessageInQueryString()
     {
         $message = (new MockRequestBody())
