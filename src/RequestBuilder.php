@@ -204,9 +204,9 @@ class RequestBuilder
                     $queryParamValue = $message->$getter();
 
                     if ($queryParamValue instanceof Message) {
-                        $params = json_decode($queryParamValue->serializeToJsonString(), true);
-                        if (is_array($params)) {
-                            foreach ($params as $key => $value) {
+                        $queryParamValue = json_decode($queryParamValue->serializeToJsonString(), true);
+                        if (is_array($queryParamValue)) {
+                            foreach ($queryParamValue as $key => $value) {
                                 $queryParams[$requiredQueryParam . '.' . $key] = $value;
                             }
                             continue;
