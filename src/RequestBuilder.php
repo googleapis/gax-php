@@ -204,16 +204,13 @@ class RequestBuilder
                     $queryParamValue = $message->$getter();
                     if ($queryParamValue instanceof Message) {
                         // Decode message for the query parameter.
-                        $param = json_decode($queryParamValue->serializeToJsonString(), true);
-                        if (is_array($param)) {
-                            // If the message has properties, add them as nested querystring values.
-                            // NOTE: If the nested property is also an object, it will be a JSON
-                            // object. This means the nesting only happens at one level of depth.
-                            foreach ($param as $key => $value) {
-                                $queryParams[$requiredQueryParam . '.' . $key] = $value;
-                            }
-                        } else {
-                            $queryParams[$requiredQueryParam] = $param;
+                        $queryParamValue = json_decode($queryParamValue->serializeToJsonString(), true);
+                    }
+                    if (is_array($queryParamValue)) {
+                        // If the message has properties, add them as nested querystring values.
+                        // NOTE: This only supports nesting at one level of depth.
+                        foreach ($queryParamValue as $key => $value) {
+                            $queryParams[$requiredQueryParam . '.' . $key] = $value;
                         }
                     } else {
                         $queryParams[$requiredQueryParam] = $queryParamValue;

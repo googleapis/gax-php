@@ -345,7 +345,7 @@ class RequestBuilderTest extends TestCase
         $query = Query::parse($request->getUri()->getQuery());
 
         $this->assertSame('', $query['name']);
-        $this->assertEquals(0, $query['number']);
+        $this->assertSame('0', $query['number']);
     }
 
 
@@ -361,7 +361,7 @@ class RequestBuilderTest extends TestCase
         $query = Query::parse($request->getUri()->getQuery());
 
         $this->assertSame('some-name', $query['nestedMessage.name']);
-        $this->assertEquals(123, $query['nestedMessage.number']);
+        $this->assertSame('123', $query['nestedMessage.number']);
     }
 
 
@@ -375,6 +375,41 @@ class RequestBuilderTest extends TestCase
 
         $dateTime = (new \DateTime)->setTimestamp(1234567);
         $this->assertSame($dateTime->format('Y-m-d\TH:i:s\Z'), $query['timestampValue']);
+    }
+
+    public function testMethodWithRequiredDoubleNestedQueryParameter()
+    {
+        $doubleNestedMessage = (new MockRequestBody())
+            ->setName('double-nested-name');
+        $nestedMessage = (new MockRequestBody())
+            ->setName('some-name')
+            ->setNestedMessage($doubleNestedMessage);
+        $message = (new MockRequestBody())
+            ->setNestedMessage($nestedMessage);
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredNestedQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $this->assertSame('some-name', $query['nestedMessage.name']);
+        $this->assertSame('double-nested-name', $query['nestedMessage.nestedMessage']);
+    }
+
+    public function testMethodWithRequiredDoubleNestedQueryParameterArray()
+    {
+        // Adding another property decodes it as array
+        $doubleNestedMessage = (new MockRequestBody())
+            ->setName('double-nested-name')
+            ->setNumber(123);
+        $nestedMessage = (new MockRequestBody())
+            ->setName('some-name')
+            ->setNestedMessage($doubleNestedMessage);
+        $message = (new MockRequestBody())
+            ->setNestedMessage($nestedMessage);
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredNestedQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $this->assertSame(['double-nested-name', '123'], $query['nestedMessage.nestedMessage']);
     }
 
     public function testMethodWithComplexMessageInQueryString()
