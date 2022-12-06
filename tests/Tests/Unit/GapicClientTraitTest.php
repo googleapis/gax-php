@@ -1976,7 +1976,7 @@ class MiddlewareTester
     public static function setNextHandler(callable $middleware, callable $nextHandler)
     {
         $middlewareProperty = (new \ReflectionClass($middleware))->getProperty('nextHandler');
-        // $middlewareProperty->setAccessible(true);
+        $middlewareProperty->setAccessible(true);
         $middlewareProperty->setValue($middleware, $nextHandler);
     }
 }
