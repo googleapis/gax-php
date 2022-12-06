@@ -84,7 +84,7 @@ class DoctumConfigBuilder
         return new Doctum($iterator, [
             'title'                => "Google Protobuf - $version",
             'version'              => $version,
-            'build_dir'            => "$gaxRootDir/protobufdocs-out",
+            'build_dir'            => "$gaxRootDir/api-docs",
             'cache_dir'            => "$gaxRootDir/cache/%version%",
             'remote_repository'    => new GitHubRemoteRepository('protocolbuffers/protobuf-php', $protobufRootDir),
             'default_opened_level' => 1,

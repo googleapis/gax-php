@@ -12,6 +12,9 @@
 # of a valid protobuf-php releas eas the first argument.
 # @see https://github.com/protocolbuffers/protobuf-php/tags
 
+# Once ran, copy the "api-docs" directory to the protocolbuffers.github.io repo:
+# https://github.com/protocolbuffers/protocolbuffers.github.io/tree/main/content/reference/php/api-docs
+
 set -ev
 
 if [ "$#" -ne 1 ]; then
@@ -20,7 +23,7 @@ if [ "$#" -ne 1 ]; then
 fi
 GIT_TAG_NAME=$1
 ROOT_DIR=$(pwd)
-DOC_OUTPUT_DIR=${ROOT_DIR}/protobufdocs-out
+DOC_OUTPUT_DIR=${ROOT_DIR}/api-docs
 DOCTUM_EXECUTABLE=${ROOT_DIR}/doctum.phar
 
 function downloadDoctum() {
@@ -42,3 +45,10 @@ function buildDocs() {
 
 downloadDoctum
 buildDocs ${GIT_TAG_NAME}
+
+# Construct the base index file to redirect to the Protobuf namespace
+UPDATED_INDEX_FILE=$(cat << EndOfMessage
+<html><head><script>window.location.replace('Google/Protobuf.html')</script></head><body></body></html>
+EndOfMessage
+)
+echo ${UPDATED_INDEX_FILE} > ${DOC_OUTPUT_DIR}/index.html
