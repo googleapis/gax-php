@@ -315,28 +315,4 @@ class CredentialsWrapperTest extends TestCase
             [$customFetcher->reveal(), ['authorization' => ['Bearer 123']]],
         ];
     }
-
-    public function testUserProjectHeaderIsSetWhenProvidingQuotaProject()
-    {
-        $quotaProject = 'test-quota-project';
-        $credentialsFetcher = $this->prophesize();
-        $credentialsFetcher->willImplement(FetchAuthTokenInterface::class);
-        $credentialsFetcher->willImplement(GetQuotaProjectInterface::class);
-        $credentialsFetcher->getLastReceivedToken()
-            ->shouldBeCalledOnce()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() + 100
-            ]);
-        $credentialsFetcher->getQuotaProject()
-            ->shouldBeCalledOnce()
-            ->willReturn($quotaProject);
-        $credentialsWrapper = new CredentialsWrapper($credentialsFetcher->reveal());
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
-        $headers = $callback();
-        $this->assertEquals($headers, [
-            'X-Goog-User-Project' => [$quotaProject],
-            'authorization' => ['Bearer 123']
-        ]);
-    }
 }

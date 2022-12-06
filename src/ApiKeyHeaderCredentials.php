@@ -31,29 +31,63 @@
  */
 namespace Google\ApiCore;
 
-use InvalidArgumentException;
-
 /**
  * The ApiKeyHeaderCredentials object provides a wrapper around an API key.
  */
 class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
 {
     private $apiKey;
+    private $quotaProject;
 
     /**
      * ApiKeyHeaderCredentials constructor.
      * @param string $apiKey The API key to set in the header for the request
-     * @param callable $authHttpHandler A handler used to deliver PSR-7 requests
-     *        specifically for authentication. Should match a signature of
-     *        `function (RequestInterface $request, array $options) : ResponseInterface`.
+     * @param string|null $quotaProject The quota project associated with the credentials.
      * @throws ValidationException
      */
-    public function __construct($apiKey)
+    public function __construct($apiKey, $quotaProject = null)
     {
         if (empty($apiKey) || !is_string($apiKey)) {
-            throw new InvalidArgumentException('API key must be a string');
+            throw new ValidationException('API key must be a string');
         }
         $this->apiKey = $apiKey;
+        $this->quotaProject = $quotaProject;
+    }
+
+    /**
+     * Factory method to create a CredentialsWrapper from an array of options.
+     *
+     * @param array $args {
+     *     An array of optional arguments.
+     *
+     *     @type string $apiKey
+     *           The API key to set in the header for the request
+     *     @type string $quotaProject
+     *           Specifies a user project to bill for access charges associated with the request.
+     * }
+     * @return ApiKeyHeaderCredentials
+     * @throws ValidationException
+     */
+    public static function build(array $args = [])
+    {
+        $args += [
+            'apiKey'        => null,
+            'quotaProject'  => null,
+        ];
+
+        if (is_null($args['apiKey'])) {
+            throw new ValidationException("Cannot build ApiKeyHeaderCredentials without apiKey option");
+        }
+
+        return new ApiKeyHeaderCredentials($args['apiKey'], $args['quotaProject']);
+    }
+
+    /**
+     * @return string|null The quota project associated with the credentials.
+     */
+    public function getQuotaProject()
+    {
+        return $this->quotaProject;
     }
 
     /**

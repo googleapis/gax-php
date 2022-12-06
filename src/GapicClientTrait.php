@@ -427,18 +427,9 @@ trait GapicClientTrait
         if (is_null($credentials)) {
             // If the user has explicitly set the apiKey option, use Api Key credentials
             if (isset($credentialsConfig['apiKey'])) {
-                return new ApiKeyHeaderCredentials($credentialsConfig['apiKey']);
+                return ApiKeyHeaderCredentials::build($credentialsConfig);
             }
-            try {
-                return CredentialsWrapper::build($credentialsConfig);
-            } catch (ValidationException $e) {
-                // If Application Default Credentials don't exist, look for the
-                // API Key environment variable
-                if ($apiKey = getenv('GOOGLE_API_KEY')) {
-                    return new ApiKeyHeaderCredentials($apiKey);
-                }
-                throw $e;
-            }
+            return CredentialsWrapper::build($credentialsConfig);
         } elseif (is_string($credentials) || is_array($credentials)) {
             return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig);
         } elseif ($credentials instanceof FetchAuthTokenInterface) {
@@ -574,7 +565,7 @@ trait GapicClientTrait
                     "have a pageStreaming in descriptor configuration.");
             }
         }
-        
+
         // LRO are either Standard LRO response type or custom, which are handled by
         // startOperationCall, so no need to validate responseType for those callType.
         if ($callType != Call::LONGRUNNING_CALL) {
@@ -612,9 +603,9 @@ trait GapicClientTrait
         // in order to find the method in the descriptor config.
         $methodName = ucfirst($methodName);
         $methodDescriptors = $this->validateCallConfig($methodName);
-        
+
         $callType = $methodDescriptors['callType'];
-        
+
         switch ($callType) {
             case Call::PAGINATED_CALL:
                 return $this->getPagedListResponseAsync(
@@ -658,7 +649,7 @@ trait GapicClientTrait
     ) {
         $methodDescriptors =$this->validateCallConfig($methodName);
         $callType = $methodDescriptors['callType'];
-        
+
         // Prepare request-based headers, merge with user-provided headers,
         // which take precedence.
         $headerParams = $methodDescriptors['headerParams'] ?? [];
@@ -762,12 +753,18 @@ trait GapicClientTrait
      */
     private function createCallStack(array $callConstructionOptions)
     {
+        $fixedHeaders = $this->agentHeader;
+        if ($quotaProject = $this->credentialsWrapper->getQuotaProject()) {
+            $fixedHeaders += [
+                'X-Goog-User-Project' => [$quotaProject]
+            ];
+        }
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-        $callStack = new FixedHeaderMiddleware($callStack, $this->agentHeader, true);
+        $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
@@ -954,18 +951,18 @@ trait GapicClientTrait
     private function buildRequestParamsHeader(array $headerParams, Message $request = null)
     {
         $headers = [];
-        
+
         // No request message means no request-based headers.
         if (!$request) {
             return $headers;
         }
-        
+
         foreach ($headerParams as $headerParam) {
             $msg = $request;
             $value = null;
             foreach ($headerParam['fieldAccessors'] as $accessor) {
                 $value = $msg->$accessor();
-                
+
                 // In case the field in question is nested in another message,
                 // skip the header param when the nested message field is unset.
                 $msg = $value;
@@ -975,7 +972,7 @@ trait GapicClientTrait
             }
 
             $keyName = $headerParam['keyName'];
-            
+
             // If there are value pattern matchers configured and the target
             // field was set, evaluate the matchers in the order that they were
             // annotated in with last one matching wins.

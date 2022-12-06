@@ -352,13 +352,13 @@ class GapicClientTraitTest extends TestCase
                 [
                     'method' => []
                 ],
-                'does not have a callType' 
+                'does not have a callType'
             ],
             [
                 [
                     'method' => ['callType' => Call::LONGRUNNING_CALL]
                 ],
-                'does not have a longRunning config' 
+                'does not have a longRunning config'
             ],
             [
                 [
@@ -561,7 +561,7 @@ class GapicClientTraitTest extends TestCase
                 [
                     'Method' => []
                 ],
-                'does not have a callType' 
+                'does not have a callType'
             ],
             [
                 [
@@ -1749,23 +1749,35 @@ class GapicClientTraitTest extends TestCase
         $this->assertEquals([], $headers);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testApiKeyOptionWithApiKey()
+    public function testApiKeyOptionAndQuotaProject()
     {
         $apiKey = 'abc-123';
-        putenv('GOOGLE_API_KEY=' . $apiKey);
-
+        $quotaProject = 'def-456';
         $client = new GapicClientTraitStub();
         $updatedOptions = $client->call('buildClientOptions', [
-            ['credentialsConfig' => ['apiKey' => $apiKey]],
+            ['credentialsConfig' => ['apiKey' => $apiKey, 'quotaProject' => $quotaProject ]],
         ]);
         $client->call('setClientOptions', [$updatedOptions]);
-        $credentialsWrapper = $client->get('credentialsWrapper');
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
-        $headers = $callback();
-        $this->assertEquals(['x-goog-api-key' => [$apiKey]], $headers);
+        $callStack = $client->call('createCallStack', [['retrySettings' => RetrySettings::constructDefault()]]);
+
+        $retryMiddleware = MiddlewareTester::getNextHandler($callStack);
+        $headerMiddleware = MiddlewareTester::getNextHandler($retryMiddleware);
+        $credentialsMiddleware = MiddlewareTester::getNextHandler($headerMiddleware);
+
+        MiddlewareTester::setNextHandler(
+            $credentialsMiddleware,
+            function (Call $call, $options) use (&$headers, &$credentials) {
+                $callback = $options['credentialsWrapper']->getAuthorizationHeaderCallback();
+                $headers = $options['headers'] + $callback();
+            }
+        );
+
+        $headerMiddleware($this->createMock(Call::class), []);
+
+        $this->assertArrayHasKey('x-goog-api-key', $headers);
+        $this->assertEquals([$apiKey], $headers['x-goog-api-key']);
+        $this->assertArrayHasKey('X-Goog-User-Project', $headers);
+        $this->assertEquals([$quotaProject], $headers['X-Goog-User-Project']);
     }
 }
 
@@ -1949,5 +1961,22 @@ class CustomOperationsClient
 {
     public function getOperation($name, $arg1, $arg2)
     {
+    }
+}
+
+class MiddlewareTester
+{
+    public static function getNextHandler(callable $middleware)
+    {
+        $middlewareProperty = (new \ReflectionClass($middleware))->getProperty('nextHandler');
+        $middlewareProperty->setAccessible(true);
+        return $middlewareProperty->getValue($middleware);
+    }
+
+    public static function setNextHandler(callable $middleware, callable $nextHandler)
+    {
+        $middlewareProperty = (new \ReflectionClass($middleware))->getProperty('nextHandler');
+        // $middlewareProperty->setAccessible(true);
+        $middlewareProperty->setValue($middleware, $nextHandler);
     }
 }

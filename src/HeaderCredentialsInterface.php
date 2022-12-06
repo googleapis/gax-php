@@ -38,4 +38,9 @@ interface HeaderCredentialsInterface
      * @return callable Callable function that returns an authorization header.
      */
     public function getAuthorizationHeaderCallback($audience = null);
+
+    /**
+     * @return string|null The quota project associated with the credentials.
+     */
+    public function getQuotaProject();
 }
