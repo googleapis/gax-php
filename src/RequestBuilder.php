@@ -203,8 +203,12 @@ class RequestBuilder
                     $getter = Serializer::getGetter($requiredQueryParam);
                     $queryParamValue = $message->$getter();
                     if ($queryParamValue instanceof Message) {
+                        // Decode message properties for the query parameter.
                         $param = json_decode($queryParamValue->serializeToJsonString(), true);
                         if (is_array($param)) {
+                            // If the message has properties, add them as nested querystring values.
+                            // NOTE: If the nested property is also an object, it will be a JSON
+                            // object. This means the nesting only happens at one level of depth.
                             foreach ($param as $key => $value) {
                                 $queryParams[$requiredQueryParam . '.' . $key] = $value;
                             }
