@@ -146,6 +146,9 @@ class RestTransportTest extends TestCase
             ->wait();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testStartUnaryCallWithValidProtoNotLoadedInDescPool()
     {
         $endpoint = 'www.example.com';
@@ -192,6 +195,9 @@ class RestTransportTest extends TestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testStartUnaryCallWithValidProtoNotLoadedInDescPoolThrowsExWithoutMetadataType()
     {
         $endpoint = 'www.example.com';
@@ -206,7 +212,7 @@ class RestTransportTest extends TestCase
             'metadata' => [
                 // This type is arbitrarily chosen and should not exist within the descriptor pool
                 // upon instantation of this test.
-                '@type' => 'type.googleapis.com/google.type.TimeOfDay'
+                '@type' => 'type.googleapis.com/google.type.DateTime'
             ]
         ];
         $httpHandler = function (RequestInterface $request) use ($body, $expectedRequest) {
