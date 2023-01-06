@@ -19,7 +19,7 @@ jobs:
                   - php: 8.1
                     extensions: "protobuf,grpc-1.49.0"
                     tools: "pecl"
-        name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}"
+        name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions ? 'protobuf,grpc' : '' }}"
         steps:
             - uses: actions/checkout@v3
             - name: Setup PHP
