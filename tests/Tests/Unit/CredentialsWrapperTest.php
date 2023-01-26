@@ -40,6 +40,7 @@ use Google\Auth\Cache\SysVCacheItemPool;
 use Google\Auth\GCECache;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\Credentials\GCECredentials;
+use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -324,6 +325,7 @@ class CredentialsWrapperTest extends TestCase
     public function testApplicationDefaultCredentialsWithOnGCECacheTrue()
     {
         putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
+        putenv(ServiceAccountCredentials::ENV_VAR);  // removes it from the environment
 
         $mockCacheItem = $this->prophesize('Psr\Cache\CacheItemInterface');
         $mockCacheItem->isHit()
@@ -352,10 +354,11 @@ class CredentialsWrapperTest extends TestCase
      */
     public function testApplicationDefaultCredentialsWithOnGCECacheFalse()
     {
+        putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
+        putenv(ServiceAccountCredentials::ENV_VAR);  // removes it from the environment
+
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Could not construct ApplicationDefaultCredentials');
-
-        putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
 
         $mockCacheItem = $this->prophesize('Psr\Cache\CacheItemInterface');
         $mockCacheItem->isHit()
@@ -381,6 +384,7 @@ class CredentialsWrapperTest extends TestCase
     public function testApplicationDefaultCredentialsWithOnGCECacheOptions()
     {
         putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
+        putenv(ServiceAccountCredentials::ENV_VAR);  // removes it from the environment
 
         $mockCacheItem = $this->prophesize('Psr\Cache\CacheItemInterface');
         $mockCacheItem->isHit()
