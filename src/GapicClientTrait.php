@@ -571,7 +571,7 @@ trait GapicClientTrait
     }
 
     /**
-     * @param string $phpMethodName
+     * @param string $methodName
      * @param Message $request
      * @param array $optionalArgs {
      *     Call Options
@@ -586,17 +586,17 @@ trait GapicClientTrait
      *
      * @return PromiseInterface
      */
-    private function startAsyncCall(string $phpMethodName)
+    private function startAsyncCall(string $methodName)
     {
         // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
         // in order to find the method in the descriptor config.
-        $methodName = ucfirst($phpMethodName);
-        $methodDescriptors = $this->validateCallConfig($methodName);
+        $rpcName = ucfirst($methodName);
+        $methodDescriptors = $this->validateCallConfig($rpcName);
 
         $args = func_get_args();
         if (count($args) < 2) {
             throw new ValidationException(
-                sprintf('Too few arguments to function %sAsync, %s passed', $phpMethodName, count($args))
+                sprintf('Too few arguments to function %sAsync, %s passed', $methodName, count($args))
             );
         }
         $request = $args[1];
@@ -607,7 +607,7 @@ trait GapicClientTrait
         switch ($callType) {
             case Call::PAGINATED_CALL:
                 return $this->getPagedListResponseAsync(
-                    $methodName,
+                    $rpcName,
                     $optionalArgs,
                     $methodDescriptors['responseType'],
                     $request,
@@ -617,20 +617,20 @@ trait GapicClientTrait
             case Call::CLIENT_STREAMING_CALL:
             case Call::BIDI_STREAMING_CALL:
                 throw new ValidationException("Call type '$callType' of requested method " .
-                    "'$methodName' is not supported for async execution.");
+                    "'$rpcName' is not supported for async execution.");
         }
 
         if (!is_array($optionalArgs)) {
             throw new ValidationException("Argument #2 must be of type array");
         }
 
-        $reflection = new \ReflectionMethod($this, $phpMethodName);
+        $reflection = new \ReflectionMethod($this, $methodName);
         $expectedRequestType = (string) $reflection->getParameters()[0]->getType();
         if (!$request instanceof $expectedRequestType) {
             throw new ValidationException("Argument #1 must be of type $expectedRequestType");
         }
 
-        return $this->startApiCall($methodName, $request, $optionalArgs);
+        return $this->startApiCall($rpcName, $request, $optionalArgs);
     }
 
     /**
