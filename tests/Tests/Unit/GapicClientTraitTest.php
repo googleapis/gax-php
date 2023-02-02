@@ -486,7 +486,10 @@ class GapicClientTraitTest extends TestCase
         ])->wait();
     }
 
-    /** @dataProvider provideAsyncValidation */
+    /**
+     * @dataProvider provideAsyncValidation
+     * @runInSeparateProcess
+     */
     public function testAsyncValidation(
         string $method,
         string $exceptionMessage,
