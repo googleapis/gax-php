@@ -352,13 +352,13 @@ class GapicClientTraitTest extends TestCase
                 [
                     'method' => []
                 ],
-                'does not have a callType' 
+                'does not have a callType'
             ],
             [
                 [
                     'method' => ['callType' => Call::LONGRUNNING_CALL]
                 ],
-                'does not have a longRunning config' 
+                'does not have a longRunning config'
             ],
             [
                 [
@@ -486,6 +486,69 @@ class GapicClientTraitTest extends TestCase
         ])->wait();
     }
 
+    /** @dataProvider provideAsyncValidation */
+    public function testAsyncValidation(
+        string $method,
+        string $exceptionClass,
+        string $exceptionMessage,
+        $request = null,
+        $args = [],
+    ) {
+        $this->expectException($exceptionClass);
+        $this->expectExceptionMessage($exceptionMessage);
+
+        $client = new GapicClientTraitStub();
+        $client->set('descriptors', ['Method' => [
+            'callType' => Call::UNARY_CALL,
+            'responseType' => 'Google\Longrunning\Operation'
+        ]]);
+
+        // Handle triggerred "method doesn't exist" error
+        set_error_handler(function($errno, $message) {
+            throw new \TypeError($message);
+        });
+
+        call_user_func_array(
+            [$client, $method],
+            array_filter([$request, $args])
+        );
+    }
+
+    public function provideAsyncValidation()
+    {
+        return [
+            [
+                'methodDoesntExist',
+                \TypeError::class,
+                'Call to undefined method Google\ApiCore\Tests\Unit\GapicClientTraitStub::methodDoesntExist()',
+            ], [
+                'methodDoesntExistAsync',
+                ValidationException::class,
+                'Requested method \'MethodDoesntExist\' does not exist in descriptor configuration',
+            ], [
+                'methodAsync',
+                \ArgumentCountError::class,
+                'Too few arguments to function methodAsync, 1 passed',
+            ], [
+                'methodAsync',
+                ValidationException::class,
+                'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
+                'invalidType',
+            ], [
+                'methodAsync',
+                ValidationException::class,
+                'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
+                new MockResponse(), // invalid class
+            ], [
+                'methodAsync',
+                ValidationException::class,
+                'Argument #2 must be of type array',
+                new MockRequest(),
+                'invalidOptionalArgs'
+            ],
+        ];
+    }
+
     public function testStartAsyncCallPaged()
     {
         $header = AgentHeader::buildAgentHeader([]);
@@ -561,7 +624,7 @@ class GapicClientTraitTest extends TestCase
                 [
                     'Method' => []
                 ],
-                'does not have a callType' 
+                'does not have a callType'
             ],
             [
                 [
@@ -1765,6 +1828,21 @@ class GapicClientTraitStub
             throw new \InvalidArgumentException("Property not found: $name");
         }
         return $this->$name;
+    }
+
+    public function method(MockRequest $request, array $optionalArgs = [])
+    {
+        // stub for reflection of "methodAsync"
+    }
+
+    public function __call($method, $args)
+    {
+        if (substr($method, -5) !== 'Async') {
+            trigger_error('Call to undefined method ' . __CLASS__ . "::$method()", E_USER_ERROR);
+        }
+
+        array_unshift($args, substr($method, 0, -5));
+        return call_user_func_array([$this, 'startAsyncCall'], $args);
     }
 }
 

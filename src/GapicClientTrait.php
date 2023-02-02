@@ -571,7 +571,7 @@ trait GapicClientTrait
     }
 
     /**
-     * @param string $methodName
+     * @param string $phpMethodName
      * @param Message $request
      * @param array $optionalArgs {
      *     Call Options
@@ -586,15 +586,21 @@ trait GapicClientTrait
      *
      * @return PromiseInterface
      */
-    private function startAsyncCall(
-        string $methodName,
-        Message $request,
-        array $optionalArgs = []
-    ) {
+    private function startAsyncCall(string $phpMethodName)
+    {
         // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
         // in order to find the method in the descriptor config.
-        $methodName = ucfirst($methodName);
+        $methodName = ucfirst($phpMethodName);
         $methodDescriptors = $this->validateCallConfig($methodName);
+
+        $args = func_get_args();
+        if (count($args) < 2) {
+            throw new \ArgumentCountError(
+                sprintf('Too few arguments to function %sAsync, %s passed', $phpMethodName, count($args))
+            );
+        }
+        $request = $args[1];
+        $optionalArgs = $args[2] ?? [];
 
         $callType = $methodDescriptors['callType'];
 
@@ -612,6 +618,16 @@ trait GapicClientTrait
             case Call::BIDI_STREAMING_CALL:
                 throw new ValidationException("Call type '$callType' of requested method " .
                     "'$methodName' is not supported for async execution.");
+        }
+
+        if (!is_array($optionalArgs)) {
+            throw new ValidationException("Argument #2 must be of type array");
+        }
+
+        $reflection = new \ReflectionMethod($this, $phpMethodName);
+        $expectedRequestType = $reflection->getParameters()[0]->getType()->getName();
+        if (!$request instanceof $expectedRequestType) {
+            throw new ValidationException("Argument #1 must be of type $expectedRequestType");
         }
 
         return $this->startApiCall($methodName, $request, $optionalArgs);
