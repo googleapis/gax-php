@@ -624,8 +624,8 @@ trait GapicClientTrait
             throw new ValidationException("Argument #2 must be of type array");
         }
 
-        $reflection = new \ReflectionMethod($this, $methodName);
-        $expectedRequestType = (string) $reflection->getParameters()[0]->getType();
+        $reflection = (new \ReflectionMethod($this, $methodName))->getParameters()[0]->getType();
+        $expectedRequestType = method_exists($reflection, 'getName') ? $reflection->getName() : (string) $reflection;
         if (!$request instanceof $expectedRequestType) {
             throw new ValidationException("Argument #1 must be of type $expectedRequestType");
         }
