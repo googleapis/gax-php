@@ -621,13 +621,13 @@ trait GapicClientTrait
         }
 
         if (!is_array($optionalArgs)) {
-            throw new ValidationException("Argument #2 must be of type array");
+            throw new \InvalidArgumentException("Argument #2 must be of type array");
         }
 
         $reflection = new \ReflectionMethod($this, $phpMethodName);
         $expectedRequestType = $reflection->getParameters()[0]->getType()->getName();
         if (!$request instanceof $expectedRequestType) {
-            throw new ValidationException("Argument #1 must be of type $expectedRequestType");
+            throw new \InvalidArgumentException("Argument #1 must be of type $expectedRequestType");
         }
 
         return $this->startApiCall($methodName, $request, $optionalArgs);

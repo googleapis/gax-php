@@ -531,17 +531,17 @@ class GapicClientTraitTest extends TestCase
                 'Too few arguments to function methodAsync, 1 passed',
             ], [
                 'methodAsync',
-                ValidationException::class,
+                \InvalidArgumentException::class,
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
                 'invalidType',
             ], [
                 'methodAsync',
-                ValidationException::class,
+                \InvalidArgumentException::class,
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
                 new MockResponse(), // invalid class
             ], [
                 'methodAsync',
-                ValidationException::class,
+                \InvalidArgumentException::class,
                 'Argument #2 must be of type array',
                 new MockRequest(),
                 'invalidOptionalArgs'
