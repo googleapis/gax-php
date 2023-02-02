@@ -489,12 +489,11 @@ class GapicClientTraitTest extends TestCase
     /** @dataProvider provideAsyncValidation */
     public function testAsyncValidation(
         string $method,
-        string $exceptionClass,
         string $exceptionMessage,
         $request = null,
-        $args = [],
+        $args = []
     ) {
-        $this->expectException($exceptionClass);
+        $this->expectException(ValidationException::class);
         $this->expectExceptionMessage($exceptionMessage);
 
         $client = new GapicClientTraitStub();
@@ -505,7 +504,7 @@ class GapicClientTraitTest extends TestCase
 
         // Handle triggerred "method doesn't exist" error
         set_error_handler(function($errno, $message) {
-            throw new \TypeError($message);
+            throw new ValidationException($message);
         });
 
         call_user_func_array(
@@ -519,29 +518,23 @@ class GapicClientTraitTest extends TestCase
         return [
             [
                 'methodDoesntExist',
-                \TypeError::class,
                 'Call to undefined method Google\ApiCore\Tests\Unit\GapicClientTraitStub::methodDoesntExist()',
             ], [
                 'methodDoesntExistAsync',
-                ValidationException::class,
                 'Requested method \'MethodDoesntExist\' does not exist in descriptor configuration',
             ], [
                 'methodAsync',
-                \ArgumentCountError::class,
                 'Too few arguments to function methodAsync, 1 passed',
             ], [
                 'methodAsync',
-                \InvalidArgumentException::class,
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
                 'invalidType',
             ], [
                 'methodAsync',
-                \InvalidArgumentException::class,
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
                 new MockResponse(), // invalid class
             ], [
                 'methodAsync',
-                \InvalidArgumentException::class,
                 'Argument #2 must be of type array',
                 new MockRequest(),
                 'invalidOptionalArgs'

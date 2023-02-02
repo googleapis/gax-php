@@ -595,7 +595,7 @@ trait GapicClientTrait
 
         $args = func_get_args();
         if (count($args) < 2) {
-            throw new \ArgumentCountError(
+            throw new ValidationException(
                 sprintf('Too few arguments to function %sAsync, %s passed', $phpMethodName, count($args))
             );
         }
@@ -621,13 +621,13 @@ trait GapicClientTrait
         }
 
         if (!is_array($optionalArgs)) {
-            throw new \InvalidArgumentException("Argument #2 must be of type array");
+            throw new ValidationException("Argument #2 must be of type array");
         }
 
         $reflection = new \ReflectionMethod($this, $phpMethodName);
-        $expectedRequestType = $reflection->getParameters()[0]->getType()->getName();
+        $expectedRequestType = (string) $reflection->getParameters()[0]->getType();
         if (!$request instanceof $expectedRequestType) {
-            throw new \InvalidArgumentException("Argument #1 must be of type $expectedRequestType");
+            throw new ValidationException("Argument #1 must be of type $expectedRequestType");
         }
 
         return $this->startApiCall($methodName, $request, $optionalArgs);
