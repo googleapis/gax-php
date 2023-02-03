@@ -514,7 +514,7 @@ class GapicClientTraitTest extends TestCase
 
         call_user_func_array(
             [$client, $method],
-            array_filter([$requestClass, $args])
+            array_filter([$request, $args])
         );
     }
 
@@ -537,7 +537,7 @@ class GapicClientTraitTest extends TestCase
             ], [
                 'methodAsync',
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
-                MockResponse::class, // invalid class
+                MockResponse::class, // invalid message
             ], [
                 'methodAsync',
                 'Argument #2 must be of type array',
