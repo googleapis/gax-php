@@ -493,7 +493,7 @@ class GapicClientTraitTest extends TestCase
     public function testAsyncValidation(
         string $method,
         string $exceptionMessage,
-        $request = null,
+        $requestClass = null,
         $args = []
     ) {
         $this->expectException(ValidationException::class);
@@ -510,9 +510,11 @@ class GapicClientTraitTest extends TestCase
             throw new ValidationException($message);
         });
 
+        $request = class_exists($requestClass) ? new $requestClass : $requestClass;
+
         call_user_func_array(
             [$client, $method],
-            array_filter([$request, $args])
+            array_filter([$requestClass, $args])
         );
     }
 
@@ -535,11 +537,11 @@ class GapicClientTraitTest extends TestCase
             ], [
                 'methodAsync',
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
-                new MockResponse(), // invalid class
+                MockResponse::class, // invalid class
             ], [
                 'methodAsync',
                 'Argument #2 must be of type array',
-                new MockRequest(),
+                MockRequest::class,
                 'invalidOptionalArgs'
             ],
         ];
