@@ -510,7 +510,7 @@ class GapicClientTraitTest extends TestCase
             throw new ValidationException($message);
         });
 
-        $request = class_exists($requestClass) ? new $requestClass : $requestClass;
+        $request = is_string($requestClass) ? new $requestClass : $requestClass;
 
         call_user_func_array(
             [$client, $method],
@@ -533,7 +533,7 @@ class GapicClientTraitTest extends TestCase
             ], [
                 'methodAsync',
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
-                'invalidType',
+                123, // invalid type
             ], [
                 'methodAsync',
                 'Argument #1 must be of type Google\ApiCore\Testing\MockRequest',
