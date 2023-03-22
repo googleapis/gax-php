@@ -35,13 +35,20 @@ use Google\ApiCore\Serializer;
 use Google\Protobuf\DescriptorPool;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @internal
  */
 abstract class GeneratedTest extends TestCase
 {
+    public function set_up()
+    {
+        if (false !== strpos(get_class($this), '\\Client\\') && PHP_VERSION_ID < 74000) {
+            self::markTestSkipped('The new clients are only supported on PHP 7.4+');
+        }
+    }
+
     /**
      * @param mixed $expected
      * @param mixed $actual
