@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2023 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Tests\Unit\Client;;
+namespace Google\ApiCore\Tests\Unit\Client;
 
-use Google\Api\Monitoring_MonitoringDestination;
 use Google\ApiCore\Testing\GeneratedTest;
-use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit_Framework_ExpectationFailedException;
 
 class GeneratedTestTest extends GeneratedTest
 {
@@ -44,3 +41,4 @@ class GeneratedTestTest extends GeneratedTest
         $this->assertGreaterThanOrEqual(74000, PHP_VERSION_ID);
     }
 }
+
