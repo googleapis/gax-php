@@ -37,6 +37,11 @@ use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
+if (!class_exists(TestCase::class)) {
+    // If the PHPUnit polyfills are not installed, use the PHPUnit testcase
+    class_alias(\PHPUnit\Framework\TestCase::class, TestCase::class);
+}
+
 /**
  * @internal
  */
