@@ -43,6 +43,8 @@ use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\ApiCore\Options\ClientOptions;
+use Google\ApiCore\Options\TransportOptions;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
@@ -362,37 +364,29 @@ trait GapicClientTrait
             'libName',
             'libVersion',
         ]);
-
-        $clientConfig = $options['clientConfig'];
-        if (is_string($clientConfig)) {
-            $clientConfig = json_decode(file_get_contents($clientConfig), true);
-        }
+        $options = new ClientOptions($options);
         $this->serviceName = $options['serviceName'];
         $this->retrySettings = RetrySettings::load(
             $this->serviceName,
-            $clientConfig,
+            $options['clientConfig'],
             $options['disableRetries']
         );
 
+        $headerInfo = [
+            'libName' => $options['libName'],
+            'libVersion' => $options['libVersion'],
+            'gapicVersion' => $options['gapicVersion'],
+        ];
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
         if ($this->transport instanceof GrpcTransport) {
-            $options['grpcVersion'] = phpversion('grpc');
-            unset($options['restVersion']);
+            $headerInfo['grpcVersion'] = phpversion('grpc');
         } elseif ($this->transport instanceof RestTransport
             || $this->transport instanceof GrpcFallbackTransport) {
-            unset($options['grpcVersion']);
-            $options['restVersion'] = Version::getApiCoreVersion();
+            $headerInfo['restVersion'] = Version::getApiCoreVersion();
         }
+        $this->agentHeader = AgentHeader::buildAgentHeader($headerInfo);
 
-        $this->agentHeader = AgentHeader::buildAgentHeader(
-            $this->pluckArray([
-                'libName',
-                'libVersion',
-                'gapicVersion'
-            ], $options)
-        );
-        self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
@@ -467,23 +461,26 @@ trait GapicClientTrait
                 implode(', ', $supportedTransports)
             ));
         }
-        $configForSpecifiedTransport = isset($transportConfig[$transport])
-            ? $transportConfig[$transport]
-            : [];
-        $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
+        $transportConfig = new TransportOptions($transportConfig);
         switch ($transport) {
             case 'grpc':
-                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                $grpcTransportConfig = $transportConfig['grpc'];
+                $grpcTransportConfig->setClientCertSource($clientCertSource);
+                return GrpcTransport::build($apiEndpoint, $grpcTransportConfig->toArray());
             case 'grpc-fallback':
-                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                $grpcFallbackTransportConfig = $transportConfig['grpcFallback'];
+                $grpcFallbackTransportConfig->setClientCertSource($clientCertSource);
+                return GrpcFallbackTransport::build($apiEndpoint, $grpcFallbackTransportConfig->toArray());
             case 'rest':
-                if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
+                $restTransportConfig = $transportConfig['rest'];
+                $restTransportConfig->setClientCertSource($clientCertSource);
+                if (!isset($restTransportConfig['restClientConfigPath'])) {
                     throw new ValidationException(
                         "The 'restClientConfigPath' config is required for 'rest' transport."
                     );
                 }
-                $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
-                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
+                $restConfigPath = $restTransportConfig['restClientConfigPath'];
+                return RestTransport::build($apiEndpoint, $restConfigPath, $restTransportConfig->toArray());
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .
