@@ -41,6 +41,7 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
+use Google\ApiCore\Options\TransportOptions;
 use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\ServerStream;
@@ -352,13 +353,13 @@ class GapicClientTraitTest extends TestCase
                 [
                     'method' => []
                 ],
-                'does not have a callType' 
+                'does not have a callType'
             ],
             [
                 [
                     'method' => ['callType' => Call::LONGRUNNING_CALL]
                 ],
-                'does not have a longRunning config' 
+                'does not have a longRunning config'
             ],
             [
                 [
@@ -561,7 +562,7 @@ class GapicClientTraitTest extends TestCase
                 [
                     'Method' => []
                 ],
-                'does not have a callType' 
+                'does not have a callType'
             ],
             [
                 [
@@ -704,7 +705,7 @@ class GapicClientTraitTest extends TestCase
         $transport = $client->call('createTransport', [
             $apiEndpoint,
             $transport,
-            $transportConfig
+            new TransportOptions($transportConfig)
         ]);
 
         $this->assertEquals($expectedTransportClass, get_class($transport));
@@ -744,7 +745,7 @@ class GapicClientTraitTest extends TestCase
         $client->call('createTransport', [
             $apiEndpoint,
             $transport,
-            $transportConfig
+            new TransportOptions($transportConfig)
         ]);
     }
 

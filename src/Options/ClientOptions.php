@@ -27,7 +27,7 @@ class ClientOptions implements ArrayAccess
     /** @var string|TransportInterface|null $transport */
     private $transport;
 
-    private array $transportConfig;
+    private TransportOptions $transportConfig;
 
     private ?string $versionFile;
 
@@ -189,7 +189,7 @@ class ClientOptions implements ArrayAccess
      */
     public function setTransportConfig(array $transportConfig): void
     {
-        $this->transportConfig = $transportConfig;
+        $this->transportConfig = new TransportOptions($transportConfig);
     }
 
     /**

@@ -436,7 +436,7 @@ trait GapicClientTrait
     /**
      * @param string $apiEndpoint
      * @param string $transport
-     * @param array $transportConfig
+     * @param TransportOptions $transportConfig
      * @param callable $clientCertSource
      * @return TransportInterface
      * @throws ValidationException
@@ -444,7 +444,7 @@ trait GapicClientTrait
     private function createTransport(
         string $apiEndpoint,
         $transport,
-        array $transportConfig,
+        TransportOptions $transportConfig,
         callable $clientCertSource = null
     ) {
         if (!is_string($transport)) {
@@ -461,7 +461,6 @@ trait GapicClientTrait
                 implode(', ', $supportedTransports)
             ));
         }
-        $transportConfig = new TransportOptions($transportConfig);
         switch ($transport) {
             case 'grpc':
                 $grpcTransportConfig = $transportConfig['grpc'];
