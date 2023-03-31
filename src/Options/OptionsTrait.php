@@ -33,12 +33,12 @@ trait OptionsTrait
      */
     public function offsetSet($offset, $value): void
     {
-        throw new BadMethodCallException('Options are read-only');
+        throw new BadMethodCallException('Cannot set options through array access. Use the setters instead');
     }
 
     public function offsetUnset($offset): void
     {
-        throw new BadMethodCallException('Options are read-only');
+        throw new BadMethodCallException('Cannot unset options through array access. Use the setters instead');
     }
 
     public function toArray(): array
