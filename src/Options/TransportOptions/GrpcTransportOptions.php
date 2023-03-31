@@ -3,8 +3,11 @@
 namespace Google\ApiCore\Options\TransportOptions;
 
 use ArrayAccess;
-use Google\ApiCore\Options\OptionsTrait;
 use Closure;
+use Google\ApiCore\Options\OptionsTrait;
+use Grpc\Channel;
+use Grpc\Interceptor;
+use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 
 class GrpcTransportOptions implements ArrayAccess
 {

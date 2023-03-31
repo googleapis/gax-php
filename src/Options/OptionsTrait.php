@@ -44,6 +44,7 @@ trait OptionsTrait
     public function toArray(): array
     {
         $arr = [];
+        /** @phpstan-ignore-next-line */
         foreach ($this as $key => $value) {
             $arr[$key] = $value;
         }

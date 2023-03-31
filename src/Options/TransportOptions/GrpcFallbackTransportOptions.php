@@ -15,7 +15,7 @@ class GrpcFallbackTransportOptions implements ArrayAccess
     private ?Closure $httpHandler;
 
     /**
-     * @param array $config {
+     * @param array $options {
      *    Config options used to construct the gRPC Fallback transport.
      *
      *    @type callable $clientCertSource
@@ -38,7 +38,6 @@ class GrpcFallbackTransportOptions implements ArrayAccess
     {
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setHttpHandler($arr['httpHandler'] ?? null);
-
     }
 
     public function setHttpHandler(?callable $httpHandler)

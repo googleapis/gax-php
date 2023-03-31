@@ -3,6 +3,7 @@
 namespace Google\ApiCore\Options\TransportOptions;
 
 use ArrayAccess;
+use Closure;
 use Google\ApiCore\Options\OptionsTrait;
 
 class RestTransportOptions implements ArrayAccess

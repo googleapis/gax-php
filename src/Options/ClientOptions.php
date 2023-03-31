@@ -6,7 +6,7 @@ use ArrayAccess;
 use Closure;
 use InvalidArgumentException;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\TransportInterface;
+use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 
 class ClientOptions implements ArrayAccess
@@ -122,10 +122,10 @@ class ClientOptions implements ArrayAccess
         $this->setTransportConfig($arr['transportConfig'] ?? []);
         $this->setVersionFile($arr['versionFile'] ?? null);
         $this->setDescriptorsConfigPath($arr['descriptorsConfigPath']);
-        $this->setServiceName($arr['serviceName']);
-        $this->setLibName($arr['libName']);
-        $this->setLibVersion($arr['libVersion']);
-        $this->setGapicVersion($arr['gapicVersion']);
+        $this->setServiceName($arr['serviceName'] ?? null);
+        $this->setLibName($arr['libName'] ?? null);
+        $this->setLibVersion($arr['libVersion'] ?? null);
+        $this->setGapicVersion($arr['gapicVersion'] ?? null);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
     }
 
@@ -214,7 +214,7 @@ class ClientOptions implements ArrayAccess
     /**
      * @param ?string $serviceName
      */
-    public function setServiceName(string $serviceName): void
+    public function setServiceName(?string $serviceName): void
     {
         $this->serviceName = $serviceName;
     }
