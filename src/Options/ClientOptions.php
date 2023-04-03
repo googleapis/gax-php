@@ -9,6 +9,24 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 
+/**
+ * The ClientOptions class adds typing to the associative array of options 
+ * passed into each API client constructor. To use this class directly, pass
+ * the result of {@see ClientOptions::toArray} to the client constructor:
+ * 
+ * ```
+ * use Google\ApiCore\ClientOptions;
+ * use Google\Cloud\SecretManager\Client\SecretManagerClient;
+ *
+ * $options = new ClientOptions([
+ *     'credentials' => '/path/to/my/credentials.json'
+ * ]);
+ * $secretManager = new SecretManagerClient($options->toArray());
+ * ```
+ *
+ * Note: It's possible to pass an associative array to the API clients as well,
+ * as ClientOptions will still be used internally for validation.
+ */
 class ClientOptions implements ArrayAccess
 {
     use OptionsTrait;
