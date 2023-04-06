@@ -40,7 +40,6 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Auth\UpdateMetadataInterface;
@@ -232,7 +231,7 @@ class CredentialsWrapper
     }
 
     /**
-     * @return Guzzle5HttpHandler|Guzzle6HttpHandler
+     * @return Guzzle6HttpHandler|Guzzle7HttpHandler
      * @throws ValidationException
      */
     private static function buildHttpHandlerFactory()
