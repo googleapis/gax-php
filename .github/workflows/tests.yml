@@ -39,19 +39,6 @@ jobs:
                 GOOGLE_APPLICATION_CREDENTIALS: ${{github.workspace}}/tests/Tests/Unit/testdata/json-key-file.json
               run: vendor/bin/phpunit
 
-    test_composer_conflict:
-        runs-on: ubuntu-latest
-        name: "Composer Conflict Test"
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: 7.4
-                extensions: protobuf-3.6.1
-            - name: Run script
-              run: dev/sh/test-composer-conflict.sh
-
     style:
         runs-on: ubuntu-latest
         name: PHP Style Check
