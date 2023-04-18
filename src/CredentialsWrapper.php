@@ -41,6 +41,7 @@ use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
+use Google\Auth\HttpHandler\Guzzle7HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
