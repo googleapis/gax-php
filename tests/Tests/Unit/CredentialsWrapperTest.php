@@ -89,23 +89,30 @@ class CredentialsWrapperTest extends TestCase
         $credentialsWrapper = CredentialsWrapper::build();
         $this->assertEquals('quota_project_from_env', $credentialsWrapper->getQuotaProject());
 
-        // Now pass the quota project through the build method to ensure it overrides the env var
+        // Now pass the quota project as a client option to ensure it overrides the env var
         $credentialsWrapper = CredentialsWrapper::build([
-            'quotaProject' => 'quota_project_from_build_method'
+            'quotaProject' => 'quota_project_from_client_option'
         ]);
-        $this->assertEquals('quota_project_from_build_method', $credentialsWrapper->getQuotaProject());
+        $this->assertEquals('quota_project_from_client_option', $credentialsWrapper->getQuotaProject());
 
-        // Now pass the keyFile parameter with no value for "quota_project_id", and it will be null
+        // Now pass the keyFile option with no value for "quota_project_id", and it will be null
         $credentialsWrapper = CredentialsWrapper::build([
             'keyFile' => __DIR__ . '/testdata/json-key-file.json'
         ]);
         $this->assertEquals(null, $credentialsWrapper->getQuotaProject());
 
-        // Now pass the keyFile parameter with a value for "quota_project_id", and it will be that value
+        // Now pass the keyFile option with a value for "quota_project_id", and it will be that value
         $credentialsWrapper = CredentialsWrapper::build([
             'keyFile' => __DIR__ . '/testdata/json-key-file-with-quota-project.json'
         ]);
         $this->assertEquals('example_quota_project', $credentialsWrapper->getQuotaProject());
+
+        // Now pass a quotaProject options with the keyFile option, and ensure it overrides the keyFile
+        $credentialsWrapper = CredentialsWrapper::build([
+            'keyFile' => __DIR__ . '/testdata/json-key-file-with-quota-project.json',
+            'quotaProject' => 'quota_project_from_client_option',
+        ]);
+        $this->assertEquals('quota_project_from_client_option', $credentialsWrapper->getQuotaProject());
     }
 
     public function buildDataWithoutExplicitKeyFile()
