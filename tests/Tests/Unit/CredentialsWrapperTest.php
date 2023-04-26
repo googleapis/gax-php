@@ -94,6 +94,18 @@ class CredentialsWrapperTest extends TestCase
             'quotaProject' => 'quota_project_from_build_method'
         ]);
         $this->assertEquals('quota_project_from_build_method', $credentialsWrapper->getQuotaProject());
+
+        // Now pass the keyFile parameter with no value for "quota_project_id", and it will be null
+        $credentialsWrapper = CredentialsWrapper::build([
+            'keyFile' => __DIR__ . '/testdata/json-key-file.json'
+        ]);
+        $this->assertEquals(null, $credentialsWrapper->getQuotaProject());
+
+        // Now pass the keyFile parameter with a value for "quota_project_id", and it will be that value
+        $credentialsWrapper = CredentialsWrapper::build([
+            'keyFile' => __DIR__ . '/testdata/json-key-file-with-quota-project.json'
+        ]);
+        $this->assertEquals('example_quota_project', $credentialsWrapper->getQuotaProject());
     }
 
     public function buildDataWithoutExplicitKeyFile()
