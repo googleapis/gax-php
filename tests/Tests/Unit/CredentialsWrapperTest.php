@@ -74,6 +74,28 @@ class CredentialsWrapperTest extends TestCase
         $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
+    public function testQuotaProjectPrecedence()
+    {
+        // Set keyfile to ensure quota project comes from the JSON file
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . __DIR__ . '/testdata/json-key-file-with-quota-project.json');
+        $credentialsWrapper = CredentialsWrapper::build();
+        $this->assertEquals('example_quota_project', $credentialsWrapper->getQuotaProject());
+
+        // Now set the quota project env var to ensure it overrides the JSON file
+        putenv('GOOGLE_CLOUD_QUOTA_PROJECT=quota_project_from_env');
+        $credentialsWrapper = CredentialsWrapper::build();
+        $this->assertEquals('quota_project_from_env', $credentialsWrapper->getQuotaProject());
+
+        // Now pass the quota project through the build method to ensure it overrides the env var
+        $credentialsWrapper = CredentialsWrapper::build([
+            'quotaProject' => 'quota_project_from_build_method'
+        ]);
+        $this->assertEquals('quota_project_from_build_method', $credentialsWrapper->getQuotaProject());
+    }
+
     public function buildDataWithoutExplicitKeyFile()
     {
         $appDefaultCreds = getenv('GOOGLE_APPLICATION_CREDENTIALS');

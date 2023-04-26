@@ -268,7 +268,7 @@ class CredentialsWrapper
                 $authHttpHandler,
                 $authCacheOptions,
                 $authCache,
-                $quotaProject,
+                $quotaProject ?: self::getQuotaProjectFromEnvVar(),
                 $defaultScopes
             );
         } catch (DomainException $ex) {
@@ -305,5 +305,13 @@ class CredentialsWrapper
         return !(self::isValid($token)
             && array_key_exists('expires_at', $token)
             && $token['expires_at'] > time() + self::$eagerRefreshThresholdSeconds);
+    }
+
+    /**
+     * @return string|null
+     */
+    private static function getQuotaProjectFromEnvVar()
+    {
+        return getenv('GOOGLE_CLOUD_QUOTA_PROJECT') ?: null;
     }
 }
