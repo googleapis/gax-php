@@ -59,14 +59,16 @@ use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class GapicClientTraitTest extends TestCase
 {
+    use ProphecyTrait;
     use TestTrait;
 
-    public function tear_down()
+    public function tearDown(): void
     {
         // Reset the static gapicVersion field between tests
         $client = new GapicClientTraitStub();
