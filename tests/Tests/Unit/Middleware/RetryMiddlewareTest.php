@@ -150,6 +150,38 @@ class RetryMiddlewareTest extends TestCase
         $middleware($call, [])->wait();
     }
 
+    public function testRetryTimeoutIsInteger()
+    {
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+                'initialRpcTimeoutMillis' => 10000,
+                'totalTimeoutMillis' => 10000,
+            ]);
+        $callCount = 0;
+        $observedTimeouts = [];
+        $handler = function(Call $call, $options) use (&$callCount, &$observedTimeouts) {
+            $observedTimeouts[] = $options['timeoutMillis'];
+            $callCount += 1;
+            return $promise = new Promise(function () use (&$promise, $callCount) {
+                if ($callCount < 2) {
+                    throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
+                }
+                $promise->resolve('Ok!');
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+        $middleware($call, [])->wait();
+
+        $this->assertCount(2, $observedTimeouts, 'Expect 2 attempts');
+        $this->assertSame(10000, $observedTimeouts[0], 'First timeout matches config');
+        $this->assertIsInt($observedTimeouts[1], 'Second timeout is an int');
+    }
+
     public function testTimeoutMillisCallSettingsOverwrite()
     {
         $handlerCalled = false;
