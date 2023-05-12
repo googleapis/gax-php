@@ -40,6 +40,7 @@ use Google\ApiCore\RetrySettings;
 use Google\Rpc\Code;
 use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
+use function usleep;
 
 class RetryMiddlewareTest extends TestCase
 {
@@ -226,6 +227,9 @@ class RetryMiddlewareTest extends TestCase
             $callCount += 1;
             $observedTimeouts[] = $options['timeoutMillis'];
             return $promise = new Promise(function () use (&$promise, $callCount) {
+                // each call needs to take at least 1 millisecond otherwise the rounded timeout will not decrease
+                // with each step of the test.
+                usleep(1000);
                 if ($callCount < 3) {
                     throw new ApiException('Cancelled!', Code::CANCELLED, ApiStatus::CANCELLED);
                 }
