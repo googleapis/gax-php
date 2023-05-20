@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.20.2](https://github.com/googleapis/gax-php/compare/v1.20.1...v1.20.2) (2023-05-12)
+
+
+### Bug Fixes
+
+* Ensure timeout set by RetryMiddleware is int not float ([#462](https://github.com/googleapis/gax-php/issues/462)) ([9d4c7fa](https://github.com/googleapis/gax-php/commit/9d4c7fa89445c63ec0bf4745ed9d98fd185ef51f))
+
+## [1.20.1](https://github.com/googleapis/gax-php/compare/v1.20.0...v1.20.1) (2023-05-12)
+
+
+### Bug Fixes
+
+* Default value for error message in createFromRequestException ([#463](https://github.com/googleapis/gax-php/issues/463)) ([7552d22](https://github.com/googleapis/gax-php/commit/7552d22241c2f488606e9546efdd6edea356ee9a))
+
 ## [1.20.0](https://github.com/googleapis/gax-php/compare/v1.19.1...v1.20.0) (2023-05-01)
 
 
