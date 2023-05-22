@@ -35,7 +35,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProtobufExtensionTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!extension_loaded('protobuf')) {
             $this->markTestSkipped('Must have the protobuf extension installed to run this test.');

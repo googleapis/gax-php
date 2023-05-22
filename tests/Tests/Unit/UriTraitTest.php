@@ -39,7 +39,7 @@ class UriTraitTest extends TestCase
 {
     private $implementation;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->implementation = $this->getObjectForTrait(UriTrait::class);
     }

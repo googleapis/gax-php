@@ -35,6 +35,7 @@ namespace Google\ApiCore;
 /**
  * Provides helper methods for service address handling.
  *
+ * @deprecated
  * @todo (dwsupplee) serviceAddress is deprecated now in favor of
  *        apiEndpoint. Rename the trait/method in our next major release.
  */
@@ -47,7 +48,7 @@ trait ServiceAddressTrait
      * @return array
      * @throws ValidationException
      */
-    private static function normalizeServiceAddress($apiEndpoint)
+    private static function normalizeServiceAddress(string $apiEndpoint)
     {
         $components = explode(':', $apiEndpoint);
         if (count($components) == 2) {

@@ -110,7 +110,7 @@ class OperationResponse
      *     @type string $operationErrorMessageMethod The method on the operation to get the error status
      * }
      */
-    public function __construct($operationName, $operationsClient, $options = [])
+    public function __construct(string $operationName, $operationsClient, array $options = [])
     {
         $this->operationName = $operationName;
         $this->operationsClient = $operationsClient;
@@ -234,7 +234,7 @@ class OperationResponse
      * @throws ValidationException
      * @return bool Indicates if the operation completed.
      */
-    public function pollUntilComplete($options = [])
+    public function pollUntilComplete(array $options = [])
     {
         if ($this->isDone()) {
             return true;
@@ -284,7 +284,7 @@ class OperationResponse
             return null;
         }
 
-        /** @var Any $anyResponse */
+        /** @var Any|null $anyResponse */
         $anyResponse = $this->lastProtoResponse->getResponse();
         if (is_null($anyResponse)) {
             return null;
@@ -427,12 +427,16 @@ class OperationResponse
             return null;
         }
 
-        /** @var Any $any */
+        /** @var Any|null $any */
         $any = $this->lastProtoResponse->getMetadata();
         if (is_null($this->metadataReturnType)) {
             return $any;
         }
-        if (is_null($any) || is_null($any->getValue())) {
+        if (is_null($any)) {
+            return null;
+        }
+        // @TODO: This is probably not doing anything and can be removed in the next release.
+        if (is_null($any->getValue())) {
             return null;
         }
         $metadataReturnType = $this->metadataReturnType;

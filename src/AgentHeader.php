@@ -52,10 +52,14 @@ class AgentHeader
      *     @type string $grpcVersion the gRPC version.
      *     @type string $restVersion the REST transport version (typically same as the
      *           ApiCore version).
+     *     @type string $protobufVersion the protobuf version in format 'x.y.z+a' where both 'x.y.z'
+     *           and '+a' are optional, and where 'a' is a single letter representing the
+     *           implementation type of the protobuf runtime. It is recommended to use 'c' for a C
+     *           implementation, and 'n' for the native language implementation (PHP).
      * }
      * @return array Agent header array
      */
-    public static function buildAgentHeader($headerInfo)
+    public static function buildAgentHeader(array $headerInfo)
     {
         $metricsHeaders = [];
 
@@ -67,27 +71,17 @@ class AgentHeader
         //      - apiCoreVersion (gax/)
         //      - grpcVersion (grpc/)
         //      - restVersion (rest/)
+        //      - protobufVersion (pb/)
 
-        $phpVersion = isset($headerInfo['phpVersion'])
-            ? $headerInfo['phpVersion']
-            : phpversion();
-        $metricsHeaders['gl-php'] = $phpVersion;
+        $metricsHeaders['gl-php'] = $headerInfo['phpVersion'] ?? phpversion();
 
         if (isset($headerInfo['libName'])) {
-            $clientVersion = isset($headerInfo['libVersion'])
-                ? $headerInfo['libVersion']
-                : self::UNKNOWN_VERSION;
-            $metricsHeaders[$headerInfo['libName']] = $clientVersion;
+            $metricsHeaders[$headerInfo['libName']] =
+                $headerInfo['libVersion'] ?? self::UNKNOWN_VERSION;
         }
 
-        $codeGenVersion = isset($headerInfo['gapicVersion'])
-            ? $headerInfo['gapicVersion']
-            : self::UNKNOWN_VERSION;
-        $metricsHeaders['gapic'] = $codeGenVersion;
-
-        $apiCoreVersion = isset($headerInfo['apiCoreVersion'])
-            ? $headerInfo['apiCoreVersion']
-            : Version::getApiCoreVersion();
+        $apiCoreVersion = $headerInfo['apiCoreVersion'] ?? Version::getApiCoreVersion();
+        $metricsHeaders['gapic'] = $headerInfo['gapicVersion'] ?? self::UNKNOWN_VERSION;
         $metricsHeaders['gax'] = $apiCoreVersion;
 
         // Context on library type identification (between gRPC+REST and REST-only):
@@ -97,15 +91,13 @@ class AgentHeader
         // either, since some clients may have the extension installed but opt to use a
         // REST-only library (e.g. GCE).
         // TODO: Should we stop sending empty gRPC headers?
-        $grpcVersion = isset($headerInfo['grpcVersion'])
-            ? $headerInfo['grpcVersion']
-            : phpversion('grpc');
-        $metricsHeaders['grpc'] = $grpcVersion;
+        $metricsHeaders['grpc'] = $headerInfo['grpcVersion'] ?? phpversion('grpc');
+        $metricsHeaders['rest'] = $headerInfo['restVersion'] ?? $apiCoreVersion;
 
-        $restVersion = isset($headerInfo['restVersion'])
-            ? $headerInfo['restVersion']
-            : $apiCoreVersion;
-        $metricsHeaders['rest'] = $restVersion;
+        // The native version is not set by default because it is complex and costly to retrieve.
+        // Users can override this default behavior if needed.
+        $metricsHeaders['pb'] = $headerInfo['protobufVersion']
+            ?? (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '+n');
 
         $metricsList = [];
         foreach ($metricsHeaders as $key => $value) {
@@ -126,7 +118,7 @@ class AgentHeader
      * @return string the gapic version
      * @throws \ReflectionException
      */
-    public static function readGapicVersionFromFile($callingClass)
+    public static function readGapicVersionFromFile(string $callingClass)
     {
         $callingClassFile = (new \ReflectionClass($callingClass))->getFileName();
         $versionFile = substr(

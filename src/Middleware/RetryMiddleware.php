@@ -106,7 +106,7 @@ class RetryMiddleware
      * @return PromiseInterface
      * @throws ApiException
      */
-    private function retry(Call $call, array $options, $status)
+    private function retry(Call $call, array $options, string $status)
     {
         $delayMult = $this->retrySettings->getRetryDelayMultiplier();
         $maxDelayMs = $this->retrySettings->getMaxRetryDelayMillis();
@@ -128,7 +128,7 @@ class RetryMiddleware
         }
 
         $delayMs = min($delayMs * $delayMult, $maxDelayMs);
-        $timeoutMs = min(
+        $timeoutMs = (int) min(
             $timeoutMs * $timeoutMult,
             $maxTimeoutMs,
             $deadlineMs - $this->getCurrentTimeMs()

@@ -241,17 +241,17 @@ class SerializerTest extends TestCase
             ]
         ];
         $color = $serializer->decodeMessage(new Color(), $data);
-        $this->assertEquals(0.1, $color->getRed(), '', 0.0000001);
-        $this->assertEquals(0.3, $color->getGreen(), '', 0.0000001);
-        $this->assertEquals(0.4, $color->getBlue(), '', 0.0000001);
+        $this->assertEqualsWithDelta(0.1, $color->getRed(), 0.0000001);
+        $this->assertEqualsWithDelta(0.3, $color->getGreen(), 0.0000001);
+        $this->assertEqualsWithDelta(0.4, $color->getBlue(), 0.0000001);
         $alpha = $color->getAlpha();
-        $this->assertEquals(1.0, $alpha->getValue(), '', 0.0000001);
+        $this->assertEqualsWithDelta(1.0, $alpha->getValue(), 0.0000001);
 
         $array = $serializer->encodeMessage($color);
-        $this->assertEquals($data['red'], $array['red'], '', 0.0000001);
-        $this->assertEquals($data['green'], $array['green'], '', 0.0000001);
-        $this->assertEquals($data['blue'], $array['blue'], '', 0.0000001);
-        $this->assertEquals($data['alpha']['value'], $array['alpha']['value'], '', 0.0000001);
+        $this->assertEqualsWithDelta($data['red'], $array['red'], 0.0000001);
+        $this->assertEqualsWithDelta($data['green'], $array['green'], 0.0000001);
+        $this->assertEqualsWithDelta($data['blue'], $array['blue'], 0.0000001);
+        $this->assertEqualsWithDelta($data['alpha']['value'], $array['alpha']['value'], 0.0000001);
     }
 
     public function testSpecialEncodingDecodingByFieldType()
@@ -279,16 +279,16 @@ class SerializerTest extends TestCase
         ];
 
         $color = $serializer->decodeMessage(new Color(), $data);
-        $this->assertEquals(0.2, $color->getRed(), '', 0.0000001);
-        $this->assertEquals(0.3, $color->getGreen(), '', 0.0000001);
-        $this->assertEquals(0.4, $color->getBlue(), '', 0.0000001);
+        $this->assertEqualsWithDelta(0.2, $color->getRed(), 0.0000001);
+        $this->assertEqualsWithDelta(0.3, $color->getGreen(), 0.0000001);
+        $this->assertEqualsWithDelta(0.4, $color->getBlue(), 0.0000001);
         $alpha = $color->getAlpha();
-        $this->assertEquals(0.5, $alpha->getValue(), '', 0.0000001);
+        $this->assertEqualsWithDelta(0.5, $alpha->getValue(), 0.0000001);
 
         $array = $serializer->encodeMessage($color);
-        $this->assertEquals($data['red'], $array['red'], '', 0.0000001);
-        $this->assertEquals($data['green'], $array['green'], '', 0.0000001);
-        $this->assertEquals($data['blue'], $array['blue'], '', 0.0000001);
-        $this->assertEquals($data['alpha']['value'], $array['alpha']['value'], '', 0.0000001);
+        $this->assertEqualsWithDelta($data['red'], $array['red'], 0.0000001);
+        $this->assertEqualsWithDelta($data['green'], $array['green'], 0.0000001);
+        $this->assertEqualsWithDelta($data['blue'], $array['blue'], 0.0000001);
+        $this->assertEqualsWithDelta($data['alpha']['value'], $array['alpha']['value'], 0.0000001);
     }
 }

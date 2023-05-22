@@ -118,7 +118,7 @@ class Serializer
      * @return mixed
      * @throws ValidationException
      */
-    public function decodeMessage($message, $data)
+    public function decodeMessage($message, array $data)
     {
         // Get message descriptor
         $pool = DescriptorPool::getGeneratedPool();
@@ -139,7 +139,7 @@ class Serializer
      * @return string Json representation of $message
      * @throws ValidationException
      */
-    public static function serializeToJson($message)
+    public static function serializeToJson(Message $message)
     {
         return json_encode(self::serializeToPhpArray($message), JSON_PRETTY_PRINT);
     }
@@ -149,7 +149,7 @@ class Serializer
      * @return array PHP array representation of $message
      * @throws ValidationException
      */
-    public static function serializeToPhpArray($message)
+    public static function serializeToPhpArray(Message $message)
     {
         return self::getPhpArraySerializer()->encodeMessage($message);
     }
@@ -160,9 +160,9 @@ class Serializer
      * @param array $metadata
      * @return array
      */
-    public static function decodeMetadata($metadata)
+    public static function decodeMetadata(array $metadata)
     {
-        if (is_null($metadata) || count($metadata) == 0) {
+        if (count($metadata) == 0) {
             return [];
         }
         $result = [];
@@ -205,7 +205,7 @@ class Serializer
     /**
      * Decode an array of Any messages into a printable PHP array.
      *
-     * @param $anyArray
+     * @param iterable $anyArray
      * @return array
      */
     public static function decodeAnyMessages($anyArray)
@@ -231,8 +231,8 @@ class Serializer
 
     /**
      * @param FieldDescriptor $field
-     * @param $data
-     * @return mixed array
+     * @param Message|array|string $data
+     * @return mixed
      * @throws \Exception
      */
     private function encodeElement(FieldDescriptor $field, $data)
@@ -290,7 +290,7 @@ class Serializer
      * @return array
      * @throws \Exception
      */
-    private function encodeMessageImpl($message, Descriptor $messageType)
+    private function encodeMessageImpl(Message $message, Descriptor $messageType)
     {
         $data = [];
 
@@ -379,7 +379,7 @@ class Serializer
      * @return mixed
      * @throws \Exception
      */
-    private function decodeMessageImpl($message, Descriptor $messageType, $data)
+    private function decodeMessageImpl(Message $message, Descriptor $messageType, array $data)
     {
         list($fieldsByName, $_) = $this->getDescriptorMaps($messageType);
         foreach ($data as $key => $v) {
@@ -395,7 +395,7 @@ class Serializer
                 ));
             }
 
-            /** @var $field FieldDescriptor */
+            /** @var FieldDescriptor $field */
             $field = $fieldsByName[$fieldName];
 
             if ($field->isMap()) {
@@ -431,7 +431,7 @@ class Serializer
      * @param string $name
      * @return string Getter function
      */
-    public static function getGetter($name)
+    public static function getGetter(string $name)
     {
         return 'get' . ucfirst(self::toCamelCase($name));
     }
@@ -440,7 +440,7 @@ class Serializer
      * @param string $name
      * @return string Setter function
      */
-    public static function getSetter($name)
+    public static function getSetter(string $name)
     {
         return 'set' . ucfirst(self::toCamelCase($name));
     }
@@ -451,7 +451,7 @@ class Serializer
      * @param string $key
      * @return string
      */
-    public static function toSnakeCase($key)
+    public static function toSnakeCase(string $key)
     {
         return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $key));
     }
@@ -462,12 +462,12 @@ class Serializer
      * @param string $key
      * @return string
      */
-    public static function toCamelCase($key)
+    public static function toCamelCase(string $key)
     {
         return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
     }
 
-    private static function hasBinaryHeaderSuffix($key)
+    private static function hasBinaryHeaderSuffix(string $key)
     {
         return substr_compare($key, "-bin", strlen($key) - 4) === 0;
     }

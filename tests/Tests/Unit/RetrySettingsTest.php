@@ -32,6 +32,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\RetrySettings;
+use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 class RetrySettingsTest extends TestCase
@@ -71,12 +72,12 @@ class RetrySettingsTest extends TestCase
         $this->assertEquals(40000, $timeoutOnlyMethod->getNoRetriesRpcTimeoutMillis());
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     */
     public function testLoadInvalid()
     {
         $inputConfig = RetrySettingsTest::buildInvalidInputConfig();
+
+        $this->expectException(ValidationException::class);
+
         RetrySettings::load(
             RetrySettingsTest::SERVICE_NAME,
             $inputConfig
@@ -102,12 +103,11 @@ class RetrySettingsTest extends TestCase
         $this->assertEquals(40000, $timeoutOnlyMethod->getNoRetriesRpcTimeoutMillis());
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     */
     public function testRetrySettingsMissingFields()
     {
-        $retrySettings = new RetrySettings([
+        $this->expectException(ValidationException::class);
+
+        new RetrySettings([
             'initialRetryDelayMillis' => 100,
             'retryDelayMultiplier' => 1.3,
             // Missing field:

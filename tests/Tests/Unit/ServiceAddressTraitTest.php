@@ -18,6 +18,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\ServiceAddressTrait;
+use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -49,11 +50,12 @@ class ServiceAddressTraitTest extends TestCase
 
     /**
      * @dataProvider normalizeServiceAddressInvalidData
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Invalid apiEndpoint
      */
     public function testNormalizeServiceAddressInvalid($serviceAddressString)
     {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Invalid apiEndpoint');
+
         self::normalizeServiceAddress($serviceAddressString);
     }
 

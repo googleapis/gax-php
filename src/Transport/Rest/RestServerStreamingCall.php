@@ -37,6 +37,8 @@ use Google\ApiCore\ApiStatus;
 use Google\ApiCore\ServerStreamingCallInterface;
 use Google\Rpc\Code;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use stdClass;
 
 /**
@@ -46,15 +48,47 @@ use stdClass;
  */
 class RestServerStreamingCall implements ServerStreamingCallInterface
 {
+    /**
+     * @var callable
+     */
     private $httpHandler;
+
+    /**
+     * @var RequestInterface
+     */
     private $originalRequest;
+
+    /**
+     * @var ?JsonStreamDecoder
+     */
     private $decoder;
+
+    /**
+     * @var string
+     */
     private $decodeType;
+
+    /**
+     * @var array<mixed>
+     */
     private $decoderOptions;
+
+    /**
+     * @var ?ResponseInterface
+     */
     private $response;
+
+    /**
+     * @var stdClass
+     */
     private $status;
 
-    public function __construct($httpHandler, $decodeType, array $decoderOptions)
+    /**
+     * @param callable $httpHandler
+     * @param string $decodeType
+     * @param array<mixed> $decoderOptions
+     */
+    public function __construct(callable $httpHandler, string $decodeType, array $decoderOptions)
     {
         $this->httpHandler = $httpHandler;
         $this->decodeType = $decodeType;
@@ -67,7 +101,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
     public function start($request, array $headers = [], array $callOptions = [])
     {
         $this->originalRequest = $this->appendHeaders($request, $headers);
-        
+
         try {
             $handler = $this->httpHandler;
             $response = $handler(
@@ -91,7 +125,12 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
         $this->response = $response;
     }
 
-    private function appendHeaders($request, $headers)
+    /**
+     * @param RequestInterface $request
+     * @param array<mixed> $headers
+     * @return RequestInterface
+     */
+    private function appendHeaders(RequestInterface $request, array $headers)
     {
         foreach ($headers as $key => $value) {
             $request = $request->hasHeader($key) ?
@@ -127,7 +166,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
      * Return the status of the server stream. If the call has not been started
      * this will be null.
      *
-     * @return \stdClass The status, with integer $code, string
+     * @return stdClass The status, with integer $code, string
      *                   $details, and array $metadata members
      */
     public function getStatus()
@@ -172,6 +211,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
 
     /**
      * For the REST transport this is a no-op.
+     * {@inheritdoc}
      */
     public function setCallCredentials($call_credentials)
     {

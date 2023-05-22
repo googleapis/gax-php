@@ -17,6 +17,7 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
+use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -24,21 +25,20 @@ class ValidationTraitTest extends TestCase
 {
     private $stub;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->stub = new ValidationTraitStub;
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Missing required argument
-     */
     public function testValidateMissingRequiredKey()
     {
         $input = [
             'foo' => 1,
             'bar' => 2
         ];
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Missing required argument');
 
         $this->stub->validate($input, ['bar', 'baz']);
     }
@@ -55,10 +55,6 @@ class ValidationTraitTest extends TestCase
         $this->assertEquals($input, $arr);
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage Missing required argument
-     */
     public function testValidateNotNullWithNullRequiredKey()
     {
         $input = [
@@ -66,6 +62,8 @@ class ValidationTraitTest extends TestCase
             'bar' => null
         ];
 
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Missing required argument');
         $this->stub->validateNotNull($input, ['foo', 'bar']);
     }
 

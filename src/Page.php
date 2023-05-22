@@ -32,8 +32,8 @@
 namespace Google\ApiCore;
 
 use Generator;
-use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\MapField;
+use Google\Protobuf\Internal\Message;
 use IteratorAggregate;
 
 /**
@@ -49,7 +49,7 @@ class Page implements IteratorAggregate
     private $options;
     private $pageStreamingDescriptor;
 
-    private $pageToken;
+    private $pageToken; // @phpstan-ignore-line
 
     private $response;
 
@@ -110,7 +110,7 @@ class Page implements IteratorAggregate
      * @throws ApiException if the call to fetch the next page fails.
      * @return Page
      */
-    public function getNextPage($pageSize = null)
+    public function getNextPage(int $pageSize = null)
     {
         if (!$this->hasNextPage()) {
             throw new ValidationException(
@@ -189,7 +189,7 @@ class Page implements IteratorAggregate
      * Additional Page objects are retrieved lazily via API calls until
      * all elements have been retrieved.
      *
-     * @return Generator|Page[]
+     * @return Generator|array<Page>
      * @throws ValidationException
      * @throws ApiException
      */
@@ -235,7 +235,7 @@ class Page implements IteratorAggregate
      * if the collectionSize parameter is less than the page size that
      * has been set.
      *
-     * @param $collectionSize int
+     * @param int $collectionSize
      * @throws ValidationException if a FixedSizeCollection of the specified size cannot be constructed
      * @return FixedSizeCollection
      */

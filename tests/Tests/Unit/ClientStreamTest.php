@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+use Google\ApiCore\ApiException;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\Testing\MockClientStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
@@ -52,10 +53,6 @@ class ClientStreamTest extends TestCase
         $this->assertSame([], $call->popReceivedCalls());
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ApiException
-     * @expectedExceptionMessage no writes failure
-     */
     public function testNoWritesFailure()
     {
         $response = 'response';
@@ -68,6 +65,10 @@ class ClientStreamTest extends TestCase
 
         $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertSame([], $call->popReceivedCalls());
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('no writes failure');
+
         $stream->readResponse();
     }
 
@@ -90,10 +91,6 @@ class ClientStreamTest extends TestCase
         $this->assertEquals($requests, $call->popReceivedCalls());
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ApiException
-     * @expectedExceptionMessage manual writes failure
-     */
     public function testManualWritesFailure()
     {
         $requests = [
@@ -114,6 +111,10 @@ class ClientStreamTest extends TestCase
 
         $this->assertSame($call, $stream->getClientStreamingCall());
         $this->assertEquals($requests, $call->popReceivedCalls());
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('manual writes failure');
+
         $stream->readResponse();
     }
 
@@ -134,10 +135,6 @@ class ClientStreamTest extends TestCase
         $this->assertEquals($requests, $call->popReceivedCalls());
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ApiException
-     * @expectedExceptionMessage write all failure
-     */
     public function testWriteAllFailure()
     {
         $requests = [
@@ -151,6 +148,9 @@ class ClientStreamTest extends TestCase
             new MockStatus(Code::INTERNAL, 'write all failure')
         );
         $stream = new ClientStream($call);
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage('write all failure');
 
         try {
             $stream->writeAllAndReadResponse($requests);

@@ -1,6 +1,7 @@
 <?php
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2022 Google LLC
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -12,7 +13,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Google LLC nor the names of its
+ *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -29,28 +30,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * GENERATED CODE WARNING
- * This file was generated from the file
- * https://github.com/google/googleapis/blob/master/google/longrunning/operations.proto
- * and updates to that file get reflected here through a refresh process.
- *
- * EXPERIMENTAL: This client library class has not yet been declared GA (1.0). This means that
- * even though we intend the surface to be stable, we may make backwards incompatible changes
- * if necessary.
- *
- * @experimental
- */
+namespace Google\ApiCore\Dev\Docs;
 
-namespace Google\ApiCore\LongRunning;
+require_once __DIR__ . '../../../../vendor/autoload.php';
 
-use Google\ApiCore\LongRunning\Gapic\OperationsGapicClient;
+DoctumConfigBuilder::checkPhpVersion();
 
-/**
- * {@inheritdoc}
- */
-class OperationsClient extends OperationsGapicClient
-{
-    // This class is intentionally empty, and is intended to hold manual
-    // additions to the generated {@see OperationsGapicClient} class.
-}
+$currentVersion = getenv('PROTOBUF_DOCS_VERSION');
+
+return DoctumConfigBuilder::buildProtobufConfigForVersion($currentVersion);

@@ -40,10 +40,10 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\UpdateMetadataInterface;
-use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
+use Google\Auth\HttpHandler\Guzzle7HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -56,6 +56,9 @@ class CredentialsWrapper
     /** @var FetchAuthTokenInterface $credentialsFetcher */
     private $credentialsFetcher;
     private $authHttpHandler;
+
+    /** @var int */
+    private static $eagerRefreshThresholdSeconds = 10;
 
     /**
      * CredentialsWrapper constructor.
@@ -119,6 +122,7 @@ class CredentialsWrapper
             'defaultScopes'     => null,
             'useJwtAccessWithScope' => true,
         ];
+
         $keyFile = $args['keyFile'];
         $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
 
@@ -126,11 +130,14 @@ class CredentialsWrapper
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
                 $authHttpHandler,
-                null,
-                null,
+                $args['authCacheOptions'],
+                $args['authCache'],
                 $args['quotaProject'],
                 $args['defaultScopes']
             );
+            if ($loader instanceof FetchAuthTokenCache) {
+                $loader = $loader->getFetcher();
+            }
         } else {
             if (is_string($keyFile)) {
                 if (!file_exists($keyFile)) {
@@ -176,6 +183,7 @@ class CredentialsWrapper
         if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
             return $this->credentialsFetcher->getQuotaProject();
         }
+        return null;
     }
 
     /**
@@ -224,7 +232,7 @@ class CredentialsWrapper
     }
 
     /**
-     * @return Guzzle5HttpHandler|Guzzle6HttpHandler
+     * @return Guzzle6HttpHandler|Guzzle7HttpHandler
      * @throws ValidationException
      */
     private static function buildHttpHandlerFactory()
@@ -243,7 +251,7 @@ class CredentialsWrapper
      * @param CacheItemPoolInterface $authCache
      * @param string $quotaProject
      * @param array $defaultScopes
-     * @return CredentialsLoader
+     * @return FetchAuthTokenInterface
      * @throws ValidationException
      */
     private static function buildApplicationDefaultCredentials(
@@ -268,7 +276,7 @@ class CredentialsWrapper
         }
     }
 
-    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, $authHttpHandler)
+    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler)
     {
         $token = $credentialsFetcher->getLastReceivedToken();
         if (self::isExpired($token)) {
@@ -280,16 +288,22 @@ class CredentialsWrapper
         return $token['access_token'];
     }
 
+    /**
+     * @param mixed $token
+     */
     private static function isValid($token)
     {
         return is_array($token)
             && array_key_exists('access_token', $token);
     }
 
+    /**
+     * @param mixed $token
+     */
     private static function isExpired($token)
     {
         return !(self::isValid($token)
             && array_key_exists('expires_at', $token)
-            && $token['expires_at'] > time());
+            && $token['expires_at'] > time() + self::$eagerRefreshThresholdSeconds);
     }
 }

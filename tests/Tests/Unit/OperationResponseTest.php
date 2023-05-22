@@ -31,16 +31,18 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
-use Google\ApiCore\LongRunning\Gapic\OperationsGapicClient;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
-use PHPUnit\Framework\TestCase;
 use Google\Rpc\Code;
+use LogicException;
+use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class OperationResponseTest extends TestCase
 {
+    use ProphecyTrait;
     use TestTrait;
 
     public function testBasic()
@@ -290,10 +292,6 @@ class OperationResponseTest extends TestCase
         $this->assertTrue($operationResponse->operationSucceeded());
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage Unable to determine operation error status for this service
-     */
     public function testMisconfiguredCustomOperationThrowsException()
     {
         $operationName = 'test-123';
@@ -310,13 +308,12 @@ class OperationResponseTest extends TestCase
         ];
         $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
 
-        $this->assertTrue($operationResponse->operationSucceeded());
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Unable to determine operation error status for this service');
+
+        $operationResponse->operationSucceeded();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage The cancel operation is not supported by this API
-     */
     public function testNoCancelOperation()
     {
         $operationClient = $this->prophesize(CustomOperationClient::class);
@@ -324,13 +321,13 @@ class OperationResponseTest extends TestCase
             'cancelOperationMethod' => null,
         ];
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal(), $options);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The cancel operation is not supported by this API');
+
         $operationResponse->cancel();
     }
 
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage The delete operation is not supported by this API
-     */
     public function testNoDeleteOperation()
     {
         $operationClient = $this->prophesize(CustomOperationClient::class);
@@ -338,7 +335,22 @@ class OperationResponseTest extends TestCase
             'deleteOperationMethod' => null,
         ];
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal(), $options);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The delete operation is not supported by this API');
         $operationResponse->delete();
+    }
+
+    public function testPollingCastToInt()
+    {
+        $op = $this->createOperationResponse([], 3);
+        $op->pollUntilComplete([
+            'initialPollDelayMillis' => 3.0,
+            'pollDelayMultiplier' => 1.5,
+        ]);
+
+        $this->assertEquals($op->isDone(), true);
+        $this->assertEquals($op->getSleeps(), [3, 4, 6]);
     }
 
     private function createOperationResponse($options, $reloadCount)
@@ -349,22 +361,24 @@ class OperationResponseTest extends TestCase
 
     private function createOperationClient($reloadCount)
     {
-        $opClient = $this->getMock(
-            OperationsClient::class,
-            ['getOperation'],
-            [[
+        $consecutiveCalls = [];
+        for ($i = 0; $i < $reloadCount - 1; $i++) {
+            $consecutiveCalls[] = $this->returnValue(new Operation);
+        }
+        $consecutiveCalls[] = $this->returnValue(new Operation(['done' => true]));
+
+        $opClient = $this->getMockBuilder(OperationsClient::class)
+            ->setConstructorArgs([[
                 'apiEndpoint' => '',
                 'scopes' => [],
-            ]]
-        );
-        for ($i = 0; $i < $reloadCount - 1; $i++) {
-            $opClient->expects($this->at($i))
-                ->method('getOperation')
-                ->willReturn(new Operation());
-        }
-        $opClient->expects($this->at($reloadCount - 1))
+            ]])
+            ->setMethods(['getOperation'])
+            ->getMock();
+
+        $opClient->expects($this->exactly($reloadCount))
             ->method('getOperation')
-            ->willReturn((new Operation())->setDone(true));
+            ->will($this->onConsecutiveCalls(...$consecutiveCalls));
+
         return $opClient;
     }
 }
@@ -372,12 +386,14 @@ class OperationResponseTest extends TestCase
 class FakeOperationResponse extends OperationResponse
 {
     private $currentTime = 0;
+    private $sleeps;
+
     public function getSleeps()
     {
         return $this->sleeps;
     }
 
-    public function sleepMillis($millis)
+    public function sleepMillis(int $millis)
     {
         $this->currentTime += $millis;
         $this->sleeps[] = $millis;

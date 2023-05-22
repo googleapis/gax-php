@@ -9,6 +9,7 @@ build/artifacts/
 artifacts/
 .idea
 .metadata
+.phpunit.result.cache
 coverage.xml
 src/Jison/Parser.js
 *.iml
@@ -16,3 +17,6 @@ src/Jison/Parser.js
 # Vim
 *.sw*
 *.vim
+
+# VS Code
+.vscode

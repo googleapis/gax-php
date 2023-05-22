@@ -31,9 +31,9 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+use Google\Api\Monitoring\MonitoringDestination;
 use Google\ApiCore\Testing\GeneratedTest;
-use Google\Api\Monitoring_MonitoringDestination;
-use PHPUnit_Framework_ExpectationFailedException;
+use PHPUnit\Framework\ExpectationFailedException;
 
 class GeneratedTestTest extends GeneratedTest
 {
@@ -52,7 +52,7 @@ class GeneratedTestTest extends GeneratedTest
     {
         try {
             $this->assertProtobufEquals($expected, $actual);
-        } catch (PHPUnit_Framework_ExpectationFailedException $ex) {
+        } catch (ExpectationFailedException $ex) {
             // As expected the assertion failed, silently return
             return;
         }
@@ -62,16 +62,16 @@ class GeneratedTestTest extends GeneratedTest
 
     public function getSuccessCases()
     {
-        $monitoringA = new Monitoring_MonitoringDestination();
+        $monitoringA = new MonitoringDestination();
         $monitoringA->setMonitoredResource("type");
-        $monitoringB = new Monitoring_MonitoringDestination();
+        $monitoringB = new MonitoringDestination();
         $monitoringB->setMonitoredResource("type");
 
         $emptyRepeatedA = $monitoringA->getMetrics();
         $emptyRepeatedB = $monitoringB->getMetrics();
 
-        $monitoringC = new Monitoring_MonitoringDestination();
-        $monitoringD = new Monitoring_MonitoringDestination();
+        $monitoringC = new MonitoringDestination();
+        $monitoringD = new MonitoringDestination();
 
         $repeatedC = $monitoringC->getMetrics();
         $repeatedC[] = "metric";
@@ -94,16 +94,16 @@ class GeneratedTestTest extends GeneratedTest
 
     public function getFailureCases()
     {
-        $monitoringA = new Monitoring_MonitoringDestination();
+        $monitoringA = new MonitoringDestination();
         $monitoringA->setMonitoredResource("typeA");
-        $monitoringB = new Monitoring_MonitoringDestination();
+        $monitoringB = new MonitoringDestination();
         $monitoringB->setMonitoredResource("typeB");
 
         $emptyRepeatedA = $monitoringA->getMetrics();
         $emptyRepeatedB = $monitoringB->getMetrics();
 
-        $monitoringC = new Monitoring_MonitoringDestination();
-        $monitoringD = new Monitoring_MonitoringDestination();
+        $monitoringC = new MonitoringDestination();
+        $monitoringD = new MonitoringDestination();
 
         $repeatedC = $monitoringC->getMetrics();
         $repeatedC[] = "metricA";

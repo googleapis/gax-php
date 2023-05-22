@@ -18,6 +18,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\GrpcSupportTrait;
+use Google\ApiCore\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 class GrpcSupportTraitTest extends TestCase
@@ -30,15 +31,16 @@ class GrpcSupportTraitTest extends TestCase
     {
         self::$hasGrpc = true;
         self::validateGrpcSupport();
+        $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Google\ApiCore\ValidationException
-     * @expectedExceptionMessage gRPC support has been requested
-     */
     public function testValidateGrpcSupportFailure()
     {
         self::$hasGrpc = false;
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('gRPC support has been requested');
+
         self::validateGrpcSupport();
     }
 
