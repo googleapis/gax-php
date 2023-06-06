@@ -376,13 +376,15 @@ trait GapicClientTrait
             $options['restVersion'] = Version::getApiCoreVersion();
         }
 
-        // "gccl" is the canonical way to track the library version, so set this if it's empty
-        if (isset($options['gapicVersion']) && empty($options['libVersion'])) {
-            $options['libVersion'] = $options['gapicVersion'];
-            $options['libName'] = 'gccl';
+        if (!empty($options['gapicVersion'])) {
+            // "gccl" is the canonical way to track the library version, so set this if it's empty
+            if (empty($options['libVersion'])) {
+                $options['libVersion'] = $options['gapicVersion'];
+                $options['libName'] = 'gccl';
+            }
+            // track the surface version being used to make the request
+            $options['gapicVersion'] .= substr(__CLASS__, -10) === 'BaseClient' ? '+s2' : '+s1';
         }
-        // track the surface version being used to make the request
-        $options['gapicVersion'] .= substr(__CLASS__, -10) === 'BaseClient' ? '+s2' : '+s1';
 
         $this->agentHeader = AgentHeader::buildAgentHeader(
             $this->pluckArray([
