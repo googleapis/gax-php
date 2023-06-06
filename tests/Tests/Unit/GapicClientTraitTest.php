@@ -1738,6 +1738,16 @@ class GapicClientTraitTest extends TestCase
         $this->assertTrue(is_callable($options['clientCertSource']));
         $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
     }
+
+    public function testSurfaceAgentHeaders()
+    {
+        $client = new FakeV2SurfaceClient([
+            'gapicVersion' => '0.0.0',
+        ]);
+        $agentHeader = $client->getAgentHeader();
+        $this->assertStringContainsString(' gapic/0.0.0+s2 ', $agentHeader['x-goog-api-client'][0]);
+        $this->assertStringContainsString(' gccl/0.0.0 ', $agentHeader['x-goog-api-client'][0]);
+    }
 }
 
 class GapicClientTraitStub
@@ -1921,4 +1931,39 @@ class CustomOperationsClient
     public function getOperation($name, $arg1, $arg2)
     {
     }
+}
+
+class FakeV2SurfaceBaseClient
+{
+    use GapicClientTrait;
+
+    public function __construct(array $options = [])
+    {
+        $clientOptions = $this->buildClientOptions($options);
+        $this->setClientOptions($clientOptions);
+    }
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+        ];
+    }
+
+    public function getAgentHeader()
+    {
+        return $this->agentHeader;
+    }
+}
+
+class FakeV2SurfaceClient extends FakeV2SurfaceBaseClient
+{
 }
