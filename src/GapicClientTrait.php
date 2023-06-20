@@ -202,15 +202,6 @@ trait GapicClientTrait
             $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
         }
 
-        // If an API endpoint is set, ensure the "audience" does not conflict
-        // with the custom endpoint by setting "user defined" scopes.
-        if ($options['apiEndpoint'] != $defaultOptions['apiEndpoint']
-            && empty($options['credentialsConfig']['scopes'])
-            && !empty($options['credentialsConfig']['defaultScopes'])
-        ) {
-            $options['credentialsConfig']['scopes'] = $options['credentialsConfig']['defaultScopes'];
-        }
-
         if (extension_loaded('sysvshm')
                 && isset($options['gcpApiConfigPath'])
                 && file_exists($options['gcpApiConfigPath'])
@@ -419,9 +410,7 @@ trait GapicClientTrait
         } elseif (is_string($credentials) || is_array($credentials)) {
             return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig);
         } elseif ($credentials instanceof FetchAuthTokenInterface) {
-            $authHttpHandler = isset($credentialsConfig['authHttpHandler'])
-                ? $credentialsConfig['authHttpHandler']
-                : null;
+            $authHttpHandler = $credentialsConfig['authHttpHandler'] ?? null;
             return new CredentialsWrapper($credentials, $authHttpHandler);
         } elseif ($credentials instanceof CredentialsWrapper) {
             return $credentials;
@@ -702,9 +691,7 @@ trait GapicClientTrait
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
 
-        $descriptor = isset($this->descriptors[$methodName]['grpcStreaming'])
-            ? $this->descriptors[$methodName]['grpcStreaming']
-            : null;
+        $descriptor = $this->descriptors[$methodName]['grpcStreaming'] ?? null;
 
         $call = new Call(
             $this->buildMethod($interfaceName, $methodName),
