@@ -355,7 +355,15 @@ trait GapicClientTrait
             'libName',
             'libVersion',
         ]);
-        $options = new ClientOptions($options);
+        if ($this->isNewClientSurface()) {
+            // cast to ClientOptions for new surfaces only
+            $options = new ClientOptions($options);
+        } elseif (is_string($options['clientConfig'])) {
+            $options['clientConfig'] = json_decode(
+                file_get_contents($options['clientConfig']),
+                true
+            );
+        }
         $this->serviceName = $options['serviceName'];
         $this->retrySettings = RetrySettings::load(
             $this->serviceName,
@@ -425,7 +433,7 @@ trait GapicClientTrait
     /**
      * @param string $apiEndpoint
      * @param string $transport
-     * @param TransportOptions $transportConfig
+     * @param TransportOptions|array $transportConfig
      * @param callable $clientCertSource
      * @return TransportInterface
      * @throws ValidationException
@@ -433,7 +441,7 @@ trait GapicClientTrait
     private function createTransport(
         string $apiEndpoint,
         $transport,
-        TransportOptions $transportConfig,
+        $transportConfig,
         callable $clientCertSource = null
     ) {
         if (!is_string($transport)) {
@@ -450,25 +458,26 @@ trait GapicClientTrait
                 implode(', ', $supportedTransports)
             ));
         }
+        $configForSpecifiedTransport = $transportConfig[$transport] ?? [];
+        if (is_array($configForSpecifiedTransport)) {
+            $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
+        } else {
+            $configForSpecifiedTransport->setClientCertSource($clientCertSource);
+            $configForSpecifiedTransport = $configForSpecifiedTransport->toArray();
+        }
         switch ($transport) {
             case 'grpc':
-                $grpcTransportConfig = $transportConfig['grpc'];
-                $grpcTransportConfig->setClientCertSource($clientCertSource);
-                return GrpcTransport::build($apiEndpoint, $grpcTransportConfig->toArray());
+                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
-                $grpcFallbackTransportConfig = $transportConfig['grpcFallback'];
-                $grpcFallbackTransportConfig->setClientCertSource($clientCertSource);
-                return GrpcFallbackTransport::build($apiEndpoint, $grpcFallbackTransportConfig->toArray());
+                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'rest':
-                $restTransportConfig = $transportConfig['rest'];
-                $restTransportConfig->setClientCertSource($clientCertSource);
-                if (!isset($restTransportConfig['restClientConfigPath'])) {
+                if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
                         "The 'restClientConfigPath' config is required for 'rest' transport."
                     );
                 }
-                $restConfigPath = $restTransportConfig['restClientConfigPath'];
-                return RestTransport::build($apiEndpoint, $restConfigPath, $restTransportConfig->toArray());
+                $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
+                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .
@@ -1039,5 +1048,13 @@ trait GapicClientTrait
     protected function modifyStreamingCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * @internal
+     */
+    private function isNewClientSurface(): bool
+    {
+        return substr(__CLASS__, -10) === 'BaseClient';
     }
 }
