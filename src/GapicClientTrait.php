@@ -359,10 +359,13 @@ trait GapicClientTrait
             // cast to ClientOptions for new surfaces only
             $options = new ClientOptions($options);
         } elseif (is_string($options['clientConfig'])) {
+            // perform validation for V1 surfaces which is done in the
+            // ClientOptions class for v2 surfaces.
             $options['clientConfig'] = json_decode(
                 file_get_contents($options['clientConfig']),
                 true
             );
+            self::validateFileExists($options['descriptorsConfigPath']);
         }
         $this->serviceName = $options['serviceName'];
         $this->retrySettings = RetrySettings::load(
