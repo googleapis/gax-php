@@ -1739,6 +1739,26 @@ class GapicClientTraitTest extends TestCase
         $this->assertTrue(is_callable($options['clientCertSource']));
         $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
     }
+
+    public function testClientOptionsForV2SurfaceOnly()
+    {
+        // v1 client
+        $client1 = new GapicClientTraitStub([
+            'apiEndpoint' => ['foo'],
+        ]);
+
+        $this->assertTrue(true, 'Test made it to here without throwing an exception');
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage(
+            'Argument 1 passed to Google\ApiCore\Options\ClientOptions::setApiEndpoint() must be '
+            . 'of the type string or null, array given'
+        );
+
+        // v2 client
+        $client = new FakeV2SurfaceClient([
+            'apiEndpoint' => ['foo'],
+        ]);
+    }
 }
 
 class GapicClientTraitStub
@@ -1922,4 +1942,39 @@ class CustomOperationsClient
     public function getOperation($name, $arg1, $arg2)
     {
     }
+}
+
+abstract class FakeV2SurfaceBaseClient
+{
+    use GapicClientTrait;
+
+    public function __construct(array $options = [])
+    {
+        $clientOptions = $this->buildClientOptions($options);
+        $this->setClientOptions($clientOptions);
+    }
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+        ];
+    }
+
+    public function getAgentHeader()
+    {
+        return $this->agentHeader;
+    }
+}
+
+class FakeV2SurfaceClient extends FakeV2SurfaceBaseClient
+{
 }
