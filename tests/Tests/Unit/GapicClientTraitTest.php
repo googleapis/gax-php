@@ -1741,12 +1741,21 @@ class GapicClientTraitTest extends TestCase
 
     public function testSurfaceAgentHeaders()
     {
+        // V2 contains new headers
         $client = new FakeV2SurfaceClient([
-            'gapicVersion' => '0.0.0',
+            'gapicVersion' => '0.0.1',
         ]);
         $agentHeader = $client->getAgentHeader();
-        $this->assertStringContainsString(' gapic/0.0.0+s2 ', $agentHeader['x-goog-api-client'][0]);
-        $this->assertStringContainsString(' gccl/0.0.0 ', $agentHeader['x-goog-api-client'][0]);
+        $this->assertStringContainsString(' gapic/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
+        $this->assertStringContainsString(' gcloud-php-s2/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
+
+        // V1 does not contain new headers
+        $client = new GapicClientTraitRestOnly([
+            'gapicVersion' => '0.0.2',
+        ]);
+        $agentHeader = $client->getAgentHeader();
+        $this->assertStringContainsString(' gapic/0.0.2 ', $agentHeader['x-goog-api-client'][0]);
+        $this->assertStringNotContainsString('gcloud-php-s2', $agentHeader['x-goog-api-client'][0]);
     }
 }
 
@@ -1913,6 +1922,11 @@ class GapicClientTraitRestOnly
     private static function defaultTransport()
     {
         return 'rest';
+    }
+
+    public function getAgentHeader()
+    {
+        return $this->agentHeader;
     }
 }
 

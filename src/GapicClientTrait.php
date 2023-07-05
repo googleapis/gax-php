@@ -376,14 +376,12 @@ trait GapicClientTrait
             $options['restVersion'] = Version::getApiCoreVersion();
         }
 
-        if (!empty($options['gapicVersion'])) {
-            // "gccl" is the canonical way to track the library version, so set this if it's empty
-            if (empty($options['libVersion'])) {
-                $options['libVersion'] = $options['gapicVersion'];
-                $options['libName'] = 'gccl';
+        // for V2 surfaces, set "client_library_name"
+        if ($this->isNewClientSurface()) {
+            if (empty($options['libVersion']) && empty($options['libName'])) {
+                $options['libVersion'] = $options['gapicVersion'] ?? '';
+                $options['libName'] = 'gcloud-php-s2';
             }
-            // track the surface version being used to make the request
-            $options['gapicVersion'] .= substr(__CLASS__, -10) === 'BaseClient' ? '+s2' : '+s1';
         }
 
         $this->agentHeader = AgentHeader::buildAgentHeader(
@@ -1051,5 +1049,13 @@ trait GapicClientTrait
     protected function modifyStreamingCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * @internal
+     */
+    private function isNewClientSurface(): bool
+    {
+        return substr(__CLASS__, -10) === 'BaseClient';
     }
 }
