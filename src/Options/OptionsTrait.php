@@ -27,6 +27,7 @@ trait OptionsTrait
         return isset($this->$offset);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->$offset;
