@@ -1749,10 +1749,17 @@ class GapicClientTraitTest extends TestCase
 
         $this->assertTrue(true, 'Test made it to here without throwing an exception');
         $this->expectException(\TypeError::class);
-        $this->expectExceptionMessage(
-            'Argument 1 passed to Google\ApiCore\Options\ClientOptions::setApiEndpoint() must be '
-            . 'of the type string or null, array given'
-        );
+        if (PHP_MAJOR_VERSION < 8) {
+            $this->expectExceptionMessage(
+                'Argument 1 passed to Google\ApiCore\Options\ClientOptions::setApiEndpoint() must '
+                . 'be of the type string or null, array given'
+            );
+        } else {
+            $this->expectExceptionMessage(
+                'Google\ApiCore\Options\ClientOptions::setApiEndpoint(): Argument #1 ($apiEndpoint)'
+                . ' must be of type ?string, array given'
+            );
+        }
 
         // v2 client
         $client = new FakeV2SurfaceClient([
