@@ -724,6 +724,7 @@ trait GapicClientTrait
                 $this->modifyStreamingCallable($callStack);
                 break;
         }
+
         return $callStack($call, $optionalArgs + array_filter([
             'audience' => self::getDefaultAudience()
         ]));
@@ -801,11 +802,12 @@ trait GapicClientTrait
      */
     private function configureCallOptions(array $optionalArgs): array
     {
-        if (!$this->isNewClientSurface()) {
-            return $optionalArgs;
+        if ($this->isNewClientSurface()) {
+            // cast to ClientOptions for new surfaces only
+            return (new CallOptions($optionalArgs))->toArray();
         }
 
-        return (new CallOptions($optionalArgs))->toArray();
+        return $optionsArgs;
     }
 
     /**

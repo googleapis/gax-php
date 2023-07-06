@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Options;
 
 use ArrayAccess;
+use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\TransportInterface;
 
@@ -107,19 +108,17 @@ class CallOptions implements ArrayAccess
      *     Transport-specific call-time options.
      *
      *     @type array $grpcOptions
-     *           Key-value pairs for gRPC-specific options which will be passed as the `$options`
-     *           argument to the {@see \Grpc\BaseStub} request methods.
-     *           See {@link https://grpc.github.io/grpc/core/group__grpc__arg__keys.html} and
-     *           {@link https://grpc.github.io/grpc/php/class_grpc_1_1_base_stub.html}.
+     *           Key-value pairs for gRPC-specific options passed as the `$options` argument to {@see \Grpc\BaseStub}
+     *           request methods. Current options are `call_credentials_callback` and `timeout`.
+     *           **NOTE**: This library sets `call_credentials_callback` using {@see CredentialsWrapper}, and `timeout`
+     *           using the `timeoutMillis` call option, so these options are not very useful.
      *     @type array $grpcFallbackOptions
-     *           Key-value pairs for gRPC fallback specific options which will be passed as the
-     *           `$options` argument of the `$httpHandler` callable. By
-     *           default these will be passed to {@see \GuzzleHttp\Client} as request options.
+     *           Key-value pairs for gRPC fallback specific options passed as the `$options` argument to the
+     *           `$httpHandler` callable. By default these are passed to {@see \GuzzleHttp\Client} as request options.
      *           See {@link https://docs.guzzlephp.org/en/stable/request-options.html}.
      *     @type array $restOptions
-     *           Key-value pairs for REST-specific options which will be passed as the `$options`
-     *           argument of the `$httpHandler` callable. By default, these will be passed to
-     *           {@see \GuzzleHttp\Client} as request options.
+     *           Key-value pairs for REST-specific options passed as the `$options` argument to the `$httpHandler`
+     *           callable. By default these are passed to {@see \GuzzleHttp\Client} as request options.
      *           See {@link https://docs.guzzlephp.org/en/stable/request-options.html}.
      * }
      */
