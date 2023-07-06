@@ -803,7 +803,7 @@ trait GapicClientTrait
     private function configureCallOptions(array $optionalArgs): array
     {
         if ($this->isNewClientSurface()) {
-            // cast to ClientOptions for new surfaces only
+            // cast to CallOptions for new surfaces only
             return (new CallOptions($optionalArgs))->toArray();
         }
 
