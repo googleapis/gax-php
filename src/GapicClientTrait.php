@@ -43,6 +43,7 @@ use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\ApiCore\Options\CallOptions;
 use Google\ApiCore\Options\ClientOptions;
 use Google\ApiCore\Options\TransportOptions;
 use Google\Auth\CredentialsLoader;
@@ -699,6 +700,7 @@ trait GapicClientTrait
         int $callType = Call::UNARY_CALL,
         string $interfaceName = null
     ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
@@ -722,7 +724,6 @@ trait GapicClientTrait
                 $this->modifyStreamingCallable($callStack);
                 break;
         }
-
         return $callStack($call, $optionalArgs + array_filter([
             'audience' => self::getDefaultAudience()
         ]));
@@ -796,6 +797,18 @@ trait GapicClientTrait
     }
 
     /**
+     * @return array
+     */
+    private function configureCallOptions(array $optionalArgs): array
+    {
+        if (!$this->isNewClientSurface()) {
+            return $optionalArgs;
+        }
+
+        return (new CallOptions($optionalArgs))->toArray();
+    }
+
+    /**
      * @param string $methodName
      * @param array $optionalArgs {
      *     Call Options
@@ -820,6 +833,7 @@ trait GapicClientTrait
         string $interfaceName = null,
         string $operationClass = null
     ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
@@ -899,6 +913,7 @@ trait GapicClientTrait
         Message $request,
         string $interfaceName = null
     ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );

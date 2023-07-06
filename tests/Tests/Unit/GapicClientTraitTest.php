@@ -1125,7 +1125,7 @@ class GapicClientTraitTest extends TestCase
         $this->assertTrue($updatedOptions['disableRetries']);
     }
 
-    private function buildClientToTestModifyCallMethods()
+    private function buildClientToTestModifyCallMethods($clientClass = null)
     {
         $header = AgentHeader::buildAgentHeader([]);
         $retrySettings = $this->getMockBuilder(RetrySettings::class)
@@ -1152,7 +1152,8 @@ class GapicClientTraitTest extends TestCase
         $credentialsWrapper = CredentialsWrapper::build([
             'keyFile' => __DIR__ . '/testdata/json-key-file.json'
         ]);
-        $client = new GapicClientTraitStubExtension();
+        $clientClass = $clientClass ?: GapicClientTraitStubExtension::class;
+        $client = new $clientClass();
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
@@ -1593,13 +1594,13 @@ class GapicClientTraitTest extends TestCase
     public function testSupportedTransportOverrideWithDefaultTransport()
     {
         $client = new GapicClientTraitRestOnly();
-        $this->assertInstanceOf(RestTransport::class, $client->getTransport());
+        $this->assertInstanceOf(RestTransport::class, $client->call('getTransport'));
     }
 
     public function testSupportedTransportOverrideWithExplicitTransport()
     {
         $client = new GapicClientTraitRestOnly(['transport' => 'rest']);
-        $this->assertInstanceOf(RestTransport::class, $client->getTransport());
+        $this->assertInstanceOf(RestTransport::class, $client->call('getTransport'));
     }
 
     /** @dataProvider provideDetermineMtlsEndpoint */
@@ -1740,14 +1741,12 @@ class GapicClientTraitTest extends TestCase
         $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
     }
 
-    public function testClientOptionsForV2SurfaceOnly()
+    public function testInvalidClientOptionsTypeThrowsExceptionForV2SurfaceOnly()
     {
         // v1 client
-        $client1 = new GapicClientTraitStub([
-            'apiEndpoint' => ['foo'],
-        ]);
-
+        new GapicClientTraitStub(['apiEndpoint' => ['foo']]);
         $this->assertTrue(true, 'Test made it to here without throwing an exception');
+
         $this->expectException(\TypeError::class);
         if (PHP_MAJOR_VERSION < 8) {
             $this->expectExceptionMessage(
@@ -1762,15 +1761,99 @@ class GapicClientTraitTest extends TestCase
         }
 
         // v2 client
-        $client = new FakeV2SurfaceClient([
-            'apiEndpoint' => ['foo'],
-        ]);
+        new GapicV2SurfaceClient(['apiEndpoint' => ['foo']]);
+    }
+
+    public function testCallOptionsForV2Surface()
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods(
+            GapicV2SurfaceClient::class
+        );
+
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->equalTo([
+                    'transportOptions' => [],
+                    'headers' => AgentHeader::buildAgentHeader([]) + ['Foo' => 'Bar'],
+                    'credentialsWrapper' => CredentialsWrapper::build([
+                        'keyFile' => __DIR__ . '/testdata/json-key-file.json'
+                    ]),
+                    'timeoutMillis' => null, // adds null timeoutMillis
+                ])
+            )
+            ->willReturn(new FulfilledPromise(new Operation()));
+
+        $callOptions = [
+            'headers' => ['Foo' => 'Bar'],
+            'invalidOption' => 'wont-be-passed'
+        ];
+        $client->call('startCall', [
+            'simpleMethod',
+            'decodeType',
+            $callOptions,
+            new MockRequest(),
+        ])->wait();
+    }
+
+    public function testInvalidCallOptionsTypeForV1SurfaceDoesNotThrowException()
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods();
+
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->equalTo([
+                    'transportOptions' => ['custom' => ['addModifyUnaryCallableOption' => true]],
+                    'headers' => AgentHeader::buildAgentHeader([]),
+                    'credentialsWrapper' => CredentialsWrapper::build([
+                        'keyFile' => __DIR__ . '/testdata/json-key-file.json'
+                    ]),
+                    'timeoutMillis' => 'blue', // invalid type, this is ignored
+                ])
+            )
+            ->willReturn(new FulfilledPromise(new Operation()));
+
+        $client->call('startCall', [
+            'simpleMethod',
+            'decodeType',
+            ['timeoutMillis' => 'blue'],
+            new MockRequest(),
+        ])->wait();
+    }
+
+    public function testInvalidCallOptionsTypeForV2SurfaceThrowsException()
+    {
+        $this->expectException(\TypeError::class);
+        if (PHP_MAJOR_VERSION < 8) {
+            $this->expectExceptionMessage(
+                'Argument 1 passed to Google\ApiCore\Options\CallOptions::setTimeoutMillis() must '
+                . 'be of the type int or null, string given'
+            );
+        } else {
+            $this->expectExceptionMessage(
+                'Google\ApiCore\Options\CallOptions::setTimeoutMillis(): Argument #1 ($timeoutMillis)'
+                . ' must be of type ?int, string given'
+            );
+        }
+
+        list($client, $_) = $this->buildClientToTestModifyCallMethods(GapicV2SurfaceClient::class);
+
+        $client->call('startCall', [
+            'simpleMethod',
+            'decodeType',
+            ['timeoutMillis' => 'blue'], // invalid type, will throw exception
+            new MockRequest(),
+        ])->wait();
     }
 }
 
 class GapicClientTraitStub
 {
     use GapicClientTrait;
+    use GapicClientStubTrait;
 
     public static function getClientDefaults()
     {
@@ -1791,7 +1874,10 @@ class GapicClientTraitStub
             ],
         ];
     }
+}
 
+trait GapicClientStubTrait
+{
     public function call($fn, array $args = [])
     {
         return call_user_func_array([$this, $fn], $args);
@@ -1852,6 +1938,7 @@ class GapicClientTraitStubExtension extends GapicClientTraitStub
 class GapicClientTraitDefaultScopeAndAudienceStub
 {
     use GapicClientTrait;
+    use GapicClientStubTrait;
 
     const SERVICE_ADDRESS = 'service-address';
 
@@ -1869,28 +1956,12 @@ class GapicClientTraitDefaultScopeAndAudienceStub
             ],
         ];
     }
-
-    public function call($fn, array $args = [])
-    {
-        return call_user_func_array([$this, $fn], $args);
-    }
-
-    public function set($name, $val, $static = false)
-    {
-        if (!property_exists($this, $name)) {
-            throw new \InvalidArgumentException("Property not found: $name");
-        }
-        if ($static) {
-            $this::$$name = $val;
-        } else {
-            $this->$name = $val;
-        }
-    }
 }
 
 class GapicClientTraitRestOnly
 {
     use GapicClientTrait;
+    use GapicClientStubTrait;
 
     public function __construct($options = [])
     {
@@ -1911,16 +1982,6 @@ class GapicClientTraitRestOnly
                 ]
             ],
         ];
-    }
-
-    public function call($fn, array $args = [])
-    {
-        return call_user_func_array([$this, $fn], $args);
-    }
-
-    public function getTransport()
-    {
-        return $this->transport;
     }
 
     private static function supportedTransports()
@@ -1951,9 +2012,10 @@ class CustomOperationsClient
     }
 }
 
-abstract class FakeV2SurfaceBaseClient
+abstract class GapicV2SurfaceBaseClient
 {
     use GapicClientTrait;
+    use GapicClientStubTrait;
 
     public function __construct(array $options = [])
     {
@@ -1975,13 +2037,8 @@ abstract class FakeV2SurfaceBaseClient
             ],
         ];
     }
-
-    public function getAgentHeader()
-    {
-        return $this->agentHeader;
-    }
 }
 
-class FakeV2SurfaceClient extends FakeV2SurfaceBaseClient
+class GapicV2SurfaceClient extends GapicV2SurfaceBaseClient
 {
 }

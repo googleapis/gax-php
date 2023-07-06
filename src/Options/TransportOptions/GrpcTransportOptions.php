@@ -9,6 +9,10 @@ use Grpc\Channel;
 use Grpc\Interceptor;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 
+/**
+ * The GrpcTransportOptions class provides typing to the associative array of options used to
+ * configure {@see \Google\ApiCore\Transport\GrpcTransport}.
+ */
 class GrpcTransportOptions implements ArrayAccess
 {
     use OptionsTrait;
@@ -28,7 +32,8 @@ class GrpcTransportOptions implements ArrayAccess
      * @param array $options {
      *    Config options used to construct the gRPC transport.
      *
-     *    @type array $stubOpts Options used to construct the gRPC stub.
+     *    @type array $stubOpts Options used to construct the gRPC stub (see
+     *          {@link https://grpc.github.io/grpc/core/group__grpc__arg__keys.html}).
      *    @type Channel $channel Grpc channel to be used.
      *    @type Interceptor[]|UnaryInterceptorInterface[] $interceptors *EXPERIMENTAL*
      *          Interceptors used to intercept RPC invocations before a call starts.

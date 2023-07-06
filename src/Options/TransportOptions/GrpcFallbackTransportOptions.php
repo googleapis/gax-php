@@ -6,6 +6,10 @@ use ArrayAccess;
 use Closure;
 use Google\ApiCore\Options\OptionsTrait;
 
+/**
+ * The GrpcFallbackTransportOptions class provides typing to the associative array of options used
+ * to configure {@see \Google\ApiCore\Transport\GrpcFallbackTransport}.
+ */
 class GrpcFallbackTransportOptions implements ArrayAccess
 {
     use OptionsTrait;
