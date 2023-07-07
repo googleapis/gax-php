@@ -80,6 +80,7 @@ trait GapicClientTrait
         Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
+    private bool $isNewClient;
 
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
@@ -385,14 +386,12 @@ trait GapicClientTrait
             $options['restVersion'] = Version::getApiCoreVersion();
         }
 
-        // for V2 surfaces, set "client_library_name"
-        if ($this->isNewClientSurface()) {
-            if (empty($options['libVersion']) && empty($options['libName'])) {
-                $options['libVersion'] = $options['gapicVersion'] ?? '';
-                $options['libName'] = 'gcloud-php-s2';
-            }
-        }
-
+        // Set "client_library_name" depending on client library surface being used
+        $userAgentHeader = sprintf(
+            'gcloud-php-%s/%s',
+            $this->isNewClientSurface() ? 'new' : 'legacy',
+            $options['gapicVersion']
+        );
         $this->agentHeader = AgentHeader::buildAgentHeader(
             $this->pluckArray([
                 'libName',
@@ -400,6 +399,8 @@ trait GapicClientTrait
                 'gapicVersion'
             ], $options)
         );
+    $this->agentHeader['User-Agent'] = [$userAgentHeader];
+
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
@@ -1065,6 +1066,6 @@ trait GapicClientTrait
      */
     private function isNewClientSurface(): bool
     {
-        return substr(__CLASS__, -10) === 'BaseClient';
+        return $this->isNewClient ?? $this->newClient = substr(__CLASS__, -10) === 'BaseClient';
     }
 }

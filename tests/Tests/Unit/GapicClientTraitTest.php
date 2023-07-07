@@ -872,7 +872,7 @@ class GapicClientTraitTest extends TestCase
         }
         $expectedProperties = [
             'serviceName' => 'test.interface.v1.api',
-            'agentHeader' => AgentHeader::buildAgentHeader([]),
+            'agentHeader' => AgentHeader::buildAgentHeader([]) + ['User-Agent' => ['gcloud-php-legacy/']],
             'retrySettings' => $expectedRetrySettings,
         ];
         return [
@@ -1356,7 +1356,8 @@ class GapicClientTraitTest extends TestCase
                 $this->isInstanceOf(Call::class),
                 $this->equalTo([
                     'headers' => AgentHeader::buildAgentHeader([]) + [
-                        'X-Goog-User-Project' => [$quotaProject]
+                        'X-Goog-User-Project' => [$quotaProject],
+                        'User-Agent' => ['gcloud-php-legacy/']
                     ],
                     'credentialsWrapper' => $credentialsWrapper
                 ])
@@ -1721,21 +1722,21 @@ class GapicClientTraitTest extends TestCase
 
     public function testSurfaceAgentHeaders()
     {
-        // V2 contains new headers
-        $client = new FakeV2SurfaceClient([
-            'gapicVersion' => '0.0.1',
-        ]);
-        $agentHeader = $client->getAgentHeader();
-        $this->assertStringContainsString(' gapic/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
-        $this->assertStringContainsString(' gcloud-php-s2/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
-
         // V1 does not contain new headers
         $client = new GapicClientTraitRestOnly([
             'gapicVersion' => '0.0.2',
         ]);
         $agentHeader = $client->getAgentHeader();
         $this->assertStringContainsString(' gapic/0.0.2 ', $agentHeader['x-goog-api-client'][0]);
-        $this->assertStringNotContainsString('gcloud-php-s2', $agentHeader['x-goog-api-client'][0]);
+        $this->assertEquals('gcloud-php-legacy/0.0.2', $agentHeader['User-Agent'][0]);
+
+        // V2 contains new headers
+        $client = new GapicV2SurfaceClient([
+            'gapicVersion' => '0.0.1',
+        ]);
+        $agentHeader = $client->getAgentHeader();
+        $this->assertStringContainsString(' gapic/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
+        $this->assertEquals('gcloud-php-new/0.0.1', $agentHeader['User-Agent'][0]);
     }
 }
 
@@ -1927,7 +1928,7 @@ class CustomOperationsClient
     }
 }
 
-class FakeV2SurfaceBaseClient
+class GapicV2SurfaceBaseClient
 {
     use GapicClientTrait;
 
@@ -1958,6 +1959,6 @@ class FakeV2SurfaceBaseClient
     }
 }
 
-class FakeV2SurfaceClient extends FakeV2SurfaceBaseClient
+class GapicV2SurfaceClient extends GapicV2SurfaceBaseClient
 {
 }
