@@ -399,7 +399,8 @@ trait GapicClientTrait
                 'gapicVersion'
             ], $options)
         );
-    $this->agentHeader['User-Agent'] = [$userAgentHeader];
+        $this->agentHeader['User-Agent'] = [$userAgentHeader];
+
 
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
@@ -478,6 +479,19 @@ trait GapicClientTrait
         $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
         switch ($transport) {
             case 'grpc':
+                // Setting the user agent for gRPC requires special handling
+                if (isset($this->agentHeader['User-Agent'])) {
+                    if (!isset($configForSpecifiedTransport['stubOpts'])) {
+                        $configForSpecifiedTransport['stubOpts'] = [];
+                    }
+                    if (!isset($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'])) {
+                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] = '';
+                    } else {
+                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .= ' ';
+                    }
+                    $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
+                        $this->agentHeader['User-Agent'][0];
+                }
                 return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
                 return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
