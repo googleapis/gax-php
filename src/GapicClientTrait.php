@@ -401,7 +401,6 @@ trait GapicClientTrait
         );
         $this->agentHeader['User-Agent'] = [$userAgentHeader];
 
-
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
@@ -481,12 +480,7 @@ trait GapicClientTrait
             case 'grpc':
                 // Setting the user agent for gRPC requires special handling
                 if (isset($this->agentHeader['User-Agent'])) {
-                    if (!isset($configForSpecifiedTransport['stubOpts'])) {
-                        $configForSpecifiedTransport['stubOpts'] = [];
-                    }
-                    if (!isset($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'])) {
-                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] = '';
-                    } else {
+                    if ($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] ??= '') {
                         $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .= ' ';
                     }
                     $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
