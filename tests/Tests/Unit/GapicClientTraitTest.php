@@ -1718,6 +1718,23 @@ class GapicClientTraitTest extends TestCase
         $this->assertTrue(is_callable($options['clientCertSource']));
         $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
     }
+
+    public function testSurfaceAgentHeaders()
+    {
+        // V1 contain new "+s1" header
+        $client = new GapicClientTraitRestOnly([
+            'gapicVersion' => '0.0.2',
+        ]);
+        $agentHeader = $client->getAgentHeader();
+        $this->assertStringContainsString(' gapic/0.0.2+s1 ', $agentHeader['x-goog-api-client'][0]);
+
+        // V2 contains new "+s2" header
+        $client = new GapicV2SurfaceClient([
+            'gapicVersion' => '0.0.1',
+        ]);
+        $agentHeader = $client->getAgentHeader();
+        $this->assertStringContainsString(' gapic/0.0.1+s2 ', $agentHeader['x-goog-api-client'][0]);
+    }
 }
 
 class GapicClientTraitStub
@@ -1884,6 +1901,11 @@ class GapicClientTraitRestOnly
     {
         return 'rest';
     }
+
+    public function getAgentHeader()
+    {
+        return $this->agentHeader;
+    }
 }
 
 class GapicClientTraitOperationsStub extends GapicClientTraitStub
@@ -1901,4 +1923,39 @@ class CustomOperationsClient
     public function getOperation($name, $arg1, $arg2)
     {
     }
+}
+
+class GapicV2SurfaceBaseClient
+{
+    use GapicClientTrait;
+
+    public function __construct(array $options = [])
+    {
+        $clientOptions = $this->buildClientOptions($options);
+        $this->setClientOptions($clientOptions);
+    }
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+        ];
+    }
+
+    public function getAgentHeader()
+    {
+        return $this->agentHeader;
+    }
+}
+
+class GapicV2SurfaceClient extends GapicV2SurfaceBaseClient
+{
 }

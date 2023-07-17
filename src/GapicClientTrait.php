@@ -80,6 +80,7 @@ trait GapicClientTrait
         Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
+    private bool $isNewClient;
 
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
@@ -385,6 +386,11 @@ trait GapicClientTrait
             $options['restVersion'] = Version::getApiCoreVersion();
         }
 
+        // Set "s1" or "s2" depending on client library surface being used
+        if (isset($options['gapicVersion'])) {
+            $options['gapicVersion'] .= $this->isNewClientSurface() ? '+s2' : '+s1';
+        }
+
         $this->agentHeader = AgentHeader::buildAgentHeader(
             $this->pluckArray([
                 'libName',
@@ -392,6 +398,7 @@ trait GapicClientTrait
                 'gapicVersion'
             ], $options)
         );
+
         self::validateFileExists($options['descriptorsConfigPath']);
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
@@ -1050,5 +1057,13 @@ trait GapicClientTrait
     protected function modifyStreamingCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * @internal
+     */
+    private function isNewClientSurface(): bool
+    {
+        return $this->isNewClient ?? $this->newClient = substr(__CLASS__, -10) === 'BaseClient';
     }
 }
