@@ -387,7 +387,7 @@ trait GapicClientTrait
         }
 
         // Set "s1" or "s2" depending on client library surface being used
-        if (isset($options['gapicVersion'])) {
+        if (!empty($options['gapicVersion'])) {
             $options['gapicVersion'] .= $this->isNewClientSurface() ? '+s2' : '+s1';
         }
 
