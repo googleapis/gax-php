@@ -81,6 +81,7 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
     private bool $isNewClient;
+    private bool $newClient;
 
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
