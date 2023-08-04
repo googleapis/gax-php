@@ -18,7 +18,7 @@
 namespace Google\ApiCore\Veneer;
 
 use Google\Auth\HttpHandler\HttpHandlerFactory;
-use Google\ApiCore\Exception;
+use Google\ApiCore\Veneer\Exception;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\OperationResponse;
 use Google\ApiCore\PagedListResponse;

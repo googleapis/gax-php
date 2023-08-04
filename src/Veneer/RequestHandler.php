@@ -32,11 +32,6 @@ class RequestHandler
      */
     private $clientConfig;
 
-    /**
-     * @var array
-     */
-    private $gapics;
-
     private $serializer;
 
     /**
@@ -44,7 +39,6 @@ class RequestHandler
      */
     public function __construct(
         Serializer $serializer,
-        array $gapicClasses = [],
         array $config = []
     ) {
         //@codeCoverageIgnoreStart
@@ -77,17 +71,12 @@ class RequestHandler
         //@codeCoverageIgnoreEnd
 
         $this->clientConfig = $grpcConfig;
-
-        // initialize the gapics
-        foreach($gapicClasses as $gapicClass) {
-            $this->gapics[$gapicClass] = new $gapicClass($this->clientConfig);
-        }
     }
 
     /**
      * Helper function that forwards the request to a gapic client obj.
      * 
-     * @param $gapicClass The object of this GAPIC client will be used.
+     * @param $gapicObj The request will be forwarded to this constructed GAPIC object.
      * @param $method This method needs to be called on the gapic obj.
      * @param $requiredArgs The positional arguments to be passed on the $method
      * @param $args The optional args.
@@ -97,7 +86,7 @@ class RequestHandler
      * and therefore, only one GAPIC was passed in the constructor
      */
     public function sendReq(
-        $gapicClass,
+        $gapicObj,
         string $method,
         array $requiredArgs,
         array $optionalArgs,
@@ -111,11 +100,8 @@ class RequestHandler
         // we can modify this behaviour
         $allArgs[] = $optionalArgs;
 
-        // fetch the gapic obj to use while sending the req.
-        $obj = $this->gapics[$gapicClass];
-
         // TODO: check how can we simplify the use of $whitelisted
-        return $this->send([$obj, $method], $allArgs, $whitelisted);
+        return $this->send([$gapicObj, $method], $allArgs, $whitelisted);
     }
 
     private function getDefaultTransport()
