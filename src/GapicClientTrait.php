@@ -81,7 +81,6 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
     private bool $isNewClient;
-    private $newClient;
 
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
@@ -1075,6 +1074,6 @@ trait GapicClientTrait
      */
     private function isNewClientSurface(): bool
     {
-        return $this->isNewClient ?? $this->newClient = substr(__CLASS__, -10) === 'BaseClient';
+        return $this->isNewClient ?? $this->isNewClient = substr(__CLASS__, -10) === 'BaseClient';
     }
 }
