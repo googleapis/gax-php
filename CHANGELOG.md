@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.22.1](https://github.com/googleapis/gax-php/compare/v1.22.0...v1.22.1) (2023-08-04)
+
+
+### Bug Fixes
+
+* Deprecation notice while GapicClientTrait-&gt;setClientOptions ([#483](https://github.com/googleapis/gax-php/issues/483)) ([1c66d34](https://github.com/googleapis/gax-php/commit/1c66d3445dca4d43831a2f4e26e59b9bd1cb76dd))
+
+## [1.22.0](https://github.com/googleapis/gax-php/compare/v1.21.1...v1.22.0) (2023-07-31)
+
+
+### Features
+
+* Sets api headers for "gcloud-php-new" and "gcloud-php-legacy"  surface versions ([#470](https://github.com/googleapis/gax-php/issues/470)) ([2d8ccff](https://github.com/googleapis/gax-php/commit/2d8ccff419a076ee2fe9d3dc7ecd5509c74afb4c))
+
+## [1.21.1](https://github.com/googleapis/gax-php/compare/v1.21.0...v1.21.1) (2023-06-28)
+
+
+### Bug Fixes
+
+* Revert "chore: remove unnecessary api endpoint check" ([#476](https://github.com/googleapis/gax-php/issues/476)) ([13e773f](https://github.com/googleapis/gax-php/commit/13e773f5b09f9a99b8425835815746d37e9c1da3))
+
 ## [1.21.0](https://github.com/googleapis/gax-php/compare/v1.20.2...v1.21.0) (2023-06-09)
 
 

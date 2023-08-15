@@ -204,6 +204,15 @@ trait GapicClientTrait
             $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
         }
 
+        // If an API endpoint is set, ensure the "audience" does not conflict
+        // with the custom endpoint by setting "user defined" scopes.
+        if ($options['apiEndpoint'] != $defaultOptions['apiEndpoint']
+            && empty($options['credentialsConfig']['scopes'])
+            && !empty($options['credentialsConfig']['defaultScopes'])
+        ) {
+            $options['credentialsConfig']['scopes'] = $options['credentialsConfig']['defaultScopes'];
+        }
+
         if (extension_loaded('sysvshm')
                 && isset($options['gcpApiConfigPath'])
                 && file_exists($options['gcpApiConfigPath'])
@@ -390,6 +399,16 @@ trait GapicClientTrait
             $headerInfo['restVersion'] = Version::getApiCoreVersion();
         }
         $this->agentHeader = AgentHeader::buildAgentHeader($headerInfo);
+      
+        // Set "client_library_name" depending on client library surface being used
+        $userAgentHeader = sprintf(
+            'gcloud-php-%s/%s',
+            $this->isNewClientSurface() ? 'new' : 'legacy',
+            $options['gapicVersion']
+        );
+        $this->agentHeader['User-Agent'] = [$userAgentHeader];
+
+        self::validateFileExists($options['descriptorsConfigPath']);
 
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
@@ -472,6 +491,14 @@ trait GapicClientTrait
         }
         switch ($transport) {
             case 'grpc':
+                // Setting the user agent for gRPC requires special handling
+                if (isset($this->agentHeader['User-Agent'])) {
+                    if ($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] ??= '') {
+                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .= ' ';
+                    }
+                    $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
+                        $this->agentHeader['User-Agent'][0];
+                }
                 return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
                 return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
@@ -1076,9 +1103,6 @@ trait GapicClientTrait
      */
     private function isNewClientSurface(): bool
     {
-        if (isset($this->isNewClient)) {
-            return $this->isNewClient;
-        }
-        return $this->isNewClient = substr(__CLASS__, -10) === 'BaseClient';
+        return $this->isNewClient ?? $this->isNewClient = substr(__CLASS__, -10) === 'BaseClient';
     }
 }
