@@ -707,7 +707,7 @@ class GapicClientTraitTest extends TestCase
         $transport = $client->call('createTransport', [
             $apiEndpoint,
             $transport,
-            new TransportOptions($transportConfig)
+            $transportConfig
         ]);
 
         $this->assertEquals($expectedTransportClass, get_class($transport));
@@ -747,7 +747,7 @@ class GapicClientTraitTest extends TestCase
         $client->call('createTransport', [
             $apiEndpoint,
             $transport,
-            new TransportOptions($transportConfig)
+            $transportConfig
         ]);
     }
 
