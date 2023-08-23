@@ -122,7 +122,7 @@ class ClientOptions implements ArrayAccess
      *           *Advanced usage*: Additionally, it is possible to pass in an already instantiated
      *           TransportInterface object. Note that when this objects is provided, any settings in
      *           $transportConfig, and any `$apiEndpoint` setting, will be ignored.
-     *     @type array|TransportOptions $transportConfig
+     *     @type array $transportConfig
      *           Configuration options that will be used to construct the transport. Options for
      *           each supported transport type should be passed in a key for that transport. For
      *           example:
@@ -167,7 +167,7 @@ class ClientOptions implements ArrayAccess
         $this->setCredentials($arr['credentials']);
         $this->setCredentialsConfig($arr['credentialsConfig'] ?? []);
         $this->setTransport($arr['transport'] ?? null);
-        $this->setTransportConfig($arr['transportConfig'] ?? []);
+        $this->setTransportConfig(new TransportOptions($arr['transportConfig'] ?? []));
         $this->setVersionFile($arr['versionFile'] ?? null);
         $this->setDescriptorsConfigPath($arr['descriptorsConfigPath']);
         $this->setServiceName($arr['serviceName'] ?? null);
@@ -233,11 +233,11 @@ class ClientOptions implements ArrayAccess
     }
 
     /**
-     * @param array $transportConfig
+     * @param TransportOptions $transportConfig
      */
-    public function setTransportConfig(array $transportConfig): void
+    public function setTransportConfig(TransportOptions $transportConfig): void
     {
-        $this->transportConfig = new TransportOptions($transportConfig);
+        $this->transportConfig = $transportConfig;
     }
 
     /**

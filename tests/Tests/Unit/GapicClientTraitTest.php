@@ -1752,7 +1752,6 @@ class GapicClientTraitTest extends TestCase
             ->with(
                 $this->isInstanceOf(Call::class),
                 $this->equalTo([
-                    'transportOptions' => [],
                     'headers' => AgentHeader::buildAgentHeader([]) + ['Foo' => 'Bar'],
                     'credentialsWrapper' => CredentialsWrapper::build([
                         'keyFile' => __DIR__ . '/testdata/json-key-file.json'
