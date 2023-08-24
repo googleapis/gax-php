@@ -65,8 +65,11 @@ class CallOptions implements ArrayAccess
      *           The timeout in milliseconds for the call.
      *     @type array $transportOptions
      *           Transport-specific call options. See {@see CallOptions::setTransportOptions}.
-     *     @type RetrySettings|array|null $retrySettings
-     *           A retry settings override for the call.
+     *     @type RetrySettings|array $retrySettings
+     *           A retry settings override for the call. If $retrySettings is an
+     *           array, the settings will be merged with the method's default
+     *           retry settings. If $retrySettings is a RetrySettings object,
+     *           that object will be used instead of the method defaults.
      * }
      */
     public function __construct(array $options)
