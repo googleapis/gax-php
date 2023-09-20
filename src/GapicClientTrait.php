@@ -109,10 +109,10 @@ trait GapicClientTrait
      */
     protected function getTransport()
     {
-        if ($this->transport) {
-            return $this->transport;
+        if (!$this->transport) {
+            $this->transport = ($this->transportCallable)($this->buildApiEndpoint());
         }
-        return $this->transport = ($this->transportCallable)($this->buildApiEndpoint());
+        return $this->transport;
     }
 
     /**
