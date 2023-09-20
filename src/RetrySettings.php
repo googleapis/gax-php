@@ -218,6 +218,12 @@ class RetrySettings
     private $noRetriesRpcTimeoutMillis;
 
     /**
+     * When set, this function will be used to evaluate if the retry should
+     * take place or not.
+     */
+    private $requestRetryFunction;
+
+    /**
      * Constructs an instance.
      *
      * @param array $settings {
@@ -225,22 +231,23 @@ class RetrySettings
      *     $retriesEnabled and $noRetriesRpcTimeoutMillis, which are optional and have defaults
      *     determined based on the other settings provided.
      *
-     *     @type bool    $retriesEnabled Optional. Enables retries. If not specified, the value is
-     *                   determined using the $retryableCodes setting. If $retryableCodes is empty,
-     *                   then $retriesEnabled is set to false; otherwise, it is set to true.
-     *     @type int     $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
-     *                   if $retriesEnabled is false, in milliseconds. It not specified, the value
-     *                   of $initialRpcTimeoutMillis is used.
-     *     @type array   $retryableCodes The Status codes that are retryable. Each status should be
-     *                   either one of the string constants defined on {@see \Google\ApiCore\ApiStatus}
-     *                   or an integer constant defined on {@see \Google\Rpc\Code}.
-     *     @type int     $initialRetryDelayMillis The initial delay of retry in milliseconds.
-     *     @type int     $retryDelayMultiplier The exponential multiplier of retry delay.
-     *     @type int     $maxRetryDelayMillis The max delay of retry in milliseconds.
-     *     @type int     $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
-     *     @type int     $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
-     *     @type int     $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
-     *     @type int     $totalTimeoutMillis The max accumulative timeout in total.
+     *     @type bool     $retriesEnabled Optional. Enables retries. If not specified, the value is
+     *                    determined using the $retryableCodes setting. If $retryableCodes is empty,
+     *                    then $retriesEnabled is set to false; otherwise, it is set to true.
+     *     @type int      $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
+     *                    if $retriesEnabled is false, in milliseconds. It not specified, the value
+     *                    of $initialRpcTimeoutMillis is used.
+     *     @type array    $retryableCodes The Status codes that are retryable. Each status should be
+     *                    either one of the string constants defined on {@see \Google\ApiCore\ApiStatus}
+     *                    or an integer constant defined on {@see \Google\Rpc\Code}.
+     *     @type int      $initialRetryDelayMillis The initial delay of retry in milliseconds.
+     *     @type int      $retryDelayMultiplier The exponential multiplier of retry delay.
+     *     @type int      $maxRetryDelayMillis The max delay of retry in milliseconds.
+     *     @type int      $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
+     *     @type int      $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
+     *     @type int      $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
+     *     @type int      $totalTimeoutMillis The max accumulative timeout in total.
+     *     @type callable $requestRetryFunction This function will be used to decide if we should retry or not.
      * }
      */
     public function __construct(array $settings)
@@ -269,6 +276,7 @@ class RetrySettings
         $this->noRetriesRpcTimeoutMillis = array_key_exists('noRetriesRpcTimeoutMillis', $settings)
             ? $settings['noRetriesRpcTimeoutMillis']
             : $this->initialRpcTimeoutMillis;
+        $this->requestRetryFunction = $settings['requestRetryFunction'] ?? null;
     }
 
     /**
@@ -348,7 +356,8 @@ class RetrySettings
             'rpcTimeoutMultiplier' => 1,
             'maxRpcTimeoutMillis' => 20000,
             'totalTimeoutMillis' => 600000,
-            'retryableCodes' => []]);
+            'retryableCodes' => [],
+            'requestRetryFunction' => null]);
     }
 
     /**
@@ -375,6 +384,7 @@ class RetrySettings
             'retryableCodes' => $this->getRetryableCodes(),
             'retriesEnabled' => $this->retriesEnabled(),
             'noRetriesRpcTimeoutMillis' => $this->getNoRetriesRpcTimeoutMillis(),
+            'requestRetryFunction' => $this->getRequestRetryFunction(),
         ];
         return new RetrySettings($settings + $existingSettings);
     }
@@ -487,6 +497,11 @@ class RetrySettings
     public function getTotalTimeoutMillis()
     {
         return $this->totalTimeoutMillis;
+    }
+
+    public function getRequestRetryFunction()
+    {
+        return $this->requestRetryFunction;
     }
 
     private static function convertArrayFromSnakeCase(array $settings)
