@@ -704,11 +704,11 @@ class GapicClientTraitTest extends TestCase
             $this->requiresGrpcExtension();
         }
         $client = new GapicClientTraitStub();
-        $transport = $client->call('createTransport', [
-            $apiEndpoint,
+        $callable = $client->call('createTransportCallable', [
             $transport,
             $transportConfig
         ]);
+        $transport = $callable($apiEndpoint);
 
         $this->assertEquals($expectedTransportClass, get_class($transport));
     }
@@ -744,11 +744,11 @@ class GapicClientTraitTest extends TestCase
 
         $this->expectException(ValidationException::class);
 
-        $client->call('createTransport', [
-            $apiEndpoint,
+        $callable = $client->call('createTransportCallable', [
             $transport,
             $transportConfig
         ]);
+        $transport = $callable($apiEndpoint);
     }
 
     public function createTransportDataInvalid()

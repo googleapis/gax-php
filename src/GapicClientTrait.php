@@ -69,6 +69,8 @@ trait GapicClientTrait
 
     /** @var TransportInterface */
     private $transport;
+    private $transportCallable;
+    private ?string $apiEndpoint;
     private $credentialsWrapper;
 
     private static $gapicVersionFromFile;
@@ -93,7 +95,9 @@ trait GapicClientTrait
      */
     public function close()
     {
-        $this->transport->close();
+        if ($this->transport) {
+            $this->transport->close();
+        }
     }
 
     /**
@@ -105,7 +109,10 @@ trait GapicClientTrait
      */
     protected function getTransport()
     {
-        return $this->transport;
+        if ($this->transport) {
+            return $this->transport;
+        }
+        return $this->transport = ($this->transportCallable)($this->buildApiEndpoint());
     }
 
     /**
@@ -390,16 +397,20 @@ trait GapicClientTrait
             'libVersion' => $options['libVersion'],
             'gapicVersion' => $options['gapicVersion'],
         ];
+
+        $transport = $options['transport'] ?: self::defaultTransport();
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
-        if ($this->transport instanceof GrpcTransport) {
+        if ($transport instanceof GrpcTransport || $transport == 'grpc') {
             $headerInfo['grpcVersion'] = phpversion('grpc');
-        } elseif ($this->transport instanceof RestTransport
-            || $this->transport instanceof GrpcFallbackTransport) {
+        } elseif ($transport instanceof RestTransport
+            || $transport instanceof GrpcFallbackTransport
+            || in_array($transport, ['rest', 'grpc-fallback'])
+        ) {
             $headerInfo['restVersion'] = Version::getApiCoreVersion();
         }
         $this->agentHeader = AgentHeader::buildAgentHeader($headerInfo);
-      
+
         // Set "client_library_name" depending on client library surface being used
         $userAgentHeader = sprintf(
             'gcloud-php-%s/%s',
@@ -418,15 +429,16 @@ trait GapicClientTrait
             $options['credentialsConfig']
         );
 
-        $transport = $options['transport'] ?: self::defaultTransport();
-        $this->transport = $transport instanceof TransportInterface
-            ? $transport
-            : $this->createTransport(
-                $options['apiEndpoint'],
+        if ($transport instanceof TransportInterface) {
+            $this->transport = $transport;
+        } else {
+            $this->transportCallable = $this->createTransportCallable(
                 $transport,
                 $options['transportConfig'],
                 $options['clientCertSource']
             );
+        }
+        $this->apiEndpoint = $options['apiEndpoint'];
     }
 
     /**
@@ -462,8 +474,7 @@ trait GapicClientTrait
      * @return TransportInterface
      * @throws ValidationException
      */
-    private function createTransport(
-        string $apiEndpoint,
+    private function createTransportCallable(
         $transport,
         $transportConfig,
         callable $clientCertSource = null
@@ -489,6 +500,7 @@ trait GapicClientTrait
             $configForSpecifiedTransport->setClientCertSource($clientCertSource);
             $configForSpecifiedTransport = $configForSpecifiedTransport->toArray();
         }
+
         switch ($transport) {
             case 'grpc':
                 // Setting the user agent for gRPC requires special handling
@@ -499,23 +511,57 @@ trait GapicClientTrait
                     $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
                         $this->agentHeader['User-Agent'][0];
                 }
-                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                return function (string $apiEndpoint) use ($configForSpecifiedTransport) {
+                    return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                };
             case 'grpc-fallback':
-                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                return function (string $apiEndpoint) use ($configForSpecifiedTransport) {
+                    return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                };
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
                         "The 'restClientConfigPath' config is required for 'rest' transport."
                     );
                 }
-                $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
-                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
+                return function (string $apiEndpoint) use ($configForSpecifiedTransport) {
+                    return RestTransport::build(
+                        $apiEndpoint,
+                        $configForSpecifiedTransport['restClientConfigPath'],
+                        $configForSpecifiedTransport
+                    );
+                };
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .
                     "Supported values: ['grpc', 'rest', 'grpc-fallback']"
                 );
         }
+    }
+
+    private function buildApiEndpoint(): string
+    {
+        // If a custom endpoint is set, or we are using an MTLS endpoint, return it
+        if ($this->apiEndpoint) {
+            return $this->apiEndpoint;
+        }
+
+        // If no API endpoint is set, derive the endpoint from the service address template and the
+        // universe domain fetched from the credentials.
+        if (defined('self::SERVICE_ADDRESS_TEMPLATE')) {
+            $universeDomain = $this->credentialsWrapper->getUniverseDomain();
+            if (!$universeDomain) {
+                throw new ValidationException('Credentials provided do not contain universe information');
+            }
+            return str_replace(
+                '.UNIVERSE_DOMAIN',
+                $universeDomain,
+                self::SERVICE_ADDRESS_TEMPLATE
+            );
+        }
+
+        // If no serviceAddressTemplate exsts, use the default endpoint
+        return $this->getClientDefaults()['apiEndpoint'];
     }
 
     /**
