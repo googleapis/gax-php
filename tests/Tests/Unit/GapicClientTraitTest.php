@@ -398,14 +398,14 @@ class GapicClientTraitTest extends TestCase
         $expectedPromise = new FulfilledPromise(new Operation());
         $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transport->expects($this->once())
-             ->method('startUnaryCall')
-             ->with(
-                $this->callback(function($call) use ($unaryDescriptors) {
+            ->method('startUnaryCall')
+            ->with(
+                $this->callback(function ($call) use ($unaryDescriptors) {
                     return strpos($call->getMethod(), $unaryDescriptors['interfaceOverride']) !== false;
                 }),
                 $this->anything()
             )
-             ->will($this->returnValue($expectedPromise));
+            ->will($this->returnValue($expectedPromise));
         $credentialsWrapper = CredentialsWrapper::build([]);
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
@@ -511,14 +511,14 @@ class GapicClientTraitTest extends TestCase
         $expectedPromise = new FulfilledPromise(new Operation());
         $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transport->expects($this->once())
-             ->method('startUnaryCall')
-             ->with(
-                $this->callback(function($call) use ($pagedDescriptors) {
+            ->method('startUnaryCall')
+            ->with(
+                $this->callback(function ($call) use ($pagedDescriptors) {
                     return strpos($call->getMethod(), $pagedDescriptors['interfaceOverride']) !== false;
                 }),
                 $this->anything()
             )
-             ->will($this->returnValue($expectedPromise));
+            ->will($this->returnValue($expectedPromise));
         $credentialsWrapper = CredentialsWrapper::build([]);
         $client = new GapicClientTraitStub();
         $client->set('transport', $transport);
@@ -704,13 +704,70 @@ class GapicClientTraitTest extends TestCase
             $this->requiresGrpcExtension();
         }
         $client = new GapicClientTraitStub();
-        $callable = $client->call('createTransportCallable', [
+        $callable = $client->call('createTransportFunction', [
             $transport,
             $transportConfig
         ]);
         $transport = $callable($apiEndpoint);
 
         $this->assertEquals($expectedTransportClass, get_class($transport));
+    }
+
+    /**
+     * @dataProvider provideCreateTransportDefaultEndpoint
+     */
+    public function testCreateTransportDefaultEndpoint(array $options, string $expectedEndpoint, $client = null)
+    {
+        $client = $client ?: new GapicClientTraitStub();
+        $updatedOptions = $client->call('buildClientOptions', [$options]);
+
+        $client->call('setClientOptions', [$updatedOptions]);
+        $transport = $client->call('getTransport');
+        $this->assertEquals(RestTransport::class, get_class($transport));
+        $transportRefl = new \ReflectionClass($transport);
+        $rbProp = $transportRefl->getProperty('requestBuilder');
+        $rbProp->setAccessible(true);
+        $requestBuilder = $rbProp->getValue($transport);
+
+        $rbRefl = new \ReflectionClass($requestBuilder);
+        $uriProp = $rbRefl->getProperty('baseUri');
+        $uriProp->setAccessible(true);
+        $baseUri = $uriProp->getValue($requestBuilder);
+
+
+        $this->assertEquals($expectedEndpoint, $baseUri);
+    }
+
+    public function provideCreateTransportDefaultEndpoint()
+    {
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getUniverseDomain()
+            ->willReturn('universe-domain.com');
+
+        return [
+            [
+                ['transport' => 'rest'],
+                'test.address.com:443',  // default from GapicClientTraitStub
+            ],
+            [
+                ['transport' => 'rest', 'apiEndpoint' => 'new.test.address.com:123'],
+                'new.test.address.com:123',   // explicitly set
+            ],
+            [
+                ['transport' => 'rest'],
+                'stub.googleapis.com:443',
+                new GapicClientTraitTpcStub(), // service address template used by new clients
+            ],
+            [
+                ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
+                'stub.universe-domain.com:443',
+                new GapicClientTraitTpcStub(), // universe domain used by new clients
+            ],
+            [
+                ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
+                'test.address.com:443',  // universe domain has no effect on older clients
+            ]
+        ];
     }
 
     public function createTransportData()
@@ -744,7 +801,7 @@ class GapicClientTraitTest extends TestCase
 
         $this->expectException(ValidationException::class);
 
-        $callable = $client->call('createTransportCallable', [
+        $callable = $client->call('createTransportFunction', [
             $transport,
             $transportConfig
         ]);
@@ -1867,6 +1924,34 @@ class GapicClientTraitStub
     }
 }
 
+class GapicClientTraitTpcStub
+{
+    use GapicClientTrait;
+    use GapicClientStubTrait;
+
+    private const SERVICE_ADDRESS_TEMPLATE = 'stub.UNIVERSE_DOMAIN';
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
+            'disableRetries' => false,
+            'auth' => null,
+            'authConfig' => null,
+            'transport' => null,
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+        ];
+    }
+}
+
 trait GapicClientStubTrait
 {
     public function call($fn, array $args = [])
@@ -1931,7 +2016,7 @@ class GapicClientTraitDefaultScopeAndAudienceStub
     use GapicClientTrait;
     use GapicClientStubTrait;
 
-    const SERVICE_ADDRESS = 'service-address';
+    public const SERVICE_ADDRESS = 'service-address';
 
     public static $serviceScopes = [
         'default-scope-1',
