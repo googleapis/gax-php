@@ -734,7 +734,6 @@ class GapicClientTraitTest extends TestCase
         $uriProp->setAccessible(true);
         $baseUri = $uriProp->getValue($requestBuilder);
 
-
         $this->assertEquals($expectedEndpoint, $baseUri);
     }
 
@@ -754,20 +753,60 @@ class GapicClientTraitTest extends TestCase
                 'new.test.address.com:123',   // explicitly set
             ],
             [
-                ['transport' => 'rest'],
+                [],
                 'stub.googleapis.com:443',
                 new GapicClientTraitTpcStub(), // service address template used by new clients
             ],
             [
-                ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
+                ['credentials' => $credentialsWrapper->reveal()],
                 'stub.universe-domain.com:443',
                 new GapicClientTraitTpcStub(), // universe domain used by new clients
             ],
             [
-                ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
+                ['credentials' => $credentialsWrapper->reveal()],
                 'test.address.com:443',  // universe domain has no effect on older clients
             ]
         ];
+    }
+
+    public function testApiEndpointLateBinding()
+    {
+        $called = false;
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->getUniverseDomain()
+            ->shouldBeCalledOnce()
+            ->will(function () use (&$called) {
+                $called = true;
+                return 'universe-domain.com';
+            });
+        $credentialsWrapper->getQuotaProject()->shouldBeCalledOnce();
+        $credentialsWrapper->getAuthorizationHeaderCallback(null)
+            ->shouldBeCalledOnce()
+            ->willReturn(function() { return []; });
+
+        $client = new GapicClientTraitTpcStub();
+        $options = ['credentials' => $credentialsWrapper->reveal()];
+        $updatedOptions = $client->call('buildClientOptions', [$options]);
+        $client->call('setClientOptions', [$updatedOptions]);
+
+        // CredentialsWrapper::getUniverseDomain has not been called
+        $this->assertFalse($called);
+
+        $callStack = $client->call('createCallStack', [
+            ['retrySettings' => RetrySettings::constructDefault()]
+        ]);
+
+        // CredentialsWrapper::getUniverseDomain has still not been called
+        $this->assertFalse($called);
+
+        $call = $this->prophesize(Call::class);
+        $call->getCallType()->shouldBeCalledOnce()->willReturn(Call::UNARY_CALL);
+        $call->getMethod()->shouldBeCalledOnce()->willReturn('test.interface.v1.api/MethodWithBody');
+        $call->getMessage()->shouldBeCalledOnce()->willReturn(new MockRequest());
+
+        // CredentialsWrapper::getUniverseDomain is called at call time
+        $callStack($call->reveal(), []);
+        $this->assertTrue($called);
     }
 
     public function createTransportData()
@@ -1942,7 +1981,7 @@ class GapicClientTraitTpcStub
             'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,
-            'transport' => null,
+            'transport' => 'rest',
             'transportConfig' => [
                 'rest' => [
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
@@ -2016,7 +2055,7 @@ class GapicClientTraitDefaultScopeAndAudienceStub
     use GapicClientTrait;
     use GapicClientStubTrait;
 
-    public const SERVICE_ADDRESS = 'service-address';
+    const SERVICE_ADDRESS = 'service-address';
 
     public static $serviceScopes = [
         'default-scope-1',

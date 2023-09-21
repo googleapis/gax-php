@@ -110,10 +110,13 @@ trait GapicClientTrait
      */
     protected function getTransport()
     {
-        if (!$this->transport) {
-            $this->transport = ($this->transportFunction)(($this->apiEndpointFunction)());
-        }
-        return $this->transport;
+        // Create transport at call-time in order to delay checking universe domain
+        return $this->transport ?: $this->transport = $this->buildTransport();
+    }
+
+    private function buildTransport(): TransportInterface
+    {
+        return ($this->transportFunction)(($this->apiEndpointFunction)());
     }
 
     /**
@@ -829,6 +832,10 @@ trait GapicClientTrait
         }
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
+            if (!$this->transport) {
+                // Create transport at call-time in order to delay checking universe domain
+                $this->transport = $this->buildTransport();
+            }
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
