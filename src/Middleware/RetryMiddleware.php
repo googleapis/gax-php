@@ -51,7 +51,7 @@ class RetryMiddleware
     /** @var float|null */
     private $deadlineMs;
 
-    /* 
+    /*
      * The number of API calls(not retries) that have already been attempted.
      * The first retry will have $currentAttempts set to 1.
      * @var int
@@ -98,15 +98,14 @@ class RetryMiddleware
             $customRetryFunc = $this->retrySettings->getRequestRetryFunction();
             // If we have a custom retry function, and it returns false
             // we throw the exception, otherwise we continue.
-            if (!is_null($customRetryFunc)){
-                if(!$customRetryFunc($e, $options, $this->currentAttempts)) {
+            if (!is_null($customRetryFunc)) {
+                if (!$customRetryFunc($e, $options, $this->currentAttempts)) {
                     throw $e;
                 }
 
                 // since the $customRetryFunction returned true,
                 // retry will take place
-            }
-            else {
+            } else {
                 // This is the default retry behaviour, i.e. we don't retry an ApiException
                 // and for other exception types, we only retry when the error code is in
                 // the list of retryable error codes.

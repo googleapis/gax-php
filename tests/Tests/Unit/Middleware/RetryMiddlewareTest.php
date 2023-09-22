@@ -275,4 +275,104 @@ class RetryMiddlewareTest extends TestCase
         $this->assertSame('Ok!', $response);
         $this->assertEquals($observedTimeout, $timeout);
     }
+
+    public function testCustomRetry()
+    {
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $maxAttempts = 3; // including the retry
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'requestRetryFunction' => function ($ex, $options, $attempts) use($maxAttempts) {
+                    if($attempts < $maxAttempts) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            ]);
+        $callCount = 0;
+        $handler = function(Call $call, $options) use (&$callCount) {
+            return new Promise(function () use (&$callCount) {
+                ++$callCount;
+                throw new ApiException('Call Count: ' . $callCount, 0, '');
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+
+        $this->expectException(ApiException::class);
+        // test if the custom retry func threw an exception after $maxAttempts
+        $this->expectExceptionMessage('Call Count: ' . $maxAttempts);
+
+        $middleware($call, [])->wait();
+    }
+
+    public function testCustomRetryRespectsRetriesEnabled()
+    {
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => false,
+                'requestRetryFunction' => function ($ex, $options, $attempts) {
+                    // This should not run as retriesEnabled is false
+                    $this->fail('Custom retry function shouldn\'t have run.');
+                    return true;
+                }
+            ]);
+
+        $handler = function(Call $call, $options) {
+            return new Promise(function () {
+                throw new ApiException('Exception msg', 0, '');
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+
+        $this->expectException(ApiException::class);
+        $middleware($call, [])->wait();
+    }
+
+    public function testCustomRetryRespectsTimeout()
+    {
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'totalTimeoutMillis' => 1,
+                'requestRetryFunction' => function ($ex, $options, $attempts) {
+                    usleep(900);
+                    echo "retrying";
+                    return true;
+                }
+            ]);
+
+        $callCount = 0;
+        $handler = function(Call $call, $options) use(&$callCount) {
+            return new Promise(function () use(&$callCount) {
+                ++$callCount;
+                throw new ApiException('Call count: ' . $callCount, 0, '');
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+
+        // $this->expectException(ApiException::class);
+        
+        try {
+            $middleware($call, [])->wait();
+            $this->fail('Expected an exception, but didn\'t receive any');
+        } catch(ApiException $e) {
+            $this->assertEquals('Retry total timeout exceeded.', $e->getMessage());
+            // we used a total timeout of 1 ms and every retry sleeps for .9 ms
+            // This means that the call count should be 2(original call and 1 retry)
+            $this->assertEquals(2, $callCount);
+        }
+    }
 }
