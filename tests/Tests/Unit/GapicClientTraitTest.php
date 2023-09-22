@@ -763,7 +763,7 @@ class GapicClientTraitTest extends TestCase
                 new GapicClientTraitTpcStub(), // universe domain used by new clients
             ],
             [
-                ['credentials' => $credentialsWrapper->reveal()],
+                ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
                 'test.address.com:443',  // universe domain has no effect on older clients
             ]
         ];
