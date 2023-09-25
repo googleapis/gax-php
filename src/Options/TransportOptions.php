@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2023 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,38 +30,61 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Tests\Unit;
+namespace Google\ApiCore\Options;
 
-use Google\ApiCore\UriTrait;
-use PHPUnit\Framework\TestCase;
+use Google\ApiCore\Options\TransportOptions\GrpcTransportOptions;
+use Google\ApiCore\Options\TransportOptions\GrpcFallbackTransportOptions;
+use Google\ApiCore\Options\TransportOptions\RestTransportOptions;
+use ArrayAccess;
 
-class UriTraitTest extends TestCase
+class TransportOptions implements ArrayAccess
 {
-    private $implementation;
+    use OptionsTrait;
 
-    public function setUp(): void
+    private GrpcTransportOptions $grpc;
+
+    private GrpcFallbackTransportOptions $grpcFallback;
+
+    private RestTransportOptions $rest;
+
+    /**
+     * @param array $options {
+     *    Config options used to construct the transport.
+     *
+     *    @type array $grpc
+     *    @type array $grpcFallback
+     *    @type array $rest
+     * }
+     */
+    public function __construct(array $options)
     {
-        $this->implementation = $this->getObjectForTrait(UriTrait::class);
+        $this->fromArray($options);
     }
 
     /**
-     * @dataProvider queryProvider
+     * Sets the array of options as class properites.
+     *
+     * @param array $arr See the constructor for the list of supported options.
      */
-    public function testBuildsUriWithQuery($expectedQuery, $query)
+    private function fromArray(array $arr): void
     {
-        $baseUri = 'http://www.example.com';
-        $uri = $this->implementation->buildUriWithQuery($baseUri, $query);
-
-        $this->assertEquals($baseUri . $expectedQuery, (string) $uri);
+        $this->setGrpc(new GrpcTransportOptions($arr['grpc'] ?? []));
+        $this->setGrpcFallback(new GrpcFallbackTransportOptions($arr['grpc-fallack'] ?? []));
+        $this->setRest(new RestTransportOptions($arr['rest'] ?? []));
     }
 
-    public function queryProvider()
+    public function setGrpc(GrpcTransportOptions $grpc): void
     {
-        return [
-            ['?narf=yes', ['narf' => 'yes']],
-            ['?narf=true', ['narf' => true]],
-            ['?narf=false', ['narf' => false]],
-            ['?narf=0', ['narf' => '0']]
-        ];
+        $this->grpc = $grpc;
+    }
+
+    public function setGrpcFallback(GrpcFallbackTransportOptions $grpcFallback): void
+    {
+        $this->grpcFallback = $grpcFallback;
+    }
+
+    public function setRest(RestTransportOptions $rest): void
+    {
+        $this->rest = $rest;
     }
 }

@@ -30,16 +30,19 @@ use Google\Protobuf\Struct;
 use Google\Protobuf\Timestamp;
 use Google\Protobuf\Value;
 use GuzzleHttp\Psr7\Query;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group core
  */
 class RequestBuilderTest extends TestCase
 {
+    private $builder;
+    private $numericEnumsBuilder;
+
     const SERVICE_NAME = 'test.interface.v1.api';
 
-    public function set_up()
+    public function setUp(): void
     {
         $this->builder = new RequestBuilder(
             'www.example.com',
@@ -345,7 +348,71 @@ class RequestBuilderTest extends TestCase
         $query = Query::parse($request->getUri()->getQuery());
 
         $this->assertSame('', $query['name']);
-        $this->assertEquals(0, $query['number']);
+        $this->assertSame('0', $query['number']);
+    }
+
+
+    public function testMethodWithRequiredNestedQueryParameters()
+    {
+        $nestedMessage = (new MockRequestBody())
+            ->setName('some-name')
+            ->setNumber(123);
+        $message = (new MockRequestBody())
+            ->setNestedMessage($nestedMessage);
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredNestedQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $this->assertSame('some-name', $query['nestedMessage.name']);
+        $this->assertSame('123', $query['nestedMessage.number']);
+    }
+
+
+    public function testMethodWithRequiredTimestampQueryParameters()
+    {
+        $message = (new MockRequestBody())
+            ->setTimestampValue(new Timestamp(['seconds' => 1234567]));
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredTimestampQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $dateTime = (new \DateTime)->setTimestamp(1234567);
+        $this->assertSame($dateTime->format('Y-m-d\TH:i:s\Z'), $query['timestampValue']);
+    }
+
+    public function testMethodWithRequiredDoubleNestedQueryParameter()
+    {
+        $doubleNestedMessage = (new MockRequestBody())
+            ->setName('double-nested-name');
+        $nestedMessage = (new MockRequestBody())
+            ->setName('some-name')
+            ->setNestedMessage($doubleNestedMessage);
+        $message = (new MockRequestBody())
+            ->setNestedMessage($nestedMessage);
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredNestedQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $this->assertSame('some-name', $query['nestedMessage.name']);
+        $this->assertSame('double-nested-name', $query['nestedMessage.nestedMessage']);
+    }
+
+    public function testMethodWithRequiredDoubleNestedQueryParameterArray()
+    {
+        // Adding another property decodes it as array
+        $doubleNestedMessage = (new MockRequestBody())
+            ->setName('double-nested-name')
+            ->setNumber(123);
+        $nestedMessage = (new MockRequestBody())
+            ->setName('some-name')
+            ->setNestedMessage($doubleNestedMessage);
+        $message = (new MockRequestBody())
+            ->setNestedMessage($nestedMessage);
+
+        $request = $this->builder->build(self::SERVICE_NAME . '/MethodWithRequiredNestedQueryParameters', $message);
+        $query = Query::parse($request->getUri()->getQuery());
+
+        $this->assertSame(['double-nested-name', '123'], $query['nestedMessage.nestedMessage']);
     }
 
     public function testMethodWithComplexMessageInQueryString()

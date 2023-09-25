@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2022 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,44 +30,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore\Middleware;
+namespace Google\ApiCore\Dev\Docs;
 
-use Google\ApiCore\Call;
+require_once __DIR__ . '../../../../vendor/autoload.php';
 
-/**
- * Middleware to add fixed headers to an API call.
- */
-class FixedHeaderMiddleware
-{
-    /** @var callable */
-    private $nextHandler;
+DoctumConfigBuilder::checkPhpVersion();
 
-    private $headers;
-    private $overrideUserHeaders;
+$currentVersion = getenv('PROTOBUF_DOCS_VERSION');
 
-    public function __construct(
-        callable $nextHandler,
-        array $headers,
-        bool $overrideUserHeaders = false
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->headers = $headers;
-        $this->overrideUserHeaders = $overrideUserHeaders;
-    }
-
-    public function __invoke(Call $call, array $options)
-    {
-        $userHeaders = $options['headers'] ?? [];
-        if ($this->overrideUserHeaders) {
-            $options['headers'] = $this->headers + $userHeaders;
-        } else {
-            $options['headers'] = $userHeaders + $this->headers;
-        }
-
-        $next = $this->nextHandler;
-        return $next(
-            $call,
-            $options
-        );
-    }
-}
+return DoctumConfigBuilder::buildProtobufConfigForVersion($currentVersion);

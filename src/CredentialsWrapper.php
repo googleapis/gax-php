@@ -40,8 +40,8 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\HttpHandler\Guzzle5HttpHandler;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
+use Google\Auth\HttpHandler\Guzzle7HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -122,6 +122,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface
             'defaultScopes'     => null,
             'useJwtAccessWithScope' => true,
         ];
+
         $keyFile = $args['keyFile'];
         $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
 
@@ -129,11 +130,14 @@ class CredentialsWrapper implements HeaderCredentialsInterface
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
                 $authHttpHandler,
-                null,
-                null,
+                $args['authCacheOptions'],
+                $args['authCache'],
                 $args['quotaProject'],
                 $args['defaultScopes']
             );
+            if ($loader instanceof FetchAuthTokenCache) {
+                $loader = $loader->getFetcher();
+            }
         } else {
             if (is_string($keyFile)) {
                 if (!file_exists($keyFile)) {
@@ -228,7 +232,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface
     }
 
     /**
-     * @return Guzzle5HttpHandler|Guzzle6HttpHandler
+     * @return Guzzle6HttpHandler|Guzzle7HttpHandler
      * @throws ValidationException
      */
     private static function buildHttpHandlerFactory()

@@ -4,24 +4,26 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
 jobs:
     test:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: [ "7.0", 7.1, 7.2, 7.3, 7.4, "8.0", 8.1 ]
+                php: [ 7.4, "8.0", 8.1, 8.2 ]
                 extensions: [""]
                 tools: [""]
                 include:
-                  - php: "7.0"
+                  - php: "7.4"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
-                  - php: 8.1
+                  - php: 8.2
                     extensions: "protobuf,grpc"
                     tools: "pecl"
         name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}"
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -39,24 +41,11 @@ jobs:
                 GOOGLE_APPLICATION_CREDENTIALS: ${{github.workspace}}/tests/Tests/Unit/testdata/json-key-file.json
               run: vendor/bin/phpunit
 
-    test_composer_conflict:
-        runs-on: ubuntu-latest
-        name: "Composer Conflict Test"
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: 7.2
-                extensions: protobuf-3.6.1
-            - name: Run script
-              run: dev/sh/test-composer-conflict.sh
-
     style:
         runs-on: ubuntu-latest
         name: PHP Style Check
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -74,7 +63,7 @@ jobs:
       runs-on: ubuntu-latest
       name: PHPStan Static Analysis
       steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
