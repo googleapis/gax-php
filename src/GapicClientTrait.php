@@ -220,7 +220,7 @@ trait GapicClientTrait
 
         // If an API endpoint is set, ensure the "audience" does not conflict
         // with the custom endpoint by setting "user defined" scopes.
-        if ($apiEndpoint
+        if ($options['apiEndpoint'] != $defaultOptions['apiEndpoint']
             && empty($options['credentialsConfig']['scopes'])
             && !empty($options['credentialsConfig']['defaultScopes'])
         ) {
