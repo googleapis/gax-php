@@ -706,9 +706,10 @@ class GapicClientTraitTest extends TestCase
         $client = new GapicClientTraitStub();
         $callable = $client->call('createTransportFunction', [
             $transport,
-            $transportConfig
+            $transportConfig,
+             $apiEndpoint
         ]);
-        $transport = $callable($apiEndpoint);
+        $transport = $callable();
 
         $this->assertEquals($expectedTransportClass, get_class($transport));
     }
@@ -716,9 +717,9 @@ class GapicClientTraitTest extends TestCase
     /**
      * @dataProvider provideCreateTransportDefaultEndpoint
      */
-    public function testCreateTransportDefaultEndpoint(array $options, string $expectedEndpoint, $client = null)
+    public function testCreateTransportDefaultEndpoint(array $options, string $expectedEndpoint)
     {
-        $client = $client ?: new GapicClientTraitStub();
+        $client = new GapicClientTraitStub();
         $updatedOptions = $client->call('buildClientOptions', [$options]);
 
         $client->call('setClientOptions', [$updatedOptions]);
@@ -752,61 +753,7 @@ class GapicClientTraitTest extends TestCase
                 ['transport' => 'rest', 'apiEndpoint' => 'new.test.address.com:123'],
                 'new.test.address.com:123',   // explicitly set
             ],
-            [
-                [],
-                'stub.googleapis.com:443',
-                new GapicClientTraitTpcStub(), // service address template used by new clients
-            ],
-            [
-                ['credentials' => $credentialsWrapper->reveal()],
-                'stub.universe-domain.com:443',
-                new GapicClientTraitTpcStub(), // universe domain used by new clients
-            ],
-            [
-                ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
-                'test.address.com:443',  // universe domain has no effect on older clients
-            ]
         ];
-    }
-
-    public function testApiEndpointLateBinding()
-    {
-        $called = false;
-        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
-        $credentialsWrapper->getUniverseDomain()
-            ->shouldBeCalledOnce()
-            ->will(function () use (&$called) {
-                $called = true;
-                return 'universe-domain.com';
-            });
-        $credentialsWrapper->getQuotaProject()->shouldBeCalledOnce();
-        $credentialsWrapper->getAuthorizationHeaderCallback(null)
-            ->shouldBeCalledOnce()
-            ->willReturn(function() { return []; });
-
-        $client = new GapicClientTraitTpcStub();
-        $options = ['credentials' => $credentialsWrapper->reveal()];
-        $updatedOptions = $client->call('buildClientOptions', [$options]);
-        $client->call('setClientOptions', [$updatedOptions]);
-
-        // CredentialsWrapper::getUniverseDomain has not been called
-        $this->assertFalse($called);
-
-        $callStack = $client->call('createCallStack', [
-            ['retrySettings' => RetrySettings::constructDefault()]
-        ]);
-
-        // CredentialsWrapper::getUniverseDomain has still not been called
-        $this->assertFalse($called);
-
-        $call = $this->prophesize(Call::class);
-        $call->getCallType()->shouldBeCalledOnce()->willReturn(Call::UNARY_CALL);
-        $call->getMethod()->shouldBeCalledOnce()->willReturn('test.interface.v1.api/MethodWithBody');
-        $call->getMessage()->shouldBeCalledOnce()->willReturn(new MockRequest());
-
-        // CredentialsWrapper::getUniverseDomain is called at call time
-        $callStack($call->reveal(), []);
-        $this->assertTrue($called);
     }
 
     public function createTransportData()
@@ -842,9 +789,10 @@ class GapicClientTraitTest extends TestCase
 
         $callable = $client->call('createTransportFunction', [
             $transport,
-            $transportConfig
+            $transportConfig,
+            $apiEndpoint
         ]);
-        $transport = $callable($apiEndpoint);
+        $transport = $callable();
     }
 
     public function createTransportDataInvalid()
@@ -1954,34 +1902,6 @@ class GapicClientTraitStub
             'auth' => null,
             'authConfig' => null,
             'transport' => null,
-            'transportConfig' => [
-                'rest' => [
-                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
-                ]
-            ],
-        ];
-    }
-}
-
-class GapicClientTraitTpcStub
-{
-    use GapicClientTrait;
-    use GapicClientStubTrait;
-
-    private const SERVICE_ADDRESS_TEMPLATE = 'stub.UNIVERSE_DOMAIN';
-
-    public static function getClientDefaults()
-    {
-        return [
-            'apiEndpoint' => 'test.address.com:443',
-            'serviceName' => 'test.interface.v1.api',
-            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
-            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
-            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
-            'disableRetries' => false,
-            'auth' => null,
-            'authConfig' => null,
-            'transport' => 'rest',
             'transportConfig' => [
                 'rest' => [
                     'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
