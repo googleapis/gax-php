@@ -40,7 +40,6 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\GetUniverseDomainInterface;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\Guzzle7HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -50,7 +49,7 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * The CredentialsWrapper object provides a wrapper around a FetchAuthTokenInterface.
  */
-class CredentialsWrapper implements GetUniverseDomainInterface
+class CredentialsWrapper
 {
     use ValidationTrait;
 
@@ -306,14 +305,5 @@ class CredentialsWrapper implements GetUniverseDomainInterface
         return !(self::isValid($token)
             && array_key_exists('expires_at', $token)
             && $token['expires_at'] > time() + self::$eagerRefreshThresholdSeconds);
-    }
-
-    public function getUniverseDomain(): string
-    {
-        if ($this->credentialsFetcher instanceof GetUniverseDomainInterface) {
-            return $this->credentialsFetcher->getUniverseDomain();
-        }
-
-        return GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
     }
 }
