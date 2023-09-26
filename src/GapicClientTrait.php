@@ -70,6 +70,7 @@ trait GapicClientTrait
 
     /** @var TransportInterface */
     private $transport;
+    private Closure $apiEndpointFunction;
     private Closure $transportFunction;
     private $credentialsWrapper;
 
@@ -115,7 +116,7 @@ trait GapicClientTrait
 
     private function buildTransport(): TransportInterface
     {
-        return ($this->transportFunction)();
+        return ($this->transportFunction)(($this->apiEndpointFunction)());
     }
 
     /**
@@ -193,6 +194,9 @@ trait GapicClientTrait
             ];
         }
 
+        // user-supplied API endpoint
+        $apiEndpoint = $options['apiEndpoint'] ?? null;
+
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
@@ -211,7 +215,7 @@ trait GapicClientTrait
 
         // serviceAddress is now deprecated and acts as an alias for apiEndpoint
         if (isset($options['serviceAddress'])) {
-            $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
+            $apiEndpoint = $this->pluck('serviceAddress', $options, false);
         }
 
         // If an API endpoint is set, ensure the "audience" does not conflict
@@ -260,11 +264,36 @@ trait GapicClientTrait
 
         // mTLS: If no apiEndpoint has been supplied by the user, and either
         // GOOGLE_API_USE_MTLS_ENDPOINT tells us to, or mTLS is available, use the mTLS endpoint.
-        if ($options['apiEndpoint'] === $defaultOptions['apiEndpoint']
-            && $this->shouldUseMtlsEndpoint($options)
-        ) {
-            $options['apiEndpoint'] = self::determineMtlsEndpoint($options['apiEndpoint']);
+        if (is_null($apiEndpoint) && $this->shouldUseMtlsEndpoint($options)) {
+            $apiEndpoint = self::determineMtlsEndpoint($defaultOptions['apiEndpoint']);
         }
+
+        $this->apiEndpointFunction = Closure::fromCallable(function () use ($apiEndpoint, $defaultOptions) {
+            // If a custom endpoint is set, or we are using an MTLS endpoint, return it
+            if ($apiEndpoint) {
+                return $apiEndpoint;
+            }
+
+            // If no API endpoint is set, derive the endpoint from the service address template and the
+            // universe domain fetched from the credentials.
+            if (defined('self::SERVICE_ADDRESS_TEMPLATE')) {
+                $universeDomain = $this->credentialsWrapper->getUniverseDomain();
+                if (!$universeDomain) {
+                    throw new ValidationException('Credentials provided do not contain universe information');
+                }
+                return str_replace(
+                    'UNIVERSE_DOMAIN',
+                    $universeDomain,
+                    self::SERVICE_ADDRESS_TEMPLATE
+                );
+            }
+
+            // If no serviceAddressTemplate exsts, use the default endpoint
+            return $defaultOptions['apiEndpoint'];
+        });
+
+        // For backwards compatibility
+        $options['apiEndpoint'] = $apiEndpoint ?: $defaultOptions['apiEndpoint'];
 
         return $options;
     }
@@ -356,10 +385,6 @@ trait GapicClientTrait
      */
     private function setClientOptions(array $options)
     {
-        // serviceAddress is now deprecated and acts as an alias for apiEndpoint
-        if (isset($options['serviceAddress'])) {
-            $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
-        }
         $this->validateNotNull($options, [
             'apiEndpoint',
             'serviceName',
@@ -433,14 +458,12 @@ trait GapicClientTrait
         );
 
         if ($transport instanceof TransportInterface) {
-            // User-provided transport class
             $this->transport = $transport;
         } else {
             $this->transportFunction = $this->createTransportFunction(
                 $transport,
                 $options['transportConfig'],
-                $options['apiEndpoint'],
-                $options['clientCertSource'],
+                $options['clientCertSource']
             );
         }
     }
@@ -481,7 +504,6 @@ trait GapicClientTrait
     private function createTransportFunction(
         $transport,
         $transportConfig,
-        string $apiEndpoint,
         callable $clientCertSource = null
     ): Closure {
         if (!is_string($transport)) {
@@ -516,12 +538,12 @@ trait GapicClientTrait
                     $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
                         $this->agentHeader['User-Agent'][0];
                 }
-                $transportFunction = function () use ($apiEndpoint, $configForSpecifiedTransport) {
+                $transportFunction = function (string $apiEndpoint) use ($configForSpecifiedTransport) {
                     return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
                 };
                 break;
             case 'grpc-fallback':
-                $transportFunction = function () use ($apiEndpoint, $configForSpecifiedTransport) {
+                $transportFunction = function (string $apiEndpoint) use ($configForSpecifiedTransport) {
                     return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
                 };
                 break;
@@ -531,7 +553,7 @@ trait GapicClientTrait
                         "The 'restClientConfigPath' config is required for 'rest' transport."
                     );
                 }
-                $transportFunction = function () use ($apiEndpoint, $configForSpecifiedTransport) {
+                $transportFunction = function (string $apiEndpoint) use ($configForSpecifiedTransport) {
                     return RestTransport::build(
                         $apiEndpoint,
                         $configForSpecifiedTransport['restClientConfigPath'],
@@ -811,7 +833,7 @@ trait GapicClientTrait
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             if (!$this->transport) {
-                // Create transport at call-time to allow for lazy initialization
+                // Create transport at call-time in order to delay checking universe domain
                 $this->transport = $this->buildTransport();
             }
             return $this->transport->$startCallMethod($call, $options);
