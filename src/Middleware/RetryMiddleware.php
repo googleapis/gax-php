@@ -52,22 +52,22 @@ class RetryMiddleware
     private $deadlineMs;
 
     /*
-     * The number of API calls(not retries) that have already been attempted.
-     * The first retry will have $currentAttempts set to 1.
+     * The number of retries that have already been attempted.
+     * The first retry will have $retryAttempts set to 0.
      * @var int
      */
-    private $currentAttempts;
+    private $retryAttempts;
 
     public function __construct(
         callable $nextHandler,
         RetrySettings $retrySettings,
         $deadlineMs = null,
-        $currentAttempts = 1
+        $retryAttempts = 0
     ) {
         $this->nextHandler = $nextHandler;
         $this->retrySettings = $retrySettings;
         $this->deadlineMs = $deadlineMs;
-        $this->currentAttempts = $currentAttempts;
+        $this->retryAttempts = $retryAttempts;
     }
 
     /**
@@ -95,29 +95,15 @@ class RetryMiddleware
         }
 
         return $nextHandler($call, $options)->then(null, function ($e) use ($call, $options) {
-            $customRetryFunc = $this->retrySettings->getRequestRetryFunction();
-            // If we have a custom retry function, and it returns false
-            // we throw the exception, otherwise we continue.
-            if (!is_null($customRetryFunc)) {
-                if (!$customRetryFunc($e, $options, $this->currentAttempts)) {
-                    throw $e;
-                }
+            $retryFunction = $this->getRetryFunction();
 
-                // since the $customRetryFunction returned true,
-                // retry will take place
-            } else {
-                // This is the default retry behaviour, i.e. we don't retry an ApiException
-                // and for other exception types, we only retry when the error code is in
-                // the list of retryable error codes.
-                if (!$e instanceof ApiException) {
-                    throw $e;
-                }
-
-                if (!in_array($e->getStatus(), $this->retrySettings->getRetryableCodes())) {
-                    throw $e;
-                }
+            // If the retry function returns false then throw the
+            // exception as we normally would.
+            if (!$retryFunction($e, $options, $this->retryAttempts)) {
+                throw $e;
             }
 
+            // Retry function returned true, so we attempt another retry
             return $this->retry($call, $options, $e->getStatus());
         });
     }
@@ -164,7 +150,7 @@ class RetryMiddleware
                 'initialRetryDelayMillis' => $delayMs,
             ]),
             $deadlineMs,
-            $this->currentAttempts + 1
+            $this->retryAttempts + 1
         );
 
         // Set the timeout for the call
@@ -179,5 +165,27 @@ class RetryMiddleware
     protected function getCurrentTimeMs()
     {
         return microtime(true) * 1000.0;
+    }
+
+    /**
+     * This is the default retry behaviour.
+     */
+    private function getRetryFunction()
+    {
+        return $this->retrySettings->getRequestRetryFunction() ??
+            function (\Exception $e, array $options, int $retryAttempt): bool {
+                // This is the default retry behaviour, i.e. we don't retry an ApiException
+                // and for other exception types, we only retry when the error code is in
+                // the list of retryable error codes.
+                if (!$e instanceof ApiException) {
+                    return false;
+                }
+
+                if (!in_array($e->getStatus(), $this->retrySettings->getRetryableCodes())) {
+                    return false;
+                }
+
+                return true;
+            };
     }
 }

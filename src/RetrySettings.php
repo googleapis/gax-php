@@ -219,7 +219,8 @@ class RetrySettings
 
     /**
      * When set, this function will be used to evaluate if the retry should
-     * take place or not.
+     * take place or not. The callable will have the following signature:
+     * function (Exception $e, array $options, int $retryAttempt): bool
      */
     private $requestRetryFunction;
 
@@ -248,6 +249,7 @@ class RetrySettings
      *     @type int      $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
      *     @type int      $totalTimeoutMillis The max accumulative timeout in total.
      *     @type callable $requestRetryFunction This function will be used to decide if we should retry or not.
+     *                    Callable signature: `function (Exception $e, array $options, int $retryAttempt): bool`
      * }
      */
     public function __construct(array $settings)

@@ -282,7 +282,7 @@ class RetryMiddlewareTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $maxAttempts = 3; // including the retry
+        $maxAttempts = 3;
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
@@ -305,7 +305,7 @@ class RetryMiddlewareTest extends TestCase
 
         $this->expectException(ApiException::class);
         // test if the custom retry func threw an exception after $maxAttempts
-        $this->expectExceptionMessage('Call Count: ' . $maxAttempts);
+        $this->expectExceptionMessage('Call Count: ' . $maxAttempts + 1);
 
         $middleware($call, [])->wait();
     }
