@@ -305,7 +305,7 @@ class RetryMiddlewareTest extends TestCase
 
         $this->expectException(ApiException::class);
         // test if the custom retry func threw an exception after $maxAttempts
-        $this->expectExceptionMessage('Call Count: ' . $maxAttempts + 1);
+        $this->expectExceptionMessage('Call Count: ' . ($maxAttempts + 1));
 
         $middleware($call, [])->wait();
     }
