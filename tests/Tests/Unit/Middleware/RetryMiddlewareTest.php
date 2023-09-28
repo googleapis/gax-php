@@ -349,7 +349,6 @@ class RetryMiddlewareTest extends TestCase
                 'totalTimeoutMillis' => 1,
                 'requestRetryFunction' => function ($ex, $options, $attempts) {
                     usleep(900);
-                    echo "retrying";
                     return true;
                 }
             ]);
