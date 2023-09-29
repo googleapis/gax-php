@@ -1941,6 +1941,7 @@ class GapicClientTraitDefaultScopeAndAudienceStub
         startOperationsCall as public;
         getPagedListResponse as public;
     }
+    use GapicClientStubTrait;
 
     const SERVICE_ADDRESS = 'service-address';
 
@@ -1957,18 +1958,6 @@ class GapicClientTraitDefaultScopeAndAudienceStub
                 'defaultScopes' => self::$serviceScopes,
             ],
         ];
-    }
-
-    public function set($name, $val, $static = false)
-    {
-        if (!property_exists($this, $name)) {
-            throw new \InvalidArgumentException("Property not found: $name");
-        }
-        if ($static) {
-            $this::$$name = $val;
-        } else {
-            $this->$name = $val;
-        }
     }
 }
 
