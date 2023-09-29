@@ -43,6 +43,9 @@ use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\ApiCore\Options\CallOptions;
+use Google\ApiCore\Options\ClientOptions;
+use Google\ApiCore\Options\TransportOptions;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
@@ -80,6 +83,7 @@ trait GapicClientTrait
         Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
+    private bool $isNewClient;
 
     /**
      * Initiates an orderly shutdown in which preexisting calls continue but new
@@ -362,37 +366,50 @@ trait GapicClientTrait
             'libName',
             'libVersion',
         ]);
-
-        $clientConfig = $options['clientConfig'];
-        if (is_string($clientConfig)) {
-            $clientConfig = json_decode(file_get_contents($clientConfig), true);
+        if ($this->isNewClientSurface()) {
+            // cast to ClientOptions for new surfaces only
+            $options = new ClientOptions($options);
+        } elseif (is_string($options['clientConfig'])) {
+            // perform validation for V1 surfaces which is done in the
+            // ClientOptions class for v2 surfaces.
+            $options['clientConfig'] = json_decode(
+                file_get_contents($options['clientConfig']),
+                true
+            );
+            self::validateFileExists($options['descriptorsConfigPath']);
         }
         $this->serviceName = $options['serviceName'];
         $this->retrySettings = RetrySettings::load(
             $this->serviceName,
-            $clientConfig,
+            $options['clientConfig'],
             $options['disableRetries']
         );
 
+        $headerInfo = [
+            'libName' => $options['libName'],
+            'libVersion' => $options['libVersion'],
+            'gapicVersion' => $options['gapicVersion'],
+        ];
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
         if ($this->transport instanceof GrpcTransport) {
-            $options['grpcVersion'] = phpversion('grpc');
-            unset($options['restVersion']);
+            $headerInfo['grpcVersion'] = phpversion('grpc');
         } elseif ($this->transport instanceof RestTransport
             || $this->transport instanceof GrpcFallbackTransport) {
-            unset($options['grpcVersion']);
-            $options['restVersion'] = Version::getApiCoreVersion();
+            $headerInfo['restVersion'] = Version::getApiCoreVersion();
         }
-
-        $this->agentHeader = AgentHeader::buildAgentHeader(
-            $this->pluckArray([
-                'libName',
-                'libVersion',
-                'gapicVersion'
-            ], $options)
+        $this->agentHeader = AgentHeader::buildAgentHeader($headerInfo);
+      
+        // Set "client_library_name" depending on client library surface being used
+        $userAgentHeader = sprintf(
+            'gcloud-php-%s/%s',
+            $this->isNewClientSurface() ? 'new' : 'legacy',
+            $options['gapicVersion']
         );
+        $this->agentHeader['User-Agent'] = [$userAgentHeader];
+
         self::validateFileExists($options['descriptorsConfigPath']);
+
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
@@ -440,7 +457,7 @@ trait GapicClientTrait
     /**
      * @param string $apiEndpoint
      * @param string $transport
-     * @param array $transportConfig
+     * @param TransportOptions|array $transportConfig
      * @param callable $clientCertSource
      * @return TransportInterface
      * @throws ValidationException
@@ -448,7 +465,7 @@ trait GapicClientTrait
     private function createTransport(
         string $apiEndpoint,
         $transport,
-        array $transportConfig,
+        $transportConfig,
         callable $clientCertSource = null
     ) {
         if (!is_string($transport)) {
@@ -466,9 +483,22 @@ trait GapicClientTrait
             ));
         }
         $configForSpecifiedTransport = $transportConfig[$transport] ?? [];
-        $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
+        if (is_array($configForSpecifiedTransport)) {
+            $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
+        } else {
+            $configForSpecifiedTransport->setClientCertSource($clientCertSource);
+            $configForSpecifiedTransport = $configForSpecifiedTransport->toArray();
+        }
         switch ($transport) {
             case 'grpc':
+                // Setting the user agent for gRPC requires special handling
+                if (isset($this->agentHeader['User-Agent'])) {
+                    if ($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] ??= '') {
+                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .= ' ';
+                    }
+                    $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
+                        $this->agentHeader['User-Agent'][0];
+                }
                 return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
                 return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
@@ -698,6 +728,7 @@ trait GapicClientTrait
         int $callType = Call::UNARY_CALL,
         string $interfaceName = null
     ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
@@ -795,6 +826,19 @@ trait GapicClientTrait
     }
 
     /**
+     * @return array
+     */
+    private function configureCallOptions(array $optionalArgs): array
+    {
+        if ($this->isNewClientSurface()) {
+            // cast to CallOptions for new surfaces only
+            return (new CallOptions($optionalArgs))->toArray();
+        }
+
+        return $optionalArgs;
+    }
+
+    /**
      * @param string $methodName
      * @param array $optionalArgs {
      *     Call Options
@@ -819,6 +863,7 @@ trait GapicClientTrait
         string $interfaceName = null,
         string $operationClass = null
     ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
@@ -898,6 +943,7 @@ trait GapicClientTrait
         Message $request,
         string $interfaceName = null
     ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
             $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
@@ -1050,5 +1096,13 @@ trait GapicClientTrait
     protected function modifyStreamingCallable(callable &$callable)
     {
         // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * @internal
+     */
+    private function isNewClientSurface(): bool
+    {
+        return $this->isNewClient ?? $this->isNewClient = substr(__CLASS__, -10) === 'BaseClient';
     }
 }
