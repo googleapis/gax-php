@@ -1569,13 +1569,13 @@ class GapicClientTraitTest extends TestCase
     public function testSupportedTransportOverrideWithDefaultTransport()
     {
         $client = new GapicClientTraitRestOnly();
-        $this->assertInstanceOf(RestTransport::class, $client->call('getTransport'));
+        $this->assertInstanceOf(RestTransport::class, $client->getTransport());
     }
 
     public function testSupportedTransportOverrideWithExplicitTransport()
     {
         $client = new GapicClientTraitRestOnly(['transport' => 'rest']);
-        $this->assertInstanceOf(RestTransport::class, $client->call('getTransport'));
+        $this->assertInstanceOf(RestTransport::class, $client->getTransport());
     }
 
     /** @dataProvider provideDetermineMtlsEndpoint */
@@ -1759,12 +1759,12 @@ class GapicClientTraitTest extends TestCase
             'headers' => ['Foo' => 'Bar'],
             'invalidOption' => 'wont-be-passed'
         ];
-        $client->call('startCall', [
+        $client->startCall(
             'simpleMethod',
             'decodeType',
             $callOptions,
             new MockRequest(),
-        ])->wait();
+        )->wait();
     }
 
     public function testInvalidCallOptionsTypeForV1SurfaceDoesNotThrowException()
@@ -1786,12 +1786,12 @@ class GapicClientTraitTest extends TestCase
             )
             ->willReturn(new FulfilledPromise(new Operation()));
 
-        $client->call('startCall', [
+        $client->startCall(
             'simpleMethod',
             'decodeType',
             ['timeoutMillis' => 'blue'],
             new MockRequest(),
-        ])->wait();
+        )->wait();
     }
 
     public function testInvalidCallOptionsTypeForV2SurfaceThrowsException()
@@ -1807,12 +1807,12 @@ class GapicClientTraitTest extends TestCase
 
         list($client, $_) = $this->buildClientToTestModifyCallMethods(GapicV2SurfaceClient::class);
 
-        $client->call('startCall', [
+        $client->startCall(
             'simpleMethod',
             'decodeType',
             ['timeoutMillis' => 'blue'], // invalid type, will throw exception
             new MockRequest(),
-        ])->wait();
+        )->wait();
     }
 
     public function testSurfaceAgentHeaders()
@@ -1856,6 +1856,7 @@ class GapicClientTraitStub
         startCall as public;
         startOperationsCall as public;
     }
+    use GapicClientStubTrait;
 
     public static function getClientDefaults()
     {
@@ -1875,6 +1876,29 @@ class GapicClientTraitStub
                 ]
             ],
         ];
+    }
+}
+
+trait GapicClientStubTrait
+{
+    public function set($name, $val, $static = false)
+    {
+        if (!property_exists($this, $name)) {
+            throw new \InvalidArgumentException("Property not found: $name");
+        }
+        if ($static) {
+            $this::$$name = $val;
+        } else {
+            $this->$name = $val;
+        }
+    }
+
+    public function get($name)
+    {
+        if (!property_exists($this, $name)) {
+            throw new \InvalidArgumentException("Property not found: $name");
+        }
+        return $this->$name;
     }
 }
 
@@ -2011,7 +2035,9 @@ class CustomOperationsClient
 
 abstract class GapicV2SurfaceBaseClient
 {
-    use GapicClientTrait;
+    use GapicClientTrait {
+        startCall as public;
+    }
     use GapicClientStubTrait;
 
     public function __construct(array $options = [])
