@@ -1103,7 +1103,6 @@ trait GapicClientTrait
      */
     private function isNewClientSurface(): bool
     {
-        return $this->isNewClient ?? $this->isNewClient =
-            substr(__CLASS__, -11) !== 'GapicClient' && substr(__CLASS__, -6) === 'Client';
+        return $this->isNewClient ?? $this->isNewClient = substr(__CLASS__, -11) !== 'GapicClient';
     }
 }
