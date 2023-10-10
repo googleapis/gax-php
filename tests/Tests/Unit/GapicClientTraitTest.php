@@ -1835,7 +1835,7 @@ class GapicClientTraitTest extends TestCase
     }
 }
 
-class GapicClientTraitStub
+class StubGapicClient
 {
     use GapicClientTrait {
         buildClientOptions as public;
@@ -1899,32 +1899,6 @@ trait GapicClientStubTrait
             throw new \InvalidArgumentException("Property not found: $name");
         }
         return $this->$name;
-    }
-}
-
-class StubGapicClient
-{
-    use GapicClientTrait;
-    use GapicClientStubTrait;
-
-    public static function getClientDefaults()
-    {
-        return [
-            'apiEndpoint' => 'test.address.com:443',
-            'serviceName' => 'test.interface.v1.api',
-            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
-            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
-            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
-            'disableRetries' => false,
-            'auth' => null,
-            'authConfig' => null,
-            'transport' => null,
-            'transportConfig' => [
-                'rest' => [
-                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
-                ]
-            ],
-        ];
     }
 }
 
