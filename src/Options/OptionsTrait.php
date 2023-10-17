@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2023 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,18 +30,61 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-use Google\ApiCore\GapicClientTrait;
+namespace Google\ApiCore\Options;
+
+use Google\ApiCore\ValidationException;
+use BadMethodCallException;
 
 /**
- * This class is intended to test the look up of a VERSION file. The following
- * directory structure is important to retain for this test:
- *
- * - testdata/src/GapicClientStub.php
- * - testdata/VERSION
+ * Trait implemented by any class representing an associative array of PHP options.
+ * This provides validation and typehinting to loosely typed associative arrays.
  */
-class GapicClientStub
+trait OptionsTrait
 {
-    use GapicClientTrait {
-        getGapicVersion as public;
+    /**
+     * @param string $filePath
+     * @throws ValidationException
+     */
+    private static function validateFileExists(string $filePath)
+    {
+        if (!file_exists($filePath)) {
+            throw new ValidationException("Could not find specified file: $filePath");
+        }
+    }
+
+    public function offsetExists($offset): bool
+    {
+        return isset($this->$offset);
+    }
+
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        return $this->$offset;
+    }
+
+    /**
+     * @throws BadMethodCallException
+     */
+    public function offsetSet($offset, $value): void
+    {
+        throw new BadMethodCallException('Cannot set options through array access. Use the setters instead');
+    }
+
+    /**
+     * @throws BadMethodCallException
+     */
+    public function offsetUnset($offset): void
+    {
+        throw new BadMethodCallException('Cannot unset options through array access. Use the setters instead');
+    }
+
+    public function toArray(): array
+    {
+        $arr = [];
+        foreach (get_object_vars($this) as $key => $value) {
+            $arr[$key] = $value;
+        }
+        return $arr;
     }
 }
