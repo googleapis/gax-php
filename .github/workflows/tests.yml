@@ -16,14 +16,14 @@ jobs:
                 tools: [""]
                 include:
                   - php: "7.4"
-                    extensions: "protobuf,grpc-1.49.0"
+                    extensions: "protobuf,grpc"
                     tools: "pecl"
                   - php: 8.2
-                    extensions: "protobuf,grpc-1.49.0"
+                    extensions: "protobuf,grpc"
                     tools: "pecl"
         name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}"
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -45,7 +45,7 @@ jobs:
         runs-on: ubuntu-latest
         name: PHP Style Check
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -63,7 +63,7 @@ jobs:
       runs-on: ubuntu-latest
       name: PHPStan Static Analysis
       steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:

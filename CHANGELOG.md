@@ -1,5 +1,69 @@
 # Changelog
 
+## [1.24.0](https://github.com/googleapis/gax-php/compare/v1.23.0...v1.24.0) (2023-10-10)
+
+
+### Features
+
+* Ensure NewClientSurface works for consoldiated v2 clients ([#493](https://github.com/googleapis/gax-php/issues/493)) ([cb8706e](https://github.com/googleapis/gax-php/commit/cb8706ef9211a1e43f733d2c8f272a330c2fa792))
+
+## [1.23.0](https://github.com/googleapis/gax-php/compare/v1.22.1...v1.23.0) (2023-09-14)
+
+
+### Features
+
+* Typesafety for new surface client options ([#450](https://github.com/googleapis/gax-php/issues/450)) ([21550c5](https://github.com/googleapis/gax-php/commit/21550c5bf07f178f2043b0630f3ac34fcc3a05e0))
+
+## [1.22.1](https://github.com/googleapis/gax-php/compare/v1.22.0...v1.22.1) (2023-08-04)
+
+
+### Bug Fixes
+
+* Deprecation notice while GapicClientTrait-&gt;setClientOptions ([#483](https://github.com/googleapis/gax-php/issues/483)) ([1c66d34](https://github.com/googleapis/gax-php/commit/1c66d3445dca4d43831a2f4e26e59b9bd1cb76dd))
+
+## [1.22.0](https://github.com/googleapis/gax-php/compare/v1.21.1...v1.22.0) (2023-07-31)
+
+
+### Features
+
+* Sets api headers for "gcloud-php-new" and "gcloud-php-legacy"  surface versions ([#470](https://github.com/googleapis/gax-php/issues/470)) ([2d8ccff](https://github.com/googleapis/gax-php/commit/2d8ccff419a076ee2fe9d3dc7ecd5509c74afb4c))
+
+## [1.21.1](https://github.com/googleapis/gax-php/compare/v1.21.0...v1.21.1) (2023-06-28)
+
+
+### Bug Fixes
+
+* Revert "chore: remove unnecessary api endpoint check" ([#476](https://github.com/googleapis/gax-php/issues/476)) ([13e773f](https://github.com/googleapis/gax-php/commit/13e773f5b09f9a99b8425835815746d37e9c1da3))
+
+## [1.21.0](https://github.com/googleapis/gax-php/compare/v1.20.2...v1.21.0) (2023-06-09)
+
+
+### Features
+
+* Support guzzle/promises:v2 ([753eae9](https://github.com/googleapis/gax-php/commit/753eae9acf638f3356f8149acf84444eb399a699))
+
+## [1.20.2](https://github.com/googleapis/gax-php/compare/v1.20.1...v1.20.2) (2023-05-12)
+
+
+### Bug Fixes
+
+* Ensure timeout set by RetryMiddleware is int not float ([#462](https://github.com/googleapis/gax-php/issues/462)) ([9d4c7fa](https://github.com/googleapis/gax-php/commit/9d4c7fa89445c63ec0bf4745ed9d98fd185ef51f))
+
+## [1.20.1](https://github.com/googleapis/gax-php/compare/v1.20.0...v1.20.1) (2023-05-12)
+
+
+### Bug Fixes
+
+* Default value for error message in createFromRequestException ([#463](https://github.com/googleapis/gax-php/issues/463)) ([7552d22](https://github.com/googleapis/gax-php/commit/7552d22241c2f488606e9546efdd6edea356ee9a))
+
+## [1.20.0](https://github.com/googleapis/gax-php/compare/v1.19.1...v1.20.0) (2023-05-01)
+
+
+### Features
+
+* **deps:** Support google/common-protos 4.0 ([af1db80](https://github.com/googleapis/gax-php/commit/af1db80c22307597f0dfcb9fafa86caf466588ba))
+* **deps:** Support google/grpc-gcp 0.3 ([18edc2c](https://github.com/googleapis/gax-php/commit/18edc2ce6a1a615e3ea7c00ede313c32cec4b799))
+
 ## [1.19.1](https://github.com/googleapis/gax-php/compare/v1.19.0...v1.19.1) (2023-03-16)
 
 
