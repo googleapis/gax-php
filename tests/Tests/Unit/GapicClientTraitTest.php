@@ -701,8 +701,7 @@ class GapicClientTraitTest extends TestCase
         $client = new StubGapicClient();
         $callable = $client->createTransportFunction(
             $transport,
-            $transportConfig,
-            $apiEndpoint
+            $transportConfig
         );
         $transport = $callable($apiEndpoint);
 
@@ -751,12 +750,12 @@ class GapicClientTraitTest extends TestCase
             [
                 [],
                 'stub.googleapis.com:443',
-                new GapicClientTraitTpcStub(), // service address template used by new clients
+                new TpcStubGapicClient(), // service address template used by new clients
             ],
             [
                 ['credentials' => $credentialsWrapper->reveal()],
                 'stub.universe-domain.com:443',
-                new GapicClientTraitTpcStub(), // universe domain used by new clients
+                new TpcStubGapicClient(), // universe domain used by new clients
             ],
             [
                 ['transport' => 'rest', 'credentials' => $credentialsWrapper->reveal()],
@@ -780,17 +779,17 @@ class GapicClientTraitTest extends TestCase
             ->shouldBeCalledOnce()
             ->willReturn(function() { return []; });
 
-        $client = new GapicClientTraitTpcStub();
+        $client = new TpcStubGapicClient();
         $options = ['credentials' => $credentialsWrapper->reveal()];
-        $updatedOptions = $client->call('buildClientOptions', [$options]);
-        $client->call('setClientOptions', [$updatedOptions]);
+        $updatedOptions = $client->buildClientOptions($options);
+        $client->setClientOptions($updatedOptions);
 
         // CredentialsWrapper::getUniverseDomain has not been called
         $this->assertFalse($called);
 
-        $callStack = $client->call('createCallStack', [
+        $callStack = $client->createCallStack(
             ['retrySettings' => RetrySettings::constructDefault()]
-        ]);
+        );
 
         // CredentialsWrapper::getUniverseDomain has still not been called
         $this->assertFalse($called);
@@ -839,9 +838,8 @@ class GapicClientTraitTest extends TestCase
         $callable = $client->createTransportFunction(
             $transport,
             $transportConfig,
-            $apiEndpoint
         );
-        $callable();
+        $callable($apiEndpoint);
     }
 
     public function createTransportDataInvalid()
@@ -1978,9 +1976,14 @@ class StubGapicClient
     }
 }
 
-class GapicClientTraitTpcStub
+class TpcStubGapicClient
 {
-    use GapicClientTrait;
+    use GapicClientTrait {
+        buildClientOptions as public;
+        setClientOptions as public;
+        createCallStack as public;
+        getTransport as public;
+    }
     use GapicClientStubTrait;
 
     private const SERVICE_ADDRESS_TEMPLATE = 'stub.UNIVERSE_DOMAIN';
