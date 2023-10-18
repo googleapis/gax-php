@@ -703,7 +703,7 @@ class GapicClientTraitTest extends TestCase
             $transport,
             $transportConfig,
             $apiEndpoint
-        ]);
+        );
         $transport = $callable($apiEndpoint);
 
         $this->assertEquals($expectedTransportClass, get_class($transport));
@@ -714,11 +714,11 @@ class GapicClientTraitTest extends TestCase
      */
     public function testCreateTransportDefaultEndpoint(array $options, string $expectedEndpoint, $client = null)
     {
-        $client = $client ?: new GapicClientTraitStub();
-        $updatedOptions = $client->call('buildClientOptions', [$options]);
+        $client = $client ?: new StubGapicClient();
+        $updatedOptions = $client->buildClientOptions($options);
 
-        $client->call('setClientOptions', [$updatedOptions]);
-        $transport = $client->call('getTransport');
+        $client->setClientOptions($updatedOptions);
+        $transport = $client->getTransport();
         $this->assertEquals(RestTransport::class, get_class($transport));
         $transportRefl = new \ReflectionClass($transport);
         $rbProp = $transportRefl->getProperty('requestBuilder');
@@ -1942,7 +1942,7 @@ class StubGapicClient
         configureCallConstructionOptions as public;
         createCredentialsWrapper as public;
         createOperationsClient as public;
-        createTransport as public;
+        createTransportFunction as public;
         determineMtlsEndpoint as public;
         getGapicVersion as public;
         getCredentialsWrapper as public;
