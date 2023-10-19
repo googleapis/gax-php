@@ -99,6 +99,7 @@ class AgentHeader
         $metricsHeaders['pb'] = $headerInfo['protobufVersion']
             ?? (phpversion('protobuf') ? phpversion('protobuf') . '+c' : '+n');
 
+	$metricsList = [];
         foreach ($metricsHeaders as $key => $value) {
             $metricsList[] = $key . "/" . $value;
         }
