@@ -5,7 +5,7 @@ on:
             - "*"
     workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
     docs:
         name: "Generate and Deploy Documentation"
