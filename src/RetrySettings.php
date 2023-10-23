@@ -222,7 +222,7 @@ class RetrySettings
      * take place or not. The callable will have the following signature:
      * function (Exception $e, array $options, int $retryAttempt): bool
      */
-    private $requestRetryFunction;
+    private Closure $retryFunction;
 
     /**
      * Constructs an instance.

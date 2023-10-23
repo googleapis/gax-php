@@ -56,7 +56,7 @@ class RetryMiddleware
      * The first retry will have $retryAttempts set to 0.
      * @var int
      */
-    private $retryAttempts;
+    private int $retryAttempts;
 
     public function __construct(
         callable $nextHandler,
