@@ -31,6 +31,8 @@
  */
 namespace Google\ApiCore;
 
+use Closure;
+
 /**
  * The RetrySettings class is used to configure retrying and timeouts for RPCs.
  * This class can be passed as an optional parameter to RPC methods, or as part
@@ -222,7 +224,7 @@ class RetrySettings
      * take place or not. The callable will have the following signature:
      * function (Exception $e, array $options, int $retryAttempt): bool
      */
-    private Closure $retryFunction;
+    private ?Closure $retryFunction;
 
     /**
      * Constructs an instance.
@@ -248,7 +250,7 @@ class RetrySettings
      *     @type int      $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
      *     @type int      $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
      *     @type int      $totalTimeoutMillis The max accumulative timeout in total.
-     *     @type callable $requestRetryFunction This function will be used to decide if we should retry or not.
+     *     @type callable $retryFunction This function will be used to decide if we should retry or not.
      *                    Callable signature: `function (Exception $e, array $options, int $retryAttempt): bool`
      * }
      */
@@ -278,7 +280,7 @@ class RetrySettings
         $this->noRetriesRpcTimeoutMillis = array_key_exists('noRetriesRpcTimeoutMillis', $settings)
             ? $settings['noRetriesRpcTimeoutMillis']
             : $this->initialRpcTimeoutMillis;
-        $this->requestRetryFunction = $settings['requestRetryFunction'] ?? null;
+        $this->retryFunction = $settings['retryFunction'] ?? null;
     }
 
     /**
@@ -359,7 +361,7 @@ class RetrySettings
             'maxRpcTimeoutMillis' => 20000,
             'totalTimeoutMillis' => 600000,
             'retryableCodes' => [],
-            'requestRetryFunction' => null]);
+            'retryFunction' => null]);
     }
 
     /**
@@ -386,7 +388,7 @@ class RetrySettings
             'retryableCodes' => $this->getRetryableCodes(),
             'retriesEnabled' => $this->retriesEnabled(),
             'noRetriesRpcTimeoutMillis' => $this->getNoRetriesRpcTimeoutMillis(),
-            'requestRetryFunction' => $this->getRequestRetryFunction(),
+            'retryFunction' => $this->getRetryFunction(),
         ];
         return new RetrySettings($settings + $existingSettings);
     }
@@ -501,9 +503,9 @@ class RetrySettings
         return $this->totalTimeoutMillis;
     }
 
-    public function getRequestRetryFunction()
+    public function getRetryFunction()
     {
-        return $this->requestRetryFunction;
+        return $this->retryFunction;
     }
 
     private static function convertArrayFromSnakeCase(array $settings)
