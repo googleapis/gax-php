@@ -286,7 +286,7 @@ class RetryMiddlewareTest extends TestCase
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
-                'requestRetryFunction' => function ($ex, $options, $attempts) use($maxAttempts) {
+                'retryFunction' => function ($ex, $options, $attempts) use($maxAttempts) {
                     if($attempts < $maxAttempts) {
                         return true;
                     }
@@ -319,7 +319,7 @@ class RetryMiddlewareTest extends TestCase
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => false,
-                'requestRetryFunction' => function ($ex, $options, $attempts) {
+                'retryFunction' => function ($ex, $options, $attempts) {
                     // This should not run as retriesEnabled is false
                     $this->fail('Custom retry function shouldn\'t have run.');
                     return true;
@@ -347,7 +347,7 @@ class RetryMiddlewareTest extends TestCase
             ->with([
                 'retriesEnabled' => true,
                 'totalTimeoutMillis' => 1,
-                'requestRetryFunction' => function ($ex, $options, $attempts) {
+                'retryFunction' => function ($ex, $options, $attempts) {
                     usleep(900);
                     return true;
                 }

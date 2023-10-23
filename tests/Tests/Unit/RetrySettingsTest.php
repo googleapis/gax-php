@@ -223,7 +223,7 @@ class RetrySettingsTest extends TestCase
             'retryableCodes' => [1],
             'noRetriesRpcTimeoutMillis' => 150,
             'retriesEnabled' => true,
-            'requestRetryFunction' => null,
+            'retryFunction' => null,
         ];
         return [
             [
@@ -273,10 +273,10 @@ class RetrySettingsTest extends TestCase
             [
                 // Test with a custom retry function
                 [
-                    'requestRetryFunction' => function($ex, $options, $attempts) {return true;}
+                    'retryFunction' => function($ex, $options, $attempts) {return true;}
                 ] + $defaultSettings,
                 [
-                    'requestRetryFunction' => function($ex, $options, $attempts) {return true;}
+                    'retryFunction' => function($ex, $options, $attempts) {return true;}
                 ] + $defaultExpectedValues
             ]
         ];
@@ -307,7 +307,7 @@ class RetrySettingsTest extends TestCase
             'retryableCodes' => [1],
             'noRetriesRpcTimeoutMillis' => 1,
             'retriesEnabled' => true,
-            'requestRetryFunction' => null,
+            'retryFunction' => null,
         ];
         return [
             [
@@ -358,10 +358,10 @@ class RetrySettingsTest extends TestCase
                 // Test with a custom retry function
                 $defaultSettings,
                 [
-                    'requestRetryFunction' => function($ex, $options, $attempts) {return true;}
+                    'retryFunction' => function($ex, $options, $attempts) {return true;}
                 ],
                 [
-                    'requestRetryFunction' => function($ex, $options, $attempts) {return true;}
+                    'retryFunction' => function($ex, $options, $attempts) {return true;}
                 ] + $defaultExpectedValues
             ]
         ];
