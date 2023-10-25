@@ -55,6 +55,7 @@ class RetryMiddleware
      * The number of retries that have already been attempted.
      * The first retry will have $retryAttempts set to 0.
      * @var int
+     * @experimental
      */
     private int $retryAttempts;
 
