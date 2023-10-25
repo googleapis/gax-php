@@ -810,7 +810,11 @@ trait GapicClientTrait
         }
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
-            return $this->getTransport()->$startCallMethod($call, $options);
+            if (!$this->transport) {
+                // Create transport at call-time to allow for lazy initialization
+                $this->transport = $this->buildTransport();
+            }
+            return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
         $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
