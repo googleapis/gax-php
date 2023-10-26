@@ -223,8 +223,6 @@ class RetrySettings
      * When set, this function will be used to evaluate if the retry should
      * take place or not. The callable will have the following signature:
      * function (Exception $e, array $options, int $retryAttempt): bool
-     *
-     * @experimental
      */
     private ?Closure $retryFunction;
 
@@ -254,6 +252,7 @@ class RetrySettings
      *     @type int      $totalTimeoutMillis The max accumulative timeout in total.
      *     @type callable $retryFunction This function will be used to decide if we should retry or not.
      *                    Callable signature: `function (Exception $e, array $options, int $retryAttempt): bool`
+     *                    This option is experimental.
      * }
      */
     public function __construct(array $settings)
@@ -505,6 +504,9 @@ class RetrySettings
         return $this->totalTimeoutMillis;
     }
 
+    /**
+     * @experimental
+     */
     public function getRetryFunction()
     {
         return $this->retryFunction;

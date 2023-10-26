@@ -286,7 +286,7 @@ class RetryMiddlewareTest extends TestCase
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
-                'retryFunction' => function ($ex, $options, $attempts) use($maxAttempts) {
+                'retryFunction' => function ($ex, $options, $attempts) use ($maxAttempts) {
                     if($attempts < $maxAttempts) {
                         return true;
                     }
@@ -326,7 +326,7 @@ class RetryMiddlewareTest extends TestCase
                 }
             ]);
 
-        $handler = function(Call $call, $options) {
+        $handler = function (Call $call, $options) {
             return new Promise(function () {
                 throw new ApiException('Exception msg', 0, '');
             });
@@ -354,15 +354,13 @@ class RetryMiddlewareTest extends TestCase
             ]);
 
         $callCount = 0;
-        $handler = function(Call $call, $options) use(&$callCount) {
+        $handler = function (Call $call, $options) use (&$callCount) {
             return new Promise(function () use(&$callCount) {
                 ++$callCount;
                 throw new ApiException('Call count: ' . $callCount, 0, '');
             });
         };
         $middleware = new RetryMiddleware($handler, $retrySettings);
-
-        // $this->expectException(ApiException::class);
         
         try {
             $middleware($call, [])->wait();
