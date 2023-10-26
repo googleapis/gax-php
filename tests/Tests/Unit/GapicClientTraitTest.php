@@ -1452,7 +1452,8 @@ class GapicClientTraitTest extends TestCase
                         'X-Goog-User-Project' => [$quotaProject],
                         'User-Agent' => ['gcloud-php-legacy/']
                     ],
-                    'credentialsWrapper' => $credentialsWrapper
+                    'credentialsWrapper' => $credentialsWrapper,
+                    'audience' => 'test.address.com:443',
                 ])
             );
         $client = new StubGapicClient();
@@ -1847,6 +1848,7 @@ class GapicClientTraitTest extends TestCase
                     'credentialsWrapper' => CredentialsWrapper::build([
                         'keyFile' => __DIR__ . '/testdata/json-key-file.json'
                     ]),
+                    'audience' => 'test.address.com:443',
                     'timeoutMillis' => null, // adds null timeoutMillis
                 ])
             )

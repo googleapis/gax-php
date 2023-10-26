@@ -268,32 +268,33 @@ trait GapicClientTrait
             $apiEndpoint = self::determineMtlsEndpoint($defaultOptions['apiEndpoint']);
         }
 
-        $this->apiEndpointFunction = Closure::fromCallable(function () use ($apiEndpoint, $defaultOptions) {
-            // If a custom endpoint is set, or we are using an MTLS endpoint, return it
+        // For backwards compatibility
+        $options['apiEndpoint'] = $apiEndpoint ?: $defaultOptions['apiEndpoint'];
+
+        $this->apiEndpointFunction = Closure::fromCallable(function () use (&$apiEndpoint, $defaultOptions) {
+            // If a custom endpoint is set, or we are using an MTLS endpoint, or if we've already derived the API
+            // endpoint below, return it.
             if ($apiEndpoint) {
                 return $apiEndpoint;
             }
 
-            // If no API endpoint is set, derive the endpoint from the service address template and the
-            // universe domain fetched from the credentials.
+            // If no API endpoint is set, derive the endpoint from the service address template and the universe domain
+            // fetched from the credentials.
             if (defined('self::SERVICE_ADDRESS_TEMPLATE')) {
                 $universeDomain = $this->credentialsWrapper->getUniverseDomain();
                 if (!$universeDomain) {
                     throw new ValidationException('Credentials provided do not contain universe information');
                 }
-                return str_replace(
+                return $apiEndpoint = str_replace(
                     'UNIVERSE_DOMAIN',
                     $universeDomain,
                     self::SERVICE_ADDRESS_TEMPLATE
                 );
             }
 
-            // If no serviceAddressTemplate exsts, use the default endpoint
-            return $defaultOptions['apiEndpoint'];
+            // If no SERVICE_ADDRESS_TEMPLATE exsts, use the default endpoint
+            return $apiEndpoint = $defaultOptions['apiEndpoint'];
         });
-
-        // For backwards compatibility
-        $options['apiEndpoint'] = $apiEndpoint ?: $defaultOptions['apiEndpoint'];
 
         return $options;
     }
@@ -807,7 +808,7 @@ trait GapicClientTrait
         }
 
         return $callStack($call, $optionalArgs + array_filter([
-            'audience' => self::getDefaultAudience()
+            'audience' => $this->getDefaultAudience()
         ]));
     }
 
@@ -955,7 +956,7 @@ trait GapicClientTrait
         $this->modifyUnaryCallable($callStack);
         return $callStack($call, $optionalArgs + array_filter([
             'metadataReturnType' => $metadataReturnType,
-            'audience' => self::getDefaultAudience()
+            'audience' => $this->getDefaultAudience()
         ]));
     }
 
@@ -1019,7 +1020,7 @@ trait GapicClientTrait
 
         $this->modifyUnaryCallable($callStack);
         return $callStack($call, $optionalArgs + array_filter([
-            'audience' => self::getDefaultAudience()
+            'audience' => $this->getDefaultAudience()
         ]));
     }
 
@@ -1100,8 +1101,11 @@ trait GapicClientTrait
     /**
      * The SERVICE_ADDRESS constant is set by GAPIC clients
      */
-    private static function getDefaultAudience()
+    private function getDefaultAudience()
     {
+        if (isset($this->apiEndpointFunction)) {
+            return ($this->apiEndpointFunction)();
+        }
         if (!defined('self::SERVICE_ADDRESS')) {
             return null;
         }
