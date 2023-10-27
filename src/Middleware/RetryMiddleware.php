@@ -53,9 +53,7 @@ class RetryMiddleware
 
     /*
      * The number of retries that have already been attempted.
-     * The first retry will have $retryAttempts set to 0.
-     *
-     * @experimental
+     * The original API call will have $retryAttempts set to 0.
      */
     private int $retryAttempts;
 
@@ -98,9 +96,11 @@ class RetryMiddleware
         return $nextHandler($call, $options)->then(null, function ($e) use ($call, $options) {
             $retryFunction = $this->getRetryFunction();
 
-            // If the retry function returns false then throw the
+            // If the number of retries has surpassed the max allowed retries,
+            // or if the retry function returns false then throw the
             // exception as we normally would.
-            if (!$retryFunction($e, $options, $this->retryAttempts)) {
+            if ($this->retryAttempts >= $this->retrySettings->getMaxRetries() ||
+                !$retryFunction($e, $options)) {
                 throw $e;
             }
 
@@ -174,7 +174,7 @@ class RetryMiddleware
     private function getRetryFunction()
     {
         return $this->retrySettings->getRetryFunction() ??
-            function (\Exception $e, array $options, int $retryAttempt): bool {
+            function (\Exception $e, array $options): bool {
                 // This is the default retry behaviour, i.e. we don't retry an ApiException
                 // and for other exception types, we only retry when the error code is in
                 // the list of retryable error codes.

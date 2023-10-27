@@ -205,6 +205,8 @@ class RetrySettings
 {
     use ValidationTrait;
 
+    const DEFAULT_MAX_RETRIES = 3;
+
     private $retriesEnabled;
 
     private $retryableCodes;
@@ -220,9 +222,15 @@ class RetrySettings
     private $noRetriesRpcTimeoutMillis;
 
     /**
+     * The number of maximum retries an operation can do.
+     * This doesn't include the original API call.
+     */
+    private int $maxRetries;
+
+    /**
      * When set, this function will be used to evaluate if the retry should
      * take place or not. The callable will have the following signature:
-     * function (Exception $e, array $options, int $retryAttempt): bool
+     * function (Exception $e, array $options): bool
      */
     private ?Closure $retryFunction;
 
@@ -250,8 +258,11 @@ class RetrySettings
      *     @type int      $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
      *     @type int      $maxRpcTimeoutMillis The max timeout of rpc call in milliseconds.
      *     @type int      $totalTimeoutMillis The max accumulative timeout in total.
+     *     @type int      $maxRetries The max retries allowed for an operation.
+     *                    Defaults to the value of the DEFAULT_MAX_RETRIES constant.
+     *                    This option is experimental.
      *     @type callable $retryFunction This function will be used to decide if we should retry or not.
-     *                    Callable signature: `function (Exception $e, array $options, int $retryAttempt): bool`
+     *                    Callable signature: `function (Exception $e, array $options): bool`
      *                    This option is experimental.
      * }
      */
@@ -281,6 +292,7 @@ class RetrySettings
         $this->noRetriesRpcTimeoutMillis = array_key_exists('noRetriesRpcTimeoutMillis', $settings)
             ? $settings['noRetriesRpcTimeoutMillis']
             : $this->initialRpcTimeoutMillis;
+        $this->maxRetries = $settings['maxRetries'] ?? self::DEFAULT_MAX_RETRIES;
         $this->retryFunction = $settings['retryFunction'] ?? null;
     }
 
@@ -362,6 +374,7 @@ class RetrySettings
             'maxRpcTimeoutMillis' => 20000,
             'totalTimeoutMillis' => 600000,
             'retryableCodes' => [],
+            'maxRetries' => self::DEFAULT_MAX_RETRIES,
             'retryFunction' => null]);
     }
 
@@ -389,6 +402,7 @@ class RetrySettings
             'retryableCodes' => $this->getRetryableCodes(),
             'retriesEnabled' => $this->retriesEnabled(),
             'noRetriesRpcTimeoutMillis' => $this->getNoRetriesRpcTimeoutMillis(),
+            'maxRetries' => $this->getMaxRetries(),
             'retryFunction' => $this->getRetryFunction(),
         ];
         return new RetrySettings($settings + $existingSettings);
@@ -502,6 +516,14 @@ class RetrySettings
     public function getTotalTimeoutMillis()
     {
         return $this->totalTimeoutMillis;
+    }
+
+    /**
+     * @experimental
+     */
+    public function getMaxRetries()
+    {
+        return $this->maxRetries;
     }
 
     /**

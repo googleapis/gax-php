@@ -283,11 +283,13 @@ class RetryMiddlewareTest extends TestCase
             ->getMock();
 
         $maxAttempts = 3;
+        $currentAttempt = 0;
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
-                'retryFunction' => function ($ex, $options, $attempts) use ($maxAttempts) {
-                    if($attempts < $maxAttempts) {
+                'retryFunction' => function ($ex, $options) use ($maxAttempts, &$currentAttempt) {
+                    $currentAttempt++;
+                    if($currentAttempt < $maxAttempts) {
                         return true;
                     }
 
@@ -305,7 +307,7 @@ class RetryMiddlewareTest extends TestCase
 
         $this->expectException(ApiException::class);
         // test if the custom retry func threw an exception after $maxAttempts
-        $this->expectExceptionMessage('Call Count: ' . ($maxAttempts + 1));
+        $this->expectExceptionMessage('Call Count: ' . ($maxAttempts));
 
         $middleware($call, [])->wait();
     }
@@ -319,7 +321,7 @@ class RetryMiddlewareTest extends TestCase
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => false,
-                'retryFunction' => function ($ex, $options, $attempts) {
+                'retryFunction' => function ($ex, $options) {
                     // This should not run as retriesEnabled is false
                     $this->fail('Custom retry function shouldn\'t have run.');
                     return true;
@@ -347,7 +349,7 @@ class RetryMiddlewareTest extends TestCase
             ->with([
                 'retriesEnabled' => true,
                 'totalTimeoutMillis' => 1,
-                'retryFunction' => function ($ex, $options, $attempts) {
+                'retryFunction' => function ($ex, $options) {
                     usleep(900);
                     return true;
                 }
