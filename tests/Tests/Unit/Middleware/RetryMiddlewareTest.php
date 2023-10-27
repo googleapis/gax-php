@@ -132,6 +132,7 @@ class RetryMiddlewareTest extends TestCase
                 'retriesEnabled' => true,
                 'retryableCodes' => [ApiStatus::CANCELLED],
                 'initialRpcTimeoutMillis' => 500,
+                'maxRetries' => 5,
                 'totalTimeoutMillis' => 1000,
             ]);
         $handler = function(Call $call, $options) {
