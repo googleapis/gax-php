@@ -205,7 +205,7 @@ class RetrySettings
 {
     use ValidationTrait;
 
-    const DEFAULT_MAX_RETRIES = 3;
+    const DEFAULT_MAX_RETRIES = 0;
 
     private $retriesEnabled;
 
@@ -224,6 +224,7 @@ class RetrySettings
     /**
      * The number of maximum retries an operation can do.
      * This doesn't include the original API call.
+     * Setting this 0 means no limit.
      */
     private int $maxRetries;
 

@@ -132,7 +132,6 @@ class RetryMiddlewareTest extends TestCase
                 'retriesEnabled' => true,
                 'retryableCodes' => [ApiStatus::CANCELLED],
                 'initialRpcTimeoutMillis' => 500,
-                'maxRetries' => 5,
                 'totalTimeoutMillis' => 1000,
             ]);
         $handler = function(Call $call, $options) {
@@ -476,6 +475,41 @@ class RetryMiddlewareTest extends TestCase
         // Even though our maxRetries hasn't reached
         // the exception should be thrown after $customRetryMaxCalls
         // because the custom retry function would return false.
+        $this->expectExceptionMessage('Call Count: ' . ($customRetryMaxCalls));
+
+        $middleware($call, [])->wait();
+    }
+
+    public function testUnlimitedMaxRetries()
+    {
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $customRetryMaxCalls = 4;
+        $callCount = 0;
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+                'maxRetries' => 0,
+                'retryFunction' => function ($ex, $options) use (&$callCount, $customRetryMaxCalls) {
+                    // The retryFunction will signal a retry until the total call count reaches $customRetryMaxCalls.
+                    return $callCount < $customRetryMaxCalls ? true : false;
+                }
+            ]);
+        $handler = function(Call $call, $options) use (&$callCount) {
+            return new Promise(function () use (&$callCount) {
+                ++$callCount;
+                throw new ApiException('Call Count: ' . $callCount, 0, ApiStatus::CANCELLED);
+            });
+        };
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+
+        $this->expectException(ApiException::class);
+        // Since the maxRetries is set to 0(unlimited),
+        // the exception should be thrown after $customRetryMaxCalls
+        // because then the custom retry function would return false.
         $this->expectExceptionMessage('Call Count: ' . ($customRetryMaxCalls));
 
         $middleware($call, [])->wait();

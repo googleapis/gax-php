@@ -96,17 +96,17 @@ class RetryMiddleware
         return $nextHandler($call, $options)->then(null, function ($e) use ($call, $options) {
             $retryFunction = $this->getRetryFunction();
 
-            // If the number of retries has surpassed the max allowed retries,
-            // or if the retry function returns false then throw the
-            // exception as we normally would.
+            // If the number of retries has surpassed the max allowed retries
+            // throw the exception as we normally would.
+            // If the maxRetries is set to 0, then we don't check this condition.
             if (0 !== $this->retrySettings->getMaxRetries()
                 && $this->retryAttempts >= $this->retrySettings->getMaxRetries()
             ) {
                 throw $e;
             }
+            // If the retry function returns false then throw the
+            // exception as we normally would.
             if (!$retryFunction($e, $options)) {
-                throw $e;
-            }
                 throw $e;
             }
 
