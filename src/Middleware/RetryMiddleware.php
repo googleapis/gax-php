@@ -99,8 +99,14 @@ class RetryMiddleware
             // If the number of retries has surpassed the max allowed retries,
             // or if the retry function returns false then throw the
             // exception as we normally would.
-            if ($this->retryAttempts >= $this->retrySettings->getMaxRetries() ||
-                !$retryFunction($e, $options)) {
+            if (0 !== $this->retrySettings->getMaxRetries()
+                && $this->retryAttempts >= $this->retrySettings->getMaxRetries()
+            ) {
+                throw $e;
+            }
+            if (!$retryFunction($e, $options)) {
+                throw $e;
+            }
                 throw $e;
             }
 
