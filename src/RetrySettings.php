@@ -224,7 +224,7 @@ class RetrySettings
     /**
      * The number of maximum retries an operation can do.
      * This doesn't include the original API call.
-     * Setting this 0 means no limit.
+     * Setting this to 0 means no limit.
      */
     private int $maxRetries;
 
