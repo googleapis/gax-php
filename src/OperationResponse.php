@@ -62,7 +62,7 @@ class OperationResponse
     const DEFAULT_MAX_POLLING_DURATION = 0;
 
     private string $operationName;
-    private object $operationsClient;
+    private ?object $operationsClient;
 
     private ?string $operationReturnType;
     private ?string $metadataReturnType;
