@@ -624,6 +624,7 @@ class GapicClientTraitTest extends TestCase
         $actualCredentialsWrapper = $client->createCredentialsWrapper(
             $auth,
             $authConfig,
+            ''
         );
 
         $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
@@ -656,6 +657,7 @@ class GapicClientTraitTest extends TestCase
         $client->createCredentialsWrapper(
             $auth,
             $authConfig,
+            ''
         );
     }
 
@@ -679,6 +681,7 @@ class GapicClientTraitTest extends TestCase
         $client->createCredentialsWrapper(
             $auth,
             $authConfig,
+            ''
         );
     }
 
@@ -921,10 +924,11 @@ class GapicClientTraitTest extends TestCase
             ],
             'credentials' => null,
             'credentialsConfig' => [],
-            'gapicVersion' => null,
+            'gapicVersion' => '',
             'libName' => null,
             'libVersion' => null,
             'clientCertSource' => null,
+            'universeDomain' => 'googleapis.com',
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -988,10 +992,11 @@ class GapicClientTraitTest extends TestCase
             ],
             'credentials' => null,
             'credentialsConfig' => [],
-            'gapicVersion' => null,
+            'gapicVersion' => '',
             'libName' => null,
             'libVersion' => null,
             'clientCertSource' => null,
+            'universeDomain' => 'googleapis.com',
         ];
 
         $restConfigOptions = $defaultOptions;

@@ -40,6 +40,7 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
+use Google\Auth\GetUniverseDomainInterface;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
 use Google\Auth\HttpHandler\Guzzle7HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
@@ -58,6 +59,9 @@ class CredentialsWrapper
     /** @var callable $authHttpHandle */
     private $authHttpHandler;
 
+    private ?string $universeDomain;
+    private bool $hasCheckedUniverse = false;
+
     /** @var int */
     private static int $eagerRefreshThresholdSeconds = 10;
 
@@ -70,10 +74,14 @@ class CredentialsWrapper
      *        `function (RequestInterface $request, array $options) : ResponseInterface`.
      * @throws ValidationException
      */
-    public function __construct(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler = null)
-    {
+    public function __construct(
+        FetchAuthTokenInterface $credentialsFetcher,
+        callable $authHttpHandler = null,
+        ?string $universeDomain = null
+    ) {
         $this->credentialsFetcher = $credentialsFetcher;
         $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
+        $this->universeDomain = $universeDomain;
     }
 
     /**
@@ -107,10 +115,12 @@ class CredentialsWrapper
      *           Ensures service account credentials use JWT Access (also known as self-signed
      *           JWTs), even when user-defined scopes are supplied.
      * }
+     * @param string $universeDomain The expected universe of the credentials. If empty, the
+     *     credentials wrapper will bypass checking that the credentials universe matches this one.
      * @return CredentialsWrapper
      * @throws ValidationException
      */
-    public static function build(array $args = [])
+    public static function build(array $args = [], string $universeDomain = null)
     {
         $args += [
             'keyFile'           => null,
@@ -173,7 +183,7 @@ class CredentialsWrapper
             );
         }
 
-        return new CredentialsWrapper($loader, $authHttpHandler);
+        return new CredentialsWrapper($loader, $authHttpHandler, $universeDomain);
     }
 
     /**
@@ -212,6 +222,19 @@ class CredentialsWrapper
         return function () use ($credentialsFetcher, $authHttpHandler, $audience) {
             $token = $credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
+                if (false === $this->hasCheckedUniverse
+                    && null !== $this->universeDomain
+                    && $credentialsFetcher instanceof GetUniverseDomainInterface
+                ) {
+                    if ($credentialsFetcher->getUniverseDomain() !== $this->universeDomain) {
+                        throw new ValidationException(sprintf(
+                            'The configured universe domain (%s) does not match the credential universe domain (%s)',
+                            $this->universeDomain,
+                            $credentialsFetcher->getUniverseDomain()
+                        ));
+                    }
+                    $this->hasCheckedUniverseDomain = true;
+                }
                 // Call updateMetadata to take advantage of self-signed JWTs
                 if ($credentialsFetcher instanceof UpdateMetadataInterface) {
                     return $credentialsFetcher->updateMetadata([], $audience);

@@ -48,6 +48,7 @@ use Google\ApiCore\Options\ClientOptions;
 use Google\ApiCore\Options\TransportOptions;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\GetUniverseDomainInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use Grpc\Gcp\ApiConfig;
@@ -181,6 +182,9 @@ trait GapicClientTrait
             ];
         }
 
+        // Keep track of the API Endpoint
+        $apiEndpoint = $options['apiEndpoint'] ?? null;
+
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
@@ -195,42 +199,24 @@ trait GapicClientTrait
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
         }
 
+        // This has no effect in "New Surface" clients because there are no veneers and the
+        // generated client classes are final.
+        // NOTE: changes to $options['apiEndpoint'] will have no effect.
         $this->modifyClientOptions($options);
 
         // serviceAddress is now deprecated and acts as an alias for apiEndpoint
         if (isset($options['serviceAddress'])) {
-            $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
+            $apiEndpoint = $this->pluck('serviceAddress', $options, false);
         }
 
-        // If an API endpoint is set, ensure the "audience" does not conflict
+        // If an API endpoint is different form the default, ensure the "audience" does not conflict
         // with the custom endpoint by setting "user defined" scopes.
-        if ($options['apiEndpoint'] != $defaultOptions['apiEndpoint']
+        if ($apiEndpoint
+            && $apiEndpoint != $defaultOptions['apiEndpoint']
             && empty($options['credentialsConfig']['scopes'])
             && !empty($options['credentialsConfig']['defaultScopes'])
         ) {
             $options['credentialsConfig']['scopes'] = $options['credentialsConfig']['defaultScopes'];
-        }
-
-        if (extension_loaded('sysvshm')
-                && isset($options['gcpApiConfigPath'])
-                && file_exists($options['gcpApiConfigPath'])
-                && isset($options['apiEndpoint'])) {
-            $grpcGcpConfig = self::initGrpcGcpConfig(
-                $options['apiEndpoint'],
-                $options['gcpApiConfigPath']
-            );
-
-            if (array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
-                $options['transportConfig']['grpc']['stubOpts'] += [
-                    'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
-                ];
-            } else {
-                $options['transportConfig']['grpc'] += [
-                    'stubOpts' => [
-                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
-                    ]
-                ];
-            }
         }
 
         // mTLS: detect and load the default clientCertSource if the environment variable
@@ -248,11 +234,52 @@ trait GapicClientTrait
 
         // mTLS: If no apiEndpoint has been supplied by the user, and either
         // GOOGLE_API_USE_MTLS_ENDPOINT tells us to, or mTLS is available, use the mTLS endpoint.
-        if ($options['apiEndpoint'] === $defaultOptions['apiEndpoint']
-            && $this->shouldUseMtlsEndpoint($options)
-        ) {
-            $options['apiEndpoint'] = self::determineMtlsEndpoint($options['apiEndpoint']);
+        if (is_null($apiEndpoint) && $this->shouldUseMtlsEndpoint($options)) {
+            $apiEndpoint = self::determineMtlsEndpoint($options['apiEndpoint']);
         }
+
+        // if the universe domain hasn't been explicitly set, assume GDU ("googleapis.com")
+        $options['universeDomain'] ??= GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
+
+        if (is_null($apiEndpoint)) {
+            if (defined('self::SERVICE_ADDRESS_TEMPLATE')) {
+                // Derive the endpoint from the service address template and the universe domain
+                $apiEndpoint = str_replace(
+                    'UNIVERSE_DOMAIN',
+                    $universeDomain,
+                    self::SERVICE_ADDRESS_TEMPLATE
+                );
+            } else {
+                // For older clients, the service address template does not exist. Use the default
+                // endpoint instead.
+                $apiEndpoint = $defaultOptions['apiEndpoint'];
+            }
+        }
+
+        if (extension_loaded('sysvshm')
+                && isset($options['gcpApiConfigPath'])
+                && file_exists($options['gcpApiConfigPath'])
+                && isset($options['apiEndpoint'])) {
+            $grpcGcpConfig = self::initGrpcGcpConfig(
+                $apiEndpoint,
+                $options['gcpApiConfigPath']
+            );
+
+            if (array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
+                $options['transportConfig']['grpc']['stubOpts'] += [
+                    'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                ];
+            } else {
+                $options['transportConfig']['grpc'] += [
+                    'stubOpts' => [
+                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+                    ]
+                ];
+            }
+        }
+
+        // For backwards compatibility
+        $options['apiEndpoint'] = $apiEndpoint;
 
         return $options;
     }
@@ -413,7 +440,8 @@ trait GapicClientTrait
 
         $this->credentialsWrapper = $this->createCredentialsWrapper(
             $options['credentials'],
-            $options['credentialsConfig']
+            $options['credentialsConfig'],
+            $options['universeDomain']
         );
 
         $transport = $options['transport'] ?: self::defaultTransport();
@@ -433,15 +461,15 @@ trait GapicClientTrait
      * @return CredentialsWrapper
      * @throws ValidationException
      */
-    private function createCredentialsWrapper($credentials, array $credentialsConfig)
+    private function createCredentialsWrapper($credentials, array $credentialsConfig, string $universeDomain)
     {
         if (is_null($credentials)) {
-            return CredentialsWrapper::build($credentialsConfig);
+            return CredentialsWrapper::build($credentialsConfig, $universeDomain);
         } elseif (is_string($credentials) || is_array($credentials)) {
-            return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig);
+            return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig, $universeDomain);
         } elseif ($credentials instanceof FetchAuthTokenInterface) {
             $authHttpHandler = $credentialsConfig['authHttpHandler'] ?? null;
-            return new CredentialsWrapper($credentials, $authHttpHandler);
+            return new CredentialsWrapper($credentials, $authHttpHandler, $universeDomain);
         } elseif ($credentials instanceof CredentialsWrapper) {
             return $credentials;
         } else {
@@ -1068,6 +1096,7 @@ trait GapicClientTrait
      *
      * @param array $options
      * @access private
+     * @internal
      */
     protected function modifyClientOptions(array &$options)
     {
