@@ -1872,6 +1872,19 @@ class GapicClientTraitTest extends TestCase
             ],
         ];
     }
+
+    public function testMtlsWithUniverseDomainThrowsException()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('mTLS is not supported in any universe other than googleapis.com');
+
+        $client = new UniverseDomainStubGapicClient();
+        $client->buildClientOptions([
+            'universeDomain' => 'foo.com',
+            'clientCertSource' => function () { $this->fail('this should not be called');},
+        ]);
+    }
+
 }
 
 class StubGapicClient

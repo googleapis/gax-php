@@ -241,6 +241,14 @@ trait GapicClientTrait
         // if the universe domain hasn't been explicitly set, assume GDU ("googleapis.com")
         $options['universeDomain'] ??= GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
 
+        if (isset($options['clientCertSource'])
+            && $options['universeDomain'] !== GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
+        ) {
+            throw new ValidationException(
+                'mTLS is not supported in any universe other than googleapis.com'
+            );
+        }
+
         if (is_null($apiEndpoint)) {
             if (defined('self::SERVICE_ADDRESS_TEMPLATE')) {
                 // Derive the endpoint from the service address template and the universe domain
