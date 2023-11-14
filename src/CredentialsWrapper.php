@@ -59,7 +59,7 @@ class CredentialsWrapper
     /** @var callable $authHttpHandle */
     private $authHttpHandler;
 
-    private ?string $universeDomain;
+    private string $universeDomain;
     private bool $hasCheckedUniverse = false;
 
     /** @var int */
@@ -81,6 +81,13 @@ class CredentialsWrapper
     ) {
         $this->credentialsFetcher = $credentialsFetcher;
         $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
+        // This happens only when someone creates the CredentialsWrapper directly
+        if (is_null($universeDomain)) {
+            $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
+        }
+        if (empty($universeDomain)) {
+            throw new ValidationException('The universe domain cannot be empty');
+        }
         $this->universeDomain = $universeDomain;
     }
 
@@ -255,14 +262,13 @@ class CredentialsWrapper
     private function checkUniverseDomain()
     {
         if (false === $this->hasCheckedUniverse
-            && null !== $this->universeDomain
-            && $credentialsFetcher instanceof GetUniverseDomainInterface
+            && $this->credentialsFetcher instanceof GetUniverseDomainInterface
         ) {
-            if ($credentialsFetcher->getUniverseDomain() !== $this->universeDomain) {
+            if ($this->credentialsFetcher->getUniverseDomain() !== $this->universeDomain) {
                 throw new ValidationException(sprintf(
                     'The configured universe domain (%s) does not match the credential universe domain (%s)',
                     $this->universeDomain,
-                    $credentialsFetcher->getUniverseDomain()
+                    $this->credentialsFetcher->getUniverseDomain()
                 ));
             }
             $this->hasCheckedUniverseDomain = true;

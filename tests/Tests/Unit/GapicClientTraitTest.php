@@ -55,6 +55,7 @@ use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\GetUniverseDomainInterface;
 use Google\LongRunning\Operation;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
@@ -624,7 +625,7 @@ class GapicClientTraitTest extends TestCase
         $actualCredentialsWrapper = $client->createCredentialsWrapper(
             $auth,
             $authConfig,
-            ''
+            GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
         );
 
         $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
@@ -1838,6 +1839,39 @@ class GapicClientTraitTest extends TestCase
         $this->assertStringContainsString(' gapic/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
         $this->assertEquals('gcloud-php-new/0.0.1', $agentHeader['User-Agent'][0]);
     }
+
+    /**
+     * @dataProvider provideServiceAddressTemplate
+     */
+    public function testServiceAddressTemplate(array $options, string $expectedEndpoint)
+    {
+        $client = new UniverseDomainStubGapicClient();
+        $updatedOptions = $client->buildClientOptions($options);
+
+        $this->assertEquals($updatedOptions['apiEndpoint'], $expectedEndpoint);
+    }
+
+    public function provideServiceAddressTemplate()
+    {
+        return [
+            [
+                [],
+                'stub.googleapis.com',  // default for GDU
+            ],
+            [
+                ['apiEndpoint' => 'new.test.address.com'],
+                'new.test.address.com', // set through api endpoint
+            ],
+            [
+                ['universeDomain' => 'foo.com'],
+                'stub.foo.com', // set through universe domain
+            ],
+            [
+                ['universeDomain' => 'foo.com', 'apiEndpoint' => 'new.test.address.com'],
+                'new.test.address.com', // set through api endpoint (universe domain is not used)
+            ],
+        ];
+    }
 }
 
 class StubGapicClient
@@ -2058,5 +2092,38 @@ class GapicV2SurfaceClient
     public function getAgentHeader()
     {
         return $this->agentHeader;
+    }
+}
+
+class UniverseDomainStubGapicClient
+{
+    use GapicClientTrait {
+        buildClientOptions as public;
+        setClientOptions as public;
+        createCallStack as public;
+        getTransport as public;
+    }
+    use GapicClientStubTrait;
+
+    private const SERVICE_ADDRESS_TEMPLATE = 'stub.UNIVERSE_DOMAIN';
+
+    public static function getClientDefaults()
+    {
+        return [
+            'apiEndpoint' => 'test.address.com:443',
+            'serviceName' => 'test.interface.v1.api',
+            'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
+            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
+            'disableRetries' => false,
+            'auth' => null,
+            'authConfig' => null,
+            'transport' => 'rest',
+            'transportConfig' => [
+                'rest' => [
+                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                ]
+            ],
+        ];
     }
 }

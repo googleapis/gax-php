@@ -246,7 +246,7 @@ trait GapicClientTrait
                 // Derive the endpoint from the service address template and the universe domain
                 $apiEndpoint = str_replace(
                     'UNIVERSE_DOMAIN',
-                    $universeDomain,
+                    $options['universeDomain'],
                     self::SERVICE_ADDRESS_TEMPLATE
                 );
             } else {
