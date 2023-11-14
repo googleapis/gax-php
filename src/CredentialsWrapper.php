@@ -203,8 +203,16 @@ class CredentialsWrapper
      */
     public function getBearerString()
     {
-        $token = self::getToken($this->credentialsFetcher, $this->authHttpHandler);
-        return empty($token) ? '' : "Bearer $token";
+        $token = $this->credentialsFetcher->getLastReceivedToken();
+        if (self::isExpired($token)) {
+            $this->checkUniverseDomain();
+
+            $token = $this->credentialsFetcher->fetchAuthToken($this->authHttpHandler);
+            if (!self::isValid($token)) {
+                return '';
+            }
+        }
+        return empty($token['access_token']) ? '' : 'Bearer ' . $token['access_token'];
     }
 
     /**
@@ -213,36 +221,22 @@ class CredentialsWrapper
      */
     public function getAuthorizationHeaderCallback($audience = null)
     {
-        $credentialsFetcher = $this->credentialsFetcher;
-        $authHttpHandler = $this->authHttpHandler;
-
         // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
-        return function () use ($credentialsFetcher, $authHttpHandler, $audience) {
-            $token = $credentialsFetcher->getLastReceivedToken();
+        return function () use ($audience) {
+            $token = $this->credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
-                if (false === $this->hasCheckedUniverse
-                    && null !== $this->universeDomain
-                    && $credentialsFetcher instanceof GetUniverseDomainInterface
-                ) {
-                    if ($credentialsFetcher->getUniverseDomain() !== $this->universeDomain) {
-                        throw new ValidationException(sprintf(
-                            'The configured universe domain (%s) does not match the credential universe domain (%s)',
-                            $this->universeDomain,
-                            $credentialsFetcher->getUniverseDomain()
-                        ));
-                    }
-                    $this->hasCheckedUniverseDomain = true;
-                }
+                $this->checkUniverseDomain();
+
                 // Call updateMetadata to take advantage of self-signed JWTs
-                if ($credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $credentialsFetcher->updateMetadata([], $audience);
+                if ($this->credentialsFetcher instanceof UpdateMetadataInterface) {
+                    return $this->credentialsFetcher->updateMetadata([], $audience);
                 }
 
                 // In case a custom fetcher is provided (unlikely) which doesn't
                 // implement UpdateMetadataInterface
-                $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
+                $token = $this->credentialsFetcher->fetchAuthToken($this->authHttpHandler);
                 if (!self::isValid($token)) {
                     return [];
                 }
@@ -253,6 +247,26 @@ class CredentialsWrapper
             }
             return [];
         };
+    }
+
+    /**
+     * Verify that the expected universe domain matches the universe domain from the credentials.
+     */
+    private function checkUniverseDomain()
+    {
+        if (false === $this->hasCheckedUniverse
+            && null !== $this->universeDomain
+            && $credentialsFetcher instanceof GetUniverseDomainInterface
+        ) {
+            if ($credentialsFetcher->getUniverseDomain() !== $this->universeDomain) {
+                throw new ValidationException(sprintf(
+                    'The configured universe domain (%s) does not match the credential universe domain (%s)',
+                    $this->universeDomain,
+                    $credentialsFetcher->getUniverseDomain()
+                ));
+            }
+            $this->hasCheckedUniverseDomain = true;
+        }
     }
 
     /**
@@ -298,18 +312,6 @@ class CredentialsWrapper
         } catch (DomainException $ex) {
             throw new ValidationException("Could not construct ApplicationDefaultCredentials", $ex->getCode(), $ex);
         }
-    }
-
-    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler)
-    {
-        $token = $credentialsFetcher->getLastReceivedToken();
-        if (self::isExpired($token)) {
-            $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
-            if (!self::isValid($token)) {
-                return '';
-            }
-        }
-        return $token['access_token'];
     }
 
     /**
