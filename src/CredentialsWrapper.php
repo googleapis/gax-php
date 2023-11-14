@@ -271,7 +271,7 @@ class CredentialsWrapper
                     $this->credentialsFetcher->getUniverseDomain()
                 ));
             }
-            $this->hasCheckedUniverseDomain = true;
+            $this->hasCheckedUniverse = true;
         }
     }
 

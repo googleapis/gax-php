@@ -255,7 +255,7 @@ class CredentialsWrapperTest extends TestCase
         // When the $fetcherDomain is null, the fetcher doesn't implement GetUniverseDomainInterface
         if (!is_null($fetcherDomain)) {
             $fetcher->willImplement(GetUniverseDomainInterface::class);
-            $fetcher->getUniverseDomain()->willReturn($fetcherDomain);
+            $fetcher->getUniverseDomain()->shouldBeCalledOnce()->willReturn($fetcherDomain);
         }
         $fetcher->getLastReceivedToken()->willReturn(null);
         $fetcher->fetchAuthToken(Argument::any())->willReturn(['access_token' => 'abc']);
