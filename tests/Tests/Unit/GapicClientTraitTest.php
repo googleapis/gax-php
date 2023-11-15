@@ -1856,7 +1856,7 @@ class GapicClientTraitTest extends TestCase
         return [
             [
                 [],
-                'stub.googleapis.com',  // default for GDU
+                'stub.googleapis.com',  // defaults to "googleapis.com"
             ],
             [
                 ['apiEndpoint' => 'new.test.address.com'],

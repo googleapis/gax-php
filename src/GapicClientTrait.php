@@ -265,25 +265,22 @@ trait GapicClientTrait
         }
 
         if (extension_loaded('sysvshm')
-                && isset($options['gcpApiConfigPath'])
-                && file_exists($options['gcpApiConfigPath'])
-                && isset($options['apiEndpoint'])) {
+            && isset($options['gcpApiConfigPath'])
+            && file_exists($options['gcpApiConfigPath'])
+            && !empty($apiEndpoint)
+        ) {
             $grpcGcpConfig = self::initGrpcGcpConfig(
                 $apiEndpoint,
                 $options['gcpApiConfigPath']
             );
 
-            if (array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
-                $options['transportConfig']['grpc']['stubOpts'] += [
-                    'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
-                ];
-            } else {
-                $options['transportConfig']['grpc'] += [
-                    'stubOpts' => [
-                        'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
-                    ]
-                ];
+            if (!array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
+                $options['transportConfig']['grpc']['stubOpts'] = [];
             }
+
+            $options['transportConfig']['grpc']['stubOpts'] += [
+                'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+            ];
         }
 
         // For backwards compatibility
