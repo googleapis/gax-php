@@ -77,14 +77,10 @@ class CredentialsWrapper
     public function __construct(
         FetchAuthTokenInterface $credentialsFetcher,
         callable $authHttpHandler = null,
-        ?string $universeDomain = null
+        string $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
     ) {
         $this->credentialsFetcher = $credentialsFetcher;
         $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
-        // This happens only when someone creates the CredentialsWrapper directly
-        if (is_null($universeDomain)) {
-            $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
-        }
         if (empty($universeDomain)) {
             throw new ValidationException('The universe domain cannot be empty');
         }
@@ -122,13 +118,15 @@ class CredentialsWrapper
      *           Ensures service account credentials use JWT Access (also known as self-signed
      *           JWTs), even when user-defined scopes are supplied.
      * }
-     * @param string $universeDomain The expected universe of the credentials. If empty, the
-     *     credentials wrapper will bypass checking that the credentials universe matches this one.
+     * @param string $universeDomain The expected universe of the credentials. Defaults to
+     *                               "googleapis.com"
      * @return CredentialsWrapper
      * @throws ValidationException
      */
-    public static function build(array $args = [], string $universeDomain = null)
-    {
+    public static function build(
+        array $args = [],
+        string $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
+    ) {
         $args += [
             'keyFile'           => null,
             'scopes'            => null,
@@ -261,14 +259,15 @@ class CredentialsWrapper
      */
     private function checkUniverseDomain()
     {
-        if (false === $this->hasCheckedUniverse
-            && $this->credentialsFetcher instanceof GetUniverseDomainInterface
-        ) {
-            if ($this->credentialsFetcher->getUniverseDomain() !== $this->universeDomain) {
+        if (false === $this->hasCheckedUniverse) {
+            $credentialsUniverse = $this->credentialsFetcher instanceof GetUniverseDomainInterface
+                ? $this->credentialsFetcher->getUniverseDomain()
+                : GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
+            if ($credentialsUniverse !== $this->universeDomain) {
                 throw new ValidationException(sprintf(
                     'The configured universe domain (%s) does not match the credential universe domain (%s)',
                     $this->universeDomain,
-                    $this->credentialsFetcher->getUniverseDomain()
+                    $credentialsUniverse
                 ));
             }
             $this->hasCheckedUniverse = true;

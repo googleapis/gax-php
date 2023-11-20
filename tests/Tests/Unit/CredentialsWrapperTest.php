@@ -193,19 +193,27 @@ class CredentialsWrapperTest extends TestCase
     /**
      * @dataProvider provideCheckUniverseDomainFails
      */
-    public function testCheckUniverseDomainFails(?string $universeDomain, string $fetcherDomain, string $message = null)
+    public function testCheckUniverseDomainFails(?string $universeDomain, ?string $credentialsUniverse, string $message = null)
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage($message ?: sprintf(
             'The configured universe domain (%s) does not match the credential universe domain (%s)',
             is_null($universeDomain) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $universeDomain,
-            $fetcherDomain
+            is_null($credentialsUniverse) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $credentialsUniverse,
         ));
         $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $fetcher->willImplement(GetUniverseDomainInterface::class);
-        $fetcher->getUniverseDomain()->willReturn($fetcherDomain);
+        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
+        if (!is_null($credentialsUniverse)) {
+            $fetcher->willImplement(GetUniverseDomainInterface::class);
+            $fetcher->getUniverseDomain()->willReturn($credentialsUniverse);
+        }
         $fetcher->getLastReceivedToken()->willReturn(null);
-        $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        // When $universeDomain is null, it means no $universeDomain argument was provided
+        if (is_null($universeDomain)) {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
+        } else {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        }
         // Check authorization callback
         $credentialsWrapper->getAuthorizationHeaderCallback()();
     }
@@ -217,20 +225,28 @@ class CredentialsWrapperTest extends TestCase
      */
     public function testCheckUniverseDomainOnGetBearerStringFails(
         ?string $universeDomain,
-        string $fetcherDomain,
+        ?string $credentialsUniverse,
         string $message = null
     ) {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage($message ?: sprintf(
             'The configured universe domain (%s) does not match the credential universe domain (%s)',
             is_null($universeDomain) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $universeDomain,
-            $fetcherDomain
+            is_null($credentialsUniverse) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $credentialsUniverse,
         ));
         $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $fetcher->willImplement(GetUniverseDomainInterface::class);
-        $fetcher->getUniverseDomain()->willReturn($fetcherDomain);
+        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
+        if (!is_null($credentialsUniverse)) {
+            $fetcher->willImplement(GetUniverseDomainInterface::class);
+            $fetcher->getUniverseDomain()->willReturn($credentialsUniverse);
+        }
         $fetcher->getLastReceivedToken()->willReturn(null);
-        $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        // When $universeDomain is null, it means no $universeDomain argument was provided
+        if (is_null($universeDomain)) {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
+        } else {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        }
         // Check getBearerString (deprecated)
         $credentialsWrapper->getBearerString();
     }
@@ -242,24 +258,29 @@ class CredentialsWrapperTest extends TestCase
             ['googleapis.com', 'foo.com'],
             ['googleapis.com', ''],
             ['', 'googleapis.com', 'The universe domain cannot be empty'],
-            [null, 'foo.com'], // null will default to "googleapis.com"
+            [null, 'foo.com'], // null in CredentialsWrapper will default to "googleapis.com"
+            ['foo.com', null], // Credentials not implementing GetUniverseDomainInterface will default to "googleapis.com"
         ];
     }
 
     /**
      * @dataProvider provideCheckUniverseDomainPasses
      */
-    public function testCheckUniverseDomainPasses(?string $universeDomain, ?string $fetcherDomain)
+    public function testCheckUniverseDomainPasses(?string $universeDomain, ?string $credentialsUniverse)
     {
         $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        // When the $fetcherDomain is null, the fetcher doesn't implement GetUniverseDomainInterface
-        if (!is_null($fetcherDomain)) {
+        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
+        if (!is_null($credentialsUniverse)) {
             $fetcher->willImplement(GetUniverseDomainInterface::class);
-            $fetcher->getUniverseDomain()->shouldBeCalledOnce()->willReturn($fetcherDomain);
+            $fetcher->getUniverseDomain()->shouldBeCalledOnce()->willReturn($credentialsUniverse);
         }
         $fetcher->getLastReceivedToken()->willReturn(null);
         $fetcher->fetchAuthToken(Argument::any())->willReturn(['access_token' => 'abc']);
-        $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        if (is_null($universeDomain)) {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
+        } else {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        }
         // Check authorization callback
         $this->assertEquals(
             ['authorization' => ['Bearer abc']],
@@ -278,7 +299,6 @@ class CredentialsWrapperTest extends TestCase
             [null, 'googleapis.com'], // null will default to "googleapis.com"
             ['foo.com', 'foo.com'],
             ['googleapis.com', 'googleapis.com'],
-            ['foo.com', null],
             ['googleapis.com', null],
         ];
     }
