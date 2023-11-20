@@ -1120,9 +1120,11 @@ class GapicClientTraitTest extends TestCase
         $options = [];
         $client = new StubGapicClientExtension();
         $updatedOptions = $client->buildClientOptions($options);
+        $client->setClientOptions($updatedOptions);
 
         $this->assertArrayHasKey('addNewOption', $updatedOptions);
         $this->assertTrue($updatedOptions['disableRetries']);
+        $this->assertEquals('abc123', $updatedOptions['apiEndpoint']);
     }
 
     private function buildClientToTestModifyCallMethods($clientClass = null)
@@ -1876,7 +1878,7 @@ class GapicClientTraitTest extends TestCase
     public function testMtlsWithUniverseDomainThrowsException()
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('mTLS is not supported in any universe other than googleapis.com');
+        $this->expectExceptionMessage('mTLS is not supported outside the "googleapis.com" universe');
 
         $client = new UniverseDomainStubGapicClient();
         $client->buildClientOptions([
@@ -1960,6 +1962,7 @@ class StubGapicClientExtension extends StubGapicClient
     {
         $options['disableRetries'] = true;
         $options['addNewOption'] = true;
+        $options['apiEndpoint'] = 'abc123';
     }
 
     protected function modifyUnaryCallable(callable &$callable)

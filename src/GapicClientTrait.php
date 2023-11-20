@@ -168,6 +168,8 @@ trait GapicClientTrait
             'libVersion' => null,
             'apiEndpoint' => null,
             'clientCertSource' => null,
+            // if the universe domain hasn't been explicitly set, assume GDU ("googleapis.com")
+            'universeDomain' => GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN,
         ];
 
         $supportedTransports = $this->supportedTransports();
@@ -199,14 +201,19 @@ trait GapicClientTrait
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
         }
 
-        // This has no effect in "New Surface" clients because there are no veneers and the
-        // generated client classes are final.
-        // NOTE: changes to $options['apiEndpoint'] will have no effect.
-        $this->modifyClientOptions($options);
+        // These calls do not apply to "New Surface" clients.
+        if (!$this->isNewClientSurface()) {
+            $preModifiedOptions = $options;
+            $this->modifyClientOptions($options);
+            // NOTE: this is required to ensure backwards compatiblity with $options['apiEndpoint']
+            if ($options['apiEndpoint'] !== $preModifiedOptions['apiEndpoint']) {
+                $apiEndpoint = $options['apiEndpoint'];
+            }
 
-        // serviceAddress is now deprecated and acts as an alias for apiEndpoint
-        if (isset($options['serviceAddress'])) {
-            $apiEndpoint = $this->pluck('serviceAddress', $options, false);
+            // serviceAddress is now deprecated and acts as an alias for apiEndpoint
+            if (isset($options['serviceAddress'])) {
+                $apiEndpoint = $this->pluck('serviceAddress', $options, false);
+            }
         }
 
         // If an API endpoint is different form the default, ensure the "audience" does not conflict
@@ -238,14 +245,12 @@ trait GapicClientTrait
             $apiEndpoint = self::determineMtlsEndpoint($options['apiEndpoint']);
         }
 
-        // if the universe domain hasn't been explicitly set, assume GDU ("googleapis.com")
-        $options['universeDomain'] ??= GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
-
+        // mTLS: It is not valid to configure mTLS outside of "googleapis.com" (yet)
         if (isset($options['clientCertSource'])
             && $options['universeDomain'] !== GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
         ) {
             throw new ValidationException(
-                'mTLS is not supported in any universe other than googleapis.com'
+                'mTLS is not supported outside the "googleapis.com" universe'
             );
         }
 
