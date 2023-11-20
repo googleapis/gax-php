@@ -288,7 +288,6 @@ trait GapicClientTrait
             ];
         }
 
-        // For backwards compatibility
         $options['apiEndpoint'] = $apiEndpoint;
 
         return $options;
