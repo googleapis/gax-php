@@ -16,8 +16,6 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: googleapis/google-cloud-php
-        # @TODO: remove branch name once the PR is merged
-        ref: add-update-deps-command
         path: google-cloud-php
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
