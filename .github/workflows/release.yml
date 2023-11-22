@@ -27,7 +27,7 @@ jobs:
       run: |
         cd google-cloud-php
         composer install -q -d dev
-        dev/google-cloud update-deps google/gax 'dev-run-google-cloud-php-tests as 1.200.0' --add=dev
+        dev/google-cloud update-deps google/gax 'dev-main as 1.200.0' --add=dev
     - name: Run google/cloud package tests
       run: |
         cd google-cloud-php
