@@ -7,7 +7,7 @@ permissions:
 jobs:
   release-suite:
     runs-on: ubuntu-latest
-    name: Run googleapis/google-cloud-php tests against latest version
+    name: Run google-cloud-php tests
     if: github.event.pull_request.user.login == 'release-please[bot]'
     steps:
     - uses: actions/checkout@v4
