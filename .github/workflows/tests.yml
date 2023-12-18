@@ -23,8 +23,8 @@ jobs:
                     extensions: "protobuf,grpc"
                     tools: "pecl"
                   - php: 7.4
-                    composerflags: "--prefer-lowest"
-        name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}"
+                    composerflags: " --prefer-lowest"
+        name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}${{ matrix.composerflags }}"
         steps:
             - uses: actions/checkout@v4
             - name: Setup PHP
@@ -38,7 +38,7 @@ jobs:
               with:
                 timeout_minutes: 10
                 max_attempts: 3
-                command: composer install ${{ matrix.composerflags }}
+                command: composer update ${{ matrix.composerflags }}
             - name: Run script
               env:
                 GOOGLE_APPLICATION_CREDENTIALS: ${{github.workspace}}/tests/Tests/Unit/testdata/json-key-file.json
