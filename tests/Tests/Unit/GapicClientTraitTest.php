@@ -1745,6 +1745,8 @@ class GapicClientTraitTest extends TestCase
         };
         $middleware2 = function (MiddlewareInterface $handler) use (&$m2Called) {
             return new class ($handler, $m2Called) implements MiddlewareInterface {
+                private MiddlewareInterface $handler;
+                private bool $m2Called;
                 public function __construct(
                     MiddlewareInterface $handler,
                     bool &$m2Called
