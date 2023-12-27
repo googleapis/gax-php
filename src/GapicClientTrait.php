@@ -101,7 +101,7 @@ trait GapicClientTrait
      *     return new class ($handler) implements MiddlewareInterface {
      *         public function __construct(private MiddlewareInterface $handler) {
      *         }
-     * 
+     *
      *         public function __invoke(Call $call, array $options) {
      *             // modify call and options (pre-request)
      *             $response = ($this->handler)($call, $options);
