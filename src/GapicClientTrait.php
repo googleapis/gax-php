@@ -95,6 +95,23 @@ trait GapicClientTrait
      *
      *     callable(MiddlewareInterface): MiddlewareInterface
      *
+     * An implementation may look something like this:
+     * ```
+     * $client->addMiddleware(function (MiddlewareInterface $handler) {
+     *     return new class ($handler) implements MiddlewareInterface {
+     *         public function __construct(private MiddlewareInterface $handler) {
+     *         }
+     * 
+     *         public function __invoke(Call $call, array $options) {
+     *             // modify call and options (pre-request)
+     *             $response = ($this->handler)($call, $options);
+     *             // modify the response (post-request)
+     *             return $response;
+     *         }
+     *     };
+     * });
+     * ```
+     *
      * @param callable $middlewareCallable A callable which returns an instance
      *                 of {@see MiddlewareInterface} when invoked with a
      *                 MiddlewareInterface instance as its first argument.
