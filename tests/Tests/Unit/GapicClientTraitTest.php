@@ -40,6 +40,7 @@ use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\Middleware\MiddlewareInterface;
 use Google\ApiCore\OperationResponse;
 use Google\ApiCore\Options\TransportOptions;
 use Google\ApiCore\RequestParamsHeaderDescriptor;
@@ -60,6 +61,7 @@ use Google\LongRunning\Operation;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -120,7 +122,8 @@ class GapicClientTraitTest extends TestCase
                     'headers' => $expectedHeaders,
                     'credentialsWrapper' => $credentialsWrapper,
                 ])
-            );
+            )
+            ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
         $client = new StubGapicClient();
         $client->set('agentHeader', $header);
         $client->set('retrySettings', [
@@ -1365,7 +1368,8 @@ class GapicClientTraitTest extends TestCase
                     ],
                     'credentialsWrapper' => $credentialsWrapper
                 ])
-            );
+            )
+            ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
         $client = new StubGapicClient();
         $updatedOptions = $client->buildClientOptions(
             [
@@ -1438,7 +1442,8 @@ class GapicClientTraitTest extends TestCase
                     'credentialsWrapper' => $credentialsWrapper,
                 ]
             )
-            ->shouldBeCalledOnce();
+            ->shouldBeCalledOnce()
+            ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
 
         $client = new DefaultScopeAndAudienceGapicClient();
         $client->set('credentialsWrapper', $credentialsWrapper);
@@ -1459,7 +1464,8 @@ class GapicClientTraitTest extends TestCase
                     'credentialsWrapper' => $credentialsWrapper,
                 ]
             )
-            ->shouldBeCalledOnce();
+            ->shouldBeCalledOnce()
+            ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
 
         $client->startCall('method.name', 'decodeType', [
             'audience' => 'custom-audience',
@@ -1722,6 +1728,76 @@ class GapicClientTraitTest extends TestCase
         $this->assertSame('test.mtls.address.com:443', $options['apiEndpoint']);
         $this->assertTrue(is_callable($options['clientCertSource']));
         $this->assertEquals(['foo', 'foo'], $options['clientCertSource']());
+    }
+
+    public function testAddMiddlewares()
+    {
+        list($client, $transport) = $this->buildClientToTestModifyCallMethods();
+
+        $m1Called = false;
+        $m2Called = false;
+        $middleware1 = function (MiddlewareInterface $handler) use (&$m1Called) {
+            return new class ($handler, $m1Called) implements MiddlewareInterface {
+                private MiddlewareInterface $handler;
+                private bool $m1Called;
+                public function __construct(
+                    MiddlewareInterface $handler,
+                    bool &$m1Called
+                ) {
+                    $this->handler = $handler;
+                    $this->m1Called = &$m1Called;
+                }
+                public function __invoke(Call $call, array $options) {
+                    $this->m1Called = true;
+                    return ($this->handler)($call, $options);
+                }
+            };
+        };
+        $middleware2 = function (MiddlewareInterface $handler) use (&$m2Called) {
+            return new class ($handler, $m2Called) implements MiddlewareInterface {
+                private MiddlewareInterface $handler;
+                private bool $m2Called;
+                public function __construct(
+                    MiddlewareInterface $handler,
+                    bool &$m2Called
+                ) {
+                    $this->handler = $handler;
+                    $this->m2Called = &$m2Called;
+                }
+                public function __invoke(Call $call, array $options) {
+                    $this->m2Called = true;
+                    return ($this->handler)($call, $options);
+                }
+            };
+        };
+        $client->addMiddleware($middleware1);
+        $client->addMiddleware($middleware2);
+
+        $transport->expects($this->once())
+            ->method('startUnaryCall')
+            ->with(
+                $this->isInstanceOf(Call::class),
+                $this->equalTo([
+                    'transportOptions' => [
+                        'custom' => ['addModifyUnaryCallableOption' => true]
+                    ],
+                    'headers' => AgentHeader::buildAgentHeader([]),
+                    'credentialsWrapper' => CredentialsWrapper::build([
+                        'keyFile' => __DIR__ . '/testdata/json-key-file.json'
+                    ])
+                ])
+            )
+            ->willReturn(new FulfilledPromise(new Operation()));
+
+        $client->startCall(
+            'simpleMethod',
+            'decodeType',
+            [],
+            new MockRequest(),
+        )->wait();
+
+        $this->assertTrue($m1Called);
+        $this->assertTrue($m2Called);
     }
 
     public function testInvalidClientOptionsTypeThrowsExceptionForV2SurfaceOnly()
