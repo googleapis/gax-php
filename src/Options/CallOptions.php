@@ -125,7 +125,15 @@ class CallOptions implements ArrayAccess
      *           See {@link https://docs.guzzlephp.org/en/stable/request-options.html}.
      * }
      */
-    public function setTransportOptions(array $transportSpecificOptions)
+    public function setTransportOptions(array $transportOptions)
+    {
+        $this->transportOptions = $transportOptions;
+    }
+
+    /**
+     * @deprecated use CallOptions::setTransportOptions
+     */
+    public function setTransportSpecificOptions(array $transportSpecificOptions)
     {
         $this->transportSpecificOptions = $transportSpecificOptions;
     }
