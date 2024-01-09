@@ -253,8 +253,11 @@ trait GapicClientTrait
             if (isset($options['serviceAddress'])) {
                 $apiEndpoint = $this->pluck('serviceAddress', $options, false);
             }
+        } else {
+            // Ads is using this method in their new surface clients, so we want to call it
+            // but this method is not used anywhere else (and should be removed in GAX V2)
+            $this->modifyClientOptions($options);
         }
-
         // If an API endpoint is different form the default, ensure the "audience" does not conflict
         // with the custom endpoint by setting "user defined" scopes.
         if ($apiEndpoint
