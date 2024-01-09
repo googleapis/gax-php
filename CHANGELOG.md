@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.26.1](https://github.com/googleapis/gax-php/compare/v1.26.0...v1.26.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* Widen google/longrunning version ([#511](https://github.com/googleapis/gax-php/issues/511)) ([b93096d](https://github.com/googleapis/gax-php/commit/b93096d0e10bde14c50480ea9f0423c292fbd5a6))
+
+## [1.26.0](https://github.com/googleapis/gax-php/compare/v1.25.0...v1.26.0) (2024-01-03)
+
+
+### Features
+
+* Add support for universe domain ([#502](https://github.com/googleapis/gax-php/issues/502)) ([5a26fac](https://github.com/googleapis/gax-php/commit/5a26facad5c2e5c30945987c422bb78a3fffb9b1))
+* Interface and methods for middleware stack ([#473](https://github.com/googleapis/gax-php/issues/473)) ([766da7b](https://github.com/googleapis/gax-php/commit/766da7b369409ec1b29376b533e7f22ee7f745f4))
+
+
+### Bug Fixes
+
+* Accept throwable for retry settings ([#509](https://github.com/googleapis/gax-php/issues/509)) ([5af9c3c](https://github.com/googleapis/gax-php/commit/5af9c3c650419c8f1a590783e954cd11dc1f0d56))
+
 ## [1.25.0](https://github.com/googleapis/gax-php/compare/v1.24.0...v1.25.0) (2023-11-02)
 
 

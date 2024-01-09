@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: [ 7.4, "8.0", 8.1, 8.2 ]
+                php: [ "7.4", "8.0", "8.1", "8.2", "8.3" ]
                 extensions: [""]
                 tools: [""]
                 composerflags: [""]
@@ -19,7 +19,7 @@ jobs:
                   - php: "7.4"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
-                  - php: 8.2
+                  - php: "8.3"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
                   - php: 7.4
@@ -52,7 +52,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                php-version: 7.4
+                php-version: "8.2"
             - name: Install Dependencies
               uses: nick-invision/retry@v2
               with:
@@ -70,7 +70,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.2'
       - name: Run Script
         run: |
           composer install
