@@ -32,39 +32,16 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
-use GapicClientStub;
-use Google\ApiCore\AgentHeader;
-use Google\ApiCore\BidiStream;
-use Google\ApiCore\Call;
-use Google\ApiCore\ClientStream;
-use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\ClientOptionsTrait;
-use Google\ApiCore\LongRunning\OperationsClient;
-use Google\ApiCore\Middleware\MiddlewareInterface;
-use Google\ApiCore\OperationResponse;
-use Google\ApiCore\Options\TransportOptions;
-use Google\ApiCore\RequestParamsHeaderDescriptor;
-use Google\ApiCore\RetrySettings;
-use Google\ApiCore\ServerStream;
-use Google\ApiCore\Testing\MockRequest;
-use Google\ApiCore\Testing\MockRequestBody;
-use Google\ApiCore\Testing\MockResponse;
-use Google\ApiCore\Transport\GrpcFallbackTransport;
-use Google\ApiCore\Transport\GrpcTransport;
-use Google\ApiCore\Transport\RestTransport;
-use Google\ApiCore\Transport\TransportInterface;
+use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\ValidationException;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
-use Google\LongRunning\Operation;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
-use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ClientOptionsTraitTest extends TestCase
@@ -198,13 +175,13 @@ class ClientOptionsTraitTest extends TestCase
     {
         $apiConfig = new ApiConfig();
         $apiConfig->mergeFromJsonString(
-            file_get_contents(__DIR__.'/testdata/test_service_grpc_config.json')
+            file_get_contents(__DIR__ . '/testdata/test_service_grpc_config.json')
         );
         $grpcGcpConfig = new Config('test.address.com:443', $apiConfig);
 
         $defaultOptions = [
             'apiEndpoint' => 'test.address.com:443',
-            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
+            'gcpApiConfigPath' => __DIR__ . '/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
             'transport' => null,
             'transportConfig' => [
@@ -577,7 +554,7 @@ class StubClientOptionsClient
     {
         return [
             'apiEndpoint' => 'test.address.com:443',
-            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
+            'gcpApiConfigPath' => __DIR__ . '/testdata/test_service_grpc_config.json',
         ];
     }
 }

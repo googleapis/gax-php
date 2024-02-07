@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\Tests\Unit;
 
-use GapicClientStub;
 use Google\ApiCore\AgentHeader;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
@@ -42,7 +41,6 @@ use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\MiddlewareInterface;
 use Google\ApiCore\OperationResponse;
-use Google\ApiCore\Options\TransportOptions;
 use Google\ApiCore\RequestParamsHeaderDescriptor;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\ServerStream;
@@ -54,15 +52,10 @@ use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
-use Google\Auth\CredentialsLoader;
-use Google\Auth\FetchAuthTokenInterface;
-use Google\Auth\GetUniverseDomainInterface;
 use Google\LongRunning\Operation;
-use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -398,11 +391,11 @@ class GapicClientTraitTest extends TestCase
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->with(
-                $this->callback(function($call) use ($unaryDescriptors) {
-                    return strpos($call->getMethod(), $unaryDescriptors['interfaceOverride']) !== false;
-                }),
-                $this->anything()
-            )
+                 $this->callback(function ($call) use ($unaryDescriptors) {
+                     return strpos($call->getMethod(), $unaryDescriptors['interfaceOverride']) !== false;
+                 }),
+                 $this->anything()
+             )
              ->will($this->returnValue($expectedPromise));
         $credentialsWrapper = CredentialsWrapper::build([]);
         $client = new StubGapicClient();
@@ -511,11 +504,11 @@ class GapicClientTraitTest extends TestCase
         $transport->expects($this->once())
              ->method('startUnaryCall')
              ->with(
-                $this->callback(function($call) use ($pagedDescriptors) {
-                    return strpos($call->getMethod(), $pagedDescriptors['interfaceOverride']) !== false;
-                }),
-                $this->anything()
-            )
+                 $this->callback(function ($call) use ($pagedDescriptors) {
+                     return strpos($call->getMethod(), $pagedDescriptors['interfaceOverride']) !== false;
+                 }),
+                 $this->anything()
+             )
              ->will($this->returnValue($expectedPromise));
         $credentialsWrapper = CredentialsWrapper::build([]);
         $client = new StubGapicClient();
@@ -834,7 +827,7 @@ class GapicClientTraitTest extends TestCase
             [
                 /* $headerParams */ [
                     [
-                        'fieldAccessors' => ['getNestedMessage','getName'],
+                        'fieldAccessors' => ['getNestedMessage', 'getName'],
                         'keyName' => 'name_field'
                     ],
                 ],
@@ -844,7 +837,7 @@ class GapicClientTraitTest extends TestCase
             [
                 /* $headerParams */ [
                     [
-                        'fieldAccessors' => ['getNestedMessage','getName'],
+                        'fieldAccessors' => ['getNestedMessage', 'getName'],
                         'keyName' => 'name_field'
                     ],
                 ],
@@ -854,7 +847,7 @@ class GapicClientTraitTest extends TestCase
             [
                 /* $headerParams */ [
                     [
-                        'fieldAccessors' => ['getNestedMessage','getName'],
+                        'fieldAccessors' => ['getNestedMessage', 'getName'],
                         'keyName' => 'name_field'
                     ],
                 ],
@@ -1308,7 +1301,7 @@ class GapicClientTraitTest extends TestCase
         $m1Called = false;
         $m2Called = false;
         $middleware1 = function (MiddlewareInterface $handler) use (&$m1Called) {
-            return new class ($handler, $m1Called) implements MiddlewareInterface {
+            return new class($handler, $m1Called) implements MiddlewareInterface {
                 private MiddlewareInterface $handler;
                 private bool $m1Called;
                 public function __construct(
@@ -1318,14 +1311,15 @@ class GapicClientTraitTest extends TestCase
                     $this->handler = $handler;
                     $this->m1Called = &$m1Called;
                 }
-                public function __invoke(Call $call, array $options) {
+                public function __invoke(Call $call, array $options)
+                {
                     $this->m1Called = true;
                     return ($this->handler)($call, $options);
                 }
             };
         };
         $middleware2 = function (MiddlewareInterface $handler) use (&$m2Called) {
-            return new class ($handler, $m2Called) implements MiddlewareInterface {
+            return new class($handler, $m2Called) implements MiddlewareInterface {
                 private MiddlewareInterface $handler;
                 private bool $m2Called;
                 public function __construct(
@@ -1335,7 +1329,8 @@ class GapicClientTraitTest extends TestCase
                     $this->handler = $handler;
                     $this->m2Called = &$m2Called;
                 }
-                public function __invoke(Call $call, array $options) {
+                public function __invoke(Call $call, array $options)
+                {
                     $this->m2Called = true;
                     return ($this->handler)($call, $options);
                 }
@@ -1520,15 +1515,15 @@ class StubGapicClient
             'apiEndpoint' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
-            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
-            'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
+            'descriptorsConfigPath' => __DIR__ . '/testdata/test_service_descriptor_config.php',
+            'gcpApiConfigPath' => __DIR__ . '/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
             'auth' => null,
             'authConfig' => null,
             'transport' => null,
             'transportConfig' => [
                 'rest' => [
-                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                    'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
                 ]
             ],
         ];
@@ -1637,10 +1632,10 @@ class RestOnlyGapicClient
             'apiEndpoint' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
-            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'descriptorsConfigPath' => __DIR__ . '/testdata/test_service_descriptor_config.php',
             'transportConfig' => [
                 'rest' => [
-                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                    'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
                 ]
             ],
         ];
@@ -1698,10 +1693,10 @@ class GapicV2SurfaceClient
             'apiEndpoint' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
-            'descriptorsConfigPath' => __DIR__.'/testdata/test_service_descriptor_config.php',
+            'descriptorsConfigPath' => __DIR__ . '/testdata/test_service_descriptor_config.php',
             'transportConfig' => [
                 'rest' => [
-                    'restClientConfigPath' => __DIR__.'/testdata/test_service_rest_client_config.php',
+                    'restClientConfigPath' => __DIR__ . '/testdata/test_service_rest_client_config.php',
                 ]
             ],
         ];

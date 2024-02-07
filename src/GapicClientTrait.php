@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\Call;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\FixedHeaderMiddleware;
@@ -40,13 +39,13 @@ use Google\ApiCore\Middleware\OperationsMiddleware;
 use Google\ApiCore\Middleware\OptionsFilterMiddleware;
 use Google\ApiCore\Middleware\PagedMiddleware;
 use Google\ApiCore\Middleware\RetryMiddleware;
+use Google\ApiCore\Options\CallOptions;
+use Google\ApiCore\Options\ClientOptions;
+use Google\ApiCore\Options\TransportOptions;
 use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
-use Google\ApiCore\Options\CallOptions;
-use Google\ApiCore\Options\ClientOptions;
-use Google\ApiCore\Options\TransportOptions;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
@@ -412,7 +411,7 @@ trait GapicClientTrait
         // Ensure required descriptor configuration exists.
         if (!isset($methodDescriptors['callType'])) {
             throw new ValidationException("Requested method '$methodName' does not have a callType " .
-                "in descriptor configuration.");
+                'in descriptor configuration.');
         }
         $callType = $methodDescriptors['callType'];
 
@@ -420,17 +419,17 @@ trait GapicClientTrait
         if ($callType == Call::LONGRUNNING_CALL) {
             if (!isset($methodDescriptors['longRunning'])) {
                 throw new ValidationException("Requested method '$methodName' does not have a longRunning config " .
-                    "in descriptor configuration.");
+                    'in descriptor configuration.');
             }
             // @TODO: check if the client implements `OperationsClientInterface` instead
             if (!method_exists($this, 'getOperationsClient')) {
-                throw new ValidationException("Client missing required getOperationsClient " .
+                throw new ValidationException('Client missing required getOperationsClient ' .
                     "for longrunning call '$methodName'");
             }
         } elseif ($callType == Call::PAGINATED_CALL) {
             if (!isset($methodDescriptors['pageStreaming'])) {
                 throw new ValidationException("Requested method '$methodName' with callType PAGINATED_CALL does not " .
-                    "have a pageStreaming in descriptor configuration.");
+                    'have a pageStreaming in descriptor configuration.');
             }
         }
 
@@ -439,7 +438,7 @@ trait GapicClientTrait
         if ($callType != Call::LONGRUNNING_CALL) {
             if (!isset($methodDescriptors['responseType'])) {
                 throw new ValidationException("Requested method '$methodName' does not have a responseType " .
-                    "in descriptor configuration.");
+                    'in descriptor configuration.');
             }
         }
 
