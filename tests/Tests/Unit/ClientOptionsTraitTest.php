@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2024 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -206,8 +206,6 @@ class ClientOptionsTraitTest extends TestCase
             'apiEndpoint' => 'test.address.com:443',
             'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
             'disableRetries' => false,
-            'auth' => null,
-            'authConfig' => null,
             'transport' => null,
             'transportConfig' => [
                 'grpc' => [
@@ -543,6 +541,14 @@ class ClientOptionsTraitTest extends TestCase
         ]);
     }
 
+    public function testBuildClientOptionsTwice()
+    {
+        $client = new StubClientOptionsClient();
+        $options = $client->buildClientOptions([]);
+        $options2 = $client->buildClientOptions($options);
+        $this->assertEquals($options, $options2);
+    }
+
 }
 
 class StubClientOptionsClient
@@ -572,13 +578,6 @@ class StubClientOptionsClient
         return [
             'apiEndpoint' => 'test.address.com:443',
             'gcpApiConfigPath' => __DIR__.'/testdata/test_service_grpc_config.json',
-            'disableRetries' => false,
-            'auth' => null,
-            'authConfig' => null,
-            'transport' => null,
-            'transportConfig' => [
-                'rest' => []
-            ],
         ];
     }
 }

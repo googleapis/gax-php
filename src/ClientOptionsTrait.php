@@ -53,12 +53,11 @@ trait ClientOptionsTrait
     {
         if (isset($options['libVersion'])) {
             return $options['libVersion'];
-        } else {
-            if (!isset(self::$gapicVersionFromFile)) {
-                self::$gapicVersionFromFile = AgentHeader::readGapicVersionFromFile(__CLASS__);
-            }
-            return self::$gapicVersionFromFile;
         }
+        if (!isset(self::$gapicVersionFromFile)) {
+            self::$gapicVersionFromFile = AgentHeader::readGapicVersionFromFile(__CLASS__);
+        }
+        return self::$gapicVersionFromFile;
     }
 
     private static function initGrpcGcpConfig(string $hostName, string $confPath)
