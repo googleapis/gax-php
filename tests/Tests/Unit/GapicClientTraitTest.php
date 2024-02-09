@@ -37,6 +37,7 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
+use Google\ApiCore\Descriptor\ServiceDescriptor;
 use Google\ApiCore\GapicClientTrait;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\MiddlewareInterface;
@@ -127,7 +128,7 @@ class GapicClientTraitTest extends TestCase
         );
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
-        $client->set('descriptors', ['method' => $unaryDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method' => $unaryDescriptors]));
         $client->startApiCall(
             'method',
             $request,
@@ -190,7 +191,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
-        $client->set('descriptors', ['method' => $longRunningDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method' => $longRunningDescriptors]));
         $message = new MockRequest();
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
@@ -242,7 +243,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
-        $client->set('descriptors', ['method' => $longRunningDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method' => $longRunningDescriptors]));
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
             ->setMethodsExcept(['validate'])
@@ -294,7 +295,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
-        $client->set('descriptors', ['method' => $longRunningDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method' => $longRunningDescriptors]));
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
             ->setMethodsExcept(['validate'])
@@ -322,7 +323,7 @@ class GapicClientTraitTest extends TestCase
     public function testStartApiCallException($descriptor, $expected)
     {
         $client = new StubGapicClient();
-        $client->set('descriptors', $descriptor);
+        $client->set('descriptors', new ServiceDescriptor('', $descriptor));
 
         // All descriptor config checks throw Validation exceptions
         $this->expectException(ValidationException::class);
@@ -403,7 +404,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
-        $client->set('descriptors', ['method' => $unaryDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method' => $unaryDescriptors]));
 
         $request = new MockRequest();
         $client->startApiCall(
@@ -441,7 +442,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['method' => $retrySettings]);
-        $client->set('descriptors', ['method' => $pagedDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method' => $pagedDescriptors]));
 
         $request = new MockRequest();
         $client->startApiCall(
@@ -471,7 +472,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['Method' => $retrySettings]);
-        $client->set('descriptors', ['Method' => $unaryDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['Method' => $unaryDescriptors]));
 
         $request = new MockRequest();
         $client->startAsyncCall(
@@ -516,7 +517,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
         $client->set('retrySettings', ['Method' => $retrySettings]);
-        $client->set('descriptors', ['Method' => $pagedDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['Method' => $pagedDescriptors]));
 
         $request = new MockRequest();
         $client->startAsyncCall(
@@ -531,7 +532,7 @@ class GapicClientTraitTest extends TestCase
     public function testStartAsyncCallException($descriptor, $expected)
     {
         $client = new StubGapicClient();
-        $client->set('descriptors', $descriptor);
+        $client->set('descriptors', new ServiceDescriptor('', $descriptor));
 
         // All descriptor config checks throw Validation exceptions
         $this->expectException(ValidationException::class);
@@ -693,7 +694,7 @@ class GapicClientTraitTest extends TestCase
                 ]
             ]
         ];
-        $client->set('descriptors', ['method.name' => $longRunningDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method.name' => $longRunningDescriptors]));
 
         // Set our mock transport.
         $expectedOperation = new Operation(['name' => 'test-123']);
@@ -909,10 +910,10 @@ class GapicClientTraitTest extends TestCase
             'clientStreamingMethod' => $retrySettings,
             'serverStreamingMethod' => $retrySettings,
         ]);
-        $client->set('descriptors', [
+        $client->set('descriptors', new ServiceDescriptor('', [
             'longRunningMethod' => $longRunningDescriptors,
             'pagedMethod' => $pageStreamingDescriptors,
-        ]);
+        ]));
         return [$client, $transport];
     }
 
@@ -1211,7 +1212,7 @@ class GapicClientTraitTest extends TestCase
             ['method.name' => $retrySettings->reveal()]
         );
         $client->set('transport', $transport->reveal());
-        $client->set('descriptors', ['method.name' => $longRunningDescriptors]);
+        $client->set('descriptors', new ServiceDescriptor('', ['method.name' => $longRunningDescriptors]));
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
             ->setMethodsExcept(['validate'])
@@ -1261,9 +1262,9 @@ class GapicClientTraitTest extends TestCase
             ['method.name' => $retrySettings->reveal()]
         );
         $client->set('transport', $transport->reveal());
-        $client->set('descriptors', [
+        $client->set('descriptors', new ServiceDescriptor('', [
             'method.name' => $pageStreamingDescriptors
-        ]);
+        ]));
 
         // Test getPagedListResponse with default audience
         $client->getPagedListResponse(
