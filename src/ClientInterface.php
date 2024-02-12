@@ -32,7 +32,7 @@
 
 namespace Google\ApiCore;
 
-interface ServiceClientInterface
+interface ClientInterface
 {
 
 }

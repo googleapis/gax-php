@@ -37,9 +37,9 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\CredentialsWrapper;
-use Google\ApiCore\ServiceClientInterface;
+use Google\ApiCore\ClientInterface;
 use Google\ApiCore\Descriptor\ServiceDescriptor;
-use Google\ApiCore\ApiCallHandler;
+use Google\ApiCore\CallHandler;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\MiddlewareInterface;
 use Google\ApiCore\OperationResponse;
@@ -62,7 +62,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-class ApiCallHandlerTest extends TestCase
+class CallHandlerTest extends TestCase
 {
     use ProphecyTrait;
     use TestTrait;
@@ -126,13 +126,13 @@ class ApiCallHandlerTest extends TestCase
             ->shouldBeCalledOnce()
             ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
 
-        $apiCallHandler = new ApiCallHandler(
+        $callHandler = new CallHandler(
             new ServiceDescriptor('', ['method' => self::$basicDescriptor + $headerParams]),
             $credentialsWrapper->reveal(),
             $transport->reveal(),
             agentHeader: $header,
         );
-        $apiCallHandler->startApiCall(
+        $callHandler->startApiCall(
             'method',
             $request,
             ['headers' => $headers]
@@ -148,7 +148,7 @@ class ApiCallHandlerTest extends TestCase
             ->shouldBeCalledOnce()
             ->willReturn($retrySettings->reveal());
 
-        $apiCallHandler = new ApiCallHandler(
+        $callHandler = new CallHandler(
             new ServiceDescriptor('', ['method' => self::$basicDescriptor]),
             $this->prophesize(CredentialsWrapper::class)->reveal(),
             $this->mockTransport(),
@@ -156,7 +156,7 @@ class ApiCallHandlerTest extends TestCase
             [],
             null,
         );
-        $apiCallHandler->startApiCall(
+        $callHandler->startApiCall(
             'method',
             null,
             ['retrySettings' => ['rpcTimeoutMultiplier' => 5]]
@@ -173,13 +173,13 @@ class ApiCallHandlerTest extends TestCase
             ->willReturn(0)
             ->shouldBeCalledOnce();
 
-        $apiCallHandler = new ApiCallHandler(
+        $callHandler = new CallHandler(
             new ServiceDescriptor('', ['method' => self::$basicDescriptor]),
             $this->prophesize(CredentialsWrapper::class)->reveal(),
             $this->mockTransport(),
             ['method' => []], // this will be ignored
         );
-        $apiCallHandler->startApiCall(
+        $callHandler->startApiCall(
             'method',
             null,
             ['retrySettings' => $retrySettings->reveal()]
@@ -188,7 +188,7 @@ class ApiCallHandlerTest extends TestCase
 
     public function testStartApiCallOperation()
     {
-        $longRunningDescriptors = [
+        $longRunningDescriptor = [
             'operationReturnType' => 'operationType',
             'metadataReturnType' => 'metadataType',
             'initialPollDelayMillis' => 100,
@@ -199,7 +199,7 @@ class ApiCallHandlerTest extends TestCase
 
         $methodDescriptor = [
             'callType' => Call::LONGRUNNING_CALL,
-            'longRunning' => $longRunningDescriptors,
+            'longRunning' => $longRunningDescriptor,
         ];
 
         $transport = $this->prophesize(TransportInterface::class);
@@ -207,16 +207,16 @@ class ApiCallHandlerTest extends TestCase
             ->shouldBeCalledOnce()
             ->willReturn(new FulfilledPromise(new Operation()));
 
-        $operationsClient = $this->prophesize(ServiceClientInterface::class);
+        $operationsClient = $this->prophesize(ClientInterface::class);
 
-        $apiCallHandler = new ApiCallHandler(
+        $callHandler = new CallHandler(
             new ServiceDescriptor('', ['method' => $methodDescriptor]),
             $this->prophesize(CredentialsWrapper::class)->reveal(),
             $transport->reveal(),
             operationsClient: $operationsClient->reveal()
         );
 
-        $response = $apiCallHandler->startApiCall(
+        $response = $callHandler->startApiCall(
             'method',
             new MockRequest()
         )->wait();
@@ -224,63 +224,56 @@ class ApiCallHandlerTest extends TestCase
         $expectedResponse = new OperationResponse(
             '',
             $operationsClient->reveal(),
-            $longRunningDescriptors + ['lastProtoResponse' => new Operation()]
+            $longRunningDescriptor + ['lastProtoResponse' => new Operation()]
         );
 
         $this->assertEquals($expectedResponse, $response);
     }
 
-    // public function testStartApiCallCustomOperation()
-    // {
-    //     $header = AgentHeader::buildAgentHeader([]);
-    //     $retrySettings = $this->getMockBuilder(RetrySettings::class)
-    //         ->disableOriginalConstructor()
-    //         ->getMock();
+    public function testStartApiCallCustomOperation()
+    {
+        $longRunningDescriptor = [
+            'operationReturnType' => 'operationType',
+            'metadataReturnType' => 'metadataType',
+            'initialPollDelayMillis' => 100,
+            'pollDelayMultiplier' => 1.0,
+            'maxPollDelayMillis' => 200,
+            'totalPollTimeoutMillis' => 300,
+        ];
 
-    //     $longRunningDescriptors = [
-    //         'callType' => Call::LONGRUNNING_CALL,
-    //         'responseType' => 'Google\ApiCore\Testing\MockResponse',
-    //         'longRunning' => [
-    //             'operationReturnType' => 'operationType',
-    //             'metadataReturnType' => 'metadataType',
-    //             'initialPollDelayMillis' => 100,
-    //             'pollDelayMultiplier' => 1.0,
-    //             'maxPollDelayMillis' => 200,
-    //             'totalPollTimeoutMillis' => 300,
-    //         ]
-    //     ];
-    //     $expectedPromise = new FulfilledPromise(new MockResponse());
-    //     $transport = $this->getMockBuilder(TransportInterface::class)->getMock();
-    //     $transport->expects($this->once())
-    //          ->method('startUnaryCall')
-    //          ->will($this->returnValue($expectedPromise));
-    //     $credentialsWrapper = CredentialsWrapper::build([]);
-    //     $client = new OperationsGapicClient();
-    //     $client->set('transport', $transport);
-    //     $client->set('credentialsWrapper', $credentialsWrapper);
-    //     $client->set('agentHeader', $header);
-    //     $client->set('retrySettings', ['method' => $retrySettings]);
-    //     $client->set('descriptors', new ServiceDescriptor('', ['method' => $longRunningDescriptors]));
-    //     $operationsClient = $this->getMockBuilder(OperationsClient::class)
-    //         ->disableOriginalConstructor()
-    //         ->setMethodsExcept(['validate'])
-    //         ->getMock();
-    //     $client->set('operationsClient', $operationsClient);
+        $methodDescriptor = [
+            'callType' => Call::LONGRUNNING_CALL,
+            'responseType' => MockResponse::class,
+            'longRunning' => $longRunningDescriptor,
+        ];
 
-    //     $request = new MockRequest();
-    //     $response = $client->startApiCall(
-    //         'method',
-    //         $request,
-    //     )->wait();
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport->startUnaryCall(Argument::type(Call::class), Argument::type('array'))
+            ->shouldBeCalledOnce()
+            ->willReturn(new FulfilledPromise(new MockResponse()));
 
-    //     $expectedResponse = new OperationResponse(
-    //         '',
-    //         $operationsClient,
-    //         $longRunningDescriptors['longRunning'] + ['lastProtoResponse' => new MockResponse()]
-    //     );
+        $operationsClient = $this->prophesize(ClientInterface::class);
 
-    //     $this->assertEquals($expectedResponse, $response);
-    // }
+        $callHandler = new CallHandler(
+            new ServiceDescriptor('', ['method' => $methodDescriptor]),
+            $this->prophesize(CredentialsWrapper::class)->reveal(),
+            $transport->reveal(),
+            operationsClient: $operationsClient->reveal()
+        );
+
+        $response = $callHandler->startApiCall(
+            'method',
+            new MockRequest(),
+        )->wait();
+
+        $expectedResponse = new OperationResponse(
+            '',
+            $operationsClient->reveal(),
+            $longRunningDescriptor + ['lastProtoResponse' => new MockResponse()]
+        );
+
+        $this->assertEquals($expectedResponse, $response);
+    }
 
     // /**
     //  * @dataProvider startApiCallExceptions

@@ -47,7 +47,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *
  * @internal
  */
-trait ServiceClientTrait
+trait ClientTrait
 {
     use ClientOptionsTrait;
     use OperationsSupportTrait;
@@ -55,7 +55,7 @@ trait ServiceClientTrait
     use ValidationTrait;
     use GrpcSupportTrait;
 
-    private ApiCallHandler $apiCallHandler;
+    private CallHandler $callHandler;
 
     /**
      * Get the credentials for the client. This method is protected to support
@@ -66,7 +66,7 @@ trait ServiceClientTrait
      */
     protected function getCredentialsWrapper()
     {
-        return $this->apiCallHandler->credentialsWrapper;
+        return $this->callHandler->credentialsWrapper;
     }
 
     /**
@@ -208,7 +208,7 @@ trait ServiceClientTrait
             $descriptors['interfaces'][$serviceName]
         );
 
-        $this->apiCallHandler = new ApiCallHandler(
+        $this->callHandler = new CallHandler(
             $serviceDescriptor,
             $credentialsWrapper,
             $transport,
@@ -241,7 +241,7 @@ trait ServiceClientTrait
         Message $request = null,
         array $optionalArgs = []
     ) {
-        return $this->apiCallHandler->startApiCall(
+        return $this->callHandler->startApiCall(
             $methodName,
             $request,
             $optionalArgs,
@@ -273,7 +273,7 @@ trait ServiceClientTrait
         // in order to find the method in the descriptor config.
         $methodName = ucfirst($methodName);
 
-        return $this->apiCallHandler->startAsyncCall($method, $request, $optionalArgs);
+        return $this->callHandler->startAsyncCall($method, $request, $optionalArgs);
     }
 
     /**
@@ -309,6 +309,6 @@ trait ServiceClientTrait
      */
     public function addMiddleware(callable $middlewareCallable): void
     {
-        $this->apiCallHandler->addMiddleware($middlewareCallable);
+        $this->callHandler->addMiddleware($middlewareCallable);
     }
 }

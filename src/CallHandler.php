@@ -53,7 +53,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  *
  * @internal
  */
-class ApiCallHandler
+class CallHandler
 {
     /** @var array<callable> $middlewareCallables */
     private array $middlewareCallables = [];
@@ -71,7 +71,7 @@ class ApiCallHandler
         private array $retrySettings = [],
         private array $agentHeader = [],
         private ?string $audience = null,
-        private ?ServiceClientInterface $operationsClient = null,
+        private ?ClientInterface $operationsClient = null,
     ) {
 
     }
@@ -149,7 +149,7 @@ class ApiCallHandler
 
         }
 
-        return $this->doApiCall($method, $request, $optionalArgs);
+        return $this->startCall($method, $request, $optionalArgs);
     }
 
     /**
@@ -175,10 +175,10 @@ class ApiCallHandler
         array $optionalArgs = []
     ) {
         $method = $this->descriptors->getMethod($methodName);
-        return $this->doApiCall($method, $request, $optionalArgs);
+        return $this->startCall($method, $request, $optionalArgs);
     }
 
-    private function doApiCall(
+    private function startCall(
         MethodDescriptor $method,
         Message $request = null,
         array $optionalArgs = []
@@ -196,7 +196,7 @@ class ApiCallHandler
                     $method->getName()
                 ));
             }
-            return $this->doOperationsCall(
+            return $this->startOperationsCall(
                 $method,
                 $request,
                 $optionalArgs,
@@ -329,11 +329,11 @@ class ApiCallHandler
      *
      * @return PromiseInterface
      */
-    private function doOperationsCall(
+    private function startOperationsCall(
         MethodDescriptor $method,
         Message $request,
         array $optionalArgs,
-        ServiceClientInterface $operationsClient,
+        ClientInterface $operationsClient,
     ) {
         $callStack = $this->createCallStack($method->getName(), $optionalArgs);
         $longRunning = $method->getLongRunning();
