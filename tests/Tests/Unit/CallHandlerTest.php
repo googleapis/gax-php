@@ -580,17 +580,6 @@ class CallHandlerTest extends TestCase
         ];
     }
 
-    public function testGetCredentialsWrapper()
-    {
-        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
-        $callHandler = new CallHandler(
-            $this->prophesize(ServiceDescriptor::class)->reveal(),
-            $credentialsWrapper->reveal(),
-            $this->prophesize(TransportInterface::class)->reveal()
-        );
-        $this->assertEquals($credentialsWrapper->reveal(), $callHandler->getCredentialsWrapper());
-    }
-
     public function testUserProjectHeaderIsSetWhenProvidingQuotaProject()
     {
         $quotaProject = 'test-quota-project';

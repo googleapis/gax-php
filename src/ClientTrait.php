@@ -52,22 +52,12 @@ trait ClientTrait
     use ClientOptionsTrait;
     use OperationsSupportTrait;
     use TransportSupportTrait;
-    use ValidationTrait;
+    use ValidationTrait {
+        ValidationTrait::validate as traitValidate;
+    }
     use GrpcSupportTrait;
 
     private CallHandler $callHandler;
-
-    /**
-     * Get the credentials for the client. This method is protected to support
-     * use by customized clients.
-     *
-     * @access private
-     * @return CredentialsWrapper
-     */
-    protected function getCredentialsWrapper()
-    {
-        return $this->callHandler->credentialsWrapper;
-    }
 
     /**
      * Configures the GAPIC client based on an array of options.

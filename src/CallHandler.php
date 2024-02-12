@@ -477,9 +477,4 @@ class CallHandler
 
         return $requestParams->getHeader();
     }
-
-    public function getCredentialsWrapper(): CredentialsWrapper
-    {
-        return $this->credentialsWrapper;
-    }
 }
