@@ -33,6 +33,7 @@
 namespace Google\ApiCore;
 
 use Google\ApiCore\Descriptor\MethodDescriptor;
+use Google\ApiCore\Descriptor\ServiceDescriptor;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\FixedHeaderMiddleware;
 use Google\ApiCore\Middleware\OperationsMiddleware;
@@ -52,11 +53,8 @@ use GuzzleHttp\Promise\PromiseInterface;
  *
  * @internal
  */
-trait ApiCallTrait
+class ApiCallHandler
 {
-    /** @var RetrySettings[] $retrySettings */
-    private array $retrySettings = [];
-    private array $agentHeader = [];
     /** @var array<callable> $middlewareCallables */
     private array $middlewareCallables = [];
     private array $transportCallMethods = [
@@ -65,6 +63,17 @@ trait ApiCallTrait
         Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
+
+    public function __construct(
+        private ServiceDescriptor $descriptors,
+        private CredentialsWrapper $credentialsWrapper,
+        private TransportInterface $transport,
+        private array $retrySettings,
+        private array $agentHeader,
+        private string $audience,
+    ) {
+
+    }
 
     /**
      * Add a middleware to the call stack by providing a callable which will be
@@ -118,11 +127,13 @@ trait ApiCallTrait
      *
      * @return PromiseInterface
      */
-    private function doAsyncCall(
-        MethodDescriptor $method,
+    public function startAsyncCall(
+        string $methodName,
         Message $request,
         array $optionalArgs = []
     ) {
+        $method = $this->descriptors->getMethod($methodName);
+
         switch ($method->getCallType()) {
             case Call::PAGINATED_CALL:
                 return $this->getPagedListResponseAsync($method, $optionalArgs, $request);
@@ -157,8 +168,17 @@ trait ApiCallTrait
      *
      * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
      */
+    public function startApiCall(
+        string $methodName,
+        Message $request = null,
+        array $optionalArgs = []
+    ) {
+        $method = $this->descriptors->getMethod($methodName);
+        return $this->doApiCall($method);
+    }
+
     private function doApiCall(
-        MethodDescriptor $method,
+        Method $method,
         Message $request = null,
         array $optionalArgs = []
     ) {
@@ -181,35 +201,6 @@ trait ApiCallTrait
             return $this->getPagedListResponse($method, $optionalArgs, $request);
         }
 
-        // Unary, and all Streaming types handled by startCall.
-        return $this->doCall($method, $optionalArgs, $request);
-    }
-
-    /**
-     * @param string $methodName
-     * @param string $decodeType
-     * @param array $optionalArgs {
-     *     Call Options
-     *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings|array $retrySettings [optional] A retry settings
-     *           override for the call.
-     * }
-     * @param Message $request
-     * @param int $callType
-     * @param string $interfaceName
-     *
-     * @return PromiseInterface|BidiStream|ClientStream|ServerStream
-     */
-    private function doCall(
-        MethodDescriptor $method,
-        array $optionalArgs = [],
-        Message $request = null
-    ) {
-        $callStack = $this->createCallStack($method->getName(), $optionalArgs);
-
         $call = new Call(
             $method->getFullName(),
             $method->getResponseType(),
@@ -217,20 +208,10 @@ trait ApiCallTrait
             $method->getGrpcStreaming(),
             $method->getCallType()
         );
-        switch ($method->getCallType()) {
-            case Call::UNARY_CALL:
-                $this->modifyUnaryCallable($callStack);
-                break;
-            case Call::BIDI_STREAMING_CALL:
-            case Call::CLIENT_STREAMING_CALL:
-            case Call::SERVER_STREAMING_CALL:
-                $this->modifyStreamingCallable($callStack);
-                break;
-        }
 
-        return $callStack($call, $optionalArgs + array_filter([
-            'audience' => self::getDefaultAudience()
-        ]));
+        return $callStack($call, $optionalArgs + [
+            'audience' => $this->audience,
+        ]);
     }
 
     /**
@@ -313,13 +294,25 @@ trait ApiCallTrait
     /**
      * @return array
      */
-    private function configureCallOptions(array $optionalArgs): array
+    private function configureCallOptions(CallOptions|array $optionalArgs): array
     {
-        if ($this->isBackwardsCompatibilityMode()) {
-            return $optionalArgs;
+        if (is_array($optionalArgs)) {
+            $optionalArgs = new CallOptions($optionalArgs);
         }
-        // cast to CallOptions for new surfaces only
-        return (new CallOptions($optionalArgs))->toArray();
+        // cast to CallOptions
+        return $optionalArgs->toArray();
+    }
+
+    public function startOperationsCall(
+        string $methodName,
+        Message $request,
+        array $optionalArgs,
+        $operationsClient,
+        string $operationClass,
+        string $interfaceName = null,
+    ) {
+        $method = $this->descriptors->getMethod($methodName, $interfaceName);
+        return $this->doOperationsCall($method, $request, $optionalArgs, $operationsClient, $operationClass);
     }
 
     /**
@@ -341,10 +334,10 @@ trait ApiCallTrait
      */
     private function doOperationsCall(
         MethodDescriptor $method,
-        array $optionalArgs,
         Message $request,
+        array $optionalArgs,
         $operationsClient,
-        string $operationClass = Operation::class
+        string $operationClass,
     ) {
         $callStack = $this->createCallStack($method->getName(), $optionalArgs);
         $longRunning = $method->getLongRunning();
@@ -370,10 +363,9 @@ trait ApiCallTrait
             Call::UNARY_CALL
         );
 
-        $this->modifyUnaryCallable($callStack);
         return $callStack($call, $optionalArgs + array_filter([
-            'metadataReturnType' => $descriptor['metadataReturnType'] ?? null,
-            'audience' => self::getDefaultAudience()
+            'metadataReturnType' => $longRunning['metdataReturnType'] ?? null,
+            'audience' => $this->audience,
         ]));
     }
 
@@ -425,10 +417,9 @@ trait ApiCallTrait
             Call::UNARY_CALL
         );
 
-        $this->modifyUnaryCallable($callStack);
-        return $callStack($call, $optionalArgs + array_filter([
-            'audience' => self::getDefaultAudience()
-        ]));
+        return $callStack($call, $optionalArgs + [
+            'audience' => $this->audience,
+        ]);
     }
 
     /**
@@ -490,36 +481,8 @@ trait ApiCallTrait
         return $requestParams->getHeader();
     }
 
-    /**
-     * The SERVICE_ADDRESS constant is set by GAPIC clients
-     */
-    private static function getDefaultAudience()
+    public function getCredentialsWrapper(): CredentialsWrapper
     {
-        if (!defined('self::SERVICE_ADDRESS')) {
-            return null;
-        }
-        return 'https://' . self::SERVICE_ADDRESS . '/'; // @phpstan-ignore-line
-    }
-
-    /**
-     * Modify the unary callable.
-     *
-     * @param callable $callable
-     * @access private
-     */
-    protected function modifyUnaryCallable(callable &$callable)
-    {
-        // Do nothing - this method exists to allow callable modification by partial veneers.
-    }
-
-    /**
-     * Modify the streaming callable.
-     *
-     * @param callable $callable
-     * @access private
-     */
-    protected function modifyStreamingCallable(callable &$callable)
-    {
-        // Do nothing - this method exists to allow callable modification by partial veneers.
+        return $this->credentialsWrapper;
     }
 }

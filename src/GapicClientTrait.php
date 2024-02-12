@@ -49,7 +49,6 @@ use GuzzleHttp\Promise\PromiseInterface;
  */
 trait GapicClientTrait
 {
-    use ApiCallTrait;
     use ClientOptionsTrait;
     use OperationsSupportTrait;
     use TransportSupportTrait;
@@ -58,47 +57,8 @@ trait GapicClientTrait
     }
     use GrpcSupportTrait;
 
-    private ?CredentialsWrapper $credentialsWrapper = null;
-    private ?ServiceDescriptor $descriptors = null;
-    private array $agentHeader = [];
     /** @var array<callable> $middlewareCallables */
     private bool $backwardsCompatibilityMode;
-
-    /**
-     * Add a middleware to the call stack by providing a callable which will be
-     * invoked at the start of each call, and will return an instance of
-     * {@see MiddlewareInterface} when invoked.
-     *
-     * The callable must have the following method signature:
-     *
-     *     callable(MiddlewareInterface): MiddlewareInterface
-     *
-     * An implementation may look something like this:
-     * ```
-     * $client->addMiddleware(function (MiddlewareInterface $handler) {
-     *     return new class ($handler) implements MiddlewareInterface {
-     *         public function __construct(private MiddlewareInterface $handler) {
-     *         }
-     *
-     *         public function __invoke(Call $call, array $options) {
-     *             // modify call and options (pre-request)
-     *             $response = ($this->handler)($call, $options);
-     *             // modify the response (post-request)
-     *             return $response;
-     *         }
-     *     };
-     * });
-     * ```
-     *
-     * @param callable $middlewareCallable A callable which returns an instance
-     *                 of {@see MiddlewareInterface} when invoked with a
-     *                 MiddlewareInterface instance as its first argument.
-     * @return void
-     */
-    public function addMiddleware(callable $middlewareCallable): void
-    {
-        $this->middlewareCallables[] = $middlewareCallable;
-    }
 
     /**
      * Get the credentials for the client. This method is protected to support
@@ -109,7 +69,7 @@ trait GapicClientTrait
      */
     protected function getCredentialsWrapper()
     {
-        return $this->credentialsWrapper;
+        return $this->apiCallHandler->credentialsWrapper;
     }
 
     /**
@@ -212,26 +172,36 @@ trait GapicClientTrait
             $options = new ClientOptions($options);
         }
         $serviceName = $options['serviceName'];
-        $this->retrySettings = RetrySettings::load(
+        $retrySettings = RetrySettings::load(
             $serviceName,
             $options['clientConfig'],
             $options['disableRetries']
         );
+
+        $transportOption = $options['transport'] ?: self::defaultTransport();
+        $transport = $transportOption instanceof TransportInterface
+            ? $transportOption
+            : $this->createTransport(
+                $options['apiEndpoint'],
+                $transportOption,
+                $options['transportConfig'],
+                $options['clientCertSource']
+            );
 
         $headerInfo = [
             'libName' => $options['libName'],
             'libVersion' => $options['libVersion'],
             'gapicVersion' => $options['gapicVersion'],
         ];
+
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
-        if ($this->transport instanceof GrpcTransport) {
+        if ($transport instanceof GrpcTransport) {
             $headerInfo['grpcVersion'] = phpversion('grpc');
-        } elseif ($this->transport instanceof RestTransport
-            || $this->transport instanceof GrpcFallbackTransport) {
+        } elseif ($transport instanceof RestTransport
+            || $transport instanceof GrpcFallbackTransport) {
             $headerInfo['restVersion'] = Version::getApiCoreVersion();
         }
-        $this->agentHeader = AgentHeader::buildAgentHeader($headerInfo);
 
         // Set "client_library_name" depending on client library surface being used
         $userAgentHeader = sprintf(
@@ -239,30 +209,31 @@ trait GapicClientTrait
             $this->isBackwardsCompatibilityMode() ? 'legacy' : 'new',
             $options['gapicVersion']
         );
-        $this->agentHeader['User-Agent'] = [$userAgentHeader];
+        $agentHeader = AgentHeader::buildAgentHeader($headerInfo);
+        $agentHeader['User-Agent'] = [$userAgentHeader];
 
-        self::validateFileExists($options['descriptorsConfigPath']);
-
-        $descriptors = require($options['descriptorsConfigPath']);
-        $this->descriptors = new ServiceDescriptor($serviceName, $descriptors['interfaces'][$serviceName]);
-
-        $this->credentialsWrapper = $this->createCredentialsWrapper(
+        $credentialsWrapper = $this->createCredentialsWrapper(
             $options['credentials'],
             $options['credentialsConfig'],
             $options['universeDomain']
         );
 
-        $transport = $options['transport'] ?: self::defaultTransport();
-        $this->transport = $transport instanceof TransportInterface
-            ? $transport
-            : $this->createTransport(
-                $options['apiEndpoint'],
-                $transport,
-                $options['transportConfig'],
-                $options['clientCertSource']
-            );
-    }
+        self::validateFileExists($options['descriptorsConfigPath']);
+        $descriptors = require($options['descriptorsConfigPath']);
+        $serviceDescriptor = new ServiceDescriptor(
+            $serviceName,
+            $descriptors['interfaces'][$serviceName]
+        );
 
+        $this->apiCallHandler = new ApiCallHandler(
+            $serviceDescriptor,
+            $credentialsWrapper,
+            $transport,
+            $retrySettings,
+            $agentHeader,
+            'https://' . self::SERVICE_ADDRESS . '/',
+        );
+    }
 
     /**
      * @param string $methodName
@@ -286,8 +257,8 @@ trait GapicClientTrait
         Message $request = null,
         array $optionalArgs = []
     ) {
-        return $this->doApiCall(
-            $this->descriptors->method($methodName),
+        return $this->apiCallHandler->startApiCall(
+            $methodName,
             $request,
             $optionalArgs,
         );
@@ -316,53 +287,9 @@ trait GapicClientTrait
     ) {
         // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
         // in order to find the method in the descriptor config.
-        $method = $this->descriptors->method(ucfirst($methodName));
+        $methodName = ucfirst($methodName);
 
-        return $this->doAsyncCall($method, $request, $optionalArgs);
-    }
-
-    /**
-     * @param string $methodName
-     * @param string $decodeType
-     * @param array $optionalArgs {
-     *     Call Options
-     *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings|array $retrySettings [optional] A retry settings
-     *           override for the call.
-     * }
-     * @param Message $request
-     * @param int $callType
-     * @param string $interfaceName
-     *
-     * @return PromiseInterface|BidiStream|ClientStream|ServerStream
-     */
-    private function startCall(
-        string $methodName,
-        string $decodeType,
-        array $optionalArgs = [],
-        Message $request = null,
-        int $callType = Call::UNARY_CALL,
-        string $interfaceName = null
-    ) {
-        // Preserve previous behavior by creating MethodDescriptor instead of validating the method.
-        $method = new MethodDescriptor(
-            $methodName,
-            $callType,
-            $interfaceName ?? $this->descriptors?->getServiceName() ?? '',
-            $decodeType,
-            null,
-            null,
-            null,
-            $this->descriptors?->getGrpcStreaming($methodName),
-        );
-        return $this->doCall(
-            $method,
-            $optionalArgs,
-            $request,
-        );
+        return $this->apiCallHandler->startAsyncCall($method, $request, $optionalArgs);
     }
 
     /**
@@ -388,14 +315,15 @@ trait GapicClientTrait
         Message $request,
         $client,
         string $interfaceName = null,
-        string $operationClass = null
+        string $operationClass = Operation::class,
     ) {
-        return $this->doOperationsCall(
-            $this->descriptors->method($methodName, $interfaceName),
-            $optionalArgs,
+        return $this->apiCallHandler->startOperationsCall(
+            $methodName,
             $request,
+            $optionalArgs,
             $client,
-            $operationClass
+            $operationClass,
+            $interfaceName,
         );
     }
 
@@ -406,5 +334,41 @@ trait GapicClientTrait
     {
         return $this->backwardsCompatibilityMode
             ?? $this->backwardsCompatibilityMode = substr(__CLASS__, -11) === 'GapicClient';
+    }
+
+    /**
+     * Add a middleware to the call stack by providing a callable which will be
+     * invoked at the start of each call, and will return an instance of
+     * {@see MiddlewareInterface} when invoked.
+     *
+     * The callable must have the following method signature:
+     *
+     *     callable(MiddlewareInterface): MiddlewareInterface
+     *
+     * An implementation may look something like this:
+     * ```
+     * $client->addMiddleware(function (MiddlewareInterface $handler) {
+     *     return new class ($handler) implements MiddlewareInterface {
+     *         public function __construct(private MiddlewareInterface $handler) {
+     *         }
+     *
+     *         public function __invoke(Call $call, array $options) {
+     *             // modify call and options (pre-request)
+     *             $response = ($this->handler)($call, $options);
+     *             // modify the response (post-request)
+     *             return $response;
+     *         }
+     *     };
+     * });
+     * ```
+     *
+     * @param callable $middlewareCallable A callable which returns an instance
+     *                 of {@see MiddlewareInterface} when invoked with a
+     *                 MiddlewareInterface instance as its first argument.
+     * @return void
+     */
+    public function addMiddleware(callable $middlewareCallable): void
+    {
+        $this->apiCallHandler->addMiddleware($middlewareCallable);
     }
 }

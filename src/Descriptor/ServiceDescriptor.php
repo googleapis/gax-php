@@ -52,7 +52,7 @@ class ServiceDescriptor
         return $this->serviceName;
     }
 
-    public function method(string $methodName, string $interfaceName = null): MethodDescriptor
+    public function getMethod(string $methodName, string $interfaceName = null): MethodDescriptor
     {
         // Ensure a method descriptor exists for the target method.
         if (!isset($this->descriptors[$methodName])) {
@@ -75,7 +75,7 @@ class ServiceDescriptor
             $methodDescriptor['headerParams'] ?? null,
             $methodDescriptor['longRunning'] ?? null,
             $methodDescriptor['pageStreaming'] ?? null,
-            $methodDescriptor['grpcStreaming'] ?? null
+            $methodDescriptor['grpcStreaming'] ?? null,
         );
     }
 

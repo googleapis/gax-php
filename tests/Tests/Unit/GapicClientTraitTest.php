@@ -1491,21 +1491,17 @@ class StubGapicClient
 {
     use GapicClientTrait {
         buildClientOptions as public;
-        buildRequestParamsHeader as public;
-        configureCallConstructionOptions as public;
         createCredentialsWrapper as public;
         createOperationsClient as public;
         createTransport as public;
         determineMtlsEndpoint as public;
         getGapicVersion as public;
         getCredentialsWrapper as public;
-        getPagedListResponse as public;
         getTransport as public;
         setClientOptions as public;
         shouldUseMtlsEndpoint as public;
         startApiCall as public;
         startAsyncCall as public;
-        startCall as public;
         startOperationsCall as public;
     }
     use GapicClientStubTrait;
@@ -1590,9 +1586,7 @@ class DefaultScopeAndAudienceGapicClient
 {
     use GapicClientTrait {
         buildClientOptions as public;
-        startCall as public;
         startOperationsCall as public;
-        getPagedListResponse as public;
     }
     use GapicClientStubTrait;
 
@@ -1677,9 +1671,7 @@ class CustomOperationsClient
 
 class GapicV2SurfaceClient
 {
-    use GapicClientTrait {
-        startCall as public;
-    }
+    use GapicClientTrait;
     use GapicClientStubTrait;
 
     public function __construct(array $options = [])
