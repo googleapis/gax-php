@@ -45,6 +45,8 @@ use Google\ApiCore\Transport\RestTransport;
  */
 trait TransportSupportTrait
 {
+    use GrpcSupportTrait;
+
     private ?TransportInterface $transport = null;
 
     /**
@@ -132,6 +134,15 @@ trait TransportSupportTrait
                     "Supported values: ['grpc', 'rest', 'grpc-fallback']"
                 );
         }
+    }
+
+    /**
+     * This defaults to all three transports, which One-Platform supports.
+     * Discovery clients should define this function and only return ['rest'].
+     */
+    private static function supportedTransports()
+    {
+        return ['grpc', 'grpc-fallback', 'rest'];
     }
 
     /**

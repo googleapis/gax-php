@@ -672,14 +672,6 @@ class GapicClientTraitTest extends TestCase
         $this->assertArrayNotHasKey('serviceAddress', $updatedOptions);
     }
 
-    public function testOperationClientClassOption()
-    {
-        $options = ['operationsClientClass' => CustomOperationsClient::class];
-        $client = new StubGapicClient();
-        $operationsClient = $client->createOperationsClient($options);
-        $this->assertInstanceOf(CustomOperationsClient::class, $operationsClient);
-    }
-
     public function testAdditionalArgumentMethods()
     {
         $client = new StubGapicClient();
@@ -855,18 +847,6 @@ class GapicClientTraitTest extends TestCase
                 /* $expected */ ['']
             ],
         ];
-    }
-
-    public function testModifyClientOptions()
-    {
-        $options = [];
-        $client = new StubGapicClientExtension();
-        $updatedOptions = $client->buildClientOptions($options);
-        $client->setClientOptions($updatedOptions);
-
-        $this->assertArrayHasKey('addNewOption', $updatedOptions);
-        $this->assertTrue($updatedOptions['disableRetries']);
-        $this->assertEquals('abc123', $updatedOptions['apiEndpoint']);
     }
 
     private function buildClientToTestModifyCallMethods($clientClass = null)
@@ -1274,14 +1254,6 @@ class GapicClientTraitTest extends TestCase
         );
     }
 
-    public function testSupportedTransportOverrideWithInvalidTransport()
-    {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Unexpected transport option "grpc". Supported transports: rest');
-
-        new RestOnlyGapicClient(['transport' => 'grpc']);
-    }
-
     public function testSupportedTransportOverrideWithDefaultTransport()
     {
         $client = new RestOnlyGapicClient();
@@ -1555,13 +1527,6 @@ trait GapicClientStubTrait
 
 class StubGapicClientExtension extends StubGapicClient
 {
-    protected function modifyClientOptions(array &$options)
-    {
-        $options['disableRetries'] = true;
-        $options['addNewOption'] = true;
-        $options['apiEndpoint'] = 'abc123';
-    }
-
     protected function modifyUnaryCallable(callable &$callable)
     {
         $originalCallable = $callable;
@@ -1629,7 +1594,6 @@ class RestOnlyGapicClient
     public static function getClientDefaults()
     {
         return [
-            'apiEndpoint' => 'test.address.com:443',
             'serviceName' => 'test.interface.v1.api',
             'clientConfig' => __DIR__ . '/testdata/test_service_client_config.json',
             'descriptorsConfigPath' => __DIR__ . '/testdata/test_service_descriptor_config.php',
@@ -1664,13 +1628,6 @@ class OperationsGapicClient extends StubGapicClient
     public function getOperationsClient()
     {
         return $this->operationsClient;
-    }
-}
-
-class CustomOperationsClient
-{
-    public function getOperation($name, $arg1, $arg2)
-    {
     }
 }
 

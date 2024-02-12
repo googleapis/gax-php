@@ -49,13 +49,6 @@ class ClientOptionsTraitTest extends TestCase
     use ProphecyTrait;
     use TestTrait;
 
-    public function tearDown(): void
-    {
-        // Reset the static gapicVersion field between tests
-        $client = new StubClientOptionsClient();
-        $client->set('gapicVersionFromFile', null, true);
-    }
-
     public function testGetGapicVersionWithVersionFile()
     {
         require_once __DIR__ . '/testdata/src/GapicClientStub.php';
@@ -70,11 +63,14 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertSame('', $client->getGapicVersion([]));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetGapicVersionWithLibVersion()
     {
         $version = '1.2.3-dev';
         $client = new StubClientOptionsClient();
-        $client->set('gapicVersionFromFile', $version, true);
+        $client->setGapicVersionFromFile($version);
         $options = ['libVersion' => $version];
         $this->assertEquals($version, $client->getGapicVersion(
             $options
@@ -526,6 +522,22 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertEquals($options, $options2);
     }
 
+    public function testModifyClientOptions()
+    {
+        $options = [];
+        $client = new ModifyClientOptionsClient();
+        $updatedOptions = $client->buildClientOptions($options);
+
+        $this->assertArrayHasKey('addNewOption', $updatedOptions);
+        $this->assertTrue($updatedOptions['disableRetries']);
+
+        // apiEndpoint is not updated when BC mode is off
+        $this->assertNull($updatedOptions['apiEndpoint']);
+
+        $client->setBackwardsCompatibilityMode(true);
+        $updatedOptions = $client->buildClientOptions($options);
+        $this->assertEquals('abc123', $updatedOptions['apiEndpoint']);
+    }
 }
 
 class StubClientOptionsClient
@@ -538,24 +550,17 @@ class StubClientOptionsClient
         shouldUseMtlsEndpoint as public;
     }
 
-    public function set($name, $val, $static = false)
-    {
-        if (!property_exists($this, $name)) {
-            throw new \InvalidArgumentException("Property not found: $name");
-        }
-        if ($static) {
-            $this::$$name = $val;
-        } else {
-            $this->$name = $val;
-        }
-    }
-
     public static function getClientDefaults()
     {
         return [
             'apiEndpoint' => 'test.address.com:443',
             'gcpApiConfigPath' => __DIR__ . '/testdata/test_service_grpc_config.json',
         ];
+    }
+
+    public function setGapicVersionFromFile(string $version)
+    {
+        self::$gapicVersionFromFile = $version;
     }
 }
 
@@ -612,5 +617,31 @@ class UniverseDomainStubClientOptionsClient
         return [
             'apiEndpoint' => 'test.address.com:443',
         ];
+    }
+}
+
+class ModifyClientOptionsClient
+{
+    use ClientOptionsTrait {
+        buildClientOptions as public;
+    }
+
+    private $backwardsCompatibility = false;
+
+    protected function modifyClientOptions(array &$options)
+    {
+        $options['disableRetries'] = true;
+        $options['addNewOption'] = true;
+        $options['apiEndpoint'] = 'abc123';
+    }
+
+    public function setBackwardsCompatibilityMode(bool $backwardsCompatibility)
+    {
+        $this->backwardsCompatibility = $backwardsCompatibility;
+    }
+
+    public function isBackwardsCompatibilityMode(): bool
+    {
+        return $this->backwardsCompatibility;
     }
 }

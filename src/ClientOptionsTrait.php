@@ -45,7 +45,7 @@ use Grpc\Gcp\Config;
  */
 trait ClientOptionsTrait
 {
-    use ArrayTrait;
+    use TransportSupportTrait;
 
     private static $gapicVersionFromFile;
 
@@ -141,7 +141,8 @@ trait ClientOptionsTrait
 
             // serviceAddress is now deprecated and acts as an alias for apiEndpoint
             if (isset($options['serviceAddress'])) {
-                $apiEndpoint = $this->pluck('serviceAddress', $options, false);
+                $apiEndpoint = $options['serviceAddress'];
+                unset($options['serviceAddress']);
             }
         } else {
             // Ads is using this method in their new surface clients, so we need to call it.
@@ -271,15 +272,6 @@ trait ClientOptionsTrait
                 print_r($credentials, true)
             );
         }
-    }
-
-    /**
-     * This defaults to all three transports, which One-Platform supports.
-     * Discovery clients should define this function and only return ['rest'].
-     */
-    private static function supportedTransports()
-    {
-        return ['grpc', 'grpc-fallback', 'rest'];
     }
 
     // Gapic Client Extension Points

@@ -70,7 +70,7 @@ class ServiceDescriptor
         return new MethodDescriptor(
             $methodName,
             $methodDescriptor['callType'],
-            $interfaceName ?? $methodDescriptor['interfaceName'] ?? $this->serviceName,
+            $interfaceName ?? $methodDescriptor['interfaceOverride'] ?? $this->serviceName,
             $methodDescriptor['responseType'] ?? null,
             $methodDescriptor['headerParams'] ?? null,
             $methodDescriptor['longRunning'] ?? null,

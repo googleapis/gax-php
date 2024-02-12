@@ -196,6 +196,7 @@ class CallHandler
                     $method->getName()
                 ));
             }
+
             return $this->startOperationsCall(
                 $method,
                 $request,
@@ -360,7 +361,7 @@ class CallHandler
         );
 
         return $callStack($call, $optionalArgs + array_filter([
-            'metadataReturnType' => $longRunning['metdataReturnType'] ?? null,
+            'metadataReturnType' => $longRunning['metadataReturnType'] ?? null,
             'audience' => $this->audience,
         ]));
     }
