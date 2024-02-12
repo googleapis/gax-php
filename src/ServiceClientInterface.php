@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2018 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,34 +32,7 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\LongRunning\OperationsClient;
-
-/**
- * Common functions used to work with various clients.
- *
- * @internal
- */
-trait OperationsSupportTrait
+interface ServiceClientInterface
 {
-    /**
-     * @param array $options
-     * @return OperationsClient|object
-     */
-    private function createOperationsClient(array $options)
-    {
-        unset(
-            $options['serviceName'],
-            $options['clientConfig'],
-            $options['descriptorsConfigPath'],
-        );
 
-        // User-supplied operations client
-        if (isset($options['operationsClient'])) {
-            return $options['operationsClient'];
-        }
-
-        // operationsClientClass option
-        $operationsClientClass = $options['operationsClientClass'] ?? OperationsCLient::class;
-        return new $operationsClientClass($options);
-    }
 }

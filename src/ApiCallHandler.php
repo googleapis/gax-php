@@ -68,9 +68,10 @@ class ApiCallHandler
         private ServiceDescriptor $descriptors,
         private CredentialsWrapper $credentialsWrapper,
         private TransportInterface $transport,
-        private array $retrySettings,
-        private array $agentHeader,
-        private string $audience,
+        private array $retrySettings = [],
+        private array $agentHeader = [],
+        private ?string $audience = null,
+        private ?ServiceClientInterface $operationsClient = null,
     ) {
 
     }
@@ -174,11 +175,11 @@ class ApiCallHandler
         array $optionalArgs = []
     ) {
         $method = $this->descriptors->getMethod($methodName);
-        return $this->doApiCall($method);
+        return $this->doApiCall($method, $request, $optionalArgs);
     }
 
     private function doApiCall(
-        Method $method,
+        MethodDescriptor $method,
         Message $request = null,
         array $optionalArgs = []
     ) {
@@ -189,17 +190,25 @@ class ApiCallHandler
 
         // Handle call based on call type configured in the method descriptor config.
         if ($method->getCallType() == Call::LONGRUNNING_CALL) {
+            if (is_null($this->operationsClient)) {
+                throw new ValidationException(sprintf(
+                    'Client missing required getOperationsClient for longrunning call "%s"',
+                    $method->getName()
+                ));
+            }
             return $this->doOperationsCall(
                 $method,
-                $optionalArgs,
                 $request,
-                $this->getOperationsClient()
+                $optionalArgs,
+                $this->operationsClient
             );
         }
 
         if ($method->getCallType() == Call::PAGINATED_CALL) {
             return $this->getPagedListResponse($method, $optionalArgs, $request);
         }
+
+        $callStack = $this->createCallStack($method->getName(), $optionalArgs);
 
         $call = new Call(
             $method->getFullName(),
@@ -209,9 +218,9 @@ class ApiCallHandler
             $method->getCallType()
         );
 
-        return $callStack($call, $optionalArgs + [
+        return $callStack($call, $optionalArgs + array_filter([
             'audience' => $this->audience,
-        ]);
+        ]));
     }
 
     /**
@@ -275,7 +284,7 @@ class ApiCallHandler
      */
     private function configureCallConstructionOptions(string $methodName, array $optionalArgs)
     {
-        $retrySettings = $this->retrySettings[$methodName];
+        $retrySettings = $this->retrySettings[$methodName] ?? RetrySettings::constructDefault();
         // Allow for retry settings to be changed at call time
         if (isset($optionalArgs['retrySettings'])) {
             if ($optionalArgs['retrySettings'] instanceof RetrySettings) {
@@ -303,18 +312,6 @@ class ApiCallHandler
         return $optionalArgs->toArray();
     }
 
-    public function startOperationsCall(
-        string $methodName,
-        Message $request,
-        array $optionalArgs,
-        $operationsClient,
-        string $operationClass,
-        string $interfaceName = null,
-    ) {
-        $method = $this->descriptors->getMethod($methodName, $interfaceName);
-        return $this->doOperationsCall($method, $request, $optionalArgs, $operationsClient, $operationClass);
-    }
-
     /**
      * @param string $methodName
      * @param array $optionalArgs {
@@ -336,8 +333,7 @@ class ApiCallHandler
         MethodDescriptor $method,
         Message $request,
         array $optionalArgs,
-        $operationsClient,
-        string $operationClass,
+        ServiceClientInterface $operationsClient,
     ) {
         $callStack = $this->createCallStack($method->getName(), $optionalArgs);
         $longRunning = $method->getLongRunning();
@@ -357,7 +353,7 @@ class ApiCallHandler
 
         $call = new Call(
             $method->getFullName(),
-            $operationClass,
+            $method->getResponseType(),
             $request,
             [],
             Call::UNARY_CALL
@@ -417,9 +413,9 @@ class ApiCallHandler
             Call::UNARY_CALL
         );
 
-        return $callStack($call, $optionalArgs + [
+        return $callStack($call, $optionalArgs + array_filter([
             'audience' => $this->audience,
-        ]);
+        ]));
     }
 
     /**

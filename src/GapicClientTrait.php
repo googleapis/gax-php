@@ -32,10 +32,19 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\Descriptor\MethodDescriptor;
-use Google\ApiCore\Descriptor\ServiceDescriptor;
+use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
+use Google\ApiCore\Middleware\FixedHeaderMiddleware;
+use Google\ApiCore\Middleware\OperationsMiddleware;
+use Google\ApiCore\Middleware\OptionsFilterMiddleware;
+use Google\ApiCore\Middleware\PagedMiddleware;
+use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\Options\CallOptions;
 use Google\ApiCore\Options\ClientOptions;
+use Google\ApiCore\Options\TransportOptions;
+use Google\ApiCore\Transport\GrpcFallbackTransport;
+use Google\ApiCore\Transport\GrpcTransport;
+use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
@@ -50,15 +59,86 @@ use GuzzleHttp\Promise\PromiseInterface;
 trait GapicClientTrait
 {
     use ClientOptionsTrait;
-    use OperationsSupportTrait;
-    use TransportSupportTrait;
     use ValidationTrait {
         ValidationTrait::validate as traitValidate;
     }
     use GrpcSupportTrait;
 
+    private ?TransportInterface $transport = null;
+    private ?CredentialsWrapper $credentialsWrapper = null;
+    /** @var RetrySettings[] $retrySettings */
+    private array $retrySettings = [];
+    private string $serviceName = '';
+    private array $agentHeader = [];
+    private array $descriptors = [];
     /** @var array<callable> $middlewareCallables */
+    private array $middlewareCallables = [];
+    private array $transportCallMethods = [
+        Call::UNARY_CALL => 'startUnaryCall',
+        Call::BIDI_STREAMING_CALL => 'startBidiStreamingCall',
+        Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
+        Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
+    ];
     private bool $backwardsCompatibilityMode;
+
+    /**
+     * Add a middleware to the call stack by providing a callable which will be
+     * invoked at the start of each call, and will return an instance of
+     * {@see MiddlewareInterface} when invoked.
+     *
+     * The callable must have the following method signature:
+     *
+     *     callable(MiddlewareInterface): MiddlewareInterface
+     *
+     * An implementation may look something like this:
+     * ```
+     * $client->addMiddleware(function (MiddlewareInterface $handler) {
+     *     return new class ($handler) implements MiddlewareInterface {
+     *         public function __construct(private MiddlewareInterface $handler) {
+     *         }
+     *
+     *         public function __invoke(Call $call, array $options) {
+     *             // modify call and options (pre-request)
+     *             $response = ($this->handler)($call, $options);
+     *             // modify the response (post-request)
+     *             return $response;
+     *         }
+     *     };
+     * });
+     * ```
+     *
+     * @param callable $middlewareCallable A callable which returns an instance
+     *                 of {@see MiddlewareInterface} when invoked with a
+     *                 MiddlewareInterface instance as its first argument.
+     * @return void
+     */
+    public function addMiddleware(callable $middlewareCallable): void
+    {
+        $this->middlewareCallables[] = $middlewareCallable;
+    }
+
+    /**
+     * Initiates an orderly shutdown in which preexisting calls continue but new
+     * calls are immediately cancelled.
+     *
+     * @experimental
+     */
+    public function close()
+    {
+        $this->transport->close();
+    }
+
+    /**
+     * Get the transport for the client. This method is protected to support
+     * use by customized clients.
+     *
+     * @access private
+     * @return TransportInterface
+     */
+    protected function getTransport()
+    {
+        return $this->transport;
+    }
 
     /**
      * Get the credentials for the client. This method is protected to support
@@ -69,7 +149,7 @@ trait GapicClientTrait
      */
     protected function getCredentialsWrapper()
     {
-        return $this->apiCallHandler->credentialsWrapper;
+        return $this->credentialsWrapper;
     }
 
     /**
@@ -171,37 +251,27 @@ trait GapicClientTrait
             // cast to ClientOptions for new surfaces only
             $options = new ClientOptions($options);
         }
-        $serviceName = $options['serviceName'];
-        $retrySettings = RetrySettings::load(
-            $serviceName,
+        $this->serviceName = $options['serviceName'];
+        $this->retrySettings = RetrySettings::load(
+            $this->serviceName,
             $options['clientConfig'],
             $options['disableRetries']
         );
-
-        $transportOption = $options['transport'] ?: self::defaultTransport();
-        $transport = $transportOption instanceof TransportInterface
-            ? $transportOption
-            : $this->createTransport(
-                $options['apiEndpoint'],
-                $transportOption,
-                $options['transportConfig'],
-                $options['clientCertSource']
-            );
 
         $headerInfo = [
             'libName' => $options['libName'],
             'libVersion' => $options['libVersion'],
             'gapicVersion' => $options['gapicVersion'],
         ];
-
         // Edge case: If the client has the gRPC extension installed, but is
         // a REST-only library, then the grpcVersion header should not be set.
-        if ($transport instanceof GrpcTransport) {
+        if ($this->transport instanceof GrpcTransport) {
             $headerInfo['grpcVersion'] = phpversion('grpc');
-        } elseif ($transport instanceof RestTransport
-            || $transport instanceof GrpcFallbackTransport) {
+        } elseif ($this->transport instanceof RestTransport
+            || $this->transport instanceof GrpcFallbackTransport) {
             $headerInfo['restVersion'] = Version::getApiCoreVersion();
         }
+        $this->agentHeader = AgentHeader::buildAgentHeader($headerInfo);
 
         // Set "client_library_name" depending on client library surface being used
         $userAgentHeader = sprintf(
@@ -209,59 +279,170 @@ trait GapicClientTrait
             $this->isBackwardsCompatibilityMode() ? 'legacy' : 'new',
             $options['gapicVersion']
         );
-        $agentHeader = AgentHeader::buildAgentHeader($headerInfo);
-        $agentHeader['User-Agent'] = [$userAgentHeader];
+        $this->agentHeader['User-Agent'] = [$userAgentHeader];
 
-        $credentialsWrapper = $this->createCredentialsWrapper(
+        self::validateFileExists($options['descriptorsConfigPath']);
+
+        $descriptors = require($options['descriptorsConfigPath']);
+        $this->descriptors = $descriptors['interfaces'][$this->serviceName];
+
+        $this->credentialsWrapper = $this->createCredentialsWrapper(
             $options['credentials'],
             $options['credentialsConfig'],
             $options['universeDomain']
         );
 
-        self::validateFileExists($options['descriptorsConfigPath']);
-        $descriptors = require($options['descriptorsConfigPath']);
-        $serviceDescriptor = new ServiceDescriptor(
-            $serviceName,
-            $descriptors['interfaces'][$serviceName]
-        );
-
-        $this->apiCallHandler = new ApiCallHandler(
-            $serviceDescriptor,
-            $credentialsWrapper,
-            $transport,
-            $retrySettings,
-            $agentHeader,
-            'https://' . self::SERVICE_ADDRESS . '/',
-        );
+        $transport = $options['transport'] ?: self::defaultTransport();
+        $this->transport = $transport instanceof TransportInterface
+            ? $transport
+            : $this->createTransport(
+                $options['apiEndpoint'],
+                $transport,
+                $options['transportConfig'],
+                $options['clientCertSource']
+            );
     }
 
     /**
-     * @param string $methodName
-     * @param Message $request
-     * @param array $optionalArgs {
-     *     Call Options
-     *
-     *     @type array $headers [optional] key-value array containing headers
-     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
-     *     @type array $transportOptions [optional] transport-specific call options
-     *     @type RetrySettings|array $retrySettings [optional] A retry settings
-     *           override for the call.
-     * }
-     *
-     * @experimental
-     *
-     * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
+     * @param string $apiEndpoint
+     * @param string $transport
+     * @param TransportOptions|array $transportConfig
+     * @param callable $clientCertSource
+     * @return TransportInterface
+     * @throws ValidationException
      */
-    private function startApiCall(
-        string $methodName,
-        Message $request = null,
-        array $optionalArgs = []
+    private function createTransport(
+        string $apiEndpoint,
+        $transport,
+        $transportConfig,
+        callable $clientCertSource = null
     ) {
-        return $this->apiCallHandler->startApiCall(
-            $methodName,
-            $request,
-            $optionalArgs,
-        );
+        if (!is_string($transport)) {
+            throw new ValidationException(
+                "'transport' must be a string, instead got:" .
+                print_r($transport, true)
+            );
+        }
+        $supportedTransports = self::supportedTransports();
+        if (!in_array($transport, $supportedTransports)) {
+            throw new ValidationException(sprintf(
+                'Unexpected transport option "%s". Supported transports: %s',
+                $transport,
+                implode(', ', $supportedTransports)
+            ));
+        }
+        $configForSpecifiedTransport = $transportConfig[$transport] ?? [];
+        if (is_array($configForSpecifiedTransport)) {
+            $configForSpecifiedTransport['clientCertSource'] = $clientCertSource;
+        } else {
+            $configForSpecifiedTransport->setClientCertSource($clientCertSource);
+            $configForSpecifiedTransport = $configForSpecifiedTransport->toArray();
+        }
+        switch ($transport) {
+            case 'grpc':
+                // Setting the user agent for gRPC requires special handling
+                if (isset($this->agentHeader['User-Agent'])) {
+                    if ($configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] ??= '') {
+                        $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .= ' ';
+                    }
+                    $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
+                        $this->agentHeader['User-Agent'][0];
+                }
+                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
+            case 'grpc-fallback':
+                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
+            case 'rest':
+                if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
+                    throw new ValidationException(
+                        "The 'restClientConfigPath' config is required for 'rest' transport."
+                    );
+                }
+                $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
+                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
+            default:
+                throw new ValidationException(
+                    "Unexpected 'transport' option: $transport. " .
+                    "Supported values: ['grpc', 'rest', 'grpc-fallback']"
+                );
+        }
+    }
+
+    /**
+     * @param array $options
+     * @return OperationsClient
+     */
+    private function createOperationsClient(array $options)
+    {
+        $this->pluckArray([
+            'serviceName',
+            'clientConfig',
+            'descriptorsConfigPath',
+        ], $options);
+
+        // User-supplied operations client
+        if ($operationsClient = $this->pluck('operationsClient', $options, false)) {
+            return $operationsClient;
+        }
+
+        // operationsClientClass option
+        $operationsClientClass = $this->pluck('operationsClientClass', $options, false)
+            ?: OperationsCLient::class;
+        return new $operationsClientClass($options);
+    }
+
+    /**
+     * @return string
+     */
+    private static function defaultTransport()
+    {
+        return self::getGrpcDependencyStatus()
+            ? 'grpc'
+            : 'rest';
+    }
+
+    private function validateCallConfig(string $methodName)
+    {
+        // Ensure a method descriptor exists for the target method.
+        if (!isset($this->descriptors[$methodName])) {
+            throw new ValidationException("Requested method '$methodName' does not exist in descriptor configuration.");
+        }
+        $methodDescriptors = $this->descriptors[$methodName];
+
+        // Ensure required descriptor configuration exists.
+        if (!isset($methodDescriptors['callType'])) {
+            throw new ValidationException("Requested method '$methodName' does not have a callType " .
+                'in descriptor configuration.');
+        }
+        $callType = $methodDescriptors['callType'];
+
+        // Validate various callType specific configurations.
+        if ($callType == Call::LONGRUNNING_CALL) {
+            if (!isset($methodDescriptors['longRunning'])) {
+                throw new ValidationException("Requested method '$methodName' does not have a longRunning config " .
+                    'in descriptor configuration.');
+            }
+            // @TODO: check if the client implements `OperationsClientInterface` instead
+            if (!method_exists($this, 'getOperationsClient')) {
+                throw new ValidationException('Client missing required getOperationsClient ' .
+                    "for longrunning call '$methodName'");
+            }
+        } elseif ($callType == Call::PAGINATED_CALL) {
+            if (!isset($methodDescriptors['pageStreaming'])) {
+                throw new ValidationException("Requested method '$methodName' with callType PAGINATED_CALL does not " .
+                    'have a pageStreaming in descriptor configuration.');
+            }
+        }
+
+        // LRO are either Standard LRO response type or custom, which are handled by
+        // startOperationCall, so no need to validate responseType for those callType.
+        if ($callType != Call::LONGRUNNING_CALL) {
+            if (!isset($methodDescriptors['responseType'])) {
+                throw new ValidationException("Requested method '$methodName' does not have a responseType " .
+                    'in descriptor configuration.');
+            }
+        }
+
+        return $methodDescriptors;
     }
 
     /**
@@ -288,8 +469,226 @@ trait GapicClientTrait
         // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
         // in order to find the method in the descriptor config.
         $methodName = ucfirst($methodName);
+        $methodDescriptors = $this->validateCallConfig($methodName);
 
-        return $this->apiCallHandler->startAsyncCall($method, $request, $optionalArgs);
+        $callType = $methodDescriptors['callType'];
+
+        switch ($callType) {
+            case Call::PAGINATED_CALL:
+                return $this->getPagedListResponseAsync(
+                    $methodName,
+                    $optionalArgs,
+                    $methodDescriptors['responseType'],
+                    $request,
+                    $methodDescriptors['interfaceOverride'] ?? $this->serviceName
+                );
+            case Call::SERVER_STREAMING_CALL:
+            case Call::CLIENT_STREAMING_CALL:
+            case Call::BIDI_STREAMING_CALL:
+                throw new ValidationException("Call type '$callType' of requested method " .
+                    "'$methodName' is not supported for async execution.");
+        }
+
+        return $this->startApiCall($methodName, $request, $optionalArgs);
+    }
+
+    /**
+     * @param string $methodName
+     * @param Message $request
+     * @param array $optionalArgs {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings
+     *           override for the call.
+     * }
+     *
+     * @experimental
+     *
+     * @return PromiseInterface|PagedListResponse|BidiStream|ClientStream|ServerStream
+     */
+    private function startApiCall(
+        string $methodName,
+        Message $request = null,
+        array $optionalArgs = []
+    ) {
+        $methodDescriptors =$this->validateCallConfig($methodName);
+        $callType = $methodDescriptors['callType'];
+
+        // Prepare request-based headers, merge with user-provided headers,
+        // which take precedence.
+        $headerParams = $methodDescriptors['headerParams'] ?? [];
+        $requestHeaders = $this->buildRequestParamsHeader($headerParams, $request);
+        $optionalArgs['headers'] = array_merge($requestHeaders, $optionalArgs['headers'] ?? []);
+
+        // Default the interface name, if not set, to the client's protobuf service name.
+        $interfaceName = $methodDescriptors['interfaceOverride'] ?? $this->serviceName;
+
+        // Handle call based on call type configured in the method descriptor config.
+        if ($callType == Call::LONGRUNNING_CALL) {
+            return $this->startOperationsCall(
+                $methodName,
+                $optionalArgs,
+                $request,
+                $this->getOperationsClient(),
+                $interfaceName,
+                // Custom operations will define their own operation response type, whereas standard
+                // LRO defaults to the same type.
+                $methodDescriptors['responseType'] ?? null
+            );
+        }
+
+        // Fully-qualified name of the response message PHP class.
+        $decodeType = $methodDescriptors['responseType'];
+
+        if ($callType == Call::PAGINATED_CALL) {
+            return $this->getPagedListResponse($methodName, $optionalArgs, $decodeType, $request, $interfaceName);
+        }
+
+        // Unary, and all Streaming types handled by startCall.
+        return $this->startCall($methodName, $decodeType, $optionalArgs, $request, $callType, $interfaceName);
+    }
+
+    /**
+     * @param string $methodName
+     * @param string $decodeType
+     * @param array $optionalArgs {
+     *     Call Options
+     *
+     *     @type array $headers [optional] key-value array containing headers
+     *     @type int $timeoutMillis [optional] the timeout in milliseconds for the call
+     *     @type array $transportOptions [optional] transport-specific call options
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings
+     *           override for the call.
+     * }
+     * @param Message $request
+     * @param int $callType
+     * @param string $interfaceName
+     *
+     * @return PromiseInterface|BidiStream|ClientStream|ServerStream
+     */
+    private function startCall(
+        string $methodName,
+        string $decodeType,
+        array $optionalArgs = [],
+        Message $request = null,
+        int $callType = Call::UNARY_CALL,
+        string $interfaceName = null
+    ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
+        $callStack = $this->createCallStack(
+            $this->configureCallConstructionOptions($methodName, $optionalArgs)
+        );
+
+        $descriptor = $this->descriptors[$methodName]['grpcStreaming'] ?? null;
+
+        $call = new Call(
+            $this->buildMethod($interfaceName, $methodName),
+            $decodeType,
+            $request,
+            $descriptor,
+            $callType
+        );
+        switch ($callType) {
+            case Call::UNARY_CALL:
+                $this->modifyUnaryCallable($callStack);
+                break;
+            case Call::BIDI_STREAMING_CALL:
+            case Call::CLIENT_STREAMING_CALL:
+            case Call::SERVER_STREAMING_CALL:
+                $this->modifyStreamingCallable($callStack);
+                break;
+        }
+
+        return $callStack($call, $optionalArgs + array_filter([
+            'audience' => self::getDefaultAudience()
+        ]));
+    }
+
+    /**
+     * @param array $callConstructionOptions {
+     *     Call Construction Options
+     *
+     *     @type RetrySettings $retrySettings [optional] A retry settings override
+     *           For the call.
+     * }
+     *
+     * @return callable
+     */
+    private function createCallStack(array $callConstructionOptions)
+    {
+        $quotaProject = $this->credentialsWrapper->getQuotaProject();
+        $fixedHeaders = $this->agentHeader;
+        if ($quotaProject) {
+            $fixedHeaders += [
+                'X-Goog-User-Project' => [$quotaProject]
+            ];
+        }
+        $callStack = function (Call $call, array $options) {
+            $startCallMethod = $this->transportCallMethods[$call->getCallType()];
+            return $this->transport->$startCallMethod($call, $options);
+        };
+        $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
+        $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
+        $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
+        $callStack = new OptionsFilterMiddleware($callStack, [
+            'headers',
+            'timeoutMillis',
+            'transportOptions',
+            'metadataCallback',
+            'audience',
+            'metadataReturnType'
+        ]);
+
+        foreach (\array_reverse($this->middlewareCallables) as $fn) {
+            /** @var MiddlewareInterface $callStack */
+            $callStack = $fn($callStack);
+        }
+
+        return $callStack;
+    }
+
+    /**
+     * @param string $methodName
+     * @param array $optionalArgs {
+     *     Optional arguments
+     *
+     *     @type RetrySettings|array $retrySettings [optional] A retry settings
+     *           override for the call.
+     * }
+     *
+     * @return array
+     */
+    private function configureCallConstructionOptions(string $methodName, array $optionalArgs)
+    {
+        $retrySettings = $this->retrySettings[$methodName];
+        // Allow for retry settings to be changed at call time
+        if (isset($optionalArgs['retrySettings'])) {
+            if ($optionalArgs['retrySettings'] instanceof RetrySettings) {
+                $retrySettings = $optionalArgs['retrySettings'];
+            } else {
+                $retrySettings = $retrySettings->with(
+                    $optionalArgs['retrySettings']
+                );
+            }
+        }
+        return [
+            'retrySettings' => $retrySettings,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function configureCallOptions(array $optionalArgs): array
+    {
+        if ($this->isBackwardsCompatibilityMode()) {
+            return $optionalArgs;
+        }
+        // cast to CallOptions for new surfaces only
+        return (new CallOptions($optionalArgs))->toArray();
     }
 
     /**
@@ -315,16 +714,216 @@ trait GapicClientTrait
         Message $request,
         $client,
         string $interfaceName = null,
-        string $operationClass = Operation::class,
+        string $operationClass = null
     ) {
-        return $this->apiCallHandler->startOperationsCall(
-            $methodName,
-            $request,
-            $optionalArgs,
-            $client,
-            $operationClass,
-            $interfaceName,
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
+        $callStack = $this->createCallStack(
+            $this->configureCallConstructionOptions($methodName, $optionalArgs)
         );
+        $descriptor = $this->descriptors[$methodName]['longRunning'];
+        $metadataReturnType = null;
+
+        // Call the methods supplied in "additionalArgumentMethods" on the request Message object
+        // to build the "additionalOperationArguments" option for the operation response.
+        if (isset($descriptor['additionalArgumentMethods'])) {
+            $additionalArgs = [];
+            foreach ($descriptor['additionalArgumentMethods'] as $additionalArgsMethodName) {
+                $additionalArgs[] = $request->$additionalArgsMethodName();
+            }
+            $descriptor['additionalOperationArguments'] = $additionalArgs;
+            unset($descriptor['additionalArgumentMethods']);
+        }
+
+        if (isset($descriptor['metadataReturnType'])) {
+            $metadataReturnType = $descriptor['metadataReturnType'];
+        }
+
+        $callStack = new OperationsMiddleware($callStack, $client, $descriptor);
+
+        $call = new Call(
+            $this->buildMethod($interfaceName, $methodName),
+            $operationClass ?: Operation::class,
+            $request,
+            [],
+            Call::UNARY_CALL
+        );
+
+        $this->modifyUnaryCallable($callStack);
+        return $callStack($call, $optionalArgs + array_filter([
+            'metadataReturnType' => $metadataReturnType,
+            'audience' => self::getDefaultAudience()
+        ]));
+    }
+
+    /**
+     * @param string $methodName
+     * @param array $optionalArgs
+     * @param string $decodeType
+     * @param Message $request
+     * @param string $interfaceName
+     *
+     * @return PagedListResponse
+     */
+    private function getPagedListResponse(
+        string $methodName,
+        array $optionalArgs,
+        string $decodeType,
+        Message $request,
+        string $interfaceName = null
+    ) {
+        return $this->getPagedListResponseAsync(
+            $methodName,
+            $optionalArgs,
+            $decodeType,
+            $request,
+            $interfaceName
+        )->wait();
+    }
+
+    /**
+     * @param string $methodName
+     * @param array $optionalArgs
+     * @param string $decodeType
+     * @param Message $request
+     * @param string $interfaceName
+     *
+     * @return PromiseInterface
+     */
+    private function getPagedListResponseAsync(
+        string $methodName,
+        array $optionalArgs,
+        string $decodeType,
+        Message $request,
+        string $interfaceName = null
+    ) {
+        $optionalArgs = $this->configureCallOptions($optionalArgs);
+        $callStack = $this->createCallStack(
+            $this->configureCallConstructionOptions($methodName, $optionalArgs)
+        );
+        $descriptor = new PageStreamingDescriptor(
+            $this->descriptors[$methodName]['pageStreaming']
+        );
+        $callStack = new PagedMiddleware($callStack, $descriptor);
+
+        $call = new Call(
+            $this->buildMethod($interfaceName, $methodName),
+            $decodeType,
+            $request,
+            [],
+            Call::UNARY_CALL
+        );
+
+        $this->modifyUnaryCallable($callStack);
+        return $callStack($call, $optionalArgs + array_filter([
+            'audience' => self::getDefaultAudience()
+        ]));
+    }
+
+    /**
+     * @param string $interfaceName
+     * @param string $methodName
+     *
+     * @return string
+     */
+    private function buildMethod(string $interfaceName = null, string $methodName = null)
+    {
+        return sprintf(
+            '%s/%s',
+            $interfaceName ?: $this->serviceName,
+            $methodName
+        );
+    }
+
+    /**
+     * @param array $headerParams
+     * @param Message|null $request
+     *
+     * @return array
+     */
+    private function buildRequestParamsHeader(array $headerParams, Message $request = null)
+    {
+        $headers = [];
+
+        // No request message means no request-based headers.
+        if (!$request) {
+            return $headers;
+        }
+
+        foreach ($headerParams as $headerParam) {
+            $msg = $request;
+            $value = null;
+            foreach ($headerParam['fieldAccessors'] as $accessor) {
+                $value = $msg->$accessor();
+
+                // In case the field in question is nested in another message,
+                // skip the header param when the nested message field is unset.
+                $msg = $value;
+                if (is_null($msg)) {
+                    break;
+                }
+            }
+
+            $keyName = $headerParam['keyName'];
+
+            // If there are value pattern matchers configured and the target
+            // field was set, evaluate the matchers in the order that they were
+            // annotated in with last one matching wins.
+            $original = $value;
+            $matchers = isset($headerParam['matchers']) && !is_null($value) ?
+                $headerParam['matchers'] :
+                [];
+            foreach ($matchers as $matcher) {
+                $matches = [];
+                if (preg_match($matcher, $original, $matches)) {
+                    $value = $matches[$keyName];
+                }
+            }
+
+            // If there are no matches or the target field was unset, skip this
+            // header param.
+            if (!$value) {
+                continue;
+            }
+
+            $headers[$keyName] = $value;
+        }
+
+        $requestParams = new RequestParamsHeaderDescriptor($headers);
+
+        return $requestParams->getHeader();
+    }
+
+    /**
+     * The SERVICE_ADDRESS constant is set by GAPIC clients
+     */
+    private static function getDefaultAudience()
+    {
+        if (!defined('self::SERVICE_ADDRESS')) {
+            return null;
+        }
+        return 'https://' . self::SERVICE_ADDRESS . '/'; // @phpstan-ignore-line
+    }
+
+    /**
+     * Modify the unary callable.
+     *
+     * @param callable $callable
+     * @access private
+     */
+    protected function modifyUnaryCallable(callable &$callable)
+    {
+        // Do nothing - this method exists to allow callable modification by partial veneers.
+    }
+
+    /**
+     * Modify the streaming callable.
+     *
+     * @param callable $callable
+     * @access private
+     */
+    protected function modifyStreamingCallable(callable &$callable)
+    {
+        // Do nothing - this method exists to allow callable modification by partial veneers.
     }
 
     /**
@@ -334,41 +933,5 @@ trait GapicClientTrait
     {
         return $this->backwardsCompatibilityMode
             ?? $this->backwardsCompatibilityMode = substr(__CLASS__, -11) === 'GapicClient';
-    }
-
-    /**
-     * Add a middleware to the call stack by providing a callable which will be
-     * invoked at the start of each call, and will return an instance of
-     * {@see MiddlewareInterface} when invoked.
-     *
-     * The callable must have the following method signature:
-     *
-     *     callable(MiddlewareInterface): MiddlewareInterface
-     *
-     * An implementation may look something like this:
-     * ```
-     * $client->addMiddleware(function (MiddlewareInterface $handler) {
-     *     return new class ($handler) implements MiddlewareInterface {
-     *         public function __construct(private MiddlewareInterface $handler) {
-     *         }
-     *
-     *         public function __invoke(Call $call, array $options) {
-     *             // modify call and options (pre-request)
-     *             $response = ($this->handler)($call, $options);
-     *             // modify the response (post-request)
-     *             return $response;
-     *         }
-     *     };
-     * });
-     * ```
-     *
-     * @param callable $middlewareCallable A callable which returns an instance
-     *                 of {@see MiddlewareInterface} when invoked with a
-     *                 MiddlewareInterface instance as its first argument.
-     * @return void
-     */
-    public function addMiddleware(callable $middlewareCallable): void
-    {
-        $this->apiCallHandler->addMiddleware($middlewareCallable);
     }
 }
