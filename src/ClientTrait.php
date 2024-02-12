@@ -124,10 +124,6 @@ trait ClientTrait
      */
     private function setClientOptions(CallOptions $options)
     {
-        // serviceAddress is now deprecated and acts as an alias for apiEndpoint
-        if (isset($options['serviceAddress'])) {
-            $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
-        }
         $this->validateNotNull($options, [
             'apiEndpoint',
             'serviceName',
