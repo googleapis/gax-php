@@ -46,7 +46,9 @@ use Google\ApiCore\Transport\GrpcFallbackTransport;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
+use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\GetUniverseDomainInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -129,6 +131,153 @@ trait GapicClientTrait
     protected function getCredentialsWrapper()
     {
         return $this->credentialsWrapper;
+    }
+
+    private function buildClientOptions(array $options)
+    {
+        // Build $defaultOptions starting from top level
+        // variables, then going into deeper nesting, so that
+        // we will not encounter missing keys
+        $defaultOptions = self::getClientDefaults();
+        $defaultOptions += [
+            'disableRetries' => false,
+            'credentials' => null,
+            'credentialsConfig' => [],
+            'transport' => null,
+            'transportConfig' => [],
+            'gapicVersion' => self::getGapicVersion($options),
+            'libName' => null,
+            'libVersion' => null,
+            'apiEndpoint' => null,
+            'clientCertSource' => null,
+            // if the universe domain hasn't been explicitly set, assume GDU ("googleapis.com")
+            'universeDomain' => GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN,
+        ];
+
+        $supportedTransports = $this->supportedTransports();
+        foreach ($supportedTransports as $transportName) {
+            if (!array_key_exists($transportName, $defaultOptions['transportConfig'])) {
+                $defaultOptions['transportConfig'][$transportName] = [];
+            }
+        }
+        if (in_array('grpc', $supportedTransports)) {
+            $defaultOptions['transportConfig']['grpc'] = [
+                'stubOpts' => ['grpc.service_config_disable_resolution' => 1]
+            ];
+        }
+
+        // Keep track of the API Endpoint
+        $apiEndpoint = $options['apiEndpoint'] ?? null;
+
+        // Merge defaults into $options starting from top level
+        // variables, then going into deeper nesting, so that
+        // we will not encounter missing keys
+        $options += $defaultOptions;
+        $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];
+        $options['transportConfig'] += $defaultOptions['transportConfig'];  // @phpstan-ignore-line
+        if (isset($options['transportConfig']['grpc'])) {
+            $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
+            $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
+        }
+        if (isset($options['transportConfig']['rest'])) {
+            $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
+        }
+
+        // These calls do not apply to "New Surface" clients.
+        if ($this->isBackwardsCompatibilityMode()) {
+            $preModifiedOptions = $options;
+            $this->modifyClientOptions($options);
+            // NOTE: this is required to ensure backwards compatiblity with $options['apiEndpoint']
+            if ($options['apiEndpoint'] !== $preModifiedOptions['apiEndpoint']) {
+                $apiEndpoint = $options['apiEndpoint'];
+            }
+
+            // serviceAddress is now deprecated and acts as an alias for apiEndpoint
+            if (isset($options['serviceAddress'])) {
+                $apiEndpoint = $options['serviceAddress'];
+                unset($options['serviceAddress']);
+            }
+        } else {
+            // Ads is using this method in their new surface clients, so we need to call it.
+            // However, this method is not used anywhere else for the new surface clients
+            // @TODO: Remove this in GAX V2
+            $this->modifyClientOptions($options);
+        }
+        // If an API endpoint is different form the default, ensure the "audience" does not conflict
+        // with the custom endpoint by setting "user defined" scopes.
+        if ($apiEndpoint
+            && $apiEndpoint != $defaultOptions['apiEndpoint']
+            && empty($options['credentialsConfig']['scopes'])
+            && !empty($options['credentialsConfig']['defaultScopes'])
+        ) {
+            $options['credentialsConfig']['scopes'] = $options['credentialsConfig']['defaultScopes'];
+        }
+
+        // mTLS: detect and load the default clientCertSource if the environment variable
+        // "GOOGLE_API_USE_CLIENT_CERTIFICATE" is true, and the cert source is available
+        if (empty($options['clientCertSource']) && CredentialsLoader::shouldLoadClientCertSource()) {
+            if ($defaultCertSource = CredentialsLoader::getDefaultClientCertSource()) {
+                $options['clientCertSource'] = function () use ($defaultCertSource) {
+                    $cert = call_user_func($defaultCertSource);
+
+                    // the key and the cert are returned in one string
+                    return [$cert, $cert];
+                };
+            }
+        }
+
+        // mTLS: If no apiEndpoint has been supplied by the user, and either
+        // GOOGLE_API_USE_MTLS_ENDPOINT tells us to, or mTLS is available, use the mTLS endpoint.
+        if (is_null($apiEndpoint) && $this->shouldUseMtlsEndpoint($options)) {
+            $apiEndpoint = self::determineMtlsEndpoint($options['apiEndpoint']);
+        }
+
+        // mTLS: It is not valid to configure mTLS outside of "googleapis.com" (yet)
+        if (isset($options['clientCertSource'])
+            && $options['universeDomain'] !== GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
+        ) {
+            throw new ValidationException(
+                'mTLS is not supported outside the "googleapis.com" universe'
+            );
+        }
+
+        if (is_null($apiEndpoint)) {
+            if (defined('self::SERVICE_ADDRESS_TEMPLATE')) {
+                // Derive the endpoint from the service address template and the universe domain
+                $apiEndpoint = str_replace(
+                    'UNIVERSE_DOMAIN',
+                    $options['universeDomain'],
+                    self::SERVICE_ADDRESS_TEMPLATE
+                );
+            } else {
+                // For older clients, the service address template does not exist. Use the default
+                // endpoint instead.
+                $apiEndpoint = $defaultOptions['apiEndpoint'];
+            }
+        }
+
+        if (extension_loaded('sysvshm')
+            && isset($options['gcpApiConfigPath'])
+            && file_exists($options['gcpApiConfigPath'])
+            && !empty($apiEndpoint)
+        ) {
+            $grpcGcpConfig = self::initGrpcGcpConfig(
+                $apiEndpoint,
+                $options['gcpApiConfigPath']
+            );
+
+            if (!array_key_exists('stubOpts', $options['transportConfig']['grpc'])) {
+                $options['transportConfig']['grpc']['stubOpts'] = [];
+            }
+
+            $options['transportConfig']['grpc']['stubOpts'] += [
+                'grpc_call_invoker' => $grpcGcpConfig->callInvoker()
+            ];
+        }
+
+        $options['apiEndpoint'] = $apiEndpoint;
+
+        return $options;
     }
 
     /**

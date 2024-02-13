@@ -35,6 +35,7 @@ namespace Google\ApiCore;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
+use Google\ApiCore\Options\ClientOptions;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 
@@ -80,7 +81,7 @@ trait ClientOptionsTrait
         return [];
     }
 
-    private function buildClientOptions(array $options)
+    private function buildClientOptions(array $options): ClientOptions
     {
         // Build $defaultOptions starting from top level
         // variables, then going into deeper nesting, so that
@@ -130,26 +131,11 @@ trait ClientOptionsTrait
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
         }
 
-        // These calls do not apply to "New Surface" clients.
-        if ($this->isBackwardsCompatibilityMode()) {
-            $preModifiedOptions = $options;
-            $this->modifyClientOptions($options);
-            // NOTE: this is required to ensure backwards compatiblity with $options['apiEndpoint']
-            if ($options['apiEndpoint'] !== $preModifiedOptions['apiEndpoint']) {
-                $apiEndpoint = $options['apiEndpoint'];
-            }
+        // Ads is using this method in their new surface clients, so we need to call it.
+        // However, this method is not used anywhere else for the new surface clients
+        // @TODO: Remove this in GAX V2
+        $this->modifyClientOptions($options);
 
-            // serviceAddress is now deprecated and acts as an alias for apiEndpoint
-            if (isset($options['serviceAddress'])) {
-                $apiEndpoint = $options['serviceAddress'];
-                unset($options['serviceAddress']);
-            }
-        } else {
-            // Ads is using this method in their new surface clients, so we need to call it.
-            // However, this method is not used anywhere else for the new surface clients
-            // @TODO: Remove this in GAX V2
-            $this->modifyClientOptions($options);
-        }
         // If an API endpoint is different form the default, ensure the "audience" does not conflict
         // with the custom endpoint by setting "user defined" scopes.
         if ($apiEndpoint
@@ -224,7 +210,7 @@ trait ClientOptionsTrait
 
         $options['apiEndpoint'] = $apiEndpoint;
 
-        return $options;
+        return new ClientOptions($options);
     }
 
     private function shouldUseMtlsEndpoint(array $options)

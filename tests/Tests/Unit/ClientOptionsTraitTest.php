@@ -43,6 +43,7 @@ use Grpc\Gcp\Config;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Closure;
 
 class ClientOptionsTraitTest extends TestCase
 {
@@ -396,16 +397,26 @@ class ClientOptionsTraitTest extends TestCase
             putenv($envVar);
         }
 
+        if ($options['clientCertSource'] ?? null === true) {
+            // Closure::fromCallable([$this, 'foo']);
+            $options['clientCertSource'] = [$this, 'foo'];
+        }
+
         $client = new StubClientOptionsClient();
         $options = $client->buildClientOptions($options);
 
         // Only check the keys we care about
         $options = array_intersect_key(
-            $options,
+            $options->toArray(),
             array_flip(['apiEndpoint', 'clientCertSource'])
         );
 
         $this->assertEquals($expected, $options);
+    }
+
+    public function foo()
+    {
+
     }
 
     public function provideMtlsClientOptions()
