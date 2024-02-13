@@ -35,6 +35,7 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\ClientOptionsTrait;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\ValidationException;
+use Google\ApiCore\Options\ClientOptions;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
@@ -165,7 +166,7 @@ class ClientOptionsTraitTest extends TestCase
         }
         $client = new StubClientOptionsClient();
         $updatedOptions = $client->buildClientOptions($options);
-        $this->assertEquals($expectedUpdatedOptions, $updatedOptions);
+        $this->assertEquals($expectedUpdatedOptions, $updatedOptions->toArray());
     }
 
     public function buildClientOptionsProvider()
@@ -176,11 +177,10 @@ class ClientOptionsTraitTest extends TestCase
         );
         $grpcGcpConfig = new Config('test.address.com:443', $apiConfig);
 
-        $defaultOptions = [
+        $defaultOptions = (new ClientOptions([
             'apiEndpoint' => 'test.address.com:443',
             'gcpApiConfigPath' => __DIR__ . '/testdata/test_service_grpc_config.json',
-            'disableRetries' => false,
-            'transport' => null,
+            'universeDomain' => 'googleapis.com',
             'transportConfig' => [
                 'grpc' => [
                     'stubOpts' => [
@@ -188,33 +188,20 @@ class ClientOptionsTraitTest extends TestCase
                         'grpc.service_config_disable_resolution' => 1
                     ]
                 ],
-                'rest' => [],
-                'grpc-fallback' => [],
             ],
-            'credentials' => null,
-            'credentialsConfig' => [],
-            'gapicVersion' => '',
-            'libName' => null,
-            'libVersion' => null,
-            'clientCertSource' => null,
-            'universeDomain' => 'googleapis.com',
-        ];
+        ]))->toArray();
 
         $restConfigOptions = $defaultOptions;
-        $restConfigOptions['transportConfig']['rest'] += [
-            'customRestConfig' => 'value'
-        ];
+        $restConfigOptions['transportConfig']['rest']['restClientConfigPath'] = 'value';
         $grpcConfigOptions = $defaultOptions;
-        $grpcConfigOptions['transportConfig']['grpc'] += [
-            'customGrpcConfig' => 'value'
-        ];
+        $grpcConfigOptions['transportConfig']['grpc']['stubOpts'] = ['value'];
         return [
             [[], $defaultOptions],
             [
                 [
                     'transportConfig' => [
                         'rest' => [
-                            'customRestConfig' => 'value'
+                            'restClientConfigPath' => 'value'
                         ]
                     ]
                 ], $restConfigOptions
@@ -223,7 +210,7 @@ class ClientOptionsTraitTest extends TestCase
                 [
                     'transportConfig' => [
                         'grpc' => [
-                            'customGrpcConfig' => 'value'
+                            'stubOpts' => ['value']
                         ]
                     ]
                 ], $grpcConfigOptions
@@ -241,7 +228,7 @@ class ClientOptionsTraitTest extends TestCase
         }
         $client = new RestOnlyClient();
         $updatedOptions = $client->buildClientOptions($options);
-        $this->assertEquals($expectedUpdatedOptions, $updatedOptions);
+        $this->assertEquals($expectedUpdatedOptions, $updatedOptions->toArray());
     }
 
     public function buildClientOptionsProviderRestOnly()
@@ -380,10 +367,10 @@ class ClientOptionsTraitTest extends TestCase
             ['', [], false],
             ['always', [], true],
             ['never', [], false],
-            ['never', ['clientCertSource' => true], false],
-            ['auto', ['clientCertSource' => true], true],
-            ['invalid', ['clientCertSource' => true], true],
-            ['', ['clientCertSource' => true], true],
+            ['never', ['clientCertSource' => 'strlen'], false],
+            ['auto', ['clientCertSource' => 'strlen'], true],
+            ['invalid', ['clientCertSource' => 'strlen'], true],
+            ['', ['clientCertSource' => 'strlen'], true],
         ];
     }
 
@@ -397,11 +384,6 @@ class ClientOptionsTraitTest extends TestCase
             putenv($envVar);
         }
 
-        if ($options['clientCertSource'] ?? null === true) {
-            // Closure::fromCallable([$this, 'foo']);
-            $options['clientCertSource'] = [$this, 'foo'];
-        }
-
         $client = new StubClientOptionsClient();
         $options = $client->buildClientOptions($options);
 
@@ -411,12 +393,12 @@ class ClientOptionsTraitTest extends TestCase
             array_flip(['apiEndpoint', 'clientCertSource'])
         );
 
+        // Hack because PHP can't serialise Closure
+        if (!empty($options['clientCertSource'])) {
+            $options['clientCertSource'] = true;
+        }
+
         $this->assertEquals($expected, $options);
-    }
-
-    public function foo()
-    {
-
     }
 
     public function provideMtlsClientOptions()
@@ -441,14 +423,12 @@ class ClientOptionsTraitTest extends TestCase
             ],
             [
                 ['GOOGLE_API_USE_MTLS_ENDPOINT=never'],
-                ['clientCertSource' => true],
+                ['clientCertSource' => 'strlen'],
                 ['apiEndpoint' => $defaultEndpoint, 'clientCertSource' => true]
             ],
             [
-                [
-                    'GOOGLE_API_USE_MTLS_ENDPOINT=auto'
-                ],
-                ['clientCertSource' => true],
+                ['GOOGLE_API_USE_MTLS_ENDPOINT=auto'],
+                ['clientCertSource' => 'strlen'],
                 ['apiEndpoint' => $mtlsEndpoint, 'clientCertSource' => true]
             ],
             [
@@ -529,7 +509,7 @@ class ClientOptionsTraitTest extends TestCase
     {
         $client = new StubClientOptionsClient();
         $options = $client->buildClientOptions([]);
-        $options2 = $client->buildClientOptions($options);
+        $options2 = $client->buildClientOptions($options->toArray());
         $this->assertEquals($options, $options2);
     }
 

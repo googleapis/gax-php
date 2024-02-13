@@ -32,15 +32,15 @@
 
 namespace Google\ApiCore\Options\TransportOptions;
 
-use ArrayAccess;
 use Closure;
+use Google\ApiCore\Options\OptionsInterface;
 use Google\ApiCore\Options\OptionsTrait;
 
 /**
  * The GrpcFallbackTransportOptions class provides typing to the associative array of options used
  * to configure {@see \Google\ApiCore\Transport\GrpcFallbackTransport}.
  */
-class GrpcFallbackTransportOptions implements ArrayAccess
+class GrpcFallbackTransportOptions implements OptionsInterface
 {
     use OptionsTrait;
 

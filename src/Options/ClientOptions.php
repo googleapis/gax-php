@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\Options;
 
-use ArrayAccess;
 use Closure;
 use InvalidArgumentException;
 use Google\ApiCore\CredentialsWrapper;
@@ -57,7 +56,7 @@ use Google\Auth\FetchAuthTokenInterface;
  * Note: It's possible to pass an associative array to the API clients as well,
  * as ClientOptions will still be used internally for validation.
  */
-class ClientOptions implements ArrayAccess
+class ClientOptions implements OptionsInterface
 {
     use OptionsTrait;
 
@@ -92,6 +91,8 @@ class ClientOptions implements ArrayAccess
     private ?Closure $clientCertSource;
 
     private ?string $universeDomain;
+
+    private ?string $gcpApiConfigPath;
 
     /**
      * @param array $options {
@@ -168,7 +169,7 @@ class ClientOptions implements ArrayAccess
         $this->setApiEndpoint($arr['apiEndpoint'] ?? null);
         $this->setDisableRetries($arr['disableRetries'] ?? false);
         $this->setClientConfig($arr['clientConfig'] ?? []);
-        $this->setCredentials($arr['credentials']);
+        $this->setCredentials($arr['credentials'] ?? null);
         $this->setCredentialsConfig($arr['credentialsConfig'] ?? []);
         $this->setTransport($arr['transport'] ?? null);
         $this->setTransportConfig(new TransportOptions($arr['transportConfig'] ?? []));
@@ -180,6 +181,7 @@ class ClientOptions implements ArrayAccess
         $this->setGapicVersion($arr['gapicVersion'] ?? null);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setUniverseDomain($arr['universeDomain'] ?? null);
+        $this->setGcpApiConfigPath($arr['gcpApiConfigPath'] ?? null);
     }
 
     /**
@@ -313,5 +315,13 @@ class ClientOptions implements ArrayAccess
     public function setUniverseDomain(?string $universeDomain)
     {
         $this->universeDomain = $universeDomain;
+    }
+
+    /**
+     * @param string $gcpApiConfigPath
+     */
+    public function setGcpApiConfigPath(?string $gcpApiConfigPath)
+    {
+        $this->gcpApiConfigPath = $gcpApiConfigPath;
     }
 }

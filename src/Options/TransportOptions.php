@@ -35,9 +35,11 @@ namespace Google\ApiCore\Options;
 use Google\ApiCore\Options\TransportOptions\GrpcTransportOptions;
 use Google\ApiCore\Options\TransportOptions\GrpcFallbackTransportOptions;
 use Google\ApiCore\Options\TransportOptions\RestTransportOptions;
-use ArrayAccess;
 
-class TransportOptions implements ArrayAccess
+/**
+ * @experimental
+ */
+class TransportOptions implements OptionsInterface
 {
     use OptionsTrait;
 
@@ -86,5 +88,21 @@ class TransportOptions implements ArrayAccess
     public function setRest(RestTransportOptions $rest): void
     {
         $this->rest = $rest;
+    }
+
+
+    public function toArray(): array
+    {
+        $arr = [];
+        foreach (get_object_vars($this) as $key => $value) {
+            if ($key === 'grpcFallback')  {
+                $key = 'grpc-fallback';
+            }
+            if ($value instanceof OptionsInterface) {
+                $value = $value->toArray();
+            }
+            $arr[$key] = $value;
+        }
+        return $arr;
     }
 }

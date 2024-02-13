@@ -32,7 +32,6 @@
 
 namespace Google\ApiCore\Options;
 
-use ArrayAccess;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\TransportInterface;
@@ -44,7 +43,7 @@ use Google\ApiCore\TransportInterface;
  * {@see TransportInterface::startClientStreamingCall()}, and
  * {@see TransportInterface::startServerStreamingCall()}.
  */
-class CallOptions implements ArrayAccess
+class CallOptions implements OptionsInterface
 {
     use OptionsTrait;
 
