@@ -249,7 +249,7 @@ trait ClientTrait
         // in order to find the method in the descriptor config.
         $methodName = ucfirst($methodName);
 
-        return $this->callHandler->startAsyncCall($method, $request, $optionalArgs);
+        return $this->callHandler->startAsyncCall($methodName, $request, $optionalArgs);
     }
 
     /**
