@@ -40,6 +40,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use TypeError;
+use UnexpectedValueException;
 
 class OptionsTraitTest extends TestCase
 {
@@ -111,6 +112,45 @@ class OptionsTraitTest extends TestCase
     {
         $options = new OptionsTraitStub(['option1' => 'foo', 'file' => __FILE__]);
         $this->assertEquals(__FILE__, $options['file']);
+    }
+
+    public function testValidateNotNullWithInvalidOption()
+    {
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('Option foo does not exist');
+
+        $stub = new OptionsTraitStub([
+            'option1' => 'foo',
+            'option2' => null
+        ]);
+
+        $stub->validateNotNull('foo');
+    }
+
+    public function testValidateNotNullWithNullRequiredKey()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Missing required argument option2');
+
+        $stub = new OptionsTraitStub([
+            'option1' => 'foo',
+            'option2' => null
+        ]);
+
+        $stub->validateNotNull('option2');
+    }
+
+    public function testValidateNotNull()
+    {
+        $stub = new OptionsTraitStub([
+            'option1' => 'foo',
+            'option2' => 2
+        ]);
+
+        $stub->validateNotNull('option1');
+        $stub->validateNotNull('option2');
+
+        $this->assertTrue(true);
     }
 }
 

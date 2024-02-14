@@ -123,22 +123,13 @@ trait ClientTrait
      */
     private function setClientOptions(ClientOptions $options)
     {
-        $this->validateNotNull($options, [
-            'apiEndpoint',
-            'serviceName',
-            'descriptorsConfigPath',
-            'clientConfig',
-            'disableRetries',
-            'credentialsConfig',
-            'transportConfig',
-        ]);
-        $this->traitValidate($options, [
-            'credentials',
-            'transport',
-            'gapicVersion',
-            'libName',
-            'libVersion',
-        ]);
+        $options->validateNotNull('apiEndpoint');
+        $options->validateNotNull('serviceName');
+        $options->validateNotNull('descriptorsConfigPath');
+        $options->validateNotNull('clientConfig');
+        $options->validateNotNull('disableRetries');
+        $options->validateNotNull('credentialsConfig');
+        $options->validateNotNull('transportConfig');
 
         $serviceName = $options['serviceName'];
         $retrySettings = RetrySettings::load(

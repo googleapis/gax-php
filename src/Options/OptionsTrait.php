@@ -34,6 +34,7 @@ namespace Google\ApiCore\Options;
 
 use Google\ApiCore\ValidationException;
 use BadMethodCallException;
+use UnexpectedValueException;
 
 /**
  * Trait implemented by any class representing an associative array of PHP options.
@@ -49,6 +50,16 @@ trait OptionsTrait
     {
         if (!file_exists($filePath)) {
             throw new ValidationException("Could not find specified file: $filePath");
+        }
+    }
+
+    public function validateNotNull(string $key)
+    {
+        if (!property_exists($this, $key)) {
+            throw new UnexpectedValueException("Option $key does not exist");
+        }
+        if (!isset($this->$key) || is_null($this->$key)) {
+            throw new ValidationException("Missing required argument $key");
         }
     }
 
