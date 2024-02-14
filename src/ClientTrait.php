@@ -34,7 +34,6 @@ namespace Google\ApiCore;
 
 use Google\ApiCore\Descriptor\MethodDescriptor;
 use Google\ApiCore\Descriptor\ServiceDescriptor;
-use Google\ApiCore\Options\CallOptions;
 use Google\ApiCore\Options\ClientOptions;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
@@ -122,7 +121,7 @@ trait ClientTrait
      * }
      * @throws ValidationException
      */
-    private function setClientOptions(CallOptions $options)
+    private function setClientOptions(ClientOptions $options)
     {
         $this->validateNotNull($options, [
             'apiEndpoint',
