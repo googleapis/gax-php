@@ -47,14 +47,14 @@ class GrpcTransportOptions implements ArrayAccess
 {
     use OptionsTrait;
 
-    private array $stubOpts;
+    private ?array $stubOpts;
 
     private ?Channel $channel;
 
     /**
      * @var Interceptor[]|UnaryInterceptorInterface[]
      */
-    private array $interceptors;
+    private ?array $interceptors;
 
     private ?Closure $clientCertSource;
 
@@ -88,16 +88,16 @@ class GrpcTransportOptions implements ArrayAccess
      */
     private function fromArray(array $arr): void
     {
-        $this->setStubOpts($arr['stubOpts'] ?? []);
+        $this->setStubOpts($arr['stubOpts'] ?? null);
         $this->setChannel($arr['channel'] ?? null);
-        $this->setInterceptors($arr['interceptors'] ?? []);
+        $this->setInterceptors($arr['interceptors'] ?? null);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
     }
 
     /**
      * @param array $stubOpts
      */
-    public function setStubOpts(array $stubOpts)
+    public function setStubOpts(?array $stubOpts)
     {
         $this->stubOpts = $stubOpts;
     }
@@ -113,7 +113,7 @@ class GrpcTransportOptions implements ArrayAccess
     /**
      * @param Interceptor[]|UnaryInterceptorInterface[] $interceptors
      */
-    public function setInterceptors(array $interceptors)
+    public function setInterceptors(?array $interceptors)
     {
         $this->interceptors = $interceptors;
     }

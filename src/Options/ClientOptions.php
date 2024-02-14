@@ -63,19 +63,19 @@ class ClientOptions implements ArrayAccess
 
     private ?string $apiEndpoint;
 
-    private bool $disableRetries;
+    private ?bool $disableRetries;
 
-    private array $clientConfig;
+    private ?array $clientConfig;
 
     /** @var string|array|FetchAuthTokenInterface|CredentialsWrapper|null */
     private $credentials;
 
-    private array $credentialsConfig;
+    private ?array $credentialsConfig;
 
     /** @var string|TransportInterface|null $transport */
     private $transport;
 
-    private TransportOptions $transportConfig;
+    private ?TransportOptions $transportConfig;
 
     private ?string $versionFile;
 
@@ -166,12 +166,12 @@ class ClientOptions implements ArrayAccess
     private function fromArray(array $arr): void
     {
         $this->setApiEndpoint($arr['apiEndpoint'] ?? null);
-        $this->setDisableRetries($arr['disableRetries'] ?? false);
-        $this->setClientConfig($arr['clientConfig'] ?? []);
-        $this->setCredentials($arr['credentials'] ?? null);
-        $this->setCredentialsConfig($arr['credentialsConfig'] ?? []);
+        $this->setDisableRetries($arr['disableRetries'] ?? null);
+        $this->setClientConfig($arr['clientConfig'] ?? null);
+        $this->setCredentials($arr['credentials']);
+        $this->setCredentialsConfig($arr['credentialsConfig'] ?? null);
         $this->setTransport($arr['transport'] ?? null);
-        $this->setTransportConfig(new TransportOptions($arr['transportConfig'] ?? []));
+        $this->setTransportConfig(isset($arr['transportConfig']) ? new TransportOptions($arr['transportConfig']) : null);
         $this->setVersionFile($arr['versionFile'] ?? null);
         $this->setDescriptorsConfigPath($arr['descriptorsConfigPath'] ?? null);
         $this->setServiceName($arr['serviceName'] ?? null);
@@ -193,7 +193,7 @@ class ClientOptions implements ArrayAccess
     /**
      * @param bool $disableRetries
      */
-    public function setDisableRetries(bool $disableRetries): void
+    public function setDisableRetries(?bool $disableRetries): void
     {
         $this->disableRetries = $disableRetries;
     }
@@ -224,7 +224,7 @@ class ClientOptions implements ArrayAccess
     /**
      * @param array $credentialsConfig
      */
-    public function setCredentialsConfig(array $credentialsConfig): void
+    public function setCredentialsConfig(?array $credentialsConfig): void
     {
         $this->credentialsConfig = $credentialsConfig;
     }
@@ -240,7 +240,7 @@ class ClientOptions implements ArrayAccess
     /**
      * @param TransportOptions $transportConfig
      */
-    public function setTransportConfig(TransportOptions $transportConfig): void
+    public function setTransportConfig(?TransportOptions $transportConfig): void
     {
         $this->transportConfig = $transportConfig;
     }

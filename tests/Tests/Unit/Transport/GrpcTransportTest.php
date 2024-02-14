@@ -472,30 +472,18 @@ class GrpcTransportTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider buildInvalidData
-     */
-    public function testBuildInvalid($apiEndpoint, $args)
+    public function testInvalidEndpoint()
     {
         $this->expectException(ValidationException::class);
 
-        GrpcTransport::build($apiEndpoint, $args);
+        GrpcTransport::build('addresswithtoo:many:segments', []);
     }
 
-    public function buildInvalidData()
+    public function testInvalidChannel()
     {
-        return [
-            [
-                "addresswithtoo:many:segments",
-                [],
-            ],
-            [
-                'example.com',
-                [
-                    'channel' => 'not a channel',
-                ]
-            ]
-        ];
+        $this->expectException(TypeError::class);
+
+        GrpcTransport::build('example.com', ['channel' => 'not a channel']);
     }
 
     /**

@@ -48,9 +48,9 @@ class CallOptions implements ArrayAccess
 {
     use OptionsTrait;
 
-    private array $headers;
+    private ?array $headers;
     private ?int $timeoutMillis;
-    private array $transportOptions;
+    private ?array $transportOptions;
 
     /** @var RetrySettings|array|null $retrySettings */
     private $retrySettings;
@@ -84,16 +84,16 @@ class CallOptions implements ArrayAccess
      */
     private function fromArray(array $arr): void
     {
-        $this->setHeaders($arr['headers'] ?? []);
+        $this->setHeaders($arr['headers'] ?? null);
         $this->setTimeoutMillis($arr['timeoutMillis'] ?? null);
-        $this->setTransportOptions($arr['transportOptions'] ?? []);
+        $this->setTransportOptions($arr['transportOptions'] ?? null);
         $this->setRetrySettings($arr['retrySettings'] ?? null);
     }
 
     /**
      * @param array $headers
      */
-    public function setHeaders(array $headers)
+    public function setHeaders(?array $headers)
     {
         $this->headers = $headers;
     }
@@ -125,7 +125,7 @@ class CallOptions implements ArrayAccess
      *           See {@link https://docs.guzzlephp.org/en/stable/request-options.html}.
      * }
      */
-    public function setTransportOptions(array $transportOptions)
+    public function setTransportOptions(?array $transportOptions)
     {
         $this->transportOptions = $transportOptions;
     }
@@ -133,7 +133,7 @@ class CallOptions implements ArrayAccess
     /**
      * @deprecated use CallOptions::setTransportOptions
      */
-    public function setTransportSpecificOptions(array $transportSpecificOptions)
+    public function setTransportSpecificOptions(?array $transportSpecificOptions)
     {
         $this->setTransportOptions($transportSpecificOptions);
     }

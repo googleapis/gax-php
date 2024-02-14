@@ -1401,7 +1401,7 @@ class GapicClientTraitTest extends TestCase
                         'keyFile' => __DIR__ . '/testdata/json-key-file.json'
                     ]),
                     'timeoutMillis' => null, // adds null timeoutMillis,
-                    'transportOptions' => [],
+                    'transportOptions' => null,
                 ])
             )
             ->willReturn(new FulfilledPromise(new Operation()));

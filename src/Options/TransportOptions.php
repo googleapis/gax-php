@@ -41,11 +41,11 @@ class TransportOptions implements ArrayAccess
 {
     use OptionsTrait;
 
-    private GrpcTransportOptions $grpc;
+    private ?GrpcTransportOptions $grpc;
 
-    private GrpcFallbackTransportOptions $grpcFallback;
+    private ?GrpcFallbackTransportOptions $grpcFallback;
 
-    private RestTransportOptions $rest;
+    private ?RestTransportOptions $rest;
 
     /**
      * @param array $options {
@@ -68,22 +68,22 @@ class TransportOptions implements ArrayAccess
      */
     private function fromArray(array $arr): void
     {
-        $this->setGrpc(new GrpcTransportOptions($arr['grpc'] ?? []));
-        $this->setGrpcFallback(new GrpcFallbackTransportOptions($arr['grpc-fallback'] ?? []));
-        $this->setRest(new RestTransportOptions($arr['rest'] ?? []));
+        $this->setGrpc(isset($arr['grpc']) ? new GrpcTransportOptions($arr['grpc']) : null);
+        $this->setGrpcFallback(isset($arr['grpcFallback']) ? new GrpcFallbackTransportOptions($arr['grpcFallback']) : null);
+        $this->setRest(isset($arr['rest']) ? new RestTransportOptions($arr['rest']) : null);
     }
 
-    public function setGrpc(GrpcTransportOptions $grpc): void
+    public function setGrpc(?GrpcTransportOptions $grpc): void
     {
         $this->grpc = $grpc;
     }
 
-    public function setGrpcFallback(GrpcFallbackTransportOptions $grpcFallback): void
+    public function setGrpcFallback(?GrpcFallbackTransportOptions $grpcFallback): void
     {
         $this->grpcFallback = $grpcFallback;
     }
 
-    public function setRest(RestTransportOptions $rest): void
+    public function setRest(?RestTransportOptions $rest): void
     {
         $this->rest = $rest;
     }

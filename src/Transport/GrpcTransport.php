@@ -38,6 +38,7 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
 use Google\ApiCore\GrpcSupportTrait;
+use Google\ApiCore\Options\TransportOptions\GrpcTransportOptions;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
 use Google\ApiCore\Transport\Grpc\ServerStreamingCallWrapper;
@@ -95,7 +96,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * @param string $apiEndpoint
      *        The address of the API remote host, for example "example.googleapis.com. May also
      *        include the port, for example "example.googleapis.com:443"
-     * @param array $config {
+     * @param GrpcTransportOptions|array $config {
      *    Config options used to construct the gRPC transport.
      *
      *    @type array $stubOpts Options used to construct the gRPC stub (see
@@ -114,18 +115,15 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * @return GrpcTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, array $config = [])
+    public static function build(string $apiEndpoint, GrpcTransportOptions|array $config = [])
     {
         self::validateGrpcSupport();
-        $config += [
-            'stubOpts'         => [],
-            'channel'          => null,
-            'interceptors'     => [],
-            'clientCertSource' => null,
-        ];
+        if (is_array($config)) {
+            $config = new GrpcTransportOptions($config);
+        }
         list($addr, $port) = self::normalizeServiceAddress($apiEndpoint);
         $host = "$addr:$port";
-        $stubOpts = $config['stubOpts'];
+        $stubOpts = $config['stubOpts'] ?? [];
         // Set the required 'credentials' key in stubOpts if it is not already set. Use
         // array_key_exists because null is a valid value.
         if (!array_key_exists('credentials', $stubOpts)) {
@@ -144,7 +142,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors']);
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'] ?? []);
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
