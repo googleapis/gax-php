@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.28.0](https://github.com/googleapis/gax-php/compare/v1.27.2...v1.28.0) (2024-02-15)
+
+
+### Features
+
+* Allow setting of universe domain in environment variable ([#520](https://github.com/googleapis/gax-php/issues/520)) ([6e6603b](https://github.com/googleapis/gax-php/commit/6e6603b03285f3f8d1072776cd206720e3990f50))
+
+## [1.27.2](https://github.com/googleapis/gax-php/compare/v1.27.1...v1.27.2) (2024-02-14)
+
+
+### Bug Fixes
+
+* Typo in TransportOptions option name ([#530](https://github.com/googleapis/gax-php/issues/530)) ([6914fe0](https://github.com/googleapis/gax-php/commit/6914fe04554867bd827be6596fafc751a3d7621a))
+
+## [1.27.1](https://github.com/googleapis/gax-php/compare/v1.27.0...v1.27.1) (2024-02-14)
+
+
+### Bug Fixes
+
+* Issues in Options classes ([#528](https://github.com/googleapis/gax-php/issues/528)) ([aa9ba3a](https://github.com/googleapis/gax-php/commit/aa9ba3a6bac9324ad894d9677da0e897497ebab2))
+
+## [1.27.0](https://github.com/googleapis/gax-php/compare/v1.26.3...v1.27.0) (2024-02-07)
+
+
+### Features
+
+* Create ClientOptionsTrait ([#527](https://github.com/googleapis/gax-php/issues/527)) ([cfe2c60](https://github.com/googleapis/gax-php/commit/cfe2c60a36233f74259c96a6799d8492ed7c45d0))
+* Implement ProjectIdProviderInterface in CredentialsWrapper ([#523](https://github.com/googleapis/gax-php/issues/523)) ([b56a463](https://github.com/googleapis/gax-php/commit/b56a4635abfeeec08895202da8218e9ba915413e))
+* Update ArrayTrait to be consistent with Core ([#526](https://github.com/googleapis/gax-php/issues/526)) ([8e44185](https://github.com/googleapis/gax-php/commit/8e44185dd6f8f8f9ef5b136776cba61ec7a8b8f6))
+
+
+### Bug Fixes
+
+* Correct exception type for Guzzle promise ([#521](https://github.com/googleapis/gax-php/issues/521)) ([7129373](https://github.com/googleapis/gax-php/commit/712937339c134e1d92cab5fa736cfe1bbcd7f343))
+
 ## [1.26.3](https://github.com/googleapis/gax-php/compare/v1.26.2...v1.26.3) (2024-01-18)
 
 

@@ -34,6 +34,7 @@ namespace Google\ApiCore;
 use DomainException;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\ProjectIdProviderInterface;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
@@ -50,7 +51,7 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * The CredentialsWrapper object provides a wrapper around a FetchAuthTokenInterface.
  */
-class CredentialsWrapper
+class CredentialsWrapper implements ProjectIdProviderInterface
 {
     use ValidationTrait;
 
@@ -202,6 +203,20 @@ class CredentialsWrapper
         return null;
     }
 
+    public function getProjectId(callable $httpHandler = null): ?string
+    {
+        // Ensure that FetchAuthTokenCache does not throw an exception
+        if ($this->credentialsFetcher instanceof FetchAuthTokenCache
+            && !$this->credentialsFetcher->getFetcher() instanceof ProjectIdProviderInterface) {
+            return null;
+        }
+
+        if ($this->credentialsFetcher instanceof ProjectIdProviderInterface) {
+            return $this->credentialsFetcher->getProjectId($httpHandler);
+        }
+        return null;
+    }
+
     /**
      * @deprecated
      * @return string Bearer string containing access token.
@@ -257,7 +272,7 @@ class CredentialsWrapper
     /**
      * Verify that the expected universe domain matches the universe domain from the credentials.
      */
-    private function checkUniverseDomain()
+    public function checkUniverseDomain()
     {
         if (false === $this->hasCheckedUniverse) {
             $credentialsUniverse = $this->credentialsFetcher instanceof GetUniverseDomainInterface
