@@ -37,7 +37,6 @@ use Google\ApiCore\Transport\HttpUnaryTransportTrait;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Call;
 use GuzzleHttp\Promise\Promise;
-use Grpc\ChannelCredentials;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
@@ -69,7 +68,7 @@ class InsecureCredentialsWrapperTest extends TestCase
         $call->getMethod()->shouldBeCalled();
         $call->getDecodeType()->shouldBeCalled();
 
-        $grpc = new GrpcTransport('', ['credentials' => ChannelCredentials::createInsecure()]);
+        $grpc = new GrpcTransport('', ['credentials' => \Grpc\ChannelCredentials::createInsecure()]);
 
         $response = $grpc->startUnaryCall(
             $call->reveal(),
