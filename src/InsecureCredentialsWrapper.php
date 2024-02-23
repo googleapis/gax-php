@@ -41,9 +41,9 @@ class InsecureCredentialsWrapper extends CredentialsWrapper
     {
     }
 
-    public function getAuthorizationHeaderCallback($audience = null): ?callable
+    public function getAuthorizationHeaderCallback($audience = null): callable
     {
-        return null;
+        return fn() => [];
     }
 
     public function checkUniverseDomain(): void
