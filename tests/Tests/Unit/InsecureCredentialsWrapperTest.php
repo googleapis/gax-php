@@ -30,23 +30,26 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Google\ApiCore;
+namespace Google\ApiCore\Tests\Unit;
 
-/**
- * For connect to emulator.
- */
-class InsecureCredentialsWrapper extends CredentialsWrapper
+use Google\ApiCore\InsecureCredentialsWrapper;
+use Google\ApiCore\Transport\HttpUnaryTransportTrait;
+use PHPUnit\Framework\TestCase;
+
+class InsecureCredentialsWrapperTest extends TestCase
 {
-    public function __construct()
+    public function testInsecureCredentialsWrapperWithHttpTransport()
     {
-    }
+        $httpImpl = new class () {
+            use HttpUnaryTransportTrait {
+                buildCommonHeaders as public;
+            }
+        };
 
-    public function getAuthorizationHeaderCallback($audience = null): ?callable
-    {
-        return fn() => [];
-    }
+        $headers = $httpImpl->buildCommonHeaders([
+            'credentialsWrapper' => new InsecureCredentialsWrapper(),
+        ]);
 
-    public function checkUniverseDomain(): void
-    {
+        $this->assertEmpty($headers);
     }
 }
