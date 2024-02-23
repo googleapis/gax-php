@@ -34,10 +34,18 @@ namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\InsecureCredentialsWrapper;
 use Google\ApiCore\Transport\HttpUnaryTransportTrait;
+use Google\ApiCore\Transport\GrpcTransport;
+use Google\ApiCore\Call;
+use GuzzleHttp\Promise\Promise;
+use Grpc\ChannelCredentials;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class InsecureCredentialsWrapperTest extends TestCase
 {
+    use TestTrait;
+    use ProphecyTrait;
+
     public function testInsecureCredentialsWrapperWithHttpTransport()
     {
         $httpImpl = new class () {
@@ -52,4 +60,23 @@ class InsecureCredentialsWrapperTest extends TestCase
 
         $this->assertEmpty($headers);
     }
+
+    public function testInsecureCredentialsWrapperWithGrpcTransport()
+    {
+        $message = $this->createMockRequest();
+        $call = $this->prophesize(Call::class);
+        $call->getMessage()->willReturn($message);
+        $call->getMethod()->shouldBeCalled();
+        $call->getDecodeType()->shouldBeCalled();
+
+        $grpc = new GrpcTransport('', ['credentials' => ChannelCredentials::createInsecure()]);
+
+        $response = $grpc->startUnaryCall(
+            $call->reveal(),
+            ['credentialsWrapper' => new InsecureCredentialsWrapper()]
+        );
+
+        $this->assertInstanceOf(Promise::class, $response);
+    }
+
 }
