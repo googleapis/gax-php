@@ -157,8 +157,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('retrySettings', ['method' => $defaultRetrySettings]);
         $expectedOptions = [
             'retrySettings' => $defaultRetrySettings
-                ->with(['rpcTimeoutMultiplier' => 5]),
-            'autoPopulationSettings' => [],
+                ->with(['rpcTimeoutMultiplier' => 5])
         ];
         $actualOptionsWithObject = $client->configureCallConstructionOptions(
             'method',

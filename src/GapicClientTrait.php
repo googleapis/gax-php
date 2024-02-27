@@ -684,10 +684,12 @@ trait GapicClientTrait
                 );
             }
         }
-        return [
-            'retrySettings' => $retrySettings,
-            'autoPopulationSettings' => $autoPopulatedFields,
-        ];
+        $result = ['retrySettings' => $retrySettings];
+
+        if (!empty($autoPopulatedFields)) {
+            $result['autoPopulationSettings'] = $autoPopulatedFields;
+        }
+        return $result;
     }
 
     /**
