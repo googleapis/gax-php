@@ -50,7 +50,7 @@ class RequestAutoPopulationMiddleware implements MiddlewareInterface
 
     public function __construct(
         callable $nextHandler,
-        array $autoPopulationSettings,
+        array $autoPopulationSettings
     ) {
         $this->nextHandler = $nextHandler;
         $this->autoPopulationSettings = $autoPopulationSettings;
