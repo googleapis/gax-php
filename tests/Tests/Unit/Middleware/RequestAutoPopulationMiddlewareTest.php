@@ -29,62 +29,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-namespace Google\ApiCore\Middleware;
+
+namespace Google\ApiCore\Tests\Unit\Middleware;
 
 use Google\ApiCore\Call;
-use GuzzleHttp\Promise\PromiseInterface;
+use Google\ApiCore\Middleware\RequestAutoPopulationMiddleware;
+use Google\ApiCore\Testing\MockRequest;
+use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
-/**
- * Middleware that adds autopopulation functionality. This middlware is
- * added iff auto population settings are present in the resource
- * descriptor config for the rpc method in context.
- */
-class RequestAutoPopulationMiddleware implements MiddlewareInterface
+class RequestAutoPopulationMiddlewareTest extends TestCase
 {
-    /** @var callable */
-    private $nextHandler;
-
-    /** @var array<string, string> */
-    private $autoPopulationSettings;
-
-    public function __construct(
-        callable $nextHandler,
-        array $autoPopulationSettings,
-    ) {
-        $this->nextHandler = $nextHandler;
-        $this->autoPopulationSettings = $autoPopulationSettings;
+    public function testRequestPopulated()
+    {
+        $request = new MockRequest();
+        $next = function ($call, $options) {
+            $this->assertTrue(Uuid::isValid($call->getMessage()->getPageToken()));
+            return true;
+        };
+        $call = new Call('GetExample', 'Example', $request);
+        $middleware = new RequestAutoPopulationMiddleware(
+            $next,
+            ['pageToken' => 'UUID4']
+        );
+        $this->assertTrue($middleware->__invoke($call, []));
     }
 
-    /**
-     * @param Call $call
-     * @param array $options
-     *
-     * @return PromiseInterface
-     */
-    public function __invoke(Call $call, array $options)
+    public function testRequestNotPopulated()
     {
-        $next = $this->nextHandler;
-
-        $request = $call->getMessage();
-        foreach ($this->autoPopulationSettings as $fieldName => $valueType) {
-            $getFieldName = 'get' . ucwords($fieldName);
-            // Populate the field if it's not already set by user
-            if (empty($request->$getFieldName())) {
-                $setFieldName = 'set' . ucwords($fieldName);
-                switch ($valueType) {
-                    case 'UUID4':
-                        $request->$setFieldName(Uuid::uuid4()->toString());
-                        break;
-                    default:
-                        // Do nothing
-                }
-            }
-        }
-        $call = $call->withMessage($request);
-        return $next(
-            $call,
-            $options
+        $request = new MockRequest();
+        $next = function ($call, $options) {
+            $this->assertTrue(empty($call->getMessage()->getPageToken()));
+            return true;
+        };
+        $call = new Call('GetExample', 'Example', $request);
+        $middleware = new RequestAutoPopulationMiddleware(
+            $next,
+            ['pageToken' => 'UNKNOWN']
         );
+        $this->assertTrue($middleware->__invoke($call, []));
     }
 }
