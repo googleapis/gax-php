@@ -39,6 +39,8 @@ use Ramsey\Uuid\Uuid;
  * Middleware that adds autopopulation functionality. This middlware is
  * added iff auto population settings are present in the resource
  * descriptor config for the rpc method in context.
+ *
+ * @internal
  */
 class RequestAutoPopulationMiddleware implements MiddlewareInterface
 {
