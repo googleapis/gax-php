@@ -50,7 +50,7 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
         $call = new Call('GetExample', 'Example', $request);
         $middleware = new RequestAutoPopulationMiddleware(
             $next,
-            ['pageToken' => 'UUID4']
+            ['pageToken' => \Google\Api\FieldInfo\Format::UUID4]
         );
         $this->assertTrue($middleware->__invoke($call, []));
     }

@@ -12,7 +12,7 @@ return [
                     'responsePageTokenGetMethod' => 'getNextPageToken',
                 ],
                 'autoPopulatedFields' => [
-                    'pageToken' => 'UUID4',
+                    'pageToken' => \Google\Api\FieldInfo\Format::UUID4,
                 ]
             ],
             'templateMap' => [

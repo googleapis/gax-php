@@ -143,7 +143,7 @@ class GapicClientTraitTest extends TestCase
         $expected = [
             'retrySettings' => $retrySettings,
             'autoPopulationSettings' => [
-                'pageToken' => 'UUID4',
+                'pageToken' => \Google\Api\FieldInfo\Format::UUID4,
             ],
         ];
         $actual = $client->configureCallConstructionOptions('PageStreamingMethod', ['retrySettings' => $retrySettings]);

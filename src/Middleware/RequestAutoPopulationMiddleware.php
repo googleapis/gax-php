@@ -75,7 +75,7 @@ class RequestAutoPopulationMiddleware implements MiddlewareInterface
             if (empty($request->$getFieldName())) {
                 $setFieldName = 'set' . ucwords($fieldName);
                 switch ($valueType) {
-                    case 'UUID4':
+                    case \Google\Api\FieldInfo\Format::UUID4:
                         $request->$setFieldName(Uuid::uuid4()->toString());
                         break;
                     default:
