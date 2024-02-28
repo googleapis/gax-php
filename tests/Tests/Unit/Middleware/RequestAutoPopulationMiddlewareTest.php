@@ -59,12 +59,10 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
     public function testRequestAutoPopulatedThrowsForInvalidValueType()
     {
         $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage(sprintf(
-            "Value type %s::%s not supported for auto population of the field %s",
-            Format::class,
-            Format::name(Format::FORMAT_UNSPECIFIED),
-            'pageToken'
-        ));
+        $this->expectExceptionMessage(
+            'Value type Google\Api\FieldInfo\Format::FORMAT_UNSPECIFIED not '
+            . 'supported for auto population of the field pageToken'
+        );
         $request = new MockRequest();
         $next = function ($call, $options) {
             $this->assertTrue(empty($call->getMessage()->getPageToken()));
