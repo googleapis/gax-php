@@ -75,7 +75,9 @@ class RequestAutoPopulationMiddleware implements MiddlewareInterface
         $request = $call->getMessage();
         foreach ($this->autoPopulationSettings as $fieldName => $valueType) {
             $getFieldName = 'get' . ucwords($fieldName);
-            // Populate the field if it's not already set by user
+            // We use a getter instead of a hazzer here because there's no need to
+            // differentiate between isset and an empty default value. Even if a
+            // field is explicitly set to an empty string, we want to autopopulate it.
             if (empty($request->$getFieldName())) {
                 $setFieldName = 'set' . ucwords($fieldName);
                 switch ($valueType) {
