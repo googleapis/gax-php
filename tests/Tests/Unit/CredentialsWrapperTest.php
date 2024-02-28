@@ -557,4 +557,13 @@ class CredentialsWrapperTest extends TestCase
         $credentialsWrapper = new CredentialsWrapper($cache);
         $this->assertEquals('my-project-id', $credentialsWrapper->getProjectId());
     }
+
+    public function testSerializeCredentialsWrapper()
+    {
+        $credentialsWrapper = CredentialsWrapper::build([
+            'keyFile' => __DIR__ . '/testdata/json-key-file.json',
+        ]);
+        $serialized = serialize($credentialsWrapper);
+        $this->assertIsString($serialized);
+    }
 }
