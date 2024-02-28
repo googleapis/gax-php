@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore\Middleware;
 
+use Google\Api\FieldInfo\Format;
 use Google\ApiCore\Call;
 use GuzzleHttp\Promise\PromiseInterface;
 use Ramsey\Uuid\Uuid;
@@ -81,14 +82,14 @@ class RequestAutoPopulationMiddleware implements MiddlewareInterface
             if (empty($request->$getFieldName())) {
                 $setFieldName = 'set' . ucwords($fieldName);
                 switch ($valueType) {
-                    case \Google\Api\FieldInfo\Format::UUID4:
+                    case Format::UUID4:
                         $request->$setFieldName(Uuid::uuid4()->toString());
                         break;
                     default:
                         throw new \UnexpectedValueException(sprintf(
                             "Value type %s::%s not supported for auto population of the field %s",
-                            \Google\Api\FieldInfo\Format::class,
-                            \Google\Api\FieldInfo\Format::name($valueType),
+                            Format::class,
+                            Format::name($valueType),
                             $fieldName
                         ));
                 }

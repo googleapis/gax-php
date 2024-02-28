@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore\Tests\Unit\Middleware;
 
+use Google\Api\FieldInfo\Format;
 use Google\ApiCore\Call;
 use Google\ApiCore\Middleware\RequestAutoPopulationMiddleware;
 use Google\ApiCore\Testing\MockRequest;
@@ -50,7 +51,7 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
         $call = new Call('GetExample', 'Example', $request);
         $middleware = new RequestAutoPopulationMiddleware(
             $next,
-            ['pageToken' => \Google\Api\FieldInfo\Format::UUID4]
+            ['pageToken' => Format::UUID4]
         );
         $this->assertTrue($middleware->__invoke($call, []));
     }
@@ -60,8 +61,8 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage(sprintf(
             "Value type %s::%s not supported for auto population of the field %s",
-            \Google\Api\FieldInfo\Format::class,
-            \Google\Api\FieldInfo\Format::name(\Google\Api\FieldInfo\Format::FORMAT_UNSPECIFIED),
+            Format::class,
+            Format::name(Format::FORMAT_UNSPECIFIED),
             'pageToken'
         ));
         $request = new MockRequest();
@@ -72,7 +73,7 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
         $call = new Call('GetExample', 'Example', $request);
         $middleware = new RequestAutoPopulationMiddleware(
             $next,
-            ['pageToken' => \Google\Api\FieldInfo\Format::FORMAT_UNSPECIFIED]
+            ['pageToken' => Format::FORMAT_UNSPECIFIED]
         );
         $middleware->__invoke($call, []);
     }
