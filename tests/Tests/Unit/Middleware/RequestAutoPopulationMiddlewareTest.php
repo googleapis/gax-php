@@ -55,8 +55,15 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
         $this->assertTrue($middleware->__invoke($call, []));
     }
 
-    public function testRequestNotPopulated()
+    public function testRequestAutoPopulatedThrowsForInvalidValueType()
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage(sprintf(
+            "Value type %s::%s not supported for auto population of the field %s",
+            \Google\Api\FieldInfo\Format::class,
+            \Google\Api\FieldInfo\Format::name(\Google\Api\FieldInfo\Format::FORMAT_UNSPECIFIED),
+            'pageToken'
+        ));
         $request = new MockRequest();
         $next = function ($call, $options) {
             $this->assertTrue(empty($call->getMessage()->getPageToken()));
@@ -65,8 +72,8 @@ class RequestAutoPopulationMiddlewareTest extends TestCase
         $call = new Call('GetExample', 'Example', $request);
         $middleware = new RequestAutoPopulationMiddleware(
             $next,
-            ['pageToken' => 'UNKNOWN']
+            ['pageToken' => \Google\Api\FieldInfo\Format::FORMAT_UNSPECIFIED]
         );
-        $this->assertTrue($middleware->__invoke($call, []));
+        $middleware->__invoke($call, []);
     }
 }

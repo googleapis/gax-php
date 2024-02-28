@@ -85,7 +85,12 @@ class RequestAutoPopulationMiddleware implements MiddlewareInterface
                         $request->$setFieldName(Uuid::uuid4()->toString());
                         break;
                     default:
-                        // Do nothing
+                        throw new \UnexpectedValueException(sprintf(
+                            "Value type %s::%s not supported for auto population of the field %s",
+                            \Google\Api\FieldInfo\Format::class,
+                            \Google\Api\FieldInfo\Format::name($valueType),
+                            $fieldName
+                        ));
                 }
             }
         }
