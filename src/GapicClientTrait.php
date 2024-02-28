@@ -636,12 +636,10 @@ trait GapicClientTrait
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
         $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
-        if (!empty($callConstructionOptions['autoPopulationSettings'])) {
-            $callStack = new RequestAutoPopulationMiddleware(
-                $callStack,
-                $callConstructionOptions['autoPopulationSettings'],
-            );
-        }
+        $callStack = new RequestAutoPopulationMiddleware(
+            $callStack,
+            $callConstructionOptions['autoPopulationSettings'],
+        );
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
             'timeoutMillis',
@@ -684,12 +682,10 @@ trait GapicClientTrait
                 );
             }
         }
-        $result = ['retrySettings' => $retrySettings];
-
-        if (!empty($autoPopulatedFields)) {
-            $result['autoPopulationSettings'] = $autoPopulatedFields;
-        }
-        return $result;
+        return [
+            'retrySettings' => $retrySettings,
+            'autoPopulationSettings' => $autoPopulatedFields,
+        ];
     }
 
     /**
