@@ -81,7 +81,7 @@ class CredentialsWrapper implements ProjectIdProviderInterface
         string $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
     ) {
         $this->credentialsFetcher = $credentialsFetcher;
-        $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
+        $this->authHttpHandler = $authHttpHandler;
         if (empty($universeDomain)) {
             throw new ValidationException('The universe domain cannot be empty');
         }
@@ -141,7 +141,7 @@ class CredentialsWrapper implements ProjectIdProviderInterface
         ];
 
         $keyFile = $args['keyFile'];
-        $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
+        $authHttpHandler = $args['authHttpHandler'];
 
         if (is_null($keyFile)) {
             $loader = self::buildApplicationDefaultCredentials(
