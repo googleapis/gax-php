@@ -68,6 +68,10 @@ class RequestAutoPopulationMiddleware implements MiddlewareInterface
     {
         $next = $this->nextHandler;
 
+        if (empty($this->autoPopulationSettings)) {
+            return $next($call, $options);
+        }
+
         $request = $call->getMessage();
         foreach ($this->autoPopulationSettings as $fieldName => $valueType) {
             $getFieldName = 'get' . ucwords($fieldName);
