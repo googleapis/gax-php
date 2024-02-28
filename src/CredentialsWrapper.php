@@ -290,19 +290,6 @@ class CredentialsWrapper implements ProjectIdProviderInterface
     }
 
     /**
-     * @return Guzzle6HttpHandler|Guzzle7HttpHandler
-     * @throws ValidationException
-     */
-    private static function buildHttpHandlerFactory()
-    {
-        try {
-            return HttpHandlerFactory::build();
-        } catch (Exception $ex) {
-            throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
-        }
-    }
-
-    /**
      * @param array $scopes
      * @param callable $authHttpHandler
      * @param array $authCacheOptions
