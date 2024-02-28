@@ -141,12 +141,11 @@ class CredentialsWrapper implements ProjectIdProviderInterface
         ];
 
         $keyFile = $args['keyFile'];
-        $authHttpHandler = $args['authHttpHandler'];
 
         if (is_null($keyFile)) {
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
-                $authHttpHandler,
+                $args['authHttpHandler'],
                 $args['authCacheOptions'],
                 $args['authCache'],
                 $args['quotaProject'],
@@ -189,7 +188,7 @@ class CredentialsWrapper implements ProjectIdProviderInterface
             );
         }
 
-        return new CredentialsWrapper($loader, $authHttpHandler, $universeDomain);
+        return new CredentialsWrapper($loader, $args['authHttpHandler'], $universeDomain);
     }
 
     /**
