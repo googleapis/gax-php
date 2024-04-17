@@ -438,7 +438,7 @@ class Serializer
      */
     public static function getGetter(string $name)
     {
-        if (! isset(self::$getterMap[$name])) {
+        if (!isset(self::$getterMap[$name])) {
             self::$getterMap[$name] = 'get' . ucfirst(self::toCamelCase($name));
         }
         return self::$getterMap[$name];
@@ -450,7 +450,7 @@ class Serializer
      */
     public static function getSetter(string $name)
     {
-        if (! isset(self::$setterMap[$name])) {
+        if (!isset(self::$setterMap[$name])) {
             self::$setterMap[$name] = 'set' . ucfirst(self::toCamelCase($name));
         }
         return self::$setterMap[$name];
@@ -464,7 +464,7 @@ class Serializer
      */
     public static function toSnakeCase(string $key)
     {
-        if (! isset(self::$snakeCaseMap[$key])) {
+        if (!isset(self::$snakeCaseMap[$key])) {
             self::$snakeCaseMap[$key] = strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $key));
         }
         return self::$snakeCaseMap[$key];
@@ -478,7 +478,7 @@ class Serializer
      */
     public static function toCamelCase(string $key)
     {
-        if (! isset(self::$camelCaseMap[$key])) {
+        if (!isset(self::$camelCaseMap[$key])) {
             self::$camelCaseMap[$key] = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
         }
         return self::$camelCaseMap[$key];
