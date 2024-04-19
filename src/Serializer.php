@@ -112,7 +112,7 @@ class Serializer
 
         // If we have supplied a customEncoder for this class type,
         // then we use that instead of the general encodeMessage definition.
-        if(array_key_exists($cls, $this->customEncoders)) {
+        if (array_key_exists($cls, $this->customEncoders)) {
             $func = $this->customEncoders[$cls];
             return call_user_func($func, $message);
         }
