@@ -385,7 +385,7 @@ class CredentialsWrapperTest extends TestCase
                 'access_token' => 123,
                 'expires_at' => time() - 1
             ]);
-        $expiredFetcher->updateMetadata(Argument::any(), 'audience')
+        $expiredFetcher->updateMetadata(Argument::any(), 'audience', Argument::any())
             ->willReturn(['authorization' => ['Bearer 456']]);
         $expiredInvalidFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $expiredInvalidFetcher->getLastReceivedToken()
