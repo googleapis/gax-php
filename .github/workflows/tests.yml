@@ -73,6 +73,4 @@ jobs:
           php-version: '8.2'
       - name: Run Script
         run: |
-          composer install
-          composer global require phpstan/phpstan
-          ~/.composer/vendor/bin/phpstan analyse
+          vendor/bin/phpstan analyse
