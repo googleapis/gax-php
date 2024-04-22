@@ -74,7 +74,7 @@ be found for Mac or Windows.
 3.  Run tests.
 
     ```sh
-    > vendor/bin/phpunit
+    > php composer.phar test
     ```
 
 4.  Updating dependencies after changing `composer.json`:
@@ -87,8 +87,8 @@ be found for Mac or Windows.
 5.  Formatting source:
 
     ```sh
-    > vendor/bin/phpcbf -s --standard=./ruleset.xml
-    > vendor/bin/phpcs -s --standard=./ruleset.xml
+    > php composer.phar cs-lint
+    > php composer.phar cs-fix
     ```
 
 ## License
