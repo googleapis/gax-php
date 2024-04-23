@@ -208,9 +208,7 @@ class RetrySettings
     const DEFAULT_MAX_RETRIES = 0;
 
     private $retriesEnabled;
-
     private $retryableCodes;
-
     private $initialRetryDelayMillis;
     private $retryDelayMultiplier;
     private $maxRetryDelayMillis;
@@ -236,6 +234,15 @@ class RetrySettings
     private ?Closure $retryFunction;
 
     /**
+     * When set, this function will be used to evaluate the dealy between
+     * retries. This overrides $retryableCodes, $initialRetryDelayMillis,
+     * and $retryDelayMultiplier.
+     * The callable will have the following signature:
+     * function (int attempts, Exception $e): int (delay in milliseconds)
+     */
+    private ?Closure $retryDelayFunction;
+
+    /**
      * Constructs an instance.
      *
      * @param array $settings {
@@ -249,11 +256,11 @@ class RetrySettings
      *     @type int      $noRetriesRpcTimeoutMillis Optional. The timeout of the rpc call to be used
      *                    if $retriesEnabled is false, in milliseconds. It not specified, the value
      *                    of $initialRpcTimeoutMillis is used.
-     *     @type array    $retryableCodes The Status codes that are retryable. Each status should be
+     *     @type array    $retryableCodes Optional. The Status codes that are retryable. Each status should be
      *                    either one of the string constants defined on {@see \Google\ApiCore\ApiStatus}
      *                    or an integer constant defined on {@see \Google\Rpc\Code}.
-     *     @type int      $initialRetryDelayMillis The initial delay of retry in milliseconds.
-     *     @type int      $retryDelayMultiplier The exponential multiplier of retry delay.
+     *     @type int      $initialRetryDelayMillis Optional. The initial delay of retry in milliseconds.
+     *     @type int      $retryDelayMultiplier Optional. The exponential multiplier of retry delay.
      *     @type int      $maxRetryDelayMillis The max delay of retry in milliseconds.
      *     @type int      $initialRpcTimeoutMillis The initial timeout of rpc call in milliseconds.
      *     @type int      $rpcTimeoutMultiplier The exponential multiplier of rpc timeout.
@@ -263,38 +270,69 @@ class RetrySettings
      *                    Defaults to the value of the DEFAULT_MAX_RETRIES constant.
      *                    This option is experimental.
      *     @type callable $retryFunction This function will be used to decide if we should retry or not.
+     *                    This overrides $retryableCodes.
      *                    Callable signature: `function (Exception $e, array $options): bool`
      *                    This option is experimental.
+     *     @type callable $retryDelayFunction Optional. This function will be used to decide the delay between retries.
+     *                    This overrides $initialRetryDelayMillis, and $retryDelayMultiplier.
      * }
      */
     public function __construct(array $settings)
     {
-        $this->validateNotNull($settings, [
-            'initialRetryDelayMillis',
-            'retryDelayMultiplier',
-            'maxRetryDelayMillis',
+        $validateMutuallyExclusiveDelayCalcs = [
+            [
+                'initialRetryDelayMillis',
+                'retryDelayMultiplier'
+            ],
+            [
+                'retryDelayFunction',
+            ]
+        ];
+        $validateMutuallyExclusiveRetryableDecider = [
+            [
+                'retryableCodes'
+            ],
+            [
+                'retryFunction'
+            ]
+        ];
+        $validateNotNullArgs = [
             'initialRpcTimeoutMillis',
             'rpcTimeoutMultiplier',
             'maxRpcTimeoutMillis',
             'totalTimeoutMillis',
-            'retryableCodes'
-        ]);
-        $this->initialRetryDelayMillis = $settings['initialRetryDelayMillis'];
-        $this->retryDelayMultiplier = $settings['retryDelayMultiplier'];
+            'maxRetryDelayMillis'
+        ];
+        $this->validateAllKeysFromOneOf(
+            $settings,
+            $validateMutuallyExclusiveDelayCalcs[0],
+            $validateMutuallyExclusiveDelayCalcs[1]
+        );
+        $this->validateAllKeysFromOneOf(
+            $settings,
+            $validateMutuallyExclusiveRetryableDecider[0],
+            $validateMutuallyExclusiveRetryableDecider[1]
+        );
+        $this->validateNotNull($settings, $validateNotNullArgs);
+        $this->initialRetryDelayMillis = $settings['initialRetryDelayMillis'] ?? null;
+        $this->retryDelayMultiplier = $settings['retryDelayMultiplier'] ?? null;
         $this->maxRetryDelayMillis = $settings['maxRetryDelayMillis'];
         $this->initialRpcTimeoutMillis = $settings['initialRpcTimeoutMillis'];
         $this->rpcTimeoutMultiplier = $settings['rpcTimeoutMultiplier'];
         $this->maxRpcTimeoutMillis = $settings['maxRpcTimeoutMillis'];
         $this->totalTimeoutMillis = $settings['totalTimeoutMillis'];
-        $this->retryableCodes = $settings['retryableCodes'];
+        $this->retryableCodes = $settings['retryableCodes'] ?? null;
+        $this->retryFunction = $settings['retryFunction'] ?? null;
         $this->retriesEnabled = array_key_exists('retriesEnabled', $settings)
             ? $settings['retriesEnabled']
-            : (count($this->retryableCodes) > 0);
+            : (count($this->retryableCodes) > 0 || isset($this->retryFunction));
         $this->noRetriesRpcTimeoutMillis = array_key_exists('noRetriesRpcTimeoutMillis', $settings)
             ? $settings['noRetriesRpcTimeoutMillis']
             : $this->initialRpcTimeoutMillis;
         $this->maxRetries = $settings['maxRetries'] ?? self::DEFAULT_MAX_RETRIES;
-        $this->retryFunction = $settings['retryFunction'] ?? null;
+        $this->retryDelayFunction = array_key_exists('retryDelayFunction', $settings)
+            ? $settings['retryDelayFunction']
+            : null;
     }
 
     /**
@@ -533,6 +571,21 @@ class RetrySettings
     public function getRetryFunction()
     {
         return $this->retryFunction;
+    }
+
+    /**
+     * @experimental
+     */
+    public function getRetryDelayMillis(int $attempts, \Exception $exception)
+    {
+        if ($this->retryDelayFunction) {
+            return min($this->retryDelayFunction($attempts, $exception), $this->maxRetryDelayMillis) ;
+        }
+
+        return min(
+            $this->initialRetryDelayMillis * $this->retryDelayMultiplier,
+            $this->maxRetryDelayMillis
+        );
     }
 
     private static function convertArrayFromSnakeCase(array $settings)

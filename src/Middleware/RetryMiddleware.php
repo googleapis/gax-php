@@ -66,12 +66,12 @@ class RetryMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @param Call $call
+     * @param Call|callable $call
      * @param array $options
      *
      * @return PromiseInterface
      */
-    public function __invoke(Call $call, array $options)
+    public function __invoke(Call|callable $call, array $options)
     {
         $nextHandler = $this->nextHandler;
 
@@ -107,27 +107,25 @@ class RetryMiddleware implements MiddlewareInterface
             }
 
             // Retry function returned true, so we attempt another retry
-            return $this->retry($call, $options, $e->getStatus());
+            return $this->retry($call, $options, $e);
         });
     }
 
     /**
-     * @param Call $call
+     * @param Call|callable $call
      * @param array $options
-     * @param string $status
+     * @param \Exception $exception
      *
      * @return PromiseInterface
      * @throws ApiException
      */
-    private function retry(Call $call, array $options, string $status)
+    private function retry(Call|callable $call, array $options, \Exception $exception)
     {
-        $delayMult = $this->retrySettings->getRetryDelayMultiplier();
-        $maxDelayMs = $this->retrySettings->getMaxRetryDelayMillis();
-        $timeoutMult = $this->retrySettings->getRpcTimeoutMultiplier();
         $maxTimeoutMs = $this->retrySettings->getMaxRpcTimeoutMillis();
+        $timeoutMult = $this->retrySettings->getRpcTimeoutMultiplier();
         $totalTimeoutMs = $this->retrySettings->getTotalTimeoutMillis();
+        $delayMs = $this->retrySettings->getRetryDelayMillis($this->retryAttempts, $exception);
 
-        $delayMs = $this->retrySettings->getInitialRetryDelayMillis();
         $timeoutMs = $options['timeoutMillis'];
         $currentTimeMs = $this->getCurrentTimeMs();
         $deadlineMs = $this->deadlineMs ?: $currentTimeMs + $totalTimeoutMs;
@@ -139,8 +137,6 @@ class RetryMiddleware implements MiddlewareInterface
                 ApiStatus::DEADLINE_EXCEEDED
             );
         }
-
-        $delayMs = min($delayMs * $delayMult, $maxDelayMs);
         $timeoutMs = (int) min(
             $timeoutMs * $timeoutMult,
             $maxTimeoutMs,
