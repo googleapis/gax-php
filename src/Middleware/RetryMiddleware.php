@@ -34,6 +34,7 @@ namespace Google\ApiCore\Middleware;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
+use Google\ApiCore\Retrier;
 use Google\ApiCore\RetrySettings;
 use GuzzleHttp\Promise\PromiseInterface;
 
@@ -44,24 +45,26 @@ class RetryMiddleware implements MiddlewareInterface
 {
     /** @var callable */
     private $nextHandler;
-    private RetrySettings $retrySettings;
-    private ?float $deadlineMs;
     private Retrier $retrier;
 
-    /*
-     * The number of retries that have already been attempted.
-     * The original API call will have $retryAttempts set to 0.
+    /**
+     * @param callable $nextHandler
+     * @param RetrySettings $retrySettings
+     * @param int $deadlineMillis TODO: Deprecate if possible.
+     * @param int $retryAttempts TODO: Deprecate if possible.
      */
-    private int $retryAttempts;
-
     public function __construct(
         callable $nextHandler,
         RetrySettings $retrySettings,
-        $deadlineMs = null,
+        $deadlineMillis = null,
         $retryAttempts = 0
     ) {
         $this->nextHandler = $nextHandler;
-        $this->retrier = new Retrier($retrySettings, $deadlineMs, $retryAttempts); 
+        $retrySettings = $retrySettings->with([
+            'deadlineMillis' => $deadlineMillis,
+            'retryAttempts' => $retryAttempts
+        ]);
+        $this->retrier = new Retrier($retrySettings);
     }
 
     /**
@@ -73,8 +76,91 @@ class RetryMiddleware implements MiddlewareInterface
     public function __invoke(Call $call, array $options)
     {
         $nextHandler = $this->nextHandler;
-        return $this->retrier->execute(function() use ($call, $options, $nextHandler) {
+        $retrySettings = $this->retrier->getRetrySettings();
+
+        if (!isset($options['timeoutMillis'])) {
+            // default to "noRetriesRpcTimeoutMillis" when retries are disabled, otherwise use "initialRpcTimeoutMillis"
+            if (!$retrySettings->retriesEnabled() && $retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
+                $options['timeoutMillis'] = $retrySettings->getNoRetriesRpcTimeoutMillis();
+            } elseif ($retrySettings->getInitialRpcTimeoutMillis() > 0) {
+                $options['timeoutMillis'] = $retrySettings->getInitialRpcTimeoutMillis();
+            }
+        }
+
+        // Call the handler immediately if retry settings are disabled.
+        if (!$retrySettings->retriesEnabled()) {
             return $nextHandler($call, $options);
+        }
+
+        return $nextHandler($call, $options)->then(null, function ($exception) use ($call, $options) {
+            if (!$this->retrier->isRetryable($exception)) {
+                throw $exception;
+            }
+
+            // Retry function returned true, so we attempt another retry
+            return $this->retry($call, $options, $exception);
         });
+    }
+
+    /**
+     * @param Call $call
+     * @param array $options
+     * @param ApiException $exception
+     *
+     * @return PromiseInterface
+     * @throws ApiException
+     */
+    private function retry(Call $call, array $options, ApiException $exception)
+    {
+        $currentTime = $this->retrier->getCurrentTimeMillis();
+        $this->retrier->checkDeadlineExceeded($currentTime);
+        $deadlineMillis = $this->retrier->calculateRetryDeadlineMillis($currentTime);
+        $retrySettings = $this->retrier->getRetrySettings()->with([
+            'retryAttempts' => $this->retrier->getRetrySettings()->getRetryAttempts() + 1,
+            'deadlineMillis' => $deadlineMillis
+        ]);
+        $timeout = $this->calculateTimeoutMillis(
+            $retrySettings,
+            $options['timeoutMillis']
+        );
+
+        $nextHandler = new RetryMiddleware(
+            $this->nextHandler,
+            $retrySettings,
+            $retrySettings->getDeadlineMillis(),
+            $retrySettings->getRetryAttempts()
+        );
+
+        // Set the timeout for the call
+        $options['timeoutMillis'] = $timeout;
+
+        return $nextHandler(
+            $call,
+            $options
+        );
+    }
+
+    /**
+     * Calculates the timeout for the call.
+     *
+     * @param RetrySettings $retrySettings
+     * @param int $timeoutMillis
+     *
+     * @return int
+     */
+    private function calculateTimeoutMillis(
+        RetrySettings $retrySettings,
+        int $timeoutMillis
+    ) {
+        $maxTimeoutMillis = $retrySettings->getMaxRpcTimeoutMillis();
+        $timeoutMult = $retrySettings->getRpcTimeoutMultiplier();
+        $deadlineMillis = $retrySettings->getDeadlineMillis();
+        $currentTime = $this->retrier->getCurrentTimeMillis();
+
+        return (int) min(
+            $timeoutMillis * $timeoutMult,
+            $maxTimeoutMillis,
+            $deadlineMillis - $currentTime
+        );
     }
 }

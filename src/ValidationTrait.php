@@ -56,6 +56,26 @@ trait ValidationTrait
         return self::validateImpl($arr, $requiredKeys, false);
     }
 
+    /**
+     * @param array $arr Associative array
+     * @param array $requiredKeys1 List of keys to check for in $arr
+     * @param array $requiredKeys2 List of keys to check for in $arr
+     * @return array Returns $arr for fluent use
+     * @throws ValidationException
+     */
+    public static function validateAllKeysFromOneOf(array $arr, array $requiredKeys1, array $requiredKeys2)
+    {
+        // Check if all keys in requiredKeys1 are present in arr
+        $allKeys1Present = count(array_diff($requiredKeys1, array_keys($arr))) === 0;
+        // Check if all keys in requiredKeys2 are present in arr
+        $allKeys2Present = count(array_diff($requiredKeys2, array_keys($arr))) === 0;
+        // Return $arr if either all keys from requiredKeys1 or requiredKeys2 are present
+        if ($allKeys1Present || $allKeys2Present) {
+            return $arr;
+        }
+        throw new ValidationException("Missing required arguments");
+    }
+
     private static function validateImpl($arr, $requiredKeys, $allowNull)
     {
         foreach ($requiredKeys as $requiredKey) {

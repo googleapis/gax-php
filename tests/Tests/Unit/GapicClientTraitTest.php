@@ -119,12 +119,7 @@ class GapicClientTraitTest extends TestCase
             ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
         $client = new StubGapicClient();
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', [
-            'method' => $this->getMockBuilder(RetrySettings::class)
-                ->disableOriginalConstructor()
-                ->getMock()
-            ]
-        );
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('descriptors', ['method' => $unaryDescriptors]);
@@ -184,12 +179,7 @@ class GapicClientTraitTest extends TestCase
             ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
         $client = new VersionedStubGapicClient();
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', [
-            'method' => $this->getMockBuilder(RetrySettings::class)
-                ->disableOriginalConstructor()
-                ->getMock()
-            ]
-        );
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('descriptors', ['method' => $unaryDescriptors]);
@@ -246,9 +236,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartOperationsCall()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
         $longRunningDescriptors = [
             'longRunning' => [
@@ -270,7 +257,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['method' => $longRunningDescriptors]);
         $message = new MockRequest();
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
@@ -297,9 +284,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartApiCallOperation()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
         $longRunningDescriptors = [
             'callType' => Call::LONGRUNNING_CALL,
@@ -322,7 +306,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['method' => $longRunningDescriptors]);
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
@@ -348,9 +332,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartApiCallCustomOperation()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
 
         $longRunningDescriptors = [
             'callType' => Call::LONGRUNNING_CALL,
@@ -374,7 +355,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['method' => $longRunningDescriptors]);
         $operationsClient = $this->getMockBuilder(OperationsClient::class)
             ->disableOriginalConstructor()
@@ -459,9 +440,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartApiCallUnary()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $unaryDescriptors = [
             'callType' => Call::UNARY_CALL,
             'responseType' => 'Google\Longrunning\Operation',
@@ -483,7 +461,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['method' => $unaryDescriptors]);
 
         $request = new MockRequest();
@@ -496,9 +474,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartApiCallPaged()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $pagedDescriptors = [
             'callType' => Call::PAGINATED_CALL,
             'responseType' => 'Google\Longrunning\ListOperationsResponse',
@@ -521,7 +496,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['method' => $retrySettings]);
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['method' => $pagedDescriptors]);
 
         $request = new MockRequest();
@@ -534,9 +509,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartAsyncCall()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $unaryDescriptors = [
             'callType' => Call::UNARY_CALL,
             'responseType' => 'Google\Longrunning\Operation'
@@ -551,7 +523,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['Method' => $retrySettings]);
+        $client->set('retrySettings', ['Method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['Method' => $unaryDescriptors]);
 
         $request = new MockRequest();
@@ -564,9 +536,6 @@ class GapicClientTraitTest extends TestCase
     public function testStartAsyncCallPaged()
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $pagedDescriptors = [
             'callType' => Call::PAGINATED_CALL,
             'responseType' => 'Google\Longrunning\ListOperationsResponse',
@@ -596,7 +565,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('transport', $transport);
         $client->set('credentialsWrapper', $credentialsWrapper);
         $client->set('agentHeader', $header);
-        $client->set('retrySettings', ['Method' => $retrySettings]);
+        $client->set('retrySettings', ['Method' => $this->getRetrySettingsMock()]);
         $client->set('descriptors', ['Method' => $pagedDescriptors]);
 
         $request = new MockRequest();
@@ -953,9 +922,7 @@ class GapicClientTraitTest extends TestCase
     private function buildClientToTestModifyCallMethods($clientClass = null)
     {
         $header = AgentHeader::buildAgentHeader([]);
-        $retrySettings = $this->getMockBuilder(RetrySettings::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $retrySettings = $this->getRetrySettingsMock();
 
         $longRunningDescriptors = [
             'longRunning' => [
@@ -1198,12 +1165,7 @@ class GapicClientTraitTest extends TestCase
             ]
         );
         $client->setClientOptions($updatedOptions);
-        $client->set('retrySettings', [
-            'method' => $this->getMockBuilder(RetrySettings::class)
-                ->disableOriginalConstructor()
-                ->getMock()
-            ]
-        );
+        $client->set('retrySettings', ['method' => $this->getRetrySettingsMock()]);
         $client->startCall(
             'method',
             'decodeType'
@@ -1212,7 +1174,6 @@ class GapicClientTraitTest extends TestCase
 
     public function testDefaultAudience()
     {
-        $retrySettings = $this->prophesize(RetrySettings::class);
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
             ->reveal();
         $transport = $this->prophesize(TransportInterface::class);
@@ -1233,7 +1194,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('agentHeader', []);
         $client->set(
             'retrySettings',
-            ['method.name' => $retrySettings->reveal()]
+            ['method.name' => $this->getRetrySettingsMock()]
         );
         $client->set('transport', $transport->reveal());
         $client->startCall('method.name', 'decodeType');
@@ -1257,7 +1218,6 @@ class GapicClientTraitTest extends TestCase
 
     public function testDefaultAudienceWithOperations()
     {
-        $retrySettings = $this->prophesize(RetrySettings::class);
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
             ->reveal();
         $transport = $this->prophesize(TransportInterface::class);
@@ -1289,7 +1249,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('agentHeader', []);
         $client->set(
             'retrySettings',
-            ['method.name' => $retrySettings->reveal()]
+            ['method.name' => $this->getRetrySettingsMock()]
         );
         $client->set('transport', $transport->reveal());
         $client->set('descriptors', ['method.name' => $longRunningDescriptors]);
@@ -1309,7 +1269,6 @@ class GapicClientTraitTest extends TestCase
 
     public function testDefaultAudienceWithPagedList()
     {
-        $retrySettings = $this->prophesize(RetrySettings::class);
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
             ->reveal();
         $transport = $this->prophesize(TransportInterface::class);
@@ -1339,7 +1298,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('agentHeader', []);
         $client->set(
             'retrySettings',
-            ['method.name' => $retrySettings->reveal()]
+            ['method.name' => $this->getRetrySettingsMock()]
         );
         $client->set('transport', $transport->reveal());
         $client->set('descriptors', [
@@ -1564,6 +1523,17 @@ class GapicClientTraitTest extends TestCase
         $agentHeader = $client->getAgentHeader();
         $this->assertStringContainsString(' gapic/0.0.1 ', $agentHeader['x-goog-api-client'][0]);
         $this->assertEquals('gcloud-php-new/0.0.1', $agentHeader['User-Agent'][0]);
+    }
+
+    private function getRetrySettingsMock()
+    {
+        $retrySettingsMock = $this->getMockBuilder(RetrySettings::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $retrySettingsMock->expects($this->any())
+            ->method('with')
+            ->willReturn($this->prophesize(RetrySettings::class)->reveal());
+        return $retrySettingsMock;
     }
 }
 
