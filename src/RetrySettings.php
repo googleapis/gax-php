@@ -579,7 +579,7 @@ class RetrySettings
     public function getRetryDelayMillis(int $attempts, \Exception $exception)
     {
         if ($this->retryDelayFunction) {
-            return min($this->retryDelayFunction($attempts, $exception), $this->maxRetryDelayMillis) ;
+            return min(call_user_func($this->retryDelayFunction, $attempts, $exception), $this->maxRetryDelayMillis) ;
         }
 
         return min(
