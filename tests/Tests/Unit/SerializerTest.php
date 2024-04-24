@@ -312,25 +312,39 @@ class SerializerTest extends TestCase
             'blue' => 50.0
         ];
 
-        $modified = [
-            'red' => 100,
-            'blue' => 100
+        $expected = [
+            'red' => 100.0,
+            'blue' => 100.0
         ];
 
         return  [
             [
                 [
-                    Color::class => function ($message) use($modified) {
-                        return $modified;
+                    Color::class => function ($message) {
+                        return [
+                            'red' => $message->getRed() * 2,
+                            'blue' => $message->getBlue() * 2
+                        ];
                     }
                 ],
                 new Color($original),
-                $modified
+                $expected
             ],
             [
                 // When no custom encoder is supplied, the encodeMessage will return the data
                 // that is passed into the proto
                 [
+                ],
+                new Color($original),
+                $original
+            ],
+            [
+                // When a custom encoder for a different protois supplied,
+                // the encodeMessage will return the data as if no custom encoder was supplied
+                [
+                    Status::class => function ($message) {
+                        return ['foo' => 'bar'];
+                    }
                 ],
                 new Color($original),
                 $original
