@@ -80,7 +80,7 @@ trait GapicClientTrait
         Call::CLIENT_STREAMING_CALL => 'startClientStreamingCall',
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
-    private bool $backwardsCompatibilityMode;
+    private ?bool $backwardsCompatibilityMode;
 
     /**
      * Add a middleware to the call stack by providing a callable which will be
@@ -947,7 +947,7 @@ trait GapicClientTrait
      */
     private function isBackwardsCompatibilityMode(): bool
     {
-        return $this->backwardsCompatibilityMode
+        return $this->backwardsCompatibilityMode 
             ?? $this->backwardsCompatibilityMode = substr(__CLASS__, -11) === 'GapicClient';
     }
 }
