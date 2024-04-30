@@ -81,10 +81,6 @@ class Retrier
             $retryDelayMillis = $this->retrySettings->getRetryDelayMillis($exception);
             // Millis to Micro conversion.
             usleep($retryDelayMillis * 1000);
-            
-            // TODO: Allow develpers to modify the $arguments using the retryListener callback.
-            // Refer ExponentialBackoff
-            // Also, Add provisions for the sleeper function(usleep) as a user input.
         }
         $this->execute($call, $options);
     }
