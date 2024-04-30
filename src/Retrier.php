@@ -90,7 +90,7 @@ class Retrier
      *
      * @return bool
      */
-    public function isRetryable(\Exception $exception)
+    public function isRetryable(\Exception $exception, array $options = [])
     {
         $retryFunction = $this->getRetryFunction();
 
@@ -102,7 +102,7 @@ class Retrier
             return false;
         }
         // Don't retry if the retry function returns false.
-        return $retryFunction($exception);
+        return $retryFunction($exception, $options);
     }
 
     /**
