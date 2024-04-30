@@ -229,7 +229,7 @@ class RetrySettings
     /**
      * When set, this function will be used to evaluate if the retry should
      * take place or not. The callable will have the following signature:
-     * function (int $retryAttempts, Exception $e): bool
+     * function (Exception $e, array $options): bool
      */
     private ?Closure $retryFunction;
 

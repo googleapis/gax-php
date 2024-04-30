@@ -102,7 +102,7 @@ class Retrier
             return false;
         }
         // Don't retry if the retry function returns false.
-        return $retryFunction($this->retrySettings->getRetryAttempts(), $exception);
+        return $retryFunction($exception);
     }
 
     /**
@@ -154,7 +154,7 @@ class Retrier
     private function getRetryFunction()
     {
         return $this->retrySettings->getRetryFunction() ??
-            function (int $retryAttempts, \Throwable $e): bool {
+            function (\Throwable $e, array $options = []): bool {
                 // This is the default retry behaviour, i.e. we don't retry an ApiException
                 // and for other exception types, we only retry when the error code is in
                 // the list of retryable error codes.
