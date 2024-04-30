@@ -63,7 +63,7 @@ class Retrier
      * @param array $options
      *
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function execute(callable $call, array $options)
     {
@@ -90,7 +90,6 @@ class Retrier
     }
 
     /**
-     * @param int $retryAttempts
      * @param \Exception $exception
      *
      * @return bool
