@@ -50,18 +50,18 @@ class RetryMiddleware implements MiddlewareInterface
     /**
      * @param callable $nextHandler
      * @param RetrySettings $retrySettings
-     * @param int $deadlineMillis TODO: Deprecate if possible.
+     * @param int $deadlineMs TODO: Deprecate if possible.
      * @param int $retryAttempts TODO: Deprecate if possible.
      */
     public function __construct(
         callable $nextHandler,
         RetrySettings $retrySettings,
-        $deadlineMillis = null,
+        $deadlineMs = null,
         $retryAttempts = 0
     ) {
         $this->nextHandler = $nextHandler;
         $retrySettings = $retrySettings->with([
-            'deadlineMillis' => $deadlineMillis,
+            'deadlineMillis' => $deadlineMs,
             'retryAttempts' => $retryAttempts
         ]);
         $this->retrier = new Retrier($retrySettings);
