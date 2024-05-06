@@ -32,6 +32,10 @@
 
 namespace Google\ApiCore;
 
+use Google\LongRunning\Client\OperationsClient;
+use Google\LongRunning\CancelOperationRequest;
+use Google\LongRunning\DeleteOperationRequest;
+use Google\LongRunning\GetOperationRequest;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Any;
 use Google\Protobuf\Internal\Message;
@@ -261,9 +265,25 @@ class OperationResponse
         }
         $this->lastProtoResponse = $this->operationsCall(
             $this->getOperationMethod,
-            $this->getName(),
+            $this->buildOperationMethodArgument(GetOperationRequest::class),
             $this->additionalArgs
         );
+    }
+
+    /**
+     * Create the argument for the operation.
+     *
+     * @param mixed $requestClass The class of the request to use for the operation.
+     *
+     * @return mixed The argument to use for the operation.
+     */
+    private function buildOperationMethodArgument(mixed $requestClass)
+    {
+        // If V2 client, first argument must be a request object.
+        if ($this->operationsClient instanceof OperationsClient) {
+            return $requestClass::build($this->getName());
+        }
+        return $this->getName();
     }
 
     /**
@@ -386,7 +406,11 @@ class OperationResponse
         if (is_null($this->cancelOperationMethod)) {
             throw new LogicException('The cancel operation is not supported by this API');
         }
-        $this->operationsCall($this->cancelOperationMethod, $this->getName(), $this->additionalArgs);
+        $this->operationsCall(
+            $this->cancelOperationMethod,
+            $this->buildOperationMethodArgument(CancelOperationRequest::class),
+            $this->additionalArgs
+        );
     }
 
     /**
@@ -405,7 +429,11 @@ class OperationResponse
         if (is_null($this->deleteOperationMethod)) {
             throw new LogicException('The delete operation is not supported by this API');
         }
-        $this->operationsCall($this->deleteOperationMethod, $this->getName(), $this->additionalArgs);
+        $this->operationsCall(
+            $this->deleteOperationMethod,
+            $this->buildOperationMethodArgument(DeleteOperationRequest::class),
+            $this->additionalArgs
+        );
         $this->deleted = true;
     }
 
