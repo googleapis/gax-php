@@ -361,11 +361,10 @@ class OperationResponseTest extends TestCase
     public function testLROOperationsClient()
     {
         $operationClient = $this->prophesize(LROOperationsClient::class);
-        $operation = $this->prophesize(Operation::class);
         $request = new GetOperationRequest(['name' => 'test-123']);
         $operationClient->getOperation(Argument::exact($request))
             ->shouldBeCalledOnce()
-            ->willReturn($operation->reveal());
+            ->willReturn(new Operation());
         $request = new DeleteOperationRequest(['name' => 'test-123']);
         $operationClient->deleteOperation(Argument::exact($request))
             ->shouldBeCalledOnce();
@@ -376,7 +375,6 @@ class OperationResponseTest extends TestCase
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
         $operationResponse->reload();
         $operationResponse->delete();
-        $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
         $operationResponse->cancel();
     }
 
