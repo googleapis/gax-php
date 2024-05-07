@@ -265,8 +265,7 @@ class OperationResponse
         }
         $this->lastProtoResponse = $this->operationsCall(
             $this->getOperationMethod,
-            $this->buildOperationMethodArgument(GetOperationRequest::class),
-            $this->additionalArgs
+            GetOperationRequest::class
         );
     }
 
@@ -392,8 +391,7 @@ class OperationResponse
         }
         $this->operationsCall(
             $this->cancelOperationMethod,
-            $this->buildOperationMethodArgument(CancelOperationRequest::class),
-            $this->additionalArgs
+            CancelOperationRequest::class
         );
     }
 
@@ -415,8 +413,7 @@ class OperationResponse
         }
         $this->operationsCall(
             $this->deleteOperationMethod,
-            $this->buildOperationMethodArgument(DeleteOperationRequest::class),
-            $this->additionalArgs
+            DeleteOperationRequest::class
         );
         $this->deleted = true;
     }
@@ -459,9 +456,12 @@ class OperationResponse
         return $metadata;
     }
 
-    private function operationsCall($method, $name, array $additionalArgs)
+    private function operationsCall(string $method, string $requestClass)
     {
-        $args = array_merge([$name], $additionalArgs);
+        $firstArgument = $this->operationsClient instanceof OperationsClient
+            ? $requestClass::build($this->getName())
+            : $this->getName();
+        $args = array_merge([$firstArgument], $this->additionalArgs);
         return call_user_func_array([$this->operationsClient, $method], $args);
     }
 
