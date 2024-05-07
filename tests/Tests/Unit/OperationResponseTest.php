@@ -373,8 +373,9 @@ class OperationResponseTest extends TestCase
 
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
         $operationResponse->reload();
-        $operationResponse->cancel();
         $operationResponse->delete();
+        $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
+        $operationResponse->cancel();
     }
 
     private function createOperationResponse($options, $reloadCount)
