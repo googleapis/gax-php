@@ -358,6 +358,27 @@ class OperationResponseTest extends TestCase
         $this->assertEquals($op->getSleeps(), [3, 4, 6]);
     }
 
+    public function testLROOperationsClient()
+    {
+        $operationClient = $this->prophesize(LROOperationsClient::class);
+        $operation = $this->prophesize(Operation::class);
+        $request = new GetOperationRequest(['name' => 'test-123']);
+        $operationClient->getOperation(Argument::exact($request))
+            ->shouldBeCalledOnce()
+            ->willReturn($operation->reveal());
+        $request = new DeleteOperationRequest(['name' => 'test-123']);
+        $operationClient->deleteOperation(Argument::exact($request))
+            ->shouldBeCalledOnce();
+        $request = new CancelOperationRequest(['name' => 'test-123']);
+        $operationClient->cancelOperation(Argument::exact($request))
+            ->shouldBeCalledOnce();
+
+        $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
+        $operationResponse->reload();
+        $operationResponse->delete();
+        $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
+        $operationResponse->cancel();
+    }
 
     private function createOperationResponse($options, $reloadCount)
     {
