@@ -34,10 +34,15 @@ namespace Google\ApiCore\Tests\Unit;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\OperationResponse;
 use Google\LongRunning\Operation;
+use Google\LongRunning\Client\OperationsClient as LROOperationsClient;
+use Google\LongRunning\CancelOperationRequest;
+use Google\LongRunning\DeleteOperationRequest;
+use Google\LongRunning\GetOperationRequest;
 use Google\Protobuf\Any;
 use Google\Rpc\Code;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class OperationResponseTest extends TestCase
@@ -351,6 +356,25 @@ class OperationResponseTest extends TestCase
 
         $this->assertEquals($op->isDone(), true);
         $this->assertEquals($op->getSleeps(), [3, 4, 6]);
+    }
+
+    public function testLROOperationsClient()
+    {
+        $operationClient = $this->prophesize(LROOperationsClient::class);
+        $request = new GetOperationRequest(['name' => 'test-123']);
+        $operationClient->getOperation(Argument::exact($request))
+            ->shouldBeCalledTimes(1);
+        $request = new CancelOperationRequest(['name' => 'test-123']);
+        $operationClient->cancelOperation(Argument::exact($request))
+            ->shouldBeCalledTimes(1);
+        $request = new DeleteOperationRequest(['name' => 'test-123']);
+        $operationClient->deleteOperation(Argument::exact($request))
+            ->shouldBeCalledTimes(1);
+
+        $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
+        $operationResponse->reload();
+        $operationResponse->cancel();
+        $operationResponse->delete();
     }
 
     private function createOperationResponse($options, $reloadCount)
