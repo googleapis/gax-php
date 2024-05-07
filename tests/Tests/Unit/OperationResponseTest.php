@@ -360,15 +360,16 @@ class OperationResponseTest extends TestCase
 
     public function testLROOperationsClient()
     {
+        $this->requiresGrpcExtension();
         $operationClient = $this->prophesize(LROOperationsClient::class);
         $request = new GetOperationRequest(['name' => 'test-123']);
         $operationClient->getOperation(Argument::exact($request))
             ->shouldBeCalledTimes(1);
-        $request = new CancelOperationRequest(['name' => 'test-123']);
-        $operationClient->cancelOperation(Argument::exact($request))
-            ->shouldBeCalledTimes(1);
         $request = new DeleteOperationRequest(['name' => 'test-123']);
         $operationClient->deleteOperation(Argument::exact($request))
+            ->shouldBeCalledTimes(1);
+        $request = new CancelOperationRequest(['name' => 'test-123']);
+        $operationClient->cancelOperation(Argument::exact($request))
             ->shouldBeCalledTimes(1);
 
         $operationResponse = new OperationResponse('test-123', $operationClient->reveal());
