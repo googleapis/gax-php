@@ -495,20 +495,4 @@ class OperationResponse
     {
         return !is_null($this->lastProtoResponse);
     }
-
-    /**
-     * Create the argument for the operation.
-     *
-     * @param mixed $requestClass The class of the request to use for the operation.
-     *
-     * @return mixed The argument to use for the operation.
-     */
-    private function buildOperationMethodArgument(mixed $requestClass)
-    {
-        // If V2 client, first argument must be a request object.
-        if ($this->operationsClient instanceof OperationsClient) {
-            return $requestClass::build($this->getName());
-        }
-        return $this->getName();
-    }
 }
