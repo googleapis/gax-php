@@ -287,7 +287,7 @@ class RetryMiddlewareTest extends TestCase
         $retrySettings = RetrySettings::constructDefault()
             ->with([
                 'retriesEnabled' => true,
-                'retryFunction' => function ($ex, $options) use ($maxAttempts, &$currentAttempt) {
+                'retryFunction' => function ($ex) use ($maxAttempts, &$currentAttempt) {
                     $currentAttempt++;
                     if($currentAttempt < $maxAttempts) {
                         return true;
@@ -349,7 +349,7 @@ class RetryMiddlewareTest extends TestCase
             ->with([
                 'retriesEnabled' => true,
                 'totalTimeoutMillis' => 1,
-                'retryFunction' => function ($ex, $options) {
+                'retryFunction' => function ($ex) {
                     usleep(900);
                     return true;
                 }
@@ -363,7 +363,7 @@ class RetryMiddlewareTest extends TestCase
             });
         };
         $middleware = new RetryMiddleware($handler, $retrySettings);
-        
+
         try {
             $middleware($call, [])->wait();
             $this->fail('Expected an exception, but didn\'t receive any');
@@ -420,7 +420,7 @@ class RetryMiddlewareTest extends TestCase
                 'retriesEnabled' => true,
                 'retryableCodes' => [ApiStatus::CANCELLED],
                 'maxRetries' => $maxRetries,
-                'retryFunction' => function ($ex, $options) use (&$callCount) {
+                'retryFunction' => function ($ex) use (&$callCount) {
                     // The retryFunction will signal a retry until the total call count reaches 5.
                     return $callCount < 5 ? true : false;
                 }
@@ -458,7 +458,7 @@ class RetryMiddlewareTest extends TestCase
                 'retriesEnabled' => true,
                 'retryableCodes' => [ApiStatus::CANCELLED],
                 'maxRetries' => $maxRetries,
-                'retryFunction' => function ($ex, $options) use (&$callCount, $customRetryMaxCalls) {
+                'retryFunction' => function ($ex) use (&$callCount, $customRetryMaxCalls) {
                     // The retryFunction will signal a retry until the total call count reaches $customRetryMaxCalls.
                     return $callCount < $customRetryMaxCalls ? true : false;
                 }
@@ -493,7 +493,7 @@ class RetryMiddlewareTest extends TestCase
                 'retriesEnabled' => true,
                 'retryableCodes' => [ApiStatus::CANCELLED],
                 'maxRetries' => 0,
-                'retryFunction' => function ($ex, $options) use (&$callCount, $customRetryMaxCalls) {
+                'retryFunction' => function ($ex) use (&$callCount, $customRetryMaxCalls) {
                     // The retryFunction will signal a retry until the total call count reaches $customRetryMaxCalls.
                     return $callCount < $customRetryMaxCalls ? true : false;
                 }

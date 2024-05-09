@@ -236,6 +236,26 @@ class RetrySettings
     private ?Closure $retryFunction;
 
     /**
+     * When set, this function will be used to evaluate the dealy between
+     * retries. This overrides $retryableCodes, $initialRetryDelayMillis,
+     * and $retryDelayMultiplier.
+     * The callable will have the following signature:
+     * function (int attempts, Exception $e): int (delay in milliseconds)
+     */
+    private ?Closure $retryDelayFunction;
+
+    /**
+     * When set, this function will be called on the arguments of the callable
+     * to be retried before invoking the callable.
+     */
+    private ?Closure $argumentUpdateFunction;
+
+    /**
+     * The deadline in milliseconds.
+     */
+    private ?float $deadlineMillis;
+
+    /**
      * Constructs an instance.
      *
      * @param array $settings {
@@ -265,6 +285,11 @@ class RetrySettings
      *     @type callable $retryFunction This function will be used to decide if we should retry or not.
      *                    Callable signature: `function (Exception $e, array $options): bool`
      *                    This option is experimental.
+     *     @type callable $retryDelayFunction Optional. This function will be used to decide the
+     *                    delay between retries.
+     *     @type float    $deadlineMillis Optional. The deadline of the rpc call in milliseconds.
+     *     @type callable $argumentUpdateFunction Optional. This function will be called on the
+     *                    arguments. Callable signature: `function (...$args): array`
      * }
      */
     public function __construct(array $settings)
@@ -277,7 +302,7 @@ class RetrySettings
             'rpcTimeoutMultiplier',
             'maxRpcTimeoutMillis',
             'totalTimeoutMillis',
-            'retryableCodes'
+            'retryableCodes',
         ]);
         $this->initialRetryDelayMillis = $settings['initialRetryDelayMillis'];
         $this->retryDelayMultiplier = $settings['retryDelayMultiplier'];
@@ -295,6 +320,9 @@ class RetrySettings
             : $this->initialRpcTimeoutMillis;
         $this->maxRetries = $settings['maxRetries'] ?? self::DEFAULT_MAX_RETRIES;
         $this->retryFunction = $settings['retryFunction'] ?? null;
+        $this->retryDelayFunction = $settings['retryDelayFunction'] ?? null;
+        $this->deadlineMillis = $settings['deadlineMillis'] ?? null;
+        $this->argumentUpdateFunction = $settings['argumentUpdateFunction'] ?? null;
     }
 
     /**
@@ -390,7 +418,7 @@ class RetrySettings
      * }
      * @return RetrySettings
      */
-    public function with(array $settings)
+    public function with(array $settings): RetrySettings
     {
         $existingSettings = [
             'initialRetryDelayMillis' => $this->getInitialRetryDelayMillis(),
@@ -405,6 +433,9 @@ class RetrySettings
             'noRetriesRpcTimeoutMillis' => $this->getNoRetriesRpcTimeoutMillis(),
             'maxRetries' => $this->getMaxRetries(),
             'retryFunction' => $this->getRetryFunction(),
+            'retryDelayFunction' => $this->getRetryDelayFunction(),
+            'deadlineMillis' => $this->getDeadlineMillis(),
+            'argumentUpdateFunction' => $this->getArgumentUpdateFunction(),
         ];
         return new RetrySettings($settings + $existingSettings);
     }
@@ -533,6 +564,33 @@ class RetrySettings
     public function getRetryFunction()
     {
         return $this->retryFunction;
+    }
+
+    /**
+     * @experimental
+     * @internal
+     */
+    public function getRetryDelayFunction()
+    {
+        return $this->retryDelayFunction;
+    }
+
+    /**
+     * @experimental
+     * @internal
+     */
+    public function getDeadlineMillis()
+    {
+        return $this->deadlineMillis;
+    }
+
+    /**
+     * @experimental
+     * @internal
+     */
+    public function getArgumentUpdateFunction()
+    {
+        return $this->argumentUpdateFunction;
     }
 
     private static function convertArrayFromSnakeCase(array $settings)
