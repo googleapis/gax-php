@@ -36,6 +36,7 @@ use ArrayAccess;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\RetrySettings;
 use Google\ApiCore\TransportInterface;
+use Google\ApiCore\Transport\GrpcTransport;
 
 /**
  * The CallOptions class provides typing to the associative array of options
@@ -60,8 +61,8 @@ class CallOptions implements ArrayAccess
      *     Call options
      *
      *     @type array $headers
-     *           Key-value array containing headers. When using gRPC tramsport, header values
-     *           must be an array of strings.
+     *           Key-value array containing headers. When using the {@see GrpcTransport}, header
+     *           values must be an array of strings.
      *     @type int $timeoutMillis
      *           The timeout in milliseconds for the call.
      *     @type array $transportOptions
