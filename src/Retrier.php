@@ -97,7 +97,7 @@ class Retrier
             }
 
             // Retry function returned true, so we attempt another retry
-            return $this->retry($exception->getStatus(), ...$parameters);
+            return $this->retry(...$parameters);
         });
     }
 
@@ -114,7 +114,7 @@ class Retrier
      * @return PromiseInterface
      * @throws ApiException
      */
-    private function retry(string $status, ...$parameters)
+    private function retry(...$parameters)
     {
         $delayMs = $this->retrySettings->getInitialRetryDelayMillis();
         $delayMult = $this->retrySettings->getRetryDelayMultiplier();
@@ -154,7 +154,7 @@ class Retrier
             $parameters = $argumentUpdateFunction(...$parameters);
         }
 
-        return $this->__invoke(...$parameters);
+        return $this(...$parameters);
     }
 
     private function getCurrentTimeMs()
@@ -192,14 +192,12 @@ class Retrier
     {
         // If timeoutMillis is not set, calculate what it should be for the first invocation
         if (is_null($this->timeoutMillis)) {
-            $timeoutMillis = 0;
             // default to "noRetriesRpcTimeoutMillis" when retries are disabled, otherwise use "initialRpcTimeoutMillis"
             if (!$this->retrySettings->retriesEnabled() && $this->retrySettings->getNoRetriesRpcTimeoutMillis() > 0) {
-                $timeoutMillis = $this->retrySettings->getNoRetriesRpcTimeoutMillis();
+                $this->timeoutMillis = $this->retrySettings->getNoRetriesRpcTimeoutMillis();
             } elseif ($this->retrySettings->getInitialRpcTimeoutMillis() > 0) {
-                $timeoutMillis = $this->retrySettings->getInitialRpcTimeoutMillis();
+                $this->timeoutMillis = $this->retrySettings->getInitialRpcTimeoutMillis();
             }
-            $this->timeoutMillis = $timeoutMillis;
         }
         return $this->timeoutMillis;
     }

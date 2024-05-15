@@ -1212,7 +1212,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testDefaultAudience()
     {
-        $retrySettings = $this->prophesize(RetrySettings::class);
+        $retrySettings = RetrySettings::constructDefault();
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
             ->reveal();
         $transport = $this->prophesize(TransportInterface::class);
@@ -1233,7 +1233,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('agentHeader', []);
         $client->set(
             'retrySettings',
-            ['method.name' => $retrySettings->reveal()]
+            ['method.name' => $retrySettings]
         );
         $client->set('transport', $transport->reveal());
         $client->startCall('method.name', 'decodeType');
@@ -1257,7 +1257,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testDefaultAudienceWithOperations()
     {
-        $retrySettings = $this->prophesize(RetrySettings::class);
+        $retrySettings = RetrySettings::constructDefault();
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
             ->reveal();
         $transport = $this->prophesize(TransportInterface::class);
@@ -1289,7 +1289,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('agentHeader', []);
         $client->set(
             'retrySettings',
-            ['method.name' => $retrySettings->reveal()]
+            ['method.name' => $retrySettings]
         );
         $client->set('transport', $transport->reveal());
         $client->set('descriptors', ['method.name' => $longRunningDescriptors]);
@@ -1309,7 +1309,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testDefaultAudienceWithPagedList()
     {
-        $retrySettings = $this->prophesize(RetrySettings::class);
+        $retrySettings = RetrySettings::constructDefault();
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class)
             ->reveal();
         $transport = $this->prophesize(TransportInterface::class);
@@ -1339,7 +1339,7 @@ class GapicClientTraitTest extends TestCase
         $client->set('agentHeader', []);
         $client->set(
             'retrySettings',
-            ['method.name' => $retrySettings->reveal()]
+            ['method.name' => $retrySettings]
         );
         $client->set('transport', $transport->reveal());
         $client->set('descriptors', [

@@ -67,12 +67,10 @@ class RetryMiddleware implements MiddlewareInterface
      */
     public function __invoke(Call $call, array $options)
     {
-        $retrier = $this->retrier;
-
-        if (empty($options['timeoutMillis'])) {
-            $options['timeoutMillis'] = $retrier->getTimeoutMillis();
+        if (empty($options['timeoutMillis']) && !is_null($this->retrier->getTimeoutMillis())) {
+            $options['timeoutMillis'] = $this->retrier->getTimeoutMillis();
         }
-        return $retrier($call, $options);
+        return ($this->retrier)($call, $options);
     }
 
     private function getArgumentUpdateFunction()
