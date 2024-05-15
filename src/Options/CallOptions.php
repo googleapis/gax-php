@@ -60,7 +60,8 @@ class CallOptions implements ArrayAccess
      *     Call options
      *
      *     @type array $headers
-     *           Key-value array containing headers
+     *           Key-value array containing headers. When using gRPC tramsport, header values
+     *           must be an array of strings.
      *     @type int $timeoutMillis
      *           The timeout in milliseconds for the call.
      *     @type array $transportOptions
