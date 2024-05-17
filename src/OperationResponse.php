@@ -269,10 +269,7 @@ class OperationResponse
         if ($this->operationsClient instanceof OperationsClient) {
             $requestClass = GetOperationRequest::class;
         } elseif ($this->isNewSurfaceOperationsClient()) {
-            $requestClass = (new \ReflectionMethod(
-                $this->operationsClient,
-                $this->getOperationMethod)
-            )->getParameters()[0]->getType()->getName();
+            $requestClass = $this->getRequestClass($this->getOperationMethod);
         }
 
         $this->lastProtoResponse = $this->operationsCall($this->getOperationMethod, $requestClass);
@@ -403,10 +400,7 @@ class OperationResponse
         if ($this->operationsClient instanceof OperationsClient) {
             $requestClass = CancelOperationRequest::class;
         } elseif ($this->isNewSurfaceOperationsClient()) {
-            $requestClass = (new \ReflectionMethod(
-                $this->operationsClient,
-                $this->cancelOperationMethod)
-            )->getParameters()[0]->getType()->getName();
+            $requestClass = $this->getRequestClass($this->cancelOperationMethod);
         }
 
         $this->operationsCall($this->cancelOperationMethod, $requestClass);
@@ -433,10 +427,7 @@ class OperationResponse
         if ($this->operationsClient instanceof OperationsClient) {
             $requestClass = DeleteOperationRequest::class;
         } elseif ($this->isNewSurfaceOperationsClient()) {
-            $requestClass = (new \ReflectionMethod(
-                $this->operationsClient,
-                $this->deleteOperationMethod)
-            )->getParameters()[0]->getType()->getName();
+            $requestClass = $this->getRequestClass($this->deleteOperationMethod);
         }
 
         $this->operationsCall($this->deleteOperationMethod, $requestClass);
@@ -534,5 +525,17 @@ class OperationResponse
     {
         return !$this->operationsClient instanceof LegacyOperationsClient
             && false !== strpos(get_class($this->operationsClient), '\\Client\\');
+    }
+
+    private function getRequestClass(string $method): string
+    {
+        $refl = new \ReflectionMethod($this->operationsClient, $method);
+        $type = $refl->getParameters()[0]->getType();
+
+        if (!$type instanceof \ReflectionNamedType) {
+            throw new \RuntimeException('Could not determine request class');
+        }
+
+        return $type->getName();
     }
 }
