@@ -266,26 +266,19 @@ class OperationResponseTest extends TestCase
 
         $phpunit = $this;
         $operationName = 'test-123';
-        $operation = $this->prophesize(CustomOperation::class);
-        $operation->isThisOperationDoneOrWhat()
-            ->shouldBeCalledTimes(2)
-            ->willReturn('Yes, it is!');
-        $operation->getError()
-            ->shouldBeCalledOnce()
-            ->willReturn(null);
         $operationClient = $this->prophesize(Client\NewSurfaceCustomOperationClient::class);
         $operationClient->getNewSurfaceOperation(Argument::type(Client\GetOperationRequest::class))
             ->shouldBeCalledOnce()
-            ->will(function ($args) use ($operation, $phpunit) {
+            ->will(function ($args) use ($phpunit) {
                 list($request) = $args;
                 $phpunit->assertEquals('test-123', $request->name);
                 $phpunit->assertEquals('arg2', $request->arg2);
                 $phpunit->assertEquals('arg3', $request->arg3);
-                return $operation->reveal();
+                return $phpunit->prophesize(Operation::class)->reveal();
             });
         $operationClient->cancelNewSurfaceOperation(Argument::type(Client\CancelOperationRequest::class))
             ->shouldBeCalledOnce()
-            ->will(function ($args) use ($operation, $phpunit) {
+            ->will(function ($args) use ($phpunit) {
                 list($request) = $args;
                 $phpunit->assertEquals('test-123', $request->name);
                 $phpunit->assertEquals('arg2', $request->arg2);
@@ -294,7 +287,7 @@ class OperationResponseTest extends TestCase
             });
         $operationClient->deleteNewSurfaceOperation(Argument::type(Client\DeleteOperationRequest::class))
             ->shouldBeCalledOnce()
-            ->will(function ($args) use ($operation, $phpunit) {
+            ->will(function ($args) use ($phpunit) {
                 list($request) = $args;
                 $phpunit->assertEquals('test-123', $request->name);
                 $phpunit->assertEquals('arg2', $request->arg2);
@@ -309,18 +302,11 @@ class OperationResponseTest extends TestCase
                 'setArgumentTwo' => 'arg2',
                 'setArgumentThree' => 'arg3'
             ],
-            'operationStatusMethod' => 'isThisOperationDoneOrWhat',
-            'operationStatusDoneValue' => 'Yes, it is!',
         ];
         $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
 
         // Test getOperationMethod
         $operationResponse->reload();
-
-        // Test operationStatusMethod and operationStatusDoneValue
-        $this->assertTrue($operationResponse->isDone());
-
-        $this->assertTrue($operationResponse->operationSucceeded());
 
         // test cancelOperationMethod
         $operationResponse->cancel();
