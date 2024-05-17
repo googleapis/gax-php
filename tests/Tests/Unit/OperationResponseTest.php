@@ -259,6 +259,76 @@ class OperationResponseTest extends TestCase
         $operationResponse->delete();
     }
 
+    public function testNewSurfaceCustomOperation()
+    {
+        // This mock requires a specific namespace, so it must be defined in a separate file
+        require_once __DIR__ . '/testdata/src/CustomOperationClient.php';
+
+        $phpunit = $this;
+        $operationName = 'test-123';
+        $operation = $this->prophesize(CustomOperation::class);
+        $operation->isThisOperationDoneOrWhat()
+            ->shouldBeCalledTimes(2)
+            ->willReturn('Yes, it is!');
+        $operation->getError()
+            ->shouldBeCalledOnce()
+            ->willReturn(null);
+        $operationClient = $this->prophesize(Client\NewSurfaceCustomOperationClient::class);
+        $operationClient->getNewSurfaceOperation(Argument::type(Client\GetOperationRequest::class))
+            ->shouldBeCalledOnce()
+            ->will(function ($args) use ($operation, $phpunit) {
+                list($request) = $args;
+                $phpunit->assertEquals('test-123', $request->name);
+                $phpunit->assertEquals('arg2', $request->arg2);
+                $phpunit->assertEquals('arg3', $request->arg3);
+                return $operation->reveal();
+            });
+        $operationClient->cancelNewSurfaceOperation(Argument::type(Client\CancelOperationRequest::class))
+            ->shouldBeCalledOnce()
+            ->will(function ($args) use ($operation, $phpunit) {
+                list($request) = $args;
+                $phpunit->assertEquals('test-123', $request->name);
+                $phpunit->assertEquals('arg2', $request->arg2);
+                $phpunit->assertEquals('arg3', $request->arg3);
+                return true;
+            });
+        $operationClient->deleteNewSurfaceOperation(Argument::type(Client\DeleteOperationRequest::class))
+            ->shouldBeCalledOnce()
+            ->will(function ($args) use ($operation, $phpunit) {
+                list($request) = $args;
+                $phpunit->assertEquals('test-123', $request->name);
+                $phpunit->assertEquals('arg2', $request->arg2);
+                $phpunit->assertEquals('arg3', $request->arg3);
+                return true;
+            });
+        $options = [
+            'getOperationMethod' => 'getNewSurfaceOperation',
+            'cancelOperationMethod' => 'cancelNewSurfaceOperation',
+            'deleteOperationMethod' => 'deleteNewSurfaceOperation',
+            'additionalOperationArguments' => [
+                'setArgumentTwo' => 'arg2',
+                'setArgumentThree' => 'arg3'
+            ],
+            'operationStatusMethod' => 'isThisOperationDoneOrWhat',
+            'operationStatusDoneValue' => 'Yes, it is!',
+        ];
+        $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
+
+        // Test getOperationMethod
+        $operationResponse->reload();
+
+        // Test operationStatusMethod and operationStatusDoneValue
+        $this->assertTrue($operationResponse->isDone());
+
+        $this->assertTrue($operationResponse->operationSucceeded());
+
+        // test cancelOperationMethod
+        $operationResponse->cancel();
+
+        // test deleteOperationMethod
+        $operationResponse->delete();
+    }
+
     /**
      * @dataProvider provideOperationsClients
      */

@@ -33,6 +33,7 @@
 namespace Google\ApiCore;
 
 use Google\LongRunning\Client\OperationsClient;
+use Google\LongRunning\OperationsClient as LegacyOperationsClient;
 use Google\LongRunning\CancelOperationRequest;
 use Google\LongRunning\DeleteOperationRequest;
 use Google\LongRunning\GetOperationRequest;
@@ -263,10 +264,18 @@ class OperationResponse
         if ($this->deleted) {
             throw new ValidationException("Cannot call reload() on a deleted operation");
         }
-        $this->lastProtoResponse = $this->operationsCall(
-            $this->getOperationMethod,
-            GetOperationRequest::class
-        );
+
+        $requestClass = null;
+        if ($this->operationsClient instanceof OperationsClient) {
+            $requestClass = GetOperationRequest::class;
+        } elseif ($this->isNewSurfaceOperationsClient()) {
+            $requestClass = (new \ReflectionMethod(
+                $this->operationsClient,
+                $this->getOperationMethod)
+            )->getParameters()[0]->getType()->getName();
+        }
+
+        $this->lastProtoResponse = $this->operationsCall($this->getOperationMethod, $requestClass);
     }
 
     /**
@@ -389,10 +398,18 @@ class OperationResponse
         if (is_null($this->cancelOperationMethod)) {
             throw new LogicException('The cancel operation is not supported by this API');
         }
-        $this->operationsCall(
-            $this->cancelOperationMethod,
-            CancelOperationRequest::class
-        );
+
+        $requestClass = null;
+        if ($this->operationsClient instanceof OperationsClient) {
+            $requestClass = CancelOperationRequest::class;
+        } elseif ($this->isNewSurfaceOperationsClient()) {
+            $requestClass = (new \ReflectionMethod(
+                $this->operationsClient,
+                $this->cancelOperationMethod)
+            )->getParameters()[0]->getType()->getName();
+        }
+
+        $this->operationsCall($this->cancelOperationMethod, $requestClass);
     }
 
     /**
@@ -411,10 +428,18 @@ class OperationResponse
         if (is_null($this->deleteOperationMethod)) {
             throw new LogicException('The delete operation is not supported by this API');
         }
-        $this->operationsCall(
-            $this->deleteOperationMethod,
-            DeleteOperationRequest::class
-        );
+
+        $requestClass = null;
+        if ($this->operationsClient instanceof OperationsClient) {
+            $requestClass = DeleteOperationRequest::class;
+        } elseif ($this->isNewSurfaceOperationsClient()) {
+            $requestClass = (new \ReflectionMethod(
+                $this->operationsClient,
+                $this->deleteOperationMethod)
+            )->getParameters()[0]->getType()->getName();
+        }
+
+        $this->operationsCall($this->deleteOperationMethod, $requestClass);
         $this->deleted = true;
     }
 
@@ -456,12 +481,21 @@ class OperationResponse
         return $metadata;
     }
 
-    private function operationsCall(string $method, string $requestClass)
+    /**
+     * Call the operations client to perform an operation.
+     *
+     * @param string $method The method to call on the operations client.
+     * @param string|null $requestClass The request class to use for the call.
+     *                                  Will be null for legacy operations clients.
+     */
+    private function operationsCall(string $method, ?string $requestClass)
     {
-        $firstArgument = $this->operationsClient instanceof OperationsClient
-            ? $requestClass::build($this->getName())
-            : $this->getName();
-        $args = array_merge([$firstArgument], $this->additionalArgs);
+        $args = array_merge([$this->getName()], array_values($this->additionalArgs));
+        if ($requestClass) {
+            $request = call_user_func_array($requestClass . '::build', $args);
+            $args = [$request];
+        }
+
         return call_user_func_array([$this->operationsClient, $method], $args);
     }
 
@@ -494,5 +528,11 @@ class OperationResponse
     private function hasProtoResponse()
     {
         return !is_null($this->lastProtoResponse);
+    }
+
+    private function isNewSurfaceOperationsClient(): bool
+    {
+        return !$this->operationsClient instanceof LegacyOperationsClient
+            && false !== strpos(get_class($this->operationsClient), '\\Client\\');
     }
 }
