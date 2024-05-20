@@ -274,7 +274,7 @@ class OperationResponseTest extends TestCase
                 $phpunit->assertEquals('test-123', $request->name);
                 $phpunit->assertEquals('arg2', $request->arg2);
                 $phpunit->assertEquals('arg3', $request->arg3);
-                return $phpunit->prophesize(Operation::class)->reveal();
+                return new \stdClass;
             });
         $operationClient->cancelNewSurfaceOperation(Argument::type(Client\CancelOperationRequest::class))
             ->shouldBeCalledOnce()
