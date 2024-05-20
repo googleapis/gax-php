@@ -517,16 +517,4 @@ class OperationResponse
         return !$this->operationsClient instanceof LegacyOperationsClient
             && false !== strpos(get_class($this->operationsClient), '\\Client\\');
     }
-
-    private function getRequestClass(string $method): string
-    {
-        $refl = new \ReflectionMethod($this->operationsClient, $method);
-        $type = $refl->getParameters()[0]->getType();
-
-        if (!$type instanceof \ReflectionNamedType) {
-            throw new \RuntimeException('Could not determine request class');
-        }
-
-        return $type->getName();
-    }
 }
