@@ -474,6 +474,9 @@ class OperationResponse
     {
         $args = array_merge([$this->getName()], array_values($this->additionalArgs));
         if ($requestClass) {
+            if (!method_exists($requestClass, 'build')) {
+                throw new LogicException('Request class must support the static build method');
+            }
             $request = call_user_func_array($requestClass . '::build', $args);
             $args = [$request];
         }

@@ -318,6 +318,24 @@ class OperationResponseTest extends TestCase
         $operationResponse->delete();
     }
 
+    public function testRequestClassWithoutBuildThrowsException()
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Request class must support the static build method');
+
+        // This mock requires a specific namespace, so it must be defined in a separate file
+        require_once __DIR__ . '/testdata/src/CustomOperationClient.php';
+
+        $operationClient = $this->prophesize(Client\NewSurfaceCustomOperationClient::class);
+        $options = [
+            'getOperationRequest' => \stdClass::class, // a class that does not have a "build" method.
+        ];
+        $operationResponse = new OperationResponse('test-123', $operationClient->reveal(), $options);
+
+        // Test getOperationMethod
+        $operationResponse->reload();
+    }
+
     /**
      * @dataProvider provideOperationsClients
      */
