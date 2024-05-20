@@ -302,6 +302,9 @@ class OperationResponseTest extends TestCase
                 'setArgumentTwo' => 'arg2',
                 'setArgumentThree' => 'arg3'
             ],
+            'getOperationRequest' => Client\GetOperationRequest::class,
+            'cancelOperationRequest' => Client\CancelOperationRequest::class,
+            'deleteOperationRequest' => Client\DeleteOperationRequest::class,
         ];
         $operationResponse = new OperationResponse($operationName, $operationClient->reveal(), $options);
 

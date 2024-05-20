@@ -85,6 +85,9 @@ class OperationResponse
     private string $getOperationMethod;
     private ?string $cancelOperationMethod;
     private ?string $deleteOperationMethod;
+    private string $getOperationRequest;
+    private ?string $cancelOperationRequest;
+    private ?string $deleteOperationRequest;
     private string $operationStatusMethod;
     /** @var mixed */
     private $operationStatusDoneValue;
@@ -132,6 +135,9 @@ class OperationResponse
             'additionalOperationArguments' => [],
             'operationErrorCodeMethod' => null,
             'operationErrorMessageMethod' => null,
+            'getOperationRequest' => GetOperationRequest::class,
+            'cancelOperationRequest' => CancelOperationRequest::class,
+            'deleteOperationRequest' => DeleteOperationRequest::class,
         ];
         $this->operationReturnType = $options['operationReturnType'];
         $this->metadataReturnType = $options['metadataReturnType'];
@@ -144,6 +150,9 @@ class OperationResponse
         $this->operationStatusDoneValue = $options['operationStatusDoneValue'];
         $this->operationErrorCodeMethod = $options['operationErrorCodeMethod'];
         $this->operationErrorMessageMethod = $options['operationErrorMessageMethod'];
+        $this->getOperationRequest = $options['getOperationRequest'];
+        $this->cancelOperationRequest = $options['cancelOperationRequest'];
+        $this->deleteOperationRequest = $options['deleteOperationRequest'];
 
         if (isset($options['initialPollDelayMillis'])) {
             $this->defaultPollSettings['initialPollDelayMillis'] = $options['initialPollDelayMillis'];
@@ -265,13 +274,7 @@ class OperationResponse
             throw new ValidationException("Cannot call reload() on a deleted operation");
         }
 
-        $requestClass = null;
-        if ($this->operationsClient instanceof OperationsClient) {
-            $requestClass = GetOperationRequest::class;
-        } elseif ($this->isNewSurfaceOperationsClient()) {
-            $requestClass = $this->getRequestClass($this->getOperationMethod);
-        }
-
+        $requestClass = $this->isNewSurfaceOperationsClient() ? $this->getOperationRequest : null;
         $this->lastProtoResponse = $this->operationsCall($this->getOperationMethod, $requestClass);
     }
 
@@ -396,13 +399,7 @@ class OperationResponse
             throw new LogicException('The cancel operation is not supported by this API');
         }
 
-        $requestClass = null;
-        if ($this->operationsClient instanceof OperationsClient) {
-            $requestClass = CancelOperationRequest::class;
-        } elseif ($this->isNewSurfaceOperationsClient()) {
-            $requestClass = $this->getRequestClass($this->cancelOperationMethod);
-        }
-
+        $requestClass = $this->isNewSurfaceOperationsClient() ? $this->cancelOperationRequest : null;
         $this->operationsCall($this->cancelOperationMethod, $requestClass);
     }
 
@@ -423,13 +420,7 @@ class OperationResponse
             throw new LogicException('The delete operation is not supported by this API');
         }
 
-        $requestClass = null;
-        if ($this->operationsClient instanceof OperationsClient) {
-            $requestClass = DeleteOperationRequest::class;
-        } elseif ($this->isNewSurfaceOperationsClient()) {
-            $requestClass = $this->getRequestClass($this->deleteOperationMethod);
-        }
-
+        $requestClass = $this->isNewSurfaceOperationsClient() ? $this->deleteOperationRequest : null;
         $this->operationsCall($this->deleteOperationMethod, $requestClass);
         $this->deleted = true;
     }
