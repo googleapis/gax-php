@@ -32,7 +32,7 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\LongRunning\OperationsClient;
+use Google\ApiCore\LongRunning\OperationsClient as LegacyOperationsClient;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\FixedHeaderMiddleware;
 use Google\ApiCore\Middleware\OperationsMiddleware;
@@ -48,6 +48,7 @@ use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\LongRunning\Client\OperationsClient;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -370,7 +371,7 @@ trait GapicClientTrait
 
     /**
      * @param array $options
-     * @return OperationsClient
+     * @return LegacyOperationsClient
      */
     private function createOperationsClient(array $options)
     {
@@ -387,7 +388,32 @@ trait GapicClientTrait
 
         // operationsClientClass option
         $operationsClientClass = $this->pluck('operationsClientClass', $options, false)
-            ?: OperationsCLient::class;
+            ?: LegacyOperationsClient::class;
+
+        return new $operationsClientClass($options);
+    }
+
+    /**
+     * @param array $options
+     * @return OperationsClient
+     */
+    private function createNewSurfaceOperationsClient(array $options)
+    {
+        $this->pluckArray([
+            'serviceName',
+            'clientConfig',
+            'descriptorsConfigPath',
+        ], $options);
+
+        // User-supplied operations client
+        if ($operationsClient = $this->pluck('operationsClient', $options, false)) {
+            return $operationsClient;
+        }
+
+        // operationsClientClass option
+        $operationsClientClass = $this->pluck('operationsClientClass', $options, false)
+            ?: OperationsClient::class;
+
         return new $operationsClientClass($options);
     }
 
