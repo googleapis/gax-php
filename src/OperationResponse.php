@@ -519,6 +519,6 @@ class OperationResponse
     private function isNewSurfaceOperationsClient(): bool
     {
         return !$this->operationsClient instanceof LegacyOperationsClient
-            && true === strpos(get_class($this->operationsClient), self::NEW_CLIENT_NAMESPACE);
+            && false !== strpos(get_class($this->operationsClient), self::NEW_CLIENT_NAMESPACE);
     }
 }
