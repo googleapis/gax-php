@@ -65,6 +65,7 @@ class OperationResponse
     const DEFAULT_POLLING_MULTIPLIER = 2;
     const DEFAULT_MAX_POLLING_INTERVAL = 60000;
     const DEFAULT_MAX_POLLING_DURATION = 0;
+    private const NEW_CLIENT_NAMESPACE = '\\Client\\';
 
     private string $operationName;
     private ?object $operationsClient;
@@ -518,6 +519,6 @@ class OperationResponse
     private function isNewSurfaceOperationsClient(): bool
     {
         return !$this->operationsClient instanceof LegacyOperationsClient
-            && true === strpos(get_class($this->operationsClient), '\\Client\\');
+            && true === strpos(get_class($this->operationsClient), self::NEW_CLIENT_NAMESPACE);
     }
 }
