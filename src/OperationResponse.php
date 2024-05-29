@@ -518,6 +518,6 @@ class OperationResponse
     private function isNewSurfaceOperationsClient(): bool
     {
         return !$this->operationsClient instanceof LegacyOperationsClient
-            && false !== strpos(get_class($this->operationsClient), '\\Client\\');
+            && true === strpos(get_class($this->operationsClient), '\\Client\\');
     }
 }
