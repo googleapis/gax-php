@@ -94,6 +94,7 @@ class OperationResponse
     private $operationStatusDoneValue;
     private ?string $operationErrorCodeMethod;
     private ?string $operationErrorMessageMethod;
+    private ?Closure $resultFunction;
 
     /**
      * OperationResponse constructor.
@@ -139,6 +140,7 @@ class OperationResponse
             'getOperationRequest' => GetOperationRequest::class,
             'cancelOperationRequest' => CancelOperationRequest::class,
             'deleteOperationRequest' => DeleteOperationRequest::class,
+            'resultFunction' => null,
         ];
         $this->operationReturnType = $options['operationReturnType'];
         $this->metadataReturnType = $options['metadataReturnType'];
@@ -154,6 +156,7 @@ class OperationResponse
         $this->getOperationRequest = $options['getOperationRequest'];
         $this->cancelOperationRequest = $options['cancelOperationRequest'];
         $this->deleteOperationRequest = $options['deleteOperationRequest'];
+        $this->resultFunction = $options['resultFunction'];
 
         if (isset($options['initialPollDelayMillis'])) {
             $this->defaultPollSettings['initialPollDelayMillis'] = $options['initialPollDelayMillis'];
@@ -310,6 +313,11 @@ class OperationResponse
         /** @var Message $response */
         $response = new $operationReturnType();
         $response->mergeFromString($anyResponse->getValue());
+
+        if ($this->resultFunction) {
+            return ($this->resultFunction)($response);
+        }
+
         return $response;
     }
 
@@ -342,6 +350,29 @@ class OperationResponse
         }
 
         return null;
+    }
+
+    public function withResultFunction(Closure $resultFunction)
+    {
+        return new OperationResponse(
+            $this->operationName,
+            $this->operationsClient,
+            $this->getDescriptorOptions() + [
+                'lastProtoResponse' => $this->lastProtoResponse,
+                'getOperationMethod' => $this->getOperationMethod,
+                'cancelOperationMethod' => $this->cancelOperationMethod,
+                'deleteOperationMethod' => $this->deleteOperationMethod,
+                'operationStatusMethod' => $this->operationStatusMethod,
+                'operationStatusDoneValue' => $this->operationStatusDoneValue,
+                'additionalOperationArguments' => $this->additionalArgs,
+                'operationErrorCodeMethod' => $this->operationErrorCodeMethod,
+                'operationErrorMessageMethod' => $this->operationErrorMessageMethod,
+                'getOperationRequest' => $this->getOperationRequest,
+                'cancelOperationRequest' => $this->cancelOperationRequest,
+                'deleteOperationRequest' => $this->deleteOperationRequest,
+                'resultFunction' => $resultFunction,
+            ]
+        );
     }
 
     /**
