@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore;
 
+use Closure;
 use Google\LongRunning\Client\OperationsClient;
 use Google\LongRunning\OperationsClient as LegacyOperationsClient;
 use Google\LongRunning\CancelOperationRequest;
