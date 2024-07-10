@@ -4,24 +4,29 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
 jobs:
     test:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: [ "7.0", 7.1, 7.2, 7.3, 7.4, "8.0", 8.1 ]
+                php: [ "8.0", "8.1", "8.2", "8.3" ]
                 extensions: [""]
                 tools: [""]
+                composerflags: [""]
                 include:
-                  - php: "7.0"
+                  - php: "8.0"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
-                  - php: 8.1
+                  - php: "8.3"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
-        name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}"
+                  - php: "8.0"
+                    composerflags: "--prefer-lowest"
+        name: "PHP ${{ matrix.php }} Unit Test ${{ matrix.extensions }}${{ matrix.composerflags }}"
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -29,40 +34,25 @@ jobs:
                 tools: ${{ matrix.tools }}
                 extensions: bcmath,${{ matrix.extensions }}
             - name: Install composer dependencies
-              uses: nick-invision/retry@v2
+              uses: nick-invision/retry@v3
               with:
                 timeout_minutes: 10
                 max_attempts: 3
-                command: composer install
+                command: composer update ${{ matrix.composerflags }}
             - name: Run script
-              env:
-                GOOGLE_APPLICATION_CREDENTIALS: ${{github.workspace}}/tests/Tests/Unit/testdata/json-key-file.json
               run: vendor/bin/phpunit
-
-    test_composer_conflict:
-        runs-on: ubuntu-latest
-        name: "Composer Conflict Test"
-        steps:
-            - uses: actions/checkout@v3
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: 7.2
-                extensions: protobuf-3.6.1
-            - name: Run script
-              run: dev/sh/test-composer-conflict.sh
 
     style:
         runs-on: ubuntu-latest
         name: PHP Style Check
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                php-version: 7.4
+                php-version: "8.2"
             - name: Install Dependencies
-              uses: nick-invision/retry@v2
+              uses: nick-invision/retry@v3
               with:
                 timeout_minutes: 10
                 max_attempts: 3
@@ -74,13 +64,17 @@ jobs:
       runs-on: ubuntu-latest
       name: PHPStan Static Analysis
       steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.2'
+      - name: Install Dependencies
+        uses: nick-invision/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: composer install
       - name: Run Script
         run: |
-          composer install
-          composer global require phpstan/phpstan
-          ~/.composer/vendor/bin/phpstan analyse
+          vendor/bin/phpstan analyse

@@ -54,7 +54,7 @@ class GrpcFallbackTransport implements TransportInterface
     use ServiceAddressTrait;
     use HttpUnaryTransportTrait;
 
-    private $baseUri;
+    private string $baseUri;
 
     /**
      * @param string $baseUri
@@ -170,9 +170,7 @@ class GrpcFallbackTransport implements TransportInterface
      */
     private function getCallOptions(array $options)
     {
-        $callOptions = isset($options['transportOptions']['grpcFallbackOptions'])
-            ? $options['transportOptions']['grpcFallbackOptions']
-            : [];
+        $callOptions = $options['transportOptions']['grpcFallbackOptions'] ?? [];
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;

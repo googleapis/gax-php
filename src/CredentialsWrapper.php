@@ -34,14 +34,16 @@ namespace Google\ApiCore;
 use DomainException;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
+use Google\Auth\ProjectIdProviderInterface;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
-use Google\Auth\HttpHandler\Guzzle5HttpHandler;
+use Google\Auth\GetUniverseDomainInterface;
 use Google\Auth\HttpHandler\Guzzle6HttpHandler;
+use Google\Auth\HttpHandler\Guzzle7HttpHandler;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -49,16 +51,20 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * The CredentialsWrapper object provides a wrapper around a FetchAuthTokenInterface.
  */
-class CredentialsWrapper implements HeaderCredentialsInterface
+class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProviderInterface
 {
     use ValidationTrait;
 
     /** @var FetchAuthTokenInterface $credentialsFetcher */
-    private $credentialsFetcher;
+    private ?FetchAuthTokenInterface $credentialsFetcher = null;
+    /** @var callable $authHttpHandle */
     private $authHttpHandler;
 
+    private string $universeDomain;
+    private bool $hasCheckedUniverse = false;
+
     /** @var int */
-    private static $eagerRefreshThresholdSeconds = 10;
+    private static int $eagerRefreshThresholdSeconds = 10;
 
     /**
      * CredentialsWrapper constructor.
@@ -69,10 +75,17 @@ class CredentialsWrapper implements HeaderCredentialsInterface
      *        `function (RequestInterface $request, array $options) : ResponseInterface`.
      * @throws ValidationException
      */
-    public function __construct(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler = null)
-    {
+    public function __construct(
+        FetchAuthTokenInterface $credentialsFetcher,
+        callable $authHttpHandler = null,
+        string $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
+    ) {
         $this->credentialsFetcher = $credentialsFetcher;
-        $this->authHttpHandler = $authHttpHandler ?: self::buildHttpHandlerFactory();
+        $this->authHttpHandler = $authHttpHandler;
+        if (empty($universeDomain)) {
+            throw new ValidationException('The universe domain cannot be empty');
+        }
+        $this->universeDomain = $universeDomain;
     }
 
     /**
@@ -106,11 +119,15 @@ class CredentialsWrapper implements HeaderCredentialsInterface
      *           Ensures service account credentials use JWT Access (also known as self-signed
      *           JWTs), even when user-defined scopes are supplied.
      * }
+     * @param string $universeDomain The expected universe of the credentials. Defaults to
+     *                               "googleapis.com"
      * @return CredentialsWrapper
      * @throws ValidationException
      */
-    public static function build(array $args = [])
-    {
+    public static function build(
+        array $args = [],
+        string $universeDomain = GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
+    ) {
         $args += [
             'keyFile'           => null,
             'scopes'            => null,
@@ -122,18 +139,21 @@ class CredentialsWrapper implements HeaderCredentialsInterface
             'defaultScopes'     => null,
             'useJwtAccessWithScope' => true,
         ];
+
         $keyFile = $args['keyFile'];
-        $authHttpHandler = $args['authHttpHandler'] ?: self::buildHttpHandlerFactory();
 
         if (is_null($keyFile)) {
             $loader = self::buildApplicationDefaultCredentials(
                 $args['scopes'],
-                $authHttpHandler,
-                null,
-                null,
+                $args['authHttpHandler'],
+                $args['authCacheOptions'],
+                $args['authCache'],
                 $args['quotaProject'],
                 $args['defaultScopes']
             );
+            if ($loader instanceof FetchAuthTokenCache) {
+                $loader = $loader->getFetcher();
+            }
         } else {
             if (is_string($keyFile)) {
                 if (!file_exists($keyFile)) {
@@ -168,7 +188,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface
             );
         }
 
-        return new CredentialsWrapper($loader, $authHttpHandler);
+        return new CredentialsWrapper($loader, $args['authHttpHandler'], $universeDomain);
     }
 
     /**
@@ -182,14 +202,36 @@ class CredentialsWrapper implements HeaderCredentialsInterface
         return null;
     }
 
+    public function getProjectId(callable $httpHandler = null): ?string
+    {
+        // Ensure that FetchAuthTokenCache does not throw an exception
+        if ($this->credentialsFetcher instanceof FetchAuthTokenCache
+            && !$this->credentialsFetcher->getFetcher() instanceof ProjectIdProviderInterface) {
+            return null;
+        }
+
+        if ($this->credentialsFetcher instanceof ProjectIdProviderInterface) {
+            return $this->credentialsFetcher->getProjectId($httpHandler);
+        }
+        return null;
+    }
+
     /**
      * @deprecated
      * @return string Bearer string containing access token.
      */
     public function getBearerString()
     {
-        $token = self::getToken($this->credentialsFetcher, $this->authHttpHandler);
-        return empty($token) ? '' : "Bearer $token";
+        $token = $this->credentialsFetcher->getLastReceivedToken();
+        if (self::isExpired($token)) {
+            $this->checkUniverseDomain();
+
+            $token = $this->credentialsFetcher->fetchAuthToken($this->authHttpHandler);
+            if (!self::isValid($token)) {
+                return '';
+            }
+        }
+        return empty($token['access_token']) ? '' : 'Bearer ' . $token['access_token'];
     }
 
     /**
@@ -198,23 +240,22 @@ class CredentialsWrapper implements HeaderCredentialsInterface
      */
     public function getAuthorizationHeaderCallback($audience = null)
     {
-        $credentialsFetcher = $this->credentialsFetcher;
-        $authHttpHandler = $this->authHttpHandler;
-
         // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
-        return function () use ($credentialsFetcher, $authHttpHandler, $audience) {
-            $token = $credentialsFetcher->getLastReceivedToken();
+        return function () use ($audience) {
+            $token = $this->credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
+                $this->checkUniverseDomain();
+
                 // Call updateMetadata to take advantage of self-signed JWTs
-                if ($credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $credentialsFetcher->updateMetadata([], $audience);
+                if ($this->credentialsFetcher instanceof UpdateMetadataInterface) {
+                    return $this->credentialsFetcher->updateMetadata([], $audience, $this->authHttpHandler);
                 }
 
                 // In case a custom fetcher is provided (unlikely) which doesn't
                 // implement UpdateMetadataInterface
-                $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
+                $token = $this->credentialsFetcher->fetchAuthToken($this->authHttpHandler);
                 if (!self::isValid($token)) {
                     return [];
                 }
@@ -228,15 +269,22 @@ class CredentialsWrapper implements HeaderCredentialsInterface
     }
 
     /**
-     * @return Guzzle5HttpHandler|Guzzle6HttpHandler
-     * @throws ValidationException
+     * Verify that the expected universe domain matches the universe domain from the credentials.
      */
-    private static function buildHttpHandlerFactory()
+    public function checkUniverseDomain()
     {
-        try {
-            return HttpHandlerFactory::build();
-        } catch (Exception $ex) {
-            throw new ValidationException("Failed to build HttpHandler", $ex->getCode(), $ex);
+        if (false === $this->hasCheckedUniverse) {
+            $credentialsUniverse = $this->credentialsFetcher instanceof GetUniverseDomainInterface
+                ? $this->credentialsFetcher->getUniverseDomain()
+                : GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
+            if ($credentialsUniverse !== $this->universeDomain) {
+                throw new ValidationException(sprintf(
+                    'The configured universe domain (%s) does not match the credential universe domain (%s)',
+                    $this->universeDomain,
+                    $credentialsUniverse
+                ));
+            }
+            $this->hasCheckedUniverse = true;
         }
     }
 
@@ -270,18 +318,6 @@ class CredentialsWrapper implements HeaderCredentialsInterface
         } catch (DomainException $ex) {
             throw new ValidationException("Could not construct ApplicationDefaultCredentials", $ex->getCode(), $ex);
         }
-    }
-
-    private static function getToken(FetchAuthTokenInterface $credentialsFetcher, callable $authHttpHandler)
-    {
-        $token = $credentialsFetcher->getLastReceivedToken();
-        if (self::isExpired($token)) {
-            $token = $credentialsFetcher->fetchAuthToken($authHttpHandler);
-            if (!self::isValid($token)) {
-                return '';
-            }
-        }
-        return $token['access_token'];
     }
 
     /**

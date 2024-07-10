@@ -53,13 +53,15 @@ use Grpc\ServerStreamingCall;
 use Grpc\UnaryCall;
 use stdClass;
 use TypeError;
-use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class GrpcTransportTest extends TestCase
 {
+    use ProphecyTrait;
     use TestTrait;
 
-    public function set_up()
+    public function setUp(): void
     {
         $this->requiresGrpcExtension();
     }
@@ -385,6 +387,8 @@ class GrpcTransportTest extends TestCase
         $call->getDecodeType()->shouldBeCalled();
 
         $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->checkUniverseDomain()
+            ->shouldBeCalledOnce();
         $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
             ->shouldBeCalledOnce();
         $hostname = '';
@@ -581,6 +585,7 @@ class GrpcTransportTest extends TestCase
 class MockCallInvoker implements CallInvoker
 {
     private $called = false;
+    private $mockCall;
 
     public function __construct($mockCall)
     {

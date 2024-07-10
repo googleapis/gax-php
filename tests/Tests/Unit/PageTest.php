@@ -38,11 +38,9 @@ use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\ValidationException;
 use Google\Rpc\Code;
 use PHPUnit\Framework\TestCase;
-use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class PageTest extends TestCase
 {
-    use ExpectException;
     use TestTrait;
 
     private function createPage($responseSequence)
@@ -57,10 +55,7 @@ class PageTest extends TestCase
 
         $internalCall = $this->createCallWithResponseSequence($responseSequence);
         $callable = function () use ($internalCall) {
-            list($response, $status) = call_user_func_array(
-                array($internalCall, 'takeAction'),
-                func_get_args()
-            );
+            list($response, $status) = $internalCall->takeAction(...func_get_args());
             return $promise = new \GuzzleHttp\Promise\Promise(function () use (&$promise, $response) {
                 $promise->resolve($response);
             });

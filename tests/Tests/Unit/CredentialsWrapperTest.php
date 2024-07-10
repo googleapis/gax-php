@@ -33,20 +33,28 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\CredentialsWrapper;
+use Google\ApiCore\ValidationException;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\Cache\MemoryCacheItemPool;
 use Google\Auth\Cache\SysVCacheItemPool;
+use Google\Auth\GCECache;
 use Google\Auth\CredentialsLoader;
+use Google\Auth\Credentials\GCECredentials;
+use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\GetQuotaProjectInterface;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\GetUniverseDomainInterface;
+use Google\Auth\ProjectIdProviderInterface;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Google\Auth\UpdateMetadataInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class CredentialsWrapperTest extends TestCase
 {
+    use ProphecyTrait;
 
     /**
      * @dataProvider buildDataWithoutExplicitKeyFile
@@ -76,7 +84,6 @@ class CredentialsWrapperTest extends TestCase
         $appDefaultCreds = getenv('GOOGLE_APPLICATION_CREDENTIALS');
         putenv('GOOGLE_APPLICATION_CREDENTIALS=' . __DIR__ . '/testdata/json-key-file.json');
         $scopes = ['myscope'];
-        $defaultAuthHttpHandler = HttpHandlerFactory::build();
         $authHttpHandler = HttpHandlerFactory::build();
         $asyncAuthHttpHandler = function ($request, $options) use ($authHttpHandler) {
             return $authHttpHandler->async($request, $options)->wait();
@@ -89,11 +96,11 @@ class CredentialsWrapperTest extends TestCase
         $testData = [
             [
                 [],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache), $defaultAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, $defaultAuthCache)),
             ],
             [
                 ['scopes' => $scopes],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $defaultAuthHttpHandler, null, $defaultAuthCache), $defaultAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler, null, $defaultAuthCache)),
             ],
             [
                 ['scopes' => $scopes, 'authHttpHandler' => $asyncAuthHttpHandler],
@@ -101,19 +108,19 @@ class CredentialsWrapperTest extends TestCase
             ],
             [
                 ['enableCaching' => false],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, null), $defaultAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, null)),
             ],
             [
                 ['authCacheOptions' => $authCacheOptions],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, $authCacheOptions, $defaultAuthCache), $defaultAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, $authCacheOptions, $defaultAuthCache)),
             ],
             [
                 ['authCache' => $authCache],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $authCache), $defaultAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, $authCache)),
             ],
             [
                 ['quotaProject' => $quotaProject],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $defaultAuthHttpHandler, null, $defaultAuthCache, $quotaProject), $defaultAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, $defaultAuthCache, $quotaProject)),
             ],
         ];
 
@@ -185,6 +192,119 @@ class CredentialsWrapperTest extends TestCase
     }
 
     /**
+     * @dataProvider provideCheckUniverseDomainFails
+     */
+    public function testCheckUniverseDomainFails(?string $universeDomain, ?string $credentialsUniverse, string $message = null)
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage($message ?: sprintf(
+            'The configured universe domain (%s) does not match the credential universe domain (%s)',
+            is_null($universeDomain) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $universeDomain,
+            is_null($credentialsUniverse) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $credentialsUniverse,
+        ));
+        $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
+        if (!is_null($credentialsUniverse)) {
+            $fetcher->willImplement(GetUniverseDomainInterface::class);
+            $fetcher->getUniverseDomain()->willReturn($credentialsUniverse);
+        }
+        $fetcher->getLastReceivedToken()->willReturn(null);
+        // When $universeDomain is null, it means no $universeDomain argument was provided
+        if (is_null($universeDomain)) {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
+        } else {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        }
+        // Check authorization callback
+        $credentialsWrapper->getAuthorizationHeaderCallback()();
+    }
+
+    /**
+     * Same test as above, but calls the deprecated CredentialsWrapper::getBearerString method
+     * instead of CredentialsWrapper::getAuthorizationHeaderCallback
+     * @dataProvider provideCheckUniverseDomainFails
+     */
+    public function testCheckUniverseDomainOnGetBearerStringFails(
+        ?string $universeDomain,
+        ?string $credentialsUniverse,
+        string $message = null
+    ) {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage($message ?: sprintf(
+            'The configured universe domain (%s) does not match the credential universe domain (%s)',
+            is_null($universeDomain) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $universeDomain,
+            is_null($credentialsUniverse) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $credentialsUniverse,
+        ));
+        $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
+        if (!is_null($credentialsUniverse)) {
+            $fetcher->willImplement(GetUniverseDomainInterface::class);
+            $fetcher->getUniverseDomain()->willReturn($credentialsUniverse);
+        }
+        $fetcher->getLastReceivedToken()->willReturn(null);
+        // When $universeDomain is null, it means no $universeDomain argument was provided
+        if (is_null($universeDomain)) {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
+        } else {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        }
+        // Check getBearerString (deprecated)
+        $credentialsWrapper->getBearerString();
+    }
+
+    public function provideCheckUniverseDomainFails()
+    {
+        return [
+            ['foo.com', 'googleapis.com'],
+            ['googleapis.com', 'foo.com'],
+            ['googleapis.com', ''],
+            ['', 'googleapis.com', 'The universe domain cannot be empty'],
+            [null, 'foo.com'], // null in CredentialsWrapper will default to "googleapis.com"
+            ['foo.com', null], // Credentials not implementing GetUniverseDomainInterface will default to "googleapis.com"
+        ];
+    }
+
+    /**
+     * @dataProvider provideCheckUniverseDomainPasses
+     */
+    public function testCheckUniverseDomainPasses(?string $universeDomain, ?string $credentialsUniverse)
+    {
+        $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
+        if (!is_null($credentialsUniverse)) {
+            $fetcher->willImplement(GetUniverseDomainInterface::class);
+            $fetcher->getUniverseDomain()->shouldBeCalledOnce()->willReturn($credentialsUniverse);
+        }
+        $fetcher->getLastReceivedToken()->willReturn(null);
+        $fetcher->fetchAuthToken(Argument::any())->willReturn(['access_token' => 'abc']);
+        if (is_null($universeDomain)) {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
+        } else {
+            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
+        }
+        // Check authorization callback
+        $this->assertEquals(
+            ['authorization' => ['Bearer abc']],
+            $credentialsWrapper->getAuthorizationHeaderCallback()()
+        );
+        // Check getBearerString (deprecated)
+        $this->assertEquals(
+            'Bearer abc',
+            $credentialsWrapper->getBearerString()
+        );
+    }
+
+    public function provideCheckUniverseDomainPasses()
+    {
+        return [
+            [null, 'googleapis.com'], // null will default to "googleapis.com"
+            ['foo.com', 'foo.com'],
+            ['googleapis.com', 'googleapis.com'],
+            ['googleapis.com', null],
+        ];
+    }
+
+    /**
      * @dataProvider getBearerStringData
      */
     public function testGetBearerString($fetcher, $expectedBearerString)
@@ -250,7 +370,8 @@ class CredentialsWrapperTest extends TestCase
      */
     public function testGetAuthorizationHeaderCallback($fetcher, $expectedCallbackResponse)
     {
-        $credentialsWrapper = new CredentialsWrapper($fetcher);
+        $httpHandler = function () {};
+        $credentialsWrapper = new CredentialsWrapper($fetcher, $httpHandler);
         $callback = $credentialsWrapper->getAuthorizationHeaderCallback('audience');
         $actualResponse = $callback();
         $this->assertSame($expectedCallbackResponse, $actualResponse);
@@ -266,7 +387,7 @@ class CredentialsWrapperTest extends TestCase
                 'access_token' => 123,
                 'expires_at' => time() - 1
             ]);
-        $expiredFetcher->updateMetadata(Argument::any(), 'audience')
+        $expiredFetcher->updateMetadata(Argument::any(), 'audience', Argument::type('callable'))
             ->willReturn(['authorization' => ['Bearer 456']]);
         $expiredInvalidFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $expiredInvalidFetcher->getLastReceivedToken()
@@ -314,5 +435,136 @@ class CredentialsWrapperTest extends TestCase
             [$nullFetcher->reveal(), []],
             [$customFetcher->reveal(), ['authorization' => ['Bearer 123']]],
         ];
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testApplicationDefaultCredentialsWithOnGCECacheTrue()
+    {
+        putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
+        putenv(ServiceAccountCredentials::ENV_VAR);  // removes it from the environment
+
+        $mockCacheItem = $this->prophesize('Psr\Cache\CacheItemInterface');
+        $mockCacheItem->isHit()
+            ->willReturn(true);
+        // mock being on GCE
+        $mockCacheItem->get()
+            ->shouldBeCalledTimes(1)
+            ->willReturn(true);
+
+        $mockCache = $this->prophesize('Psr\Cache\CacheItemPoolInterface');
+        $mockCache->getItem(GCECache::GCE_CACHE_KEY)
+            ->shouldBeCalledTimes(1)
+            ->willReturn($mockCacheItem->reveal());
+
+        $wrapper = CredentialsWrapper::build([
+            'authCache' => $mockCache->reveal(),
+        ]);
+        $reflectionClass = new \ReflectionClass($wrapper);
+        $reflectionProperty = $reflectionClass->getProperty('credentialsFetcher');
+        $reflectionProperty->setAccessible(true);
+        $this->assertInstanceOf(GCECredentials::class, $reflectionProperty->getValue($wrapper)->getFetcher());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testApplicationDefaultCredentialsWithOnGCECacheFalse()
+    {
+        putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
+        putenv(ServiceAccountCredentials::ENV_VAR);  // removes it from the environment
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Could not construct ApplicationDefaultCredentials');
+
+        $mockCacheItem = $this->prophesize('Psr\Cache\CacheItemInterface');
+        $mockCacheItem->isHit()
+            ->willReturn(true);
+        // mock not being on GCE
+        $mockCacheItem->get()
+            ->shouldBeCalledTimes(1)
+            ->willReturn(false);
+
+        $mockCache = $this->prophesize('Psr\Cache\CacheItemPoolInterface');
+        $mockCache->getItem(GCECache::GCE_CACHE_KEY)
+            ->shouldBeCalledTimes(1)
+            ->willReturn($mockCacheItem->reveal());
+
+        $wrapper = CredentialsWrapper::build([
+            'authCache' => $mockCache->reveal(),
+        ]);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testApplicationDefaultCredentialsWithOnGCECacheOptions()
+    {
+        putenv('HOME=' . __DIR__ . '/not_exist_fixtures');
+        putenv(ServiceAccountCredentials::ENV_VAR);  // removes it from the environment
+
+        $mockCacheItem = $this->prophesize('Psr\Cache\CacheItemInterface');
+        $mockCacheItem->isHit()
+            ->willReturn(true);
+        // mock being on GCE
+        $mockCacheItem->get()
+            ->shouldBeCalledTimes(1)
+            ->willReturn(true);
+
+        $mockCache = $this->prophesize('Psr\Cache\CacheItemPoolInterface');
+        $mockCache->getItem('prefix_' . GCECache::GCE_CACHE_KEY)
+            ->shouldBeCalledTimes(1)
+            ->willReturn($mockCacheItem->reveal());
+
+        $wrapper = CredentialsWrapper::build([
+            'authCache' => $mockCache->reveal(),
+            'authCacheOptions' => ['gce_prefix' => 'prefix_'],
+        ]);
+        $reflectionClass = new \ReflectionClass($wrapper);
+        $reflectionProperty = $reflectionClass->getProperty('credentialsFetcher');
+        $reflectionProperty->setAccessible(true);
+        $this->assertInstanceOf(GCECredentials::class, $reflectionProperty->getValue($wrapper)->getFetcher());
+    }
+
+    public function testGetProjectId()
+    {
+        $credentials = $this->prophesize(FetchAuthTokenInterface::class)
+            ->willImplement(ProjectIdProviderInterface::class);
+        $credentials
+            ->getProjectId(null)
+            ->shouldBeCalledOnce()
+            ->willReturn('my-project-id');
+        $credentialsWrapper = new CredentialsWrapper($credentials->reveal());
+        $this->assertEquals('my-project-id', $credentialsWrapper->getProjectId());
+    }
+
+    public function testGetProjectIdWithFetchAuthTokenCache()
+    {
+        // Ensure credentials which do NOT implement ProjectIdProviderInterface return null
+        $credentials = $this->prophesize(FetchAuthTokenInterface::class);
+        $cache = new FetchAuthTokenCache($credentials->reveal(), [], new MemoryCacheItemPool());
+        $credentialsWrapper = new CredentialsWrapper($cache);
+        $this->assertNull($credentialsWrapper->getProjectId());
+
+        // Ensure credentials which DO implement ProjectIdProviderInterface return the project ID
+        $credentials = $this->prophesize(FetchAuthTokenInterface::class)
+            ->willImplement(ProjectIdProviderInterface::class);
+        $credentials
+            ->getProjectId(null)
+            ->shouldBeCalledOnce()
+            ->willReturn('my-project-id');
+        $cache = new FetchAuthTokenCache($credentials->reveal(), [], new MemoryCacheItemPool());
+        $credentialsWrapper = new CredentialsWrapper($cache);
+        $this->assertEquals('my-project-id', $credentialsWrapper->getProjectId());
+    }
+
+    public function testSerializeCredentialsWrapper()
+    {
+        $credentialsWrapper = CredentialsWrapper::build([
+            'keyFile' => __DIR__ . '/testdata/json-key-file.json',
+        ]);
+        $serialized = serialize($credentialsWrapper);
+        $this->assertIsString($serialized);
     }
 }
