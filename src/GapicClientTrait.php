@@ -35,6 +35,7 @@ namespace Google\ApiCore;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\FixedHeaderMiddleware;
+use Google\ApiCore\Middleware\LoggerMiddleware;
 use Google\ApiCore\Middleware\OperationsMiddleware;
 use Google\ApiCore\Middleware\OptionsFilterMiddleware;
 use Google\ApiCore\Middleware\PagedMiddleware;
@@ -302,6 +303,10 @@ trait GapicClientTrait
                 $options['transportConfig'],
                 $options['clientCertSource']
             );
+        
+        if ($this->logger) {
+            $transport->setLogger($this->logger);
+        }
     }
 
     /**
@@ -642,6 +647,11 @@ trait GapicClientTrait
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
         $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
+
+        if ($this->logger) {
+            $callStack = new LoggerMiddleware($callStack, $this->logger, $this->serviceName);
+        }
+
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new RequestAutoPopulationMiddleware(
             $callStack,

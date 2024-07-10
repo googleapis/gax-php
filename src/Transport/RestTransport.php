@@ -44,6 +44,7 @@ use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * A REST based transport implementation.
@@ -57,6 +58,7 @@ class RestTransport implements TransportInterface
     }
 
     private RequestBuilder $requestBuilder;
+    private LoggerInterface $logger;
 
     /**
      * @param RequestBuilder $requestBuilder A builder responsible for creating
@@ -109,23 +111,33 @@ class RestTransport implements TransportInterface
      */
     public function startUnaryCall(Call $call, array $options)
     {
+        $requestLog = null;
         $headers = self::buildCommonHeaders($options);
+        $request =  $this->requestBuilder->build(
+            $call->getMethod(),
+            $call->getMessage(),
+            $headers
+        );
+
+        if ($this->logger) {
+            $requestLog = $this->logRequest($request);
+        }
 
         // call the HTTP handler
         $httpHandler = $this->httpHandler;
         return $httpHandler(
-            $this->requestBuilder->build(
-                $call->getMethod(),
-                $call->getMessage(),
-                $headers
-            ),
+            $request,
             $this->getCallOptions($options)
         )->then(
-            function (ResponseInterface $response) use ($call, $options) {
+            function (ResponseInterface $response) use ($call, $options, $requestLog) {
                 $decodeType = $call->getDecodeType();
                 /** @var Message $return */
                 $return = new $decodeType;
                 $body = (string) $response->getBody();
+
+                if ($this->logger) {
+                    $this->logResponse($response, $requestLog['timestamp']);
+                }
 
                 // In some rare cases LRO response metadata may not be loaded
                 // in the descriptor pool, triggering an exception. The catch
@@ -244,6 +256,18 @@ class RestTransport implements TransportInterface
     }
 
     /**
+     * Sets a PSR-3 LoggerInterface
+     *
+     * @param LoggerInterface $logger The PSR-3 LoggerInterface instance
+     * 
+     * @return void
+     */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->$logger = $logger;
+    }
+
+    /**
      * @param array<mixed> $options
      *
      * @return array<mixed>
@@ -263,5 +287,67 @@ class RestTransport implements TransportInterface
         }
 
         return $callOptions;
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return array
+     */
+    private function logRequest(RequestInterface $request)
+    {
+        $logger = $this->logger;
+        $timestamp = Date(DATE_RFC3339);
+
+        $debugEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'DEBUG', //Perhaps have something like Logger::debug
+            'jsonPayload' => [
+                'request.method' => $request->getMethod(),
+                'request.url' => $request->getUri(),
+                'request.headers' => $request->getHeaders(),
+                'request.payload' => $request->getBody()
+            ]
+        ];
+
+        $logger->debug(json_encode($debugEvent));
+
+        return $debugEvent;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @param string $startTime
+     *
+     * @return array
+     */
+    private function logResponse(ResponseInterface $response, string $startTime)
+    {
+        $logger = $this->logger;
+        $timestamp = date(DATE_RFC3339);
+        
+        $debugEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'DEBUG', //Perhaps have something like Logger::debug
+            'jsonPayload' => [
+                'response.headers' => $response->getHeaders(),
+                'response.payload' => $response->getBody(),
+            ]
+        ];
+
+        $logger->debug(json_encode($debugEvent));
+
+        $infoEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'INFO', //Perhaps have something like Logger::debug
+            'jsonPayload' => [
+                'response.status' => $response->getStatusCode(),
+                'latency' => strtotime($startTime) - strtotime($timestamp)
+            ]
+        ];
+
+        $logger->info(json_encode($infoEvent));
+
+        return [$debugEvent, $infoEvent];
     }
 }

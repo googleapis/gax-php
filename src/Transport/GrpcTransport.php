@@ -50,6 +50,7 @@ use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use Grpc\Interceptor;
 use GuzzleHttp\Promise\Promise;
+use Psr\Log\LoggerInterface;
 
 /**
  * A gRPC based transport implementation.
@@ -59,6 +60,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
     use ValidationTrait;
     use GrpcSupportTrait;
     use ServiceAddressTrait;
+
+    private LoggerInterface $logger;
 
     /**
      * @param string $hostname
@@ -252,6 +255,18 @@ class GrpcTransport extends BaseStub implements TransportInterface
         );
 
         return $promise;
+    }
+
+    /**
+     * Sets a PSR-3 LoggerInterface
+     * 
+     * @param LoggerInterface $logger
+     *
+     * @return void
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     private function verifyUniverseDomain(array $options)
