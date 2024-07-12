@@ -35,6 +35,8 @@ use Exception;
 use Google\ApiCore\Call;
 use Google\ApiCore\ValidationException;
 use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * A trait for shared functionality between transports that support only unary RPCs using simple
@@ -166,5 +168,62 @@ trait HttpUnaryTransportTrait
 
         // the key and the cert are returned in one temporary file
         return [$certFile, $keyFile];
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return void
+     */
+    private function logRequest(RequestInterface $request)
+    {
+        $logger = $this->logger;
+        $timestamp = date(DATE_RFC3339);
+
+        $debugEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'DEBUG', //Perhaps have something like Logger::debug
+            'jsonPayload' => [
+                'request.method' => $request->getMethod(),
+                'request.url' => $request->getUri(),
+                'request.headers' => $request->getHeaders(),
+                'request.payload' => $request->getBody()
+            ]
+        ];
+
+        $logger->debug(json_encode($debugEvent));
+    }
+
+    /**
+     * @param ResponseInterface $response
+     *
+     * @return void
+     */
+    private function logResponse(ResponseInterface $response)
+    {
+        $logger = $this->logger;
+        $timestamp = date(DATE_RFC3339);
+        
+        $debugEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'DEBUG', //Perhaps have something like Logger::debug
+            'jsonPayload' => [
+                'response.headers' => $response->getHeaders(),
+                'response.payload' => $response->getBody(),
+            ]
+        ];
+
+        $logger->debug(json_encode($debugEvent));
+
+        $infoEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'INFO', //Perhaps have something like Logger::debug
+            'jsonPayload' => [
+                'response.status' => $response->getStatusCode()
+            ]
+        ];
+
+        $logger->info(json_encode($infoEvent));
+
     }
 }

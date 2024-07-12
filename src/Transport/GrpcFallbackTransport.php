@@ -109,15 +109,26 @@ class GrpcFallbackTransport implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $httpHandler = $this->httpHandler;
+        $request = $this->buildRequest($call, $options);
+
+        if ($this->logger) {
+            $this->logRequest($request);
+        }
+
         return $httpHandler(
-            $this->buildRequest($call, $options),
+            $request,
             $this->getCallOptions($options)
         )->then(
             function (ResponseInterface $response) use ($options) {
+                if ($this->logger) {
+                    $this->logResponse($response);
+                }
+
                 if (isset($options['metadataCallback'])) {
                     $metadataCallback = $options['metadataCallback'];
                     $metadataCallback($response->getHeaders());
                 }
+                
                 return $response;
             }
         )->then(

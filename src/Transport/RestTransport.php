@@ -124,7 +124,7 @@ class RestTransport implements TransportInterface
         );
 
         if ($this->logger) {
-            $requestLog = $this->logRequest($request);
+            $this->logRequest($request);
         }
 
         // call the HTTP handler
@@ -140,7 +140,7 @@ class RestTransport implements TransportInterface
                 $body = (string) $response->getBody();
 
                 if ($this->logger) {
-                    $this->logResponse($response, $requestLog['timestamp']);
+                    $this->logResponse($response);
                 }
 
                 // In some rare cases LRO response metadata may not be loaded
@@ -279,67 +279,5 @@ class RestTransport implements TransportInterface
         }
 
         return $callOptions;
-    }
-
-    /**
-     * @param RequestInterface $request
-     *
-     * @return array
-     */
-    private function logRequest(RequestInterface $request)
-    {
-        $logger = $this->logger;
-        $timestamp = date(DATE_RFC3339);
-
-        $debugEvent = [
-            'timestamp' => $timestamp,
-            'severity' => 'DEBUG', //Perhaps have something like Logger::debug
-            'jsonPayload' => [
-                'request.method' => $request->getMethod(),
-                'request.url' => $request->getUri(),
-                'request.headers' => $request->getHeaders(),
-                'request.payload' => $request->getBody()
-            ]
-        ];
-
-        $logger->debug(json_encode($debugEvent));
-
-        return $debugEvent;
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @param string $startTime
-     *
-     * @return array
-     */
-    private function logResponse(ResponseInterface $response, string $startTime)
-    {
-        $logger = $this->logger;
-        $timestamp = date(DATE_RFC3339);
-        
-        $debugEvent = [
-            'timestamp' => $timestamp,
-            'severity' => 'DEBUG', //Perhaps have something like Logger::debug
-            'jsonPayload' => [
-                'response.headers' => $response->getHeaders(),
-                'response.payload' => $response->getBody(),
-            ]
-        ];
-
-        $logger->debug(json_encode($debugEvent));
-
-        $infoEvent = [
-            'timestamp' => $timestamp,
-            'severity' => 'INFO', //Perhaps have something like Logger::debug
-            'jsonPayload' => [
-                'response.status' => $response->getStatusCode(),
-                'latency' => strtotime($startTime) - strtotime($timestamp)
-            ]
-        ];
-
-        $logger->info(json_encode($infoEvent));
-
-        return [$debugEvent, $infoEvent];
     }
 }

@@ -59,9 +59,11 @@ use Psr\Log\LoggerInterface;
     public function __invoke(Call $call, array $options)
     {
         $nextHandler = $this->nextHandler;
+        $startTime = date(DATE_RFC3339);
 
         $infoEvent = [
-            'timestamp' => date(DATE_RFC3339),
+            'timestamp' => $startTime,
+            'severity' => 'INFO',
             'jsonPayload' => [
                 'serviceName' => $this->serviceName
             ]
@@ -70,6 +72,34 @@ use Psr\Log\LoggerInterface;
         $this->logger->info(json_encode($infoEvent));
 
         // We could use a Then here to calculate latency if we want as well the retry.
-        return $nextHandler($call, $options);
+        return $nextHandler($call, $options)->then(function($response) use ($startTime) {
+            $endTime = date(DATE_RFC3339);
+
+            $debugEvent = [
+                'timestamp' => $startTime,
+                'severity' => 'DEBUG',
+                'jsonPayload' => [
+                    'latency' => strtotime($endTime) - strtotime($endTime)
+                ]
+            ];
+
+            $this->logger->debug(json_encode($debugEvent));
+
+            return $response;
+        }, function($exception) use ($startTime) {
+            $endTime = date(DATE_RFC3339);
+
+            $debugEvent = [
+                'timestamp' => $startTime,
+                'severity' => 'DEBUG',
+                'jsonPayload' => [
+                    'latency' => strtotime($endTime) - strtotime($endTime)
+                ]
+            ];
+
+            $this->logger->debug(json_encode($debugEvent));
+
+            throw $exception;
+        });
     }
   }
