@@ -230,12 +230,17 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $this->verifyUniverseDomain($options);
+        $headers = isset($options['headers']) ? $options['headers'] : [];
+
+        if ($this->logger) {
+            $this->logRequest($call, $headers);
+        }
 
         $unaryCall = $this->_simpleRequest(
             '/' . $call->getMethod(),
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
-            isset($options['headers']) ? $options['headers'] : [],
+            $headers,
             $this->getCallOptions($options)
         );
 
@@ -244,6 +249,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
             function () use ($unaryCall, $options, &$promise) {
                 list($response, $status) = $unaryCall->wait();
 
+                if ($this->logger) {
+                    $this->logResponse($response, $status);
+                }
+
                 if ($status->code == Code::OK) {
                     if (isset($options['metadataCallback'])) {
                         $metadataCallback = $options['metadataCallback'];
@@ -251,6 +260,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
                     }
                     $promise->resolve($response);
                 } else {
+                    if ($this->logger) {
+                        $this->logResponse(null, $status);
+                    }
+
                     throw ApiException::createFromStdClass($status);
                 }
             },
@@ -288,5 +301,66 @@ class GrpcTransport extends BaseStub implements TransportInterface
     private static function loadClientCertSource(callable $clientCertSource)
     {
         return call_user_func($clientCertSource);
+    }
+
+    /**
+     * @param RequestInterface $request
+     *
+     * @return void
+     */
+    private function logRequest(Call $call, array $headers)
+    {
+        $logger = $this->logger;
+        $timestamp = date(DATE_RFC3339);
+
+        $debugEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'DEBUG',
+            'jsonPayload' => [
+                'request.rpcName' => $call->getMethod(),
+                'request.headers' => $headers,
+                'request.payload' => $call->getMessage()
+            ]
+        ];
+
+        $logger->debug(json_encode($debugEvent));
+    }
+
+    /**
+     * @param ResponseInterface $response
+     *
+     * @return void
+     */
+    private function logResponse(mixed $response, mixed $status)
+    {
+        // In the case we do not have a $status->code == Code::OK
+        // from the request, we log the status only and we do not have
+        // a response.
+        if ($response) {
+            $logger = $this->logger;
+            $timestamp = date(DATE_RFC3339);
+            
+            $debugEvent = [
+                'timestamp' => $timestamp,
+                'severity' => 'DEBUG',
+                'jsonPayload' => [
+                    'response.headers' => $status->metadata,
+                    'response.payload' => $response,
+                ]
+            ];
+
+            $logger->debug(json_encode($debugEvent));
+        }
+
+        $infoEvent = [
+            'timestamp' => $timestamp,
+            'severity' => 'INFO',
+            'jsonPayload' => [
+                'response.status' => $status->code
+            ]
+        ];
+
+        $logger->info(json_encode($infoEvent));
+
     }
 }

@@ -115,7 +115,6 @@ class RestTransport implements TransportInterface
      */
     public function startUnaryCall(Call $call, array $options)
     {
-        $requestLog = null;
         $headers = self::buildCommonHeaders($options);
         $request =  $this->requestBuilder->build(
             $call->getMethod(),
@@ -133,7 +132,7 @@ class RestTransport implements TransportInterface
             $request,
             $this->getCallOptions($options)
         )->then(
-            function (ResponseInterface $response) use ($call, $options, $requestLog) {
+            function (ResponseInterface $response) use ($call, $options) {
                 $decodeType = $call->getDecodeType();
                 /** @var Message $return */
                 $return = new $decodeType;
