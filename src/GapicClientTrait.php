@@ -52,6 +52,7 @@ use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Common functions used to work with various clients.
@@ -82,6 +83,7 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
     private bool $backwardsCompatibilityMode;
+    private ?LoggerInterface $logger = null;
 
     /**
      * Add a middleware to the call stack by providing a callable which will be
@@ -294,6 +296,10 @@ trait GapicClientTrait
             $options['universeDomain']
         );
 
+        if ($options['logger']) {
+            $this->logger = $options['logger'];
+        }
+
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
@@ -303,10 +309,6 @@ trait GapicClientTrait
                 $options['transportConfig'],
                 $options['clientCertSource']
             );
-        
-        if ($this->logger) {
-            $transport->setLogger($this->logger);
-        }
     }
 
     /**
@@ -354,9 +356,9 @@ trait GapicClientTrait
                     $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
                         $this->agentHeader['User-Agent'][0];
                 }
-                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport, $this->logger);
             case 'grpc-fallback':
-                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
+                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport , $this->logger);
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
@@ -364,7 +366,7 @@ trait GapicClientTrait
                     );
                 }
                 $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
-                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
+                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport, $this->logger);
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .

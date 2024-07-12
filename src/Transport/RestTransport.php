@@ -58,20 +58,23 @@ class RestTransport implements TransportInterface
     }
 
     private RequestBuilder $requestBuilder;
-    private LoggerInterface $logger;
+    private ?LoggerInterface $logger;
 
     /**
      * @param RequestBuilder $requestBuilder A builder responsible for creating
      *        a PSR-7 request from a set of request information.
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
+     * @param LoggerInterface $logger A PSR-3 compatible logger.
      */
     public function __construct(
         RequestBuilder $requestBuilder,
-        callable $httpHandler
+        callable $httpHandler,
+        LoggerInterface $logger=null
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->httpHandler = $httpHandler;
         $this->transportName = 'REST';
+        $this->logger = $logger;
     }
 
     /**
@@ -87,10 +90,11 @@ class RestTransport implements TransportInterface
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
      * }
+     * @param LoggerInterface $logger A PSR-3 compatible logger.
      * @return RestTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, string $restConfigPath, array $config = [])
+    public static function build(string $apiEndpoint, string $restConfigPath, array $config = [], LoggerInterface $logger=null)
     {
         $config += [
             'httpHandler'  => null,
@@ -99,7 +103,7 @@ class RestTransport implements TransportInterface
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        $transport = new RestTransport($requestBuilder, $httpHandler);
+        $transport = new RestTransport($requestBuilder, $httpHandler, $logger);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }
@@ -256,18 +260,6 @@ class RestTransport implements TransportInterface
     }
 
     /**
-     * Sets a PSR-3 LoggerInterface
-     *
-     * @param LoggerInterface $logger The PSR-3 LoggerInterface instance
-     * 
-     * @return void
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->$logger = $logger;
-    }
-
-    /**
      * @param array<mixed> $options
      *
      * @return array<mixed>
@@ -297,7 +289,7 @@ class RestTransport implements TransportInterface
     private function logRequest(RequestInterface $request)
     {
         $logger = $this->logger;
-        $timestamp = Date(DATE_RFC3339);
+        $timestamp = date(DATE_RFC3339);
 
         $debugEvent = [
             'timestamp' => $timestamp,

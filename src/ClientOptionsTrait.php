@@ -32,11 +32,13 @@
 
 namespace Google\ApiCore;
 
+use Google\ApiCore\Logger;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
+use Psr\Log\LoggerInterface;
 
 /**
  * Common functions used to work with various clients.
@@ -98,6 +100,7 @@ trait ClientOptionsTrait
             'apiEndpoint' => null,
             'clientCertSource' => null,
             'universeDomain' => null,
+            'logger' => null
         ];
 
         $supportedTransports = $this->supportedTransports();
@@ -168,6 +171,22 @@ trait ClientOptionsTrait
                     // the key and the cert are returned in one string
                     return [$cert, $cert];
                 };
+            }
+        }
+
+        // If the user provides a logger or the GOOGLE_SDK_DEBUG_LOGGING environment variable is set
+        // we attach a logger to the options array
+        // If we have the logger option SET to null, it should trump the environment variable AKA explicitely 
+        // turning off logging
+        if (getenv('GOOGLE_SDK_DEBUG_LOGGING') || (array_key_exists('logger', $options) && $options['logger'] !== null)) {
+
+            // If we have the logger set to other than null and is not a LoggerInterface throw and exception.
+            if(isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
+                throw new ValidationException(
+                    'the "Logger" option should be PSR-3 LoggerInterface compatible'
+                );
+            } elseif(getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
+                $options['logger'] = new Logger();
             }
         }
 
