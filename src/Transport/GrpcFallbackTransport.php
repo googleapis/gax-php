@@ -84,7 +84,7 @@ class GrpcFallbackTransport implements TransportInterface
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      * }
-     * @param LoggerInterface A PSR-3 compatible logger.
+     * @param LoggerInterface $logger A PSR-3 compatible logger.
      * @return GrpcFallbackTransport
      * @throws ValidationException
      */
@@ -128,7 +128,7 @@ class GrpcFallbackTransport implements TransportInterface
                     $metadataCallback = $options['metadataCallback'];
                     $metadataCallback($response->getHeaders());
                 }
-                
+
                 return $response;
             }
         )->then(
