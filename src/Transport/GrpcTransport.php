@@ -81,8 +81,13 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * @param LoggerInterface $logger A PSR-3 Compatible logger.
      * @throws Exception
      */
-    public function __construct(string $hostname, array $opts, Channel $channel = null, array $interceptors = [], LoggerInterface $logger=null)
-    {
+    public function __construct(
+        string $hostname,
+        array $opts,
+        Channel $channel = null,
+        array $interceptors = [],
+        LoggerInterface $logger = null
+    ) {
         if ($interceptors) {
             $channel = Interceptor::intercept(
                 $channel ?: new Channel($hostname, $opts),
@@ -120,7 +125,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      * @return GrpcTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, array $config = [], LoggerInterface $logger=null)
+    public static function build(string $apiEndpoint, array $config = [], LoggerInterface $logger = null)
     {
         self::validateGrpcSupport();
         $config += [
@@ -304,7 +309,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
     }
 
     /**
-     * @param RequestInterface $request
+     * @param Call $call
+     * @param array $headers
      *
      * @return void
      */
@@ -327,19 +333,20 @@ class GrpcTransport extends BaseStub implements TransportInterface
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param mixed $response
+     * @param mixed $status
      *
      * @return void
      */
     private function logResponse(mixed $response, mixed $status)
     {
-        // In the case we do not have a $status->code == Code::OK
+        $logger = $this->logger;
+        $timestamp = date(DATE_RFC3339);
+
+        // In the case we have a $status->code != Code::OK
         // from the request, we log the status only and we do not have
         // a response.
         if ($response) {
-            $logger = $this->logger;
-            $timestamp = date(DATE_RFC3339);
-            
             $debugEvent = [
                 'timestamp' => $timestamp,
                 'severity' => 'DEBUG',
@@ -360,7 +367,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ]
         ];
 
-        $logger->info(json_encode($infoEvent));
-
+         $logger->info(json_encode($infoEvent));
     }
 }

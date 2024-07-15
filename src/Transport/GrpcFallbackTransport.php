@@ -66,7 +66,7 @@ class GrpcFallbackTransport implements TransportInterface
     public function __construct(
         string $baseUri,
         callable $httpHandler,
-        LoggerInterface $logger=null
+        LoggerInterface $logger = null
     ) {
         $this->baseUri = $baseUri;
         $this->httpHandler = $httpHandler;
@@ -88,7 +88,7 @@ class GrpcFallbackTransport implements TransportInterface
      * @return GrpcFallbackTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, array $config = [], LoggerInterface $logger=null)
+    public static function build(string $apiEndpoint, array $config = [], LoggerInterface $logger = null)
     {
         $config += [
             'httpHandler'  => null,

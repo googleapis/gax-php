@@ -176,16 +176,16 @@ trait ClientOptionsTrait
 
         // If the user provides a logger or the GOOGLE_SDK_DEBUG_LOGGING environment variable is set
         // we attach a logger to the options array
-        // If we have the logger option SET to null, it should trump the environment variable AKA explicitely 
+        // If we have the logger option SET to null, it should trump the environment variable AKA explicitely
         // turning off logging
-        if (getenv('GOOGLE_SDK_DEBUG_LOGGING') || (array_key_exists('logger', $options) && $options['logger'] !== null)) {
-
+        if (getenv('GOOGLE_SDK_DEBUG_LOGGING') ||
+        (array_key_exists('logger', $options) && $options['logger'] !== null)) {
             // If we have the logger set to other than null and is not a LoggerInterface throw and exception.
-            if(isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
+            if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
                 throw new ValidationException(
                     'the "Logger" option should be PSR-3 LoggerInterface compatible'
                 );
-            } elseif(getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
+            } elseif (getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
                 $options['logger'] = new Logger();
             }
         }

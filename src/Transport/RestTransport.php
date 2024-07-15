@@ -69,7 +69,7 @@ class RestTransport implements TransportInterface
     public function __construct(
         RequestBuilder $requestBuilder,
         callable $httpHandler,
-        LoggerInterface $logger=null
+        LoggerInterface $logger = null
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->httpHandler = $httpHandler;
@@ -94,8 +94,12 @@ class RestTransport implements TransportInterface
      * @return RestTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, string $restConfigPath, array $config = [], LoggerInterface $logger=null)
-    {
+    public static function build(
+        string $apiEndpoint,
+        string $restConfigPath,
+        array $config = [],
+        LoggerInterface $logger = null
+    ) {
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,

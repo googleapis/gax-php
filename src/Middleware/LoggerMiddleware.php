@@ -35,22 +35,21 @@ namespace Google\ApiCore\Middleware;
 use Google\ApiCore\Call;
 use Psr\Log\LoggerInterface;
 
- /**
-  * Middleware that logs request information
-  */
-  class LoggerMiddleware implements MiddlewareInterface
-  {
+/**
+ * Middleware that logs request information
+ */
+class LoggerMiddleware implements MiddlewareInterface
+{
     /** @var callable */
     private $nextHandler;
     private LoggerInterface $logger;
     private string $serviceName;
 
     public function __construct(
-        callable $nextHandler, 
+        callable $nextHandler,
         LoggerInterface $logger,
         string $serviceName
-    )
-    {
+    ) {
         $this->nextHandler = $nextHandler;
         $this->logger = $logger;
         $this->serviceName = $serviceName;
@@ -76,7 +75,7 @@ use Psr\Log\LoggerInterface;
 
         $this->logger->info(json_encode($infoEvent));
 
-        return $nextHandler($call, $options)->then(function($response) use ($startTime) {
+        return $nextHandler($call, $options)->then(function ($response) use ($startTime) {
             $endTime = date(DATE_RFC3339);
 
             $debugEvent = [
@@ -90,7 +89,7 @@ use Psr\Log\LoggerInterface;
             $this->logger->debug(json_encode($debugEvent));
 
             return $response;
-        }, function($exception) use ($startTime) {
+        }, function ($exception) use ($startTime) {
             $endTime = date(DATE_RFC3339);
 
             $debugEvent = [
@@ -106,4 +105,4 @@ use Psr\Log\LoggerInterface;
             throw $exception;
         });
     }
-  }
+}

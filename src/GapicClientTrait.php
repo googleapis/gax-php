@@ -358,7 +358,7 @@ trait GapicClientTrait
                 }
                 return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport, $this->logger);
             case 'grpc-fallback':
-                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport , $this->logger);
+                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport, $this->logger);
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
