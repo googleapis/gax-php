@@ -84,6 +84,9 @@ class RetryMiddleware implements MiddlewareInterface
             }
         }
 
+        // Setting the retry attempts for the logger middleware.
+        $options['retryAttempt'] = $this->retryAttempts;
+
         // Call the handler immediately if retry settings are disabled.
         if (!$this->retrySettings->retriesEnabled()) {
             return $nextHandler($call, $options);

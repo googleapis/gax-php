@@ -68,10 +68,14 @@ use Psr\Log\LoggerInterface;
                 'serviceName' => $this->serviceName
             ]
         ];
+        
+        // If retry is set and is bigger than 0, we add it to the log.
+        if ($options['retryAttempt']) {
+            $infoEvent['jsonPayload']['retryAttempt'] = $options['retryAttempt'];
+        }
 
         $this->logger->info(json_encode($infoEvent));
 
-        // We could use a Then here to calculate latency if we want as well the retry.
         return $nextHandler($call, $options)->then(function($response) use ($startTime) {
             $endTime = date(DATE_RFC3339);
 
