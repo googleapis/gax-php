@@ -83,6 +83,6 @@ class Logger implements LoggerInterface
 
     public function log($level, string|Stringable $message, array $context = []): void
     {
-        print($message);
+        print($message . "\n");
     }
 }
