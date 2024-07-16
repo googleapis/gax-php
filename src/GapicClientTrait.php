@@ -298,9 +298,6 @@ trait GapicClientTrait
 
         if ($options['logger']) {
             $this->logger = $options['logger'];
-            $options['transportConfig']['logger'] = $this->logger;
-        } else {
-            $options['transportConfig']['logger'] = null;
         }
 
         $transport = $options['transport'] ?: self::defaultTransport();

@@ -189,9 +189,12 @@ class ClientOptionsTraitTest extends TestCase
                     'stubOpts' => [
                         'grpc_call_invoker' => $grpcGcpConfig->callInvoker(),
                         'grpc.service_config_disable_resolution' => 1
-                    ]
+                    ],
+                    'logger' => null,
                 ],
-                'rest' => [],
+                'rest' => [
+                    'logger' => null,
+                ],
                 'grpc-fallback' => [],
             ],
             'credentials' => null,
@@ -201,6 +204,7 @@ class ClientOptionsTraitTest extends TestCase
             'libVersion' => null,
             'clientCertSource' => null,
             'universeDomain' => 'googleapis.com',
+            'logger' => null,
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -254,7 +258,9 @@ class ClientOptionsTraitTest extends TestCase
             'disableRetries' => false,
             'transport' => null,
             'transportConfig' => [
-                'rest' => [],
+                'rest' => [
+                    'logger' => null,
+                ],
                 'fake-transport' => []
             ],
             'credentials' => null,
@@ -264,6 +270,7 @@ class ClientOptionsTraitTest extends TestCase
             'libVersion' => null,
             'clientCertSource' => null,
             'universeDomain' => 'googleapis.com',
+            'logger' => null,
         ];
 
         $restConfigOptions = $defaultOptions;

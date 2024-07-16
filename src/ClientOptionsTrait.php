@@ -118,6 +118,22 @@ trait ClientOptionsTrait
         // Keep track of the API Endpoint
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
+         // If the user provides a logger or the GOOGLE_SDK_DEBUG_LOGGING environment variable is set
+        // we attach a logger to the options array
+        // If we have the logger option SET to null, it should trump the environment variable AKA explicitely
+        // turning off logging
+        if (getenv('GOOGLE_SDK_DEBUG_LOGGING') ||
+        (array_key_exists('logger', $options) && $options['logger'] !== null)) {
+            // If we have the logger set to other than null and is not a LoggerInterface throw and exception.
+            if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
+                throw new ValidationException(
+                    'the "Logger" option should be PSR-3 LoggerInterface compatible'
+                );
+            } elseif (getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
+                $options['logger'] = new Logger();
+            }
+        }
+
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
@@ -127,9 +143,19 @@ trait ClientOptionsTrait
         if (isset($options['transportConfig']['grpc'])) {
             $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
             $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
+            $options['transportConfig']['grpc']['logger'] = null;
+            
+            if (isset($options['logger'])) {
+                $options['transportConfig']['grpc']['logger'] = $options['logger'];
+            }
         }
         if (isset($options['transportConfig']['rest'])) {
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
+            $options['transportConfig']['rest']['logger'] = null;
+
+            if (isset($options['logger'])) {
+                $options['transportConfig']['rest']['logger'] = $options['logger'];
+            }
         }
 
         // These calls do not apply to "New Surface" clients.
@@ -171,22 +197,6 @@ trait ClientOptionsTrait
                     // the key and the cert are returned in one string
                     return [$cert, $cert];
                 };
-            }
-        }
-
-        // If the user provides a logger or the GOOGLE_SDK_DEBUG_LOGGING environment variable is set
-        // we attach a logger to the options array
-        // If we have the logger option SET to null, it should trump the environment variable AKA explicitely
-        // turning off logging
-        if (getenv('GOOGLE_SDK_DEBUG_LOGGING') ||
-        (array_key_exists('logger', $options) && $options['logger'] !== null)) {
-            // If we have the logger set to other than null and is not a LoggerInterface throw and exception.
-            if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
-                throw new ValidationException(
-                    'the "Logger" option should be PSR-3 LoggerInterface compatible'
-                );
-            } elseif (getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
-                $options['logger'] = new Logger();
             }
         }
 

@@ -69,7 +69,7 @@ class LoggerMiddleware implements MiddlewareInterface
         ];
         
         // If retry is set and is bigger than 0, we add it to the log.
-        if ($options['retryAttempt']) {
+        if (isset($options['retryAttempt']) && $options['retryAttempt'] > 0) {
             $infoEvent['jsonPayload']['retryAttempt'] = $options['retryAttempt'];
         }
 

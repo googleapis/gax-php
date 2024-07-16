@@ -153,8 +153,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 "instead got: " . print_r($channel, true)
             );
         }
+        $logger = isset($config['logger']) ? $config['logger'] : null;
         try {
-            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger']);
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $logger);
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
