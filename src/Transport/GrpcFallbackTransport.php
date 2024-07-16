@@ -84,11 +84,10 @@ class GrpcFallbackTransport implements TransportInterface
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      * }
-     * @param LoggerInterface $logger A PSR-3 compatible logger.
      * @return GrpcFallbackTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, array $config = [], LoggerInterface $logger = null)
+    public static function build(string $apiEndpoint, array $config = [])
     {
         $config += [
             'httpHandler'  => null,
@@ -96,7 +95,7 @@ class GrpcFallbackTransport implements TransportInterface
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler, $logger);
+        $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler, $config['logger']);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }

@@ -121,11 +121,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *          extends {@see Grpc\Interceptor}.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
      * }
-     * @param LoggerInterface $logger A PSR-3 compatible logger.
      * @return GrpcTransport
      * @throws ValidationException
      */
-    public static function build(string $apiEndpoint, array $config = [], LoggerInterface $logger = null)
+    public static function build(string $apiEndpoint, array $config = [])
     {
         self::validateGrpcSupport();
         $config += [
@@ -155,7 +154,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $logger);
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger']);
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),

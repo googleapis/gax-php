@@ -298,6 +298,9 @@ trait GapicClientTrait
 
         if ($options['logger']) {
             $this->logger = $options['logger'];
+            $options['transportConfig']['logger'] = $this->logger;
+        } else {
+            $options['transportConfig']['logger'] = null;
         }
 
         $transport = $options['transport'] ?: self::defaultTransport();
@@ -356,9 +359,9 @@ trait GapicClientTrait
                     $configForSpecifiedTransport['stubOpts']['grpc.primary_user_agent'] .=
                         $this->agentHeader['User-Agent'][0];
                 }
-                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport, $this->logger);
+                return GrpcTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'grpc-fallback':
-                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport, $this->logger);
+                return GrpcFallbackTransport::build($apiEndpoint, $configForSpecifiedTransport);
             case 'rest':
                 if (!isset($configForSpecifiedTransport['restClientConfigPath'])) {
                     throw new ValidationException(
@@ -366,7 +369,7 @@ trait GapicClientTrait
                     );
                 }
                 $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
-                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport, $this->logger);
+                return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
             default:
                 throw new ValidationException(
                     "Unexpected 'transport' option: $transport. " .

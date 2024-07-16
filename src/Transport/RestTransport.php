@@ -90,7 +90,6 @@ class RestTransport implements TransportInterface
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
      * }
-     * @param LoggerInterface $logger A PSR-3 compatible logger.
      * @return RestTransport
      * @throws ValidationException
      */
@@ -107,7 +106,7 @@ class RestTransport implements TransportInterface
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        $transport = new RestTransport($requestBuilder, $httpHandler, $logger);
+        $transport = new RestTransport($requestBuilder, $httpHandler, $config['logger']);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }
