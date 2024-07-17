@@ -290,11 +290,18 @@ class CredentialsWrapper implements ProjectIdProviderInterface
     }
 
     /**
-     * Skip universe domain check for Metadata server (e.g. GCE) credentials.
+     * Skip universe domain check for Metadata server (e.g. GCE) credentials. However, still check
+     * the universe domain if the user provides a default, no matter which credentials are being
+     * used.
+     *
      * @return bool
      */
     private function shouldCheckUniverseDomain(): bool
     {
+        if ($this->universeDoman !== GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN) {
+            return true;
+        }
+
         $fetcher = $this->credentialsFetcher instanceof FetchAuthTokenCache
             ? $this->credentialsFetcher->getFetcher()
             : $this->credentialsFetcher;
