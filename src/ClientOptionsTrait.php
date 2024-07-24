@@ -118,16 +118,16 @@ trait ClientOptionsTrait
         // Keep track of the API Endpoint
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
-         // If the user provides a logger or the GOOGLE_SDK_DEBUG_LOGGING environment variable is set
+        // If the user provides a logger or the GOOGLE_SDK_DEBUG_LOGGING environment variable is set
         // we attach a logger to the options array
         // If we have the logger option SET to null, it should trump the environment variable AKA explicitely
         // turning off logging
-        if (getenv('GOOGLE_SDK_DEBUG_LOGGING') ||
+        if (strtoupper(getenv('GOOGLE_SDK_DEBUG_LOGGING')) === 'TRUE' ||
         (array_key_exists('logger', $options) && $options['logger'] !== null)) {
             // If we have the logger set to other than null and is not a LoggerInterface throw and exception.
             if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
                 throw new ValidationException(
-                    'the "Logger" option should be PSR-3 LoggerInterface compatible'
+                    'the "logger" option should be PSR-3 LoggerInterface compatible'
                 );
             } elseif (getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
                 $options['logger'] = new Logger();
@@ -143,19 +143,11 @@ trait ClientOptionsTrait
         if (isset($options['transportConfig']['grpc'])) {
             $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
             $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
-            $options['transportConfig']['grpc']['logger'] = null;
-            
-            if (isset($options['logger'])) {
-                $options['transportConfig']['grpc']['logger'] = $options['logger'];
-            }
+            $options['transportConfig']['grpc']['logger'] = $options['logger'] ?? null;
         }
         if (isset($options['transportConfig']['rest'])) {
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
-            $options['transportConfig']['rest']['logger'] = null;
-
-            if (isset($options['logger'])) {
-                $options['transportConfig']['rest']['logger'] = $options['logger'];
-            }
+            $options['transportConfig']['rest']['logger'] = $options['logger'] ?? null;
         }
 
         // These calls do not apply to "New Surface" clients.

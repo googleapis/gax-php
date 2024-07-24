@@ -53,7 +53,7 @@ class Logger implements LoggerInterface
     ];
     private int $level;
 
-    public function __construct(string $level=LogLevel::DEBUG)
+    public function __construct(string $level = LogLevel::DEBUG)
     {
         $this->level = $this->getLevelMap($level);
     }

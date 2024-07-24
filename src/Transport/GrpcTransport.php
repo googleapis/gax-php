@@ -153,9 +153,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 "instead got: " . print_r($channel, true)
             );
         }
-        $logger = isset($config['logger']) ? $config['logger'] : null;
         try {
-            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $logger);
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger'] ?? null);
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
@@ -235,7 +234,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $this->verifyUniverseDomain($options);
-        $headers = isset($options['headers']) ? $options['headers'] : [];
+        $headers = $options['headers'] ?? [];
 
         if ($this->logger) {
             $this->logRequest($call, $headers);
@@ -316,7 +315,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     private function logRequest(Call $call, array $headers)
     {
-        $logger = $this->logger;
         $timestamp = date(DATE_RFC3339);
 
         $debugEvent = [
@@ -329,7 +327,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ]
         ];
 
-        $logger->debug(json_encode($debugEvent));
+        $this->logger->debug(json_encode($debugEvent));
     }
 
     /**
@@ -340,7 +338,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     private function logResponse(mixed $response, mixed $status)
     {
-        $logger = $this->logger;
         $timestamp = date(DATE_RFC3339);
 
         // In the case we have a $status->code != Code::OK
@@ -356,7 +353,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 ]
             ];
 
-            $logger->debug(json_encode($debugEvent));
+            $this->logger->debug(json_encode($debugEvent));
         }
 
         $infoEvent = [
@@ -367,6 +364,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
             ]
         ];
 
-         $logger->info(json_encode($infoEvent));
+         $this->logger->info(json_encode($infoEvent));
     }
 }

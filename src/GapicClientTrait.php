@@ -296,9 +296,7 @@ trait GapicClientTrait
             $options['universeDomain']
         );
 
-        if ($options['logger']) {
-            $this->logger = $options['logger'];
-        }
+        $this->logger = $options['logger'] ?? null;
 
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface

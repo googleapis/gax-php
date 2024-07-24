@@ -177,7 +177,6 @@ trait HttpUnaryTransportTrait
      */
     private function logRequest(RequestInterface $request)
     {
-        $logger = $this->logger;
         $timestamp = date(DATE_RFC3339);
 
         $debugEvent = [
@@ -191,7 +190,7 @@ trait HttpUnaryTransportTrait
             ]
         ];
 
-        $logger->debug(json_encode($debugEvent));
+        $this->logger->debug(json_encode($debugEvent));
     }
 
     /**
@@ -201,7 +200,6 @@ trait HttpUnaryTransportTrait
      */
     private function logResponse(ResponseInterface $response)
     {
-        $logger = $this->logger;
         $timestamp = date(DATE_RFC3339);
         
         $debugEvent = [
@@ -213,7 +211,7 @@ trait HttpUnaryTransportTrait
             ]
         ];
 
-        $logger->debug(json_encode($debugEvent));
+        $this->logger->debug(json_encode($debugEvent));
 
         $infoEvent = [
             'timestamp' => $timestamp,
@@ -223,6 +221,6 @@ trait HttpUnaryTransportTrait
             ]
         ];
 
-        $logger->info(json_encode($infoEvent));
+        $this->logger->info(json_encode($infoEvent));
     }
 }

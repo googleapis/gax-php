@@ -32,7 +32,9 @@
 
 namespace Google\ApiCore\Middleware;
 
+use Exception;
 use Google\ApiCore\Call;
+use Google\Protobuf\Internal\Message;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -75,7 +77,7 @@ class LoggerMiddleware implements MiddlewareInterface
 
         $this->logger->info(json_encode($infoEvent));
 
-        return $nextHandler($call, $options)->then(function ($response) use ($startTime) {
+        return $nextHandler($call, $options)->then(function (Message $response) use ($startTime) {
             $endTime = date(DATE_RFC3339);
 
             $debugEvent = [
@@ -89,7 +91,7 @@ class LoggerMiddleware implements MiddlewareInterface
             $this->logger->debug(json_encode($debugEvent));
 
             return $response;
-        }, function ($exception) use ($startTime) {
+        }, function (Exception $exception) use ($startTime) {
             $endTime = date(DATE_RFC3339);
 
             $debugEvent = [
