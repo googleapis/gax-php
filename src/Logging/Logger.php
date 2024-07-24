@@ -41,6 +41,23 @@ use Stringable;
  */
 class Logger implements LoggerInterface
 {
+    private array $levelMapping = [
+        LogLevel::EMERGENCY => 7,
+        LogLevel::ALERT => 6,
+        LogLevel::CRITICAL => 5,
+        LogLevel::ERROR => 4,
+        LogLevel::WARNING => 3,
+        LogLevel::NOTICE => 2,
+        LogLevel::INFO => 1,
+        LogLevel::DEBUG => 0,
+    ];
+    private int $level;
+
+    public function __construct(string $level=LogLevel::DEBUG)
+    {
+        $this->level = $this->getLevelMap($level);
+    }
+
     public function emergency(string|Stringable $message, array $context = []): void
     {
         $this->log(LogLevel::EMERGENCY, $message);
@@ -83,6 +100,19 @@ class Logger implements LoggerInterface
 
     public function log($level, string|Stringable $message, array $context = []): void
     {
+        if ($this->getLevelMap($level) < $this->level) {
+            return;
+        }
+
         print($message . "\n");
+    }
+
+    private function getLevelMap(string $levelName): int
+    {
+        if (!array_key_exists($levelName, $this->levelMapping)) {
+            throw new ValidationException('The level supplied to the Logger is not valid');
+        }
+
+        return $this->levelMapping[$levelName];
     }
 }
