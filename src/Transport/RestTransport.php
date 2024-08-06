@@ -44,7 +44,6 @@ use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * A REST based transport implementation.
@@ -58,23 +57,19 @@ class RestTransport implements TransportInterface
     }
 
     private RequestBuilder $requestBuilder;
-    private ?LoggerInterface $logger;
 
     /**
      * @param RequestBuilder $requestBuilder A builder responsible for creating
      *        a PSR-7 request from a set of request information.
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
-     * @param LoggerInterface $logger A PSR-3 compatible logger.
      */
     public function __construct(
         RequestBuilder $requestBuilder,
         callable $httpHandler,
-        LoggerInterface $logger = null
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->httpHandler = $httpHandler;
         $this->transportName = 'REST';
-        $this->logger = $logger;
     }
 
     /**
@@ -96,8 +91,7 @@ class RestTransport implements TransportInterface
     public static function build(
         string $apiEndpoint,
         string $restConfigPath,
-        array $config = [],
-        LoggerInterface $logger = null
+        array $config = []
     ) {
         $config += [
             'httpHandler'  => null,
@@ -105,8 +99,8 @@ class RestTransport implements TransportInterface
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        $transport = new RestTransport($requestBuilder, $httpHandler, $config['logger'] ?? null);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger'] ?? null);
+        $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }
@@ -125,9 +119,9 @@ class RestTransport implements TransportInterface
             $headers
         );
 
-        if ($this->logger) {
-            $this->logRequest($request);
-        }
+        // if ($this->logger) {
+        //     $this->logRequest($request);
+        // }
 
         // call the HTTP handler
         $httpHandler = $this->httpHandler;
@@ -141,9 +135,9 @@ class RestTransport implements TransportInterface
                 $return = new $decodeType;
                 $body = (string) $response->getBody();
 
-                if ($this->logger) {
-                    $this->logResponse($response);
-                }
+                // if ($this->logger) {
+                //     $this->logResponse($response);
+                // }
 
                 // In some rare cases LRO response metadata may not be loaded
                 // in the descriptor pool, triggering an exception. The catch

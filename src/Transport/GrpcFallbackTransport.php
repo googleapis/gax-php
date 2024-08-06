@@ -43,7 +43,6 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * A transport that sends protobuf over HTTP 1.1 that can be used when full gRPC support
@@ -56,22 +55,18 @@ class GrpcFallbackTransport implements TransportInterface
     use HttpUnaryTransportTrait;
 
     private string $baseUri;
-    private ?LoggerInterface $logger;
 
     /**
      * @param string $baseUri
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
-     * @param LoggerInterface $logger A PSR-3 compatible logger.
      */
     public function __construct(
         string $baseUri,
-        callable $httpHandler,
-        LoggerInterface $logger = null
+        callable $httpHandler
     ) {
         $this->baseUri = $baseUri;
         $this->httpHandler = $httpHandler;
         $this->transportName = 'grpc-fallback';
-        $this->logger = $logger;
     }
 
     /**
@@ -94,8 +89,8 @@ class GrpcFallbackTransport implements TransportInterface
             'clientCertSource' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler, $config['logger'] ?? null);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger'] ?? null);
+        $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }
@@ -110,19 +105,11 @@ class GrpcFallbackTransport implements TransportInterface
         $httpHandler = $this->httpHandler;
         $request = $this->buildRequest($call, $options);
 
-        if ($this->logger) {
-            $this->logRequest($request);
-        }
-
         return $httpHandler(
             $request,
             $this->getCallOptions($options)
         )->then(
             function (ResponseInterface $response) use ($options) {
-                if ($this->logger) {
-                    $this->logResponse($response);
-                }
-
                 if (isset($options['metadataCallback'])) {
                     $metadataCallback = $options['metadataCallback'];
                     $metadataCallback($response->getHeaders());

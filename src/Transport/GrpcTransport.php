@@ -50,6 +50,7 @@ use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use Grpc\Interceptor;
 use GuzzleHttp\Promise\Promise;
+use LoggingTrait;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -60,6 +61,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     use ValidationTrait;
     use GrpcSupportTrait;
     use ServiceAddressTrait;
+    use LoggingTrait;
 
     private ?LoggerInterface $logger;
 
@@ -237,7 +239,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         $headers = $options['headers'] ?? [];
 
         if ($this->logger) {
-            $this->logRequest($call, $headers);
+            $startTime = $this->logGRPCRequest($call, $headers, $options['retryAttempt'] ?? 0);
         }
 
         $unaryCall = $this->_simpleRequest(
@@ -250,11 +252,11 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
         /** @var Promise $promise */
         $promise = new Promise(
-            function () use ($unaryCall, $options, &$promise) {
+            function () use ($unaryCall, $options, &$promise, $startTime) {
                 list($response, $status) = $unaryCall->wait();
 
                 if ($this->logger) {
-                    $this->logResponse($response, $status);
+                    $this->logGRPCResponse($response, $status, $startTime);
                 }
 
                 if ($status->code == Code::OK) {
@@ -265,7 +267,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                     $promise->resolve($response);
                 } else {
                     if ($this->logger) {
-                        $this->logResponse(null, $status);
+                        $this->logGRPCResponse(null, $status, $startTime);
                     }
 
                     throw ApiException::createFromStdClass($status);
@@ -305,65 +307,5 @@ class GrpcTransport extends BaseStub implements TransportInterface
     private static function loadClientCertSource(callable $clientCertSource)
     {
         return call_user_func($clientCertSource);
-    }
-
-    /**
-     * @param Call $call
-     * @param array $headers
-     *
-     * @return void
-     */
-    private function logRequest(Call $call, array $headers)
-    {
-        $timestamp = date(DATE_RFC3339);
-
-        $debugEvent = [
-            'timestamp' => $timestamp,
-            'severity' => 'DEBUG',
-            'jsonPayload' => [
-                'request.rpcName' => $call->getMethod(),
-                'request.headers' => $headers,
-                'request.payload' => $call->getMessage()
-            ]
-        ];
-
-        $this->logger->debug(json_encode($debugEvent));
-    }
-
-    /**
-     * @param mixed $response
-     * @param mixed $status
-     *
-     * @return void
-     */
-    private function logResponse(mixed $response, mixed $status)
-    {
-        $timestamp = date(DATE_RFC3339);
-
-        // In the case we have a $status->code != Code::OK
-        // from the request, we log the status only and we do not have
-        // a response.
-        if ($response) {
-            $debugEvent = [
-                'timestamp' => $timestamp,
-                'severity' => 'DEBUG',
-                'jsonPayload' => [
-                    'response.headers' => $status->metadata,
-                    'response.payload' => $response,
-                ]
-            ];
-
-            $this->logger->debug(json_encode($debugEvent));
-        }
-
-        $infoEvent = [
-            'timestamp' => $timestamp,
-            'severity' => 'INFO',
-            'jsonPayload' => [
-                'response.status' => $status->code
-            ]
-        ];
-
-         $this->logger->info(json_encode($infoEvent));
     }
 }

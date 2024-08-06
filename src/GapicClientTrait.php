@@ -647,11 +647,6 @@ trait GapicClientTrait
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
         $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
-
-        if ($this->logger) {
-            $callStack = new LoggerMiddleware($callStack, $this->logger, $this->serviceName);
-        }
-
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new RequestAutoPopulationMiddleware(
             $callStack,
