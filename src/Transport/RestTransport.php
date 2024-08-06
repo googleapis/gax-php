@@ -262,6 +262,10 @@ class RestTransport implements TransportInterface
             $callOptions['key'] = $key;
         }
 
+        if (isset($options['retryAttempt'])) {
+            $callOptions['retryAttempt'] = $options['retryAttempt'];
+        }
+
         return $callOptions;
     }
 }
