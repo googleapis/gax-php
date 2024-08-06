@@ -65,7 +65,7 @@ class RestTransport implements TransportInterface
      */
     public function __construct(
         RequestBuilder $requestBuilder,
-        callable $httpHandler,
+        callable $httpHandler
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->httpHandler = $httpHandler;
@@ -88,18 +88,15 @@ class RestTransport implements TransportInterface
      * @return RestTransport
      * @throws ValidationException
      */
-    public static function build(
-        string $apiEndpoint,
-        string $restConfigPath,
-        array $config = []
-    ) {
+    public static function build(string $apiEndpoint, string $restConfigPath, array $config = [])
+    {
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger'] ?? null);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
@@ -113,20 +110,15 @@ class RestTransport implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $headers = self::buildCommonHeaders($options);
-        $request =  $this->requestBuilder->build(
-            $call->getMethod(),
-            $call->getMessage(),
-            $headers
-        );
-
-        // if ($this->logger) {
-        //     $this->logRequest($request);
-        // }
 
         // call the HTTP handler
         $httpHandler = $this->httpHandler;
         return $httpHandler(
-            $request,
+            $this->requestBuilder->build(
+                $call->getMethod(),
+                $call->getMessage(),
+                $headers
+            ),
             $this->getCallOptions($options)
         )->then(
             function (ResponseInterface $response) use ($call, $options) {
@@ -134,10 +126,6 @@ class RestTransport implements TransportInterface
                 /** @var Message $return */
                 $return = new $decodeType;
                 $body = (string) $response->getBody();
-
-                // if ($this->logger) {
-                //     $this->logResponse($response);
-                // }
 
                 // In some rare cases LRO response metadata may not be loaded
                 // in the descriptor pool, triggering an exception. The catch
