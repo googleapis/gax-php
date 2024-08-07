@@ -44,13 +44,14 @@ use Google\ApiCore\Transport\Grpc\ServerStreamingCallWrapper;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
+use Google\Auth\Logger\LogEvent;
+use Google\Auth\Logger\LoggingTrait;
 use Google\Rpc\Code;
 use Grpc\BaseStub;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use Grpc\Interceptor;
 use GuzzleHttp\Promise\Promise;
-use LoggingTrait;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -237,9 +238,18 @@ class GrpcTransport extends BaseStub implements TransportInterface
     {
         $this->verifyUniverseDomain($options);
         $headers = $options['headers'] ?? [];
+        $requestEvent = null;
 
         if ($this->logger) {
-            $startTime = $this->logGRPCRequest($call, $headers, $options['retryAttempt'] ?? 0);
+            $requestEvent = new LogEvent();
+
+            $requestEvent->headers = $headers;
+            $requestEvent->payload = $call->getMessage()->serializeToJsonString();
+            $requestEvent->retryAttempt = $options['retryAttempt'];
+            $requestEvent->serviceName = $options['serviceName'];
+            $requestEvent->rpcName = $call->getMethod();
+
+            $this->logRequest($requestEvent);
         }
 
         $unaryCall = $this->_simpleRequest(
@@ -252,11 +262,17 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
         /** @var Promise $promise */
         $promise = new Promise(
-            function () use ($unaryCall, $options, &$promise, $startTime) {
+            function () use ($unaryCall, $options, &$promise, $requestEvent) {
                 list($response, $status) = $unaryCall->wait();
 
                 if ($this->logger) {
-                    $this->logGRPCResponse($response, $status, $startTime);
+                    $responseEvent = new LogEvent($requestEvent->timestamp);
+
+                    $responseEvent->headers = $status->metadata;
+                    $responseEvent->payload = $response->serializeToJsonString();
+                    $responseEvent->status = $status->code;
+
+                    $this->logResponse($responseEvent);
                 }
 
                 if ($status->code == Code::OK) {
@@ -266,10 +282,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
                     }
                     $promise->resolve($response);
                 } else {
-                    if ($this->logger) {
-                        $this->logGRPCResponse(null, $status, $startTime);
-                    }
-
                     throw ApiException::createFromStdClass($status);
                 }
             },

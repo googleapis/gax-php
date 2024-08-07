@@ -640,6 +640,8 @@ trait GapicClientTrait
             ];
         }
 
+        $callConstructionOptions['serviceName'] = $this->serviceName;
+
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
@@ -657,7 +659,8 @@ trait GapicClientTrait
             'transportOptions',
             'metadataCallback',
             'audience',
-            'metadataReturnType'
+            'metadataReturnType',
+            'serviceName'
         ]);
 
         foreach (\array_reverse($this->middlewareCallables) as $fn) {

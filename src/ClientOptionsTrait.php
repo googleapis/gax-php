@@ -32,10 +32,11 @@
 
 namespace Google\ApiCore;
 
-use Google\ApiCore\Logger;
+use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
+use Google\Auth\Logger\StdOutLogger;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use Psr\Log\LoggerInterface;
@@ -122,8 +123,8 @@ trait ClientOptionsTrait
         // we attach a logger to the options array
         // If we have the logger option SET to null, it should trump the environment variable AKA explicitely
         // turning off logging
-        if (!array_key_exists('logger', $options) && '1' === getenv('GOOGLE_SDK_DEBUG_LOGGING')) {
-            $options['logger'] = new Logger();
+        if (!array_key_exists('logger', $options)) {
+            $options['logger'] = ApplicationDefaultCredentials::getDefaultLogger();
         }
         // If the logger is supplied,  and is not a LoggerInterface throw and exception.
         if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
