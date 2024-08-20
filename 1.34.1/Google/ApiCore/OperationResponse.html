@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\OperationResponse | Google ApiCore - doctum</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../doctum.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
+        <script async defer src="../../js/autocomplete.min.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_OperationResponse" data-root-path="../../" data-search-index-url="../../doctum-search.json">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <div class="search-bar hidden" id="search-progress-bar-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="search-progress-bar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   id="doctum-search-auto-complete"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search"
+                   spellcheck="false"
+                   autocorrect="off"
+                   autocomplete="off"
+                   autocapitalize="off">
+            <div class="auto-complete-results" id="auto-complete-results"></div>
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google ApiCore - doctum</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li>OperationResponse</li>
+            </ol>
+        </div>
+                <div id="page-content">
+    <div class="page-header">
+        <h1>OperationResponse    
+            </h1>
+    </div>
+
+    
+    <p>        class
+    <strong>OperationResponse</strong>        (<a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php">View source</a>)
+</p>
+
+        
+    
+        
+
+            <div class="description">
+            <p><p>Response object from a long running API method.</p></p>            <p><p>The OperationResponse object is returned by API methods that perform
+a long running operation. It provides methods that can be used to
+poll the status of the operation, retrieve the results, and cancel
+the operation.</p>
+<p>To support a long running operation, the server must implement the
+Operations API, which is used by the OperationResponse object. If
+more control is required, it is possible to make calls against the
+Operations API directly instead of via the OperationResponse object
+using an Operations Client instance.</p></p>        </div>
+            
+                <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                    <a href="../../Google/ApiCore/PollingTrait.html"><abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a>    </div>
+                <div class="col-md-6"></div>
+            </div>
+            </div>
+    
+            <h2>Constants</h2>    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                                                                                                        DEFAULT_POLLING_INTERVAL
+                                    </td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                                                                                                        DEFAULT_POLLING_MULTIPLIER
+                                    </td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                                                                                                        DEFAULT_MAX_POLLING_INTERVAL
+                                    </td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                                                                                                        DEFAULT_MAX_POLLING_DURATION
+                                    </td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                                            private
+                                                                                NEW_CLIENT_NAMESPACE
+                                    </td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getCurrentTimeMillis">getCurrentTimeMillis</a>()
+        
+                                            <p><p>Protected to allow overriding for tests</p></p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/PollingTrait.html#method_getCurrentTimeMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_sleepMillis">sleepMillis</a>(int $millis)
+        
+                                            <p><p>Protected to allow overriding for tests</p></p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/PollingTrait.html#method_sleepMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method___construct">__construct</a>(string $operationName, object $operationsClient, array $options = [])
+        
+                                            <p><p>OperationResponse constructor.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_isDone">isDone</a>()
+        
+                                            <p><p>Check whether the operation has completed.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_operationSucceeded">operationSucceeded</a>()
+        
+                                            <p><p>Check whether the operation completed successfully. If the operation is not complete, or if the operation
+failed, return false.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_operationFailed">operationFailed</a>()
+        
+                                            <p><p>Check whether the operation failed. If the operation is not complete, or if the operation
+succeeded, return false.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p><p>Get the formatted name of the operation</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_pollUntilComplete">pollUntilComplete</a>(array $options = [])
+        
+                                            <p><p>Poll the server in a loop until the operation is complete.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_reload">reload</a>()
+        
+                                            <p><p>Reload the status of the operation with a request to the service.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed|null
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getResult">getResult</a>()
+        
+                                            <p><p>Return the result of the operation. If operationSucceeded() is false, return null.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\Rpc\Status">Status</abbr>|null
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getError">getError</a>()
+        
+                                            <p><p>If the operation failed, return the status. If operationFailed() is false, return null.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getDescriptorOptions">getDescriptorOptions</a>()
+        
+                                            <p><p>Get an array containing the values of 'operationReturnType', 'metadataReturnType', and
+the polling options <code>initialPollDelayMillis</code>, <code>pollDelayMultiplier</code>, <code>maxPollDelayMillis</code>,
+and <code>totalPollTimeoutMillis</code>. The array can be passed as the $options argument to the
+constructor when creating another OperationResponse object.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\LongRunning\Operation">Operation</abbr>|mixed|null
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getLastProtoResponse">getLastProtoResponse</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    object
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getOperationsClient">getOperationsClient</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_cancel">cancel</a>()
+        
+                                            <p><p>Cancel the long-running operation.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_delete">delete</a>()
+        
+                                            <p><p>Delete the long-running operation.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getMetadata">getMetadata</a>()
+        
+                                            <p><p>Get the metadata returned with the last proto response. If a metadata type was provided, then
+the return value will be of that type - otherwise, the return value will be of type Any. If
+no metadata object is available, returns null.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_getCurrentTimeMillis">
+        <div class="location">in <a href="../../Google/ApiCore/PollingTrait.html#method_getCurrentTimeMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/PollingTrait.php#L83">at line 83</a></div>
+        <code>            protected        float
+    <strong>getCurrentTimeMillis</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Protected to allow overriding for tests</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td><p>Current time in milliseconds</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_sleepMillis">
+        <div class="location">in <a href="../../Google/ApiCore/PollingTrait.html#method_sleepMillis">
+<abbr title="Google\ApiCore\PollingTrait">PollingTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/PollingTrait.php#L93">at line 93</a></div>
+        <code>            protected        
+    <strong>sleepMillis</strong>(int $millis)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Protected to allow overriding for tests</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$millis</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L123">at line 123</a></div>
+        <code>                    
+    <strong>__construct</strong>(string $operationName, object $operationsClient, array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>OperationResponse constructor.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$operationName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>object</td>
+                <td>$operationsClient</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>{
+Optional. Options for configuring the operation response object.</p>
+<pre><code>@type string $operationReturnType The return type of the longrunning operation.
+@type string $metadataReturnType The type of the metadata returned in the operation response.
+@type int $initialPollDelayMillis    The initial polling interval to use, in milliseconds.
+@type int $pollDelayMultiplier Multiplier applied to the polling interval on each retry.
+@type int $maxPollDelayMillis The maximum polling interval to use, in milliseconds.
+@type int $totalPollTimeoutMillis The maximum amount of time to continue polling.
+@type object $lastProtoResponse A response already received from the server.
+@type string $getOperationMethod The method on $operationsClient to get the operation.
+@type string $cancelOperationMethod The method on $operationsClient to cancel the operation.
+@type string $deleteOperationMethod The method on $operationsClient to delete the operation.
+@type string $operationStatusMethod The method on the operation to get the status.
+@type string $operationStatusDoneValue The method on the operation to determine if the status is done.
+@type array $additionalOperationArguments Additional arguments to pass to $operationsClient methods.
+@type string $operationErrorCodeMethod The method on the operation to get the error code
+@type string $operationErrorMessageMethod The method on the operation to get the error status</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isDone">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L177">at line 177</a></div>
+        <code>                    bool
+    <strong>isDone</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Check whether the operation has completed.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_operationSucceeded">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L197">at line 197</a></div>
+        <code>                    bool
+    <strong>operationSucceeded</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Check whether the operation completed successfully. If the operation is not complete, or if the operation
+failed, return false.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_operationFailed">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L218">at line 218</a></div>
+        <code>                    bool
+    <strong>operationFailed</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Check whether the operation failed. If the operation is not complete, or if the operation
+succeeded, return false.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L228">at line 228</a></div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Get the formatted name of the operation</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td><p>The formatted name of the operation</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_pollUntilComplete">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L253">at line 253</a></div>
+        <code>                    bool
+    <strong>pollUntilComplete</strong>(array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Poll the server in a loop until the operation is complete.</p></p>                <p><p>Return true if the operation completed, otherwise return false. If the
+$options['totalPollTimeoutMillis'] setting is not set (or set &lt;= 0) then
+pollUntilComplete will continue polling until the operation completes,
+and therefore will always return true.</p></p>        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>{
+Options for configuring the polling behaviour.</p>
+<pre><code>@type int $initialPollDelayMillis The initial polling interval to use, in milliseconds.
+@type int $pollDelayMultiplier    Multiplier applied to the polling interval on each retry.
+@type int $maxPollDelayMillis     The maximum polling interval to use, in milliseconds.
+@type int $totalPollTimeoutMillis The maximum amount of time to continue polling, in milliseconds.</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td><p>Indicates if the operation completed.</p></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_reload">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L272">at line 272</a></div>
+        <code>                    
+    <strong>reload</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Reload the status of the operation with a request to the service.</p></p>                        
+        </div>
+        <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResult">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L287">at line 287</a></div>
+        <code>                    mixed|null
+    <strong>getResult</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Return the result of the operation. If operationSucceeded() is false, return null.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed|null</td>
+            <td><p>The result of the operation, or null if operationSucceeded() is false</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getError">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L322">at line 322</a></div>
+        <code>                    <abbr title="Google\Rpc\Status">Status</abbr>|null
+    <strong>getError</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>If the operation failed, return the status. If operationFailed() is false, return null.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\Rpc\Status">Status</abbr>|null</td>
+            <td><p>The status of the operation in case of failure, or null if
+operationFailed() is false.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDescriptorOptions">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L355">at line 355</a></div>
+        <code>                    array
+    <strong>getDescriptorOptions</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Get an array containing the values of 'operationReturnType', 'metadataReturnType', and
+the polling options <code>initialPollDelayMillis</code>, <code>pollDelayMultiplier</code>, <code>maxPollDelayMillis</code>,
+and <code>totalPollTimeoutMillis</code>. The array can be passed as the $options argument to the
+constructor when creating another OperationResponse object.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLastProtoResponse">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L366">at line 366</a></div>
+        <code>                    <abbr title="Google\LongRunning\Operation">Operation</abbr>|mixed|null
+    <strong>getLastProtoResponse</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\LongRunning\Operation">Operation</abbr>|mixed|null</td>
+            <td><p>The last Operation object received from the server.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOperationsClient">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L375">at line 375</a></div>
+        <code>                    object
+    <strong>getOperationsClient</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>object</td>
+            <td><p>The OperationsClient object used to make
+requests to the operations API.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cancel">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L397">at line 397</a></div>
+        <code>                    
+    <strong>cancel</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Cancel the long-running operation.</p></p>                <p><p>For operations of type Google\LongRunning\Operation, this method starts
+asynchronous cancellation on a long-running operation. The server
+makes a best effort to cancel the operation, but success is not
+guaranteed. If the server doesn't support this method, it will throw an
+ApiException with code \Google\Rpc\Code::UNIMPLEMENTED. Clients can continue
+to use reload and pollUntilComplete methods to check whether the cancellation
+succeeded or whether the operation completed despite cancellation.
+On successful cancellation, the operation is not deleted; instead, it becomes
+an operation with a getError() value with a \Google\Rpc\Status code of 1,
+corresponding to \Google\Rpc\Code::CANCELLED.</p></p>        
+        </div>
+        <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/LogicException">LogicException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_delete">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L418">at line 418</a></div>
+        <code>                    
+    <strong>delete</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Delete the long-running operation.</p></p>                <p><p>For operations of type Google\LongRunning\Operation, this method
+indicates that the client is no longer interested in the operation result.
+It does not cancel the operation. If the server doesn't support this method,
+it will throw an ApiException with code \Google\Rpc\Code::UNIMPLEMENTED.</p></p>        
+        </div>
+        <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/LogicException">LogicException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMetadata">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/1.34.1/src/OperationResponse.php#L436">at line 436</a></div>
+        <code>                    mixed
+    <strong>getMetadata</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Get the metadata returned with the last proto response. If a metadata type was provided, then
+the return value will be of that type - otherwise, the return value will be of type Any. If
+no metadata object is available, returns null.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td><p>The metadata returned from the server in the last response.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+</div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
+    </div>
+    </body>
+
+</html>
