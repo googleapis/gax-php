@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\Options\ClientOptions | Google API Core - v1.34.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../doctum.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
+        <script async defer src="../../../js/autocomplete.min.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_Options_ClientOptions" data-root-path="../../../" data-search-index-url="../../../doctum-search.json">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <div class="search-bar hidden" id="search-progress-bar-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="search-progress-bar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   id="doctum-search-auto-complete"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search"
+                   spellcheck="false"
+                   autocorrect="off"
+                   autocomplete="off"
+                   autocapitalize="off">
+            <div class="auto-complete-results" id="auto-complete-results"></div>
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google API Core - v1.34.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li><a href="../../../Google/ApiCore/Options.html">Options</a></li><li class="backslash">\</li><li>ClientOptions</li>
+            </ol>
+        </div>
+                <div id="page-content">
+    <div class="page-header">
+        <h1>ClientOptions    
+            </h1>
+    </div>
+
+    
+    <p>        class
+    <strong>ClientOptions</strong>        implements        <a target="_blank" rel="noopener" href="https://www.php.net/ArrayAccess">ArrayAccess</a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php">View source</a>)
+</p>
+
+        
+    
+        
+
+            <div class="description">
+            <p><p>The ClientOptions class adds typing to the associative array of options
+passed into each API client constructor. To use this class directly, pass
+the result of {ClientOptions::toArray} to the client constructor:</p></p>            <p><pre><code>use Google\ApiCore\ClientOptions;
+use Google\Cloud\SecretManager\Client\SecretManagerClient;
+
+$options = new ClientOptions([
+    'credentials' =&gt; '/path/to/my/credentials.json'
+]);
+$secretManager = new SecretManagerClient($options-&gt;toArray());</code></pre>
+<p>Note: It's possible to pass an associative array to the API clients as well,
+as ClientOptions will still be used internally for validation.</p></p>        </div>
+            
+                <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                    <a href="../../../Google/ApiCore/Options/OptionsTrait.html"><abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a>    </div>
+                <div class="col-md-6"><p>Trait implemented by any class representing an associative array of PHP options.</p></div>
+            </div>
+            </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_offsetExists">offsetExists</a>($offset)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetExists">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_offsetGet">offsetGet</a>($offset)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetGet">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_offsetSet">offsetSet</a>($offset, $value)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetSet">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_offsetUnset">offsetUnset</a>($offset)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetUnset">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_toArray">toArray</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_toArray">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method___construct">__construct</a>(array $options)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setApiEndpoint">setApiEndpoint</a>(string|null $apiEndpoint)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setDisableRetries">setDisableRetries</a>(bool $disableRetries)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setClientConfig">setClientConfig</a>(string|array $clientConfig)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setCredentials">setCredentials</a>(string|array|<abbr title="Google\Auth\FetchAuthTokenInterface">FetchAuthTokenInterface</abbr>|<a href="../../../Google/ApiCore/CredentialsWrapper.html"><abbr title="Google\ApiCore\CredentialsWrapper">CredentialsWrapper</abbr></a>|null $credentials)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setCredentialsConfig">setCredentialsConfig</a>(array $credentialsConfig)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setTransport">setTransport</a>(string|<a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>|null $transport)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setTransportConfig">setTransportConfig</a>(<a href="../../../Google/ApiCore/Options/TransportOptions.html"><abbr title="Google\ApiCore\Options\TransportOptions">TransportOptions</abbr></a> $transportConfig)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setVersionFile">setVersionFile</a>(string|null $versionFile)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setServiceName">setServiceName</a>(string|null $serviceName)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setLibName">setLibName</a>(string|null $libName)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setLibVersion">setLibVersion</a>(string|null $libVersion)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    void
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setGapicVersion">setGapicVersion</a>(string|null $gapicVersion)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setClientCertSource">setClientCertSource</a>(callable|null $clientCertSource)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setUniverseDomain">setUniverseDomain</a>(string|null $universeDomain)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_offsetExists">
+        <div class="location">in <a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetExists">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/OptionsTrait.php#L55">at line 55</a></div>
+        <code>                    bool
+    <strong>offsetExists</strong>($offset)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_offsetGet">
+        <div class="location">in <a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetGet">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/OptionsTrait.php#L60">at line 60</a></div>
+        <code>                    
+    <strong>offsetGet</strong>($offset)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_offsetSet">
+        <div class="location">in <a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetSet">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/OptionsTrait.php#L69">at line 69</a></div>
+        <code>                    void
+    <strong>offsetSet</strong>($offset, $value)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/BadMethodCallException">BadMethodCallException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_offsetUnset">
+        <div class="location">in <a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_offsetUnset">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/OptionsTrait.php#L77">at line 77</a></div>
+        <code>                    void
+    <strong>offsetUnset</strong>($offset)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/BadMethodCallException">BadMethodCallException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_toArray">
+        <div class="location">in <a href="../../../Google/ApiCore/Options/OptionsTrait.html#method_toArray">
+<abbr title="Google\ApiCore\Options\OptionsTrait">OptionsTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/OptionsTrait.php#L82">at line 82</a></div>
+        <code>                    array
+    <strong>toArray</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L156">at line 156</a></div>
+        <code>                    
+    <strong>__construct</strong>(array $options)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>{
+@type string $apiEndpoint
+The address of the API remote host, for example &quot;example.googleapis.com. May also
+include the port, for example &quot;example.googleapis.com:443&quot;
+@type bool $disableRetries
+Determines whether or not retries defined by the client configuration should be
+disabled. Defaults to <code>false</code>.
+@type string|array $clientConfig
+Client method configuration, including retry settings. This option can be either a
+path to a JSON file, or a PHP array containing the decoded JSON data.
+By default this settings points to the default client config file, which is provided
+in the resources folder.
+@type string|array|FetchAuthTokenInterface|CredentialsWrapper $credentials
+The credentials to be used by the client to authorize API calls. This option
+accepts either a path to a credentials file, or a decoded credentials file as a
+PHP array.
+<em>Advanced usage</em>: In addition, this option can also accept a pre-constructed
+\Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\CredentialsWrapper
+object. Note that when one of these objects are provided, any settings in
+$authConfig will be ignored.
+@type array $credentialsConfig
+Options used to configure credentials, including auth token caching, for the client.
+For a full list of supporting configuration options, see
+\Google\ApiCore\CredentialsWrapper::build.
+@type string|TransportInterface|null $transport
+The transport used for executing network requests. May be either the string <code>rest</code>,
+<code>grpc</code>, or 'grpc-fallback'. Defaults to <code>grpc</code> if gRPC support is detected on the system.
+<em>Advanced usage</em>: Additionally, it is possible to pass in an already instantiated
+TransportInterface object. Note that when this objects is provided, any settings in
+$transportConfig, and any <code>$apiEndpoint</code> setting, will be ignored.
+@type array $transportConfig
+Configuration options that will be used to construct the transport. Options for
+each supported transport type should be passed in a key for that transport. For
+example:
+$transportConfig = [
+'grpc' =&gt; [...],
+'rest' =&gt; [...],
+'grpc-fallback' =&gt; [...],
+];
+See the GrpcTransport::build and RestTransport::build
+methods for the supported options.
+@type string $versionFile
+The path to a file which contains the current version of the client.
+@type string $descriptorsConfigPath
+The path to a descriptor configuration file.
+@type string $serviceName
+The name of the service.
+@type string $libName
+The name of the client application.
+@type string $libVersion
+The version of the client application.
+@type string $gapicVersion
+The code generator version of the GAPIC library.
+@type callable $clientCertSource
+A callable which returns the client cert as a string.
+@type string $universeDomain
+The default service domain for a given Cloud universe.
+}</p></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setApiEndpoint">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L188">at line 188</a></div>
+        <code>                    void
+    <strong>setApiEndpoint</strong>(string|null $apiEndpoint)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$apiEndpoint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDisableRetries">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L196">at line 196</a></div>
+        <code>                    void
+    <strong>setDisableRetries</strong>(bool $disableRetries)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$disableRetries</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setClientConfig">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L205">at line 205</a></div>
+        <code>                    void
+    <strong>setClientConfig</strong>(string|array $clientConfig)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|array</td>
+                <td>$clientConfig</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/InvalidArgumentException">InvalidArgumentException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCredentials">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L219">at line 219</a></div>
+        <code>                    void
+    <strong>setCredentials</strong>(string|array|<abbr title="Google\Auth\FetchAuthTokenInterface">FetchAuthTokenInterface</abbr>|<a href="../../../Google/ApiCore/CredentialsWrapper.html"><abbr title="Google\ApiCore\CredentialsWrapper">CredentialsWrapper</abbr></a>|null $credentials)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|array|<abbr title="Google\Auth\FetchAuthTokenInterface">FetchAuthTokenInterface</abbr>|<a href="../../../Google/ApiCore/CredentialsWrapper.html"><abbr title="Google\ApiCore\CredentialsWrapper">CredentialsWrapper</abbr></a>|null</td>
+                <td>$credentials</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setCredentialsConfig">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L227">at line 227</a></div>
+        <code>                    void
+    <strong>setCredentialsConfig</strong>(array $credentialsConfig)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$credentialsConfig</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTransport">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L235">at line 235</a></div>
+        <code>                    void
+    <strong>setTransport</strong>(string|<a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>|null $transport)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|<a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>|null</td>
+                <td>$transport</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setTransportConfig">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L243">at line 243</a></div>
+        <code>                    void
+    <strong>setTransportConfig</strong>(<a href="../../../Google/ApiCore/Options/TransportOptions.html"><abbr title="Google\ApiCore\Options\TransportOptions">TransportOptions</abbr></a> $transportConfig)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../Google/ApiCore/Options/TransportOptions.html"><abbr title="Google\ApiCore\Options\TransportOptions">TransportOptions</abbr></a></td>
+                <td>$transportConfig</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setVersionFile">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L251">at line 251</a></div>
+        <code>                    void
+    <strong>setVersionFile</strong>(string|null $versionFile)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$versionFile</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setServiceName">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L270">at line 270</a></div>
+        <code>                    void
+    <strong>setServiceName</strong>(string|null $serviceName)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$serviceName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLibName">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L278">at line 278</a></div>
+        <code>                    void
+    <strong>setLibName</strong>(string|null $libName)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$libName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setLibVersion">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L286">at line 286</a></div>
+        <code>                    void
+    <strong>setLibVersion</strong>(string|null $libVersion)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$libVersion</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setGapicVersion">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L294">at line 294</a></div>
+        <code>                    void
+    <strong>setGapicVersion</strong>(string|null $gapicVersion)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$gapicVersion</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>void</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setClientCertSource">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L302">at line 302</a></div>
+        <code>                    
+    <strong>setClientCertSource</strong>(callable|null $clientCertSource)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>callable|null</td>
+                <td>$clientCertSource</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUniverseDomain">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.34.1/src/Options/ClientOptions.php#L313">at line 313</a></div>
+        <code>                    
+    <strong>setUniverseDomain</strong>(string|null $universeDomain)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|null</td>
+                <td>$universeDomain</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+</div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
+    </div>
+    </body>
+
+</html>
