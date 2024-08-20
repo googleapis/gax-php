@@ -1,0 +1,1 @@
+$([ "v1.34.1" != "" ] && echo "v1.34.1" || echo ${GITHUB_REF#refs/*/})
