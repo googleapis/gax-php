@@ -38,6 +38,7 @@ use InvalidArgumentException;
 use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * The ClientOptions class adds typing to the associative array of options
@@ -92,6 +93,8 @@ class ClientOptions implements ArrayAccess
     private ?Closure $clientCertSource;
 
     private ?string $universeDomain;
+
+    private ?LoggerInterface $logger;
 
     /**
      * @param array $options {
@@ -180,6 +183,7 @@ class ClientOptions implements ArrayAccess
         $this->setGapicVersion($arr['gapicVersion'] ?? null);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setUniverseDomain($arr['universeDomain'] ?? null);
+        $this->setLogger($arr['logger'] ?? null);
     }
 
     /**
@@ -313,5 +317,13 @@ class ClientOptions implements ArrayAccess
     public function setUniverseDomain(?string $universeDomain)
     {
         $this->universeDomain = $universeDomain;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(?LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

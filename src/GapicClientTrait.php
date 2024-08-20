@@ -51,6 +51,7 @@ use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Common functions used to work with various clients.
@@ -81,6 +82,7 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
     private bool $backwardsCompatibilityMode;
+    private ?LoggerInterface $logger = null;
 
     /**
      * Add a middleware to the call stack by providing a callable which will be
@@ -292,6 +294,8 @@ trait GapicClientTrait
             $options['credentialsConfig'],
             $options['universeDomain']
         );
+
+        $this->logger = $options['logger'] ?? null;
 
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
@@ -636,6 +640,8 @@ trait GapicClientTrait
             ];
         }
 
+        $callConstructionOptions['serviceName'] = $this->serviceName;
+
         $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
@@ -653,7 +659,8 @@ trait GapicClientTrait
             'transportOptions',
             'metadataCallback',
             'audience',
-            'metadataReturnType'
+            'metadataReturnType',
+            'serviceName'
         ]);
 
         foreach (\array_reverse($this->middlewareCallables) as $fn) {

@@ -89,7 +89,7 @@ class GrpcFallbackTransport implements TransportInterface
             'clientCertSource' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger'] ?? null);
         $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
@@ -103,8 +103,10 @@ class GrpcFallbackTransport implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $httpHandler = $this->httpHandler;
+        $request = $this->buildRequest($call, $options);
+
         return $httpHandler(
-            $this->buildRequest($call, $options),
+            $request,
             $this->getCallOptions($options)
         )->then(
             function (ResponseInterface $response) use ($options) {
@@ -112,6 +114,7 @@ class GrpcFallbackTransport implements TransportInterface
                     $metadataCallback = $options['metadataCallback'];
                     $metadataCallback($response->getHeaders());
                 }
+
                 return $response;
             }
         )->then(

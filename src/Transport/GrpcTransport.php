@@ -44,12 +44,15 @@ use Google\ApiCore\Transport\Grpc\ServerStreamingCallWrapper;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
+use Google\Auth\Logger\LogEvent;
+use Google\Auth\Logger\LoggingTrait;
 use Google\Rpc\Code;
 use Grpc\BaseStub;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use Grpc\Interceptor;
 use GuzzleHttp\Promise\Promise;
+use Psr\Log\LoggerInterface;
 
 /**
  * A gRPC based transport implementation.
@@ -59,6 +62,9 @@ class GrpcTransport extends BaseStub implements TransportInterface
     use ValidationTrait;
     use GrpcSupportTrait;
     use ServiceAddressTrait;
+    use LoggingTrait;
+
+    private ?LoggerInterface $logger;
 
     /**
      * @param string $hostname
@@ -75,10 +81,16 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *        release. To prepare for this, please take the time to convert
      *        `UnaryInterceptorInterface` implementations over to a class which
      *        extends {@see Grpc\Interceptor}.
+     * @param LoggerInterface $logger A PSR-3 Compatible logger.
      * @throws Exception
      */
-    public function __construct(string $hostname, array $opts, Channel $channel = null, array $interceptors = [])
-    {
+    public function __construct(
+        string $hostname,
+        array $opts,
+        Channel $channel = null,
+        array $interceptors = [],
+        LoggerInterface $logger = null
+    ) {
         if ($interceptors) {
             $channel = Interceptor::intercept(
                 $channel ?: new Channel($hostname, $opts),
@@ -87,6 +99,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         }
 
         parent::__construct($hostname, $opts, $channel);
+        $this->logger = $logger;
     }
 
     /**
@@ -144,7 +157,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors']);
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger'] ?? null);
         } catch (Exception $ex) {
             throw new ValidationException(
                 "Failed to build GrpcTransport: " . $ex->getMessage(),
@@ -224,19 +237,47 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $this->verifyUniverseDomain($options);
+        $headers = $options['headers'] ?? [];
+        $requestEvent = null;
+
+        if ($this->logger) {
+            $requestEvent = new LogEvent();
+
+            $requestEvent->headers = $headers;
+            $requestEvent->payload = $call->getMessage()->serializeToJsonString();
+            $requestEvent->retryAttempt = $options['retryAttempt'];
+            $requestEvent->serviceName = $options['serviceName'];
+            $requestEvent->rpcName = $call->getMethod();
+            $requestEvent->clientId = $options['clientId'];
+            $requestEvent->requestId = spl_object_id($call);
+
+            $this->logRequest($requestEvent);
+        }
 
         $unaryCall = $this->_simpleRequest(
             '/' . $call->getMethod(),
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
-            isset($options['headers']) ? $options['headers'] : [],
+            $headers,
             $this->getCallOptions($options)
         );
 
         /** @var Promise $promise */
         $promise = new Promise(
-            function () use ($unaryCall, $options, &$promise) {
+            function () use ($unaryCall, $options, &$promise, $requestEvent) {
                 list($response, $status) = $unaryCall->wait();
+
+                if ($this->logger) {
+                    $responseEvent = new LogEvent($requestEvent->timestamp);
+
+                    $responseEvent->headers = $status->metadata;
+                    $responseEvent->payload = $response->serializeToJsonString();
+                    $responseEvent->status = $status->code;
+                    $responseEvent->clientId = $requestEvent->clientId;
+                    $responseEvent->requestId = $requestEvent->requestId;
+
+                    $this->logResponse($responseEvent);
+                }
 
                 if ($status->code == Code::OK) {
                     if (isset($options['metadataCallback'])) {
