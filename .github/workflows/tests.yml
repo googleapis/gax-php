@@ -68,6 +68,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
+<<<<<<< Updated upstream
           php-version: '8.2'
       - name: Install Dependencies
         uses: nick-invision/retry@v3
@@ -78,3 +79,10 @@ jobs:
       - name: Run Script
         run: |
           vendor/bin/phpstan analyse
+=======
+          path: src
+
+    static-analysis:
+        name: PHPStan Static Analysis
+        uses: GoogleCloudPlatform/php-tools/.github/workflows/static-analysis.yml@reusable-workflow
+>>>>>>> Stashed changes
