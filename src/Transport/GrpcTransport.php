@@ -248,6 +248,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->retryAttempt = $options['retryAttempt'];
             $requestEvent->serviceName = $options['serviceName'];
             $requestEvent->rpcName = $call->getMethod();
+            $requestEvent->clientId = $options['clientId'];
+            $requestEvent->requestId = spl_object_id($call);
 
             $this->logRequest($requestEvent);
         }
@@ -271,6 +273,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
                     $responseEvent->headers = $status->metadata;
                     $responseEvent->payload = $response->serializeToJsonString();
                     $responseEvent->status = $status->code;
+                    $responseEvent->clientId = $requestEvent->clientId;
+                    $responseEvent->requestId = $requestEvent->requestId;
 
                     $this->logResponse($responseEvent);
                 }
