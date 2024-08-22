@@ -8,27 +8,15 @@ on:
         inputs:
             tag:
                 description: 'Tag to release'
-                required: true
 
 permissions:
   contents: write
 
 jobs:
-    tag:
-        name: "Get Tag for Documentation"
-        runs-on: ubuntu-latest
-        outputs:
-            tag: ${{ steps.tag.outputs.tag }}
-        steps:
-            - name: "Get Tag"
-              id: tag
-              run: |
-                TAG=$([ "${{ inputs.tag }}" != "" ] && echo "${{ inputs.tag }}" || echo ${GITHUB_REF#refs/*/})
-                echo "tag=$TAG" > "$GITHUB_OUTPUT"
     docs:
-        needs: tag
         name: "Generate and Deploy Documentation"
         uses: GoogleCloudPlatform/php-tools/.github/workflows/doctum.yml@doctum
         with:
-          title: "Google API Core - ${{ needs.tag.outputs.tag }}"
-          tag: ${{ needs.tag.outputs.tag }}
+          title: "Google API Core (GAX) Reference Documentation"
+          default_version: ${{ inputs.tag || github.ref_name }}
+
