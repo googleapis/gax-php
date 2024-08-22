@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\LongRunning\Gapic\OperationsGapicClient | Google API Core (GAX) Reference Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../../fonts/doctum-font.css">
+        <script src="../../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../../doctum.js"></script>
+        <script async defer src="../../../../js/bootstrap.min.js"></script>
+        <script async defer src="../../../../js/autocomplete.min.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_LongRunning_Gapic_OperationsGapicClient" data-root-path="../../../../" data-search-index-url="../../../../doctum-search.json">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#">
+                <select class="form-control" id="version-switcher" name="version">
+                                            <option
+                            value="../../../../../v1.9.1/index.html"
+                            data-version="v1.9.1" >v1.9.1</option>
+                                            <option
+                            value="../../../../../v1.10.0/index.html"
+                            data-version="v1.10.0" >v1.10.0</option>
+                                            <option
+                            value="../../../../../v1.11.0/index.html"
+                            data-version="v1.11.0" >v1.11.0</option>
+                                            <option
+                            value="../../../../../v1.11.1/index.html"
+                            data-version="v1.11.1" >v1.11.1</option>
+                                            <option
+                            value="../../../../../v1.11.2/index.html"
+                            data-version="v1.11.2" >v1.11.2</option>
+                                            <option
+                            value="../../../../../v1.11.3/index.html"
+                            data-version="v1.11.3" >v1.11.3</option>
+                                            <option
+                            value="../../../../../v1.11.4/index.html"
+                            data-version="v1.11.4" >v1.11.4</option>
+                                            <option
+                            value="../../../../../v1.12.0/index.html"
+                            data-version="v1.12.0" >v1.12.0</option>
+                                            <option
+                            value="../../../../../v1.12.1/index.html"
+                            data-version="v1.12.1" >v1.12.1</option>
+                                            <option
+                            value="../../../../../v1.12.2/index.html"
+                            data-version="v1.12.2" >v1.12.2</option>
+                                            <option
+                            value="../../../../../v1.13.0/index.html"
+                            data-version="v1.13.0" >v1.13.0</option>
+                                            <option
+                            value="../../../../../v1.14.0/index.html"
+                            data-version="v1.14.0" >v1.14.0</option>
+                                            <option
+                            value="../../../../../v1.15.0/index.html"
+                            data-version="v1.15.0" >v1.15.0</option>
+                                            <option
+                            value="../../../../../v1.16.0/index.html"
+                            data-version="v1.16.0" >v1.16.0</option>
+                                            <option
+                            value="../../../../../v1.16.1/index.html"
+                            data-version="v1.16.1" >v1.16.1</option>
+                                            <option
+                            value="../../../../../v1.16.2/index.html"
+                            data-version="v1.16.2" >v1.16.2</option>
+                                            <option
+                            value="../../../../../v1.16.3/index.html"
+                            data-version="v1.16.3" >v1.16.3</option>
+                                            <option
+                            value="../../../../../v1.16.4/index.html"
+                            data-version="v1.16.4" >v1.16.4</option>
+                                            <option
+                            value="../../../../../v1.17.0/index.html"
+                            data-version="v1.17.0" >v1.17.0</option>
+                                            <option
+                            value="../../../../../v1.18.0/index.html"
+                            data-version="v1.18.0" >v1.18.0</option>
+                                            <option
+                            value="../../../../../v1.18.1/index.html"
+                            data-version="v1.18.1" >v1.18.1</option>
+                                            <option
+                            value="../../../../../v1.18.2/index.html"
+                            data-version="v1.18.2" >v1.18.2</option>
+                                            <option
+                            value="../../../../../v1.19.0/index.html"
+                            data-version="v1.19.0" >v1.19.0</option>
+                                            <option
+                            value="../../../../../v1.19.1/index.html"
+                            data-version="v1.19.1" >v1.19.1</option>
+                                            <option
+                            value="../../../../../v1.20.0/index.html"
+                            data-version="v1.20.0" >v1.20.0</option>
+                                            <option
+                            value="../../../../../v1.20.1/index.html"
+                            data-version="v1.20.1" >v1.20.1</option>
+                                            <option
+                            value="../../../../../v1.20.2/index.html"
+                            data-version="v1.20.2" >v1.20.2</option>
+                                            <option
+                            value="../../../../../v1.21.0/index.html"
+                            data-version="v1.21.0" >v1.21.0</option>
+                                            <option
+                            value="../../../../../v1.21.1/index.html"
+                            data-version="v1.21.1" >v1.21.1</option>
+                                            <option
+                            value="../../../../../v1.22.0/index.html"
+                            data-version="v1.22.0" >v1.22.0</option>
+                                            <option
+                            value="../../../../../v1.22.1/index.html"
+                            data-version="v1.22.1" >v1.22.1</option>
+                                            <option
+                            value="../../../../../v1.23.0/index.html"
+                            data-version="v1.23.0" >v1.23.0</option>
+                                            <option
+                            value="../../../../../v1.24.0/index.html"
+                            data-version="v1.24.0" >v1.24.0</option>
+                                            <option
+                            value="../../../../../v1.25.0/index.html"
+                            data-version="v1.25.0" >v1.25.0</option>
+                                            <option
+                            value="../../../../../v1.26.0/index.html"
+                            data-version="v1.26.0" >v1.26.0</option>
+                                            <option
+                            value="../../../../../v1.26.1/index.html"
+                            data-version="v1.26.1" >v1.26.1</option>
+                                            <option
+                            value="../../../../../v1.26.2/index.html"
+                            data-version="v1.26.2" >v1.26.2</option>
+                                            <option
+                            value="../../../../../v1.26.3/index.html"
+                            data-version="v1.26.3" >v1.26.3</option>
+                                            <option
+                            value="../../../../../v1.27.0/index.html"
+                            data-version="v1.27.0" >v1.27.0</option>
+                                            <option
+                            value="../../../../../v1.27.1/index.html"
+                            data-version="v1.27.1" >v1.27.1</option>
+                                            <option
+                            value="../../../../../v1.27.2/index.html"
+                            data-version="v1.27.2" >v1.27.2</option>
+                                            <option
+                            value="../../../../../v1.28.0/index.html"
+                            data-version="v1.28.0" >v1.28.0</option>
+                                            <option
+                            value="../../../../../v1.28.1/index.html"
+                            data-version="v1.28.1" >v1.28.1</option>
+                                            <option
+                            value="../../../../../v1.29.0/index.html"
+                            data-version="v1.29.0" >v1.29.0</option>
+                                            <option
+                            value="../../../../../v1.7.1/index.html"
+                            data-version="v1.7.1" >v1.7.1</option>
+                                            <option
+                            value="../../../../../v1.29.1/index.html"
+                            data-version="v1.29.1" >v1.29.1</option>
+                                            <option
+                            value="../../../../../v1.8.0/index.html"
+                            data-version="v1.8.0" >v1.8.0</option>
+                                            <option
+                            value="../../../../../v1.9.0/index.html"
+                            data-version="v1.9.0" selected>v1.9.0</option>
+                                            <option
+                            value="../../../../../v1.30.0/index.html"
+                            data-version="v1.30.0" >v1.30.0</option>
+                                            <option
+                            value="../../../../../v1.30.1/index.html"
+                            data-version="v1.30.1" >v1.30.1</option>
+                                            <option
+                            value="../../../../../v1.31.0/index.html"
+                            data-version="v1.31.0" >v1.31.0</option>
+                                            <option
+                            value="../../../../../v1.32.0/index.html"
+                            data-version="v1.32.0" >v1.32.0</option>
+                                            <option
+                            value="../../../../../v1.33.0/index.html"
+                            data-version="v1.33.0" >v1.33.0</option>
+                                            <option
+                            value="../../../../../v1.34.0/index.html"
+                            data-version="v1.34.0" >v1.34.0</option>
+                                            <option
+                            value="../../../../../v1.34.1/index.html"
+                            data-version="v1.34.1" >v1.34.1</option>
+                                            <option
+                            value="../../../../../doctum/index.html"
+                            data-version="doctum" >doctum</option>
+                                    </select>
+            </form>
+                <div class="search-bar hidden" id="search-progress-bar-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="search-progress-bar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <form id="search-form" action="../../../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   id="doctum-search-auto-complete"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search"
+                   spellcheck="false"
+                   autocorrect="off"
+                   autocomplete="off"
+                   autocapitalize="off">
+            <div class="auto-complete-results" id="auto-complete-results"></div>
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google API Core (GAX) Reference Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                                        <li role="presentation" class="dropdown visible-xs-block visible-sm-block">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="true" aria-expanded="false">Versions&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li ><a href="../../../../../v1.9.1/index.html" data-version="v1.9.1">v1.9.1</a></li>
+                        <li ><a href="../../../../../v1.10.0/index.html" data-version="v1.10.0">v1.10.0</a></li>
+                        <li ><a href="../../../../../v1.11.0/index.html" data-version="v1.11.0">v1.11.0</a></li>
+                        <li ><a href="../../../../../v1.11.1/index.html" data-version="v1.11.1">v1.11.1</a></li>
+                        <li ><a href="../../../../../v1.11.2/index.html" data-version="v1.11.2">v1.11.2</a></li>
+                        <li ><a href="../../../../../v1.11.3/index.html" data-version="v1.11.3">v1.11.3</a></li>
+                        <li ><a href="../../../../../v1.11.4/index.html" data-version="v1.11.4">v1.11.4</a></li>
+                        <li ><a href="../../../../../v1.12.0/index.html" data-version="v1.12.0">v1.12.0</a></li>
+                        <li ><a href="../../../../../v1.12.1/index.html" data-version="v1.12.1">v1.12.1</a></li>
+                        <li ><a href="../../../../../v1.12.2/index.html" data-version="v1.12.2">v1.12.2</a></li>
+                        <li ><a href="../../../../../v1.13.0/index.html" data-version="v1.13.0">v1.13.0</a></li>
+                        <li ><a href="../../../../../v1.14.0/index.html" data-version="v1.14.0">v1.14.0</a></li>
+                        <li ><a href="../../../../../v1.15.0/index.html" data-version="v1.15.0">v1.15.0</a></li>
+                        <li ><a href="../../../../../v1.16.0/index.html" data-version="v1.16.0">v1.16.0</a></li>
+                        <li ><a href="../../../../../v1.16.1/index.html" data-version="v1.16.1">v1.16.1</a></li>
+                        <li ><a href="../../../../../v1.16.2/index.html" data-version="v1.16.2">v1.16.2</a></li>
+                        <li ><a href="../../../../../v1.16.3/index.html" data-version="v1.16.3">v1.16.3</a></li>
+                        <li ><a href="../../../../../v1.16.4/index.html" data-version="v1.16.4">v1.16.4</a></li>
+                        <li ><a href="../../../../../v1.17.0/index.html" data-version="v1.17.0">v1.17.0</a></li>
+                        <li ><a href="../../../../../v1.18.0/index.html" data-version="v1.18.0">v1.18.0</a></li>
+                        <li ><a href="../../../../../v1.18.1/index.html" data-version="v1.18.1">v1.18.1</a></li>
+                        <li ><a href="../../../../../v1.18.2/index.html" data-version="v1.18.2">v1.18.2</a></li>
+                        <li ><a href="../../../../../v1.19.0/index.html" data-version="v1.19.0">v1.19.0</a></li>
+                        <li ><a href="../../../../../v1.19.1/index.html" data-version="v1.19.1">v1.19.1</a></li>
+                        <li ><a href="../../../../../v1.20.0/index.html" data-version="v1.20.0">v1.20.0</a></li>
+                        <li ><a href="../../../../../v1.20.1/index.html" data-version="v1.20.1">v1.20.1</a></li>
+                        <li ><a href="../../../../../v1.20.2/index.html" data-version="v1.20.2">v1.20.2</a></li>
+                        <li ><a href="../../../../../v1.21.0/index.html" data-version="v1.21.0">v1.21.0</a></li>
+                        <li ><a href="../../../../../v1.21.1/index.html" data-version="v1.21.1">v1.21.1</a></li>
+                        <li ><a href="../../../../../v1.22.0/index.html" data-version="v1.22.0">v1.22.0</a></li>
+                        <li ><a href="../../../../../v1.22.1/index.html" data-version="v1.22.1">v1.22.1</a></li>
+                        <li ><a href="../../../../../v1.23.0/index.html" data-version="v1.23.0">v1.23.0</a></li>
+                        <li ><a href="../../../../../v1.24.0/index.html" data-version="v1.24.0">v1.24.0</a></li>
+                        <li ><a href="../../../../../v1.25.0/index.html" data-version="v1.25.0">v1.25.0</a></li>
+                        <li ><a href="../../../../../v1.26.0/index.html" data-version="v1.26.0">v1.26.0</a></li>
+                        <li ><a href="../../../../../v1.26.1/index.html" data-version="v1.26.1">v1.26.1</a></li>
+                        <li ><a href="../../../../../v1.26.2/index.html" data-version="v1.26.2">v1.26.2</a></li>
+                        <li ><a href="../../../../../v1.26.3/index.html" data-version="v1.26.3">v1.26.3</a></li>
+                        <li ><a href="../../../../../v1.27.0/index.html" data-version="v1.27.0">v1.27.0</a></li>
+                        <li ><a href="../../../../../v1.27.1/index.html" data-version="v1.27.1">v1.27.1</a></li>
+                        <li ><a href="../../../../../v1.27.2/index.html" data-version="v1.27.2">v1.27.2</a></li>
+                        <li ><a href="../../../../../v1.28.0/index.html" data-version="v1.28.0">v1.28.0</a></li>
+                        <li ><a href="../../../../../v1.28.1/index.html" data-version="v1.28.1">v1.28.1</a></li>
+                        <li ><a href="../../../../../v1.29.0/index.html" data-version="v1.29.0">v1.29.0</a></li>
+                        <li ><a href="../../../../../v1.7.1/index.html" data-version="v1.7.1">v1.7.1</a></li>
+                        <li ><a href="../../../../../v1.29.1/index.html" data-version="v1.29.1">v1.29.1</a></li>
+                        <li ><a href="../../../../../v1.8.0/index.html" data-version="v1.8.0">v1.8.0</a></li>
+                        <li class="active"><a href="../../../../../v1.9.0/index.html" data-version="v1.9.0">v1.9.0</a></li>
+                        <li ><a href="../../../../../v1.30.0/index.html" data-version="v1.30.0">v1.30.0</a></li>
+                        <li ><a href="../../../../../v1.30.1/index.html" data-version="v1.30.1">v1.30.1</a></li>
+                        <li ><a href="../../../../../v1.31.0/index.html" data-version="v1.31.0">v1.31.0</a></li>
+                        <li ><a href="../../../../../v1.32.0/index.html" data-version="v1.32.0">v1.32.0</a></li>
+                        <li ><a href="../../../../../v1.33.0/index.html" data-version="v1.33.0">v1.33.0</a></li>
+                        <li ><a href="../../../../../v1.34.0/index.html" data-version="v1.34.0">v1.34.0</a></li>
+                        <li ><a href="../../../../../v1.34.1/index.html" data-version="v1.34.1">v1.34.1</a></li>
+                        <li ><a href="../../../../../doctum/index.html" data-version="doctum">doctum</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                    <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li><a href="../../../../Google/ApiCore/LongRunning.html">LongRunning</a></li><li class="backslash">\</li><li><a href="../../../../Google/ApiCore/LongRunning/Gapic.html">Gapic</a></li><li class="backslash">\</li><li>OperationsGapicClient</li>
+            </ol>
+        </div>
+                <div id="page-content">
+    <div class="page-header">
+        <h1>OperationsGapicClient    
+            </h1>
+    </div>
+
+    
+    <p>        class
+    <strong>OperationsGapicClient</strong>        (<a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/LongRunning/Gapic/OperationsGapicClient.php">View source</a>)
+</p>
+
+        
+    
+        
+
+            <div class="description">
+            <p><p>Service Description: Manages long-running operations with an API service.</p></p>            <p><p>When an API method normally takes long time to complete, it can be designed
+to return [Operation][google.longrunning.Operation] to the client, and the client can use this
+interface to receive the real response asynchronously by polling the
+operation resource, or pass the operation resource to another API (such as
+Google Cloud Pub/Sub API) to receive the response.  Any API service that
+returns long-running operations should implement the <code>Operations</code> interface
+so developers can have a consistent client experience.</p>
+<p>EXPERIMENTAL: This client library class has not yet been declared GA (1.0). This means that
+even though we intend the surface to be stable, we may make backwards incompatible changes
+if necessary.</p>
+<p>This class provides the ability to make remote calls to the backing service through method
+calls that map to API methods. Sample code to get started:</p>
+<pre><code>$options = [
+    'apiEndpoint' =&gt; 'my-service-address',
+    'scopes' =&gt; ['my-service-scope'],
+];
+$operationsClient = new OperationsClient($options);
+try {
+    $name = '';
+    $response = $operationsClient-&gt;getOperation($name);
+} finally {
+    if (isset($operationsClient)) {
+        $operationsClient-&gt;close();
+    }
+}</code></pre></p>        </div>
+            
+                <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                    <a href="../../../../Google/ApiCore/GapicClientTrait.html"><abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a>    </div>
+                <div class="col-md-6"><p>Common functions used to work with various clients.</p></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                    <a href="../../../../Google/ApiCore/ArrayTrait.html"><abbr title="Google\ApiCore\ArrayTrait">ArrayTrait</abbr></a>    </div>
+                <div class="col-md-6"><p>Provides basic array helper methods.</p></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                    <a href="../../../../Google/ApiCore/ValidationTrait.html"><abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a>    </div>
+                <div class="col-md-6"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                    <a href="../../../../Google/ApiCore/GrpcSupportTrait.html"><abbr title="Google\ApiCore\GrpcSupportTrait">GrpcSupportTrait</abbr></a>    </div>
+                <div class="col-md-6"><p>Provides helper methods for gRPC support.</p></div>
+            </div>
+            </div>
+    
+            <h2>Constants</h2>    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                                                                                                        SERVICE_NAME
+                                    </td>
+                <td class="last">
+                    <p><em><p>The name of the service.</p></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                                                                                                        DEFAULT_SERVICE_PORT
+                                    </td>
+                <td class="last">
+                    <p><em><p>The default port of the service.</p></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                                                                                                        CODEGEN_NAME
+                                    </td>
+                <td class="last">
+                    <p><em><p>The name of the code generator, to be included in the agent header.</p></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_validate">validate</a>(array $arr, array $requiredKeys)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/ValidationTrait.html#method_validate">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_validateNotNull">validateNotNull</a>(array $arr, array $requiredKeys)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/ValidationTrait.html#method_validateNotNull">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_close">close</a>()
+        
+                                            <p><p>Initiates an orderly shutdown in which preexisting calls continue but new
+calls are immediately cancelled.</p></p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/GapicClientTrait.html#method_close">
+<abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method___construct">__construct</a>(array $options = [])
+        
+                                            <p>Constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Google\LongRunning\Operation">Operation</abbr>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getOperation">getOperation</a>(string $name, array $optionalArgs = [])
+        
+                                            <p><p>Gets the latest state of a long-running operation.  Clients can use this
+method to poll the operation result at intervals as recommended by the API
+service.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Google/ApiCore/PagedListResponse.html"><abbr title="Google\ApiCore\PagedListResponse">PagedListResponse</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_listOperations">listOperations</a>(string $name, string $filter, array $optionalArgs = [])
+        
+                                            <p><p>Lists operations that match the specified filter in the request. If the
+server doesn't support this method, it returns <code>UNIMPLEMENTED</code>.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_cancelOperation">cancelOperation</a>(string $name, array $optionalArgs = [])
+        
+                                            <p><p>Starts asynchronous cancellation on a long-running operation.  The server
+makes a best effort to cancel the operation, but success is not
+guaranteed.  If the server doesn't support this method, it returns
+<code>google.rpc.Code.UNIMPLEMENTED</code>.  Clients can use
+[Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+other methods to check whether the cancellation succeeded or whether the
+operation completed despite cancellation. On successful cancellation,
+the operation is not deleted; instead, it becomes an operation with
+an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
+corresponding to <code>Code.CANCELLED</code>.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_deleteOperation">deleteOperation</a>(string $name, array $optionalArgs = [])
+        
+                                            <p><p>Deletes a long-running operation. This method indicates that the client is
+no longer interested in the operation result. It does not cancel the
+operation. If the server doesn't support this method, it returns
+<code>google.rpc.Code.UNIMPLEMENTED</code>.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_validate">
+        <div class="location">in <a href="../../../../Google/ApiCore/ValidationTrait.html#method_validate">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/ValidationTrait.php#L41">at line 41</a></div>
+        <code>        static            array
+    <strong>validate</strong>(array $arr, array $requiredKeys)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$arr</td>
+                <td><p>Associative array</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$requiredKeys</td>
+                <td><p>List of keys to check for in $arr</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td><p>Returns $arr for fluent use</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_validateNotNull">
+        <div class="location">in <a href="../../../../Google/ApiCore/ValidationTrait.html#method_validateNotNull">
+<abbr title="Google\ApiCore\ValidationTrait">ValidationTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/ValidationTrait.php#L51">at line 51</a></div>
+        <code>        static            array
+    <strong>validateNotNull</strong>(array $arr, array $requiredKeys)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$arr</td>
+                <td><p>Associative array</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$requiredKeys</td>
+                <td><p>List of keys to check for in $arr</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td><p>Returns $arr for fluent use</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_close">
+        <div class="location">in <a href="../../../../Google/ApiCore/GapicClientTrait.html#method_close">
+<abbr title="Google\ApiCore\GapicClientTrait">GapicClientTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/GapicClientTrait.php#L89">at line 89</a></div>
+        <code>                    
+    <strong>close</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Initiates an orderly shutdown in which preexisting calls continue but new
+calls are immediately cancelled.</p></p>                        
+        </div>
+        <div class="tags">
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/LongRunning/Gapic/OperationsGapicClient.php#L181">at line 181</a></div>
+        <code>                    
+    <strong>__construct</strong>(array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p>Constructor.</p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>{
+Required. Options for configuring the service API wrapper. Those options
+that must be provided are marked as Required.</p>
+<pre><code>@type string $apiEndpoint
+      Required. The address of the API remote host. May optionally include the port,
+      formatted as "&lt;uri&gt;:&lt;port&gt;".
+@type string|array $credentials
+      The credentials to be used by the client to authorize API calls. This option
+      accepts either a path to a credentials file, or a decoded credentials file as a
+      PHP array.
+      *Advanced usage*: In addition, this option can also accept a pre-constructed
+      \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\CredentialsWrapper
+      object. Note that when one of these objects are provided, any settings in
+      $credentialsConfig will be ignored.
+@type array $credentialsConfig
+      Options used to configure credentials, including auth token caching, for the client. For
+      a full list of supporting configuration options, see
+      \Google\ApiCore\CredentialsWrapper::build.
+@type bool $disableRetries
+      Determines whether or not retries defined by the client configuration should be
+      disabled. Defaults to `false`.
+@type string|array $clientConfig
+      Client method configuration, including retry settings. This option can be either a
+      path to a JSON file, or a PHP array containing the decoded JSON data.
+      By default this settings points to the default client config file, which is provided
+      in the resources folder.
+@type string $transport
+      The transport used for executing network requests. May be either the string `rest`
+      or `grpc`. Defaults to `grpc` if gRPC support is detected on the system.
+      *Advanced usage*: Additionally, it is possible to pass in an already instantiated
+      TransportInterface object. Note that when this objects is provided, any settings in
+      $transportConfig, and any $apiEndpoint setting, will be ignored.
+@type array $transportConfig
+      Configuration options that will be used to construct the transport. Options for
+      each supported transport type should be passed in a key for that transport. For
+      example:
+      $transportConfig = [
+          'grpc' =&gt; [...],
+          'rest' =&gt; [...]
+      ];
+      See the GrpcTransport::build and RestTransport::build methods for the supported
+      options.</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOperation">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/LongRunning/Gapic/OperationsGapicClient.php#L225">at line 225</a></div>
+        <code>                    <abbr title="Google\LongRunning\Operation">Operation</abbr>
+    <strong>getOperation</strong>(string $name, array $optionalArgs = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Gets the latest state of a long-running operation.  Clients can use this
+method to poll the operation result at intervals as recommended by the API
+service.</p></p>                <p><p>Sample code:</p>
+<pre><code>$options = [
+    'apiEndpoint' =&gt; 'my-service-address',
+    'scopes' =&gt; ['my-service-scope'],
+];
+$operationsClient = new OperationsClient($options);
+try {
+    $name = '';
+    $response = $operationsClient-&gt;getOperation($name);
+} finally {
+    if (isset($operationsClient)) {
+        $operationsClient-&gt;close();
+    }
+}</code></pre></p>        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td><p>The name of the operation resource.</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$optionalArgs</td>
+                <td><p>{
+Optional.</p>
+<pre><code>@type RetrySettings|array $retrySettings
+     Retry settings to use for this call. Can be a
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} object, or an associative array
+     of retry settings parameters. See the documentation on
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} for example usage.</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Google\LongRunning\Operation">Operation</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_listOperations">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/LongRunning/Gapic/OperationsGapicClient.php#L308">at line 308</a></div>
+        <code>                    <a href="../../../../Google/ApiCore/PagedListResponse.html"><abbr title="Google\ApiCore\PagedListResponse">PagedListResponse</abbr></a>
+    <strong>listOperations</strong>(string $name, string $filter, array $optionalArgs = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Lists operations that match the specified filter in the request. If the
+server doesn't support this method, it returns <code>UNIMPLEMENTED</code>.</p></p>                <p><p>NOTE: the <code>name</code> binding below allows API services to override the binding
+to use different resource name schemes, such as <code>users/&amp;#42;/operations</code>.</p>
+<p>Sample code:</p>
+<pre><code>$options = [
+    'apiEndpoint' =&gt; 'my-service-address',
+    'scopes' =&gt; ['my-service-scope'],
+];
+$operationsClient = new OperationsClient($options);
+try {
+    $name = '';
+    $filter = '';
+    // Iterate through all elements
+    $pagedResponse = $operationsClient-&gt;listOperations($name, $filter);
+    foreach ($pagedResponse-&gt;iterateAllElements() as $element) {
+        // doSomethingWith($element);
+    }
+
+    // OR iterate over pages of elements
+    $pagedResponse = $operationsClient-&gt;listOperations($name, $filter);
+    foreach ($pagedResponse-&gt;iteratePages() as $page) {
+        foreach ($page as $element) {
+            // doSomethingWith($element);
+        }
+    }
+} finally {
+    if (isset($operationsClient)) {
+        $operationsClient-&gt;close();
+    }
+}</code></pre></p>        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td><p>The name of the operation collection.</p></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$filter</td>
+                <td><p>The standard list filter.</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$optionalArgs</td>
+                <td><p>{
+Optional.</p>
+<pre><code>@type int $pageSize
+     The maximum number of resources contained in the underlying API
+     response. The API may return fewer values in a page, even if
+     there are additional values to be retrieved.
+@type string $pageToken
+     A page token is used to specify a page of values to be returned.
+     If no page token is specified (the default), the first page
+     of values will be returned. Any page token used here must have
+     been generated by a previous call to the API.
+@type RetrySettings|array $retrySettings
+     Retry settings to use for this call. Can be a
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} object, or an associative array
+     of retry settings parameters. See the documentation on
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} for example usage.</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Google/ApiCore/PagedListResponse.html"><abbr title="Google\ApiCore\PagedListResponse">PagedListResponse</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cancelOperation">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/LongRunning/Gapic/OperationsGapicClient.php#L378">at line 378</a></div>
+        <code>                    
+    <strong>cancelOperation</strong>(string $name, array $optionalArgs = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Starts asynchronous cancellation on a long-running operation.  The server
+makes a best effort to cancel the operation, but success is not
+guaranteed.  If the server doesn't support this method, it returns
+<code>google.rpc.Code.UNIMPLEMENTED</code>.  Clients can use
+[Operations.GetOperation][google.longrunning.Operations.GetOperation] or
+other methods to check whether the cancellation succeeded or whether the
+operation completed despite cancellation. On successful cancellation,
+the operation is not deleted; instead, it becomes an operation with
+an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
+corresponding to <code>Code.CANCELLED</code>.</p></p>                <p><p>Sample code:</p>
+<pre><code>$options = [
+    'apiEndpoint' =&gt; 'my-service-address',
+    'scopes' =&gt; ['my-service-scope'],
+];
+$operationsClient = new OperationsClient($options);
+try {
+    $name = '';
+    $operationsClient-&gt;cancelOperation($name);
+} finally {
+    if (isset($operationsClient)) {
+        $operationsClient-&gt;close();
+    }
+}</code></pre></p>        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td><p>The name of the operation resource to be cancelled.</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$optionalArgs</td>
+                <td><p>{
+Optional.</p>
+<pre><code>@type RetrySettings|array $retrySettings
+     Retry settings to use for this call. Can be a
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} object, or an associative array
+     of retry settings parameters. See the documentation on
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} for example usage.</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_deleteOperation">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.9.0/src/LongRunning/Gapic/OperationsGapicClient.php#L435">at line 435</a></div>
+        <code>                    
+    <strong>deleteOperation</strong>(string $name, array $optionalArgs = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Deletes a long-running operation. This method indicates that the client is
+no longer interested in the operation result. It does not cancel the
+operation. If the server doesn't support this method, it returns
+<code>google.rpc.Code.UNIMPLEMENTED</code>.</p></p>                <p><p>Sample code:</p>
+<pre><code>$options = [
+    'apiEndpoint' =&gt; 'my-service-address',
+    'scopes' =&gt; ['my-service-scope'],
+];
+$operationsClient = new OperationsClient($options);
+try {
+    $name = '';
+    $operationsClient-&gt;deleteOperation($name);
+} finally {
+    if (isset($operationsClient)) {
+        $operationsClient-&gt;close();
+    }
+}</code></pre></p>        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td><p>The name of the operation resource to be deleted.</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$optionalArgs</td>
+                <td><p>{
+Optional.</p>
+<pre><code>@type RetrySettings|array $retrySettings
+     Retry settings to use for this call. Can be a
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} object, or an associative array
+     of retry settings parameters. See the documentation on
+     {\Google\ApiCore\LongRunning\Gapic\Google\ApiCore\RetrySettings} for example usage.</code></pre>
+<p>}</p></td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+</div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
+    </div>
+    </body>
+
+</html>

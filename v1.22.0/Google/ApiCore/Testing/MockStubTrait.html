@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\Testing\MockStubTrait | Google API Core (GAX) Reference Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../fonts/doctum-font.css">
+        <script src="../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../doctum.js"></script>
+        <script async defer src="../../../js/bootstrap.min.js"></script>
+        <script async defer src="../../../js/autocomplete.min.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_Testing_MockStubTrait" data-root-path="../../../" data-search-index-url="../../../doctum-search.json">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#">
+                <select class="form-control" id="version-switcher" name="version">
+                                            <option
+                            value="../../../../v1.9.1/index.html"
+                            data-version="v1.9.1" >v1.9.1</option>
+                                            <option
+                            value="../../../../v1.10.0/index.html"
+                            data-version="v1.10.0" >v1.10.0</option>
+                                            <option
+                            value="../../../../v1.11.0/index.html"
+                            data-version="v1.11.0" >v1.11.0</option>
+                                            <option
+                            value="../../../../v1.11.1/index.html"
+                            data-version="v1.11.1" >v1.11.1</option>
+                                            <option
+                            value="../../../../v1.11.2/index.html"
+                            data-version="v1.11.2" >v1.11.2</option>
+                                            <option
+                            value="../../../../v1.11.3/index.html"
+                            data-version="v1.11.3" >v1.11.3</option>
+                                            <option
+                            value="../../../../v1.11.4/index.html"
+                            data-version="v1.11.4" >v1.11.4</option>
+                                            <option
+                            value="../../../../v1.12.0/index.html"
+                            data-version="v1.12.0" >v1.12.0</option>
+                                            <option
+                            value="../../../../v1.12.1/index.html"
+                            data-version="v1.12.1" >v1.12.1</option>
+                                            <option
+                            value="../../../../v1.12.2/index.html"
+                            data-version="v1.12.2" >v1.12.2</option>
+                                            <option
+                            value="../../../../v1.13.0/index.html"
+                            data-version="v1.13.0" >v1.13.0</option>
+                                            <option
+                            value="../../../../v1.14.0/index.html"
+                            data-version="v1.14.0" >v1.14.0</option>
+                                            <option
+                            value="../../../../v1.15.0/index.html"
+                            data-version="v1.15.0" >v1.15.0</option>
+                                            <option
+                            value="../../../../v1.16.0/index.html"
+                            data-version="v1.16.0" >v1.16.0</option>
+                                            <option
+                            value="../../../../v1.16.1/index.html"
+                            data-version="v1.16.1" >v1.16.1</option>
+                                            <option
+                            value="../../../../v1.16.2/index.html"
+                            data-version="v1.16.2" >v1.16.2</option>
+                                            <option
+                            value="../../../../v1.16.3/index.html"
+                            data-version="v1.16.3" >v1.16.3</option>
+                                            <option
+                            value="../../../../v1.16.4/index.html"
+                            data-version="v1.16.4" >v1.16.4</option>
+                                            <option
+                            value="../../../../v1.17.0/index.html"
+                            data-version="v1.17.0" >v1.17.0</option>
+                                            <option
+                            value="../../../../v1.18.0/index.html"
+                            data-version="v1.18.0" >v1.18.0</option>
+                                            <option
+                            value="../../../../v1.18.1/index.html"
+                            data-version="v1.18.1" >v1.18.1</option>
+                                            <option
+                            value="../../../../v1.18.2/index.html"
+                            data-version="v1.18.2" >v1.18.2</option>
+                                            <option
+                            value="../../../../v1.19.0/index.html"
+                            data-version="v1.19.0" >v1.19.0</option>
+                                            <option
+                            value="../../../../v1.19.1/index.html"
+                            data-version="v1.19.1" >v1.19.1</option>
+                                            <option
+                            value="../../../../v1.20.0/index.html"
+                            data-version="v1.20.0" >v1.20.0</option>
+                                            <option
+                            value="../../../../v1.20.1/index.html"
+                            data-version="v1.20.1" >v1.20.1</option>
+                                            <option
+                            value="../../../../v1.20.2/index.html"
+                            data-version="v1.20.2" >v1.20.2</option>
+                                            <option
+                            value="../../../../v1.21.0/index.html"
+                            data-version="v1.21.0" >v1.21.0</option>
+                                            <option
+                            value="../../../../v1.21.1/index.html"
+                            data-version="v1.21.1" >v1.21.1</option>
+                                            <option
+                            value="../../../../v1.22.0/index.html"
+                            data-version="v1.22.0" selected>v1.22.0</option>
+                                            <option
+                            value="../../../../v1.22.1/index.html"
+                            data-version="v1.22.1" >v1.22.1</option>
+                                            <option
+                            value="../../../../v1.23.0/index.html"
+                            data-version="v1.23.0" >v1.23.0</option>
+                                            <option
+                            value="../../../../v1.24.0/index.html"
+                            data-version="v1.24.0" >v1.24.0</option>
+                                            <option
+                            value="../../../../v1.25.0/index.html"
+                            data-version="v1.25.0" >v1.25.0</option>
+                                            <option
+                            value="../../../../v1.26.0/index.html"
+                            data-version="v1.26.0" >v1.26.0</option>
+                                            <option
+                            value="../../../../v1.26.1/index.html"
+                            data-version="v1.26.1" >v1.26.1</option>
+                                            <option
+                            value="../../../../v1.26.2/index.html"
+                            data-version="v1.26.2" >v1.26.2</option>
+                                            <option
+                            value="../../../../v1.26.3/index.html"
+                            data-version="v1.26.3" >v1.26.3</option>
+                                            <option
+                            value="../../../../v1.27.0/index.html"
+                            data-version="v1.27.0" >v1.27.0</option>
+                                            <option
+                            value="../../../../v1.27.1/index.html"
+                            data-version="v1.27.1" >v1.27.1</option>
+                                            <option
+                            value="../../../../v1.27.2/index.html"
+                            data-version="v1.27.2" >v1.27.2</option>
+                                            <option
+                            value="../../../../v1.28.0/index.html"
+                            data-version="v1.28.0" >v1.28.0</option>
+                                            <option
+                            value="../../../../v1.28.1/index.html"
+                            data-version="v1.28.1" >v1.28.1</option>
+                                            <option
+                            value="../../../../v1.29.0/index.html"
+                            data-version="v1.29.0" >v1.29.0</option>
+                                            <option
+                            value="../../../../v1.7.1/index.html"
+                            data-version="v1.7.1" >v1.7.1</option>
+                                            <option
+                            value="../../../../v1.29.1/index.html"
+                            data-version="v1.29.1" >v1.29.1</option>
+                                            <option
+                            value="../../../../v1.8.0/index.html"
+                            data-version="v1.8.0" >v1.8.0</option>
+                                            <option
+                            value="../../../../v1.9.0/index.html"
+                            data-version="v1.9.0" >v1.9.0</option>
+                                            <option
+                            value="../../../../v1.30.0/index.html"
+                            data-version="v1.30.0" >v1.30.0</option>
+                                            <option
+                            value="../../../../v1.30.1/index.html"
+                            data-version="v1.30.1" >v1.30.1</option>
+                                            <option
+                            value="../../../../v1.31.0/index.html"
+                            data-version="v1.31.0" >v1.31.0</option>
+                                            <option
+                            value="../../../../v1.32.0/index.html"
+                            data-version="v1.32.0" >v1.32.0</option>
+                                            <option
+                            value="../../../../v1.33.0/index.html"
+                            data-version="v1.33.0" >v1.33.0</option>
+                                            <option
+                            value="../../../../v1.34.0/index.html"
+                            data-version="v1.34.0" >v1.34.0</option>
+                                            <option
+                            value="../../../../v1.34.1/index.html"
+                            data-version="v1.34.1" >v1.34.1</option>
+                                            <option
+                            value="../../../../doctum/index.html"
+                            data-version="doctum" >doctum</option>
+                                    </select>
+            </form>
+                <div class="search-bar hidden" id="search-progress-bar-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="search-progress-bar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <form id="search-form" action="../../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   id="doctum-search-auto-complete"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search"
+                   spellcheck="false"
+                   autocorrect="off"
+                   autocomplete="off"
+                   autocapitalize="off">
+            <div class="auto-complete-results" id="auto-complete-results"></div>
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Google API Core (GAX) Reference Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                                        <li role="presentation" class="dropdown visible-xs-block visible-sm-block">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="true" aria-expanded="false">Versions&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li ><a href="../../../../v1.9.1/index.html" data-version="v1.9.1">v1.9.1</a></li>
+                        <li ><a href="../../../../v1.10.0/index.html" data-version="v1.10.0">v1.10.0</a></li>
+                        <li ><a href="../../../../v1.11.0/index.html" data-version="v1.11.0">v1.11.0</a></li>
+                        <li ><a href="../../../../v1.11.1/index.html" data-version="v1.11.1">v1.11.1</a></li>
+                        <li ><a href="../../../../v1.11.2/index.html" data-version="v1.11.2">v1.11.2</a></li>
+                        <li ><a href="../../../../v1.11.3/index.html" data-version="v1.11.3">v1.11.3</a></li>
+                        <li ><a href="../../../../v1.11.4/index.html" data-version="v1.11.4">v1.11.4</a></li>
+                        <li ><a href="../../../../v1.12.0/index.html" data-version="v1.12.0">v1.12.0</a></li>
+                        <li ><a href="../../../../v1.12.1/index.html" data-version="v1.12.1">v1.12.1</a></li>
+                        <li ><a href="../../../../v1.12.2/index.html" data-version="v1.12.2">v1.12.2</a></li>
+                        <li ><a href="../../../../v1.13.0/index.html" data-version="v1.13.0">v1.13.0</a></li>
+                        <li ><a href="../../../../v1.14.0/index.html" data-version="v1.14.0">v1.14.0</a></li>
+                        <li ><a href="../../../../v1.15.0/index.html" data-version="v1.15.0">v1.15.0</a></li>
+                        <li ><a href="../../../../v1.16.0/index.html" data-version="v1.16.0">v1.16.0</a></li>
+                        <li ><a href="../../../../v1.16.1/index.html" data-version="v1.16.1">v1.16.1</a></li>
+                        <li ><a href="../../../../v1.16.2/index.html" data-version="v1.16.2">v1.16.2</a></li>
+                        <li ><a href="../../../../v1.16.3/index.html" data-version="v1.16.3">v1.16.3</a></li>
+                        <li ><a href="../../../../v1.16.4/index.html" data-version="v1.16.4">v1.16.4</a></li>
+                        <li ><a href="../../../../v1.17.0/index.html" data-version="v1.17.0">v1.17.0</a></li>
+                        <li ><a href="../../../../v1.18.0/index.html" data-version="v1.18.0">v1.18.0</a></li>
+                        <li ><a href="../../../../v1.18.1/index.html" data-version="v1.18.1">v1.18.1</a></li>
+                        <li ><a href="../../../../v1.18.2/index.html" data-version="v1.18.2">v1.18.2</a></li>
+                        <li ><a href="../../../../v1.19.0/index.html" data-version="v1.19.0">v1.19.0</a></li>
+                        <li ><a href="../../../../v1.19.1/index.html" data-version="v1.19.1">v1.19.1</a></li>
+                        <li ><a href="../../../../v1.20.0/index.html" data-version="v1.20.0">v1.20.0</a></li>
+                        <li ><a href="../../../../v1.20.1/index.html" data-version="v1.20.1">v1.20.1</a></li>
+                        <li ><a href="../../../../v1.20.2/index.html" data-version="v1.20.2">v1.20.2</a></li>
+                        <li ><a href="../../../../v1.21.0/index.html" data-version="v1.21.0">v1.21.0</a></li>
+                        <li ><a href="../../../../v1.21.1/index.html" data-version="v1.21.1">v1.21.1</a></li>
+                        <li class="active"><a href="../../../../v1.22.0/index.html" data-version="v1.22.0">v1.22.0</a></li>
+                        <li ><a href="../../../../v1.22.1/index.html" data-version="v1.22.1">v1.22.1</a></li>
+                        <li ><a href="../../../../v1.23.0/index.html" data-version="v1.23.0">v1.23.0</a></li>
+                        <li ><a href="../../../../v1.24.0/index.html" data-version="v1.24.0">v1.24.0</a></li>
+                        <li ><a href="../../../../v1.25.0/index.html" data-version="v1.25.0">v1.25.0</a></li>
+                        <li ><a href="../../../../v1.26.0/index.html" data-version="v1.26.0">v1.26.0</a></li>
+                        <li ><a href="../../../../v1.26.1/index.html" data-version="v1.26.1">v1.26.1</a></li>
+                        <li ><a href="../../../../v1.26.2/index.html" data-version="v1.26.2">v1.26.2</a></li>
+                        <li ><a href="../../../../v1.26.3/index.html" data-version="v1.26.3">v1.26.3</a></li>
+                        <li ><a href="../../../../v1.27.0/index.html" data-version="v1.27.0">v1.27.0</a></li>
+                        <li ><a href="../../../../v1.27.1/index.html" data-version="v1.27.1">v1.27.1</a></li>
+                        <li ><a href="../../../../v1.27.2/index.html" data-version="v1.27.2">v1.27.2</a></li>
+                        <li ><a href="../../../../v1.28.0/index.html" data-version="v1.28.0">v1.28.0</a></li>
+                        <li ><a href="../../../../v1.28.1/index.html" data-version="v1.28.1">v1.28.1</a></li>
+                        <li ><a href="../../../../v1.29.0/index.html" data-version="v1.29.0">v1.29.0</a></li>
+                        <li ><a href="../../../../v1.7.1/index.html" data-version="v1.7.1">v1.7.1</a></li>
+                        <li ><a href="../../../../v1.29.1/index.html" data-version="v1.29.1">v1.29.1</a></li>
+                        <li ><a href="../../../../v1.8.0/index.html" data-version="v1.8.0">v1.8.0</a></li>
+                        <li ><a href="../../../../v1.9.0/index.html" data-version="v1.9.0">v1.9.0</a></li>
+                        <li ><a href="../../../../v1.30.0/index.html" data-version="v1.30.0">v1.30.0</a></li>
+                        <li ><a href="../../../../v1.30.1/index.html" data-version="v1.30.1">v1.30.1</a></li>
+                        <li ><a href="../../../../v1.31.0/index.html" data-version="v1.31.0">v1.31.0</a></li>
+                        <li ><a href="../../../../v1.32.0/index.html" data-version="v1.32.0">v1.32.0</a></li>
+                        <li ><a href="../../../../v1.33.0/index.html" data-version="v1.33.0">v1.33.0</a></li>
+                        <li ><a href="../../../../v1.34.0/index.html" data-version="v1.34.0">v1.34.0</a></li>
+                        <li ><a href="../../../../v1.34.1/index.html" data-version="v1.34.1">v1.34.1</a></li>
+                        <li ><a href="../../../../doctum/index.html" data-version="doctum">doctum</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../classes.html">Classes</a></li>
+                    <li><a href="../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">trait</span></li>
+                        <li><a href="../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li><a href="../../../Google/ApiCore/Testing.html">Testing</a></li><li class="backslash">\</li><li>MockStubTrait</li>
+            </ol>
+        </div>
+                <div id="page-content">
+    <div class="page-header">
+        <h1>MockStubTrait    
+            </h1>
+    </div>
+
+    
+    <p>        trait
+    <strong>MockStubTrait</strong>        (<a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php">View source</a>)
+</p>
+
+        
+    
+                        <table>
+            <tr>
+                <td><span class="label label-warning">internal</span></td>
+                <td>&nbsp; </td>
+            </tr>
+        </table>
+                &nbsp;
+    
+
+            <div class="description">
+            <p><p>The MockStubTrait is used by generated mock stub classes which extent \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+It provides functionality to add responses, get received calls, and overrides the _simpleRequest
+method so that the elements of $responses are returned instead of making a call to the API.</p></p>                    </div>
+            
+        
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method___construct">__construct</a>(callable $deserialize = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method__simpleRequest">_simpleRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p><p>Overrides the _simpleRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockUnaryCall object that will return the first item from $responses</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method__clientStreamRequest">_clientStreamRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p><p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockClientStreamingCall object that will return the first item from $responses</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method__serverStreamRequest">_serverStreamRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p><p>Overrides the _serverStreamRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockServerStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method__bidiRequest">_bidiRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        
+                                            <p><p>Overrides the _bidiRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockBidiStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_stripStatusFromResponses">stripStatusFromResponses</a>($responses)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_addResponse">addResponse</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null)
+        
+                                            <p><p>Add a response object, and an optional status, to the list of responses to be returned via
+_simpleRequest.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_setStreamingStatus">setStreamingStatus</a>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
+        
+                                            <p><p>Set the status object to be used when creating streaming calls.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_popReceivedCalls">popReceivedCalls</a>()
+        
+                                            <p><p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getReceivedCallCount">getReceivedCallCount</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_popCallObjects">popCallObjects</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_isExhausted">isExhausted</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_create">create</a>(mixed $responseObject, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null, callable $deserialize = null)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_createWithResponseSequence">createWithResponseSequence</a>(array $sequence, callable $deserialize = null, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $finalStatus = null)
+        
+                                            <p><p>Creates a sequence such that the responses are returned in order.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L55">at line 55</a></div>
+        <code>                    
+    <strong>__construct</strong>(callable $deserialize = null)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__simpleRequest">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L71">at line 71</a></div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a>
+    <strong>_simpleRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Overrides the _simpleRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockUnaryCall object that will return the first item from $responses</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td><p>The API method name to be called</p></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$argument</td>
+                <td><p>The request object to the API method</p></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td><p>A function to deserialize the response object</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockUnaryCall.html"><abbr title="Google\ApiCore\Testing\MockUnaryCall">MockUnaryCall</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__clientStreamRequest">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L101">at line 101</a></div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a>
+    <strong>_clientStreamRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockClientStreamingCall object that will return the first item from $responses</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td><p>The name of the method to call</p></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td><p>A function that deserializes the responses</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td><p>A metadata map to send to the server
+(optional)</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>An array of options (optional)</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockClientStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockClientStreamingCall">MockClientStreamingCall</abbr></a></td>
+            <td><p>The active call object</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__serverStreamRequest">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L132">at line 132</a></div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a>
+    <strong>_serverStreamRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Overrides the _serverStreamRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockServerStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td><p>The name of the method to call</p></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$argument</td>
+                <td><p>The argument to the method</p></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td><p>A function that deserializes the responses</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td><p>A metadata map to send to the server
+(optional)</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>An array of options (optional)</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockServerStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockServerStreamingCall">MockServerStreamingCall</abbr></a></td>
+            <td><p>The active call object</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method__bidiRequest">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L168">at line 168</a></div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a>
+    <strong>_bidiRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Overrides the _bidiRequest method in \Grpc\BaseStub
+(<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
+Returns a MockBidiStreamingCall object that will stream items from $responses, and return
+a final status of $serverStreamingStatus.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td><p>The name of the method to call</p></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td><p>A function that deserializes the responses</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$metadata</td>
+                <td><p>A metadata map to send to the server
+(optional)</p></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td><p>An array of options (optional)</p></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockBidiStreamingCall.html"><abbr title="Google\ApiCore\Testing\MockBidiStreamingCall">MockBidiStreamingCall</abbr></a></td>
+            <td><p>The active call object</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_stripStatusFromResponses">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L183">at line 183</a></div>
+        <code>        static            
+    <strong>stripStatusFromResponses</strong>($responses)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$responses</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_addResponse">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L199">at line 199</a></div>
+        <code>                    
+    <strong>addResponse</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Add a response object, and an optional status, to the list of responses to be returned via
+_simpleRequest.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$response</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a></td>
+                <td>$status</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setStreamingStatus">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L216">at line 216</a></div>
+        <code>                    
+    <strong>setStreamingStatus</strong>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Set the status object to be used when creating streaming calls.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a></td>
+                <td>$status</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_popReceivedCalls">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L226">at line 226</a></div>
+        <code>                    <a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]
+    <strong>popReceivedCalls</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/ReceivedRequest.html"><abbr title="Google\ApiCore\Testing\ReceivedRequest">ReceivedRequest</abbr></a>[]</td>
+            <td><p>An array of received requests</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getReceivedCallCount">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L236">at line 236</a></div>
+        <code>                    int
+    <strong>getReceivedCallCount</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td><p>The number of calls received.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_popCallObjects">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L244">at line 244</a></div>
+        <code>                    array
+    <strong>popCallObjects</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td><p>The call objects created by calls to the stub</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isExhausted">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L254">at line 254</a></div>
+        <code>                    bool
+    <strong>isExhausted</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td><p>True if $receivedFuncCalls and $response are empty.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L266">at line 266</a></div>
+        <code>        static            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+    <strong>create</strong>(mixed $responseObject, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null, callable $deserialize = null)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed</td>
+                <td>$responseObject</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a></td>
+                <td>$status</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></td>
+            <td><p>An instance of the current class type.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createWithResponseSequence">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.22.0/src/Testing/MockStubTrait.php#L280">at line 280</a></div>
+        <code>        static            <a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a>
+    <strong>createWithResponseSequence</strong>(array $sequence, callable $deserialize = null, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $finalStatus = null)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Creates a sequence such that the responses are returned in order.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$sequence</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$deserialize</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a></td>
+                <td>$finalStatus</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Google/ApiCore/Testing/MockStubTrait.html"><abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></td>
+            <td><p>An instance of the current class type.</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+</div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
+    </div>
+    </body>
+
+</html>

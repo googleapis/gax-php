@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\Page | Google API Core (GAX) Reference Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/doctum-font.css">
+        <script src="../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../doctum.js"></script>
+        <script async defer src="../../js/bootstrap.min.js"></script>
+        <script async defer src="../../js/autocomplete.min.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_Page" data-root-path="../../" data-search-index-url="../../doctum-search.json">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#">
+                <select class="form-control" id="version-switcher" name="version">
+                                            <option
+                            value="../../../v1.9.1/index.html"
+                            data-version="v1.9.1" >v1.9.1</option>
+                                            <option
+                            value="../../../v1.10.0/index.html"
+                            data-version="v1.10.0" >v1.10.0</option>
+                                            <option
+                            value="../../../v1.11.0/index.html"
+                            data-version="v1.11.0" >v1.11.0</option>
+                                            <option
+                            value="../../../v1.11.1/index.html"
+                            data-version="v1.11.1" >v1.11.1</option>
+                                            <option
+                            value="../../../v1.11.2/index.html"
+                            data-version="v1.11.2" >v1.11.2</option>
+                                            <option
+                            value="../../../v1.11.3/index.html"
+                            data-version="v1.11.3" >v1.11.3</option>
+                                            <option
+                            value="../../../v1.11.4/index.html"
+                            data-version="v1.11.4" >v1.11.4</option>
+                                            <option
+                            value="../../../v1.12.0/index.html"
+                            data-version="v1.12.0" >v1.12.0</option>
+                                            <option
+                            value="../../../v1.12.1/index.html"
+                            data-version="v1.12.1" >v1.12.1</option>
+                                            <option
+                            value="../../../v1.12.2/index.html"
+                            data-version="v1.12.2" >v1.12.2</option>
+                                            <option
+                            value="../../../v1.13.0/index.html"
+                            data-version="v1.13.0" >v1.13.0</option>
+                                            <option
+                            value="../../../v1.14.0/index.html"
+                            data-version="v1.14.0" >v1.14.0</option>
+                                            <option
+                            value="../../../v1.15.0/index.html"
+                            data-version="v1.15.0" selected>v1.15.0</option>
+                                            <option
+                            value="../../../v1.16.0/index.html"
+                            data-version="v1.16.0" >v1.16.0</option>
+                                            <option
+                            value="../../../v1.16.1/index.html"
+                            data-version="v1.16.1" >v1.16.1</option>
+                                            <option
+                            value="../../../v1.16.2/index.html"
+                            data-version="v1.16.2" >v1.16.2</option>
+                                            <option
+                            value="../../../v1.16.3/index.html"
+                            data-version="v1.16.3" >v1.16.3</option>
+                                            <option
+                            value="../../../v1.16.4/index.html"
+                            data-version="v1.16.4" >v1.16.4</option>
+                                            <option
+                            value="../../../v1.17.0/index.html"
+                            data-version="v1.17.0" >v1.17.0</option>
+                                            <option
+                            value="../../../v1.18.0/index.html"
+                            data-version="v1.18.0" >v1.18.0</option>
+                                            <option
+                            value="../../../v1.18.1/index.html"
+                            data-version="v1.18.1" >v1.18.1</option>
+                                            <option
+                            value="../../../v1.18.2/index.html"
+                            data-version="v1.18.2" >v1.18.2</option>
+                                            <option
+                            value="../../../v1.19.0/index.html"
+                            data-version="v1.19.0" >v1.19.0</option>
+                                            <option
+                            value="../../../v1.19.1/index.html"
+                            data-version="v1.19.1" >v1.19.1</option>
+                                            <option
+                            value="../../../v1.20.0/index.html"
+                            data-version="v1.20.0" >v1.20.0</option>
+                                            <option
+                            value="../../../v1.20.1/index.html"
+                            data-version="v1.20.1" >v1.20.1</option>
+                                            <option
+                            value="../../../v1.20.2/index.html"
+                            data-version="v1.20.2" >v1.20.2</option>
+                                            <option
+                            value="../../../v1.21.0/index.html"
+                            data-version="v1.21.0" >v1.21.0</option>
+                                            <option
+                            value="../../../v1.21.1/index.html"
+                            data-version="v1.21.1" >v1.21.1</option>
+                                            <option
+                            value="../../../v1.22.0/index.html"
+                            data-version="v1.22.0" >v1.22.0</option>
+                                            <option
+                            value="../../../v1.22.1/index.html"
+                            data-version="v1.22.1" >v1.22.1</option>
+                                            <option
+                            value="../../../v1.23.0/index.html"
+                            data-version="v1.23.0" >v1.23.0</option>
+                                            <option
+                            value="../../../v1.24.0/index.html"
+                            data-version="v1.24.0" >v1.24.0</option>
+                                            <option
+                            value="../../../v1.25.0/index.html"
+                            data-version="v1.25.0" >v1.25.0</option>
+                                            <option
+                            value="../../../v1.26.0/index.html"
+                            data-version="v1.26.0" >v1.26.0</option>
+                                            <option
+                            value="../../../v1.26.1/index.html"
+                            data-version="v1.26.1" >v1.26.1</option>
+                                            <option
+                            value="../../../v1.26.2/index.html"
+                            data-version="v1.26.2" >v1.26.2</option>
+                                            <option
+                            value="../../../v1.26.3/index.html"
+                            data-version="v1.26.3" >v1.26.3</option>
+                                            <option
+                            value="../../../v1.27.0/index.html"
+                            data-version="v1.27.0" >v1.27.0</option>
+                                            <option
+                            value="../../../v1.27.1/index.html"
+                            data-version="v1.27.1" >v1.27.1</option>
+                                            <option
+                            value="../../../v1.27.2/index.html"
+                            data-version="v1.27.2" >v1.27.2</option>
+                                            <option
+                            value="../../../v1.28.0/index.html"
+                            data-version="v1.28.0" >v1.28.0</option>
+                                            <option
+                            value="../../../v1.28.1/index.html"
+                            data-version="v1.28.1" >v1.28.1</option>
+                                            <option
+                            value="../../../v1.29.0/index.html"
+                            data-version="v1.29.0" >v1.29.0</option>
+                                            <option
+                            value="../../../v1.7.1/index.html"
+                            data-version="v1.7.1" >v1.7.1</option>
+                                            <option
+                            value="../../../v1.29.1/index.html"
+                            data-version="v1.29.1" >v1.29.1</option>
+                                            <option
+                            value="../../../v1.8.0/index.html"
+                            data-version="v1.8.0" >v1.8.0</option>
+                                            <option
+                            value="../../../v1.9.0/index.html"
+                            data-version="v1.9.0" >v1.9.0</option>
+                                            <option
+                            value="../../../v1.30.0/index.html"
+                            data-version="v1.30.0" >v1.30.0</option>
+                                            <option
+                            value="../../../v1.30.1/index.html"
+                            data-version="v1.30.1" >v1.30.1</option>
+                                            <option
+                            value="../../../v1.31.0/index.html"
+                            data-version="v1.31.0" >v1.31.0</option>
+                                            <option
+                            value="../../../v1.32.0/index.html"
+                            data-version="v1.32.0" >v1.32.0</option>
+                                            <option
+                            value="../../../v1.33.0/index.html"
+                            data-version="v1.33.0" >v1.33.0</option>
+                                            <option
+                            value="../../../v1.34.0/index.html"
+                            data-version="v1.34.0" >v1.34.0</option>
+                                            <option
+                            value="../../../v1.34.1/index.html"
+                            data-version="v1.34.1" >v1.34.1</option>
+                                            <option
+                            value="../../../doctum/index.html"
+                            data-version="doctum" >doctum</option>
+                                    </select>
+            </form>
+                <div class="search-bar hidden" id="search-progress-bar-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="search-progress-bar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <form id="search-form" action="../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   id="doctum-search-auto-complete"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search"
+                   spellcheck="false"
+                   autocorrect="off"
+                   autocomplete="off"
+                   autocapitalize="off">
+            <div class="auto-complete-results" id="auto-complete-results"></div>
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Google API Core (GAX) Reference Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                                        <li role="presentation" class="dropdown visible-xs-block visible-sm-block">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="true" aria-expanded="false">Versions&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li ><a href="../../../v1.9.1/index.html" data-version="v1.9.1">v1.9.1</a></li>
+                        <li ><a href="../../../v1.10.0/index.html" data-version="v1.10.0">v1.10.0</a></li>
+                        <li ><a href="../../../v1.11.0/index.html" data-version="v1.11.0">v1.11.0</a></li>
+                        <li ><a href="../../../v1.11.1/index.html" data-version="v1.11.1">v1.11.1</a></li>
+                        <li ><a href="../../../v1.11.2/index.html" data-version="v1.11.2">v1.11.2</a></li>
+                        <li ><a href="../../../v1.11.3/index.html" data-version="v1.11.3">v1.11.3</a></li>
+                        <li ><a href="../../../v1.11.4/index.html" data-version="v1.11.4">v1.11.4</a></li>
+                        <li ><a href="../../../v1.12.0/index.html" data-version="v1.12.0">v1.12.0</a></li>
+                        <li ><a href="../../../v1.12.1/index.html" data-version="v1.12.1">v1.12.1</a></li>
+                        <li ><a href="../../../v1.12.2/index.html" data-version="v1.12.2">v1.12.2</a></li>
+                        <li ><a href="../../../v1.13.0/index.html" data-version="v1.13.0">v1.13.0</a></li>
+                        <li ><a href="../../../v1.14.0/index.html" data-version="v1.14.0">v1.14.0</a></li>
+                        <li class="active"><a href="../../../v1.15.0/index.html" data-version="v1.15.0">v1.15.0</a></li>
+                        <li ><a href="../../../v1.16.0/index.html" data-version="v1.16.0">v1.16.0</a></li>
+                        <li ><a href="../../../v1.16.1/index.html" data-version="v1.16.1">v1.16.1</a></li>
+                        <li ><a href="../../../v1.16.2/index.html" data-version="v1.16.2">v1.16.2</a></li>
+                        <li ><a href="../../../v1.16.3/index.html" data-version="v1.16.3">v1.16.3</a></li>
+                        <li ><a href="../../../v1.16.4/index.html" data-version="v1.16.4">v1.16.4</a></li>
+                        <li ><a href="../../../v1.17.0/index.html" data-version="v1.17.0">v1.17.0</a></li>
+                        <li ><a href="../../../v1.18.0/index.html" data-version="v1.18.0">v1.18.0</a></li>
+                        <li ><a href="../../../v1.18.1/index.html" data-version="v1.18.1">v1.18.1</a></li>
+                        <li ><a href="../../../v1.18.2/index.html" data-version="v1.18.2">v1.18.2</a></li>
+                        <li ><a href="../../../v1.19.0/index.html" data-version="v1.19.0">v1.19.0</a></li>
+                        <li ><a href="../../../v1.19.1/index.html" data-version="v1.19.1">v1.19.1</a></li>
+                        <li ><a href="../../../v1.20.0/index.html" data-version="v1.20.0">v1.20.0</a></li>
+                        <li ><a href="../../../v1.20.1/index.html" data-version="v1.20.1">v1.20.1</a></li>
+                        <li ><a href="../../../v1.20.2/index.html" data-version="v1.20.2">v1.20.2</a></li>
+                        <li ><a href="../../../v1.21.0/index.html" data-version="v1.21.0">v1.21.0</a></li>
+                        <li ><a href="../../../v1.21.1/index.html" data-version="v1.21.1">v1.21.1</a></li>
+                        <li ><a href="../../../v1.22.0/index.html" data-version="v1.22.0">v1.22.0</a></li>
+                        <li ><a href="../../../v1.22.1/index.html" data-version="v1.22.1">v1.22.1</a></li>
+                        <li ><a href="../../../v1.23.0/index.html" data-version="v1.23.0">v1.23.0</a></li>
+                        <li ><a href="../../../v1.24.0/index.html" data-version="v1.24.0">v1.24.0</a></li>
+                        <li ><a href="../../../v1.25.0/index.html" data-version="v1.25.0">v1.25.0</a></li>
+                        <li ><a href="../../../v1.26.0/index.html" data-version="v1.26.0">v1.26.0</a></li>
+                        <li ><a href="../../../v1.26.1/index.html" data-version="v1.26.1">v1.26.1</a></li>
+                        <li ><a href="../../../v1.26.2/index.html" data-version="v1.26.2">v1.26.2</a></li>
+                        <li ><a href="../../../v1.26.3/index.html" data-version="v1.26.3">v1.26.3</a></li>
+                        <li ><a href="../../../v1.27.0/index.html" data-version="v1.27.0">v1.27.0</a></li>
+                        <li ><a href="../../../v1.27.1/index.html" data-version="v1.27.1">v1.27.1</a></li>
+                        <li ><a href="../../../v1.27.2/index.html" data-version="v1.27.2">v1.27.2</a></li>
+                        <li ><a href="../../../v1.28.0/index.html" data-version="v1.28.0">v1.28.0</a></li>
+                        <li ><a href="../../../v1.28.1/index.html" data-version="v1.28.1">v1.28.1</a></li>
+                        <li ><a href="../../../v1.29.0/index.html" data-version="v1.29.0">v1.29.0</a></li>
+                        <li ><a href="../../../v1.7.1/index.html" data-version="v1.7.1">v1.7.1</a></li>
+                        <li ><a href="../../../v1.29.1/index.html" data-version="v1.29.1">v1.29.1</a></li>
+                        <li ><a href="../../../v1.8.0/index.html" data-version="v1.8.0">v1.8.0</a></li>
+                        <li ><a href="../../../v1.9.0/index.html" data-version="v1.9.0">v1.9.0</a></li>
+                        <li ><a href="../../../v1.30.0/index.html" data-version="v1.30.0">v1.30.0</a></li>
+                        <li ><a href="../../../v1.30.1/index.html" data-version="v1.30.1">v1.30.1</a></li>
+                        <li ><a href="../../../v1.31.0/index.html" data-version="v1.31.0">v1.31.0</a></li>
+                        <li ><a href="../../../v1.32.0/index.html" data-version="v1.32.0">v1.32.0</a></li>
+                        <li ><a href="../../../v1.33.0/index.html" data-version="v1.33.0">v1.33.0</a></li>
+                        <li ><a href="../../../v1.34.0/index.html" data-version="v1.34.0">v1.34.0</a></li>
+                        <li ><a href="../../../v1.34.1/index.html" data-version="v1.34.1">v1.34.1</a></li>
+                        <li ><a href="../../../doctum/index.html" data-version="doctum">doctum</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../classes.html">Classes</a></li>
+                    <li><a href="../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li>Page</li>
+            </ol>
+        </div>
+                <div id="page-content">
+    <div class="page-header">
+        <h1>Page    
+            </h1>
+    </div>
+
+    
+    <p>        class
+    <strong>Page</strong>        implements        <a target="_blank" rel="noopener" href="https://www.php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php">View source</a>)
+</p>
+
+        
+    
+        
+
+            <div class="description">
+            <p><p>A Page object wraps an API list method response and provides methods
+to retrieve additional pages using the page token.</p></p>                    </div>
+            
+        
+            <h2>Constants</h2>    <table class="table table-condensed">
+                    <tr>
+                <td>
+                                                                                                                        FINAL_PAGE_TOKEN
+                                    </td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method___construct">__construct</a>(<a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options, callable $callable, <a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a> $pageStreamingDescriptor, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response)
+        
+                                            <p><p>Page constructor.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_hasNextPage">hasNextPage</a>()
+        
+                                            <p><p>Returns true if there are more pages that can be retrieved from the
+API.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getNextPageToken">getNextPageToken</a>()
+        
+                                            <p><p>Returns the next page token from the response.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getNextPage">getNextPage</a>(int|null $pageSize = null)
+        
+                                            <p><p>Retrieves the next Page object using the next page token.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getPageElementCount">getPageElementCount</a>()
+        
+                                            <p><p>Return the number of elements in the response.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getIterator">getIterator</a>()
+        
+                                            <p><p>Return an iterator over the elements in the response.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_iteratePages">iteratePages</a>()
+        
+                                            <p><p>Return an iterator over Page objects, beginning with this object.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getRequestObject">getRequestObject</a>()
+        
+                                            <p><p>Gets the request object used to generate the Page.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getResponseObject">getResponseObject</a>()
+        
+                                            <p><p>Gets the API response object.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_expandToFixedSizeCollection">expandToFixedSizeCollection</a>(int $collectionSize)
+        
+                                            <p><p>Returns a collection of elements with a fixed size set by
+the collectionSize parameter. The collection will only contain
+fewer than collectionSize elements if there are no more
+pages to be retrieved from the server.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L65">at line 65</a></div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options, callable $callable, <a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a> $pageStreamingDescriptor, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Page constructor.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a></td>
+                <td>$call</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$callable</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/PageStreamingDescriptor.html"><abbr title="Google\ApiCore\PageStreamingDescriptor">PageStreamingDescriptor</abbr></a></td>
+                <td>$pageStreamingDescriptor</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+                <td>$response</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasNextPage">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L88">at line 88</a></div>
+        <code>                    bool
+    <strong>hasNextPage</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Returns true if there are more pages that can be retrieved from the
+API.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNextPageToken">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L98">at line 98</a></div>
+        <code>                    string
+    <strong>getNextPageToken</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Returns the next page token from the response.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNextPage">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L113">at line 113</a></div>
+        <code>                    <a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>
+    <strong>getNextPage</strong>(int|null $pageSize = null)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Retrieves the next Page object using the next page token.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int|null</td>
+                <td>$pageSize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPageElementCount">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L162">at line 162</a></div>
+        <code>                    int
+    <strong>getPageElementCount</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Return the number of elements in the response.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIterator">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L173">at line 173</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>
+    <strong>getIterator</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Return an iterator over the elements in the response.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_iteratePages">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L196">at line 196</a></div>
+        <code>                    <a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]
+    <strong>iteratePages</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Return an iterator over Page objects, beginning with this object.</p></p>                <p><p>Additional Page objects are retrieved lazily via API calls until
+all elements have been retrieved.</p></p>        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" rel="noopener" href="https://www.php.net/Generator">Generator</a>|<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Google/ApiCore/ApiException.html"><abbr title="Google\ApiCore\ApiException">ApiException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRequestObject">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L211">at line 211</a></div>
+        <code>                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+    <strong>getRequestObject</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Gets the request object used to generate the Page.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResponseObject">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L221">at line 221</a></div>
+        <code>                    mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr>
+    <strong>getResponseObject</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Gets the API response object.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed|<abbr title="Google\Protobuf\Internal\Message">Message</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_expandToFixedSizeCollection">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.15.0/src/Page.php#L242">at line 242</a></div>
+        <code>                    <a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a>
+    <strong>expandToFixedSizeCollection</strong>(int $collectionSize)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Returns a collection of elements with a fixed size set by
+the collectionSize parameter. The collection will only contain
+fewer than collectionSize elements if there are no more
+pages to be retrieved from the server.</p></p>                <p><p>NOTE: it is an error to call this method if an optional parameter
+to set the page size is not supported or has not been set in the
+API call that was used to create this page. It is also an error
+if the collectionSize parameter is less than the page size that
+has been set.</p></p>        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$collectionSize</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Google/ApiCore/FixedSizeCollection.html"><abbr title="Google\ApiCore\FixedSizeCollection">FixedSizeCollection</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Google/ApiCore/ValidationException.html"><abbr title="Google\ApiCore\ValidationException">ValidationException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+</div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
+    </div>
+    </body>
+
+</html>

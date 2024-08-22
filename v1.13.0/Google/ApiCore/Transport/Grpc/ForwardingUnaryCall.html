@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Google\ApiCore\Transport\Grpc\ForwardingUnaryCall | Google API Core (GAX) Reference Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/doctum.css">
+        <link rel="stylesheet" type="text/css" href="../../../../fonts/doctum-font.css">
+        <script src="../../../../js/jquery-3.5.1.slim.min.js"></script>
+        <script async defer src="../../../../doctum.js"></script>
+        <script async defer src="../../../../js/bootstrap.min.js"></script>
+        <script async defer src="../../../../js/autocomplete.min.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+    </head>
+
+    <body id="class" data-name="class:Google_ApiCore_Transport_Grpc_ForwardingUnaryCall" data-root-path="../../../../" data-search-index-url="../../../../doctum-search.json">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#">
+                <select class="form-control" id="version-switcher" name="version">
+                                            <option
+                            value="../../../../../v1.9.1/index.html"
+                            data-version="v1.9.1" >v1.9.1</option>
+                                            <option
+                            value="../../../../../v1.10.0/index.html"
+                            data-version="v1.10.0" >v1.10.0</option>
+                                            <option
+                            value="../../../../../v1.11.0/index.html"
+                            data-version="v1.11.0" >v1.11.0</option>
+                                            <option
+                            value="../../../../../v1.11.1/index.html"
+                            data-version="v1.11.1" >v1.11.1</option>
+                                            <option
+                            value="../../../../../v1.11.2/index.html"
+                            data-version="v1.11.2" >v1.11.2</option>
+                                            <option
+                            value="../../../../../v1.11.3/index.html"
+                            data-version="v1.11.3" >v1.11.3</option>
+                                            <option
+                            value="../../../../../v1.11.4/index.html"
+                            data-version="v1.11.4" >v1.11.4</option>
+                                            <option
+                            value="../../../../../v1.12.0/index.html"
+                            data-version="v1.12.0" >v1.12.0</option>
+                                            <option
+                            value="../../../../../v1.12.1/index.html"
+                            data-version="v1.12.1" >v1.12.1</option>
+                                            <option
+                            value="../../../../../v1.12.2/index.html"
+                            data-version="v1.12.2" >v1.12.2</option>
+                                            <option
+                            value="../../../../../v1.13.0/index.html"
+                            data-version="v1.13.0" selected>v1.13.0</option>
+                                            <option
+                            value="../../../../../v1.14.0/index.html"
+                            data-version="v1.14.0" >v1.14.0</option>
+                                            <option
+                            value="../../../../../v1.15.0/index.html"
+                            data-version="v1.15.0" >v1.15.0</option>
+                                            <option
+                            value="../../../../../v1.16.0/index.html"
+                            data-version="v1.16.0" >v1.16.0</option>
+                                            <option
+                            value="../../../../../v1.16.1/index.html"
+                            data-version="v1.16.1" >v1.16.1</option>
+                                            <option
+                            value="../../../../../v1.16.2/index.html"
+                            data-version="v1.16.2" >v1.16.2</option>
+                                            <option
+                            value="../../../../../v1.16.3/index.html"
+                            data-version="v1.16.3" >v1.16.3</option>
+                                            <option
+                            value="../../../../../v1.16.4/index.html"
+                            data-version="v1.16.4" >v1.16.4</option>
+                                            <option
+                            value="../../../../../v1.17.0/index.html"
+                            data-version="v1.17.0" >v1.17.0</option>
+                                            <option
+                            value="../../../../../v1.18.0/index.html"
+                            data-version="v1.18.0" >v1.18.0</option>
+                                            <option
+                            value="../../../../../v1.18.1/index.html"
+                            data-version="v1.18.1" >v1.18.1</option>
+                                            <option
+                            value="../../../../../v1.18.2/index.html"
+                            data-version="v1.18.2" >v1.18.2</option>
+                                            <option
+                            value="../../../../../v1.19.0/index.html"
+                            data-version="v1.19.0" >v1.19.0</option>
+                                            <option
+                            value="../../../../../v1.19.1/index.html"
+                            data-version="v1.19.1" >v1.19.1</option>
+                                            <option
+                            value="../../../../../v1.20.0/index.html"
+                            data-version="v1.20.0" >v1.20.0</option>
+                                            <option
+                            value="../../../../../v1.20.1/index.html"
+                            data-version="v1.20.1" >v1.20.1</option>
+                                            <option
+                            value="../../../../../v1.20.2/index.html"
+                            data-version="v1.20.2" >v1.20.2</option>
+                                            <option
+                            value="../../../../../v1.21.0/index.html"
+                            data-version="v1.21.0" >v1.21.0</option>
+                                            <option
+                            value="../../../../../v1.21.1/index.html"
+                            data-version="v1.21.1" >v1.21.1</option>
+                                            <option
+                            value="../../../../../v1.22.0/index.html"
+                            data-version="v1.22.0" >v1.22.0</option>
+                                            <option
+                            value="../../../../../v1.22.1/index.html"
+                            data-version="v1.22.1" >v1.22.1</option>
+                                            <option
+                            value="../../../../../v1.23.0/index.html"
+                            data-version="v1.23.0" >v1.23.0</option>
+                                            <option
+                            value="../../../../../v1.24.0/index.html"
+                            data-version="v1.24.0" >v1.24.0</option>
+                                            <option
+                            value="../../../../../v1.25.0/index.html"
+                            data-version="v1.25.0" >v1.25.0</option>
+                                            <option
+                            value="../../../../../v1.26.0/index.html"
+                            data-version="v1.26.0" >v1.26.0</option>
+                                            <option
+                            value="../../../../../v1.26.1/index.html"
+                            data-version="v1.26.1" >v1.26.1</option>
+                                            <option
+                            value="../../../../../v1.26.2/index.html"
+                            data-version="v1.26.2" >v1.26.2</option>
+                                            <option
+                            value="../../../../../v1.26.3/index.html"
+                            data-version="v1.26.3" >v1.26.3</option>
+                                            <option
+                            value="../../../../../v1.27.0/index.html"
+                            data-version="v1.27.0" >v1.27.0</option>
+                                            <option
+                            value="../../../../../v1.27.1/index.html"
+                            data-version="v1.27.1" >v1.27.1</option>
+                                            <option
+                            value="../../../../../v1.27.2/index.html"
+                            data-version="v1.27.2" >v1.27.2</option>
+                                            <option
+                            value="../../../../../v1.28.0/index.html"
+                            data-version="v1.28.0" >v1.28.0</option>
+                                            <option
+                            value="../../../../../v1.28.1/index.html"
+                            data-version="v1.28.1" >v1.28.1</option>
+                                            <option
+                            value="../../../../../v1.29.0/index.html"
+                            data-version="v1.29.0" >v1.29.0</option>
+                                            <option
+                            value="../../../../../v1.7.1/index.html"
+                            data-version="v1.7.1" >v1.7.1</option>
+                                            <option
+                            value="../../../../../v1.29.1/index.html"
+                            data-version="v1.29.1" >v1.29.1</option>
+                                            <option
+                            value="../../../../../v1.8.0/index.html"
+                            data-version="v1.8.0" >v1.8.0</option>
+                                            <option
+                            value="../../../../../v1.9.0/index.html"
+                            data-version="v1.9.0" >v1.9.0</option>
+                                            <option
+                            value="../../../../../v1.30.0/index.html"
+                            data-version="v1.30.0" >v1.30.0</option>
+                                            <option
+                            value="../../../../../v1.30.1/index.html"
+                            data-version="v1.30.1" >v1.30.1</option>
+                                            <option
+                            value="../../../../../v1.31.0/index.html"
+                            data-version="v1.31.0" >v1.31.0</option>
+                                            <option
+                            value="../../../../../v1.32.0/index.html"
+                            data-version="v1.32.0" >v1.32.0</option>
+                                            <option
+                            value="../../../../../v1.33.0/index.html"
+                            data-version="v1.33.0" >v1.33.0</option>
+                                            <option
+                            value="../../../../../v1.34.0/index.html"
+                            data-version="v1.34.0" >v1.34.0</option>
+                                            <option
+                            value="../../../../../v1.34.1/index.html"
+                            data-version="v1.34.1" >v1.34.1</option>
+                                            <option
+                            value="../../../../../doctum/index.html"
+                            data-version="doctum" >doctum</option>
+                                    </select>
+            </form>
+                <div class="search-bar hidden" id="search-progress-bar-container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="search-progress-bar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+        </div>
+        <form id="search-form" action="../../../../search.html">
+            <span class="icon icon-search"></span>
+            <input name="search"
+                   id="doctum-search-auto-complete"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search"
+                   spellcheck="false"
+                   autocorrect="off"
+                   autocomplete="off"
+                   autocapitalize="off">
+            <div class="auto-complete-results" id="auto-complete-results"></div>
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Google API Core (GAX) Reference Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                                        <li role="presentation" class="dropdown visible-xs-block visible-sm-block">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="true" aria-expanded="false">Versions&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li ><a href="../../../../../v1.9.1/index.html" data-version="v1.9.1">v1.9.1</a></li>
+                        <li ><a href="../../../../../v1.10.0/index.html" data-version="v1.10.0">v1.10.0</a></li>
+                        <li ><a href="../../../../../v1.11.0/index.html" data-version="v1.11.0">v1.11.0</a></li>
+                        <li ><a href="../../../../../v1.11.1/index.html" data-version="v1.11.1">v1.11.1</a></li>
+                        <li ><a href="../../../../../v1.11.2/index.html" data-version="v1.11.2">v1.11.2</a></li>
+                        <li ><a href="../../../../../v1.11.3/index.html" data-version="v1.11.3">v1.11.3</a></li>
+                        <li ><a href="../../../../../v1.11.4/index.html" data-version="v1.11.4">v1.11.4</a></li>
+                        <li ><a href="../../../../../v1.12.0/index.html" data-version="v1.12.0">v1.12.0</a></li>
+                        <li ><a href="../../../../../v1.12.1/index.html" data-version="v1.12.1">v1.12.1</a></li>
+                        <li ><a href="../../../../../v1.12.2/index.html" data-version="v1.12.2">v1.12.2</a></li>
+                        <li class="active"><a href="../../../../../v1.13.0/index.html" data-version="v1.13.0">v1.13.0</a></li>
+                        <li ><a href="../../../../../v1.14.0/index.html" data-version="v1.14.0">v1.14.0</a></li>
+                        <li ><a href="../../../../../v1.15.0/index.html" data-version="v1.15.0">v1.15.0</a></li>
+                        <li ><a href="../../../../../v1.16.0/index.html" data-version="v1.16.0">v1.16.0</a></li>
+                        <li ><a href="../../../../../v1.16.1/index.html" data-version="v1.16.1">v1.16.1</a></li>
+                        <li ><a href="../../../../../v1.16.2/index.html" data-version="v1.16.2">v1.16.2</a></li>
+                        <li ><a href="../../../../../v1.16.3/index.html" data-version="v1.16.3">v1.16.3</a></li>
+                        <li ><a href="../../../../../v1.16.4/index.html" data-version="v1.16.4">v1.16.4</a></li>
+                        <li ><a href="../../../../../v1.17.0/index.html" data-version="v1.17.0">v1.17.0</a></li>
+                        <li ><a href="../../../../../v1.18.0/index.html" data-version="v1.18.0">v1.18.0</a></li>
+                        <li ><a href="../../../../../v1.18.1/index.html" data-version="v1.18.1">v1.18.1</a></li>
+                        <li ><a href="../../../../../v1.18.2/index.html" data-version="v1.18.2">v1.18.2</a></li>
+                        <li ><a href="../../../../../v1.19.0/index.html" data-version="v1.19.0">v1.19.0</a></li>
+                        <li ><a href="../../../../../v1.19.1/index.html" data-version="v1.19.1">v1.19.1</a></li>
+                        <li ><a href="../../../../../v1.20.0/index.html" data-version="v1.20.0">v1.20.0</a></li>
+                        <li ><a href="../../../../../v1.20.1/index.html" data-version="v1.20.1">v1.20.1</a></li>
+                        <li ><a href="../../../../../v1.20.2/index.html" data-version="v1.20.2">v1.20.2</a></li>
+                        <li ><a href="../../../../../v1.21.0/index.html" data-version="v1.21.0">v1.21.0</a></li>
+                        <li ><a href="../../../../../v1.21.1/index.html" data-version="v1.21.1">v1.21.1</a></li>
+                        <li ><a href="../../../../../v1.22.0/index.html" data-version="v1.22.0">v1.22.0</a></li>
+                        <li ><a href="../../../../../v1.22.1/index.html" data-version="v1.22.1">v1.22.1</a></li>
+                        <li ><a href="../../../../../v1.23.0/index.html" data-version="v1.23.0">v1.23.0</a></li>
+                        <li ><a href="../../../../../v1.24.0/index.html" data-version="v1.24.0">v1.24.0</a></li>
+                        <li ><a href="../../../../../v1.25.0/index.html" data-version="v1.25.0">v1.25.0</a></li>
+                        <li ><a href="../../../../../v1.26.0/index.html" data-version="v1.26.0">v1.26.0</a></li>
+                        <li ><a href="../../../../../v1.26.1/index.html" data-version="v1.26.1">v1.26.1</a></li>
+                        <li ><a href="../../../../../v1.26.2/index.html" data-version="v1.26.2">v1.26.2</a></li>
+                        <li ><a href="../../../../../v1.26.3/index.html" data-version="v1.26.3">v1.26.3</a></li>
+                        <li ><a href="../../../../../v1.27.0/index.html" data-version="v1.27.0">v1.27.0</a></li>
+                        <li ><a href="../../../../../v1.27.1/index.html" data-version="v1.27.1">v1.27.1</a></li>
+                        <li ><a href="../../../../../v1.27.2/index.html" data-version="v1.27.2">v1.27.2</a></li>
+                        <li ><a href="../../../../../v1.28.0/index.html" data-version="v1.28.0">v1.28.0</a></li>
+                        <li ><a href="../../../../../v1.28.1/index.html" data-version="v1.28.1">v1.28.1</a></li>
+                        <li ><a href="../../../../../v1.29.0/index.html" data-version="v1.29.0">v1.29.0</a></li>
+                        <li ><a href="../../../../../v1.7.1/index.html" data-version="v1.7.1">v1.7.1</a></li>
+                        <li ><a href="../../../../../v1.29.1/index.html" data-version="v1.29.1">v1.29.1</a></li>
+                        <li ><a href="../../../../../v1.8.0/index.html" data-version="v1.8.0">v1.8.0</a></li>
+                        <li ><a href="../../../../../v1.9.0/index.html" data-version="v1.9.0">v1.9.0</a></li>
+                        <li ><a href="../../../../../v1.30.0/index.html" data-version="v1.30.0">v1.30.0</a></li>
+                        <li ><a href="../../../../../v1.30.1/index.html" data-version="v1.30.1">v1.30.1</a></li>
+                        <li ><a href="../../../../../v1.31.0/index.html" data-version="v1.31.0">v1.31.0</a></li>
+                        <li ><a href="../../../../../v1.32.0/index.html" data-version="v1.32.0">v1.32.0</a></li>
+                        <li ><a href="../../../../../v1.33.0/index.html" data-version="v1.33.0">v1.33.0</a></li>
+                        <li ><a href="../../../../../v1.34.0/index.html" data-version="v1.34.0">v1.34.0</a></li>
+                        <li ><a href="../../../../../v1.34.1/index.html" data-version="v1.34.1">v1.34.1</a></li>
+                        <li ><a href="../../../../../doctum/index.html" data-version="doctum">doctum</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                    <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                    <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Google.html">Google</a></li><li class="backslash">\</li><li><a href="../../../../Google/ApiCore.html">ApiCore</a></li><li class="backslash">\</li><li><a href="../../../../Google/ApiCore/Transport.html">Transport</a></li><li class="backslash">\</li><li><a href="../../../../Google/ApiCore/Transport/Grpc.html">Grpc</a></li><li class="backslash">\</li><li>ForwardingUnaryCall</li>
+            </ol>
+        </div>
+                <div id="page-content">
+    <div class="page-header">
+        <h1>ForwardingUnaryCall    
+            </h1>
+    </div>
+
+    
+    <p>        class
+    <strong>ForwardingUnaryCall</strong>        extends <a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html"><abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingUnaryCall.php">View source</a>)
+</p>
+
+        
+    
+        
+
+            <div class="description">
+            <p><p>Class ForwardingUnaryCall wraps a \Grpc\UnaryCall.</p></p>                    </div>
+            
+        
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_innerCall">
+                                        protected                                        <abbr title="Grpc\UnaryCall">UnaryCall</abbr>
+                                                                                
+                                    </td>
+                <td>$innerCall</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method___construct">__construct</a>(<abbr title="Grpc\AbstractCall">AbstractCall</abbr>|<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html"><abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> $innerCall)
+        
+                                            <p><p>ForwardingCall constructor.</p></p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method___construct">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getMetadata">getMetadata</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_getMetadata">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getTrailingMetadata">getTrailingMetadata</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_getTrailingMetadata">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_getPeer">getPeer</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_getPeer">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_cancel">cancel</a>()
+        
+                                            <p><p>Cancels the call.</p></p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_cancel">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8">
+                    <a href="#method_wait">wait</a>()
+        
+                                            <p><p>Wait for the server to respond with data and a status.</p></p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method___construct">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingCall.php#L52">at line 52</a></div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Grpc\AbstractCall">AbstractCall</abbr>|<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html"><abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> $innerCall)
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>ForwardingCall constructor.</p></p>                        
+        </div>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Grpc\AbstractCall">AbstractCall</abbr>|<a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html"><abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a></td>
+                <td>$innerCall</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getMetadata">
+        <div class="location">in <a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_getMetadata">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingCall.php#L60">at line 60</a></div>
+        <code>                    mixed
+    <strong>getMetadata</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td><p>The metadata sent by the server</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTrailingMetadata">
+        <div class="location">in <a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_getTrailingMetadata">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingCall.php#L68">at line 68</a></div>
+        <code>                    mixed
+    <strong>getTrailingMetadata</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td><p>The trailing metadata sent by the server</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPeer">
+        <div class="location">in <a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_getPeer">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingCall.php#L76">at line 76</a></div>
+        <code>                    string
+    <strong>getPeer</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p class="no-description">No description</p>
+                    
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td><p>The URI of the endpoint</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cancel">
+        <div class="location">in <a href="../../../../Google/ApiCore/Transport/Grpc/ForwardingCall.html#method_cancel">
+<abbr title="Google\ApiCore\Transport\Grpc\ForwardingCall">ForwardingCall</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingCall.php#L84">at line 84</a></div>
+        <code>                    
+    <strong>cancel</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Cancels the call.</p></p>                        
+        </div>
+        <div class="tags">
+            
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_wait">
+        <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.13.0/src/Transport/Grpc/ForwardingUnaryCall.php#L52">at line 52</a></div>
+        <code>                    array
+    <strong>wait</strong>()
+        </code>
+    </h3>
+    <div class="details">    
+    
+            
+
+        <div class="method-description">
+                            <p><p>Wait for the server to respond with data and a status.</p></p>                        
+        </div>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td><p>[response data, status]</p></td>
+        </tr>
+    </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+</div><div id="footer">
+        Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
+    </div>
+    </body>
+
+</html>
