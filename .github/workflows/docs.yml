@@ -8,6 +8,7 @@ on:
         inputs:
             tag:
                 description: 'Tag to release'
+    pull_request:
 
 permissions:
   contents: write
@@ -19,4 +20,4 @@ jobs:
         with:
           title: "Google API Core (GAX) Reference Documentation"
           default_version: ${{ inputs.tag || github.ref_name }}
-
+          dry_run: ${{ github.event_name == 'push' }}
