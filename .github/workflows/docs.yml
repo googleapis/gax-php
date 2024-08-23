@@ -19,5 +19,5 @@ jobs:
         uses: GoogleCloudPlatform/php-tools/.github/workflows/doctum.yml@doctum
         with:
           title: "Google API Core (GAX) Reference Documentation"
-          default_version: ${{ inputs.tag || github.ref_name }}
-          dry_run: ${{ github.event_name == 'push' }}
+          default_version: ${{ inputs.tag || github.head_ref || github.ref_name }}
+          dry_run: ${{ github.event_name == 'pull_request' }}
