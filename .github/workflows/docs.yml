@@ -16,7 +16,7 @@ permissions:
 jobs:
     docs:
         name: "Generate and Deploy Documentation"
-        uses: GoogleCloudPlatform/php-tools/.github/workflows/doctum.yml@doctum
+        uses: GoogleCloudPlatform/php-tools/.github/workflows/doctum.yml@main
         with:
           title: "Google API Core (GAX) Reference Documentation"
           default_version: ${{ inputs.tag || github.head_ref || github.ref_name }}
