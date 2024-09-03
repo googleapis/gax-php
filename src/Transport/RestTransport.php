@@ -83,6 +83,7 @@ class RestTransport implements TransportInterface
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
+     *    @type bool $hasEmulator True if the emulator is enabled.
      * }
      * @return RestTransport
      * @throws ValidationException
@@ -92,9 +93,12 @@ class RestTransport implements TransportInterface
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,
+            'hasEmulator' => false,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
-        $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
+        $requestBuilder = $config['hasEmulator']
+            ? new InsecureRequestbuilder("$baseUri:$port", $restConfigPath)
+            : new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
