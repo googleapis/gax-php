@@ -33,6 +33,7 @@ namespace Google\ApiCore\Transport;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
+use Google\ApiCore\InsecureRequestBuilder;
 use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
@@ -97,7 +98,7 @@ class RestTransport implements TransportInterface
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = $config['hasEmulator']
-            ? new InsecureRequestbuilder("$baseUri:$port", $restConfigPath)
+            ? new InsecureRequestBuilder("$baseUri:$port", $restConfigPath)
             : new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         $transport = new RestTransport($requestBuilder, $httpHandler);
