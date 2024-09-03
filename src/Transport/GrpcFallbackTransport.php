@@ -159,8 +159,8 @@ class GrpcFallbackTransport implements TransportInterface
     {
         $decodeType = $call->getDecodeType();
         /** @var Message $responseMessage */
-        $responseMessage = new $decodeType();
-        $responseMessage->mergeFromString((string)$response->getBody());
+        $responseMessage = new $decodeType;
+        $responseMessage->mergeFromString((string) $response->getBody());
         return $responseMessage;
     }
 
