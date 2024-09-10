@@ -195,7 +195,7 @@ class JsonStreamDecoder
 
                     // Dump the part of the chunk used for parsing the message
                     // and use the remaining for the next message.
-                    $remaining = $chunkLength-$length;
+                    $remaining = $chunkLength - $length;
                     $chunk = substr($chunk, $end, $remaining);
 
                     // Reset all indices and exit chunk processing.
