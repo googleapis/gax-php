@@ -38,6 +38,7 @@ use Google\ApiCore\ValidationException;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
+use Google\Auth\Logging\StdOutLogger;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use InvalidArgumentException;
@@ -545,6 +546,71 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertEquals($options, $options2);
     }
 
+    public function testLoggerIsNullWhenNullIsPassed()
+    {
+        putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
+
+        $client = new StubClientOptionsClient();
+        $optionsArray = [
+            'logger' => null,
+        ];
+        $options = $client->buildClientOptions($optionsArray);
+        $this->assertNull($options['transportCondig']['rest']['logger']);
+        $this->assertNull($options['transportCondig']['grpc']['logger']);
+
+        putenv('GOOGLE_SDK_DEBUG_LOGGING');
+    }
+
+    public function testLoggerIsNotNullIfFlagIsEmptyAndEnvVarSet()
+    {
+        putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
+
+        $client = new StubClientOptionsClient();
+        $optionsArray = [];
+        $options = $client->buildClientOptions($optionsArray);
+
+        $this->assertInstanceOf(StdOutLogger::class, $options['transportCondig']['rest']['logger']);
+        $this->assertInstanceOf(StdOutLogger::class, $options['transportCondig']['grpc']['logger']);
+
+        putenv('GOOGLE_SDK_DEBUG_LOGGING');
+    }
+
+    public function testLoggerIsNullIfFlagIsEmptyAndNoEnvVar()
+    {
+        $client = new StubClientOptionsClient();
+        $optionsArray = [];
+        $options = $client->buildClientOptions($optionsArray);
+
+        $this->assertNull($options['transportCondig']['rest']['logger']);
+        $this->assertNull($options['transportCondig']['grpc']['logger']);
+    }
+
+    public function testLoggerIsSetWhenALoggerIsPassed()
+    {
+        $client = new StubClientOptionsClient();
+        $logger = new StdOutLogger();
+        $optionsArray = [
+            'logger' => $logger
+        ];
+        $options = $client->buildClientOptions($optionsArray);
+
+        $this->assertEquals($options['transportCondig']['rest']['logger'], $logger);
+        $this->assertEquals($options['transportCondig']['grpc']['logger'], $logger);
+    }
+
+    public function testExceptionIsRaisedIfOptionsIsInvalid()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
+        );
+
+        $client = new StubClientOptionsClient();
+        $optionsArray = [
+            'logger' => 'nonValidOption'
+        ];
+        $client->buildClientOptions($optionsArray);
+    }
 }
 
 class StubClientOptionsClient

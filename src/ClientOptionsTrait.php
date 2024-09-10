@@ -32,11 +32,13 @@
 
 namespace Google\ApiCore;
 
+use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
+use Psr\Log\LoggerInterface;
 
 /**
  * Common functions used to work with various clients.
@@ -115,6 +117,17 @@ trait ClientOptionsTrait
         // Keep track of the API Endpoint
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
+        // If logger is explecitely set to null, logging is disabled
+        if (!array_key_exists('logger', $options)) {
+            $options['logger'] = ApplicationDefaultCredentials::getDefaultLogger();
+        }
+
+        if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
+            throw new ValidationException(
+                'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
+            );
+        }
+
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
@@ -124,9 +137,11 @@ trait ClientOptionsTrait
         if (isset($options['transportConfig']['grpc'])) {
             $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
             $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
+            $options['transportCondig']['grpc']['logger'] = $options['logger'] ?? null;
         }
         if (isset($options['transportConfig']['rest'])) {
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
+            $options['transportCondig']['rest']['logger'] = $options['logger'] ?? null;
         }
 
         // These calls do not apply to "New Surface" clients.
