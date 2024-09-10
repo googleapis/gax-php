@@ -61,6 +61,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Log\LogLevel;
 
 class GapicClientTraitTest extends TestCase
 {
@@ -1626,6 +1627,25 @@ class GapicClientTraitTest extends TestCase
         $gapic->setClientOptions($options);
 
         $this->assertTrue($gapic->hasEmulator);
+    }
+
+    public function testLogConfiguration()
+    {
+        putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
+
+        $client = new StubGapicClient();
+        $options = $client->buildClientOptions([
+            'apiEndpoint' => 'test'
+        ]);
+        $client->setClientOptions($options);
+
+        $parsedOutput = json_decode($this->getActualOutput(), true);
+
+        $this->assertArrayHasKey('timestamp', $parsedOutput);
+        $this->assertEquals($parsedOutput['severity'], strtoupper(LogLevel::DEBUG));
+        $this->assertArrayHasKey('jsonPayload', $parsedOutput);
+
+        putenv('GOOGLE_SDK_DEBUG_LOGGING');
     }
 }
 
