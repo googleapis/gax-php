@@ -51,6 +51,8 @@ use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Google\Protobuf\Internal\Message;
 use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Common functions used to work with various clients.
@@ -81,6 +83,7 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
     private bool $backwardsCompatibilityMode;
+    private null|LoggerInterface $logger = null;
 
     /**
      * Add a middleware to the call stack by providing a callable which will be
@@ -293,6 +296,8 @@ trait GapicClientTrait
             $options['universeDomain']
         );
 
+        $this->logger = $options['logger'] ?? null;
+
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
             ? $transport
@@ -302,6 +307,8 @@ trait GapicClientTrait
                 $options['transportConfig'],
                 $options['clientCertSource']
             );
+
+        $this->logConfiguration($options);
     }
 
     /**
@@ -949,5 +956,20 @@ trait GapicClientTrait
     {
         return $this->backwardsCompatibilityMode
             ?? $this->backwardsCompatibilityMode = substr(__CLASS__, -11) === 'GapicClient';
+    }
+
+    private function logConfiguration(array $options): void
+    {
+        if (!$this->logger) {
+            return;
+        }
+
+        $configurationLog = [
+            'timestamp' => date(DATE_RFC3339),
+            'severity' => strtoupper(LogLevel::DEBUG),
+            'jsonPayload' => $options
+        ];
+
+        $this->logger->debug(json_encode($configurationLog));
     }
 }
