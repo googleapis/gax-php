@@ -271,7 +271,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                     $responseEvent = new LogEvent($requestEvent->timestamp);
 
                     $responseEvent->headers = $status->metadata;
-                    $responseEvent->payload = $response->serializeToJsonString();
+                    $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
                     $responseEvent->status = $status->code;
                     $responseEvent->clientId = $requestEvent->clientId;
                     $responseEvent->requestId = $requestEvent->clientId;
