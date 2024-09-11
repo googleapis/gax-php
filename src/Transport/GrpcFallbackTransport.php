@@ -37,12 +37,14 @@ use Google\ApiCore\Call;
 use Google\ApiCore\ServiceAddressTrait;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
+use Google\Auth\Logging\LoggingTrait;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Status;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * A transport that sends protobuf over HTTP 1.1 that can be used when full gRPC support
@@ -53,20 +55,25 @@ class GrpcFallbackTransport implements TransportInterface
     use ValidationTrait;
     use ServiceAddressTrait;
     use HttpUnaryTransportTrait;
+    use LoggingTrait;
 
     private string $baseUri;
+    private null|LoggerInterface $logger;
 
     /**
      * @param string $baseUri
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
+     * @param null|LoggerInterface A PSR-3 Logger Interface.
      */
     public function __construct(
         string $baseUri,
-        callable $httpHandler
+        callable $httpHandler,
+        null|LoggerInterface $logger = null
     ) {
         $this->baseUri = $baseUri;
         $this->httpHandler = $httpHandler;
         $this->transportName = 'grpc-fallback';
+        $this->logger = $logger;
     }
 
     /**
@@ -90,7 +97,7 @@ class GrpcFallbackTransport implements TransportInterface
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
-        $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler);
+        $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler, $config['logger'] ?? null);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
         }
