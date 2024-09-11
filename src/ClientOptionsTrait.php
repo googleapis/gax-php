@@ -137,11 +137,11 @@ trait ClientOptionsTrait
         if (isset($options['transportConfig']['grpc'])) {
             $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
             $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
-            $options['transportCondig']['grpc']['logger'] = $options['logger'] ?? null;
+            $options['transportConfig']['grpc']['logger'] = $options['logger'] ?? null;
         }
         if (isset($options['transportConfig']['rest'])) {
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
-            $options['transportCondig']['rest']['logger'] = $options['logger'] ?? null;
+            $options['transportConfig']['rest']['logger'] = $options['logger'] ?? null;
         }
 
         // These calls do not apply to "New Surface" clients.

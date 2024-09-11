@@ -189,10 +189,13 @@ class ClientOptionsTraitTest extends TestCase
                 'grpc' => [
                     'stubOpts' => [
                         'grpc_call_invoker' => $grpcGcpConfig->callInvoker(),
-                        'grpc.service_config_disable_resolution' => 1
-                    ]
+                        'grpc.service_config_disable_resolution' => 1,
+                    ],
+                    'logger' => null,
                 ],
-                'rest' => [],
+                'rest' => [
+                    'logger' => null,
+                ],
                 'grpc-fallback' => [],
             ],
             'credentials' => null,
@@ -201,16 +204,19 @@ class ClientOptionsTraitTest extends TestCase
             'libName' => null,
             'libVersion' => null,
             'clientCertSource' => null,
+            'logger' => null,
             'universeDomain' => 'googleapis.com',
         ];
 
         $restConfigOptions = $defaultOptions;
         $restConfigOptions['transportConfig']['rest'] += [
-            'customRestConfig' => 'value'
+            'customRestConfig' => 'value',
+            'logger' => null,
         ];
         $grpcConfigOptions = $defaultOptions;
         $grpcConfigOptions['transportConfig']['grpc'] += [
-            'customGrpcConfig' => 'value'
+            'customGrpcConfig' => 'value',
+            'logger' => null,
         ];
         return [
             [[], $defaultOptions],
@@ -255,7 +261,9 @@ class ClientOptionsTraitTest extends TestCase
             'disableRetries' => false,
             'transport' => null,
             'transportConfig' => [
-                'rest' => [],
+                'rest' => [
+                    'logger' => null,
+                ],
                 'fake-transport' => []
             ],
             'credentials' => null,
@@ -265,6 +273,7 @@ class ClientOptionsTraitTest extends TestCase
             'libVersion' => null,
             'clientCertSource' => null,
             'universeDomain' => 'googleapis.com',
+            'logger' => null
         ];
 
         $restConfigOptions = $defaultOptions;
@@ -555,8 +564,8 @@ class ClientOptionsTraitTest extends TestCase
             'logger' => null,
         ];
         $options = $client->buildClientOptions($optionsArray);
-        $this->assertNull($options['transportCondig']['rest']['logger']);
-        $this->assertNull($options['transportCondig']['grpc']['logger']);
+        $this->assertNull($options['transportConfig']['rest']['logger']);
+        $this->assertNull($options['transportConfig']['grpc']['logger']);
 
         putenv('GOOGLE_SDK_DEBUG_LOGGING');
     }
@@ -569,8 +578,8 @@ class ClientOptionsTraitTest extends TestCase
         $optionsArray = [];
         $options = $client->buildClientOptions($optionsArray);
 
-        $this->assertInstanceOf(StdOutLogger::class, $options['transportCondig']['rest']['logger']);
-        $this->assertInstanceOf(StdOutLogger::class, $options['transportCondig']['grpc']['logger']);
+        $this->assertInstanceOf(StdOutLogger::class, $options['transportConfig']['rest']['logger']);
+        $this->assertInstanceOf(StdOutLogger::class, $options['transportConfig']['grpc']['logger']);
 
         putenv('GOOGLE_SDK_DEBUG_LOGGING');
     }
@@ -581,8 +590,8 @@ class ClientOptionsTraitTest extends TestCase
         $optionsArray = [];
         $options = $client->buildClientOptions($optionsArray);
 
-        $this->assertNull($options['transportCondig']['rest']['logger']);
-        $this->assertNull($options['transportCondig']['grpc']['logger']);
+        $this->assertNull($options['transportConfig']['rest']['logger']);
+        $this->assertNull($options['transportConfig']['grpc']['logger']);
     }
 
     public function testLoggerIsSetWhenALoggerIsPassed()
@@ -594,8 +603,8 @@ class ClientOptionsTraitTest extends TestCase
         ];
         $options = $client->buildClientOptions($optionsArray);
 
-        $this->assertEquals($options['transportCondig']['rest']['logger'], $logger);
-        $this->assertEquals($options['transportCondig']['grpc']['logger'], $logger);
+        $this->assertEquals($options['transportConfig']['rest']['logger'], $logger);
+        $this->assertEquals($options['transportConfig']['grpc']['logger'], $logger);
     }
 
     public function testExceptionIsRaisedIfOptionsIsInvalid()
