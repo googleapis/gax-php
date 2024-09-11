@@ -981,8 +981,12 @@ trait GapicClientTrait
             ?? $this->backwardsCompatibilityMode = substr(__CLASS__, -11) === 'GapicClient';
     }
 
-    private function logConfiguration(array $options): void
+    private function logConfiguration(array|ClientOptions $options): void
     {
+        if ($options instanceof ClientOptions) {
+            $options = $options->toArray();
+        }
+
         if (!$this->logger) {
             return;
         }

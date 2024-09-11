@@ -1703,7 +1703,7 @@ class GapicClientTraitTest extends TestCase
         ]);
         $client->setClientOptions($options);
 
-        $parsedOutput = json_decode($this->getActualOutput(), true);
+        $parsedOutput = json_decode($this->getActualOutputForAssertion(), true);
 
         $this->assertArrayHasKey('timestamp', $parsedOutput);
         $this->assertEquals($parsedOutput['severity'], strtoupper(LogLevel::DEBUG));

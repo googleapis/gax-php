@@ -336,7 +336,7 @@ class ClientOptions implements ArrayAccess
     /**
     * @param LoggerInterface $logger
     */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(?LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
