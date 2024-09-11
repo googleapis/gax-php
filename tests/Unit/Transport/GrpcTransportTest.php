@@ -40,6 +40,7 @@ use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\ValidationException;
+use Google\Auth\Logging\StdOutLogger;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -56,6 +57,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Argument;
 use stdClass;
 use TypeError;
+use Psr\Log\LoggerInterface;
 
 class GrpcTransportTest extends TestCase
 {
@@ -434,6 +436,36 @@ class GrpcTransportTest extends TestCase
             'address.com:123',
             ['clientCertSource' => $mockClientCertSource]
         );
+    }
+
+    public function testLoggerGetsCalledIfLoggerSupplied()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug()
+            ->shouldBeCalledTimes(2);
+        $logger->info()
+            ->shouldBeCalledTimes(1);
+
+        $message = $this->createMockRequest();
+
+        $call = $this->prophesize(Call::class);
+        $call->getMessage()->willReturn($message);
+        $call->getMethod()->shouldBeCalled();
+        $call->getDecodeType()->shouldBeCalled();
+
+        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
+        $credentialsWrapper->checkUniverseDomain()
+            ->shouldBeCalledOnce();
+        $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
+            ->shouldBeCalledOnce();
+        $hostname = '';
+        $opts = ['credentials' => ChannelCredentials::createInsecure()];
+        $transport = new GrpcTransport($hostname, $opts, logger: $logger->reveal());
+        $options = [
+            'audience' => 'an-audience',
+            'credentialsWrapper' => $credentialsWrapper->reveal(),
+        ];
+        $transport->startUnaryCall($call->reveal(), $options);
     }
 
     /**
