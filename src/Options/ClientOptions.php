@@ -38,6 +38,7 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 
 /**
  * The ClientOptions class adds typing to the associative array of options
@@ -95,6 +96,8 @@ class ClientOptions implements ArrayAccess
     private ?string $universeDomain;
 
     private ?string $apiKey;
+
+    private ?LoggerInterface $logger;
 
     /**
      * @param array $options {
@@ -186,6 +189,7 @@ class ClientOptions implements ArrayAccess
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setUniverseDomain($arr['universeDomain'] ?? null);
         $this->setApiKey($arr['apiKey'] ?? null);
+        $this->setLogger($arr['logger'] ?? null);
     }
 
     /**
@@ -327,5 +331,13 @@ class ClientOptions implements ArrayAccess
     public function setApiKey(?string $apiKey)
     {
         $this->apiKey = $apiKey;
+    }
+
+    /**
+    * @param LoggerInterface $logger
+    */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }
