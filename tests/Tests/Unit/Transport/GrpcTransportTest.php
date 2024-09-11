@@ -55,6 +55,7 @@ use Grpc\UnaryCall;
 use stdClass;
 use TypeError;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Log\LoggerInterface;
 
@@ -434,10 +435,12 @@ class GrpcTransportTest extends TestCase
     public function testLoggerGetsCalledIfLoggerSupplied()
     {
         $logger = $this->prophesize(StdOutLogger::class);
-        $logger->debug()
+        $logger->debug(Argument::cetera())
             ->shouldBeCalledTimes(2);
-        $logger->info()
+        $logger->info(Argument::cetera())
             ->shouldBeCalledTimes(1);
+        $logger->log(Argument::cetera())
+            ->shouldBeCalled();
 
         $message = $this->createMockRequest();
 
