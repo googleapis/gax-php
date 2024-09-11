@@ -34,17 +34,15 @@ namespace Google\ApiCore;
 use DomainException;
 use Exception;
 use Google\Auth\ApplicationDefaultCredentials;
-use Google\Auth\ProjectIdProviderInterface;
 use Google\Auth\Cache\MemoryCacheItemPool;
+use Google\Auth\Credentials\GCECredentials;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenCache;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetQuotaProjectInterface;
 use Google\Auth\GetUniverseDomainInterface;
-use Google\Auth\HttpHandler\Guzzle6HttpHandler;
-use Google\Auth\HttpHandler\Guzzle7HttpHandler;
-use Google\Auth\HttpHandler\HttpHandlerFactory;
+use Google\Auth\ProjectIdProviderInterface;
 use Google\Auth\UpdateMetadataInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -273,7 +271,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
      */
     public function checkUniverseDomain()
     {
-        if (false === $this->hasCheckedUniverse) {
+        if (false === $this->hasCheckedUniverse && $this->shouldCheckUniverseDomain()) {
             $credentialsUniverse = $this->credentialsFetcher instanceof GetUniverseDomainInterface
                 ? $this->credentialsFetcher->getUniverseDomain()
                 : GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
@@ -286,6 +284,24 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
             }
             $this->hasCheckedUniverse = true;
         }
+    }
+
+    /**
+     * Skip universe domain check for Metadata server (e.g. GCE) credentials.
+     *
+     * @return bool
+     */
+    private function shouldCheckUniverseDomain(): bool
+    {
+        $fetcher = $this->credentialsFetcher instanceof FetchAuthTokenCache
+            ? $this->credentialsFetcher->getFetcher()
+            : $this->credentialsFetcher;
+
+        if ($fetcher instanceof GCECredentials) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -316,7 +332,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
                 $defaultScopes
             );
         } catch (DomainException $ex) {
-            throw new ValidationException("Could not construct ApplicationDefaultCredentials", $ex->getCode(), $ex);
+            throw new ValidationException('Could not construct ApplicationDefaultCredentials', $ex->getCode(), $ex);
         }
     }
 
