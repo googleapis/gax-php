@@ -461,7 +461,7 @@ class GrpcTransportTest extends TestCase
             'audience' => 'an-audience',
             'credentialsWrapper' => $credentialsWrapper->reveal(),
         ];
-        $transport->startUnaryCall($call->reveal(), $options);
+        $transport->startUnaryCall($call->reveal(), $options)->wait();
     }
 
     /**
