@@ -38,6 +38,7 @@ use Google\ApiCore\Options\OptionsTrait;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Grpc\Channel;
 use Grpc\Interceptor;
+use Psr\Log\LoggerInterface;
 
 /**
  * The GrpcTransportOptions class provides typing to the associative array of options used to
@@ -50,6 +51,8 @@ class GrpcTransportOptions implements ArrayAccess
     private array $stubOpts;
 
     private ?Channel $channel;
+
+    private LoggerInterface $logger;
 
     /**
      * @var Interceptor[]|UnaryInterceptorInterface[]
@@ -74,6 +77,7 @@ class GrpcTransportOptions implements ArrayAccess
      *          `UnaryInterceptorInterface` implementations over to a class which
      *          extends {@see Grpc\Interceptor}.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
+     *    @type LoggerInterface A PSR-3 Logger Interface.
      * }
      */
     public function __construct(array $options)
@@ -92,6 +96,7 @@ class GrpcTransportOptions implements ArrayAccess
         $this->setChannel($arr['channel'] ?? null);
         $this->setInterceptors($arr['interceptors'] ?? []);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
+        $this->setLogger($arr['logger'] ?? null);
     }
 
     /**
@@ -127,5 +132,13 @@ class GrpcTransportOptions implements ArrayAccess
             $clientCertSource = Closure::fromCallable($clientCertSource);
         }
         $this->clientCertSource = $clientCertSource;
+    }
+
+    /**
+     * @param ?LoggerInterface $logger
+     */
+    public function setLogger(?LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }
