@@ -52,7 +52,7 @@ class GrpcTransportOptions implements ArrayAccess
 
     private ?Channel $channel;
 
-    private LoggerInterface $logger;
+    private ?LoggerInterface $logger;
 
     /**
      * @var Interceptor[]|UnaryInterceptorInterface[]
