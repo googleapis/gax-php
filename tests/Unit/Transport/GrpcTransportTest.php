@@ -449,26 +449,11 @@ class GrpcTransportTest extends TestCase
         $logger->log(Argument::cetera())
             ->shouldBeCalled();
 
-        $message = $this->createMockRequest();
 
-        $call = $this->prophesize(Call::class);
-        $call->getMessage()->willReturn($message);
-        $call->getMethod()->shouldBeCalled();
-        $call->getDecodeType()->shouldBeCalled();
+        $call = new Call('method', '', $this->createMockRequest());
 
-        $credentialsWrapper = $this->prophesize(CredentialsWrapper::class);
-        $credentialsWrapper->checkUniverseDomain()
-            ->shouldBeCalledOnce();
-        $credentialsWrapper->getAuthorizationHeaderCallback('an-audience')
-            ->shouldBeCalledOnce();
-        $hostname = '';
-        $opts = ['credentials' => ChannelCredentials::createInsecure()];
-        $transport = new GrpcTransport($hostname, $opts, logger: $logger->reveal());
-        $options = [
-            'audience' => 'an-audience',
-            'credentialsWrapper' => $credentialsWrapper->reveal(),
-        ];
-        $transport->startUnaryCall($call->reveal(), $options)->wait();
+        $transport = GrpcTransport::build('', []);
+        $transport->startUnaryCall($call, [])->wait();
     }
 
     /**
