@@ -82,6 +82,7 @@ class RestTransportOptions implements ArrayAccess
         $this->setHttpHandler($arr['httpHandler'] ?? null);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setRestClientConfigPath($arr['restClientConfigPath'] ?? null);
+        $this->setLogger($arr['logger'] ?? null);
     }
 
     /**
