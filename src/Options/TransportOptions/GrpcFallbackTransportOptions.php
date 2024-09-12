@@ -35,6 +35,7 @@ namespace Google\ApiCore\Options\TransportOptions;
 use ArrayAccess;
 use Closure;
 use Google\ApiCore\Options\OptionsTrait;
+use Psr\Log\LoggerInterface;
 
 /**
  * The GrpcFallbackTransportOptions class provides typing to the associative array of options used
@@ -48,6 +49,8 @@ class GrpcFallbackTransportOptions implements ArrayAccess
 
     private ?Closure $httpHandler;
 
+    private ?LoggerInterface $logger;
+
     /**
      * @param array $options {
      *    Config options used to construct the gRPC Fallback transport.
@@ -56,6 +59,8 @@ class GrpcFallbackTransportOptions implements ArrayAccess
      *          A callable which returns the client cert as a string.
      *    @type callable $httpHandler
      *          A handler used to deliver PSR-7 requests.
+     *    @type ?LoggerInterface
+     *          A PSR-3 logger interface instance.
      * }
      */
     public function __construct(array $options)
@@ -72,6 +77,7 @@ class GrpcFallbackTransportOptions implements ArrayAccess
     {
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setHttpHandler($arr['httpHandler'] ?? null);
+        $this->setLogger($arr['logger'] ?? null);
     }
 
     public function setHttpHandler(?callable $httpHandler)
@@ -91,5 +97,12 @@ class GrpcFallbackTransportOptions implements ArrayAccess
             $clientCertSource = Closure::fromCallable($clientCertSource);
         }
         $this->clientCertSource = $clientCertSource;
+    }
+
+    /**
+     * @param ?LoggerInterface $logger
+     */
+    public function setLogger(?LoggerInterface $logger) {
+        $this->logger = $logger;
     }
 }
