@@ -45,7 +45,7 @@ class CredentialsWrapperMiddleware implements MiddlewareInterface
     private $nextHandler;
 
     /** @var HeaderCredentialsInterface */
-    private HeaderCredentialInterface  $credentialsWrapper;
+    private HeaderCredentialsInterface  $credentialsWrapper;
 
     public function __construct(
         callable $nextHandler,

@@ -42,7 +42,6 @@ use Google\Auth\CredentialsLoader;
 use Google\Auth\Credentials\GCECredentials;
 use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\FetchAuthTokenCache;
-use Google\Auth\GetQuotaProjectInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
 use Google\Auth\ProjectIdProviderInterface;

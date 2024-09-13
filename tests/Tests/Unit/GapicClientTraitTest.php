@@ -52,6 +52,7 @@ use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\Transport\RestTransport;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\ApiCore\ValidationException;
+use Google\Auth\FetchAuthTokenInterface;
 use Google\LongRunning\Operation;
 use Grpc\Gcp\Config;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -1569,11 +1570,11 @@ class GapicClientTraitTest extends TestCase
     public function testApiKeyOption()
     {
         $apiKey = 'abc-123';
-        $client = new GapicClientTraitStub();
-        $updatedOptions = $client->call('buildClientOptions', [
-            ['credentialsConfig' => ['apiKey' => $apiKey]],
+        $client = new StubGapicClient();
+        $updatedOptions = $client->buildClientOptions([
+            'credentialsConfig' => ['apiKey' => $apiKey],
         ]);
-        $client->call('setClientOptions', [$updatedOptions]);
+        $client->setClientOptions($updatedOptions);
         $credentialsWrapper = $client->get('credentialsWrapper');
         $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
         $headers = $callback();
@@ -1584,14 +1585,12 @@ class GapicClientTraitTest extends TestCase
     {
         $apiKey = 'abc-123';
         $credentials = $this->prophesize(FetchAuthTokenInterface::class);
-        $client = new GapicClientTraitStub();
-        $updatedOptions = $client->call('buildClientOptions', [
-            [
-                'credentialsConfig' => ['apiKey' => $apiKey],
-                'credentials' => $credentials->reveal(),
-            ]
+        $client = new StubGapicClient();
+        $updatedOptions = $client->buildClientOptions([
+            'credentialsConfig' => ['apiKey' => $apiKey],
+            'credentials' => $credentials->reveal(),
         ]);
-        $client->call('setClientOptions', [$updatedOptions]);
+        $client->setClientOptions($updatedOptions);
         $credentialsWrapper = $client->get('credentialsWrapper');
         $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
         $headers = $callback();
@@ -1602,12 +1601,17 @@ class GapicClientTraitTest extends TestCase
     {
         $apiKey = 'abc-123';
         $quotaProject = 'def-456';
-        $client = new GapicClientTraitStub();
-        $updatedOptions = $client->call('buildClientOptions', [
-            ['credentialsConfig' => ['apiKey' => $apiKey, 'quotaProject' => $quotaProject ]],
+        $client = new StubGapicClient();
+        $updatedOptions = $client->buildClientOptions([
+            'credentialsConfig' => ['apiKey' => $apiKey, 'quotaProject' => $quotaProject ]
         ]);
-        $client->call('setClientOptions', [$updatedOptions]);
-        $callStack = $client->call('createCallStack', [['retrySettings' => RetrySettings::constructDefault()]]);
+        $client->setClientOptions($updatedOptions);
+        $callStack = $client->createCallStack([
+            'retrySettings' => RetrySettings::constructDefault(),
+            'autoPopulationSettings' => [
+                'pageToken' => \Google\Api\FieldInfo\Format::UUID4,
+            ],
+        ]);
 
         $retryMiddleware = MiddlewareTester::getNextHandler($callStack);
         $headerMiddleware = MiddlewareTester::getNextHandler($retryMiddleware);
@@ -1639,6 +1643,7 @@ class StubGapicClient
         createCredentialsWrapper as public;
         createOperationsClient as public;
         createTransport as public;
+        createCallStack as public;
         determineMtlsEndpoint as public;
         getGapicVersion as public;
         getCredentialsWrapper as public;
