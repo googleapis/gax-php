@@ -143,6 +143,9 @@ trait ClientOptionsTrait
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
             $options['transportConfig']['rest']['logger'] = $options['logger'] ?? null;
         }
+        if (isset($options['transportConfig']['grpc-fallback'])) {
+            $options['transportConfig']['grpc-fallback']['logger'] = $options['logger'] ?? null;
+        }
 
         // These calls do not apply to "New Surface" clients.
         if ($this->isBackwardsCompatibilityMode()) {
