@@ -31,15 +31,21 @@
  */
 namespace Google\ApiCore;
 
+use Google\Auth\Logging\LogEvent;
+use Google\Auth\Logging\LoggingTrait;
 use Google\Rpc\Code;
+use Psr\Log\LoggerInterface;
 
 /**
  * ServerStream is the response object from a server streaming API call.
  */
 class ServerStream
 {
+    use LoggingTrait;
+
     private $call;
     private $resourcesGetMethod;
+    private null|LoggerInterface $logger;
 
     /**
      * ServerStream constructor.
@@ -47,12 +53,18 @@ class ServerStream
      * @param ServerStreamingCallInterface $serverStreamingCall The server streaming call object
      * @param array $streamingDescriptor
      */
-    public function __construct($serverStreamingCall, array $streamingDescriptor = [])
+    public function __construct(
+        $serverStreamingCall,
+        array $streamingDescriptor = [],
+        null|LoggerInterface $logger = null
+
+    )
     {
         $this->call = $serverStreamingCall;
         if (array_key_exists('resourcesGetMethod', $streamingDescriptor)) {
             $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
         }
+        $this->logger = $logger;
     }
 
     /**
@@ -68,11 +80,31 @@ class ServerStream
         if (!is_null($resourcesGetMethod)) {
             foreach ($this->call->responses() as $response) {
                 foreach ($response->$resourcesGetMethod() as $resource) {
+                    if ($this->logger) {
+                        $responseEvent = new LogEvent();
+
+                        $responseEvent->headers = $this->call->status->metadata;
+                        $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
+                        $responseEvent->clientId = spl_object_id($this);
+
+                        $this->logResponse($responseEvent);
+                    }
+
                     yield $resource;
                 }
             }
         } else {
             foreach ($this->call->responses() as $response) {
+                if ($this->logger) {
+                    $responseEvent = new LogEvent();
+
+                    $responseEvent->headers = $this->call->status->metadata;
+                    $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
+                    $responseEvent->clientId = spl_object_id($this);
+
+                    $this->logResponse($responseEvent);
+                }
+
                 yield $response;
             }
         }
