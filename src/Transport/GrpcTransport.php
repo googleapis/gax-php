@@ -181,7 +181,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 isset($options['headers']) ? $options['headers'] : [],
                 $this->getCallOptions($options)
             ),
-            $call->getDescriptor()
+            $call->getDescriptor(),
+            $this->logger
         );
     }
 
@@ -200,7 +201,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 isset($options['headers']) ? $options['headers'] : [],
                 $this->getCallOptions($options)
             ),
-            $call->getDescriptor()
+            $call->getDescriptor(),
+            $this->logger
         );
     }
 
@@ -225,9 +227,26 @@ class GrpcTransport extends BaseStub implements TransportInterface
             isset($options['headers']) ? $options['headers'] : [],
             $this->getCallOptions($options)
         );
+
+        if ($this->logger) {
+            $requestEvent = new LogEvent();
+
+            $requestEvent->headers = $options['headers'];
+            $requestEvent->payload = $call->getMessage()->serializeToJsonString();
+            $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
+            $requestEvent->serviceName = $options['serviceName'] ?? null;
+            $requestEvent->rpcName = $call->getMethod();
+            $requestEvent->clientId = spl_object_id($this);
+            $requestEvent->requestId = spl_object_id($call);
+
+            $this->logRequest($requestEvent);
+        }
+
+
         return new ServerStream(
             new ServerStreamingCallWrapper($stream),
-            $call->getDescriptor()
+            $call->getDescriptor(),
+            $this->logger
         );
     }
 

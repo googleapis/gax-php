@@ -31,19 +31,26 @@
  */
 namespace Google\ApiCore;
 
+use Google\Auth\Logging\LogEvent;
+use Google\Auth\Logging\LoggingTrait;
+use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use Grpc\BidiStreamingCall;
+use Psr\Log\LoggerInterface;
 
 /**
  * BidiStream is the response object from a gRPC bidirectional streaming API call.
  */
 class BidiStream
 {
+    use LoggingTrait;
+
     private $call;
     private $isComplete = false;
     private $writesClosed = false;
     private $resourcesGetMethod = null;
     private $pendingResources = [];
+    private null|LoggerInterface $logger = null;
 
     /**
      * BidiStream constructor.
@@ -51,12 +58,17 @@ class BidiStream
      * @param BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      * @param array $streamingDescriptor
      */
-    public function __construct(BidiStreamingCall $bidiStreamingCall, array $streamingDescriptor = [])
+    public function __construct(
+        BidiStreamingCall $bidiStreamingCall,
+        array $streamingDescriptor = [],
+        null|LoggerInterface $logger = null,
+    )
     {
         $this->call = $bidiStreamingCall;
         if (array_key_exists('resourcesGetMethod', $streamingDescriptor)) {
             $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
         }
+        $this->logger = $logger;
     }
 
     /**
@@ -73,6 +85,19 @@ class BidiStream
         if ($this->writesClosed) {
             throw new ValidationException('Cannot call write() after calling closeWrite().');
         }
+
+        if ($this->logger && $request instanceof Message) {
+            $logEvent = new LogEvent();
+
+            $logEvent->headers = null;
+            $logEvent->payload = $request->serializeToJsonString();
+            $logEvent->rpcName = $this->resourcesGetMethod;
+            $logEvent->clientId = spl_object_id($this);
+            $logEvent->requestId = spl_object_id($request);
+
+            return $logEvent;
+        }
+
         $this->call->write($request);
     }
 
@@ -144,6 +169,18 @@ class BidiStream
                 throw ApiException::createFromStdClass($status);
             }
         }
+
+        if ($this->logger) {
+            $responseEvent = new LogEvent();
+
+            $responseEvent->headers = isset($status) ? $status->code : null;
+            $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
+            $responseEvent->status = ($status) ? $status->code : null;
+            $responseEvent->clientId = spl_object_id($this);
+
+            $this->logResponse($responseEvent);
+        }
+
         return $result;
     }
 

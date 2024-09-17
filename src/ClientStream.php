@@ -31,15 +31,22 @@
  */
 namespace Google\ApiCore;
 
+use Google\Auth\Logging\LogEvent;
+use Google\Auth\Logging\LoggingTrait;
+use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use Grpc\ClientStreamingCall;
+use Psr\Log\LoggerInterface;
 
 /**
  * ClientStream is the response object from a gRPC client streaming API call.
  */
 class ClientStream
 {
+    use LoggingTrait;
+
     private $call;
+    private null|LoggerInterface $logger;
 
     /**
      * ClientStream constructor.
@@ -49,9 +56,11 @@ class ClientStream
      */
     public function __construct(// @phpstan-ignore-line
         ClientStreamingCall $clientStreamingCall,
-        array $streamingDescriptor = []
+        array $streamingDescriptor = [],
+        null|LoggerInterface $logger = null,
     ) {
         $this->call = $clientStreamingCall;
+        $this->logger = $logger;
     }
 
     /**
@@ -61,6 +70,18 @@ class ClientStream
      */
     public function write($request)
     {
+        if ($this->logger && $request instanceof Message) {
+            $requestEvent = new LogEvent();
+
+            $requestEvent->payload = $request->serializeToJsonString();
+            $requestEvent->serviceName = $options['serviceName'] ?? null;
+            // $requestEvent->rpcName = $call->getMethod();
+            $requestEvent->clientId = spl_object_id($this);
+            $requestEvent->requestId = spl_object_id($request);
+
+            $this->logRequest($requestEvent);
+        }
+
         $this->call->write($request);
     }
 
@@ -74,6 +95,17 @@ class ClientStream
     {
         list($response, $status) = $this->call->wait();
         if ($status->code == Code::OK) {
+            if ($this->logger) {
+                $responseEvent = new LogEvent();
+
+                $responseEvent->headers = $status->metadata;
+                $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
+                $responseEvent->status = $status->code;
+                $responseEvent->clientId = spl_object_id($this);
+
+                $this->logResponse($responseEvent);
+            }
+
             return $response;
         } else {
             throw ApiException::createFromStdClass($status);
