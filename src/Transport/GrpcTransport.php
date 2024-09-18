@@ -46,22 +46,22 @@ use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
-use Grpc\BaseStub;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use Grpc\Interceptor;
+use Grpc\BaseStub;
 use GuzzleHttp\Promise\Promise;
 
 /**
  * A gRPC based transport implementation.
  */
-class GrpcTransport implements TransportInterface
+class GrpcTransport extends BaseStub implements TransportInterface
 {
     use ValidationTrait;
     use GrpcSupportTrait;
     use ServiceAddressTrait;
 
-    private GrpcClient $client;
+    private BaseStub $client;
 
     /**
      * @param string $hostname
@@ -82,7 +82,14 @@ class GrpcTransport implements TransportInterface
      */
     public function __construct(string $hostname, array $opts, Channel $channel = null, array $interceptors = [])
     {
-        $this->client = new GrpcClient($hostname, $opts, $channel, $interceptors);
+        if ($interceptors) {
+            $channel = Interceptor::intercept(
+                $channel ?: new Channel($hostname, $opts),
+                $interceptors
+            );
+        }
+
+        $this->client = new BaseStub($hostname, $opts, $channel, $interceptors);
     }
 
     /**
@@ -298,7 +305,7 @@ class GrpcTransport implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->simpleRequest($method, $arguments, $deserialize, $metadata, $options);
+        return $this->client->_simpleRequest($method, $arguments, $deserialize, $metadata, $options);
     }
 
     /**
@@ -311,7 +318,7 @@ class GrpcTransport implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->clientStreamRequest($method, $deserialize, $metadata, $options);
+        return $this->client->_clientStreamRequest($method, $deserialize, $metadata, $options);
     }
 
     /**
@@ -326,7 +333,7 @@ class GrpcTransport implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->serverStreamRequest($method, $arguments, $deserialize, $metadata, $options);
+        return $this->client->_serverStreamRequest($method, $arguments, $deserialize, $metadata, $options);
     }
 
     /**
@@ -339,6 +346,6 @@ class GrpcTransport implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->bidiRequest($method, $deserialize, $metadata, $options);
+        return $this->client->_bidiRequest($method, $deserialize, $metadata, $options);
     }
 }
