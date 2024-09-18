@@ -158,7 +158,7 @@ class GrpcTransport implements TransportInterface
         $this->verifyUniverseDomain($options);
 
         return new BidiStream(
-            $this->client->bidiRequest(
+            $this->_bidiRequest(
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
@@ -176,7 +176,7 @@ class GrpcTransport implements TransportInterface
         $this->verifyUniverseDomain($options);
 
         return new ClientStream(
-            $this->client->clientStreamRequest(
+            $this->_clientStreamRequest(
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
@@ -200,7 +200,7 @@ class GrpcTransport implements TransportInterface
         }
 
         // This simultaenously creates and starts a \Grpc\ServerStreamingCall.
-        $stream = $this->client->serverStreamRequest(
+        $stream = $this->_serverStreamRequest(
             '/' . $call->getMethod(),
             $message,
             [$call->getDecodeType(), 'decode'],
@@ -220,7 +220,7 @@ class GrpcTransport implements TransportInterface
     {
         $this->verifyUniverseDomain($options);
 
-        $unaryCall = $this->client->simpleRequest(
+        $unaryCall = $this->_simpleRequest(
             '/' . $call->getMethod(),
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
@@ -282,5 +282,63 @@ class GrpcTransport implements TransportInterface
     private static function loadClientCertSource(callable $clientCertSource)
     {
         return call_user_func($clientCertSource);
+    }
+
+    /** FOR TESTING */
+
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @param callable $deserialize
+     */
+    protected function _simpleRequest(
+        $method,
+        $arguments,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->client->simpleRequest($method, $arguments, $deserialize, $metadata, $options);
+    }
+
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     */
+    protected function _clientStreamRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->client->clientStreamRequest($method, $deserialize, $metadata, $options);
+    }
+
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @param callable $deserialize
+     */
+    protected function _serverStreamRequest(
+        $method,
+        $arguments,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->client->serverStreamRequest($method, $arguments, $deserialize, $metadata, $options);
+    }
+
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     */
+    protected function _bidiRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->client->bidiRequest($method, $deserialize, $metadata, $options);
     }
 }
