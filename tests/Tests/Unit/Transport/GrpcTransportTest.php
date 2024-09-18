@@ -516,7 +516,7 @@ class GrpcTransportTest extends TestCase
             [$interceptor]
         );
 
-        $r1 = new \ReflectionProperty(GrpcTransport::class, 'client');
+        $r1 = new \ReflectionProperty(GrpcTransport::class, 'stub');
         $r1->setAccessible(true);
 
         $r2 = new \ReflectionProperty(BaseStub::class, 'call_invoker');

@@ -46,10 +46,10 @@ use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
 use Google\Rpc\Code;
+use Grpc\BaseStub;
 use Grpc\Channel;
 use Grpc\ChannelCredentials;
 use Grpc\Interceptor;
-use Grpc\BaseStub;
 use GuzzleHttp\Promise\Promise;
 
 /**
@@ -61,7 +61,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     use GrpcSupportTrait;
     use ServiceAddressTrait;
 
-    private BaseStub $client;
+    private BaseStub $stub;
 
     /**
      * @param string $hostname
@@ -89,7 +89,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
 
-        $this->client = new BaseStub($hostname, $opts, $channel, $interceptors);
+        $this->stub = new BaseStub($hostname, $opts, $channel, $interceptors);
     }
 
     /**
@@ -258,7 +258,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
     public function close()
     {
-        $this->client->close();
+        $this->stub->close();
     }
 
     private function verifyUniverseDomain(array $options)
@@ -305,7 +305,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->_simpleRequest($method, $arguments, $deserialize, $metadata, $options);
+        return $this->stub->_simpleRequest($method, $arguments, $deserialize, $metadata, $options);
     }
 
     /**
@@ -318,7 +318,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->_clientStreamRequest($method, $deserialize, $metadata, $options);
+        return $this->stub->_clientStreamRequest($method, $deserialize, $metadata, $options);
     }
 
     /**
@@ -333,7 +333,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->_serverStreamRequest($method, $arguments, $deserialize, $metadata, $options);
+        return $this->stub->_serverStreamRequest($method, $arguments, $deserialize, $metadata, $options);
     }
 
     /**
@@ -346,6 +346,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $metadata = [],
         array $options = []
     ) {
-        return $this->client->_bidiRequest($method, $deserialize, $metadata, $options);
+        return $this->stub->_bidiRequest($method, $deserialize, $metadata, $options);
     }
 }
