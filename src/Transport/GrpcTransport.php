@@ -40,6 +40,7 @@ use Google\ApiCore\ClientStream;
 use Google\ApiCore\GrpcSupportTrait;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
+use Google\ApiCore\Transport\Grpc\GrpcClient;
 use Google\ApiCore\Transport\Grpc\ServerStreamingCallWrapper;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
@@ -54,11 +55,13 @@ use GuzzleHttp\Promise\Promise;
 /**
  * A gRPC based transport implementation.
  */
-class GrpcTransport extends BaseStub implements TransportInterface
+class GrpcTransport implements TransportInterface
 {
     use ValidationTrait;
     use GrpcSupportTrait;
     use ServiceAddressTrait;
+
+    private GrpcClient $client;
 
     /**
      * @param string $hostname
@@ -79,14 +82,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     public function __construct(string $hostname, array $opts, Channel $channel = null, array $interceptors = [])
     {
-        if ($interceptors) {
-            $channel = Interceptor::intercept(
-                $channel ?: new Channel($hostname, $opts),
-                $interceptors
-            );
-        }
-
-        parent::__construct($hostname, $opts, $channel);
+        $this->client = new GrpcClient($hostname, $opts, $channel, $interceptors);
     }
 
     /**
@@ -162,7 +158,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         $this->verifyUniverseDomain($options);
 
         return new BidiStream(
-            $this->_bidiRequest(
+            $this->client->bidiRequest(
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
@@ -177,11 +173,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     public function startClientStreamingCall(Call $call, array $options)
     {
-
         $this->verifyUniverseDomain($options);
 
         return new ClientStream(
-            $this->_clientStreamRequest(
+            $this->client->clientStreamRequest(
                 '/' . $call->getMethod(),
                 [$call->getDecodeType(), 'decode'],
                 isset($options['headers']) ? $options['headers'] : [],
@@ -205,7 +200,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         }
 
         // This simultaenously creates and starts a \Grpc\ServerStreamingCall.
-        $stream = $this->_serverStreamRequest(
+        $stream = $this->client->serverStreamRequest(
             '/' . $call->getMethod(),
             $message,
             [$call->getDecodeType(), 'decode'],
@@ -225,7 +220,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     {
         $this->verifyUniverseDomain($options);
 
-        $unaryCall = $this->_simpleRequest(
+        $unaryCall = $this->client->simpleRequest(
             '/' . $call->getMethod(),
             $call->getMessage(),
             [$call->getDecodeType(), 'decode'],
@@ -252,6 +247,11 @@ class GrpcTransport extends BaseStub implements TransportInterface
         );
 
         return $promise;
+    }
+
+    public function close()
+    {
+        $this->client->close();
     }
 
     private function verifyUniverseDomain(array $options)
