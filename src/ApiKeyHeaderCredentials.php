@@ -76,7 +76,7 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
         ];
 
         if (is_null($args['apiKey'])) {
-            throw new ValidationException("Cannot build ApiKeyHeaderCredentials without apiKey option");
+            throw new ValidationException('Cannot build ApiKeyHeaderCredentials without apiKey option');
         }
 
         return new ApiKeyHeaderCredentials($args['apiKey'], $args['quotaProject']);
