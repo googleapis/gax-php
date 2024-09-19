@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.0](https://github.com/googleapis/gax-php/compare/v1.34.1...v1.35.0) (2024-09-19)
+
+
+### Features
+
+* **docs:** Use doctum shared workflow for reference docs ([#578](https://github.com/googleapis/gax-php/issues/578)) ([021763f](https://github.com/googleapis/gax-php/commit/021763f255acaffda6ebe34a9d1a01c2bd187326))
+
 ## [1.34.1](https://github.com/googleapis/gax-php/compare/v1.34.0...v1.34.1) (2024-08-13)
 
 
