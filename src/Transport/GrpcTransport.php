@@ -60,6 +60,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
     use GrpcSupportTrait;
     use ServiceAddressTrait;
 
+    private BaseStub $stub;
+
     /**
      * @param string $hostname
      * @param array $opts
@@ -86,7 +88,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
 
-        parent::__construct($hostname, $opts, $channel);
+        $this->stub = new BaseStub($hostname, $opts, $channel);
     }
 
     /**
@@ -177,7 +179,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
      */
     public function startClientStreamingCall(Call $call, array $options)
     {
-
         $this->verifyUniverseDomain($options);
 
         return new ClientStream(
@@ -254,6 +255,11 @@ class GrpcTransport extends BaseStub implements TransportInterface
         return $promise;
     }
 
+    public function close()
+    {
+        $this->stub->close();
+    }
+
     private function verifyUniverseDomain(array $options)
     {
         if (isset($options['credentialsWrapper'])) {
@@ -282,5 +288,63 @@ class GrpcTransport extends BaseStub implements TransportInterface
     private static function loadClientCertSource(callable $clientCertSource)
     {
         return call_user_func($clientCertSource);
+    }
+
+    /** FOR TESTING */
+
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @param callable $deserialize
+     */
+    protected function _simpleRequest(
+        $method,
+        $arguments,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->stub->_simpleRequest($method, $arguments, $deserialize, $metadata, $options);
+    }
+
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     */
+    protected function _clientStreamRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->stub->_clientStreamRequest($method, $deserialize, $metadata, $options);
+    }
+
+    /**
+     * @param string $method
+     * @param array $arguments
+     * @param callable $deserialize
+     */
+    protected function _serverStreamRequest(
+        $method,
+        $arguments,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->stub->_serverStreamRequest($method, $arguments, $deserialize, $metadata, $options);
+    }
+
+    /**
+     * @param string $method
+     * @param callable $deserialize
+     */
+    protected function _bidiRequest(
+        $method,
+        $deserialize,
+        array $metadata = [],
+        array $options = []
+    ) {
+        return $this->stub->_bidiRequest($method, $deserialize, $metadata, $options);
     }
 }
