@@ -164,7 +164,7 @@ class JsonStreamDecoder
                 if ($b === '}' && !$str) {
                     $level--;
                     if ($level === 1) {
-                        $end = $cursor+1;
+                        $end = $cursor + 1;
                     }
                 }
                 // Track the closing of an array if not in a string value.
