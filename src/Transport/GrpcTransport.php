@@ -89,7 +89,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
 
-        $this->stub = new BaseStub($hostname, $opts, $channel, $interceptors);
+        $this->stub = new BaseStub($hostname, $opts, $channel);
     }
 
     /**
