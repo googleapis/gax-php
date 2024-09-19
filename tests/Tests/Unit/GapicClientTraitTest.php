@@ -1569,32 +1569,58 @@ class GapicClientTraitTest extends TestCase
 
     public function testApiKeyOption()
     {
-        $apiKey = 'abc-123';
-        $client = new StubGapicClient();
-        $updatedOptions = $client->buildClientOptions([
-            'credentialsConfig' => ['apiKey' => $apiKey],
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport->startUnaryCall(
+            Argument::type(Call::class),
+            Argument::that(function ($options) {
+                // assert API key
+                $this->assertArrayHasKey('credentialsWrapper', $options);
+                $headers = $options['credentialsWrapper']->getAuthorizationHeaderCallback()();
+                $this->assertArrayHasKey('x-goog-api-key', $headers);
+                $this->assertEquals(['abc-123'], $headers['x-goog-api-key']);
+
+                return true;
+            })
+        )
+            ->shouldBeCalledOnce()
+            ->willReturn(new FulfilledPromise(new MockResponse()));
+
+        $client = new GapicV2SurfaceClient([
+            'transport' => $transport->reveal(),
+            'credentialsConfig' => ['apiKey' => 'abc-123']
         ]);
-        $client->setClientOptions($updatedOptions);
-        $credentialsWrapper = $client->get('credentialsWrapper');
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
-        $headers = $callback();
-        $this->assertEquals(['x-goog-api-key' => [$apiKey]], $headers);
+
+        $response = $client->startCall('SimpleMethod', 'decodeType');
     }
 
-    public function testApiKeyOptionIsIgnoredWhenCredentialsAreSupplied()
+    public function testApiKeyOptionThrowsExceptionWhenCredentialsAreSupplied()
     {
-        $apiKey = 'abc-123';
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            'API Keys and Credentials are mutually exclusive authentication methods and cannot be used together.'
+        );
+
         $credentials = $this->prophesize(FetchAuthTokenInterface::class);
-        $client = new StubGapicClient();
-        $updatedOptions = $client->buildClientOptions([
-            'credentialsConfig' => ['apiKey' => $apiKey],
+        $client = new GapicV2SurfaceClient([
+            'credentialsConfig' => ['apiKey' => 'abc-123'],
             'credentials' => $credentials->reveal(),
         ]);
-        $client->setClientOptions($updatedOptions);
-        $credentialsWrapper = $client->get('credentialsWrapper');
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback();
-        $headers = $callback();
-        $this->assertEquals([], $headers);
+    }
+
+    public function testApiKeyOptionThrowsExceptionWhenKeyFileIsSupplied()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            'API Keys and Credentials are mutually exclusive authentication methods and cannot be used together.'
+        );
+
+        $credentials = $this->prophesize(FetchAuthTokenInterface::class);
+        $client = new GapicV2SurfaceClient([
+            'credentialsConfig' => [
+                'apiKey' => 'abc-123',
+                'keyFile' => __DIR__ . '/testdata/json-key-file.json',
+            ],
+        ]);
     }
 
     public function testApiKeyOptionAndQuotaProject()

@@ -42,7 +42,7 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
     /**
      * ApiKeyHeaderCredentials constructor.
      * @param string $apiKey The API key to set in the header for the request
-     * @param string|null $quotaProject The quota project associated with the credentials.
+     * @param string|null $quotaProject The quota project associated with the API key.
      * @throws ValidationException
      */
     public function __construct($apiKey, $quotaProject = null)
