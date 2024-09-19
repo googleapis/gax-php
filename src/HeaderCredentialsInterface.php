@@ -37,10 +37,12 @@ interface HeaderCredentialsInterface
      * @param string $audience optional audience for self-signed JWTs.
      * @return callable Callable function that returns an authorization header.
      */
-    public function getAuthorizationHeaderCallback($audience = null);
+    public function getAuthorizationHeaderCallback($audience = null): ?callable;
 
     /**
      * @return string|null The quota project associated with the credentials.
      */
-    public function getQuotaProject();
+    public function getQuotaProject(): ?string;
+
+    public function checkUniverseDomain(): void;
 }

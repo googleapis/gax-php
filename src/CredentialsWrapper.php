@@ -192,7 +192,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
     /**
      * @return string|null The quota project associated with the credentials.
      */
-    public function getQuotaProject()
+    public function getQuotaProject(): ?string
     {
         if ($this->credentialsFetcher instanceof GetQuotaProjectInterface) {
             return $this->credentialsFetcher->getQuotaProject();
@@ -236,7 +236,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
      * @param string $audience optional audience for self-signed JWTs.
      * @return callable Callable function that returns an authorization header.
      */
-    public function getAuthorizationHeaderCallback($audience = null)
+    public function getAuthorizationHeaderCallback($audience = null): ?callable
     {
         // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
         // be passed into the gRPC c extension, and changes have the potential to trigger very
@@ -269,7 +269,7 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
     /**
      * Verify that the expected universe domain matches the universe domain from the credentials.
      */
-    public function checkUniverseDomain()
+    public function checkUniverseDomain(): void
     {
         if (false === $this->hasCheckedUniverse && $this->shouldCheckUniverseDomain()) {
             $credentialsUniverse = $this->credentialsFetcher instanceof GetUniverseDomainInterface

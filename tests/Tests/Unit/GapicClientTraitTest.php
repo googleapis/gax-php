@@ -1599,38 +1599,33 @@ class GapicClientTraitTest extends TestCase
 
     public function testApiKeyOptionAndQuotaProject()
     {
-        $apiKey = 'abc-123';
-        $quotaProject = 'def-456';
-        $client = new StubGapicClient();
-        $updatedOptions = $client->buildClientOptions([
-            'credentialsConfig' => ['apiKey' => $apiKey, 'quotaProject' => $quotaProject ]
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport->startUnaryCall(
+            Argument::type(Call::class),
+            Argument::that(function ($options) {
+                // assert API key
+                $this->assertArrayHasKey('credentialsWrapper', $options);
+                $headers = $options['credentialsWrapper']->getAuthorizationHeaderCallback()();
+                $this->assertArrayHasKey('x-goog-api-key', $headers);
+                $this->assertEquals(['abc-123'], $headers['x-goog-api-key']);
+
+                // assert quota project
+                $this->assertArrayHasKey('headers', $options);
+                $this->assertArrayHasKey('X-Goog-User-Project', $options['headers']);
+                $this->assertEquals(['def-456'], $options['headers']['X-Goog-User-Project']);
+
+                return true;
+            })
+        )
+            ->shouldBeCalledOnce()
+            ->willReturn(new FulfilledPromise(new MockResponse()));
+
+        $client = new GapicV2SurfaceClient([
+            'transport' => $transport->reveal(),
+            'credentialsConfig' => ['apiKey' => 'abc-123', 'quotaProject' => 'def-456']
         ]);
-        $client->setClientOptions($updatedOptions);
-        $callStack = $client->createCallStack([
-            'retrySettings' => RetrySettings::constructDefault(),
-            'autoPopulationSettings' => [
-                'pageToken' => \Google\Api\FieldInfo\Format::UUID4,
-            ],
-        ]);
 
-        $retryMiddleware = MiddlewareTester::getNextHandler($callStack);
-        $headerMiddleware = MiddlewareTester::getNextHandler($retryMiddleware);
-        $credentialsMiddleware = MiddlewareTester::getNextHandler($headerMiddleware);
-
-        MiddlewareTester::setNextHandler(
-            $credentialsMiddleware,
-            function (Call $call, $options) use (&$headers, &$credentials) {
-                $callback = $options['credentialsWrapper']->getAuthorizationHeaderCallback();
-                $headers = $options['headers'] + $callback();
-            }
-        );
-
-        $headerMiddleware($this->createMock(Call::class), []);
-
-        $this->assertArrayHasKey('x-goog-api-key', $headers);
-        $this->assertEquals([$apiKey], $headers['x-goog-api-key']);
-        $this->assertArrayHasKey('X-Goog-User-Project', $headers);
-        $this->assertEquals([$quotaProject], $headers['X-Goog-User-Project']);
+        $response = $client->startCall('SimpleMethod', 'decodeType');
     }
 }
 

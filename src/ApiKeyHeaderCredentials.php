@@ -85,7 +85,7 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
     /**
      * @return string|null The quota project associated with the credentials.
      */
-    public function getQuotaProject()
+    public function getQuotaProject(): ?string
     {
         return $this->quotaProject;
     }
@@ -95,7 +95,7 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
      *
      * @return callable Callable function that returns the API key header.
      */
-    public function getAuthorizationHeaderCallback($unusedAudience = null)
+    public function getAuthorizationHeaderCallback($unusedAudience = null): ?callable
     {
         $apiKey = $this->apiKey;
 
@@ -105,5 +105,10 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
         return function () use ($apiKey) {
             return ['x-goog-api-key' => [$apiKey]];
         };
+    }
+
+    public function checkUniverseDomain(): void
+    {
+        // no-op, API keys do not have a universe domain
     }
 }
