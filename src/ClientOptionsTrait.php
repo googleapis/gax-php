@@ -36,6 +36,7 @@ use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use Psr\Log\LoggerInterface;
@@ -117,15 +118,19 @@ trait ClientOptionsTrait
         // Keep track of the API Endpoint
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
-        // If logger is explecitely set to null, logging is disabled
-        if (!array_key_exists('logger', $options)) {
+        // If logger is explecitely set to false, logging is disabled
+        if (isset($options['logger']) && $options['logger'] !== false) {
             $options['logger'] = ApplicationDefaultCredentials::getDefaultLogger();
         }
 
-        if (isset($options['logger']) && !$options['logger'] instanceof LoggerInterface) {
+        if (isset($options['logger']) && (!$options['logger'] instanceof LoggerInterface || !$options['logger'] instanceof bool)) {
             throw new ValidationException(
                 'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
             );
+        }
+
+        if (isset($options['logger'])) {
+            $options['credentialsConfig']['authHttpHandler'] = HttpHandlerFactory::build(logger: $options['logger']);
         }
 
         // Merge defaults into $options starting from top level

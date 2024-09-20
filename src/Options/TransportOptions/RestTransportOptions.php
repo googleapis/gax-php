@@ -51,7 +51,7 @@ class RestTransportOptions implements ArrayAccess
 
     private ?string $restClientConfigPath;
 
-    private ?LoggerInterface $logger;
+    private null|false|LoggerInterface $logger;
 
     /**
      * @param array $options {
@@ -63,7 +63,7 @@ class RestTransportOptions implements ArrayAccess
      *          A callable which returns the client cert as a string.
      *    @type string $restClientConfigPath
      *          The path to the REST client config file.
-     *    @typo ?LoggerInterface
+     *    @typo null|false|LoggerInterface
      *          A PSR-3 compliant logger instance.
      * }
      */
@@ -116,9 +116,9 @@ class RestTransportOptions implements ArrayAccess
     }
 
     /**
-     * @param ?LoggerInterface $logger
+     * @param null|false|LoggerInterface $logger
      */
-    public function setLogger(?LoggerInterface $logger)
+    public function setLogger(null|false|LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
