@@ -260,16 +260,8 @@ trait ClientOptionsTrait
      */
     private function createCredentialsWrapper($credentials, array $credentialsConfig, string $universeDomain)
     {
-        if (isset($credentialsConfig['apiKey']) && (!is_null($credentials) || isset($credentialsConfig['keyFile']))) {
-            throw new ValidationException(
-                'API Keys and Credentials are mutually exclusive authentication methods and cannot be used together.'
-            );
-        }
         if (is_null($credentials)) {
             // If the user has explicitly set the apiKey option, use Api Key credentials
-            if (isset($credentialsConfig['apiKey'])) {
-                return ApiKeyHeaderCredentials::build($credentialsConfig);
-            }
             return CredentialsWrapper::build($credentialsConfig, $universeDomain);
         } elseif (is_string($credentials) || is_array($credentials)) {
             return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig, $universeDomain);

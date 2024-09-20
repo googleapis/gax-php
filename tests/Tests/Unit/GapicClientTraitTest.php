@@ -33,6 +33,7 @@
 namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\AgentHeader;
+use Google\ApiCore\ApiKeyHeaderCredentials;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Call;
 use Google\ApiCore\ClientStream;
@@ -1587,7 +1588,7 @@ class GapicClientTraitTest extends TestCase
 
         $client = new GapicV2SurfaceClient([
             'transport' => $transport->reveal(),
-            'credentialsConfig' => ['apiKey' => 'abc-123']
+            'apiKey' => 'abc-123',
         ]);
 
         $response = $client->startCall('SimpleMethod', 'decodeType');
@@ -1602,25 +1603,25 @@ class GapicClientTraitTest extends TestCase
 
         $credentials = $this->prophesize(FetchAuthTokenInterface::class);
         $client = new GapicV2SurfaceClient([
-            'credentialsConfig' => ['apiKey' => 'abc-123'],
+            'apiKey' => 'abc-123',
             'credentials' => $credentials->reveal(),
         ]);
     }
 
-    public function testApiKeyOptionThrowsExceptionWhenKeyFileIsSupplied()
+    public function testKeyFileIsIgnoredWhenApiKeyOptionIsSupplied()
     {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(
-            'API Keys and Credentials are mutually exclusive authentication methods and cannot be used together.'
-        );
-
         $credentials = $this->prophesize(FetchAuthTokenInterface::class);
         $client = new GapicV2SurfaceClient([
+            'apiKey' => 'abc-123',
             'credentialsConfig' => [
-                'apiKey' => 'abc-123',
                 'keyFile' => __DIR__ . '/testdata/json-key-file.json',
             ],
         ]);
+
+        $prop = new \ReflectionProperty($client, 'credentialsWrapper');
+        $prop->setAccessible(true);
+        $this->assertInstanceOf(ApiKeyHeaderCredentials::class, $prop->getValue($client));
+
     }
 
     public function testApiKeyOptionAndQuotaProject()
@@ -1648,7 +1649,8 @@ class GapicClientTraitTest extends TestCase
 
         $client = new GapicV2SurfaceClient([
             'transport' => $transport->reveal(),
-            'credentialsConfig' => ['apiKey' => 'abc-123', 'quotaProject' => 'def-456']
+            'apiKey' => 'abc-123',
+            'credentialsConfig' => ['quotaProject' => 'def-456']
         ]);
 
         $response = $client->startCall('SimpleMethod', 'decodeType');

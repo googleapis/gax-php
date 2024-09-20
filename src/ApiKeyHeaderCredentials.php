@@ -36,8 +36,8 @@ namespace Google\ApiCore;
  */
 class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
 {
-    private $apiKey;
-    private $quotaProject;
+    private string $apiKey;
+    private ?string $quotaProject;
 
     /**
      * ApiKeyHeaderCredentials constructor.
@@ -45,41 +45,13 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
      * @param string|null $quotaProject The quota project associated with the API key.
      * @throws ValidationException
      */
-    public function __construct($apiKey, $quotaProject = null)
+    public function __construct(string $apiKey, string $quotaProject = null)
     {
-        if (empty($apiKey) || !is_string($apiKey)) {
-            throw new ValidationException('API key must be a string');
+        if (empty($apiKey)) {
+            throw new ValidationException('API key cannot be empty');
         }
         $this->apiKey = $apiKey;
         $this->quotaProject = $quotaProject;
-    }
-
-    /**
-     * Factory method to create a CredentialsWrapper from an array of options.
-     *
-     * @param array $args {
-     *     An array of optional arguments.
-     *
-     *     @type string $apiKey
-     *           The API key to set in the header for the request
-     *     @type string $quotaProject
-     *           Specifies a user project to bill for access charges associated with the request.
-     * }
-     * @return ApiKeyHeaderCredentials
-     * @throws ValidationException
-     */
-    public static function build(array $args = [])
-    {
-        $args += [
-            'apiKey'        => null,
-            'quotaProject'  => null,
-        ];
-
-        if (is_null($args['apiKey'])) {
-            throw new ValidationException('Cannot build ApiKeyHeaderCredentials without apiKey option');
-        }
-
-        return new ApiKeyHeaderCredentials($args['apiKey'], $args['quotaProject']);
     }
 
     /**
