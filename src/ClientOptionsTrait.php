@@ -101,6 +101,7 @@ trait ClientOptionsTrait
             'apiEndpoint' => null,
             'clientCertSource' => null,
             'universeDomain' => null,
+            'logger' => null,
         ];
 
         $supportedTransports = $this->supportedTransports();
@@ -115,15 +116,20 @@ trait ClientOptionsTrait
             ];
         }
 
+        // Merge defaults into $options starting from top level
+        // variables, then going into deeper nesting, so that
+        // we will not encounter missing keys
+        $options += $defaultOptions;
+
         // Keep track of the API Endpoint
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
         // If logger is explecitely set to false, logging is disabled
-        if (isset($options['logger']) && $options['logger'] !== false) {
-            $options['logger'] = ApplicationDefaultCredentials::getDefaultLogger();
+        if ($options['logger'] !== false) {
+            $options['logger'] = $options['logger'] ?? ApplicationDefaultCredentials::getDefaultLogger();
         }
 
-        if (isset($options['logger']) && (!$options['logger'] instanceof LoggerInterface || !$options['logger'] instanceof bool)) {
+        if ($options['logger'] !== false && !$options['logger'] instanceof LoggerInterface) {
             throw new ValidationException(
                 'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
             );
@@ -133,10 +139,6 @@ trait ClientOptionsTrait
             $options['credentialsConfig']['authHttpHandler'] = HttpHandlerFactory::build(logger: $options['logger']);
         }
 
-        // Merge defaults into $options starting from top level
-        // variables, then going into deeper nesting, so that
-        // we will not encounter missing keys
-        $options += $defaultOptions;
         $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];
         $options['transportConfig'] += $defaultOptions['transportConfig'];  // @phpstan-ignore-line
         if (isset($options['transportConfig']['grpc'])) {
