@@ -83,7 +83,7 @@ trait GapicClientTrait
         Call::SERVER_STREAMING_CALL => 'startServerStreamingCall',
     ];
     private bool $backwardsCompatibilityMode;
-    private null|LoggerInterface $logger = null;
+    private null|false|LoggerInterface $logger = null;
 
     /**
      * Add a middleware to the call stack by providing a callable which will be
