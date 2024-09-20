@@ -1664,7 +1664,6 @@ class StubGapicClient
         createCredentialsWrapper as public;
         createOperationsClient as public;
         createTransport as public;
-        createCallStack as public;
         determineMtlsEndpoint as public;
         getGapicVersion as public;
         getCredentialsWrapper as public;
@@ -1885,21 +1884,3 @@ class GapicV2SurfaceClient
         return $this->agentHeader;
     }
 }
-
-class MiddlewareTester
-{
-    public static function getNextHandler(callable $middleware)
-    {
-        $middlewareProperty = (new \ReflectionClass($middleware))->getProperty('nextHandler');
-        $middlewareProperty->setAccessible(true);
-        return $middlewareProperty->getValue($middleware);
-    }
-
-    public static function setNextHandler(callable $middleware, callable $nextHandler)
-    {
-        $middlewareProperty = (new \ReflectionClass($middleware))->getProperty('nextHandler');
-        $middlewareProperty->setAccessible(true);
-        $middlewareProperty->setValue($middleware, $nextHandler);
-    }
-}
-
