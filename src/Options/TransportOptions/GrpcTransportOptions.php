@@ -52,7 +52,7 @@ class GrpcTransportOptions implements ArrayAccess
 
     private ?Channel $channel;
 
-    private ?LoggerInterface $logger;
+    private null|false|LoggerInterface $logger;
 
     /**
      * @var Interceptor[]|UnaryInterceptorInterface[]
@@ -77,7 +77,7 @@ class GrpcTransportOptions implements ArrayAccess
      *          `UnaryInterceptorInterface` implementations over to a class which
      *          extends {@see Grpc\Interceptor}.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
-     *    @type LoggerInterface A PSR-3 Logger Interface.
+     *    @type null|false|LoggerInterface A PSR-3 Logger Interface.
      * }
      */
     public function __construct(array $options)
@@ -135,9 +135,9 @@ class GrpcTransportOptions implements ArrayAccess
     }
 
     /**
-     * @param ?LoggerInterface $logger
+     * @param null|false|LoggerInterface $logger
      */
-    public function setLogger(?LoggerInterface $logger)
+    public function setLogger(null|false|LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

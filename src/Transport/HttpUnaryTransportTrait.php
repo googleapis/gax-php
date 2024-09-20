@@ -127,13 +127,10 @@ trait HttpUnaryTransportTrait
      * @return callable
      * @throws ValidationException
      */
-    private static function buildHttpHandlerAsync(LoggerInterface $logger = null)
+    private static function buildHttpHandlerAsync(null|false|LoggerInterface $logger = null)
     {
         try {
-            // We set the loggerDisabled to true in case that we do not have a logger in this point.
-            // This is to avoid the factory to attach a logger back if the env var is set but the user
-            // set the client's logger to null explicitely.
-            return [HttpHandlerFactory::build(null, $logger, $logger ? false : true), 'async'];
+            return [HttpHandlerFactory::build(null, $logger), 'async'];
         } catch (Exception $ex) {
             throw new ValidationException('Failed to build HttpHandler', $ex->getCode(), $ex);
         }

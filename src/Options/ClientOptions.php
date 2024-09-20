@@ -94,7 +94,7 @@ class ClientOptions implements ArrayAccess
 
     private ?string $universeDomain;
 
-    private ?LoggerInterface $logger;
+    private null|false|LoggerInterface $logger;
 
     /**
      * @param array $options {
@@ -154,6 +154,8 @@ class ClientOptions implements ArrayAccess
      *           A callable which returns the client cert as a string.
      *     @type string $universeDomain
      *           The default service domain for a given Cloud universe.
+     *     @type null|false|LoggerInterface
+     *           A PSR-3 compliant logger.
      * }
      */
     public function __construct(array $options)
@@ -320,9 +322,9 @@ class ClientOptions implements ArrayAccess
     }
 
     /**
-     * @param LoggerInterface $logger
+     * @param null|false|LoggerInterface $logger
      */
-    public function setLogger(?LoggerInterface $logger)
+    public function setLogger(null|false|LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

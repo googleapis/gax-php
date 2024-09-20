@@ -49,7 +49,7 @@ class GrpcFallbackTransportOptions implements ArrayAccess
 
     private ?Closure $httpHandler;
 
-    private ?LoggerInterface $logger;
+    private null|false|LoggerInterface $logger;
 
     /**
      * @param array $options {
@@ -59,7 +59,7 @@ class GrpcFallbackTransportOptions implements ArrayAccess
      *          A callable which returns the client cert as a string.
      *    @type callable $httpHandler
      *          A handler used to deliver PSR-7 requests.
-     *    @type ?LoggerInterface
+     *    @type null|false|LoggerInterface
      *          A PSR-3 logger interface instance.
      * }
      */
@@ -100,9 +100,9 @@ class GrpcFallbackTransportOptions implements ArrayAccess
     }
 
     /**
-     * @param ?LoggerInterface $logger
+     * @param null|false|LoggerInterface $logger
      */
-    public function setLogger(?LoggerInterface $logger) {
+    public function setLogger(null|false|LoggerInterface $logger) {
         $this->logger = $logger;
     }
 }
