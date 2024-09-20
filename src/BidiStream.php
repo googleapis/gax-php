@@ -95,7 +95,7 @@ class BidiStream
             $logEvent->clientId = spl_object_id($this);
             $logEvent->requestId = spl_object_id($request);
 
-            return $logEvent;
+            $this->logRequest($logEvent);
         }
 
         $this->call->write($request);
@@ -174,8 +174,8 @@ class BidiStream
             $responseEvent = new LogEvent();
 
             $responseEvent->headers = isset($status) ? $status->code : null;
-            $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
-            $responseEvent->status = ($status) ? $status->code : null;
+            $responseEvent->payload = ($result) ? $result->serializeToJsonString() : null;
+            $responseEvent->status = (is_null($result)) ? $status->call->getStatus() : null;
             $responseEvent->clientId = spl_object_id($this);
 
             $this->logResponse($responseEvent);
