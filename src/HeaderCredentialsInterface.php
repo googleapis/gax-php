@@ -40,9 +40,9 @@ interface HeaderCredentialsInterface
     public function getAuthorizationHeaderCallback($audience = null): ?callable;
 
     /**
-     * @return string|null The quota project associated with the credentials.
+     * Verify that the expected universe domain matches the universe domain from the credentials.
+     *
+     * @throws ValidationException if the universe domain does not match.
      */
-    public function getQuotaProject(): ?string;
-
     public function checkUniverseDomain(): void;
 }

@@ -268,6 +268,8 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
 
     /**
      * Verify that the expected universe domain matches the universe domain from the credentials.
+     *
+     * @throws ValidationException if the universe domain does not match.
      */
     public function checkUniverseDomain(): void
     {

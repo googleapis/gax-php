@@ -31,10 +31,12 @@
  */
 namespace Google\ApiCore;
 
+use Google\Auth\GetQuotaProjectInterface;
+
 /**
  * The ApiKeyHeaderCredentials object provides a wrapper around an API key.
  */
-class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
+class ApiKeyHeaderCredentials implements HeaderCredentialsInterface, GetQuotaProjectInterface
 {
     private string $apiKey;
     private ?string $quotaProject;
@@ -79,8 +81,15 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface
         };
     }
 
+    /**
+     * Verify that the expected universe domain matches the universe domain from the credentials.
+     *
+     * @throws ValidationException if the universe domain does not match.
+     */
     public function checkUniverseDomain(): void
     {
-        // no-op, API keys do not have a universe domain
+        // This is a no-op, as API keys are not tied to a universe domain. As a result, the
+        // potential for leaking API keys to the GDU is higher, and it's recommended to specify
+        // the "universeDomain" option with the GAPIC client.
     }
 }
