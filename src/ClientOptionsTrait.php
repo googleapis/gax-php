@@ -261,6 +261,7 @@ trait ClientOptionsTrait
     private function createCredentialsWrapper($credentials, array $credentialsConfig, string $universeDomain)
     {
         if (is_null($credentials)) {
+            // If the user has explicitly set the apiKey option, use Api Key credentials
             return CredentialsWrapper::build($credentialsConfig, $universeDomain);
         } elseif (is_string($credentials) || is_array($credentials)) {
             return CredentialsWrapper::build(['keyFile' => $credentials] + $credentialsConfig, $universeDomain);
