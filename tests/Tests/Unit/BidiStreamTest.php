@@ -36,13 +36,20 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Testing\MockBidiStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\ValidationException;
+use Google\Auth\Logging\StdOutLogger;
 use Google\Protobuf\Internal\GPBType;
+use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Rpc\Code;
+use Grpc\BidiStreamingCall;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
+use stdClass;
 
 class BidiStreamTest extends TestCase
 {
+    use ProphecyTrait;
     use TestTrait;
 
     public function testEmptySuccess()
@@ -315,5 +322,58 @@ class BidiStreamTest extends TestCase
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $this->assertEquals($resources, iterator_to_array($stream->closeWriteAndReadAll()));
+    }
+
+    public function testWriteCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(2);
+
+        $request1 = $this->prophesize(Message::class);
+        $request2 = $this->prophesize(Message::class);
+
+        $requests = [$request1->reveal(), $request2->reveal()];
+
+        $call = $this->prophesize(BidiStreamingCall::class);
+        $call->write(Argument::cetera());
+
+        $stream = new BidiStream($call->reveal(), logger: $logger->reveal());
+        $stream->writeAll($requests);
+    }
+
+    public function testReadCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(3);
+        $logger->info(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+
+        $request1 = $this->prophesize(Message::class);
+        $request2 = $this->prophesize(Message::class);
+
+        $requests = [$request1->reveal(), $request2->reveal()];
+
+        $status = new stdClass();
+        $status->code = 0;
+
+        $call = $this->prophesize(BidiStreamingCall::class);
+        $call->write(Argument::cetera())
+            ->willReturn();
+        $call->writesDone()
+            ->willReturn();
+        $call->read()
+            ->willReturn();
+        $call->getStatus()
+            ->willReturn($status);
+        $call->getMetadata()
+            ->willReturn([]);
+
+        $stream = new BidiStream($call->reveal(), logger: $logger->reveal());
+        $stream->writeAll($requests);
+
+        // Loop to trigger the reads
+        foreach($stream->closeWriteAndReadAll() as $_) {}
     }
 }
