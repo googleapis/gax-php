@@ -328,7 +328,7 @@ trait GapicClientTrait
     private function createTransport(
         string $apiEndpoint,
         $transport,
-    $transportConfig,
+        $transportConfig,
         callable $clientCertSource = null
     ) {
         if (!is_string($transport)) {
