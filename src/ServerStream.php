@@ -52,12 +52,12 @@ class ServerStream
      *
      * @param ServerStreamingCallInterface $serverStreamingCall The server streaming call object
      * @param array $streamingDescriptor
+     * @param null|false|LoggerInterface $logger
      */
     public function __construct(
         $serverStreamingCall,
         array $streamingDescriptor = [],
         null|LoggerInterface $logger = null
-
     )
     {
         $this->call = $serverStreamingCall;
@@ -77,34 +77,22 @@ class ServerStream
     public function readAll()
     {
         $resourcesGetMethod = $this->resourcesGetMethod;
-        if (!is_null($resourcesGetMethod)) {
-            foreach ($this->call->responses() as $response) {
+        foreach ($this->call->responses() as $response)
+        {
+            if ($this->logger) {
+                $responseEvent = new LogEvent();
+                $responseEvent->headers = $this->call->getMetadata();
+                $responseEvent->payload = $response ? $response->serializeToJsonString() : null;
+                $responseEvent->clientId = spl_object_id($this->call);
+
+                $this->logResponse($responseEvent);
+            }
+
+            if (!is_null($resourcesGetMethod)) {
                 foreach ($response->$resourcesGetMethod() as $resource) {
-                    if ($this->logger) {
-                        $responseEvent = new LogEvent();
-
-                        $responseEvent->headers = $this->call->status->metadata;
-                        $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
-                        $responseEvent->clientId = spl_object_id($this);
-
-                        $this->logResponse($responseEvent);
-                    }
-
                     yield $resource;
                 }
-            }
-        } else {
-            foreach ($this->call->responses() as $response) {
-                if ($this->logger) {
-                    $responseEvent = new LogEvent();
-
-                    $responseEvent->headers = $this->call->status->metadata;
-                    $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
-                    $responseEvent->clientId = spl_object_id($this);
-
-                    $this->logResponse($responseEvent);
-                }
-
+            } else {
                 yield $response;
             }
         }
@@ -112,6 +100,15 @@ class ServerStream
         // Errors in the REST transport will be thrown from there and not reach
         // this handling. Successful REST server-streams will have an OK status.
         $status = $this->call->getStatus();
+
+        if ($this->logger) {
+            $statusEvent = new LogEvent();
+            $statusEvent->status = $status->code;
+            $statusEvent->clientId = spl_object_id($this->call);
+
+            $this->logResponse($statusEvent);
+        }
+
         if ($status->code !== Code::OK) {
             throw ApiException::createFromStdClass($status);
         }
