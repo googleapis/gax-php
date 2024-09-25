@@ -157,7 +157,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            if (isset($options['logger']) && $options['logger'] === false) {
+            if (isset($config['logger']) && $config['logger'] === false) {
                 $config['logger'] = null;
             }
             return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger'] ?? null);
