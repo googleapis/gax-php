@@ -173,9 +173,12 @@ class BidiStream
             $responseEvent = new LogEvent();
 
             $responseEvent->headers = (is_null($result)) ? $this->call->getMetadata() : null;
-            $responseEvent->payload = ($result) ? $result->serializeToJsonString() : null;
             $responseEvent->status = (is_null($result)) ? $status->code : null;
             $responseEvent->clientId = spl_object_id($this);
+
+            if ($result && $result instanceof Message) {
+                $responseEvent->payload = ($result) ? $result->serializeToJsonString() : null;
+            }
 
             $this->logResponse($responseEvent);
         }
