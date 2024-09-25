@@ -91,7 +91,6 @@ class BidiStream
 
             $logEvent->headers = null;
             $logEvent->payload = $request->serializeToJsonString();
-            $logEvent->rpcName = $this->resourcesGetMethod;
             $logEvent->clientId = spl_object_id($this);
             $logEvent->requestId = spl_object_id($request);
 

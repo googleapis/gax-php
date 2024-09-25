@@ -342,6 +342,26 @@ class BidiStreamTest extends TestCase
         $stream->writeAll($requests);
     }
 
+    public function testWriteStringDoesNotCallLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+        $logger->info(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+
+        $requests = ['request1', 'request2'];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses);
+        $stream = new BidiStream($call, logger: $logger->reveal());
+
+        $stream->writeAll($requests);
+
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($stream->closeWriteAndReadAll()));
+        $this->assertEquals($requests, $call->popReceivedCalls());
+    }
+
     public function testReadCallsLogger()
     {
         $logger = $this->prophesize(StdOutLogger::class);
