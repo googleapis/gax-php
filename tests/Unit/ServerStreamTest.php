@@ -212,8 +212,12 @@ class ServerStreamTest extends TestCase
     public function testReadCallsLogger()
     {
         $logger = $this->prophesize(StdOutLogger::class);
+
+        // Two Debugs expected, once per response
         $logger->debug(Argument::cetera())
-            ->shouldBeCalledTimes(3);
+            ->shouldBeCalledTimes(2);
+
+        // Three info expected, once per response and once for the OK status
         $logger->info(Argument::cetera())
             ->shouldBeCalledTimes(3);
 
