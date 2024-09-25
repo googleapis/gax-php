@@ -75,7 +75,6 @@ class ClientStream
 
             $requestEvent->payload = $request->serializeToJsonString();
             $requestEvent->serviceName = $options['serviceName'] ?? null;
-            // $requestEvent->rpcName = $call->getMethod();
             $requestEvent->clientId = spl_object_id($this);
             $requestEvent->requestId = spl_object_id($request);
 
@@ -99,9 +98,12 @@ class ClientStream
                 $responseEvent = new LogEvent();
 
                 $responseEvent->headers = $status->metadata;
-                $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
                 $responseEvent->status = $status->code;
                 $responseEvent->clientId = spl_object_id($this);
+
+                if ($response && $response instanceof Message) {
+                    $response->serializeToJsonString();
+                }
 
                 $this->logResponse($responseEvent);
             }
