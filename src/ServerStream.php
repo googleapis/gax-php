@@ -106,7 +106,7 @@ class ServerStream
             $statusEvent->status = $status->code;
             $statusEvent->clientId = spl_object_id($this->call);
 
-            $this->logResponse($statusEvent);
+            $this->logStatus($statusEvent);
         }
 
         if ($status->code !== Code::OK) {
