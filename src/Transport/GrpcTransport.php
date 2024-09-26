@@ -81,6 +81,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
      *        release. To prepare for this, please take the time to convert
      *        `UnaryInterceptorInterface` implementations over to a class which
      *        extends {@see Grpc\Interceptor}.
+     * @param null|false|LoggerInterface $logger A PSR-3 Compliant logger.
      * @throws Exception
      */
     public function __construct(
@@ -88,7 +89,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         array $opts,
         Channel $channel = null,
         array $interceptors = [],
-        null|LoggerInterface $logger = null
+        null|false|LoggerInterface $logger = null
     )
     {
         if ($interceptors) {
