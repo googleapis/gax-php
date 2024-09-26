@@ -324,23 +324,22 @@ class BidiStreamTest extends TestCase
         $this->assertEquals($resources, iterator_to_array($stream->closeWriteAndReadAll()));
     }
 
-    // public function testWriteCallsLogger()
-    // {
-    //     $logger = $this->prophesize(StdOutLogger::class);
-    //     $logger->debug(Argument::cetera())
-    //         ->shouldBeCalledTimes(2);
+    public function testWriteCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(2);
 
-    //     $request1 = $this->prophesize(Message::class);
-    //     $request2 = $this->prophesize(Message::class);
+        $requests = [
+            $this->createStatus(Code::OK, 'request1'),
+            $this->createStatus(Code::OK, 'request2')
+        ];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses, ['\Google\Rpc\Status', 'mergeFromString']);
+        $stream = new BidiStream($call, logger: $logger->reveal());
 
-    //     $requests = [$request1->reveal(), $request2->reveal()];
-
-    //     $call = $this->prophesize(BidiStreamingCall::class);
-    //     $call->write(Argument::cetera());
-
-    //     $stream = new BidiStream($call->reveal(), logger: $logger->reveal());
-    //     $stream->writeAll($requests);
-    // }
+        $stream->writeAll($requests);
+    }
 
     public function testWriteStringDoesNotCallLogger()
     {
@@ -362,38 +361,24 @@ class BidiStreamTest extends TestCase
         $this->assertEquals($requests, $call->popReceivedCalls());
     }
 
-    // public function testReadCallsLogger()
-    // {
-    //     $logger = $this->prophesize(StdOutLogger::class);
-    //     $logger->debug(Argument::cetera())
-    //         ->shouldBeCalledTimes(3);
-    //     $logger->info(Argument::cetera())
-    //         ->shouldBeCalledTimes(1);
+    public function testReadCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(3);
+        $logger->info(Argument::cetera())
+            ->shouldBeCalledTimes(1);
 
-    //     $request1 = $this->prophesize(Message::class);
-    //     $request2 = $this->prophesize(Message::class);
+        $requests = [
+            $this->createStatus(Code::OK, 'request1'),
+            $this->createStatus(Code::OK, 'request2')
+        ];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses, ['\Google\Rpc\Status', 'mergeFromString']);
+        $stream = new BidiStream($call, logger: $logger->reveal());
 
-    //     $requests = [$request1->reveal(), $request2->reveal()];
+        $stream->writeAll($requests);
 
-    //     $status = new stdClass();
-    //     $status->code = 0;
-
-    //     $call = $this->prophesize(BidiStreamingCall::class);
-    //     $call->write(Argument::cetera())
-    //         ->willReturn();
-    //     $call->writesDone()
-    //         ->willReturn();
-    //     $call->read()
-    //         ->willReturn();
-    //     $call->getStatus()
-    //         ->willReturn($status);
-    //     $call->getMetadata()
-    //         ->willReturn([]);
-
-    //     $stream = new BidiStream($call->reveal(), logger: $logger->reveal());
-    //     $stream->writeAll($requests);
-
-    //     // Loop to trigger the reads
-    //     foreach($stream->closeWriteAndReadAll() as $_) {}
-    // }
+        foreach ($stream->closeWriteAndReadAll() as $_) {}
+    }
 }
