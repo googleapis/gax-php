@@ -102,7 +102,8 @@ class GrpcFallbackTransportOptions implements ArrayAccess
     /**
      * @param null|false|LoggerInterface $logger
      */
-    public function setLogger(null|false|LoggerInterface $logger) {
+    public function setLogger(null|false|LoggerInterface $logger)
+    {
         $this->logger = $logger;
     }
 }

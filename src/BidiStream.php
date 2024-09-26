@@ -63,8 +63,7 @@ class BidiStream
         BidiStreamingCall $bidiStreamingCall,
         array $streamingDescriptor = [],
         null|LoggerInterface $logger = null,
-    )
-    {
+    ) {
         $this->call = $bidiStreamingCall;
         if (array_key_exists('resourcesGetMethod', $streamingDescriptor)) {
             $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];

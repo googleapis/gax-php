@@ -37,7 +37,6 @@ use Google\ApiCore\Call;
 use Google\ApiCore\ServiceAddressTrait;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
-use Google\Auth\Logging\LoggingTrait;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Status;
 use GuzzleHttp\Exception\RequestException;
