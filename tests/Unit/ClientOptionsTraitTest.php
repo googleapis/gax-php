@@ -196,7 +196,9 @@ class ClientOptionsTraitTest extends TestCase
                 'rest' => [
                     'logger' => null,
                 ],
-                'grpc-fallback' => [],
+                'grpc-fallback' => [
+                    'logger' => null,
+                ],
             ],
             'credentials' => null,
             'credentialsConfig' => [],
@@ -555,17 +557,18 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertEquals($options, $options2);
     }
 
-    public function testLoggerIsNullWhenNullIsPassed()
+    public function testLoggerIsNullWhenFalseIsPassed()
     {
         putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
 
         $client = new StubClientOptionsClient();
         $optionsArray = [
-            'logger' => null,
+            'logger' => false,
         ];
         $options = $client->buildClientOptions($optionsArray);
-        $this->assertNull($options['transportConfig']['rest']['logger']);
-        $this->assertNull($options['transportConfig']['grpc']['logger']);
+        $this->assertFalse($options['transportConfig']['rest']['logger']);
+        $this->assertFalse($options['transportConfig']['grpc']['logger']);
+        $this->assertFalse($options['transportConfig']['grpc-fallback']['logger']);
 
         putenv('GOOGLE_SDK_DEBUG_LOGGING');
     }
