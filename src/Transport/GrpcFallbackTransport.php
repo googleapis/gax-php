@@ -55,7 +55,6 @@ class GrpcFallbackTransport implements TransportInterface
     use ValidationTrait;
     use ServiceAddressTrait;
     use HttpUnaryTransportTrait;
-    use LoggingTrait;
 
     private string $baseUri;
     private null|LoggerInterface $logger;
@@ -68,12 +67,10 @@ class GrpcFallbackTransport implements TransportInterface
     public function __construct(
         string $baseUri,
         callable $httpHandler,
-        null|LoggerInterface $logger = null
     ) {
         $this->baseUri = $baseUri;
         $this->httpHandler = $httpHandler;
         $this->transportName = 'grpc-fallback';
-        $this->logger = $logger;
     }
 
     /**

@@ -53,7 +53,7 @@ class ServerStream
      *
      * @param ServerStreamingCallInterface $serverStreamingCall The server streaming call object
      * @param array $streamingDescriptor
-     * @param null|false|LoggerInterface $logger
+     * @param null|LoggerInterface $logger A PSR-3 compliant logger.
      */
     public function __construct(
         $serverStreamingCall,
@@ -82,7 +82,7 @@ class ServerStream
         {
             if ($this->logger && $response instanceof Message) {
                 $responseEvent = new LogEvent();
-                $responseEvent->payload = $response ? $response->serializeToJsonString() : null;
+                $responseEvent->payload = $response->serializeToJsonString();
                 $responseEvent->clientId = spl_object_id($this->call);
 
                 $this->logResponse($responseEvent);
