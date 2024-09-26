@@ -116,13 +116,13 @@ trait ClientOptionsTrait
             ];
         }
 
+        // Keep track of the API Endpoint
+        $apiEndpoint = $options['apiEndpoint'] ?? null;
+
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
         $options += $defaultOptions;
-
-        // Keep track of the API Endpoint
-        $apiEndpoint = $options['apiEndpoint'] ?? null;
 
         // If logger is explecitely set to false, logging is disabled
         if ($options['logger'] !== false) {
