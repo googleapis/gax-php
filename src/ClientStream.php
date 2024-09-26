@@ -53,6 +53,7 @@ class ClientStream
      *
      * @param ClientStreamingCall $clientStreamingCall The gRPC client streaming call object
      * @param array $streamingDescriptor
+     * @param null|LoggerInterface $logger A PSR-3 compliant logger.
      */
     public function __construct(// @phpstan-ignore-line
         ClientStreamingCall $clientStreamingCall,
@@ -74,7 +75,6 @@ class ClientStream
             $requestEvent = new LogEvent();
 
             $requestEvent->payload = $request->serializeToJsonString();
-            $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->clientId = spl_object_id($this);
             $requestEvent->requestId = spl_object_id($request);
 
