@@ -59,8 +59,7 @@ class ServerStream
         $serverStreamingCall,
         array $streamingDescriptor = [],
         null|LoggerInterface $logger = null
-    )
-    {
+    ) {
         $this->call = $serverStreamingCall;
         if (array_key_exists('resourcesGetMethod', $streamingDescriptor)) {
             $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
@@ -78,8 +77,7 @@ class ServerStream
     public function readAll()
     {
         $resourcesGetMethod = $this->resourcesGetMethod;
-        foreach ($this->call->responses() as $response)
-        {
+        foreach ($this->call->responses() as $response) {
             if ($this->logger && $response instanceof Message) {
                 $responseEvent = new LogEvent();
                 $responseEvent->payload = $response->serializeToJsonString();
