@@ -57,6 +57,7 @@ class BidiStream
      *
      * @param BidiStreamingCall $bidiStreamingCall The gRPC bidirectional streaming call object
      * @param array $streamingDescriptor
+     * @param null|LoggerInterface $logger
      */
     public function __construct(
         BidiStreamingCall $bidiStreamingCall,
@@ -177,7 +178,7 @@ class BidiStream
             $responseEvent->clientId = spl_object_id($this);
 
             if ($result && $result instanceof Message) {
-                $responseEvent->payload = ($result) ? $result->serializeToJsonString() : null;
+                $responseEvent->payload = $result->serializeToJsonString();
             }
 
             $this->logResponse($responseEvent);
