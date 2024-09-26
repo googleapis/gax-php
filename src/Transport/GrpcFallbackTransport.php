@@ -56,12 +56,10 @@ class GrpcFallbackTransport implements TransportInterface
     use HttpUnaryTransportTrait;
 
     private string $baseUri;
-    private null|LoggerInterface $logger;
 
     /**
      * @param string $baseUri
      * @param callable $httpHandler A handler used to deliver PSR-7 requests.
-     * @param null|LoggerInterface A PSR-3 Logger Interface.
      */
     public function __construct(
         string $baseUri,
