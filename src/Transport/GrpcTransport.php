@@ -90,8 +90,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         Channel $channel = null,
         array $interceptors = [],
         null|false|LoggerInterface $logger = null
-    )
-    {
+    ) {
         if ($interceptors) {
             $channel = Interceptor::intercept(
                 $channel ?: new Channel($hostname, $opts),
@@ -245,7 +244,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
             $this->logRequest($requestEvent);
         }
-
 
         return new ServerStream(
             new ServerStreamingCallWrapper($stream),
