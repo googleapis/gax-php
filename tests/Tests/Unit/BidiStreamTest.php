@@ -36,13 +36,20 @@ use Google\ApiCore\BidiStream;
 use Google\ApiCore\Testing\MockBidiStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
 use Google\ApiCore\ValidationException;
+use Google\Auth\Logging\StdOutLogger;
 use Google\Protobuf\Internal\GPBType;
+use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Rpc\Code;
+use Grpc\BidiStreamingCall;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
+use stdClass;
 
 class BidiStreamTest extends TestCase
 {
+    use ProphecyTrait;
     use TestTrait;
 
     public function testEmptySuccess()
@@ -315,5 +322,63 @@ class BidiStreamTest extends TestCase
 
         $this->assertSame($call, $stream->getBidiStreamingCall());
         $this->assertEquals($resources, iterator_to_array($stream->closeWriteAndReadAll()));
+    }
+
+    public function testWriteCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(2);
+
+        $requests = [
+            $this->createStatus(Code::OK, 'request1'),
+            $this->createStatus(Code::OK, 'request2')
+        ];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses, ['\Google\Rpc\Status', 'mergeFromString']);
+        $stream = new BidiStream($call, logger: $logger->reveal());
+
+        $stream->writeAll($requests);
+    }
+
+    public function testWriteStringDoesNotCallLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+        $logger->info(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+
+        $requests = ['request1', 'request2'];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses);
+        $stream = new BidiStream($call, logger: $logger->reveal());
+
+        $stream->writeAll($requests);
+
+        $this->assertSame($call, $stream->getBidiStreamingCall());
+        $this->assertSame([], iterator_to_array($stream->closeWriteAndReadAll()));
+        $this->assertEquals($requests, $call->popReceivedCalls());
+    }
+
+    public function testReadCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(3);
+        $logger->info(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+
+        $requests = [
+            $this->createStatus(Code::OK, 'request1'),
+            $this->createStatus(Code::OK, 'request2')
+        ];
+        $responses = [];
+        $call = new MockBidiStreamingCall($responses, ['\Google\Rpc\Status', 'mergeFromString']);
+        $stream = new BidiStream($call, logger: $logger->reveal());
+
+        $stream->writeAll($requests);
+
+        foreach ($stream->closeWriteAndReadAll() as $_) {}
     }
 }

@@ -32,11 +32,14 @@
 
 namespace Google\ApiCore;
 
+use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\GetUniverseDomainInterface;
+use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
+use Psr\Log\LoggerInterface;
 
 /**
  * Common functions used to work with various clients.
@@ -98,6 +101,7 @@ trait ClientOptionsTrait
             'apiEndpoint' => null,
             'clientCertSource' => null,
             'universeDomain' => null,
+            'logger' => null,
         ];
 
         $supportedTransports = $this->supportedTransports();
@@ -119,14 +123,35 @@ trait ClientOptionsTrait
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
         $options += $defaultOptions;
+
+        // If logger is explecitely set to false, logging is disabled
+        if ($options['logger'] !== false) {
+            $options['logger'] = $options['logger'] ?? ApplicationDefaultCredentials::getDefaultLogger();
+        }
+
+        if ($options['logger'] !== null && $options['logger'] !== false && !$options['logger'] instanceof LoggerInterface) {
+            throw new ValidationException(
+                'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
+            );
+        }
+
+        if (isset($options['logger'])) {
+            $options['credentialsConfig']['authHttpHandler'] = HttpHandlerFactory::build(logger: $options['logger']);
+        }
+
         $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];
         $options['transportConfig'] += $defaultOptions['transportConfig'];  // @phpstan-ignore-line
         if (isset($options['transportConfig']['grpc'])) {
             $options['transportConfig']['grpc'] += $defaultOptions['transportConfig']['grpc'];
             $options['transportConfig']['grpc']['stubOpts'] += $defaultOptions['transportConfig']['grpc']['stubOpts'];
+            $options['transportConfig']['grpc']['logger'] = $options['logger'] ?? null;
         }
         if (isset($options['transportConfig']['rest'])) {
             $options['transportConfig']['rest'] += $defaultOptions['transportConfig']['rest'];
+            $options['transportConfig']['rest']['logger'] = $options['logger'] ?? null;
+        }
+        if (isset($options['transportConfig']['grpc-fallback'])) {
+            $options['transportConfig']['grpc-fallback']['logger'] = $options['logger'] ?? null;
         }
 
         // These calls do not apply to "New Surface" clients.

@@ -40,6 +40,7 @@ use Google\ApiCore\Testing\MockRequest;
 use Google\ApiCore\Tests\Unit\TestTrait;
 use Google\ApiCore\Transport\GrpcTransport;
 use Google\ApiCore\ValidationException;
+use Google\Auth\Logging\StdOutLogger;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
@@ -51,10 +52,13 @@ use Grpc\ChannelCredentials;
 use Grpc\ClientStreamingCall;
 use Grpc\ServerStreamingCall;
 use Grpc\UnaryCall;
+use GuzzleHttp\Promise\Promise;
 use stdClass;
 use TypeError;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Log\LoggerInterface;
 
 class GrpcTransportTest extends TestCase
 {
@@ -429,6 +433,17 @@ class GrpcTransportTest extends TestCase
         );
     }
 
+    // public function testLoggerGetsCalledIfLoggerSupplied()
+    // {
+    //     // $logger = $this->prophesize(StdOutLogger::class);
+    //     // $logger->debug(Argument::cetera())
+    //     //     ->shouldBeCalledTimes(2);
+    //     // $logger->info(Argument::cetera())
+    //     //     ->shouldBeCalledTimes(1);
+    //     // $logger->log(Argument::cetera())
+    //     //     ->shouldBeCalled();
+    // }
+
     /**
      * @dataProvider buildDataGrpc
      */
@@ -624,4 +639,3 @@ class MockCallInvoker implements CallInvoker
         return $this->called;
     }
 }
-
