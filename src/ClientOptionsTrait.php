@@ -129,7 +129,7 @@ trait ClientOptionsTrait
             $options['logger'] = $options['logger'] ?? ApplicationDefaultCredentials::getDefaultLogger();
         }
 
-        if ($options['logger'] !== false && !$options['logger'] instanceof LoggerInterface) {
+        if ($options['logger']!== null && $options['logger'] !== false && !$options['logger'] instanceof LoggerInterface) {
             throw new ValidationException(
                 'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
             );
