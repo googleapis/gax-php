@@ -65,11 +65,11 @@ class ApiKeyHeaderCredentials implements HeaderCredentialsInterface, GetQuotaPro
     }
 
     /**
-     * @param string $unusedAudience audiences are not supported for API keys.
+     * @param string|null $unusedAudience audiences are not supported for API keys.
      *
-     * @return callable Callable function that returns the API key header.
+     * @return callable|null Callable function that returns the API key header.
      */
-    public function getAuthorizationHeaderCallback($unusedAudience = null): ?callable
+    public function getAuthorizationHeaderCallback(?string $unusedAudience = null): ?callable
     {
         $apiKey = $this->apiKey;
 

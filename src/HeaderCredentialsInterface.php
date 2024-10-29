@@ -34,10 +34,10 @@ namespace Google\ApiCore;
 interface HeaderCredentialsInterface
 {
     /**
-     * @param string $audience optional audience for self-signed JWTs.
-     * @return callable Callable function that returns an authorization header.
+     * @param string|null $audience optional audience for self-signed JWTs.
+     * @return callable|null Callable function that returns an authorization header.
      */
-    public function getAuthorizationHeaderCallback($audience = null): ?callable;
+    public function getAuthorizationHeaderCallback(?string $audience = null): ?callable;
 
     /**
      * Verify that the expected universe domain matches the universe domain from the credentials.
