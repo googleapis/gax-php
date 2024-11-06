@@ -42,7 +42,8 @@ use InvalidArgumentException;
 /**
  * The ClientOptions class adds typing to the associative array of options
  * passed into each API client constructor. To use this class directly, pass
- * the result of {@see ClientOptions::toArray} to the client constructor:
+ * the result of {@see \Google\ApiCore\Options\ClientOptions::toArray()} to the
+ * client constructor:
  *
  * ```
  * use Google\ApiCore\ClientOptions;
@@ -92,6 +93,8 @@ class ClientOptions implements ArrayAccess
     private ?Closure $clientCertSource;
 
     private ?string $universeDomain;
+
+    private ?string $apiKey;
 
     /**
      * @param array $options {
@@ -151,6 +154,8 @@ class ClientOptions implements ArrayAccess
      *           A callable which returns the client cert as a string.
      *     @type string $universeDomain
      *           The default service domain for a given Cloud universe.
+     *    @type string $apiKey
+     *          The API key to be used for the client.
      * }
      */
     public function __construct(array $options)
@@ -180,6 +185,7 @@ class ClientOptions implements ArrayAccess
         $this->setGapicVersion($arr['gapicVersion'] ?? null);
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setUniverseDomain($arr['universeDomain'] ?? null);
+        $this->setApiKey($arr['apiKey'] ?? null);
     }
 
     /**
@@ -313,5 +319,13 @@ class ClientOptions implements ArrayAccess
     public function setUniverseDomain(?string $universeDomain)
     {
         $this->universeDomain = $universeDomain;
+    }
+
+    /**
+     * @param string $apiKey
+     */
+    public function setApiKey(?string $apiKey)
+    {
+        $this->apiKey = $apiKey;
     }
 }
