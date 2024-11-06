@@ -218,8 +218,6 @@ trait GapicClientTrait
      */
     private function setClientOptions(array $options)
     {
-        $hasEmulator = $options['hasEmulator'] ?? false;
-
         // serviceAddress is now deprecated and acts as an alias for apiEndpoint
         if (isset($options['serviceAddress'])) {
             $options['apiEndpoint'] = $this->pluck('serviceAddress', $options, false);
@@ -316,7 +314,7 @@ trait GapicClientTrait
                 $transport,
                 $options['transportConfig'],
                 $options['clientCertSource'],
-                $hasEmulator
+                $options['hasEmulator'] ?? false
             );
     }
 
