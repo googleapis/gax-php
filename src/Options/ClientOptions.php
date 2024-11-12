@@ -96,6 +96,8 @@ class ClientOptions implements ArrayAccess
 
     private ?string $apiKey;
 
+    private bool $hasEmulator;
+
     /**
      * @param array $options {
      *     @type string $apiEndpoint
@@ -154,8 +156,10 @@ class ClientOptions implements ArrayAccess
      *           A callable which returns the client cert as a string.
      *     @type string $universeDomain
      *           The default service domain for a given Cloud universe.
-     *    @type string $apiKey
-     *          The API key to be used for the client.
+     *     @type string $apiKey
+     *           The API key to be used for the client.
+     *     @type bool $hasEmulator
+     *           Determines whether or not the client is using an emulator. Defaults to `false`.
      * }
      */
     public function __construct(array $options)
@@ -186,6 +190,7 @@ class ClientOptions implements ArrayAccess
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setUniverseDomain($arr['universeDomain'] ?? null);
         $this->setApiKey($arr['apiKey'] ?? null);
+        $this->setHasEmulator($arr['hasEmulator'] ?? false);
     }
 
     /**
@@ -327,5 +332,13 @@ class ClientOptions implements ArrayAccess
     public function setApiKey(?string $apiKey)
     {
         $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @param bool $hasEmulator
+     */
+    public function setHasEmulator(bool $hasEmulator): void
+    {
+        $this->hasEmulator = $hasEmulator;
     }
 }
