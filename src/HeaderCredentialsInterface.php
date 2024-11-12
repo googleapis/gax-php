@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2024 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,13 +29,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+namespace Google\ApiCore;
 
-namespace Google\ApiCore\Dev\Docs;
+interface HeaderCredentialsInterface
+{
+    /**
+     * @param string|null $audience optional audience for self-signed JWTs.
+     * @return callable|null Callable function that returns an authorization header.
+     */
+    public function getAuthorizationHeaderCallback(?string $audience = null): ?callable;
 
-require_once __DIR__ . '../../../../vendor/autoload.php';
-
-DoctumConfigBuilder::checkPhpVersion();
-
-$currentVersion = getenv('API_CORE_DOCS_VERSION');
-
-return DoctumConfigBuilder::buildConfigForVersion($currentVersion);
+    /**
+     * Verify that the expected universe domain matches the universe domain from the credentials.
+     *
+     * @throws ValidationException if the universe domain does not match.
+     */
+    public function checkUniverseDomain(): void;
+}

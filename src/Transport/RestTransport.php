@@ -31,9 +31,9 @@
  */
 namespace Google\ApiCore\Transport;
 
-use BadMethodCallException;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
+use Google\ApiCore\InsecureRequestBuilder;
 use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
@@ -84,6 +84,7 @@ class RestTransport implements TransportInterface
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
+     *    @type bool $hasEmulator True if the emulator is enabled.
      * }
      * @return RestTransport
      * @throws ValidationException
@@ -93,9 +94,12 @@ class RestTransport implements TransportInterface
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,
+            'hasEmulator' => false,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
-        $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
+        $requestBuilder = $config['hasEmulator']
+            ? new InsecureRequestBuilder("$baseUri:$port", $restConfigPath)
+            : new RequestBuilder("$baseUri:$port", $restConfigPath);
         $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
@@ -124,7 +128,7 @@ class RestTransport implements TransportInterface
             function (ResponseInterface $response) use ($call, $options) {
                 $decodeType = $call->getDecodeType();
                 /** @var Message $return */
-                $return = new $decodeType;
+                $return = new $decodeType();
                 $body = (string) $response->getBody();
 
                 // In some rare cases LRO response metadata may not be loaded
