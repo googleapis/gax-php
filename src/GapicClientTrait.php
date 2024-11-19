@@ -243,7 +243,7 @@ trait GapicClientTrait
         // internally to determine if the client is running in emulator mode.
         // Therefore, we need to remove it from the $options array before
         // creating the ClientOptions.
-        $hasEmulator = $this->pluck('hasEmulator', $options, false);
+        $hasEmulator = $this->pluck('hasEmulator', $options, false) ?: false;
         if ($this->isBackwardsCompatibilityMode()) {
             if (is_string($options['clientConfig'])) {
                 // perform validation for V1 surfaces which is done in the
