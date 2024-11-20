@@ -289,7 +289,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 list($response, $status) = $unaryCall->wait();
 
                 if ($this->logger) {
-                    $responseEvent = new LogEvent($requestEvent->timestamp);
+                    $responseEvent = new LogEvent($requestEvent->milliseconds);
 
                     $responseEvent->headers = $status->metadata;
                     $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
