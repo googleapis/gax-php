@@ -217,9 +217,10 @@ class ServerStreamTest extends TestCase
         $logger->debug(Argument::cetera())
             ->shouldBeCalledTimes(2);
 
-        // Three info expected, once per response and once for the OK status
+        // Only the when we call the `getStatus` method we log the status as each individual
+        // response has a private status code and the
         $logger->info(Argument::cetera())
-            ->shouldBeCalledTimes(3);
+            ->shouldBeCalledTimes(1);
 
         $responses = [
             $this->createStatus(Code::OK, 'response1'),
