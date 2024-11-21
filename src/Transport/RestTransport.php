@@ -115,6 +115,9 @@ class RestTransport implements TransportInterface
     {
         $headers = self::buildCommonHeaders($options);
 
+        // Add the $call object ID for logging
+        $options['requestId'] = spl_object_id($call);
+
         // call the HTTP handler
         $httpHandler = $this->httpHandler;
         return $httpHandler(
@@ -268,6 +271,10 @@ class RestTransport implements TransportInterface
 
         if (isset($options['retryAttempt'])) {
             $callOptions['retryAttempt'] = $options['retryAttempt'];
+        }
+
+        if (isset($options['requestId'])) {
+            $callOptions['requestId'] = $options['requestId'];
         }
 
         return $callOptions;
