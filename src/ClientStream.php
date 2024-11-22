@@ -31,8 +31,8 @@
  */
 namespace Google\ApiCore;
 
-use Google\Auth\Logging\LogEvent;
 use Google\Auth\Logging\LoggingTrait;
+use Google\Auth\Logging\RpcLogEvent;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use Grpc\ClientStreamingCall;
@@ -72,7 +72,7 @@ class ClientStream
     public function write($request)
     {
         if ($this->logger && $request instanceof Message) {
-            $requestEvent = new LogEvent();
+            $requestEvent = new RpcLogEvent();
 
             $requestEvent->payload = $request->serializeToJsonString();
             $requestEvent->clientId = spl_object_id($this);
@@ -95,7 +95,7 @@ class ClientStream
         list($response, $status) = $this->call->wait();
         if ($status->code == Code::OK) {
             if ($this->logger) {
-                $responseEvent = new LogEvent();
+                $responseEvent = new RpcLogEvent();
 
                 $responseEvent->headers = $status->metadata;
                 $responseEvent->status = $status->code;
