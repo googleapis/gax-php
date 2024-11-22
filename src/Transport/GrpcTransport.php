@@ -44,8 +44,8 @@ use Google\ApiCore\Transport\Grpc\ServerStreamingCallWrapper;
 use Google\ApiCore\Transport\Grpc\UnaryInterceptorInterface;
 use Google\ApiCore\ValidationException;
 use Google\ApiCore\ValidationTrait;
-use Google\Auth\Logging\LogEvent;
 use Google\Auth\Logging\LoggingTrait;
+use Google\Auth\Logging\RpcLogEvent;
 use Google\Rpc\Code;
 use Grpc\BaseStub;
 use Grpc\Channel;
@@ -232,7 +232,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         );
 
         if ($this->logger) {
-            $requestEvent = new LogEvent();
+            $requestEvent = new RpcLogEvent();
 
             $requestEvent->headers = $options['headers'];
             $requestEvent->payload = $call->getMessage()->serializeToJsonString();
@@ -262,7 +262,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         $requestEvent = null;
 
         if ($this->logger) {
-            $requestEvent = new LogEvent();
+            $requestEvent = new RpcLogEvent();
 
             $requestEvent->headers = $headers;
             $requestEvent->payload = $call->getMessage()->serializeToJsonString();
@@ -289,7 +289,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
                 list($response, $status) = $unaryCall->wait();
 
                 if ($this->logger) {
-                    $responseEvent = new LogEvent($requestEvent->milliseconds);
+                    $responseEvent = new RpcLogEvent($requestEvent->milliseconds);
 
                     $responseEvent->headers = $status->metadata;
                     $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;

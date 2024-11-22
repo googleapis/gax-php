@@ -31,8 +31,8 @@
  */
 namespace Google\ApiCore;
 
-use Google\Auth\Logging\LogEvent;
 use Google\Auth\Logging\LoggingTrait;
+use Google\Auth\Logging\RpcLogEvent;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use Psr\Log\LoggerInterface;
@@ -79,7 +79,7 @@ class ServerStream
         $resourcesGetMethod = $this->resourcesGetMethod;
         foreach ($this->call->responses() as $response) {
             if ($this->logger && $response instanceof Message) {
-                $responseEvent = new LogEvent();
+                $responseEvent = new RpcLogEvent();
                 $responseEvent->payload = $response->serializeToJsonString();
                 $responseEvent->clientId = spl_object_id($this->call);
 
@@ -100,7 +100,7 @@ class ServerStream
         $status = $this->call->getStatus();
 
         if ($this->logger) {
-            $statusEvent = new LogEvent();
+            $statusEvent = new RpcLogEvent();
             $statusEvent->status = $status->code;
             $statusEvent->clientId = spl_object_id($this->call);
 

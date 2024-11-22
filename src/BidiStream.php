@@ -31,8 +31,8 @@
  */
 namespace Google\ApiCore;
 
-use Google\Auth\Logging\LogEvent;
 use Google\Auth\Logging\LoggingTrait;
+use Google\Auth\Logging\RpcLogEvent;
 use Google\Protobuf\Internal\Message;
 use Google\Rpc\Code;
 use Grpc\BidiStreamingCall;
@@ -87,7 +87,7 @@ class BidiStream
         }
 
         if ($this->logger && $request instanceof Message) {
-            $logEvent = new LogEvent();
+            $logEvent = new RpcLogEvent();
 
             $logEvent->headers = null;
             $logEvent->payload = $request->serializeToJsonString();
@@ -170,7 +170,7 @@ class BidiStream
         }
 
         if ($this->logger) {
-            $responseEvent = new LogEvent();
+            $responseEvent = new RpcLogEvent();
 
             $responseEvent->headers = (is_null($result)) ? $this->call->getMetadata() : null;
             $responseEvent->status = (is_null($result)) ? $status->code : null;
