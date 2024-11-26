@@ -1695,7 +1695,7 @@ class GapicClientTraitTest extends TestCase
 
     public function testLogConfiguration()
     {
-        putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
+        putenv('GOOGLE_SDK_PHP_LOGGING=true');
 
         $client = new StubGapicClient();
         $options = $client->buildClientOptions([
@@ -1705,11 +1705,12 @@ class GapicClientTraitTest extends TestCase
 
         $parsedOutput = json_decode($this->getActualOutputForAssertion(), true);
 
+        $this->assertNotNull($parsedOutput);
         $this->assertArrayHasKey('timestamp', $parsedOutput);
         $this->assertEquals($parsedOutput['severity'], strtoupper(LogLevel::DEBUG));
         $this->assertArrayHasKey('jsonPayload', $parsedOutput);
 
-        putenv('GOOGLE_SDK_DEBUG_LOGGING');
+        putenv('GOOGLE_SDK_PHP_LOGGING');
     }
 }
 

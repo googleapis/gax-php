@@ -124,7 +124,7 @@ trait ClientOptionsTrait
         // we will not encounter missing keys
         $options += $defaultOptions;
 
-        // If logger is explecitely set to false, logging is disabled
+        // If logger is explicitly set to false, logging is disabled
         if ($options['logger'] !== false) {
             $options['logger'] = $options['logger'] ?? ApplicationDefaultCredentials::getDefaultLogger();
         }
