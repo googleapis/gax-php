@@ -559,7 +559,7 @@ class ClientOptionsTraitTest extends TestCase
 
     public function testLoggerIsNullWhenFalseIsPassed()
     {
-        putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
+        putenv('GOOGLE_SDK_PHP_LOGGING=true');
 
         $client = new StubClientOptionsClient();
         $optionsArray = [
@@ -570,12 +570,12 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertFalse($options['transportConfig']['grpc']['logger']);
         $this->assertFalse($options['transportConfig']['grpc-fallback']['logger']);
 
-        putenv('GOOGLE_SDK_DEBUG_LOGGING');
+        putenv('GOOGLE_SDK_PHP_LOGGING');
     }
 
     public function testLoggerIsNotNullIfFlagIsEmptyAndEnvVarSet()
     {
-        putenv('GOOGLE_SDK_DEBUG_LOGGING=true');
+        putenv('GOOGLE_SDK_PHP_LOGGING=true');
 
         $client = new StubClientOptionsClient();
         $optionsArray = [];
@@ -584,7 +584,7 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertInstanceOf(StdOutLogger::class, $options['transportConfig']['rest']['logger']);
         $this->assertInstanceOf(StdOutLogger::class, $options['transportConfig']['grpc']['logger']);
 
-        putenv('GOOGLE_SDK_DEBUG_LOGGING');
+        putenv('GOOGLE_SDK_PHP_LOGGING');
     }
 
     public function testLoggerIsNullIfFlagIsEmptyAndNoEnvVar()
