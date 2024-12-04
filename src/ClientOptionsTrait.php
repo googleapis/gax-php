@@ -40,6 +40,7 @@ use Google\Auth\HttpHandler\HttpHandlerFactory;
 use Grpc\Gcp\ApiConfig;
 use Grpc\Gcp\Config;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Common functions used to work with various clients.
@@ -119,6 +120,9 @@ trait ClientOptionsTrait
         // Keep track of the API Endpoint
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
+        // Keep track of the original user supplied options for logging the configuration
+        $clientSuppliedOptions = json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys
@@ -133,6 +137,11 @@ trait ClientOptionsTrait
             throw new ValidationException(
                 'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
             );
+        }
+
+        // Log the user supplied configuration.
+        if ($clientSuppliedOptions) {
+            $this->logConfiguration($options['logger'], $clientSuppliedOptions);
         }
 
         if (isset($options['logger'])) {
@@ -341,5 +350,24 @@ trait ClientOptionsTrait
     private function isBackwardsCompatibilityMode(): bool
     {
         return false;
+    }
+
+    /**
+     * @param null|false|LoggerInterface $logger
+     * @param string $options
+     */
+    private function logConfiguration(null|false|LoggerInterface $logger, string $options): void
+    {
+        if (!$logger) {
+            return;
+        }
+
+        $configurationLog = [
+            'timestamp' => date(DATE_RFC3339),
+            'severity' => strtoupper(LogLevel::DEBUG),
+            'jsonPayload' => $options
+        ];
+
+        $logger->debug(json_encode($configurationLog));
     }
 }
