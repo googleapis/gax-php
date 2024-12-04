@@ -261,6 +261,14 @@ class GrpcTransport extends BaseStub implements TransportInterface
         $headers = $options['headers'] ?? [];
         $requestEvent = null;
 
+        $unaryCall = $this->_simpleRequest(
+            '/' . $call->getMethod(),
+            $call->getMessage(),
+            [$call->getDecodeType(), 'decode'],
+            isset($options['headers']) ? $options['headers'] : [],
+            $this->getCallOptions($options)
+        );
+
         if ($this->logger) {
             $requestEvent = new RpcLogEvent();
 
@@ -274,14 +282,6 @@ class GrpcTransport extends BaseStub implements TransportInterface
 
             $this->logRequest($requestEvent);
         }
-
-        $unaryCall = $this->_simpleRequest(
-            '/' . $call->getMethod(),
-            $call->getMessage(),
-            [$call->getDecodeType(), 'decode'],
-            isset($options['headers']) ? $options['headers'] : [],
-            $this->getCallOptions($options)
-        );
 
         /** @var Promise $promise */
         $promise = new Promise(
