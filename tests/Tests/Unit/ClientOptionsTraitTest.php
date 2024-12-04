@@ -44,6 +44,7 @@ use Grpc\Gcp\Config;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Log\LogLevel;
 
 class ClientOptionsTraitTest extends TestCase
 {
@@ -557,6 +558,9 @@ class ClientOptionsTraitTest extends TestCase
         $this->assertEquals($options, $options2);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testLoggerIsNullWhenFalseIsPassed()
     {
         putenv('GOOGLE_SDK_PHP_LOGGING=true');
@@ -566,13 +570,15 @@ class ClientOptionsTraitTest extends TestCase
             'logger' => false,
         ];
         $options = $client->buildClientOptions($optionsArray);
+
         $this->assertFalse($options['transportConfig']['rest']['logger']);
         $this->assertFalse($options['transportConfig']['grpc']['logger']);
         $this->assertFalse($options['transportConfig']['grpc-fallback']['logger']);
-
-        putenv('GOOGLE_SDK_PHP_LOGGING');
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testLoggerIsNotNullIfFlagIsEmptyAndEnvVarSet()
     {
         putenv('GOOGLE_SDK_PHP_LOGGING=true');
@@ -583,8 +589,25 @@ class ClientOptionsTraitTest extends TestCase
 
         $this->assertInstanceOf(StdOutLogger::class, $options['transportConfig']['rest']['logger']);
         $this->assertInstanceOf(StdOutLogger::class, $options['transportConfig']['grpc']['logger']);
+    }
 
-        putenv('GOOGLE_SDK_PHP_LOGGING');
+    /**
+     * @runInSeparateProcess
+     */
+    public function testLogConfiguration()
+    {
+        putenv('GOOGLE_SDK_PHP_LOGGING=true');
+
+        $client = new StubClientOptionsClient();
+        $options = $client->buildClientOptions([
+            'apiEndpoint' => 'test'
+        ]);
+        $parsedOutput = json_decode($this->getActualOutputForAssertion(), true);
+
+        $this->assertNotNull($parsedOutput);
+        $this->assertArrayHasKey('timestamp', $parsedOutput);
+        $this->assertEquals($parsedOutput['severity'], strtoupper(LogLevel::DEBUG));
+        $this->assertArrayHasKey('jsonPayload', $parsedOutput);
     }
 
     public function testLoggerIsNullIfFlagIsEmptyAndNoEnvVar()

@@ -327,8 +327,6 @@ trait GapicClientTrait
                 $options['clientCertSource'],
                 $hasEmulator
             );
-
-        $this->logConfiguration($options);
     }
 
     /**
@@ -979,24 +977,5 @@ trait GapicClientTrait
     {
         return $this->backwardsCompatibilityMode
             ?? $this->backwardsCompatibilityMode = substr(__CLASS__, -11) === 'GapicClient';
-    }
-
-    private function logConfiguration(array|ClientOptions $options): void
-    {
-        if ($options instanceof ClientOptions) {
-            $options = $options->toArray();
-        }
-
-        if (!$this->logger) {
-            return;
-        }
-
-        $configurationLog = [
-            'timestamp' => date(DATE_RFC3339),
-            'severity' => strtoupper(LogLevel::DEBUG),
-            'jsonPayload' => $options
-        ];
-
-        $this->logger->debug(json_encode($configurationLog));
     }
 }
