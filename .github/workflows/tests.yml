@@ -74,5 +74,5 @@ jobs:
       - name: Run Script
         run: |
           composer install
-          composer global require phpstan/phpstan
+          composer global require phpstan/phpstan:^1.0
           ~/.composer/vendor/bin/phpstan analyse
