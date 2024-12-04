@@ -365,7 +365,9 @@ trait ClientOptionsTrait
         $configurationLog = [
             'timestamp' => date(DATE_RFC3339),
             'severity' => strtoupper(LogLevel::DEBUG),
-            'jsonPayload' => $options
+            'jsonPayload' => [
+                'suppliedConfiguration' => $options
+            ]
         ];
 
         $logger->debug(json_encode($configurationLog));
