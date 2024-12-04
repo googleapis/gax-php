@@ -62,7 +62,7 @@ class ApiException extends Exception
     public function __construct(
         string $message,
         int $code,
-        string $status = null,
+        ?string $status = null,
         array $optionalArgs = []
     ) {
         $optionalArgs += [
@@ -163,8 +163,8 @@ class ApiException extends Exception
     public static function createFromApiResponse(
         $basicMessage,
         $rpcCode,
-        array $metadata = null,
-        Exception $previous = null
+        ?array $metadata = null,
+        ?Exception $previous = null
     ) {
         return self::create(
             $basicMessage,
@@ -187,8 +187,8 @@ class ApiException extends Exception
     public static function createFromRestApiResponse(
         $basicMessage,
         $rpcCode,
-        array $metadata = null,
-        Exception $previous = null
+        ?array $metadata = null,
+        ?Exception $previous = null
     ) {
         return self::create(
             $basicMessage,
@@ -244,7 +244,7 @@ class ApiException extends Exception
         int $rpcCode,
         $metadata,
         array $decodedMetadata,
-        Exception $previous = null
+        ?Exception $previous = null
     ) {
         $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
         $rpcStatus = ApiStatus::statusFromRpcCode($rpcCode);
