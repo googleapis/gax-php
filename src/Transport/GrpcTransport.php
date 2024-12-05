@@ -87,7 +87,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
     public function __construct(
         string $hostname,
         array $opts,
-        Channel $channel = null,
+        ?Channel $channel = null,
         array $interceptors = [],
         null|false|LoggerInterface $logger = null
     ) {
