@@ -35,6 +35,7 @@ namespace Google\ApiCore\Tests\Unit\Middleware;
 use Google\ApiCore\ApiException;
 use Google\ApiCore\ApiStatus;
 use Google\ApiCore\Call;
+use Google\ApiCore\Middleware\MiddlewareInterface;
 use Google\ApiCore\Middleware\RetryMiddleware;
 use Google\ApiCore\RetrySettings;
 use Google\Rpc\Code;
@@ -404,6 +405,45 @@ class RetryMiddlewareTest extends TestCase
         $middleware($call, [])->wait();
     }
 
+    public function testRetriesAreIncludedInTheOptionsArray()
+    {
+        $call = $this->getMockBuilder(Call::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $maxRetries = 1;
+        $reportedRetries = 0;
+        $retrySettings = RetrySettings::constructDefault()
+            ->with([
+                'retriesEnabled' => true,
+                'retryableCodes' => [ApiStatus::CANCELLED],
+                'maxRetries' => $maxRetries
+            ]);
+
+        $callCount = 0;
+        $handler = function(Call $call, $options) use (&$callCount, &$reportedRetries) {
+            $promise = new Promise(function () use (&$callCount, &$reportedRetries, $options, &$promise) {
+                if ($callCount === 0) {
+                    ++$callCount;
+                    throw new ApiException('Call Count: ' . $callCount, 0, ApiStatus::CANCELLED);
+                }
+
+                if (array_key_exists('retryAttempt', $options)) {
+                    $reportedRetries = $options['retryAttempt'];
+                }
+
+                $promise->resolve(null);
+            });
+
+            return $promise;
+        };
+
+        $middleware = new RetryMiddleware($handler, $retrySettings);
+        $middleware($call, [])->wait();
+
+        $this->assertEquals($callCount, $reportedRetries);
+    }
+
     /**
      * Tests for maxRetries to be evaluated before the retry function.
      */
@@ -513,5 +553,32 @@ class RetryMiddlewareTest extends TestCase
         $this->expectExceptionMessage('Call Count: ' . ($customRetryMaxCalls));
 
         $middleware($call, [])->wait();
+    }
+}
+
+class MockHandler implements MiddlewareInterface
+{
+    public int $calls;
+    public bool $containsRetries = false;
+
+    public function __construct()
+    {
+        $this->calls = 0;
+    }
+
+    public function __invoke(Call $call, array $options)
+    {
+        $promise =  new Promise();
+
+        if ($this->calls === 0) {
+            $this->calls += 1;
+            return $promise->reject();
+        }
+
+        if (array_key_exists('retryAttempt') && $options['retryAttempt'] === 1) {
+            $this->containsRetries = true;
+        }
+
+        return $promise->resolve();
     }
 }
