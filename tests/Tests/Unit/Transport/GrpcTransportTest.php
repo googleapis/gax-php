@@ -506,21 +506,24 @@ class GrpcTransportTest extends TestCase
      */
     public function testExperimentalInterceptors($callType, $interceptor)
     {
+        $mockCallInvoker = new MockCallInvoker($this->buildMockCallForInterceptor($callType));
+
         $transport = new GrpcTransport(
             'example.com',
             [
-                'credentials' => ChannelCredentials::createInsecure()
+                'credentials' => ChannelCredentials::createInsecure(),
             ],
             null,
             [$interceptor]
         );
 
-        $mockCallInvoker = new MockCallInvoker($this->buildMockCallForInterceptor($callType));
+        $r1 = new \ReflectionProperty(GrpcTransport::class, 'stub');
+        $r1->setAccessible(true);
 
-        $r = new \ReflectionProperty(BaseStub::class, 'call_invoker');
-        $r->setAccessible(true);
-        $r->setValue(
-            $transport,
+        $r2 = new \ReflectionProperty(BaseStub::class, 'call_invoker');
+        $r2->setAccessible(true);
+        $r2->setValue(
+            $r1->getValue($transport),
             $mockCallInvoker
         );
 
