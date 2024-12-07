@@ -236,24 +236,24 @@ class CredentialsWrapper implements HeaderCredentialsInterface, ProjectIdProvide
      * @param string $audience optional audience for self-signed JWTs.
      * @return callable Callable function that returns an authorization header.
      */
-    public function getAuthorizationHeaderCallback($audience = null): ?callable
+    public function getAuthorizationHeaderCallback($audience = null, ?string $clientId = null): ?callable
     {
         // NOTE: changes to this function should be treated carefully and tested thoroughly. It will
         // be passed into the gRPC c extension, and changes have the potential to trigger very
         // difficult-to-diagnose segmentation faults.
-        return function () use ($audience) {
+        return function () use ($audience, $clientId) {
             $token = $this->credentialsFetcher->getLastReceivedToken();
             if (self::isExpired($token)) {
                 $this->checkUniverseDomain();
 
                 // Call updateMetadata to take advantage of self-signed JWTs
                 if ($this->credentialsFetcher instanceof UpdateMetadataInterface) {
-                    return $this->credentialsFetcher->updateMetadata([], $audience, $this->authHttpHandler);
+                    return $this->credentialsFetcher->updateMetadata([], $audience, $this->authHttpHandler, $clientId);
                 }
 
                 // In case a custom fetcher is provided (unlikely) which doesn't
                 // implement UpdateMetadataInterface
-                $token = $this->credentialsFetcher->fetchAuthToken($this->authHttpHandler);
+                $token = $this->credentialsFetcher->fetchAuthToken($this->authHttpHandler, $clientId);
                 if (!self::isValid($token)) {
                     return [];
                 }

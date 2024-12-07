@@ -277,7 +277,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
-            $requestEvent->clientId = spl_object_id($this);
+            $requestEvent->clientId = $options['clientId'];
             $requestEvent->requestId = spl_object_id($call);
 
             $this->logRequest($requestEvent);
@@ -331,7 +331,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $audience = $options['audience'] ?? null;
             $credentialsWrapper = $options['credentialsWrapper'];
             $callOptions['call_credentials_callback'] = $credentialsWrapper
-                ->getAuthorizationHeaderCallback($audience);
+                ->getAuthorizationHeaderCallback($audience, $options['clientId']);
         }
 
         if (isset($options['timeoutMillis'])) {

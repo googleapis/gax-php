@@ -106,7 +106,7 @@ trait HttpUnaryTransportTrait
             $credentialsWrapper = $options['credentialsWrapper'];
             $audience = $options['audience'] ?? null;
             $callback = $credentialsWrapper
-                ->getAuthorizationHeaderCallback($audience);
+                ->getAuthorizationHeaderCallback($audience, $options['clientId']);
             // Prevent unexpected behavior, as the authorization header callback
             // uses lowercase "authorization"
             unset($headers['authorization']);
