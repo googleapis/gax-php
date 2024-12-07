@@ -277,6 +277,10 @@ class RestTransport implements TransportInterface
             $callOptions['requestId'] = $options['requestId'];
         }
 
+        if (isset($options['clientId'])) {
+            $callOptions['clientId'] = $options['clientId'];
+        }
+
         return $callOptions;
     }
 }
