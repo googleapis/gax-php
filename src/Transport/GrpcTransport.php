@@ -239,8 +239,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
-            $requestEvent->clientId = spl_object_id($this);
-            $requestEvent->requestId = spl_object_id($call);
+            $requestEvent->processId = getmypid();
+            $requestEvent->requestId = spl_object_id($call) . getmypid();
 
             $this->logRequest($requestEvent);
         }
@@ -277,8 +277,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
-            $requestEvent->clientId = spl_object_id($this);
-            $requestEvent->requestId = spl_object_id($call);
+            $requestEvent->processId = getmypid();
+            $requestEvent->requestId = spl_object_id($call) . getmypid();
 
             $this->logRequest($requestEvent);
         }
@@ -294,8 +294,8 @@ class GrpcTransport extends BaseStub implements TransportInterface
                     $responseEvent->headers = $status->metadata;
                     $responseEvent->payload = ($response) ? $response->serializeToJsonString() : null;
                     $responseEvent->status = $status->code;
-                    $responseEvent->clientId = $requestEvent->clientId;
-                    $responseEvent->requestId = $requestEvent->clientId;
+                    $responseEvent->processId = $requestEvent->processId;
+                    $responseEvent->requestId = $requestEvent->requestId;
 
                     $this->logResponse($responseEvent);
                 }

@@ -116,7 +116,7 @@ class RestTransport implements TransportInterface
         $headers = self::buildCommonHeaders($options);
 
         // Add the $call object ID for logging
-        $options['requestId'] = spl_object_id($call);
+        $options['requestId'] = spl_object_id($call) . getmypid();
 
         // call the HTTP handler
         $httpHandler = $this->httpHandler;

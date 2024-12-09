@@ -659,7 +659,9 @@ trait GapicClientTrait
             ];
         }
 
-        $callStack = function (Call $call, array $options) {
+        $randomIdentifier = rand(1000, 9999);
+
+        $callStack = function (Call $call, array $options) use ($randomIdentifier) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
         };
