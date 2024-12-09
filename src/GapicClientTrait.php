@@ -35,6 +35,7 @@ namespace Google\ApiCore;
 use Google\ApiCore\LongRunning\OperationsClient;
 use Google\ApiCore\Middleware\CredentialsWrapperMiddleware;
 use Google\ApiCore\Middleware\FixedHeaderMiddleware;
+use Google\ApiCore\Middleware\GenerateRequestIdMiddleware;
 use Google\ApiCore\Middleware\OperationsMiddleware;
 use Google\ApiCore\Middleware\OptionsFilterMiddleware;
 use Google\ApiCore\Middleware\PagedMiddleware;
@@ -659,15 +660,14 @@ trait GapicClientTrait
             ];
         }
 
-        $randomIdentifier = rand(1000, 9999);
-
-        $callStack = function (Call $call, array $options) use ($randomIdentifier) {
+        $callStack = function (Call $call, array $options) {
             $startCallMethod = $this->transportCallMethods[$call->getCallType()];
             return $this->transport->$startCallMethod($call, $options);
         };
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
         $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
+        $callStack = new GenerateRequestIdMiddleware($callStack);
         $callStack = new RequestAutoPopulationMiddleware(
             $callStack,
             $callConstructionOptions['autoPopulationSettings'],
