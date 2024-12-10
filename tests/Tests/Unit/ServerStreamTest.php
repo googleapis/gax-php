@@ -35,13 +35,17 @@ use Google\ApiCore\ApiException;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\Testing\MockServerStreamingCall;
 use Google\ApiCore\Testing\MockStatus;
+use Google\Auth\Logging\StdOutLogger;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Rpc\Code;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ServerStreamTest extends TestCase
 {
+    use ProphecyTrait;
     use TestTrait;
 
     public function testEmptySuccess()
@@ -203,5 +207,33 @@ class ServerStreamTest extends TestCase
         } finally {
             $this->assertSame(3, $index);
         }
+    }
+
+    public function testReadCallsLogger()
+    {
+        $logger = $this->prophesize(StdOutLogger::class);
+
+        // Two Debugs expected, once per response
+        $logger->debug(Argument::cetera())
+            ->shouldBeCalledTimes(2);
+
+        // Only the when we call the `getStatus` method we log the status as each individual
+        // response has a private status code and the
+        $logger->info(Argument::cetera())
+            ->shouldBeCalledTimes(1);
+
+        $responses = [
+            $this->createStatus(Code::OK, 'response1'),
+            $this->createStatus(Code::OK, 'response2')
+        ];
+        $serializedResponses = [];
+        foreach ($responses as $response) {
+            $serializedResponses[] = $response->serializeToString();
+        }
+        $call = new MockServerStreamingCall($serializedResponses, ['\Google\Rpc\Status', 'mergeFromString']);
+        $stream = new ServerStream($call, logger: $logger->reveal());
+
+        // Loop to read the responses
+        foreach ($stream->readAll() as $response) {}
     }
 }
