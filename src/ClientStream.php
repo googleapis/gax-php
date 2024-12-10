@@ -47,7 +47,6 @@ class ClientStream
 
     private $call;
     private null|LoggerInterface $logger;
-    private int $identifier;
 
     /**
      * ClientStream constructor.
@@ -63,7 +62,6 @@ class ClientStream
     ) {
         $this->call = $clientStreamingCall;
         $this->logger = $logger;
-        $this->identifier = spl_object_id($this) . rand(1000,9999);
     }
 
     /**
@@ -78,7 +76,7 @@ class ClientStream
 
             $requestEvent->payload = $request->serializeToJsonString();
             $requestEvent->processId = getmypid();
-            $requestEvent->requestId = $this->identifier;
+            $requestEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             $this->logRequest($requestEvent);
         }
@@ -102,7 +100,7 @@ class ClientStream
                 $responseEvent->headers = $status->metadata;
                 $responseEvent->status = $status->code;
                 $responseEvent->processId = getmypid();
-                $responseEvent->requestId = $this->identifier;
+                $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());;
 
                 if ($response && $response instanceof Message) {
                     $response->serializeToJsonString();
