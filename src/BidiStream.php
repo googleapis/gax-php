@@ -91,7 +91,7 @@ class BidiStream
 
             $logEvent->headers = null;
             $logEvent->payload = $request->serializeToJsonString();
-            $logEvent->processId = getmypid();
+            $logEvent->processId = (int) getmypid();
             $logEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             $this->logRequest($logEvent);
@@ -174,7 +174,7 @@ class BidiStream
 
             $responseEvent->headers = (is_null($result)) ? $this->call->getMetadata() : null;
             $responseEvent->status = (is_null($result)) ? $status->code : null;
-            $responseEvent->processId = getmypid();
+            $responseEvent->processId = (int) getmypid();
             $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             if ($result && $result instanceof Message) {
