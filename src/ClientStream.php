@@ -75,7 +75,7 @@ class ClientStream
             $requestEvent = new RpcLogEvent();
 
             $requestEvent->payload = $request->serializeToJsonString();
-            $requestEvent->processId = getmypid();
+            $requestEvent->processId = (int) getmypid();
             $requestEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             $this->logRequest($requestEvent);
@@ -99,7 +99,7 @@ class ClientStream
 
                 $responseEvent->headers = $status->metadata;
                 $responseEvent->status = $status->code;
-                $responseEvent->processId = getmypid();
+                $responseEvent->processId = (int) getmypid();
                 $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());;
 
                 if ($response && $response instanceof Message) {

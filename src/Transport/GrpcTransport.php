@@ -245,7 +245,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
-            $requestEvent->processId = getmypid();
+            $requestEvent->processId = (int) getmypid();
             $requestEvent->requestId = crc32((string) spl_object_id($serverStream) . getmypid());
 
             $this->logRequest($requestEvent);
@@ -279,7 +279,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
-            $requestEvent->processId = getmypid();
+            $requestEvent->processId = (int) getmypid();
             $requestEvent->requestId = crc32((string) spl_object_id($call) . getmypid());
 
             $this->logRequest($requestEvent);

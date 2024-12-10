@@ -81,7 +81,7 @@ class ServerStream
             if ($this->logger && $response instanceof Message) {
                 $responseEvent = new RpcLogEvent();
                 $responseEvent->payload = $response->serializeToJsonString();
-                $responseEvent->processId = getmypid();
+                $responseEvent->processId = (int) getmypid();
                 $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
                 $this->logResponse($responseEvent);
@@ -103,7 +103,7 @@ class ServerStream
         if ($this->logger) {
             $statusEvent = new RpcLogEvent();
             $statusEvent->status = $status->code;
-            $statusEvent->processId = getmypid();
+            $statusEvent->processId = (int) getmypid();
             $statusEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             $this->logStatus($statusEvent);
