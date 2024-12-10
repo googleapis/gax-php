@@ -100,7 +100,7 @@ class ClientStream
                 $responseEvent->headers = $status->metadata;
                 $responseEvent->status = $status->code;
                 $responseEvent->processId = (int) getmypid();
-                $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());;
+                $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
                 if ($response && $response instanceof Message) {
                     $response->serializeToJsonString();
