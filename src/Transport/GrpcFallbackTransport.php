@@ -103,6 +103,9 @@ class GrpcFallbackTransport implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $httpHandler = $this->httpHandler;
+
+        $options['requestId'] = crc32((string) spl_object_id($call) . getmypid());
+
         return $httpHandler(
             $this->buildRequest($call, $options),
             $this->getCallOptions($options)
@@ -174,6 +177,10 @@ class GrpcFallbackTransport implements TransportInterface
 
         if (isset($options['timeoutMillis'])) {
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
+        }
+
+        if (isset($options['requestId'])) {
+            $callOptions['requestId'] = $options['requestId'];
         }
 
         if ($this->clientCertSource) {
