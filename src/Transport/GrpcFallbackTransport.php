@@ -179,6 +179,10 @@ class GrpcFallbackTransport implements TransportInterface
             $callOptions['timeout'] = $options['timeoutMillis'] / 1000;
         }
 
+        if (isset($options['retryAttempt'])) {
+            $callOptions['retryAttempt'] = $options['retryAttempt'];
+        }
+
         if (isset($options['requestId'])) {
             $callOptions['requestId'] = $options['requestId'];
         }
