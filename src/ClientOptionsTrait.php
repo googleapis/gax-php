@@ -365,6 +365,7 @@ trait ClientOptionsTrait
         $configurationLog = [
             'timestamp' => date(DATE_RFC3339),
             'severity' => strtoupper(LogLevel::DEBUG),
+            'processId' => getmypid(),
             'jsonPayload' => [
                 'suppliedConfiguration' => $options
             ]
