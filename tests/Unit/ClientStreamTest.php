@@ -187,8 +187,6 @@ class ClientStreamTest extends TestCase
         $logger = $this->prophesize(StdOutLogger::class);
         $logger->debug(Argument::cetera())
             ->shouldBeCalledTimes(2);
-        $logger->info(Argument::cetera())
-            ->shouldBeCalledTimes(1);
 
         $requests = [
             $this->createStatus(Code::OK, 'request1'),

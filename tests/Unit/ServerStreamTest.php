@@ -215,17 +215,13 @@ class ServerStreamTest extends TestCase
 
         // Two Debugs expected, once per response
         $logger->debug(Argument::cetera())
-            ->shouldBeCalledTimes(2);
-
-        // Only the when we call the `getStatus` method we log the status as each individual
-        // response has a private status code and the
-        $logger->info(Argument::cetera())
-            ->shouldBeCalledTimes(1);
+            ->shouldBeCalledTimes(3);
 
         $responses = [
             $this->createStatus(Code::OK, 'response1'),
             $this->createStatus(Code::OK, 'response2')
         ];
+
         $serializedResponses = [];
         foreach ($responses as $response) {
             $serializedResponses[] = $response->serializeToString();

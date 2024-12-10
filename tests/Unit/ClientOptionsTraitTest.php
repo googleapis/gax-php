@@ -658,6 +658,8 @@ class StubClientOptionsClient
         shouldUseMtlsEndpoint as public;
     }
 
+    private const SERVICE_NAME = 'TEST_SERVICE_NAME';
+
     public function set($name, $val, $static = false)
     {
         if (!property_exists($this, $name)) {

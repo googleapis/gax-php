@@ -106,7 +106,7 @@ class ServerStream
             $statusEvent->processId = (int) getmypid();
             $statusEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
-            $this->logStatus($statusEvent);
+            $this->logResponse($statusEvent);
         }
 
         if ($status->code !== Code::OK) {

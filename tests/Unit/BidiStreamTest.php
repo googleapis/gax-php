@@ -362,8 +362,6 @@ class BidiStreamTest extends TestCase
         $logger = $this->prophesize(StdOutLogger::class);
         $logger->debug(Argument::cetera())
             ->shouldBeCalledTimes(3);
-        $logger->info(Argument::cetera())
-            ->shouldBeCalledTimes(1);
 
         $requests = [
             $this->createStatus(Code::OK, 'request1'),

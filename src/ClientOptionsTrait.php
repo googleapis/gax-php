@@ -367,7 +367,8 @@ trait ClientOptionsTrait
             'severity' => strtoupper(LogLevel::DEBUG),
             'processId' => getmypid(),
             'jsonPayload' => [
-                'suppliedConfiguration' => $options
+                'serviceName' => self::SERVICE_NAME, // @phpstan-ignore-line
+                'clientConfiguration' => $options,
             ]
         ];
 
