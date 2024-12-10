@@ -56,7 +56,6 @@ use GuzzleHttp\Promise\Promise;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Argument;
 use stdClass;
 use TypeError;
 use Psr\Log\LoggerInterface;
