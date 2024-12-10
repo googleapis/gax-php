@@ -121,7 +121,7 @@ trait ClientOptionsTrait
         $apiEndpoint = $options['apiEndpoint'] ?? null;
 
         // Keep track of the original user supplied options for logging the configuration
-        $clientSuppliedOptions = json_encode($options, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $clientSuppliedOptions = $options;
 
         // Merge defaults into $options starting from top level
         // variables, then going into deeper nesting, so that
@@ -140,9 +140,7 @@ trait ClientOptionsTrait
         }
 
         // Log the user supplied configuration.
-        if ($clientSuppliedOptions) {
-            $this->logConfiguration($options['logger'], $clientSuppliedOptions);
-        }
+        $this->logConfiguration($options['logger'], $clientSuppliedOptions);
 
         if (isset($options['logger'])) {
             $options['credentialsConfig']['authHttpHandler'] = HttpHandlerFactory::build(logger: $options['logger']);
@@ -356,7 +354,7 @@ trait ClientOptionsTrait
      * @param null|false|LoggerInterface $logger
      * @param string $options
      */
-    private function logConfiguration(null|false|LoggerInterface $logger, string $options): void
+    private function logConfiguration(null|false|LoggerInterface $logger, array $options): void
     {
         if (!$logger) {
             return;
