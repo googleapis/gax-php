@@ -47,7 +47,6 @@ class ServerStream
     private $call;
     private $resourcesGetMethod;
     private null|LoggerInterface $logger;
-    private int $identifier;
 
     /**
      * ServerStream constructor.
@@ -66,7 +65,6 @@ class ServerStream
             $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
         }
         $this->logger = $logger;
-        $this->identifier = spl_object_id($this) . rand(1000, 9999);
     }
 
     /**
@@ -84,7 +82,7 @@ class ServerStream
                 $responseEvent = new RpcLogEvent();
                 $responseEvent->payload = $response->serializeToJsonString();
                 $responseEvent->processId = getmypid();
-                $responseEvent->requestId = $this->identifier;
+                $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
                 $this->logResponse($responseEvent);
             }
@@ -106,7 +104,7 @@ class ServerStream
             $statusEvent = new RpcLogEvent();
             $statusEvent->status = $status->code;
             $statusEvent->processId = getmypid();
-            $statusEvent->requestId = $this->identifier;
+            $statusEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             $this->logStatus($statusEvent);
         }

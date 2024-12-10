@@ -51,7 +51,6 @@ class BidiStream
     private $resourcesGetMethod = null;
     private $pendingResources = [];
     private null|LoggerInterface $logger = null;
-    private int $identifier;
 
     /**
      * BidiStream constructor.
@@ -70,7 +69,6 @@ class BidiStream
             $this->resourcesGetMethod = $streamingDescriptor['resourcesGetMethod'];
         }
         $this->logger = $logger;
-        $this->identifier = spl_object_id($this) . rand(1000,9999);
     }
 
     /**
@@ -94,7 +92,7 @@ class BidiStream
             $logEvent->headers = null;
             $logEvent->payload = $request->serializeToJsonString();
             $logEvent->processId = getmypid();
-            $logEvent->requestId = $this->identifier;
+            $logEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             $this->logRequest($logEvent);
         }
@@ -177,7 +175,7 @@ class BidiStream
             $responseEvent->headers = (is_null($result)) ? $this->call->getMetadata() : null;
             $responseEvent->status = (is_null($result)) ? $status->code : null;
             $responseEvent->processId = getmypid();
-            $responseEvent->requestId = $this->identifier;
+            $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
             if ($result && $result instanceof Message) {
                 $responseEvent->payload = $result->serializeToJsonString();

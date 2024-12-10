@@ -231,6 +231,12 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $this->getCallOptions($options)
         );
 
+        $serverStream = new ServerStream(
+            new ServerStreamingCallWrapper($stream),
+            $call->getDescriptor(),
+            $this->logger
+        );
+
         if ($this->logger) {
             $requestEvent = new RpcLogEvent();
 
@@ -240,16 +246,12 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
             $requestEvent->processId = getmypid();
-            $requestEvent->requestId = spl_object_id($call) . getmypid();
+            $requestEvent->requestId = crc32((string) spl_object_id($serverStream) . getmypid());
 
             $this->logRequest($requestEvent);
         }
 
-        return new ServerStream(
-            new ServerStreamingCallWrapper($stream),
-            $call->getDescriptor(),
-            $this->logger
-        );
+        return $serverStream;
     }
 
     /**
@@ -278,7 +280,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
             $requestEvent->processId = getmypid();
-            $requestEvent->requestId = spl_object_id($call) . getmypid();
+            $requestEvent->requestId = crc32((string) spl_object_id($call) . getmypid());
 
             $this->logRequest($requestEvent);
         }
