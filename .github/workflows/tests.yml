@@ -19,7 +19,7 @@ jobs:
                   - php: "8.0"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
-                  - php: "8.3"
+                  - php: "8.4"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
                   - php: "8.0"
