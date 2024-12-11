@@ -71,6 +71,7 @@ class ClientStream
      */
     public function write($request)
     {
+        // In some cases, $request can be a string
         if ($this->logger && $request instanceof Message) {
             $requestEvent = new RpcLogEvent();
 
@@ -102,7 +103,7 @@ class ClientStream
                 $responseEvent->processId = (int) getmypid();
                 $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
-                if ($response && $response instanceof Message) {
+                if ($response instanceof Message) {
                     $response->serializeToJsonString();
                 }
 

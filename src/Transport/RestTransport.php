@@ -95,12 +95,13 @@ class RestTransport implements TransportInterface
             'httpHandler'  => null,
             'clientCertSource' => null,
             'hasEmulator' => false,
+            'logger' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
         $requestBuilder = $config['hasEmulator']
             ? new InsecureRequestBuilder("$baseUri:$port", $restConfigPath)
             : new RequestBuilder("$baseUri:$port", $restConfigPath);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger'] ?? null);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger']);
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);

@@ -387,9 +387,7 @@ class RetryMiddlewareTest extends TestCase
 
     public function testRetriesAreIncludedInTheOptionsArray()
     {
-        $call = $this->getMockBuilder(Call::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $call = $this->prophesize(Call::class)->reveal();
 
         $maxRetries = 1;
         $reportedRetries = 0;
@@ -527,32 +525,5 @@ class RetryMiddlewareTest extends TestCase
         $this->expectExceptionMessage('Call Count: ' . ($customRetryMaxCalls));
 
         $middleware($call->reveal(), [])->wait();
-    }
-}
-
-class MockHandler implements MiddlewareInterface
-{
-    public int $calls;
-    public bool $containsRetries = false;
-
-    public function __construct()
-    {
-        $this->calls = 0;
-    }
-
-    public function __invoke(Call $call, array $options)
-    {
-        $promise =  new Promise();
-
-        if ($this->calls === 0) {
-            $this->calls += 1;
-            return $promise->reject();
-        }
-
-        if (array_key_exists('retryAttempt') && $options['retryAttempt'] === 1) {
-            $this->containsRetries = true;
-        }
-
-        return $promise->resolve();
     }
 }

@@ -87,9 +87,10 @@ class GrpcFallbackTransport implements TransportInterface
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,
+            'logger' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync(logger: $config['logger'] ?? null);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync(logger: $config['logger']);
         $transport = new GrpcFallbackTransport("$baseUri:$port", $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);

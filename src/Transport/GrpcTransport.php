@@ -135,6 +135,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
             'channel'          => null,
             'interceptors'     => [],
             'clientCertSource' => null,
+            'logger'           => null,
         ];
         list($addr, $port) = self::normalizeServiceAddress($apiEndpoint);
         $host = "$addr:$port";
@@ -157,10 +158,10 @@ class GrpcTransport extends BaseStub implements TransportInterface
             );
         }
         try {
-            if (isset($config['logger']) && $config['logger'] === false) {
+            if ($config['logger'] === false) {
                 $config['logger'] = null;
             }
-            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger'] ?? null);
+            return new GrpcTransport($host, $stubOpts, $channel, $config['interceptors'], $config['logger']);
         } catch (Exception $ex) {
             throw new ValidationException(
                 'Failed to build GrpcTransport: ' . $ex->getMessage(),

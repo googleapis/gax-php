@@ -172,12 +172,12 @@ class BidiStream
         if ($this->logger) {
             $responseEvent = new RpcLogEvent();
 
-            $responseEvent->headers = (is_null($result)) ? $this->call->getMetadata() : null;
-            $responseEvent->status = (is_null($result)) ? $status->code : null;
+            $responseEvent->headers = $this->call->getMetadata();
+            $responseEvent->status = $status->code ?? null;
             $responseEvent->processId = (int) getmypid();
             $responseEvent->requestId = crc32((string) spl_object_id($this) . getmypid());
 
-            if ($result && $result instanceof Message) {
+            if ($result instanceof Message) {
                 $responseEvent->payload = $result->serializeToJsonString();
             }
 

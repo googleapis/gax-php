@@ -129,11 +129,15 @@ trait ClientOptionsTrait
         $options += $defaultOptions;
 
         // If logger is explicitly set to false, logging is disabled
-        if ($options['logger'] !== false) {
-            $options['logger'] = $options['logger'] ?? ApplicationDefaultCredentials::getDefaultLogger();
+        if (is_null($options['logger'])) {
+            $options['logger'] = ApplicationDefaultCredentials::getDefaultLogger();
         }
 
-        if ($options['logger'] !== null && $options['logger'] !== false && !$options['logger'] instanceof LoggerInterface) {
+        if (
+            $options['logger'] !== null
+            && $options['logger'] !== false
+            && !$options['logger'] instanceof LoggerInterface
+        ) {
             throw new ValidationException(
                 'The "logger" option in the options array should be PSR-3 LoggerInterface compatible'
             );
@@ -143,7 +147,9 @@ trait ClientOptionsTrait
         $this->logConfiguration($options['logger'], $clientSuppliedOptions);
 
         if (isset($options['logger'])) {
-            $options['credentialsConfig']['authHttpHandler'] = HttpHandlerFactory::build(logger: $options['logger']);
+            $options['credentialsConfig']['authHttpHandler'] = HttpHandlerFactory::build(
+                logger: $options['logger']
+            );
         }
 
         $options['credentialsConfig'] += $defaultOptions['credentialsConfig'];

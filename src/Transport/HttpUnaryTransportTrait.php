@@ -130,7 +130,7 @@ trait HttpUnaryTransportTrait
     private static function buildHttpHandlerAsync(null|false|LoggerInterface $logger = null)
     {
         try {
-            return [HttpHandlerFactory::build(null, $logger), 'async'];
+            return [HttpHandlerFactory::build(logger: $logger), 'async'];
         } catch (Exception $ex) {
             throw new ValidationException('Failed to build HttpHandler', $ex->getCode(), $ex);
         }
