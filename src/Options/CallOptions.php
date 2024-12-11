@@ -54,6 +54,7 @@ class CallOptions implements ArrayAccess
 
     /** @var RetrySettings|array|null $retrySettings */
     private $retrySettings;
+    private bool $withResponseMetadata;
 
     /**
      * @param array $options {
@@ -88,6 +89,7 @@ class CallOptions implements ArrayAccess
         $this->setTimeoutMillis($arr['timeoutMillis'] ?? null);
         $this->setTransportOptions($arr['transportOptions'] ?? []);
         $this->setRetrySettings($arr['retrySettings'] ?? null);
+        $this->setWithResponseMetadata($arr['withResponseMetadata'] ?? false);
     }
 
     /**
@@ -96,6 +98,14 @@ class CallOptions implements ArrayAccess
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
+    }
+
+    /**
+     * @param bool $withResponseMetadata
+     */
+    public function setWithResponseMetadata(bool $withResponseMetadata)
+    {
+        $this->withResponseMetadata = $withResponseMetadata;
     }
 
     /**
