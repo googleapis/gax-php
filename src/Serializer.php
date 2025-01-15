@@ -65,6 +65,18 @@ class Serializer
         'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
     ];
 
+    private static $restKnownTypes = [
+        'type.googleapis.com/google.rpc.RetryInfo' => \Google\Rpc\RetryInfo::class,
+        'type.googleapis.com/google.rpc.DebugInfo' => \Google\Rpc\DebugInfo::class,
+        'type.googleapis.com/google.rpc.QuotaFailure' => \Google\Rpc\QuotaFailure::class,
+        'type.googleapis.com/google.rpc.BadRequest' => \Google\Rpc\BadRequest::class,
+        'type.googleapis.com/google.rpc.RequestInfo' => \Google\Rpc\RequestInfo::class,
+        'type.googleapis.com/google.rpc.ResourceInfo' => \Google\Rpc\ResourceInfo::class,
+        'type.googleapis.com/google.rpc.ErrorInfo' => \Google\Rpc\ErrorInfo::class,
+        'type.googleapis.com/google.rpc.Help' => \Google\Rpc\Help::class,
+        'type.googleapis.com/google.rpc.LocalizedMessage' => \Google\Rpc\LocalizedMessage::class,
+    ];
+
     private $fieldTransformers;
     private $messageTypeTransformers;
     private $decodeFieldTransformers;
@@ -131,6 +143,34 @@ class Serializer
     }
 
     /**
+     * Encode rest metadata errors to the correct protobuf Error type
+     *
+     * @param array $metadata
+     * @return array
+     */
+    public static function encodeMetadataToProtobufErrors(array $metadata): array
+    {
+        $result = [];
+
+        foreach($metadata as $error) {
+            $message = null;
+            $type = $error['@type'];
+
+            if (!isset(self::$restKnownTypes[$type])) {
+                continue;
+            }
+
+            $class = self::$restKnownTypes[$type];
+            $message = new $class;
+            $jsonMessage = json_encode(array_diff($error, ['@type' => $error['@type']]));
+            $message->mergeFromJsonString($jsonMessage);
+            $result[] = $message;
+        }
+
+        return $result;
+    }
+
+    /**
      * Decode PHP array into the specified protobuf message
      *
      * @param mixed $message
@@ -185,16 +225,20 @@ class Serializer
         if (count($metadata) == 0) {
             return [];
         }
-        $result = [];
+        $result = [
+            'serialized' => [],
+            'unserialized' => []
+        ];
         foreach ($metadata as $key => $values) {
             foreach ($values as $value) {
                 $decodedValue = [
                     '@type' => $key,
                 ];
+                /** @var Message $message */
+                $message = null;
                 if (self::hasBinaryHeaderSuffix($key)) {
                     if (isset(self::$metadataKnownTypes[$key])) {
                         $class = self::$metadataKnownTypes[$key];
-                        /** @var Message $message */
                         $message = new $class();
                         try {
                             $message->mergeFromString($value);
@@ -207,16 +251,21 @@ class Serializer
                         }
                     } else {
                         // The metadata contains an unexpected binary type
+                        $unknownDataMessage = '<Unknown Binary Data>';
                         $decodedValue += [
-                            'data' => '<Unknown Binary Data>',
+                            'data' => $unknownDataMessage,
                         ];
+                        $message = null;
                     }
                 } else {
                     $decodedValue += [
                         'data' => $value,
                     ];
                 }
-                $result[] = $decodedValue;
+                $result['serialized'][] = $decodedValue;
+                if (!is_null($message)) {
+                    $result['unserialized'][] = $message;
+                }
             }
         }
         return $result;
@@ -231,12 +280,14 @@ class Serializer
     public static function decodeAnyMessages($anyArray)
     {
         $results = [];
+        $messages = [];
         foreach ($anyArray as $any) {
             try {
                 /** @var Any $any */
                 /** @var Message $unpacked */
                 $unpacked = $any->unpack();
                 $results[] = self::serializeToPhpArray($unpacked);
+                $messages[] = $unpacked;
             } catch (\Exception $ex) {
                 echo "$ex\n";
                 // failed to unpack the $any object - show as unknown binary data
