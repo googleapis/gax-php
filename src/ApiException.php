@@ -156,15 +156,15 @@ class ApiException extends Exception
      */
     public static function createFromStdClass(stdClass $status)
     {
+        $unserializedErrors = [];
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
-        $decodedMessages = Serializer::decodeMetadata((array) $metadata);
 
         return self::create(
             $status->details,
             $status->code,
             $metadata,
-            $decodedMessages['serialized'],
-            $decodedMessages['unserialized']
+            Serializer::decodeMetadata((array) $metadata, $unserializedErrors),
+            $unserializedErrors
         );
     }
 
@@ -181,13 +181,13 @@ class ApiException extends Exception
         ?array $metadata = null,
         ?Exception $previous = null
     ) {
-        $decodedMessages = Serializer::decodeMetadata((array) $metadata);
+        $unserializedErrors = [];
         return self::create(
             $basicMessage,
             $rpcCode,
             $metadata,
-            $decodedMessages['serialized'],
-            $decodedMessages['unserialized'],
+            Serializer::decodeMetadata((array) $metadata, $unserializedErrors),
+            $unserializedErrors,
             $previous
         );
     }

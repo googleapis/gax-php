@@ -63,9 +63,6 @@ class Serializer
         'google.rpc.errorinfo-bin' => \Google\Rpc\ErrorInfo::class,
         'google.rpc.help-bin' => \Google\Rpc\Help::class,
         'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
-    ];
-
-    private static $restKnownTypes = [
         'type.googleapis.com/google.rpc.RetryInfo' => \Google\Rpc\RetryInfo::class,
         'type.googleapis.com/google.rpc.DebugInfo' => \Google\Rpc\DebugInfo::class,
         'type.googleapis.com/google.rpc.QuotaFailure' => \Google\Rpc\QuotaFailure::class,
@@ -156,11 +153,11 @@ class Serializer
             $message = null;
             $type = $error['@type'];
 
-            if (!isset(self::$restKnownTypes[$type])) {
+            if (!isset(self::$metadataKnownTypes[$type])) {
                 continue;
             }
 
-            $class = self::$restKnownTypes[$type];
+            $class = self::$metadataKnownTypes[$type];
             $message = new $class;
             $jsonMessage = json_encode(array_diff($error, ['@type' => $error['@type']]));
             $message->mergeFromJsonString($jsonMessage);
@@ -218,31 +215,32 @@ class Serializer
      * Decode metadata received from gRPC status object
      *
      * @param array $metadata
+     * @param array $unserializedErrors
      * @return array
      */
-    public static function decodeMetadata(array $metadata)
+    public static function decodeMetadata(array $metadata, array &$unserializedErrors = null)
     {
         if (count($metadata) == 0) {
             return [];
         }
-        $result = [
-            'serialized' => [],
-            'unserialized' => []
-        ];
+        $result = [];
         foreach ($metadata as $key => $values) {
             foreach ($values as $value) {
                 $decodedValue = [
                     '@type' => $key,
                 ];
-                /** @var Message $message */
-                $message = null;
                 if (self::hasBinaryHeaderSuffix($key)) {
                     if (isset(self::$metadataKnownTypes[$key])) {
                         $class = self::$metadataKnownTypes[$key];
+                        /** @var Message $message */
                         $message = new $class();
                         try {
                             $message->mergeFromString($value);
                             $decodedValue += self::serializeToPhpArray($message);
+
+                            if (!is_null($unserializedErrors)) {
+                                $unserializedErrors[] = $message;
+                            }
                         } catch (\Exception $e) {
                             // We encountered an error trying to deserialize the data
                             $decodedValue += [
@@ -251,21 +249,16 @@ class Serializer
                         }
                     } else {
                         // The metadata contains an unexpected binary type
-                        $unknownDataMessage = '<Unknown Binary Data>';
                         $decodedValue += [
-                            'data' => $unknownDataMessage,
+                            'data' => '<Unknown Binary Data>',
                         ];
-                        $message = null;
                     }
                 } else {
                     $decodedValue += [
                         'data' => $value,
                     ];
                 }
-                $result['serialized'][] = $decodedValue;
-                if (!is_null($message)) {
-                    $result['unserialized'][] = $message;
-                }
+                $result[] = $decodedValue;
             }
         }
         return $result;
