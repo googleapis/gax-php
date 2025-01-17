@@ -32,6 +32,7 @@
 namespace Google\ApiCore;
 
 use Exception;
+use Google\Protobuf\Internal\Message;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Rpc\Status;
 use GuzzleHttp\Exception\RequestException;
@@ -46,6 +47,7 @@ class ApiException extends Exception
     private $metadata;
     private $basicMessage;
     private $decodedMetadataErrorInfo;
+    private array $protoErrors;
 
     /**
      * ApiException constructor.
@@ -57,12 +59,14 @@ class ApiException extends Exception
      *     @type array|null $metadata
      *     @type string|null $basicMessage
      * }
+     * @param $protoErrors array<Message>
      */
     public function __construct(
         string $message,
         int $code,
         ?string $status = null,
-        array $optionalArgs = []
+        array $optionalArgs = [],
+        array $protoErrors = [],
     ) {
         $optionalArgs += [
             'previous' => null,
@@ -73,6 +77,7 @@ class ApiException extends Exception
         $this->status = $status;
         $this->metadata = $optionalArgs['metadata'];
         $this->basicMessage = $optionalArgs['basicMessage'];
+        $this->protoErrors = $protoErrors;
         if ($this->metadata) {
             $this->decodedMetadataErrorInfo = self::decodeMetadataErrorInfo($this->metadata);
         }
@@ -138,17 +143,29 @@ class ApiException extends Exception
     }
 
     /**
+     * Returns the array containing all of the Protobuf errors
+     * @return array<Message>
+     */
+    public function getProtobufErrors()
+    {
+        return $this->protoErrors;
+    }
+
+    /**
      * @param stdClass $status
      * @return ApiException
      */
     public static function createFromStdClass(stdClass $status)
     {
+        $unserializedErrors = [];
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
+
         return self::create(
             $status->details,
             $status->code,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata)
+            Serializer::decodeMetadata((array) $metadata, $unserializedErrors),
+            $unserializedErrors
         );
     }
 
@@ -165,11 +182,13 @@ class ApiException extends Exception
         ?array $metadata = null,
         ?Exception $previous = null
     ) {
+        $unserializedErrors = [];
         return self::create(
             $basicMessage,
             $rpcCode,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata),
+            Serializer::decodeMetadata((array) $metadata, $unserializedErrors),
+            $unserializedErrors,
             $previous
         );
     }
@@ -194,6 +213,7 @@ class ApiException extends Exception
             $rpcCode,
             $metadata,
             is_null($metadata) ? [] : $metadata,
+            Serializer::encodeMetadataToProtobufErrors($metadata ?? []),
             $previous
         );
     }
@@ -235,6 +255,7 @@ class ApiException extends Exception
      * @param int $rpcCode
      * @param iterable|null $metadata
      * @param array $decodedMetadata
+     * @param array $protoErrors
      * @param Exception|null $previous
      * @return ApiException
      */
@@ -243,6 +264,7 @@ class ApiException extends Exception
         int $rpcCode,
         $metadata,
         array $decodedMetadata,
+        array $protoErrors = [],
         ?Exception $previous = null
     ) {
         $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
@@ -263,11 +285,17 @@ class ApiException extends Exception
             $metadata = iterator_to_array($metadata);
         }
 
-        return new ApiException($message, $rpcCode, $rpcStatus, [
-            'previous' => $previous,
-            'metadata' => $metadata,
-            'basicMessage' => $basicMessage,
-        ]);
+        return new ApiException(
+            $message,
+            $rpcCode,
+            $rpcStatus,
+            [
+                'previous' => $previous,
+                'metadata' => $metadata,
+                'basicMessage' => $basicMessage,
+            ],
+            $protoErrors
+        );
     }
 
     /**
