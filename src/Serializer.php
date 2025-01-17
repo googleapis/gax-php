@@ -273,14 +273,12 @@ class Serializer
     public static function decodeAnyMessages($anyArray)
     {
         $results = [];
-        $messages = [];
         foreach ($anyArray as $any) {
             try {
                 /** @var Any $any */
                 /** @var Message $unpacked */
                 $unpacked = $any->unpack();
                 $results[] = self::serializeToPhpArray($unpacked);
-                $messages[] = $unpacked;
             } catch (\Exception $ex) {
                 echo "$ex\n";
                 // failed to unpack the $any object - show as unknown binary data
