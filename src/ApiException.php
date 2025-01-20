@@ -210,7 +210,7 @@ class ApiException extends Exception
             $rpcCode,
             $metadata,
             is_null($metadata) ? [] : $metadata,
-            Serializer::encodeMetadataToProtobufErrors($metadata),
+            Serializer::encodeMetadataToProtobufErrors($metadata ?? []),
             $previous
         );
     }
@@ -291,7 +291,7 @@ class ApiException extends Exception
                 'metadata' => $metadata,
                 'basicMessage' => $basicMessage,
             ],
-            $protobufErrors
+            $protobufErrors ?? []
         );
     }
 
