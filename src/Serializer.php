@@ -164,6 +164,34 @@ class Serializer
     }
 
     /**
+     * Encodes decoded metadata to the Protobuf error type
+     *
+     * @param array metadata
+     * @return array
+     */
+    public static function encodeMetadataToProtobufErrors(array $metadata): array
+    {
+        $result = [];
+
+        foreach ($metadata as $error) {
+            $message = null;
+            $type = $error['@type'];
+
+            if (!isset(self::$metadataKnownTypes[$type])) {
+                continue;
+            }
+
+            $class = self::$metadataKnownTypes[$type];
+            $message = new $class;
+            $jsonMessage = json_encode(array_diff($error, ['@type' => $error['@type']]));
+            $message->mergeFromJsonString($jsonMessage);
+            $result[] = $message;
+        }
+
+        return $result;
+    }
+
+    /**
      * @param Message $message
      * @return string Json representation of $message
      * @throws ValidationException
