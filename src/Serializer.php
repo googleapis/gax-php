@@ -175,6 +175,11 @@ class Serializer
 
         foreach ($metadata as $error) {
             $message = null;
+
+            if (!isset($error['@type'])) {
+                continue;
+            }
+
             $type = $error['@type'];
 
             if (!isset(self::$metadataKnownTypes[$type])) {
@@ -183,7 +188,7 @@ class Serializer
 
             $class = self::$metadataKnownTypes[$type];
             $message = new $class;
-            $jsonMessage = json_encode(array_diff($error, ['@type' => $error['@type']]));
+            $jsonMessage = json_encode(array_diff_key($error, ['@type' => true]));
             $message->mergeFromJsonString($jsonMessage);
             $result[] = $message;
         }
