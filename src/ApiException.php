@@ -46,6 +46,7 @@ class ApiException extends Exception
     private $metadata;
     private $basicMessage;
     private $decodedMetadataErrorInfo;
+    private array $protobufErrors;
 
     /**
      * ApiException constructor.
@@ -62,7 +63,8 @@ class ApiException extends Exception
         string $message,
         int $code,
         ?string $status = null,
-        array $optionalArgs = []
+        array $optionalArgs = [],
+        array $protobufErrors = [],
     ) {
         $optionalArgs += [
             'previous' => null,
@@ -76,6 +78,7 @@ class ApiException extends Exception
         if ($this->metadata) {
             $this->decodedMetadataErrorInfo = self::decodeMetadataErrorInfo($this->metadata);
         }
+        $this->protobufErrors = $protobufErrors;
     }
 
     public function getStatus()
@@ -138,17 +141,28 @@ class ApiException extends Exception
     }
 
     /**
+     * Returns the unserialized errors
+     * @return array
+     */
+    public function getUnserializedErrors(): array
+    {
+        return $this->protobufErrors;
+    }
+
+    /**
      * @param stdClass $status
      * @return ApiException
      */
     public static function createFromStdClass(stdClass $status)
     {
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
+        $errors = [];
         return self::create(
             $status->details,
             $status->code,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata)
+            Serializer::decodeMetadata((array) $metadata, $errors),
+            $errors,
         );
     }
 
@@ -235,6 +249,7 @@ class ApiException extends Exception
      * @param int $rpcCode
      * @param iterable|null $metadata
      * @param array $decodedMetadata
+     * @param array $protobufErrors
      * @param Exception|null $previous
      * @return ApiException
      */
@@ -243,6 +258,7 @@ class ApiException extends Exception
         int $rpcCode,
         $metadata,
         array $decodedMetadata,
+        array $protobufErrors = null,
         ?Exception $previous = null
     ) {
         $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
@@ -263,11 +279,17 @@ class ApiException extends Exception
             $metadata = iterator_to_array($metadata);
         }
 
-        return new ApiException($message, $rpcCode, $rpcStatus, [
-            'previous' => $previous,
-            'metadata' => $metadata,
-            'basicMessage' => $basicMessage,
-        ]);
+        return new ApiException(
+            $message,
+            $rpcCode,
+            $rpcStatus,
+            [
+                'previous' => $previous,
+                'metadata' => $metadata,
+                'basicMessage' => $basicMessage,
+            ],
+            $protobufErrors
+        );
     }
 
     /**
