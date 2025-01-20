@@ -179,11 +179,13 @@ class ApiException extends Exception
         ?array $metadata = null,
         ?Exception $previous = null
     ) {
+        $errors = [];
         return self::create(
             $basicMessage,
             $rpcCode,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata),
+            Serializer::decodeMetadata((array) $metadata, $errors),
+            $errors,
             $previous
         );
     }
@@ -208,6 +210,7 @@ class ApiException extends Exception
             $rpcCode,
             $metadata,
             is_null($metadata) ? [] : $metadata,
+            Serializer::encodeMetadataToProtobufErrors($metadata),
             $previous
         );
     }
