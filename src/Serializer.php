@@ -63,6 +63,15 @@ class Serializer
         'google.rpc.errorinfo-bin' => \Google\Rpc\ErrorInfo::class,
         'google.rpc.help-bin' => \Google\Rpc\Help::class,
         'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
+        'type.googleapis.com/google.rpc.RetryInfo' => \Google\Rpc\RetryInfo::class,
+        'type.googleapis.com/google.rpc.DebugInfo' => \Google\Rpc\DebugInfo::class,
+        'type.googleapis.com/google.rpc.QuotaFailure' => \Google\Rpc\QuotaFailure::class,
+        'type.googleapis.com/google.rpc.BadRequest' => \Google\Rpc\BadRequest::class,
+        'type.googleapis.com/google.rpc.RequestInfo' => \Google\Rpc\RequestInfo::class,
+        'type.googleapis.com/google.rpc.ResourceInfo' => \Google\Rpc\ResourceInfo::class,
+        'type.googleapis.com/google.rpc.ErrorInfo' => \Google\Rpc\ErrorInfo::class,
+        'type.googleapis.com/google.rpc.Help' => \Google\Rpc\Help::class,
+        'type.googleapis.com/google.rpc.LocalizedMessage' => \Google\Rpc\LocalizedMessage::class,
     ];
 
     private $fieldTransformers;
@@ -178,9 +187,10 @@ class Serializer
      * Decode metadata received from gRPC status object
      *
      * @param array $metadata
+     * @param array $errors
      * @return array
      */
-    public static function decodeMetadata(array $metadata)
+    public static function decodeMetadata(array $metadata, array &$errors = null)
     {
         if (count($metadata) == 0) {
             return [];
@@ -199,6 +209,9 @@ class Serializer
                         try {
                             $message->mergeFromString($value);
                             $decodedValue += self::serializeToPhpArray($message);
+                            if (!is_null($errors)) {
+                                $errors[] = $message;
+                            }
                         } catch (\Exception $e) {
                             // We encountered an error trying to deserialize the data
                             $decodedValue += [
