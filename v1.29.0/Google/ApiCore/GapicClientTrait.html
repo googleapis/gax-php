@@ -315,17 +315,17 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>GapicClientTrait    
+        <h1>GapicClientTrait
             </h1>
     </div>
 
-    
+
     <p>        trait
     <strong>GapicClientTrait</strong>        (<a href="https://github.com/googleapis/gax-php/blob/v1.29.0/src/GapicClientTrait.php">View source</a>)
 </p>
 
-        
-    
+
+
                         <table>
             <tr>
                 <td><span class="label label-warning">internal</span></td>
@@ -333,14 +333,14 @@
             </tr>
         </table>
                 &nbsp;
-    
+
 
             <div class="description">
             <p><p>Common functions used to work with various clients.</p></p>                    </div>
-            
+
                 <h2>Traits</h2>
 
-        
+
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
@@ -363,9 +363,9 @@
                 <div class="col-md-6"><p>Provides basic array helper methods.</p></div>
             </div>
             </div>
-    
-    
-    
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
@@ -375,7 +375,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_validate">validate</a>(array $arr, array $requiredKeys)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validate">
@@ -387,7 +387,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_validateNotNull">validateNotNull</a>(array $arr, array $requiredKeys)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Google/ApiCore/ValidationTrait.html#method_validateNotNull">
@@ -399,7 +399,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_addMiddleware">addMiddleware</a>(callable $middlewareCallable)
-        
+
                                             <p><p>Add a middleware to the call stack by providing a callable which will be
 invoked at the start of each call, and will return an instance of
 {MiddlewareInterface} when invoked.</p></p>                </div>
@@ -407,11 +407,11 @@ invoked at the start of each call, and will return an instance of
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_close">close</a>()
-        
+
                                             <p><p>Initiates an orderly shutdown in which preexisting calls continue but new
 calls are immediately cancelled.</p></p>                </div>
                 <div class="col-md-2"></div>
@@ -430,13 +430,13 @@ calls are immediately cancelled.</p></p>                </div>
     <strong>validate</strong>(array $arr, array $requiredKeys)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -454,7 +454,7 @@ calls are immediately cancelled.</p></p>                </div>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -464,9 +464,9 @@ calls are immediately cancelled.</p></p>                </div>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -479,13 +479,13 @@ calls are immediately cancelled.</p></p>                </div>
     <strong>validateNotNull</strong>(array $arr, array $requiredKeys)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -503,7 +503,7 @@ calls are immediately cancelled.</p></p>                </div>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -513,9 +513,9 @@ calls are immediately cancelled.</p></p>                </div>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -527,9 +527,9 @@ calls are immediately cancelled.</p></p>                </div>
     <strong>addMiddleware</strong>(callable $middlewareCallable)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Add a middleware to the call stack by providing a callable which will be
@@ -549,7 +549,7 @@ invoked at the start of each call, and will return an instance of
             return $response;
         }
     };
-});</code></pre></p>        
+});</code></pre></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -564,7 +564,7 @@ MiddlewareInterface instance as its first argument.</p></td>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -574,9 +574,9 @@ MiddlewareInterface instance as its first argument.</p></td>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -584,33 +584,42 @@ MiddlewareInterface instance as its first argument.</p></td>
                     <div class="method-item">
                     <h3 id="method_close">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.29.0/src/GapicClientTrait.php#L126">at line 126</a></div>
-        <code>                    
+        <code>
     <strong>close</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Initiates an orderly shutdown in which preexisting calls continue but new
-calls are immediately cancelled.</p></p>                        
+calls are immediately cancelled.</p></p>
         </div>
         <div class="tags">
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

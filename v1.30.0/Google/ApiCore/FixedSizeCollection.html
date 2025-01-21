@@ -315,38 +315,38 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>FixedSizeCollection    
+        <h1>FixedSizeCollection
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>FixedSizeCollection</strong>        implements        <a target="_blank" rel="noopener" href="https://www.php.net/IteratorAggregate">IteratorAggregate</a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.30.0/src/FixedSizeCollection.php">View source</a>)
 </p>
 
-        
-    
-        
+
+
+
 
             <div class="description">
             <p><p>A collection of elements retrieved using one or more API calls. The
 collection will attempt to retrieve a fixed number of elements, and
 will make API calls until that fixed number is reached, or there
 are no more elements to retrieve.</p></p>                    </div>
-            
-        
-    
-    
+
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $initialPage, int $collectionSize)
-        
+
                                             <p><p>FixedSizeCollection constructor.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -356,7 +356,7 @@ are no more elements to retrieve.</p></p>                    </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getCollectionSize">getCollectionSize</a>()
-        
+
                                             <p><p>Returns the number of elements in the collection. This will be
 equal to the collectionSize parameter used at construction
 unless there are no elements remaining to be retrieved.</p></p>                </div>
@@ -368,7 +368,7 @@ unless there are no elements remaining to be retrieved.</p></p>                <
                 </div>
                 <div class="col-md-8">
                     <a href="#method_hasNextCollection">hasNextCollection</a>()
-        
+
                                             <p><p>Returns true if there are more elements that can be retrieved
 from the API.</p></p>                </div>
                 <div class="col-md-2"></div>
@@ -379,7 +379,7 @@ from the API.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getNextPageToken">getNextPageToken</a>()
-        
+
                                             <p><p>Returns a page token that can be passed into the API list
 method to retrieve additional elements.</p></p>                </div>
                 <div class="col-md-2"></div>
@@ -390,7 +390,7 @@ method to retrieve additional elements.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getNextCollection">getNextCollection</a>()
-        
+
                                             <p><p>Retrieves the next FixedSizeCollection using one or more API calls.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -400,7 +400,7 @@ method to retrieve additional elements.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getIterator">getIterator</a>()
-        
+
                                             <p><p>Returns an iterator over the elements of the collection.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -410,7 +410,7 @@ method to retrieve additional elements.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_iterateCollections">iterateCollections</a>()
-        
+
                                             <p><p>Returns an iterator over FixedSizeCollections, starting with this
 and making API calls as required until all of the elements have
 been retrieved.</p></p>                </div>
@@ -425,16 +425,16 @@ been retrieved.</p></p>                </div>
                     <div class="method-item">
                     <h3 id="method___construct">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.30.0/src/FixedSizeCollection.php#L55">at line 55</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(<a href="../../Google/ApiCore/Page.html"><abbr title="Google\ApiCore\Page">Page</abbr></a> $initialPage, int $collectionSize)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>FixedSizeCollection constructor.</p></p>                        
+                            <p><p>FixedSizeCollection constructor.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -452,10 +452,10 @@ been retrieved.</p></p>                </div>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -467,17 +467,17 @@ been retrieved.</p></p>                </div>
     <strong>getCollectionSize</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Returns the number of elements in the collection. This will be
 equal to the collectionSize parameter used at construction
-unless there are no elements remaining to be retrieved.</p></p>                        
+unless there are no elements remaining to be retrieved.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -487,9 +487,9 @@ unless there are no elements remaining to be retrieved.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -501,16 +501,16 @@ unless there are no elements remaining to be retrieved.</p></p>
     <strong>hasNextCollection</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Returns true if there are more elements that can be retrieved
-from the API.</p></p>                        
+from the API.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -520,9 +520,9 @@ from the API.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -534,16 +534,16 @@ from the API.</p></p>
     <strong>getNextPageToken</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Returns a page token that can be passed into the API list
-method to retrieve additional elements.</p></p>                        
+method to retrieve additional elements.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -553,9 +553,9 @@ method to retrieve additional elements.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -567,15 +567,15 @@ method to retrieve additional elements.</p></p>
     <strong>getNextCollection</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Retrieves the next FixedSizeCollection using one or more API calls.</p></p>                        
+                            <p><p>Retrieves the next FixedSizeCollection using one or more API calls.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -585,9 +585,9 @@ method to retrieve additional elements.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -599,15 +599,15 @@ method to retrieve additional elements.</p></p>
     <strong>getIterator</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Returns an iterator over the elements of the collection.</p></p>                        
+                            <p><p>Returns an iterator over the elements of the collection.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -617,9 +617,9 @@ method to retrieve additional elements.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -631,17 +631,17 @@ method to retrieve additional elements.</p></p>
     <strong>iterateCollections</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Returns an iterator over FixedSizeCollections, starting with this
 and making API calls as required until all of the elements have
-been retrieved.</p></p>                        
+been retrieved.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -651,19 +651,28 @@ been retrieved.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

@@ -315,17 +315,17 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>MockTransport    
+        <h1>MockTransport
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>MockTransport</strong>        implements        <a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockTransport.php">View source</a>)
 </p>
 
-        
-    
+
+
                         <table>
             <tr>
                 <td><span class="label label-warning">internal</span></td>
@@ -333,12 +333,12 @@
             </tr>
         </table>
                 &nbsp;
-    
 
-            
+
+
                 <h2>Traits</h2>
 
-        
+
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
@@ -349,19 +349,19 @@ It provides functionality to add responses, get received calls, and overrides th
 method so that the elements of $responses are returned instead of making a call to the API.</p></div>
             </div>
             </div>
-    
-    
-    
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(callable $deserialize = null)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method___construct">
@@ -373,7 +373,7 @@ method so that the elements of $responses are returned instead of making a call 
                 </div>
                 <div class="col-md-8">
                     <a href="#method__simpleRequest">_simpleRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
-        
+
                                             <p><p>Overrides the _simpleRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
 Returns a MockUnaryCall object that will return the first item from $responses</p></p>                </div>
@@ -386,7 +386,7 @@ Returns a MockUnaryCall object that will return the first item from $responses</
                 </div>
                 <div class="col-md-8">
                     <a href="#method__clientStreamRequest">_clientStreamRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
-        
+
                                             <p><p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
 Returns a MockClientStreamingCall object that will return the first item from $responses</p></p>                </div>
@@ -399,7 +399,7 @@ Returns a MockClientStreamingCall object that will return the first item from $r
                 </div>
                 <div class="col-md-8">
                     <a href="#method__serverStreamRequest">_serverStreamRequest</a>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
-        
+
                                             <p><p>Overrides the _serverStreamRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
 Returns a MockServerStreamingCall object that will stream items from $responses, and return
@@ -413,7 +413,7 @@ a final status of $serverStreamingStatus.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method__bidiRequest">_bidiRequest</a>(string $method, callable $deserialize, array $metadata = [], array $options = [])
-        
+
                                             <p><p>Overrides the _bidiRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
 Returns a MockBidiStreamingCall object that will stream items from $responses, and return
@@ -427,7 +427,7 @@ a final status of $serverStreamingStatus.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_stripStatusFromResponses">stripStatusFromResponses</a>($responses)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_stripStatusFromResponses">
@@ -435,11 +435,11 @@ a final status of $serverStreamingStatus.</p></p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_addResponse">addResponse</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null)
-        
+
                                             <p><p>Add a response object, and an optional status, to the list of responses to be returned via
 _simpleRequest.</p></p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_addResponse">
@@ -447,11 +447,11 @@ _simpleRequest.</p></p>                </div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_setStreamingStatus">setStreamingStatus</a>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
-        
+
                                             <p><p>Set the status object to be used when creating streaming calls.</p></p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_setStreamingStatus">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
@@ -462,7 +462,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_popReceivedCalls">popReceivedCalls</a>()
-        
+
                                             <p><p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p></p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popReceivedCalls">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
@@ -473,7 +473,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getReceivedCallCount">getReceivedCallCount</a>()
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_getReceivedCallCount">
@@ -485,7 +485,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_popCallObjects">popCallObjects</a>()
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_popCallObjects">
@@ -497,7 +497,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_isExhausted">isExhausted</a>()
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_isExhausted">
@@ -509,7 +509,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_create">create</a>(mixed $responseObject, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null, callable $deserialize = null)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_create">
@@ -521,18 +521,18 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_createWithResponseSequence">createWithResponseSequence</a>(array $sequence, callable $deserialize = null, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $finalStatus = null)
-        
+
                                             <p><p>Creates a sequence such that the responses are returned in order.</p></p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_createWithResponseSequence">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_setAgentHeaderDescriptor">setAgentHeaderDescriptor</a>($agentHeaderDescriptor)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -543,7 +543,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startUnaryCall">startUnaryCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p><p>Returns a promise used to execute network requests.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -553,7 +553,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startBidiStreamingCall">startBidiStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p><p>Starts a bidi streaming call.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -563,7 +563,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startClientStreamingCall">startClientStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p><p>Starts a client streaming call.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -573,17 +573,17 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startServerStreamingCall">startServerStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p><p>Starts a server streaming call.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___call">__call</a>(string $name, array $arguments)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -594,7 +594,7 @@ _simpleRequest.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_close">close</a>()
-        
+
                                             <p><p>Closes the connection, if one exists.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -608,17 +608,17 @@ _simpleRequest.</p></p>                </div>
                     <h3 id="method___construct">
         <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method___construct">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockStubTrait.php#L55">at line 55</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(callable $deserialize = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -631,10 +631,10 @@ _simpleRequest.</p></p>                </div>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -647,14 +647,14 @@ _simpleRequest.</p></p>                </div>
     <strong>_simpleRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Overrides the _simpleRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
-Returns a MockUnaryCall object that will return the first item from $responses</p></p>                        
+Returns a MockUnaryCall object that will return the first item from $responses</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -687,7 +687,7 @@ Returns a MockUnaryCall object that will return the first item from $responses</
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -697,9 +697,9 @@ Returns a MockUnaryCall object that will return the first item from $responses</
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -712,14 +712,14 @@ Returns a MockUnaryCall object that will return the first item from $responses</
     <strong>_clientStreamRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Overrides the _clientStreamRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
-Returns a MockClientStreamingCall object that will return the first item from $responses</p></p>                        
+Returns a MockClientStreamingCall object that will return the first item from $responses</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -748,7 +748,7 @@ Returns a MockClientStreamingCall object that will return the first item from $r
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -758,9 +758,9 @@ Returns a MockClientStreamingCall object that will return the first item from $r
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -773,15 +773,15 @@ Returns a MockClientStreamingCall object that will return the first item from $r
     <strong>_serverStreamRequest</strong>(string $method, <abbr title="Google\Protobuf\Internal\Message">Message</abbr> $argument, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Overrides the _serverStreamRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
 Returns a MockServerStreamingCall object that will stream items from $responses, and return
-a final status of $serverStreamingStatus.</p></p>                        
+a final status of $serverStreamingStatus.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -815,7 +815,7 @@ a final status of $serverStreamingStatus.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -825,9 +825,9 @@ a final status of $serverStreamingStatus.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -840,15 +840,15 @@ a final status of $serverStreamingStatus.</p></p>
     <strong>_bidiRequest</strong>(string $method, callable $deserialize, array $metadata = [], array $options = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Overrides the _bidiRequest method in \Grpc\BaseStub
 (<a href="https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php">https://github.com/grpc/grpc/blob/master/src/php/lib/Grpc/BaseStub.php</a>)
 Returns a MockBidiStreamingCall object that will stream items from $responses, and return
-a final status of $serverStreamingStatus.</p></p>                        
+a final status of $serverStreamingStatus.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -877,7 +877,7 @@ a final status of $serverStreamingStatus.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -887,9 +887,9 @@ a final status of $serverStreamingStatus.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -898,17 +898,17 @@ a final status of $serverStreamingStatus.</p></p>
                     <h3 id="method_stripStatusFromResponses">
         <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_stripStatusFromResponses">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockStubTrait.php#L183">at line 183</a></div>
-        <code>        static            
+        <code>        static
     <strong>stripStatusFromResponses</strong>($responses)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -921,10 +921,10 @@ a final status of $serverStreamingStatus.</p></p>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -933,17 +933,17 @@ a final status of $serverStreamingStatus.</p></p>
                     <h3 id="method_addResponse">
         <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_addResponse">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockStubTrait.php#L199">at line 199</a></div>
-        <code>                    
+        <code>
     <strong>addResponse</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Add a response object, and an optional status, to the list of responses to be returned via
-_simpleRequest.</p></p>                        
+_simpleRequest.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -961,10 +961,10 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -973,16 +973,16 @@ _simpleRequest.</p></p>
                     <h3 id="method_setStreamingStatus">
         <div class="location">in <a href="../../../Google/ApiCore/Testing/MockStubTrait.html#method_setStreamingStatus">
 <abbr title="Google\ApiCore\Testing\MockStubTrait">MockStubTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockStubTrait.php#L216">at line 216</a></div>
-        <code>                    
+        <code>
     <strong>setStreamingStatus</strong>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Set the status object to be used when creating streaming calls.</p></p>                        
+                            <p><p>Set the status object to be used when creating streaming calls.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -995,10 +995,10 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -1011,15 +1011,15 @@ _simpleRequest.</p></p>
     <strong>popReceivedCalls</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p></p>                        
+                            <p><p>Return a list of calls made to _simpleRequest, and clear $receivedFuncCalls.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1029,9 +1029,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1044,16 +1044,16 @@ _simpleRequest.</p></p>
     <strong>getReceivedCallCount</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1063,9 +1063,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1078,16 +1078,16 @@ _simpleRequest.</p></p>
     <strong>popCallObjects</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1097,9 +1097,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1112,16 +1112,16 @@ _simpleRequest.</p></p>
     <strong>isExhausted</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1131,9 +1131,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1146,13 +1146,13 @@ _simpleRequest.</p></p>
     <strong>create</strong>(mixed $responseObject, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status = null, callable $deserialize = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1175,7 +1175,7 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1185,9 +1185,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1200,12 +1200,12 @@ _simpleRequest.</p></p>
     <strong>createWithResponseSequence</strong>(array $sequence, callable $deserialize = null, <a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $finalStatus = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Creates a sequence such that the responses are returned in order.</p></p>                        
+                            <p><p>Creates a sequence such that the responses are returned in order.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1228,7 +1228,7 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1238,9 +1238,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1248,17 +1248,17 @@ _simpleRequest.</p></p>
                     <div class="method-item">
                     <h3 id="method_setAgentHeaderDescriptor">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockTransport.php#L53">at line 53</a></div>
-        <code>                    
+        <code>
     <strong>setAgentHeaderDescriptor</strong>($agentHeaderDescriptor)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1271,10 +1271,10 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -1286,12 +1286,12 @@ _simpleRequest.</p></p>
     <strong>startUnaryCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Returns a promise used to execute network requests.</p></p>                        
+                            <p><p>Returns a promise used to execute network requests.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1309,7 +1309,7 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1319,7 +1319,7 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -1329,8 +1329,8 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -1342,12 +1342,12 @@ _simpleRequest.</p></p>
     <strong>startBidiStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Starts a bidi streaming call.</p></p>                        
+                            <p><p>Starts a bidi streaming call.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1365,7 +1365,7 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1375,9 +1375,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1389,12 +1389,12 @@ _simpleRequest.</p></p>
     <strong>startClientStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Starts a client streaming call.</p></p>                        
+                            <p><p>Starts a client streaming call.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1412,7 +1412,7 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1422,9 +1422,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1436,12 +1436,12 @@ _simpleRequest.</p></p>
     <strong>startServerStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Starts a server streaming call.</p></p>                        
+                            <p><p>Starts a server streaming call.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1459,7 +1459,7 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1469,9 +1469,9 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -1479,17 +1479,17 @@ _simpleRequest.</p></p>
                     <div class="method-item">
                     <h3 id="method___call">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.18.2/src/Testing/MockTransport.php#L96">at line 96</a></div>
-        <code>                    
+        <code>
     <strong>__call</strong>(string $name, array $arguments)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -1507,10 +1507,10 @@ _simpleRequest.</p></p>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -1522,15 +1522,15 @@ _simpleRequest.</p></p>
     <strong>close</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Closes the connection, if one exists.</p></p>                        
+                            <p><p>Closes the connection, if one exists.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -1540,19 +1540,28 @@ _simpleRequest.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

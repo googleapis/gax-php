@@ -315,21 +315,21 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>ApiStatus    
+        <h1>ApiStatus
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>ApiStatus</strong>        (<a href="https://github.com/googleapis/gax-php/blob/v1.16.3/src/ApiStatus.php">View source</a>)
 </p>
 
-        
-    
-        
 
-            
-        
+
+
+
+
+
             <h2>Constants</h2>    <table class="table table-condensed">
                     <tr>
                 <td>
@@ -504,8 +504,8 @@
             </tr>
             </table>
 
-    
-    
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
@@ -515,7 +515,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_isValidStatus">isValidStatus</a>(string $status)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -526,7 +526,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_statusFromRpcCode">statusFromRpcCode</a>(int $code)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -537,7 +537,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_rpcCodeFromStatus">rpcCodeFromStatus</a>(string $status)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -548,7 +548,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_rpcCodeFromHttpStatusCode">rpcCodeFromHttpStatusCode</a>(int $httpStatusCode)
-        
+
                                             <p><p>Maps HTTP status codes to Google\Rpc\Code codes.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -565,13 +565,13 @@
     <strong>isValidStatus</strong>(string $status)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -584,7 +584,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -594,9 +594,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -608,13 +608,13 @@
     <strong>statusFromRpcCode</strong>(int $code)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -627,7 +627,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -637,9 +637,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -651,13 +651,13 @@
     <strong>rpcCodeFromStatus</strong>(string $status)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -670,7 +670,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -680,9 +680,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -694,12 +694,12 @@
     <strong>rpcCodeFromHttpStatusCode</strong>(int $httpStatusCode)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Maps HTTP status codes to Google\Rpc\Code codes.</p></p>                <p><p>Some codes are left out because they map to multiple gRPC codes (e.g. 500).</p></p>        
+                            <p><p>Maps HTTP status codes to Google\Rpc\Code codes.</p></p>                <p><p>Some codes are left out because they map to multiple gRPC codes (e.g. 500).</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -712,7 +712,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -722,19 +722,28 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

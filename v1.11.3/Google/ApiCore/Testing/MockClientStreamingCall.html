@@ -315,18 +315,18 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>MockClientStreamingCall    
+        <h1>MockClientStreamingCall
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>MockClientStreamingCall</strong>        extends <abbr title="Grpc\ClientStreamingCall">ClientStreamingCall</abbr>        (<a href="https://github.com/googleapis/gax-php/blob/v1.11.3/src/Testing/MockClientStreamingCall.php">View source</a>)
 </p>
 
-        
-    
-        
+
+
+
 
             <div class="description">
             <p><p>The MockClientStreamingCall class is used to mock out the \Grpc\ClientStreamingCall class
@@ -334,20 +334,20 @@
 method, and an optional status. The response object and status are returned immediately from the
 wait() method. It also provides a write() method that accepts request objects, and a
 getAllRequests() method that returns all request objects passed to write(), and clears them.</p></p>        </div>
-            
-        
-    
-    
+
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, <a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null $status = null)
-        
+
                                             <p><p>MockClientStreamingCall constructor.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -357,17 +357,17 @@ getAllRequests() method that returns all request objects passed to write(), and 
                 </div>
                 <div class="col-md-8">
                     <a href="#method_wait">wait</a>()
-        
+
                                             <p><p>Immediately return the preset response object and status.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_write">write</a>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr>|mixed $request, array $options = [])
-        
+
                                             <p><p>Save the request object, to be retrieved via getReceivedCalls()</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -377,7 +377,7 @@ getAllRequests() method that returns all request objects passed to write(), and 
                 </div>
                 <div class="col-md-8">
                     <a href="#method_popReceivedCalls">popReceivedCalls</a>()
-        
+
                                             <p><p>Return a list of calls made to write(), and clear $receivedFuncCalls.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -390,16 +390,16 @@ getAllRequests() method that returns all request objects passed to write(), and 
                     <div class="method-item">
                     <h3 id="method___construct">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.11.3/src/Testing/MockClientStreamingCall.php#L62">at line 62</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr> $response, callable|null $deserialize = null, <a href="../../../Google/ApiCore/Testing/MockStatus.html"><abbr title="Google\ApiCore\Testing\MockStatus">MockStatus</abbr></a>|null $status = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>MockClientStreamingCall constructor.</p></p>                        
+                            <p><p>MockClientStreamingCall constructor.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -422,10 +422,10 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -437,15 +437,15 @@ getAllRequests() method that returns all request objects passed to write(), and 
     <strong>wait</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Immediately return the preset response object and status.</p></p>                        
+                            <p><p>Immediately return the preset response object and status.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -455,9 +455,9 @@ getAllRequests() method that returns all request objects passed to write(), and 
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -465,16 +465,16 @@ getAllRequests() method that returns all request objects passed to write(), and 
                     <div class="method-item">
                     <h3 id="method_write">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.11.3/src/Testing/MockClientStreamingCall.php#L83">at line 83</a></div>
-        <code>                    
+        <code>
     <strong>write</strong>(<abbr title="Google\Protobuf\Internal\Message">Message</abbr>|mixed $request, array $options = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Save the request object, to be retrieved via getReceivedCalls()</p></p>                        
+                            <p><p>Save the request object, to be retrieved via getReceivedCalls()</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -492,8 +492,8 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </tr>
             </table>
 
-            
-            
+
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -503,8 +503,8 @@ getAllRequests() method that returns all request objects passed to write(), and 
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -516,15 +516,15 @@ getAllRequests() method that returns all request objects passed to write(), and 
     <strong>popReceivedCalls</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Return a list of calls made to write(), and clear $receivedFuncCalls.</p></p>                        
+                            <p><p>Return a list of calls made to write(), and clear $receivedFuncCalls.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -534,19 +534,28 @@ getAllRequests() method that returns all request objects passed to write(), and 
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

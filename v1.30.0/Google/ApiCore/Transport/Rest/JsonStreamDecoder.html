@@ -315,21 +315,21 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>JsonStreamDecoder    
+        <h1>JsonStreamDecoder
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>JsonStreamDecoder</strong>        (<a href="https://github.com/googleapis/gax-php/blob/v1.30.0/src/Transport/Rest/JsonStreamDecoder.php">View source</a>)
 </p>
 
-        
-    
-        
 
-            
-        
+
+
+
+
+
             <h2>Constants</h2>    <table class="table table-condensed">
                     <tr>
                 <td>
@@ -342,18 +342,18 @@
             </tr>
             </table>
 
-    
-    
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(<abbr title="Psr\Http\Message\StreamInterface">StreamInterface</abbr> $stream, string $decodeType, array $options = [])
-        
+
                                             <p><p>JsonStreamDecoder is a HTTP-JSON response stream decoder for JSON-ecoded
 protobuf messages. The response stream must be a JSON array, where the first
 byte is the opening of the array (i.e. '['), and the last byte is the closing
@@ -367,7 +367,7 @@ separated.</p></p>                </div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_decode">decode</a>()
-        
+
                                             <p><p>Begins decoding the configured response stream. It is a generator which
 yields messages of the given decode type from the stream until the stream
 completes. Throws an Exception if the stream is closed before the closing
@@ -380,7 +380,7 @@ byte is read or if it encounters an error while decoding a message.</p></p>     
                 </div>
                 <div class="col-md-8">
                     <a href="#method_close">close</a>()
-        
+
                                             <p><p>Closes the underlying stream. If the stream is actively being decoded, an
 exception will not be thrown due to the interruption.</p></p>                </div>
                 <div class="col-md-2"></div>
@@ -394,20 +394,20 @@ exception will not be thrown due to the interruption.</p></p>                </d
                     <div class="method-item">
                     <h3 id="method___construct">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.30.0/src/Transport/Rest/JsonStreamDecoder.php#L70">at line 70</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(<abbr title="Psr\Http\Message\StreamInterface">StreamInterface</abbr> $stream, string $decodeType, array $options = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>JsonStreamDecoder is a HTTP-JSON response stream decoder for JSON-ecoded
 protobuf messages. The response stream must be a JSON array, where the first
 byte is the opening of the array (i.e. '['), and the last byte is the closing
 of the array (i.e. ']'). Each array item must be a JSON object and comma
-separated.</p></p>                        
+separated.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -438,10 +438,10 @@ An array of optional arguments.</p>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -453,18 +453,18 @@ An array of optional arguments.</p>
     <strong>decode</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Begins decoding the configured response stream. It is a generator which
 yields messages of the given decode type from the stream until the stream
 completes. Throws an Exception if the stream is closed before the closing
-byte is read or if it encounters an error while decoding a message.</p></p>                        
+byte is read or if it encounters an error while decoding a message.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -474,7 +474,7 @@ byte is read or if it encounters an error while decoding a message.</p></p>
         </tr>
     </table>
 
-            
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -484,8 +484,8 @@ byte is read or if it encounters an error while decoding a message.</p></p>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -497,16 +497,16 @@ byte is read or if it encounters an error while decoding a message.</p></p>
     <strong>close</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>Closes the underlying stream. If the stream is actively being decoded, an
-exception will not be thrown due to the interruption.</p></p>                        
+exception will not be thrown due to the interruption.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -516,19 +516,28 @@ exception will not be thrown due to the interruption.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

@@ -315,45 +315,45 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>ApiException    
+        <h1>ApiException
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>ApiException</strong>        extends <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.26.3/src/ApiException.php">View source</a>)
 </p>
 
-        
-    
-        
+
+
+
 
             <div class="description">
             <p><p>Represents an exception thrown during an RPC.</p></p>                    </div>
-            
-        
-    
-    
+
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(string $message, int $code, string $status = null, array $optionalArgs = [])
-        
+
                                             <p><p>ApiException constructor.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getStatus">getStatus</a>()
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -364,7 +364,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getReason">getReason</a>()
-        
+
                                             <p><p>Returns the <code>reason</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -374,7 +374,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getDomain">getDomain</a>()
-        
+
                                             <p><p>Returns the <code>domain</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -384,7 +384,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getErrorInfoMetadata">getErrorInfoMetadata</a>()
-        
+
                                             <p><p>Returns the <code>metadata</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -394,7 +394,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_createFromStdClass">createFromStdClass</a>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -405,7 +405,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_createFromApiResponse">createFromApiResponse</a>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a> $previous = null)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -416,7 +416,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_createFromRestApiResponse">createFromRestApiResponse</a>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a> $previous = null)
-        
+
                                             <p><p>For REST-based responses, the metadata does not need to be decoded.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -426,7 +426,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_createFromRpcStatus">createFromRpcStatus</a>(<abbr title="Google\Rpc\Status">Status</abbr> $status)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -437,7 +437,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_createFromRequestException">createFromRequestException</a>(<abbr title="GuzzleHttp\Exception\RequestException">RequestException</abbr> $ex, bool $isStream = false)
-        
+
                                             <p><p>Creates an ApiException from a GuzzleHttp RequestException.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -447,7 +447,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getBasicMessage">getBasicMessage</a>()
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -458,7 +458,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getMetadata">getMetadata</a>()
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -469,7 +469,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method___toString">__toString</a>()
-        
+
                                             <p><p>String representation of ApiException</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -482,16 +482,16 @@
                     <div class="method-item">
                     <h3 id="method___construct">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.26.3/src/ApiException.php#L62">at line 62</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(string $message, int $code, string $status = null, array $optionalArgs = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>ApiException constructor.</p></p>                        
+                            <p><p>ApiException constructor.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -523,10 +523,10 @@
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -534,23 +534,23 @@
                     <div class="method-item">
                     <h3 id="method_getStatus">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.26.3/src/ApiException.php#L82">at line 82</a></div>
-        <code>                    
+        <code>
     <strong>getStatus</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -562,15 +562,15 @@
     <strong>getReason</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Returns the <code>reason</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>                        
+                            <p><p>Returns the <code>reason</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -580,9 +580,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -594,15 +594,15 @@
     <strong>getDomain</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Returns the <code>domain</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>                        
+                            <p><p>Returns the <code>domain</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -612,9 +612,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -626,15 +626,15 @@
     <strong>getErrorInfoMetadata</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Returns the <code>metadata</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>                        
+                            <p><p>Returns the <code>metadata</code> in ErrorInfo for an exception, or null if there is no ErrorInfo.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -644,9 +644,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -658,13 +658,13 @@
     <strong>createFromStdClass</strong>(<a target="_blank" rel="noopener" href="https://www.php.net/stdClass">stdClass</a> $status)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -677,7 +677,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -687,9 +687,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -701,13 +701,13 @@
     <strong>createFromApiResponse</strong>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a> $previous = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -735,7 +735,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -745,9 +745,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -759,12 +759,12 @@
     <strong>createFromRestApiResponse</strong>(string $basicMessage, int $rpcCode, array $metadata = null, <a target="_blank" rel="noopener" href="https://www.php.net/Exception">Exception</a> $previous = null)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>For REST-based responses, the metadata does not need to be decoded.</p></p>                        
+                            <p><p>For REST-based responses, the metadata does not need to be decoded.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -792,7 +792,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -802,9 +802,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -816,13 +816,13 @@
     <strong>createFromRpcStatus</strong>(<abbr title="Google\Rpc\Status">Status</abbr> $status)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -835,7 +835,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -845,9 +845,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -859,12 +859,12 @@
     <strong>createFromRequestException</strong>(<abbr title="GuzzleHttp\Exception\RequestException">RequestException</abbr> $ex, bool $isStream = false)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Creates an ApiException from a GuzzleHttp RequestException.</p></p>                        
+                            <p><p>Creates an ApiException from a GuzzleHttp RequestException.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -882,7 +882,7 @@
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -892,7 +892,7 @@
         </tr>
     </table>
 
-            
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -902,8 +902,8 @@
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -915,16 +915,16 @@
     <strong>getBasicMessage</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -934,9 +934,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -948,16 +948,16 @@
     <strong>getMetadata</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -967,9 +967,9 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -981,15 +981,15 @@
     <strong>__toString</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>String representation of ApiException</p></p>                        
+                            <p><p>String representation of ApiException</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -999,19 +999,28 @@
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

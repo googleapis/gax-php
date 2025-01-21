@@ -315,35 +315,35 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>ServerStream    
+        <h1>ServerStream
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>ServerStream</strong>        (<a href="https://github.com/googleapis/gax-php/blob/v1.25.0/src/ServerStream.php">View source</a>)
 </p>
 
-        
-    
-        
+
+
+
 
             <div class="description">
             <p><p>ServerStream is the response object from a server streaming API call.</p></p>                    </div>
-            
-        
-    
-    
+
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(<a href="../../Google/ApiCore/ServerStreamingCallInterface.html"><abbr title="Google\ApiCore\ServerStreamingCallInterface">ServerStreamingCallInterface</abbr></a> $serverStreamingCall, array $streamingDescriptor = [])
-        
+
                                             <p><p>ServerStream constructor.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -353,7 +353,7 @@
                 </div>
                 <div class="col-md-8">
                     <a href="#method_readAll">readAll</a>()
-        
+
                                             <p><p>A generator which yields results from the server until the streaming call
 completes. Throws an ApiException if the streaming call failed.</p></p>                </div>
                 <div class="col-md-2"></div>
@@ -364,7 +364,7 @@ completes. Throws an ApiException if the streaming call failed.</p></p>         
                 </div>
                 <div class="col-md-8">
                     <a href="#method_getServerStreamingCall">getServerStreamingCall</a>()
-        
+
                                             <p><p>Return the underlying call object.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -377,16 +377,16 @@ completes. Throws an ApiException if the streaming call failed.</p></p>         
                     <div class="method-item">
                     <h3 id="method___construct">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.25.0/src/ServerStream.php#L50">at line 50</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(<a href="../../Google/ApiCore/ServerStreamingCallInterface.html"><abbr title="Google\ApiCore\ServerStreamingCallInterface">ServerStreamingCallInterface</abbr></a> $serverStreamingCall, array $streamingDescriptor = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>ServerStream constructor.</p></p>                        
+                            <p><p>ServerStream constructor.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -404,10 +404,10 @@ completes. Throws an ApiException if the streaming call failed.</p></p>         
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -419,16 +419,16 @@ completes. Throws an ApiException if the streaming call failed.</p></p>         
     <strong>readAll</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p><p>A generator which yields results from the server until the streaming call
-completes. Throws an ApiException if the streaming call failed.</p></p>                        
+completes. Throws an ApiException if the streaming call failed.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -438,7 +438,7 @@ completes. Throws an ApiException if the streaming call failed.</p></p>
         </tr>
     </table>
 
-            
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -448,8 +448,8 @@ completes. Throws an ApiException if the streaming call failed.</p></p>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -461,15 +461,15 @@ completes. Throws an ApiException if the streaming call failed.</p></p>
     <strong>getServerStreamingCall</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Return the underlying call object.</p></p>                        
+                            <p><p>Return the underlying call object.</p></p>
         </div>
         <div class="tags">
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -479,19 +479,28 @@ completes. Throws an ApiException if the streaming call failed.</p></p>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>

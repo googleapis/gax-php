@@ -315,26 +315,26 @@
         </div>
                 <div id="page-content">
     <div class="page-header">
-        <h1>GrpcFallbackTransport    
+        <h1>GrpcFallbackTransport
             </h1>
     </div>
 
-    
+
     <p>        class
     <strong>GrpcFallbackTransport</strong>        implements        <a href="../../../Google/ApiCore/Transport/TransportInterface.html"><abbr title="Google\ApiCore\Transport\TransportInterface">TransportInterface</abbr></a>        (<a href="https://github.com/googleapis/gax-php/blob/v1.7.1/src/Transport/GrpcFallbackTransport.php">View source</a>)
 </p>
 
-        
-    
-        
+
+
+
 
             <div class="description">
             <p><p>A transport that sends protobuf over HTTP 1.1 that can be used when full gRPC support
 is not available.</p></p>                    </div>
-            
+
                 <h2>Traits</h2>
 
-        
+
     <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-6">
@@ -353,9 +353,9 @@ is not available.</p></p>                    </div>
 HTTP requests.</p></div>
             </div>
             </div>
-    
-    
-    
+
+
+
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
@@ -365,7 +365,7 @@ HTTP requests.</p></div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_validate">validate</a>(array $arr, array $requiredKeys)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/ValidationTrait.html#method_validate">
@@ -377,7 +377,7 @@ HTTP requests.</p></div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_validateNotNull">validateNotNull</a>(array $arr, array $requiredKeys)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/ValidationTrait.html#method_validateNotNull">
@@ -385,55 +385,55 @@ HTTP requests.</p></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startClientStreamingCall">startClientStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p>{@inheritdoc}</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_startClientStreamingCall">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startServerStreamingCall">startServerStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p>{@inheritdoc}</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_startServerStreamingCall">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startBidiStreamingCall">startBidiStreamingCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p>{@inheritdoc}</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_startBidiStreamingCall">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method_close">close</a>()
-        
+
                                             <p>{@inheritdoc}</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_close">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+
                 </div>
                 <div class="col-md-8">
                     <a href="#method___construct">__construct</a>(string $baseUri, callable $httpHandler)
-        
+
                                             <p class="no-description">No description</p>
                                     </div>
                 <div class="col-md-2"></div>
@@ -444,7 +444,7 @@ HTTP requests.</p></div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_build">build</a>(string $apiEndpoint, array $config = [])
-        
+
                                             <p><p>Builds a GrpcFallbackTransport.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -454,7 +454,7 @@ HTTP requests.</p></div>
                 </div>
                 <div class="col-md-8">
                     <a href="#method_startUnaryCall">startUnaryCall</a>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
-        
+
                                             <p><p>Returns a promise used to execute network requests.</p></p>                </div>
                 <div class="col-md-2"></div>
             </div>
@@ -472,13 +472,13 @@ HTTP requests.</p></div>
     <strong>validate</strong>(array $arr, array $requiredKeys)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -496,7 +496,7 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -506,9 +506,9 @@ HTTP requests.</p></div>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -521,13 +521,13 @@ HTTP requests.</p></div>
     <strong>validateNotNull</strong>(array $arr, array $requiredKeys)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -545,7 +545,7 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -555,9 +555,9 @@ HTTP requests.</p></div>
         </tr>
     </table>
 
-            
-            
-            
+
+
+
                     </div>
     </div>
 
@@ -566,16 +566,16 @@ HTTP requests.</p></div>
                     <h3 id="method_startClientStreamingCall">
         <div class="location">in <a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_startClientStreamingCall">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.7.1/src/Transport/HttpUnaryTransportTrait.php#L52">at line 52</a></div>
-        <code>                    
+        <code>
     <strong>startClientStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p>{@inheritdoc}</p>                        
+                            <p>{@inheritdoc}</p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -593,8 +593,8 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
+
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -604,8 +604,8 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -614,16 +614,16 @@ HTTP requests.</p></div>
                     <h3 id="method_startServerStreamingCall">
         <div class="location">in <a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_startServerStreamingCall">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.7.1/src/Transport/HttpUnaryTransportTrait.php#L61">at line 61</a></div>
-        <code>                    
+        <code>
     <strong>startServerStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p>{@inheritdoc}</p>                        
+                            <p>{@inheritdoc}</p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -641,8 +641,8 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
+
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -652,8 +652,8 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -662,16 +662,16 @@ HTTP requests.</p></div>
                     <h3 id="method_startBidiStreamingCall">
         <div class="location">in <a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_startBidiStreamingCall">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.7.1/src/Transport/HttpUnaryTransportTrait.php#L70">at line 70</a></div>
-        <code>                    
+        <code>
     <strong>startBidiStreamingCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p>{@inheritdoc}</p>                        
+                            <p>{@inheritdoc}</p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -689,8 +689,8 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
+
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -700,8 +700,8 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -710,22 +710,22 @@ HTTP requests.</p></div>
                     <h3 id="method_close">
         <div class="location">in <a href="../../../Google/ApiCore/Transport/HttpUnaryTransportTrait.html#method_close">
 <abbr title="Google\ApiCore\Transport\HttpUnaryTransportTrait">HttpUnaryTransportTrait</abbr></a> <a href="https://github.com/googleapis/gax-php/blob/v1.7.1/src/Transport/HttpUnaryTransportTrait.php#L78">at line 78</a></div>
-        <code>                    
+        <code>
     <strong>close</strong>()
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p>{@inheritdoc}</p>                        
+                            <p>{@inheritdoc}</p>
         </div>
         <div class="tags">
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -733,17 +733,17 @@ HTTP requests.</p></div>
                     <div class="method-item">
                     <h3 id="method___construct">
         <div class="location"><a href="https://github.com/googleapis/gax-php/blob/v1.7.1/src/Transport/GrpcFallbackTransport.php#L63">at line 63</a></div>
-        <code>                    
+        <code>
     <strong>__construct</strong>(string $baseUri, callable $httpHandler)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
                             <p class="no-description">No description</p>
-                    
+
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -761,10 +761,10 @@ HTTP requests.</p></div>
             </tr>
             </table>
 
-            
-            
-            
-            
+
+
+
+
                     </div>
     </div>
 
@@ -776,12 +776,12 @@ HTTP requests.</p></div>
     <strong>build</strong>(string $apiEndpoint, array $config = [])
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Builds a GrpcFallbackTransport.</p></p>                        
+                            <p><p>Builds a GrpcFallbackTransport.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -802,7 +802,7 @@ Config options used to construct the grpc-fallback transport.</p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -812,7 +812,7 @@ Config options used to construct the grpc-fallback transport.</p>
         </tr>
     </table>
 
-            
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -822,8 +822,8 @@ Config options used to construct the grpc-fallback transport.</p>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
@@ -835,12 +835,12 @@ Config options used to construct the grpc-fallback transport.</p>
     <strong>startUnaryCall</strong>(<a href="../../../Google/ApiCore/Call.html"><abbr title="Google\ApiCore\Call">Call</abbr></a> $call, array $options)
         </code>
     </h3>
-    <div class="details">    
-    
-            
+    <div class="details">
+
+
 
         <div class="method-description">
-                            <p><p>Returns a promise used to execute network requests.</p></p>                        
+                            <p><p>Returns a promise used to execute network requests.</p></p>
         </div>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -858,7 +858,7 @@ Config options used to construct the grpc-fallback transport.</p>
             </tr>
             </table>
 
-            
+
                             <h4>Return Value</h4>
 
                     <table class="table table-condensed">
@@ -868,7 +868,7 @@ Config options used to construct the grpc-fallback transport.</p>
         </tr>
     </table>
 
-            
+
                             <h4>Exceptions</h4>
 
                     <table class="table table-condensed">
@@ -878,18 +878,27 @@ Config options used to construct the grpc-fallback transport.</p>
             </tr>
             </table>
 
-            
-            
+
+
                     </div>
     </div>
 
             </div>
             </div>
 
-    
+
 </div><div id="footer">
         Generated by <a href="https://github.com/code-lts/doctum">Doctum, a API Documentation generator and fork of Sami</a>.</div></div>
     </div>
-    </body>
+    <script>
+function doRedirect(url) {
+    matches = url.match(/\/Google\/ApiCore\/(.*).html/);
+    if (matches) {
+        return window.location = "https://cloud.google.com/php/docs/reference/gax/latest/" + matches[1].replaceAll('/', '.');
+    }
+    return window.location = "https://cloud.google.com/php/docs/reference/gax/latest";
+}
+doRedirect(window.location.href);
+    </script></body>
 
 </html>
