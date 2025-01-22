@@ -38,6 +38,15 @@ use Google\Protobuf\FieldMask;
 use Google\Protobuf\ListValue;
 use Google\Protobuf\Struct;
 use Google\Protobuf\Value;
+use Google\Rpc\BadRequest;
+use Google\Rpc\DebugInfo;
+use Google\Rpc\ErrorInfo;
+use Google\Rpc\Help;
+use Google\Rpc\LocalizedMessage;
+use Google\Rpc\QuotaFailure;
+use Google\Rpc\RequestInfo;
+use Google\Rpc\ResourceInfo;
+use Google\Rpc\RetryInfo;
 use Google\Rpc\Status;
 use Google\Type\Color;
 use PHPUnit\Framework\TestCase;
@@ -150,6 +159,113 @@ class SerializerTest extends TestCase
         ];
 
         $this->verifySerializeAndDeserialize($message, $encodedMessage);
+    }
+
+    public function testEncodeMetadataToProtobufErrors()
+    {
+        $allNonBinTypes = [
+            [
+                '@type' => 'type.googleapis.com/google.rpc.RetryInfo',
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.DebugInfo',
+                'stackEntries' => [],
+                'detail' => ''
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.QuotaFailure',
+                'violations' => [],
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.BadRequest',
+                'fieldViolations' => []
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.RequestInfo',
+                'requestId' => '',
+                'servingData' => '',
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.ResourceInfo',
+                'resourceType' => '',
+                'resourceName' => '',
+                'owner' => '',
+                'description' => '',
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.ErrorInfo',
+                'reason' => '',
+                'domain' => '',
+                'metadata' => [],
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.Help',
+                'links' => [],
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.LocalizedMessage',
+                'locale' => '',
+                'message' => '',
+            ],
+        ];
+        $encodedTypes = [
+            new RetryInfo(),
+            new DebugInfo(),
+            new QuotaFailure(),
+            new BadRequest(),
+            new RequestInfo(),
+            new ResourceInfo(),
+            new ErrorInfo(),
+            new Help(),
+            new LocalizedMessage()
+        ];
+
+        $encodedErrors = Serializer::encodeMetadataToProtobufErrors($allNonBinTypes);
+        $this->assertCount(9, $encodedErrors);
+        $this->assertEquals($encodedTypes, $encodedErrors);
+    }
+
+    public function testEncodeMetadataToProtobufErrorsNonKnownType()
+    {
+        $metadata = [
+            [
+                '@type' => 'unknown',
+                'details' => 'Unknown error'
+            ]
+        ];
+
+        $encodedErrors = Serializer::encodeMetadataToProtobufErrors($metadata);
+        $this->assertCount(0, $encodedErrors);
+    }
+
+    public function testDecodeMetadataReturnsErrorsWithArrayPointer()
+    {
+        $expectedError = new BadRequest();
+        $metadata = [
+            'google.rpc.badrequest-bin' => [$expectedError->serializeToString()]
+        ];
+
+        $protobufErrors = [];
+        $expectedProtbufErrors = [
+            $expectedError
+        ];
+
+        Serializer::decodeMetadata($metadata, $protobufErrors);
+
+        $this->assertCount(1, $protobufErrors);
+        $this->assertEquals($expectedProtbufErrors, $protobufErrors);
+    }
+
+    public function testDecodeMetadataDoesNotAddUnknownsToErrors()
+    {
+        $metadata = [
+            'unknown' => ['random string']
+        ];
+
+        $protobufErrors = [];
+        Serializer::decodeMetadata($metadata, $protobufErrors);
+
+        $this->assertCount(0, $protobufErrors);
     }
 
     public function testProperlyHandlesMessage()
