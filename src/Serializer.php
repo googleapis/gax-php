@@ -53,27 +53,6 @@ class Serializer
     private static array $snakeCaseMap = [];
     private static array $camelCaseMap = [];
 
-    private static $metadataKnownTypes = [
-        'google.rpc.retryinfo-bin' => \Google\Rpc\RetryInfo::class,
-        'google.rpc.debuginfo-bin' => \Google\Rpc\DebugInfo::class,
-        'google.rpc.quotafailure-bin' => \Google\Rpc\QuotaFailure::class,
-        'google.rpc.badrequest-bin' => \Google\Rpc\BadRequest::class,
-        'google.rpc.requestinfo-bin' => \Google\Rpc\RequestInfo::class,
-        'google.rpc.resourceinfo-bin' => \Google\Rpc\ResourceInfo::class,
-        'google.rpc.errorinfo-bin' => \Google\Rpc\ErrorInfo::class,
-        'google.rpc.help-bin' => \Google\Rpc\Help::class,
-        'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
-        'type.googleapis.com/google.rpc.RetryInfo' => \Google\Rpc\RetryInfo::class,
-        'type.googleapis.com/google.rpc.DebugInfo' => \Google\Rpc\DebugInfo::class,
-        'type.googleapis.com/google.rpc.QuotaFailure' => \Google\Rpc\QuotaFailure::class,
-        'type.googleapis.com/google.rpc.BadRequest' => \Google\Rpc\BadRequest::class,
-        'type.googleapis.com/google.rpc.RequestInfo' => \Google\Rpc\RequestInfo::class,
-        'type.googleapis.com/google.rpc.ResourceInfo' => \Google\Rpc\ResourceInfo::class,
-        'type.googleapis.com/google.rpc.ErrorInfo' => \Google\Rpc\ErrorInfo::class,
-        'type.googleapis.com/google.rpc.Help' => \Google\Rpc\Help::class,
-        'type.googleapis.com/google.rpc.LocalizedMessage' => \Google\Rpc\LocalizedMessage::class,
-    ];
-
     private $fieldTransformers;
     private $messageTypeTransformers;
     private $decodeFieldTransformers;
@@ -164,39 +143,6 @@ class Serializer
     }
 
     /**
-     * Encodes decoded metadata to the Protobuf error type
-     *
-     * @param array $metadata
-     * @return array
-     */
-    public static function encodeMetadataToProtobufErrors(array $metadata): array
-    {
-        $result = [];
-
-        foreach ($metadata as $error) {
-            $message = null;
-
-            if (!isset($error['@type'])) {
-                continue;
-            }
-
-            $type = $error['@type'];
-
-            if (!isset(self::$metadataKnownTypes[$type])) {
-                continue;
-            }
-
-            $class = self::$metadataKnownTypes[$type];
-            $message = new $class();
-            $jsonMessage = json_encode(array_diff_key($error, ['@type' => true]));
-            $message->mergeFromJsonString($jsonMessage);
-            $result[] = $message;
-        }
-
-        return $result;
-    }
-
-    /**
      * @param Message $message
      * @return string Json representation of $message
      * @throws ValidationException
@@ -235,8 +181,8 @@ class Serializer
                     '@type' => $key,
                 ];
                 if (self::hasBinaryHeaderSuffix($key)) {
-                    if (isset(self::$metadataKnownTypes[$key])) {
-                        $class = self::$metadataKnownTypes[$key];
+                    if (isset(KnownTypes::BINARY_KNOWN_TYPES[$key])) {
+                        $class = KnownTypes::BINARY_KNOWN_TYPES[$key];
                         /** @var Message $message */
                         $message = new $class();
                         try {
@@ -573,7 +519,7 @@ class Serializer
 
     public static function loadKnownMetadataTypes()
     {
-        foreach (self::$metadataKnownTypes as $key => $class) {
+        foreach (KnownTypes::allKnownTypes() as $key => $class) {
             new $class();
         }
     }

@@ -210,7 +210,7 @@ class ApiException extends Exception
             $rpcCode,
             $metadata,
             is_null($metadata) ? [] : $metadata,
-            Serializer::encodeMetadataToProtobufErrors($metadata ?? []),
+            self::decodeMetadataToProtobufErrors($metadata ?? []),
             $previous
         );
     }
@@ -293,6 +293,40 @@ class ApiException extends Exception
             ],
             $protobufErrors ?? []
         );
+    }
+
+    /**
+     * Encodes decoded metadata to the Protobuf error type
+     *
+     * @param array $metadata
+     * @return array
+     */
+    private static function decodeMetadataToProtobufErrors(array $metadata): array
+    {
+        $result = [];
+        Serializer::loadKnownMetadataTypes();
+
+        foreach ($metadata as $error) {
+            $message = null;
+
+            if (!isset($error['@type'])) {
+                continue;
+            }
+
+            $type = $error['@type'];
+
+            if (!isset(KnownTypes::JSON_KNOWN_TYPES[$type])) {
+                continue;
+            }
+
+            $class = KnownTypes::JSON_KNOWN_TYPES[$type];
+            $message = new $class();
+            $jsonMessage = json_encode(array_diff_key($error, ['@type' => true]), JSON_FORCE_OBJECT);
+            $message->mergeFromJsonString($jsonMessage);
+            $result[] = $message;
+        }
+
+        return $result;
     }
 
     /**
