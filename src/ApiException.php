@@ -261,7 +261,7 @@ class ApiException extends Exception
         int $rpcCode,
         $metadata,
         array $decodedMetadata,
-        array $protobufErrors = null,
+        ?array $protobufErrors = null,
         ?Exception $previous = null
     ) {
         $containsErrorInfo = self::containsErrorInfo($decodedMetadata);
