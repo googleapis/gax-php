@@ -187,7 +187,7 @@ class Serializer
             }
 
             $class = self::$metadataKnownTypes[$type];
-            $message = new $class;
+            $message = new $class();
             $jsonMessage = json_encode(array_diff_key($error, ['@type' => true]));
             $message->mergeFromJsonString($jsonMessage);
             $result[] = $message;
