@@ -144,7 +144,7 @@ class ApiException extends Exception
      * Returns the unserialized errors
      * @return array
      */
-    public function getUnserializedErrors(): array
+    public function getErrorDetails(): array
     {
         return $this->protobufErrors;
     }
