@@ -181,8 +181,8 @@ class Serializer
                     '@type' => $key,
                 ];
                 if (self::hasBinaryHeaderSuffix($key)) {
-                    if (isset(KnownTypes::BINARY_KNOWN_TYPES[$key])) {
-                        $class = KnownTypes::BINARY_KNOWN_TYPES[$key];
+                    if (isset(KnownTypes::GRPC_TYPES[$key])) {
+                        $class = KnownTypes::GRPC_TYPES[$key];
                         /** @var Message $message */
                         $message = new $class();
                         try {

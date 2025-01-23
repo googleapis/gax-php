@@ -315,11 +315,11 @@ class ApiException extends Exception
 
             $type = $error['@type'];
 
-            if (!isset(KnownTypes::JSON_KNOWN_TYPES[$type])) {
+            if (!isset(KnownTypes::JSON_TYPES[$type])) {
                 continue;
             }
 
-            $class = KnownTypes::JSON_KNOWN_TYPES[$type];
+            $class = KnownTypes::JSON_TYPES[$type];
             $message = new $class();
             $jsonMessage = json_encode(array_diff_key($error, ['@type' => true]), JSON_FORCE_OBJECT);
             $message->mergeFromJsonString($jsonMessage);
