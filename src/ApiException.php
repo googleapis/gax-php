@@ -252,7 +252,7 @@ class ApiException extends Exception
      * @param int $rpcCode
      * @param iterable|null $metadata
      * @param array $decodedMetadata
-     * @param array $protobufErrors
+     * @param array|null $protobufErrors
      * @param Exception|null $previous
      * @return ApiException
      */
