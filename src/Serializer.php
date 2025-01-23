@@ -220,10 +220,10 @@ class Serializer
      * Decode metadata received from gRPC status object
      *
      * @param array $metadata
-     * @param array $errors
+     * @param null|array $errors
      * @return array
      */
-    public static function decodeMetadata(array $metadata, array &$errors = null)
+    public static function decodeMetadata(array $metadata, ?array &$errors = null)
     {
         if (count($metadata) == 0) {
             return [];
