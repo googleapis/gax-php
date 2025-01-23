@@ -345,39 +345,47 @@ class ApiExceptionTest extends TestCase
     {
         $metadata = [
             [
-                '@type' => 'google.rpc.retryinfo-bin',
+                '@type' => 'type.googleapis.com/google.rpc.RetryInfo',
             ],
             [
-                '@type' => 'google.rpc.debuginfo-bin',
+                '@type' => 'type.googleapis.com/google.rpc.DebugInfo',
                 'stackEntries' => [],
                 'detail' => ''
             ],
             [
-                '@type' => 'google.rpc.quotafailure-bin',
+                '@type' => 'type.googleapis.com/google.rpc.QuotaFailure',
                 'violations' => [],
             ],
             [
-                '@type' => 'google.rpc.badrequest-bin',
+                '@type' => 'type.googleapis.com/google.rpc.BadRequest',
                 'fieldViolations' => []
             ],
             [
-                '@type' => 'google.rpc.requestinfo-bin',
+                '@type' => 'type.googleapis.com/google.rpc.RequestInfo',
                 'requestId' => '',
                 'servingData' => '',
             ],
             [
-                '@type' => 'google.rpc.resourceinfo-bin',
+                '@type' => 'type.googleapis.com/google.rpc.ResourceInfo',
                 'resourceType' => '',
                 'resourceName' => '',
                 'owner' => '',
                 'description' => '',
             ],
             [
-                '@type' => 'google.rpc.help-bin',
+                '@type' => 'type.googleapis.com/google.rpc.ErrorInfo',
+                'reason' => 'Error Info',
+                'domain' => 'Error Info Domain',
+                'metadata' => [
+                    'test' => 'Error Info Test'
+                ],
+            ],
+            [
+                '@type' => 'type.googleapis.com/google.rpc.Help',
                 'links' => [],
             ],
             [
-                '@type' => 'google.rpc.localizedmessage-bin',
+                '@type' => 'type.googleapis.com/google.rpc.LocalizedMessage',
                 'locale' => '',
                 'message' => '',
             ],
@@ -390,6 +398,11 @@ class ApiExceptionTest extends TestCase
         $apiException = ApiException::createFromRestApiResponse($basicMessage, $code, $metadata);
 
         $expectedMessage = json_encode([
+            'reason' => 'Error Info',
+            'domain' => 'Error Info Domain',
+            'errorInfoMetadata' => [
+                'test' => 'Error Info Test'
+            ],
             'message' => $basicMessage,
             'code' => $code,
             'status' => $status,
@@ -397,10 +410,15 @@ class ApiExceptionTest extends TestCase
         ], JSON_PRETTY_PRINT);
 
         $this->assertSame($expectedMessage, $apiException->getMessage());
-        $this->assertCount(8, $apiException->getErrorDetails());
-        $this->assertSame(null, $apiException->getReason());
-        $this->assertSame(null, $apiException->getDomain());
-        $this->assertSame(null, $apiException->getErrorInfoMetadata());
+        $this->assertCount(9, $apiException->getErrorDetails());
+        $this->assertSame('Error Info', $apiException->getReason());
+        $this->assertSame('Error Info Domain', $apiException->getDomain());
+        $this->assertSame(
+            [
+                'test' => 'Error Info Test'
+            ],
+            $apiException->getErrorInfoMetadata()
+        );
     }
 
     /**
