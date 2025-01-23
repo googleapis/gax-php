@@ -33,7 +33,7 @@ namespace Google\ApiCore;
 
 class KnownTypes
 {
-    public const BINARY_KNOWN_TYPES = [
+    public const GRPC_TYPES = [
         'google.rpc.retryinfo-bin' => \Google\Rpc\RetryInfo::class,
         'google.rpc.debuginfo-bin' => \Google\Rpc\DebugInfo::class,
         'google.rpc.quotafailure-bin' => \Google\Rpc\QuotaFailure::class,
@@ -45,7 +45,7 @@ class KnownTypes
         'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
     ];
 
-    public const JSON_KNOWN_TYPES = [
+    public const JSON_TYPES = [
         'type.googleapis.com/google.rpc.RetryInfo' => \Google\Rpc\RetryInfo::class,
         'type.googleapis.com/google.rpc.DebugInfo' => \Google\Rpc\DebugInfo::class,
         'type.googleapis.com/google.rpc.QuotaFailure' => \Google\Rpc\QuotaFailure::class,
@@ -59,6 +59,6 @@ class KnownTypes
 
     public static function allKnownTypes(): array
     {
-        return self::BINARY_KNOWN_TYPES + self::JSON_KNOWN_TYPES;
+        return self::GRPC_TYPES + self::JSON_TYPES;
     }
 }
