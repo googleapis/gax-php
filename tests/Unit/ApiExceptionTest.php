@@ -71,7 +71,7 @@ class ApiExceptionTest extends TestCase
         $this->assertSame(Code::OK, $apiException->getCode());
         $this->assertSame($expectedMessage, $apiException->getMessage());
         $this->assertNull($apiException->getMetadata());
-        $this->assertEmpty($apiException->getUnserializedErrors());
+        $this->assertEmpty($apiException->getErrorDetails());
     }
 
     /**
@@ -96,7 +96,7 @@ class ApiExceptionTest extends TestCase
         $this->assertSame(Code::OK, $apiException->getCode());
         $this->assertSame($expectedMessageWithoutErrorDetails, $apiException->getMessage());
         $this->assertSame($metadata, $apiException->getMetadata());
-        $this->assertCount($unserializedErrorsCount ,$apiException->getUnserializedErrors());
+        $this->assertCount($unserializedErrorsCount ,$apiException->getErrorDetails());
     }
 
     /**
@@ -121,7 +121,7 @@ class ApiExceptionTest extends TestCase
         $this->assertSame(Code::OK, $apiException->getCode());
         $this->assertSame($expectedMessage, $apiException->getMessage());
         $this->assertSame($metadata, $apiException->getMetadata());
-        $this->assertCount($unserializedErrorsCount ,$apiException->getUnserializedErrors());
+        $this->assertCount($unserializedErrorsCount ,$apiException->getErrorDetails());
     }
 
     public function getMetadata()
@@ -341,7 +341,7 @@ class ApiExceptionTest extends TestCase
         ];
     }
 
-    public function testGetUnserializedErrors()
+    public function testGetErrorDetails()
     {
         $metadata = [
             [
@@ -397,7 +397,7 @@ class ApiExceptionTest extends TestCase
         ], JSON_PRETTY_PRINT);
 
         $this->assertSame($expectedMessage, $apiException->getMessage());
-        $this->assertCount(8, $apiException->getUnserializedErrors());
+        $this->assertCount(8, $apiException->getErrorDetails());
         $this->assertSame(null, $apiException->getReason());
         $this->assertSame(null, $apiException->getDomain());
         $this->assertSame(null, $apiException->getErrorInfoMetadata());
