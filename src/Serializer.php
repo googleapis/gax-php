@@ -166,7 +166,7 @@ class Serializer
     /**
      * Encodes decoded metadata to the Protobuf error type
      *
-     * @param array metadata
+     * @param array $metadata
      * @return array
      */
     public static function encodeMetadataToProtobufErrors(array $metadata): array
