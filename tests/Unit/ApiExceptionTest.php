@@ -346,6 +346,7 @@ class ApiExceptionTest extends TestCase
         $metadata = [
             [
                 '@type' => 'type.googleapis.com/google.rpc.RetryInfo',
+                'retry_delay' => '1s'
             ],
             [
                 '@type' => 'type.googleapis.com/google.rpc.DebugInfo',
