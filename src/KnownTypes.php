@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2025 Google LLC
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,7 @@ class KnownTypes
         'google.rpc.errorinfo-bin' => \Google\Rpc\ErrorInfo::class,
         'google.rpc.help-bin' => \Google\Rpc\Help::class,
         'google.rpc.localizedmessage-bin' => \Google\Rpc\LocalizedMessage::class,
+        'google.rpc.preconditionfailure-bin' => \Google\Rpc\PreconditionFailure::class,
     ];
 
     public const JSON_TYPES = [
@@ -55,6 +56,7 @@ class KnownTypes
         'type.googleapis.com/google.rpc.ErrorInfo' => \Google\Rpc\ErrorInfo::class,
         'type.googleapis.com/google.rpc.Help' => \Google\Rpc\Help::class,
         'type.googleapis.com/google.rpc.LocalizedMessage' => \Google\Rpc\LocalizedMessage::class,
+        'type.googleapis.com/google.rpc.PreconditionFailure' => \Google\Rpc\PreconditionFailure::class,
     ];
 
     public static function allKnownTypes(): array

@@ -519,7 +519,7 @@ class Serializer
 
     public static function loadKnownMetadataTypes()
     {
-        foreach (KnownTypes::allKnownTypes() as $key => $class) {
+        foreach (KnownTypes::GRPC_TYPES as $key => $class) {
             new $class();
         }
     }
