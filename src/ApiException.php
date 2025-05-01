@@ -162,9 +162,8 @@ class ApiException extends Exception
             $decodedStatus->mergeFromString($metadata['grpc-status-details-bin'][0]);
             foreach ($decodedStatus->getDetails() as $any) {
                 if (isset(KnownTypes::JSON_TYPES[$any->getTypeUrl()])) {
-                    if ($any->is(KnownTypes::JSON_TYPES[$any->getTypeUrl()])) {
-                        $errors[] = $any->unpack();
-                    }
+                    KnownTypes::addKnownTypesToDescriptorPool();
+                    $errors[] = $any->unpack();
                 }
             }
         }
