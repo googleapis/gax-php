@@ -174,6 +174,8 @@ class Serializer
         if (count($metadata) == 0) {
             return [];
         }
+        // ensure known types are available from the descriptor pool
+        KnownTypes::addKnownTypesToDescriptorPool();
         $result = [];
         // If metadata contains a "status" bin, use that instead
         if (isset($metadata['grpc-status-details-bin'])) {
@@ -181,7 +183,6 @@ class Serializer
             $status->mergeFromString($metadata['grpc-status-details-bin'][0]);
             foreach ($status->getDetails() as $any) {
                 if (isset(KnownTypes::JSON_TYPES[$any->getTypeUrl()])) {
-                    KnownTypes::addKnownTypesToDescriptorPool();
                     $errors[] = $error = $any->unpack();
                     $result[] = [
                         '@type' => $any->getTypeUrl(),
@@ -192,6 +193,8 @@ class Serializer
         }
 
         // look for individual error detail bins and decode those
+        // NOTE: This method SHOULD be superceeded by 'grpc-status-details-bin' in every case, but
+        // we are keeping it for now to be safe
         foreach ($metadata as $key => $values) {
             foreach ($values as $value) {
                 $decodedValue = [
