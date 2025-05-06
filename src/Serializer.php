@@ -178,15 +178,14 @@ class Serializer
         // If metadata contains a "status" bin, use that instead
         if (isset($metadata['grpc-status-details-bin'])) {
             $status = new \Google\Rpc\Status();
-            $status->mergeFromString($metadata['grpc-status-details-bin'][0])
+            $status->mergeFromString($metadata['grpc-status-details-bin'][0]);
             foreach ($status->getDetails() as $any) {
                 if (isset(KnownTypes::JSON_TYPES[$any->getTypeUrl()])) {
                     KnownTypes::addKnownTypesToDescriptorPool();
                     $errors[] = $error = $any->unpack();
                     $result[] = [
                         '@type' => $any->getTypeUrl(),
-                        'value' => self::serializeToPhpArray($error),
-                    ];
+                    ] + self::serializeToPhpArray($error);
                 }
             }
             return $result;
