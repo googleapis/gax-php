@@ -38,6 +38,7 @@ use Google\ApiCore\CredentialsWrapper;
 use Google\ApiCore\Transport\TransportInterface;
 use Google\Auth\FetchAuthTokenInterface;
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 
 /**
  * The ClientOptions class adds typing to the associative array of options
@@ -96,6 +97,8 @@ class ClientOptions implements ArrayAccess
 
     private ?string $apiKey;
 
+    private null|false|LoggerInterface $logger;
+
     /**
      * @param array $options {
      *     @type string $apiEndpoint
@@ -117,6 +120,12 @@ class ClientOptions implements ArrayAccess
      *           \Google\Auth\FetchAuthTokenInterface object or \Google\ApiCore\CredentialsWrapper
      *           object. Note that when one of these objects are provided, any settings in
      *           $authConfig will be ignored.
+     *           *Important*: If you accept a credential configuration (credential JSON/File/Stream)
+     *           from an external source for authentication to Google Cloud Platform, you must
+     *           validate it before providing it to any Google API or library. Providing an
+     *           unvalidated credential configuration to Google APIs can compromise the security of
+     *           your systems and data. For more information
+     *           {@see https://cloud.google.com/docs/authentication/external/externally-sourced-credentials}
      *     @type array $credentialsConfig
      *           Options used to configure credentials, including auth token caching, for the client.
      *           For a full list of supporting configuration options, see
@@ -154,8 +163,10 @@ class ClientOptions implements ArrayAccess
      *           A callable which returns the client cert as a string.
      *     @type string $universeDomain
      *           The default service domain for a given Cloud universe.
-     *    @type string $apiKey
+     *     @type string $apiKey
      *          The API key to be used for the client.
+     *     @type null|false|LoggerInterface
+     *           A PSR-3 compliant logger.
      * }
      */
     public function __construct(array $options)
@@ -186,6 +197,7 @@ class ClientOptions implements ArrayAccess
         $this->setClientCertSource($arr['clientCertSource'] ?? null);
         $this->setUniverseDomain($arr['universeDomain'] ?? null);
         $this->setApiKey($arr['apiKey'] ?? null);
+        $this->setLogger($arr['logger'] ?? null);
     }
 
     /**
@@ -327,5 +339,13 @@ class ClientOptions implements ArrayAccess
     public function setApiKey(?string $apiKey)
     {
         $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @param null|false|LoggerInterface $logger
+     */
+    public function setLogger(null|false|LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

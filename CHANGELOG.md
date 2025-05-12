@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.36.0](https://github.com/googleapis/gax-php/compare/v1.35.1...v1.36.0) (2024-12-11)
+
+
+### Features
+
+* Add logging to the supported transports ([#585](https://github.com/googleapis/gax-php/issues/585)) ([819a677](https://github.com/googleapis/gax-php/commit/819a677e0d89d75662b30a1dbdd45f6a610d9f0c))
+
+## [1.35.1](https://github.com/googleapis/gax-php/compare/v1.35.0...v1.35.1) (2024-12-04)
+
+
+### Bug Fixes
+
+* Ensure hasEmulator client option is passed to createTransport ([#594](https://github.com/googleapis/gax-php/issues/594)) ([13bbe8a](https://github.com/googleapis/gax-php/commit/13bbe8a2e6df2bfd6c5febba735113f1abcba201))
+* Remove implicit null, add php 8.4 ([#599](https://github.com/googleapis/gax-php/issues/599)) ([af0a0e7](https://github.com/googleapis/gax-php/commit/af0a0e708dfbea46de627965db0f63114fcfb67f))
+
 ## [1.35.0](https://github.com/googleapis/gax-php/compare/v1.34.1...v1.35.0) (2024-11-06)
 
 
