@@ -31,7 +31,6 @@
  */
 namespace Google\ApiCore;
 
-use Composer\InstalledVersions;
 use Google\Protobuf\Any;
 use Google\Protobuf\Descriptor;
 use Google\Protobuf\DescriptorPool;
