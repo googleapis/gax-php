@@ -453,9 +453,7 @@ class Serializer
      */
     private function checkFieldRepeated(FieldDescriptor $field): bool
     {
-        $protobufVersion = InstalledVersions::getPrettyVersion('google/protobuf');
-
-        return version_compare($protobufVersion, '4.31.0', '>=')
+        return method_exists($field, 'isRepeated')
             ? $field->isRepeated()
             : $field->getLabel() === GPBLabel::REPEATED;
     }
