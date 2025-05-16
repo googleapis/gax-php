@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore;
 
+use Composer\InstalledVersions;
 use Google\Protobuf\Any;
 use Google\Protobuf\Descriptor;
 use Google\Protobuf\DescriptorPool;
@@ -344,7 +345,7 @@ class Serializer
                     $arr[$this->encodeElement($keyField, $k)] = $this->encodeElement($valueField, $vv);
                 }
                 $v = $arr;
-            } elseif ($field->getLabel() === GPBLabel::REPEATED) {
+            } elseif ($this->checkFieldRepeated($field)) {
                 $arr = [];
                 foreach ($v as $k => $vv) {
                     $arr[$k] = $this->encodeElement($field, $vv);
@@ -427,7 +428,7 @@ class Serializer
                     $arr[$this->decodeElement($keyField, $k)] = $this->decodeElement($valueField, $vv);
                 }
                 $value = $arr;
-            } elseif ($field->getLabel() === GPBLabel::REPEATED) {
+            } elseif ($this->checkFieldRepeated($field)) {
                 $arr = [];
                 foreach ($v as $k => $vv) {
                     $arr[$k] = $this->decodeElement($field, $vv);
@@ -445,6 +446,19 @@ class Serializer
             unset($value);
         }
         return $message;
+    }
+
+    /**
+     * @param FieldDescriptor $field
+     * @return bool
+     */
+    private function checkFieldRepeated(FieldDescriptor $field): bool
+    {
+        $protobufVersion = InstalledVersions::getPrettyVersion('google/protobuf');
+
+        return version_compare($protobufVersion, '4.31.0', '>=')
+            ? $field->isRepeated()
+            : $field->getLabel() === GPBLabel::REPEATED;
     }
 
     /**
