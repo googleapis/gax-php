@@ -101,30 +101,44 @@ class GrpcTransportOptions implements ArrayAccess
 
     /**
      * @param array $stubOpts
+     *
+     * @return $this
      */
     public function setStubOpts(array $stubOpts)
     {
         $this->stubOpts = $stubOpts;
+
+        return $this;
     }
 
     /**
      * @param ?Channel $channel
+     *
+     * @return $this
      */
     public function setChannel(?Channel $channel)
     {
         $this->channel = $channel;
+
+        return $this;
     }
 
     /**
      * @param Interceptor[]|UnaryInterceptorInterface[] $interceptors
+     *
+     * @return $this
      */
     public function setInterceptors(array $interceptors)
     {
         $this->interceptors = $interceptors;
+
+        return $this;
     }
 
     /**
      * @param ?callable $clientCertSource
+     *
+     * @return $this
      */
     public function setClientCertSource(?callable $clientCertSource)
     {
@@ -132,13 +146,19 @@ class GrpcTransportOptions implements ArrayAccess
             $clientCertSource = Closure::fromCallable($clientCertSource);
         }
         $this->clientCertSource = $clientCertSource;
+
+        return $this;
     }
 
     /**
      * @param null|false|LoggerInterface $logger
+     *
+     * @return $this
      */
     public function setLogger(null|false|LoggerInterface $logger)
     {
         $this->logger = $logger;
+
+        return $this;
     }
 }
