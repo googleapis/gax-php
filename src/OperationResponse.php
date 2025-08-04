@@ -57,7 +57,7 @@ use LogicException;
  * Operations API directly instead of via the OperationResponse object
  * using an Operations Client instance.
  *
- * @template T
+ * @template T = mixed
  */
 class OperationResponse
 {
