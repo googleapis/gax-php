@@ -63,37 +63,37 @@ class ClientOptions implements ArrayAccess
 {
     use OptionsTrait;
 
-    public ?string $apiEndpoint;
+    private ?string $apiEndpoint;
 
-    public bool $disableRetries;
+    private bool $disableRetries;
 
-    public array $clientConfig;
+    private array $clientConfig;
 
     /** @var string|array|FetchAuthTokenInterface|CredentialsWrapper|null */
-    public $credentials;
+    private $credentials;
 
-    public array $credentialsConfig;
+    private array $credentialsConfig;
 
     /** @var string|TransportInterface|null $transport */
-    public $transport;
+    private $transport;
 
-    public TransportOptions $transportConfig;
+    private TransportOptions $transportConfig;
 
-    public ?string $versionFile;
+    private ?string $versionFile;
 
-    public ?string $descriptorsConfigPath;
+    private ?string $descriptorsConfigPath;
 
-    public ?string $serviceName;
+    private ?string $serviceName;
 
-    public ?string $libName;
+    private ?string $libName;
 
-    public ?string $libVersion;
+    private ?string $libVersion;
 
-    public ?string $gapicVersion;
+    private ?string $gapicVersion;
 
-    public ?Closure $clientCertSource;
+    private ?Closure $clientCertSource;
 
-    public ?string $universeDomain;
+    private ?string $universeDomain;
 
     private ?string $apiKey;
 

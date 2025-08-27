@@ -89,14 +89,6 @@ trait ClientOptionsTrait
     {
         if ($options instanceof ClientOptions) {
             $options = $options->toArray();
-
-            // The constructor of ClientOptions construct creates a `TransportOptions`.
-            // We call `toArray` on it and nested items that uses the `optionsTrait` to keep
-            // the same behaviour as if it was just an array.
-            $options['transportConfig'] = $options['transportConfig']->toArray();
-            $options['transportConfig']['grpc'] = $options['transportConfig']['grpc']->toArray();
-            $options['transportConfig']['grpcFallback'] = $options['transportConfig']['grpcFallback']->toArray();
-            $options['transportConfig']['rest'] = $options['transportConfig']['rest']->toArray();
         }
 
         // Build $defaultOptions starting from top level
