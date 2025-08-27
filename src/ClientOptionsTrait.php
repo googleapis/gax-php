@@ -32,6 +32,7 @@
 
 namespace Google\ApiCore;
 
+use Google\ApiCore\Options\ClientOptions;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\CredentialsLoader;
 use Google\Auth\FetchAuthTokenInterface;
@@ -84,8 +85,12 @@ trait ClientOptionsTrait
         return [];
     }
 
-    private function buildClientOptions(array $options)
+    private function buildClientOptions(array|ClientOptions $options)
     {
+        if ($options instanceof ClientOptions) {
+            $options = $options->toArray();
+        }
+
         // Build $defaultOptions starting from top level
         // variables, then going into deeper nesting, so that
         // we will not encounter missing keys

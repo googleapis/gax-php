@@ -83,7 +83,9 @@ trait OptionsTrait
     {
         $arr = [];
         foreach (get_object_vars($this) as $key => $value) {
-            $arr[$key] = $value;
+            $arr[$key] = is_object($value) && method_exists($value, 'toArray')
+                ? $value->toArray()
+                : $value;
         }
         return $arr;
     }
