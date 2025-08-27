@@ -66,7 +66,7 @@ trait GapicClientTrait
     use GrpcSupportTrait;
 
     private ?TransportInterface $transport = null;
-    private ?CredentialsWrapper $credentialsWrapper = null;
+    private ?HeaderCredentialsInterface $credentialsWrapper = null;
     /** @var RetrySettings[] $retrySettings */
     private array $retrySettings = [];
     private string $serviceName = '';
@@ -238,6 +238,12 @@ trait GapicClientTrait
             'libName',
             'libVersion',
         ]);
+
+        // "hasEmulator" is not a supported Client Option, but is used
+        // internally to determine if the client is running in emulator mode.
+        // Therefore, we need to remove it from the $options array before
+        // creating the ClientOptions.
+        $hasEmulator = $this->pluck('hasEmulator', $options, false) ?? false;
         if ($this->isBackwardsCompatibilityMode()) {
             if (is_string($options['clientConfig'])) {
                 // perform validation for V1 surfaces which is done in the
@@ -287,11 +293,24 @@ trait GapicClientTrait
         $descriptors = require($options['descriptorsConfigPath']);
         $this->descriptors = $descriptors['interfaces'][$this->serviceName];
 
-        $this->credentialsWrapper = $this->createCredentialsWrapper(
-            $options['credentials'],
-            $options['credentialsConfig'],
-            $options['universeDomain']
-        );
+        if (isset($options['apiKey'], $options['credentials'])) {
+            throw new ValidationException(
+                'API Keys and Credentials are mutually exclusive authentication methods and cannot be used together.'
+            );
+        }
+        // Set the credentialsWrapper
+        if (isset($options['apiKey'])) {
+            $this->credentialsWrapper = new ApiKeyHeaderCredentials(
+                $options['apiKey'],
+                $options['credentialsConfig']['quotaProject'] ?? null
+            );
+        } else {
+            $this->credentialsWrapper = $this->createCredentialsWrapper(
+                $options['credentials'],
+                $options['credentialsConfig'],
+                $options['universeDomain']
+            );
+        }
 
         $transport = $options['transport'] ?: self::defaultTransport();
         $this->transport = $transport instanceof TransportInterface
@@ -300,7 +319,8 @@ trait GapicClientTrait
                 $options['apiEndpoint'],
                 $transport,
                 $options['transportConfig'],
-                $options['clientCertSource']
+                $options['clientCertSource'],
+                $hasEmulator
             );
     }
 
@@ -309,6 +329,7 @@ trait GapicClientTrait
      * @param string $transport
      * @param TransportOptions|array $transportConfig
      * @param callable $clientCertSource
+     * @param bool $hasEmulator
      * @return TransportInterface
      * @throws ValidationException
      */
@@ -316,7 +337,8 @@ trait GapicClientTrait
         string $apiEndpoint,
         $transport,
         $transportConfig,
-        callable $clientCertSource = null
+        ?callable $clientCertSource = null,
+        bool $hasEmulator = false
     ) {
         if (!is_string($transport)) {
             throw new ValidationException(
@@ -359,6 +381,8 @@ trait GapicClientTrait
                     );
                 }
                 $restConfigPath = $configForSpecifiedTransport['restClientConfigPath'];
+                $configForSpecifiedTransport['hasEmulator'] = $hasEmulator;
+
                 return RestTransport::build($apiEndpoint, $restConfigPath, $configForSpecifiedTransport);
             default:
                 throw new ValidationException(
@@ -512,10 +536,10 @@ trait GapicClientTrait
      */
     private function startApiCall(
         string $methodName,
-        Message $request = null,
+        ?Message $request = null,
         array $optionalArgs = []
     ) {
-        $methodDescriptors =$this->validateCallConfig($methodName);
+        $methodDescriptors = $this->validateCallConfig($methodName);
         $callType = $methodDescriptors['callType'];
 
         // Prepare request-based headers, merge with user-provided headers,
@@ -574,9 +598,9 @@ trait GapicClientTrait
         string $methodName,
         string $decodeType,
         array $optionalArgs = [],
-        Message $request = null,
+        ?Message $request = null,
         int $callType = Call::UNARY_CALL,
-        string $interfaceName = null
+        ?string $interfaceName = null
     ) {
         $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
@@ -622,9 +646,8 @@ trait GapicClientTrait
      */
     private function createCallStack(array $callConstructionOptions)
     {
-        $quotaProject = $this->credentialsWrapper->getQuotaProject();
         $fixedHeaders = $this->agentHeader;
-        if ($quotaProject) {
+        if ($quotaProject = $this->credentialsWrapper->getQuotaProject()) {
             $fixedHeaders += [
                 'X-Goog-User-Project' => [$quotaProject]
             ];
@@ -729,8 +752,8 @@ trait GapicClientTrait
         array $optionalArgs,
         Message $request,
         $client,
-        string $interfaceName = null,
-        string $operationClass = null
+        ?string $interfaceName = null,
+        ?string $operationClass = null
     ) {
         $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
@@ -785,7 +808,7 @@ trait GapicClientTrait
         array $optionalArgs,
         string $decodeType,
         Message $request,
-        string $interfaceName = null
+        ?string $interfaceName = null
     ) {
         return $this->getPagedListResponseAsync(
             $methodName,
@@ -810,7 +833,7 @@ trait GapicClientTrait
         array $optionalArgs,
         string $decodeType,
         Message $request,
-        string $interfaceName = null
+        ?string $interfaceName = null
     ) {
         $optionalArgs = $this->configureCallOptions($optionalArgs);
         $callStack = $this->createCallStack(
@@ -841,7 +864,7 @@ trait GapicClientTrait
      *
      * @return string
      */
-    private function buildMethod(string $interfaceName = null, string $methodName = null)
+    private function buildMethod(?string $interfaceName = null, ?string $methodName = null)
     {
         return sprintf(
             '%s/%s',
@@ -856,7 +879,7 @@ trait GapicClientTrait
      *
      * @return array
      */
-    private function buildRequestParamsHeader(array $headerParams, Message $request = null)
+    private function buildRequestParamsHeader(array $headerParams, ?Message $request = null)
     {
         $headers = [];
 

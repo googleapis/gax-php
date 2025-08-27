@@ -50,7 +50,7 @@ class RequestBuilder
     use UriTrait;
     use ValidationTrait;
 
-    private $baseUri;
+    protected $baseUri;
     private $restConfig;
 
     /**
@@ -233,8 +233,8 @@ class RequestBuilder
         foreach ($placeholders as $placeholder => $metadata) {
             $value = array_reduce(
                 $metadata['getters'],
-                function (Message $result = null, $getter) {
-                    if ($result) {
+                function (?Message $result = null, $getter = null) {
+                    if ($result && $getter) {
                         return $result->$getter();
                     }
                 },
@@ -270,7 +270,7 @@ class RequestBuilder
      * @param array $queryParams
      * @return UriInterface
      */
-    private function buildUri(string $path, array $queryParams)
+    protected function buildUri(string $path, array $queryParams)
     {
         $uri = Utils::uriFor(
             sprintf(

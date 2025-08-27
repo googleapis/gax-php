@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/googleapis/gax-php/actions/workflows/tests.yml/badge.svg)
 
--   [Documentation](https://googleapis.github.io/gax-php)
+-   [Documentation](https://cloud.google.com/php/docs/reference/gax/latest)
 
 Google API Core for PHP (gax-php) is a set of modules which aids the development
 of APIs for clients based on [gRPC][] and Google API conventions.
@@ -17,7 +17,7 @@ more convenient and idiomatic API surface to callers.
 
 ## PHP Versions
 
-gax-php currently requires PHP 5.6 or higher.
+gax-php currently requires PHP 8.1 or higher.
 
 ## Contributing
 

@@ -33,6 +33,7 @@ namespace Google\ApiCore\Transport;
 
 use Google\ApiCore\ApiException;
 use Google\ApiCore\Call;
+use Google\ApiCore\InsecureRequestBuilder;
 use Google\ApiCore\RequestBuilder;
 use Google\ApiCore\ServerStream;
 use Google\ApiCore\ServiceAddressTrait;
@@ -83,6 +84,7 @@ class RestTransport implements TransportInterface
      *
      *    @type callable $httpHandler A handler used to deliver PSR-7 requests.
      *    @type callable $clientCertSource A callable which returns the client cert as a string.
+     *    @type bool $hasEmulator True if the emulator is enabled.
      * }
      * @return RestTransport
      * @throws ValidationException
@@ -92,10 +94,14 @@ class RestTransport implements TransportInterface
         $config += [
             'httpHandler'  => null,
             'clientCertSource' => null,
+            'hasEmulator' => false,
+            'logger' => null,
         ];
         list($baseUri, $port) = self::normalizeServiceAddress($apiEndpoint);
-        $requestBuilder = new RequestBuilder("$baseUri:$port", $restConfigPath);
-        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync();
+        $requestBuilder = $config['hasEmulator']
+            ? new InsecureRequestBuilder("$baseUri:$port", $restConfigPath)
+            : new RequestBuilder("$baseUri:$port", $restConfigPath);
+        $httpHandler = $config['httpHandler'] ?: self::buildHttpHandlerAsync($config['logger']);
         $transport = new RestTransport($requestBuilder, $httpHandler);
         if ($config['clientCertSource']) {
             $transport->configureMtlsChannel($config['clientCertSource']);
@@ -109,6 +115,9 @@ class RestTransport implements TransportInterface
     public function startUnaryCall(Call $call, array $options)
     {
         $headers = self::buildCommonHeaders($options);
+
+        // Add the $call object ID for logging
+        $options['requestId'] = crc32((string) spl_object_id($call) . getmypid());
 
         // call the HTTP handler
         $httpHandler = $this->httpHandler;
@@ -259,6 +268,14 @@ class RestTransport implements TransportInterface
             list($cert, $key) = self::loadClientCertSource($this->clientCertSource);
             $callOptions['cert'] = $cert;
             $callOptions['key'] = $key;
+        }
+
+        if (isset($options['retryAttempt'])) {
+            $callOptions['retryAttempt'] = $options['retryAttempt'];
+        }
+
+        if (isset($options['requestId'])) {
+            $callOptions['requestId'] = $options['requestId'];
         }
 
         return $callOptions;
