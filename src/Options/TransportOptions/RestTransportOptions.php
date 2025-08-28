@@ -87,6 +87,8 @@ class RestTransportOptions implements ArrayAccess
 
     /**
      * @param ?callable $httpHandler
+     *
+     * @return $this
      */
     public function setHttpHandler(?callable $httpHandler)
     {
@@ -94,10 +96,14 @@ class RestTransportOptions implements ArrayAccess
             $httpHandler = Closure::fromCallable($httpHandler);
         }
         $this->httpHandler = $httpHandler;
+
+        return $this;
     }
 
     /**
      * @param ?callable $clientCertSource
+     *
+     * @return $this
      */
     public function setClientCertSource(?callable $clientCertSource)
     {
@@ -105,21 +111,31 @@ class RestTransportOptions implements ArrayAccess
             $clientCertSource = Closure::fromCallable($clientCertSource);
         }
         $this->clientCertSource = $clientCertSource;
+
+        return $this;
     }
 
     /**
      * @param ?string $restClientConfigPath
+     *
+     * @return $this
      */
     public function setRestClientConfigPath(?string $restClientConfigPath)
     {
         $this->restClientConfigPath = $restClientConfigPath;
+
+        return $this;
     }
 
     /**
      * @param null|false|LoggerInterface $logger
+     *
+     * @return $this
      */
     public function setLogger(null|false|LoggerInterface $logger)
     {
         $this->logger = $logger;
+
+        return $this;
     }
 }

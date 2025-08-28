@@ -72,6 +72,8 @@ class GrpcFallbackTransportOptions implements ArrayAccess
      * Sets the array of options as class properites.
      *
      * @param array $arr See the constructor for the list of supported options.
+     *
+     * @return $this
      */
     private function fromArray(array $arr): void
     {
@@ -86,10 +88,14 @@ class GrpcFallbackTransportOptions implements ArrayAccess
             $httpHandler = Closure::fromCallable($httpHandler);
         }
         $this->httpHandler = $httpHandler;
+
+        return $this;
     }
 
     /**
      * @param ?callable $clientCertSource
+     *
+     * @return $this
      */
     public function setClientCertSource(?callable $clientCertSource)
     {
@@ -97,13 +103,19 @@ class GrpcFallbackTransportOptions implements ArrayAccess
             $clientCertSource = Closure::fromCallable($clientCertSource);
         }
         $this->clientCertSource = $clientCertSource;
+
+        return $this;
     }
 
     /**
      * @param null|false|LoggerInterface $logger
+     *
+     * @return $this
      */
     public function setLogger(null|false|LoggerInterface $logger)
     {
         $this->logger = $logger;
+
+        return $this;
     }
 }

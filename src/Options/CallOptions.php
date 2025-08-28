@@ -96,6 +96,8 @@ class CallOptions implements ArrayAccess
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
+
+        return $this;
     }
 
     /**
@@ -104,6 +106,8 @@ class CallOptions implements ArrayAccess
     public function setTimeoutMillis(?int $timeoutMillis)
     {
         $this->timeoutMillis = $timeoutMillis;
+
+        return $this;
     }
 
     /**
@@ -128,6 +132,8 @@ class CallOptions implements ArrayAccess
     public function setTransportOptions(array $transportOptions)
     {
         $this->transportOptions = $transportOptions;
+
+        return $this;
     }
 
     /**
@@ -140,9 +146,13 @@ class CallOptions implements ArrayAccess
 
     /**
      * @param RetrySettings|array|null $retrySettings
+     *
+     * @return $this
      */
     public function setRetrySettings($retrySettings)
     {
         $this->retrySettings = $retrySettings;
+
+        return $this;
     }
 }
