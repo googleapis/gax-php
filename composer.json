@@ -24,7 +24,7 @@
         "phpstan/phpstan": "^2.0"
     },
     "conflict": {
-        "ext-protobuf": "<4.7.0"
+        "ext-protobuf": "<4.31.0"
     },
     "autoload": {
         "psr-4": {
