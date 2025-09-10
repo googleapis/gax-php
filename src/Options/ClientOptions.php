@@ -308,7 +308,7 @@ class ClientOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    private function setDescriptorsConfigPath(?string $descriptorsConfigPath)
+    private function setDescriptorsConfigPath(?string $descriptorsConfigPath): self
     {
         if (!is_null($descriptorsConfigPath)) {
             self::validateFileExists($descriptorsConfigPath);
@@ -371,7 +371,7 @@ class ClientOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setClientCertSource(?callable $clientCertSource)
+    public function setClientCertSource(?callable $clientCertSource): self
     {
         if (!is_null($clientCertSource)) {
             $clientCertSource = Closure::fromCallable($clientCertSource);
@@ -386,7 +386,7 @@ class ClientOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setUniverseDomain(?string $universeDomain)
+    public function setUniverseDomain(?string $universeDomain): self
     {
         $this->universeDomain = $universeDomain;
 
@@ -398,7 +398,7 @@ class ClientOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setApiKey(?string $apiKey)
+    public function setApiKey(?string $apiKey): self
     {
         $this->apiKey = $apiKey;
 
@@ -410,7 +410,7 @@ class ClientOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setLogger(null|false|LoggerInterface $logger)
+    public function setLogger(null|false|LoggerInterface $logger): self
     {
         $this->logger = $logger;
 

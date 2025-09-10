@@ -91,7 +91,7 @@ class RestTransportOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setHttpHandler(?callable $httpHandler)
+    public function setHttpHandler(?callable $httpHandler): self
     {
         if (!is_null($httpHandler)) {
             $httpHandler = Closure::fromCallable($httpHandler);
@@ -106,7 +106,7 @@ class RestTransportOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setClientCertSource(?callable $clientCertSource)
+    public function setClientCertSource(?callable $clientCertSource): self
     {
         if (!is_null($clientCertSource)) {
             $clientCertSource = Closure::fromCallable($clientCertSource);
@@ -121,7 +121,7 @@ class RestTransportOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setRestClientConfigPath(?string $restClientConfigPath)
+    public function setRestClientConfigPath(?string $restClientConfigPath): self
     {
         $this->restClientConfigPath = $restClientConfigPath;
 
@@ -133,7 +133,7 @@ class RestTransportOptions implements ArrayAccess, OptionsInterface
      *
      * @return $this
      */
-    public function setLogger(null|false|LoggerInterface $logger)
+    public function setLogger(null|false|LoggerInterface $logger): self
     {
         $this->logger = $logger;
 
