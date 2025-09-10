@@ -142,6 +142,8 @@ class CallOptions implements ArrayAccess, OptionsInterface
     public function setTransportSpecificOptions(array $transportSpecificOptions): self
     {
         $this->setTransportOptions($transportSpecificOptions);
+
+        return $this;
     }
 
     /**

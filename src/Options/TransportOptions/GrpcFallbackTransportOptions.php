@@ -73,8 +73,6 @@ class GrpcFallbackTransportOptions implements ArrayAccess, OptionsInterface
      * Sets the array of options as class properites.
      *
      * @param array $arr See the constructor for the list of supported options.
-     *
-     * @return $this
      */
     private function fromArray(array $arr): void
     {
@@ -83,6 +81,11 @@ class GrpcFallbackTransportOptions implements ArrayAccess, OptionsInterface
         $this->setLogger($arr['logger'] ?? null);
     }
 
+    /**
+     * @param ?callable $httpHandler
+     *
+     * @return $this
+     */
     public function setHttpHandler(?callable $httpHandler): self
     {
         if (!is_null($httpHandler)) {
