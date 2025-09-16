@@ -275,6 +275,42 @@ class GrpcTransportTest extends TestCase
         $this->assertEquals([$response], $actualResponsesArray);
     }
 
+    public function testBidiOpeningRequestLogsRpcName()
+    {
+        $response = 'response';
+        $status = new stdClass();
+        $status->code = Code::OK;
+
+        $bidiStreamingCall = $this->prophesize(\Grpc\BidiStreamingCall::class);
+        // $bidiStreamingCall->read()
+        //     ->shouldBeCalled()
+        //     ->willReturn($response, null);
+        // $bidiStreamingCall->getStatus()
+        //     ->shouldBeCalled()
+        //     ->willReturn($status);
+        // $bidiStreamingCall->writesDone()
+        //     ->shouldBeCalledOnce();
+
+        $transport = new MockGrpcTransport(
+            $bidiStreamingCall->reveal(),
+            logger: new StdOutLogger()
+        );
+
+        /* @var $stream \Google\ApiCore\BidiStream */
+        $stream = $transport->startBidiStreamingCall(
+            new Call('takeAction', null),
+            ['headers' => [
+                ['thisis' => 'a header']
+            ]]
+        );
+
+        $buffer = $this->getActualOutput();
+        $unserializedBuffer = json_decode($buffer, true);
+
+        $this->assertNotEmpty($unserializedBuffer);
+        $this->assertNotEmpty($unserializedBuffer['rpcName']);
+    }
+
     public function testBidiStreamingSuccessObject()
     {
         $response = new Status();
