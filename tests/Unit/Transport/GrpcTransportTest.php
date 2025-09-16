@@ -282,14 +282,6 @@ class GrpcTransportTest extends TestCase
         $status->code = Code::OK;
 
         $bidiStreamingCall = $this->prophesize(\Grpc\BidiStreamingCall::class);
-        // $bidiStreamingCall->read()
-        //     ->shouldBeCalled()
-        //     ->willReturn($response, null);
-        // $bidiStreamingCall->getStatus()
-        //     ->shouldBeCalled()
-        //     ->willReturn($status);
-        // $bidiStreamingCall->writesDone()
-        //     ->shouldBeCalledOnce();
 
         $transport = new MockGrpcTransport(
             $bidiStreamingCall->reveal(),
