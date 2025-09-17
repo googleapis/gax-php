@@ -301,7 +301,7 @@ class GrpcTransportTest extends TestCase
 
         $this->assertNotEmpty($unserializedBuffer);
         $this->assertNotEmpty($unserializedBuffer['rpcName']);
-        $this->assertEquals($unserializedBuffer['rpcName'], $rpcName);
+        $this->assertEquals($rpcName, $unserializedBuffer['rpcName']);
     }
 
     public function testBidiStreamingSuccessObject()
