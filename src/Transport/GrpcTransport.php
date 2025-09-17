@@ -192,7 +192,7 @@ class GrpcTransport extends BaseStub implements TransportInterface
         if ($this->logger) {
             $requestEvent = new RpcLogEvent();
 
-            $requestEvent->headers = $options['headers'];
+            $requestEvent->headers = $options['headers'] ?? [];
             $requestEvent->retryAttempt = $options['retryAttempt'] ?? null;
             $requestEvent->serviceName = $options['serviceName'] ?? null;
             $requestEvent->rpcName = $call->getMethod();
