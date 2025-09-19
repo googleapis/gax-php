@@ -121,8 +121,10 @@ class ClientOptions implements ArrayAccess, OptionsInterface
      *           configuration to Google APIs can compromise the security of your systems and data. It is now
      *           recommended to create the credentials explicitly:
      *           ```
-     *           $creds = new Google\Auth\Credentials\ServiceAccountCredentials($scopes, $json);
-     *           $options = new Google\ApiCore\Options\ClientOptions(['credentials' => $creds]);
+     *           use Google\Auth\Credentials\ServiceAccountCredentials;
+     *           use Google\ApiCore\Options\ClientOptions;
+     *           $creds = new ServiceAccountCredentials($scopes, $json);
+     *           $options = new ClientOptions(['credentials' => $creds]);
      *           ```
      *           For more information
      *           {@see https://cloud.google.com/docs/authentication/external/externally-sourced-credentials}
