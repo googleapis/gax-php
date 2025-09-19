@@ -124,6 +124,14 @@ trait ClientOptionsTrait
             'logger' => null,
         ];
 
+        // Check for transport method in environment variable if not set in options
+        if (!isset($options['transport'])) {
+            $envTransport = getenv('GOOGLE_API_TRANSPORT');
+            if ($envTransport !== false && in_array($envTransport, ['rest', 'grpc', 'grpc-fallback'])) {
+                $options['transport'] = $envTransport;
+            }
+        }
+
         $supportedTransports = $this->supportedTransports();
         foreach ($supportedTransports as $transportName) {
             if (!array_key_exists($transportName, $defaultOptions['transportConfig'])) {
