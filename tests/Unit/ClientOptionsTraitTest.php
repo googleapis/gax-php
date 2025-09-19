@@ -657,6 +657,80 @@ class ClientOptionsTraitTest extends TestCase
         ];
         $client->buildClientOptions($optionsArray);
     }
+
+    /**
+     * @runInSeparateProcess
+     * @dataProvider provideTransportEnvironmentVariable
+     */
+    public function testTransportEnvironmentVariable($envVarValue, $options, $expectedTransport)
+    {
+        if ($envVarValue !== null) {
+            putenv('GOOGLE_API_TRANSPORT=' . $envVarValue);
+        } else {
+            putenv('GOOGLE_API_TRANSPORT'); // unset
+        }
+
+        $client = new StubClientOptionsClient();
+        $builtOptions = $client->buildClientOptions($options);
+
+        $this->assertEquals($expectedTransport, $builtOptions['transport']);
+    }
+
+    public function provideTransportEnvironmentVariable()
+    {
+        return [
+            // Test environment variable with valid values
+            ['rest', [], 'rest'],
+            ['grpc', [], 'grpc'],
+            ['grpc-fallback', [], 'grpc-fallback'],
+
+            // Test invalid environment variable values (should be ignored)
+            ['invalid', [], null],
+            ['REST', [], null], // case sensitive
+            ['', [], null], // empty string
+
+            // Test that options override environment variable
+            ['rest', ['transport' => 'grpc'], 'grpc'],
+            ['grpc', ['transport' => 'rest'], 'rest'],
+
+            // Test no environment variable set
+            [null, [], null],
+            [null, ['transport' => 'rest'], 'rest'],
+        ];
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testTransportEnvironmentVariableIntegration()
+    {
+        // Test that the transport from env var is actually used
+        putenv('GOOGLE_API_TRANSPORT=rest');
+        
+        $client = new StubClientOptionsClient();
+        $options = $client->buildClientOptions([]);
+        
+        $this->assertEquals('rest', $options['transport']);
+        
+        // Verify it doesn't break other configurations
+        $this->assertArrayHasKey('transportConfig', $options);
+        $this->assertArrayHasKey('rest', $options['transportConfig']);
+        $this->assertArrayHasKey('grpc', $options['transportConfig']);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testTransportEnvironmentVariableWithGrpcFallback()
+    {
+        putenv('GOOGLE_API_TRANSPORT=grpc-fallback');
+        
+        $client = new StubClientOptionsClient();
+        $options = $client->buildClientOptions([]);
+        
+        $this->assertEquals('grpc-fallback', $options['transport']);
+        $this->assertArrayHasKey('grpc-fallback', $options['transportConfig']);
+    }
 }
 
 class StubClientOptionsClient
