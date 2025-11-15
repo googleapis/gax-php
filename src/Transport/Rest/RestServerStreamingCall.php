@@ -176,7 +176,7 @@ class RestServerStreamingCall implements ServerStreamingCallInterface
      */
     public function getPeer()
     {
-        return $this->originalRequest->getUri();
+        return (string) $this->originalRequest->getUri();
     }
 
     /**
