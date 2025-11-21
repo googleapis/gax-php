@@ -50,11 +50,11 @@ class OperationsMiddlewareTest extends TestCase
         $operationsClient = $this->prophesize(OperationsClient::class);
 
         $descriptor = [
-            'operationNameMethod' => 'getNumber'
+            'operationNameMethod' => 'getNextPageToken'
         ];
         $handler = function (Call $call, $options) use (&$callCount) {
             return $promise = new Promise(function () use (&$promise) {
-                $response = new MockResponse(['number' => 123]);
+                $response = new MockResponse(['next_page_token' => '123']);
                 $promise->resolve($response);
             });
         };
