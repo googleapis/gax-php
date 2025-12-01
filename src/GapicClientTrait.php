@@ -702,7 +702,7 @@ trait GapicClientTrait
             return $this->transport->$startCallMethod($call, $options);
         };
 
-        foreach (\array_reverse($this->prependMiddlewareCallables) as $fn) {
+        foreach ($this->prependMiddlewareCallables as $fn) {
             /** @var MiddlewareInterface $callStack */
             $callStack = $fn($callStack);
         }
