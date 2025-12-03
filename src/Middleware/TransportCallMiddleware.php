@@ -36,7 +36,6 @@ use Google\ApiCore\Transport\TransportInterface;
 
 class TransportCallMiddleware implements MiddlewareInterface
 {
-
     /**
      * A Middleware in charge of handling the end of the callstack to call the transport layer.
      * This middleware is made so the callstack in the GapicClientTrait is always a middleware.
