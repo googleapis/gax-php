@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * Copyright 2018 Google LLC
  * All rights reserved.
@@ -511,7 +514,7 @@ trait GapicClientTrait
     /**
      * @param string $methodName
      * @param Message $request
-     * @param array $optionalArgs {
+     * @param array $callOptions {
      *     Call Options
      *
      *     @type array $headers                     [optional] key-value array containing headers
@@ -527,7 +530,7 @@ trait GapicClientTrait
     private function startAsyncCall(
         string $methodName,
         Message $request,
-        array $optionalArgs = []
+        array $callOptions = []
     ) {
         // Convert method name to the UpperCamelCase of RPC names from lowerCamelCase of GAPIC method names
         // in order to find the method in the descriptor config.
@@ -540,7 +543,7 @@ trait GapicClientTrait
             case Call::PAGINATED_CALL:
                 return $this->getPagedListResponseAsync(
                     $methodName,
-                    $optionalArgs,
+                    $callOptions,
                     $methodDescriptors['responseType'],
                     $request,
                     $methodDescriptors['interfaceOverride'] ?? $this->serviceName
@@ -552,13 +555,13 @@ trait GapicClientTrait
                     "'$methodName' is not supported for async execution.");
         }
 
-        return $this->startApiCall($methodName, $request, $optionalArgs);
+        return $this->startApiCall($methodName, $request, $callOptions);
     }
 
     /**
      * @param string $methodName
      * @param Message $request
-     * @param array $optionalArgs {
+     * @param array $callOptions {
      *     Call Options
      *
      *     @type array $headers [optional] key-value array containing headers
@@ -575,7 +578,7 @@ trait GapicClientTrait
     private function startApiCall(
         string $methodName,
         ?Message $request = null,
-        array $optionalArgs = []
+        array $callOptions = []
     ) {
         $methodDescriptors = $this->validateCallConfig($methodName);
         $callType = $methodDescriptors['callType'];
@@ -584,7 +587,7 @@ trait GapicClientTrait
         // which take precedence.
         $headerParams = $methodDescriptors['headerParams'] ?? [];
         $requestHeaders = $this->buildRequestParamsHeader($headerParams, $request);
-        $optionalArgs['headers'] = array_merge($requestHeaders, $optionalArgs['headers'] ?? []);
+        $callOptions['headers'] = array_merge($requestHeaders, $callOptions['headers'] ?? []);
 
         // Default the interface name, if not set, to the client's protobuf service name.
         $interfaceName = $methodDescriptors['interfaceOverride'] ?? $this->serviceName;
@@ -593,7 +596,7 @@ trait GapicClientTrait
         if ($callType == Call::LONGRUNNING_CALL) {
             return $this->startOperationsCall(
                 $methodName,
-                $optionalArgs,
+                $callOptions,
                 $request,
                 $this->getOperationsClient(),
                 $interfaceName,
@@ -607,17 +610,17 @@ trait GapicClientTrait
         $decodeType = $methodDescriptors['responseType'];
 
         if ($callType == Call::PAGINATED_CALL) {
-            return $this->getPagedListResponse($methodName, $optionalArgs, $decodeType, $request, $interfaceName);
+            return $this->getPagedListResponse($methodName, $callOptions, $decodeType, $request, $interfaceName);
         }
 
         // Unary, and all Streaming types handled by startCall.
-        return $this->startCall($methodName, $decodeType, $optionalArgs, $request, $callType, $interfaceName);
+        return $this->startCall($methodName, $decodeType, $callOptions, $request, $callType, $interfaceName);
     }
 
     /**
      * @param string $methodName
      * @param string $decodeType
-     * @param array $optionalArgs {
+     * @param array $callOptions {
      *     Call Options
      *
      *     @type array $headers [optional] key-value array containing headers
@@ -635,14 +638,14 @@ trait GapicClientTrait
     private function startCall(
         string $methodName,
         string $decodeType,
-        array $optionalArgs = [],
+        array $callOptions = [],
         ?Message $request = null,
         int $callType = Call::UNARY_CALL,
         ?string $interfaceName = null
     ) {
-        $optionalArgs = $this->configureCallOptions($optionalArgs);
+        $callOptions = $this->configureCallOptions($callOptions);
         $callStack = $this->createCallStack(
-            $this->configureCallConstructionOptions($methodName, $optionalArgs)
+            $this->configureCallConstructionOptions($methodName, $callOptions)
         );
 
         $descriptor = $this->descriptors[$methodName]['grpcStreaming'] ?? null;
@@ -665,7 +668,7 @@ trait GapicClientTrait
                 break;
         }
 
-        return $callStack($call, $optionalArgs + array_filter([
+        return $callStack($call, $callOptions + array_filter([
             'audience' => self::getDefaultAudience()
         ]));
     }
@@ -733,7 +736,7 @@ trait GapicClientTrait
 
     /**
      * @param string $methodName
-     * @param array $optionalArgs {
+     * @param array $callOptions {
      *     Optional arguments
      *
      *     @type RetrySettings|array $retrySettings [optional] A retry settings
@@ -742,17 +745,17 @@ trait GapicClientTrait
      *
      * @return array
      */
-    private function configureCallConstructionOptions(string $methodName, array $optionalArgs)
+    private function configureCallConstructionOptions(string $methodName, array $callOptions)
     {
         $retrySettings = $this->retrySettings[$methodName];
         $autoPopulatedFields = $this->descriptors[$methodName]['autoPopulatedFields'] ?? [];
         // Allow for retry settings to be changed at call time
-        if (isset($optionalArgs['retrySettings'])) {
-            if ($optionalArgs['retrySettings'] instanceof RetrySettings) {
-                $retrySettings = $optionalArgs['retrySettings'];
+        if (isset($callOptions['retrySettings'])) {
+            if ($callOptions['retrySettings'] instanceof RetrySettings) {
+                $retrySettings = $callOptions['retrySettings'];
             } else {
                 $retrySettings = $retrySettings->with(
-                    $optionalArgs['retrySettings']
+                    $callOptions['retrySettings']
                 );
             }
         }
@@ -765,18 +768,18 @@ trait GapicClientTrait
     /**
      * @return array
      */
-    private function configureCallOptions(array $optionalArgs): array
+    private function configureCallOptions(array $callOptions): array
     {
         if ($this->isBackwardsCompatibilityMode()) {
-            return $optionalArgs;
+            return $callOptions;
         }
         // cast to CallOptions for new surfaces only
-        return (new CallOptions($optionalArgs))->toArray();
+        return (new CallOptions($callOptions))->toArray();
     }
 
     /**
      * @param string $methodName
-     * @param array $optionalArgs {
+     * @param array $callOptions {
      *     Call Options
      *
      *     @type array $headers [optional] key-value array containing headers
@@ -793,15 +796,15 @@ trait GapicClientTrait
      */
     private function startOperationsCall(
         string $methodName,
-        array $optionalArgs,
+        array $callOptions,
         Message $request,
         $client,
         ?string $interfaceName = null,
         ?string $operationClass = null
     ) {
-        $optionalArgs = $this->configureCallOptions($optionalArgs);
+        $callOptions = $this->configureCallOptions($callOptions);
         $callStack = $this->createCallStack(
-            $this->configureCallConstructionOptions($methodName, $optionalArgs)
+            $this->configureCallConstructionOptions($methodName, $callOptions)
         );
         $descriptor = $this->descriptors[$methodName]['longRunning'];
         $metadataReturnType = null;
@@ -832,7 +835,7 @@ trait GapicClientTrait
         );
 
         $this->modifyUnaryCallable($callStack);
-        return $callStack($call, $optionalArgs + array_filter([
+        return $callStack($call, $callOptions + array_filter([
             'metadataReturnType' => $metadataReturnType,
             'audience' => self::getDefaultAudience()
         ]));
@@ -840,7 +843,7 @@ trait GapicClientTrait
 
     /**
      * @param string $methodName
-     * @param array $optionalArgs
+     * @param array $callOptions
      * @param string $decodeType
      * @param Message $request
      * @param string $interfaceName
@@ -849,14 +852,14 @@ trait GapicClientTrait
      */
     private function getPagedListResponse(
         string $methodName,
-        array $optionalArgs,
+        array $callOptions,
         string $decodeType,
         Message $request,
         ?string $interfaceName = null
     ) {
         return $this->getPagedListResponseAsync(
             $methodName,
-            $optionalArgs,
+            $callOptions,
             $decodeType,
             $request,
             $interfaceName
@@ -865,7 +868,7 @@ trait GapicClientTrait
 
     /**
      * @param string $methodName
-     * @param array $optionalArgs
+     * @param array $callOptions
      * @param string $decodeType
      * @param Message $request
      * @param string $interfaceName
@@ -874,14 +877,14 @@ trait GapicClientTrait
      */
     private function getPagedListResponseAsync(
         string $methodName,
-        array $optionalArgs,
+        array $callOptions,
         string $decodeType,
         Message $request,
         ?string $interfaceName = null
     ) {
-        $optionalArgs = $this->configureCallOptions($optionalArgs);
+        $callOptions = $this->configureCallOptions($callOptions);
         $callStack = $this->createCallStack(
-            $this->configureCallConstructionOptions($methodName, $optionalArgs)
+            $this->configureCallConstructionOptions($methodName, $callOptions)
         );
         $descriptor = new PageStreamingDescriptor(
             $this->descriptors[$methodName]['pageStreaming']
@@ -897,7 +900,7 @@ trait GapicClientTrait
         );
 
         $this->modifyUnaryCallable($callStack);
-        return $callStack($call, $optionalArgs + array_filter([
+        return $callStack($call, $callOptions + array_filter([
             'audience' => self::getDefaultAudience()
         ]));
     }
