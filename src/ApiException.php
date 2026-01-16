@@ -172,7 +172,7 @@ class ApiException extends Exception
             $status->details,
             $status->code,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata),
+            Serializer::decodeMetadata((array) $metadata, $errors),
             $errors,
         );
     }
