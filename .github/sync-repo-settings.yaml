@@ -24,5 +24,3 @@ permissionRules:
     permission: admin
   - team: cloud-sdk-php-team
     permission: push
-  - team: cloud-sdk-php-team
-    permission: push
