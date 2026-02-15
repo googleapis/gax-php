@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * Copyright 2016 Google LLC
  * All rights reserved.
