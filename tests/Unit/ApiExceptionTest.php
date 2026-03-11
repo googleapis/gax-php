@@ -50,6 +50,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ApiExceptionTest extends TestCase
 {
@@ -792,5 +793,22 @@ class ApiExceptionTest extends TestCase
             [$withoutErrorMessageUnary, true, Code::NOT_FOUND],
             [$withProtoError, false, Code::INVALID_ARGUMENT]
         ];
+    }
+
+    public function testGrpcStatusDetailsBinUnknownType()
+    {
+        $any = new Any();
+        $any->setTypeUrl('invalid.url');
+
+        $statusBin = new Status();
+        $statusBin->setDetails([$any]);
+
+        $status = new stdClass();
+        $status->metadata = ['grpc-status-details-bin' => [$statusBin->serializeToString()]];
+        $status->details = 'exception message';
+        $status->code = 123;
+
+        $exception = ApiException::createFromStdClass($status);
+        $this->assertEmpty($exception->getErrorDetails());
     }
 }

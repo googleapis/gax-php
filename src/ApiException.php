@@ -165,7 +165,11 @@ class ApiException extends Exception
                     $class = KnownTypes::JSON_TYPES[$any->getTypeUrl()];
                     new $class(); // add known types to descriptor pool
                 }
-                $errors[] = $any->unpack();
+                try {
+                    $errors[] = $any->unpack();
+                } catch (Exception $e) {
+                    // swallow any unknown error types
+                }
             }
         }
         return self::create(
