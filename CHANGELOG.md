@@ -1,5 +1,48 @@
 # Changelog
 
+## [1.42.1](https://github.com/googleapis/gax-php/compare/v1.42.0...v1.42.1) (2026-03-12)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency google/protobuf to v5 ([#655](https://github.com/googleapis/gax-php/issues/655)) ([1d89f50](https://github.com/googleapis/gax-php/commit/1d89f50510794e220fb036042612336717e8fedd))
+* Suppress unpack exceptions ([#656](https://github.com/googleapis/gax-php/issues/656)) ([989cf37](https://github.com/googleapis/gax-php/commit/989cf3710c6285b3eb71b6fc0c83d2b50508f456))
+
+## [1.42.0](https://github.com/googleapis/gax-php/compare/v1.41.0...v1.42.0) (2026-01-22)
+
+
+### Features
+
+* Support grpc-status-details-bin for ApiException::getErrorDetails ([#614](https://github.com/googleapis/gax-php/issues/614)) ([c44ad0c](https://github.com/googleapis/gax-php/commit/c44ad0c068586b635a3f6b325e157c116f68065e))
+
+## [1.41.0](https://github.com/googleapis/gax-php/compare/v1.40.1...v1.41.0) (2026-01-16)
+
+
+### Features
+
+* Add ApiException::getErrorDetails() for retrieval of additional exception info ([#611](https://github.com/googleapis/gax-php/issues/611)) ([be7402a](https://github.com/googleapis/gax-php/commit/be7402a94d1c4201e1ca03cdd3bab6c01adb0c24))
+
+## [1.40.1](https://github.com/googleapis/gax-php/compare/v1.40.0...v1.40.1) (2026-01-16)
+
+
+### Bug Fixes
+
+* Use self:: instead of $this-&gt; for static validation methods in GapicClientTrait validation  ([#643](https://github.com/googleapis/gax-php/issues/643)) ([5ba2b20](https://github.com/googleapis/gax-php/commit/5ba2b200c16b78b10e3dddf5ac6a2c5cd7eb8641))
+
+## [1.40.0](https://github.com/googleapis/gax-php/compare/v1.39.0...v1.40.0) (2025-12-04)
+
+
+### Features
+
+* Add TransportCallMiddleware ([#640](https://github.com/googleapis/gax-php/issues/640)) ([a0f9d37](https://github.com/googleapis/gax-php/commit/a0f9d3740d62f6a776ac701631aa734046ceeb77))
+
+## [1.39.0](https://github.com/googleapis/gax-php/compare/v1.38.2...v1.39.0) (2025-12-02)
+
+
+### Features
+
+* Add GapicClientTrait::prependMiddleware ([#638](https://github.com/googleapis/gax-php/issues/638)) ([d46c06d](https://github.com/googleapis/gax-php/commit/d46c06d3bb551d9f7848bceebcfd78f80ec7890f))
+
 ## [1.38.2](https://github.com/googleapis/gax-php/compare/v1.38.1...v1.38.2) (2025-11-14)
 
 

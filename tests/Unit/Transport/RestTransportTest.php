@@ -467,7 +467,7 @@ class RestTransportTest extends TestCase
 
     public function testClientCertSourceOptionInvalid()
     {
-        $this->requiresPhp7();
+        self::requiresPhp7();
 
         $mockClientCertSource = 'foo';
 
