@@ -31,6 +31,9 @@
  */
 namespace Google\ApiCore;
 
+/**
+ * @internal
+ */
 class KnownTypes
 {
     private static bool $initialized = false;
@@ -68,8 +71,7 @@ class KnownTypes
 
     public static function allKnownTypes(): array
     {
-        // This is currently the same as TYPE_URLS, but that could change in the future
-        return self::TYPE_URLS;
+        return array_values(self::TYPE_URLS);
     }
 
     public static function addKnownTypesToDescriptorPool()
