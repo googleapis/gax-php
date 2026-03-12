@@ -31,6 +31,7 @@
  */
 namespace Google\ApiCore;
 
+use Exception;
 use Google\Protobuf\Any;
 use Google\Protobuf\Descriptor;
 use Google\Protobuf\DescriptorPool;
@@ -183,11 +184,21 @@ class Serializer
             $status->mergeFromString($metadata['grpc-status-details-bin'][0]);
             foreach ($status->getDetails() as $any) {
                 if (isset(KnownTypes::TYPE_URLS[$any->getTypeUrl()])) {
-                    $errors[] = $error = $any->unpack();
-                    $result[] = [
-                        '@type' => $any->getTypeUrl(),
-                    ] + self::serializeToPhpArray($error);
+                    $class = KnownTypes::TYPE_URLS[$any->getTypeUrl()];
+                    new $class(); // add known types to descriptor pool
                 }
+                try {
+                    $error = $any->unpack();
+                } catch (Exception $ex) {
+                    // failed to unpack the $any object - keep the object as-is instead
+                    $error = $any;
+                }
+                if (!is_null($errors)) {
+                    $errors[] = $error;
+                }
+                $result[] = [
+                    '@type' => $any->getTypeUrl(),
+                ] + self::serializeToPhpArray($error);
             }
             return $result;
         }
@@ -197,9 +208,7 @@ class Serializer
         // we are keeping it for now to be safe
         foreach ($metadata as $key => $values) {
             foreach ($values as $value) {
-                $decodedValue = [
-                    '@type' => $key,
-                ];
+                $decodedValue = ['@type' => $key];
                 if (self::hasBinaryHeaderSuffix($key)) {
                     if (isset(KnownTypes::BIN_TYPES[$key])) {
                         $class = KnownTypes::BIN_TYPES[$key];
@@ -213,20 +222,14 @@ class Serializer
                             }
                         } catch (\Exception $e) {
                             // We encountered an error trying to deserialize the data
-                            $decodedValue += [
-                                'data' => '<Unable to deserialize data>',
-                            ];
+                            $decodedValue['data'] = '<Unable to deserialize data>';
                         }
                     } else {
                         // The metadata contains an unexpected binary type
-                        $decodedValue += [
-                            'data' => '<Unknown Binary Data>',
-                        ];
+                        $decodedValue['data'] = '<Unknown Binary Data>';
                     }
                 } else {
-                    $decodedValue += [
-                        'data' => $value,
-                    ];
+                    $decodedValue['data'] = $value;
                 }
                 $result[] = $decodedValue;
             }

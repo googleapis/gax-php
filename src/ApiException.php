@@ -157,28 +157,12 @@ class ApiException extends Exception
     {
         $metadata = property_exists($status, 'metadata') ? $status->metadata : null;
         $errors = [];
-        if (isset($metadata['grpc-status-details-bin'])) {
-            $decodedStatus = new \Google\Rpc\Status();
-            $decodedStatus->mergeFromString($metadata['grpc-status-details-bin'][0]);
-            foreach ($decodedStatus->getDetails() as $any) {
-                if (isset(KnownTypes::TYPE_URLS[$any->getTypeUrl()])) {
-                    $class = KnownTypes::TYPE_URLS[$any->getTypeUrl()];
-                    new $class(); // add known types to descriptor pool
-                }
-                try {
-                    $errors[] = $any->unpack();
-                } catch (Exception $ex) {
-                    // throw $ex;
-                    // failed to unpack the $any object - keep the object as-is instead
-                    $errors[] = $any;
-                }
-            }
-        }
+
         return self::create(
             $status->details,
             $status->code,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata),
+            Serializer::decodeMetadata((array) $metadata, $errors),
             $errors,
         );
     }
