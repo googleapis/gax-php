@@ -182,7 +182,7 @@ class Serializer
             $status = new \Google\Rpc\Status();
             $status->mergeFromString($metadata['grpc-status-details-bin'][0]);
             foreach ($status->getDetails() as $any) {
-                if (isset(KnownTypes::JSON_TYPES[$any->getTypeUrl()])) {
+                if (isset(KnownTypes::TYPE_URLS[$any->getTypeUrl()])) {
                     $errors[] = $error = $any->unpack();
                     $result[] = [
                         '@type' => $any->getTypeUrl(),
@@ -201,8 +201,8 @@ class Serializer
                     '@type' => $key,
                 ];
                 if (self::hasBinaryHeaderSuffix($key)) {
-                    if (isset(KnownTypes::GRPC_TYPES[$key])) {
-                        $class = KnownTypes::GRPC_TYPES[$key];
+                    if (isset(KnownTypes::BIN_TYPES[$key])) {
+                        $class = KnownTypes::BIN_TYPES[$key];
                         /** @var Message $message */
                         $message = new $class();
                         try {
@@ -538,7 +538,7 @@ class Serializer
 
     public static function loadKnownMetadataTypes()
     {
-        foreach (KnownTypes::GRPC_TYPES as $key => $class) {
+        foreach (KnownTypes::allKnownTypes() as $key => $class) {
             new $class();
         }
     }
