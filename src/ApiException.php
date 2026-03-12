@@ -167,8 +167,10 @@ class ApiException extends Exception
                 }
                 try {
                     $errors[] = $any->unpack();
-                } catch (Exception $e) {
-                    // swallow any unknown error types
+                } catch (Exception $ex) {
+                    // throw $ex;
+                    // failed to unpack the $any object - keep the object as-is instead
+                    $errors[] = $any;
                 }
             }
         }
@@ -176,7 +178,7 @@ class ApiException extends Exception
             $status->details,
             $status->code,
             $metadata,
-            Serializer::decodeMetadata((array) $metadata, $errors),
+            Serializer::decodeMetadata((array) $metadata),
             $errors,
         );
     }

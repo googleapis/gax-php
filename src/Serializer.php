@@ -250,7 +250,6 @@ class Serializer
                 $unpacked = $any->unpack();
                 $results[] = self::serializeToPhpArray($unpacked);
             } catch (\Exception $ex) {
-                echo "$ex\n";
                 // failed to unpack the $any object - show as unknown binary data
                 $results[] = [
                     'typeUrl' => $any->getTypeUrl(),

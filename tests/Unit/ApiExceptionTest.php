@@ -40,6 +40,7 @@ use Google\Rpc\Code;
 use Google\Rpc\DebugInfo;
 use Google\Rpc\ErrorInfo;
 use Google\Rpc\Help;
+use Google\Rpc\Help\Link;
 use Google\Rpc\LocalizedMessage;
 use Google\Rpc\QuotaFailure;
 use Google\Rpc\RequestInfo;
@@ -797,11 +798,17 @@ class ApiExceptionTest extends TestCase
 
     public function testGrpcStatusDetailsBinUnknownType()
     {
-        $any = new Any();
-        $any->setTypeUrl('invalid.url');
+        $link = new Link(['url' => 'foo.com', 'description' => 'a helpful link']);
+        $help = new Help(['links' => [$link]]);
+        $validAny = new Any();
+        $validAny->setTypeUrl('type.googleapis.com/google.rpc.Help');
+        $validAny->setValue($help->serializeToString());
+
+        $invalidAny = new Any();
+        $invalidAny->setTypeUrl('type.googleapis.com/invalid.url');
 
         $statusBin = new Status();
-        $statusBin->setDetails([$any]);
+        $statusBin->setDetails([$validAny, $invalidAny]);
 
         $status = new stdClass();
         $status->metadata = ['grpc-status-details-bin' => [$statusBin->serializeToString()]];
@@ -809,6 +816,10 @@ class ApiExceptionTest extends TestCase
         $status->code = 123;
 
         $exception = ApiException::createFromStdClass($status);
-        $this->assertEmpty($exception->getErrorDetails());
+        $this->assertCount(2, $exception->getErrorDetails());
+
+        [$detail1, $detail2] = $exception->getErrorDetails();
+        $this->assertEquals($help, $detail1); // verify the valid detail was decoded
+        $this->assertEquals($invalidAny, $detail2); // verify the invalid detail did not change
     }
 }
