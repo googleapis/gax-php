@@ -38,11 +38,6 @@ class KnownTypes
 {
     private static bool $initialized = false;
 
-    /** @deprecated use BIN_TYPES instead */
-    public const GRPC_TYPES = self::BIN_TYPES;
-    /** @deprecated use TYPE_URLS instead */
-    public const JSON_TYPES = self::TYPE_URLS;
-
     public const BIN_TYPES = [
         'google.rpc.retryinfo-bin' => \Google\Rpc\RetryInfo::class,
         'google.rpc.debuginfo-bin' => \Google\Rpc\DebugInfo::class,

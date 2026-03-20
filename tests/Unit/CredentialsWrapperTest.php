@@ -218,39 +218,6 @@ class CredentialsWrapperTest extends TestCase
         $credentialsWrapper->getAuthorizationHeaderCallback()();
     }
 
-    /**
-     * Same test as above, but calls the deprecated CredentialsWrapper::getBearerString method
-     * instead of CredentialsWrapper::getAuthorizationHeaderCallback
-     * @dataProvider provideCheckUniverseDomainFails
-     */
-    public function testCheckUniverseDomainOnGetBearerStringFails(
-        ?string $universeDomain,
-        ?string $credentialsUniverse,
-        ?string $message = null
-    ) {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage($message ?: sprintf(
-            'The configured universe domain (%s) does not match the credential universe domain (%s)',
-            is_null($universeDomain) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $universeDomain,
-            is_null($credentialsUniverse) ? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN : $credentialsUniverse,
-        ));
-        $fetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        // When the $credentialsUniverse is null, the fetcher doesn't implement GetUniverseDomainInterface
-        if (!is_null($credentialsUniverse)) {
-            $fetcher->willImplement(GetUniverseDomainInterface::class);
-            $fetcher->getUniverseDomain()->willReturn($credentialsUniverse);
-        }
-        $fetcher->getLastReceivedToken()->willReturn(null);
-        // When $universeDomain is null, it means no $universeDomain argument was provided
-        if (is_null($universeDomain)) {
-            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal());
-        } else {
-            $credentialsWrapper = new CredentialsWrapper($fetcher->reveal(), null, $universeDomain);
-        }
-        // Check getBearerString (deprecated)
-        $credentialsWrapper->getBearerString();
-    }
-
     public function provideCheckUniverseDomainFails()
     {
         return [
@@ -286,11 +253,6 @@ class CredentialsWrapperTest extends TestCase
             ['authorization' => ['Bearer abc']],
             $credentialsWrapper->getAuthorizationHeaderCallback()()
         );
-        // Check getBearerString (deprecated)
-        $this->assertEquals(
-            'Bearer abc',
-            $credentialsWrapper->getBearerString()
-        );
     }
 
     public function provideCheckUniverseDomainPasses()
@@ -314,67 +276,6 @@ class CredentialsWrapperTest extends TestCase
         );
 
         $credentialsWrapper->checkUniverseDomain();
-    }
-
-    /**
-     * @dataProvider getBearerStringData
-     */
-    public function testGetBearerString($fetcher, $expectedBearerString)
-    {
-        $credentialsWrapper = new CredentialsWrapper($fetcher);
-        $bearerString = $credentialsWrapper->getBearerString();
-        $this->assertSame($expectedBearerString, $bearerString);
-    }
-
-    public function getBearerStringData()
-    {
-        $expiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $expiredFetcher->getLastReceivedToken()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() - 1
-            ]);
-        $expiredFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => 456,
-                'expires_at' => time() + 1000
-            ]);
-        $eagerExpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $eagerExpiredFetcher->getLastReceivedToken()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() + 1
-            ]);
-        $eagerExpiredFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => 456,
-                'expires_at' => time() + 10 // within 10 second eager threshold
-            ]);
-        $unexpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $unexpiredFetcher->getLastReceivedToken()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() + 100,
-            ]);
-        $insecureFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $insecureFetcher->getLastReceivedToken()->willReturn(null);
-        $insecureFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => '',
-            ]);
-        $nullFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $nullFetcher->getLastReceivedToken()->willReturn(null);
-        $nullFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => null,
-            ]);
-        return [
-            [$expiredFetcher->reveal(), 'Bearer 456'],
-            [$eagerExpiredFetcher->reveal(), 'Bearer 456'],
-            [$unexpiredFetcher->reveal(), 'Bearer 123'],
-            [$insecureFetcher->reveal(), ''],
-            [$nullFetcher->reveal(), '']
-        ];
     }
 
     /**
