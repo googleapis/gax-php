@@ -19,6 +19,8 @@ namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\Testing\GeneratedTest;
 
+require_once __DIR__ . '/MyMessage.php';
+
 class ProtobufBandaidTest extends GeneratedTest
 {
     /**

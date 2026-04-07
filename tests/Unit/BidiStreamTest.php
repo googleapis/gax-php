@@ -31,6 +31,8 @@
  */
 namespace Google\ApiCore\Tests\Unit;
 
+require_once __DIR__ . '/TestTrait.php';
+
 use Google\ApiCore\ApiException;
 use Google\ApiCore\BidiStream;
 use Google\ApiCore\Testing\MockBidiStreamingCall;
