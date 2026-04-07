@@ -68,11 +68,18 @@ class GapicClientTraitTest extends TestCase
     use ProphecyTrait;
     use TestTrait;
 
+    public function setUp(): void
+    {
+        $keyFilePath = __DIR__ . '/testdata/creds/json-key-file.json';
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $keyFilePath);
+    }
+
     public function tearDown(): void
     {
         // Reset the static gapicVersion field between tests
         $client = new StubGapicClient();
         $client->set('gapicVersionFromFile', null, true);
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=');
     }
 
     public function testHeadersOverwriteBehavior()

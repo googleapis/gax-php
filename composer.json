@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Google\\ApiCore\\Dev\\": "dev/src",
+            "Google\\ApiCore\\Tests\\": "tests",
             "Google\\Showcase\\": "tests/Conformance/src",
             "GPBMetadata\\Google\\Showcase\\": "tests/Conformance/metadata"
         }

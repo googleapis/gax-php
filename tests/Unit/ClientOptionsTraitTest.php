@@ -103,16 +103,37 @@ class ClientOptionsTraitTest extends TestCase
     {
         $keyFilePath = __DIR__ . '/testdata/creds/json-key-file.json';
         $keyFile = json_decode(file_get_contents($keyFilePath), true);
+
         $fetcher = $this->prophesize(FetchAuthTokenInterface::class)->reveal();
         $credentialsWrapper = new CredentialsWrapper($fetcher);
+
         return [
-            [null, [], CredentialsWrapper::build()],
             [$keyFilePath, [], CredentialsWrapper::build(['keyFile' => $keyFile])],
             [$keyFile, [], CredentialsWrapper::build(['keyFile' => $keyFile])],
             [$fetcher, [], new CredentialsWrapper($fetcher)],
             [$credentialsWrapper, [], $credentialsWrapper],
         ];
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testCreateCredentialsWrapperFromEnv()
+    {
+        $keyFilePath = __DIR__ . '/testdata/creds/json-key-file.json';
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $keyFilePath);
+
+        $expectedCredentialsWrapper = CredentialsWrapper::build();
+        $client = new StubClientOptionsClient();
+        $actualCredentialsWrapper = $client->createCredentialsWrapper(
+            null,
+            [],
+            GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN
+        );
+
+        $this->assertEquals($expectedCredentialsWrapper, $actualCredentialsWrapper);
+    }
+
 
     /**
      * @dataProvider createCredentialsWrapperValidationExceptionData
