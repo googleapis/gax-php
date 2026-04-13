@@ -428,7 +428,7 @@ class RestTransportTest extends TestCase
     {
         $uri = 'address.com';
         $apiEndpoint = "$uri:443";
-        $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
+        $restConfigPath = __DIR__ . '/../testdata/resources/test_service_rest_client_config.php';
         $requestBuilder = new RequestBuilder($apiEndpoint, $restConfigPath);
         $httpHandler = [HttpHandlerFactory::build(), 'async'];
         return [
@@ -454,7 +454,7 @@ class RestTransportTest extends TestCase
         };
         $transport = RestTransport::build(
             'address.com:123',
-            __DIR__ . '/../testdata/test_service_rest_client_config.php',
+            __DIR__ . '/../testdata/resources/test_service_rest_client_config.php',
             ['clientCertSource' => $mockClientCertSource]
         );
 
@@ -476,7 +476,7 @@ class RestTransportTest extends TestCase
 
         RestTransport::build(
             'address.com:123',
-            __DIR__ . '/../testdata/test_service_rest_client_config.php',
+            __DIR__ . '/../testdata/resources/test_service_rest_client_config.php',
             ['clientCertSource' => $mockClientCertSource]
         );
     }
@@ -493,7 +493,7 @@ class RestTransportTest extends TestCase
 
     public function buildInvalidData()
     {
-        $restConfigPath = __DIR__ . '/../testdata/test_service_rest_client_config.php';
+        $restConfigPath = __DIR__ . '/../testdata/resources/test_service_rest_client_config.php';
         return [
             [
                 'addresswithtoo:many:segments',
