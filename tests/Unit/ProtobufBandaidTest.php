@@ -19,11 +19,10 @@ namespace Google\ApiCore\Tests\Unit;
 
 use Google\ApiCore\Testing\GeneratedTest;
 
-require_once __DIR__ . '/testdata/generated/MyMessage.php';
-require_once __DIR__ . '/testdata/generated/metadata/Example.php';
-
 class ProtobufBandaidTest extends GeneratedTest
 {
+    use TestTrait;
+
     /**
      * @dataProvider protobufMessageProvider
      */
@@ -34,6 +33,9 @@ class ProtobufBandaidTest extends GeneratedTest
 
     public function protobufMessageProvider()
     {
+        $this->autoloadTestdata('generated');
+        $this->autoloadTestdata('generated/metadata', 'GPBMetadata\\'  . __NAMESPACE__);
+
         $msg1 = new MyMessage();
         $msg2 = new Mymessage();
         return [

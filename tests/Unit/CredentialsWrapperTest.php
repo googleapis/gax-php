@@ -95,31 +95,55 @@ class CredentialsWrapperTest extends TestCase
         $testData = [
             [
                 [],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, $defaultAuthCache)),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    httpHandler: $authHttpHandler,
+                    cache: $defaultAuthCache
+                )),
             ],
             [
                 ['scopes' => $scopes],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $authHttpHandler, null, $defaultAuthCache)),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    scope: $scopes,
+                    httpHandler: $authHttpHandler,
+                    cache: $defaultAuthCache
+                )),
             ],
             [
                 ['scopes' => $scopes, 'authHttpHandler' => $asyncAuthHttpHandler],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials($scopes, $asyncAuthHttpHandler, null, $defaultAuthCache), $asyncAuthHttpHandler),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    $scopes,
+                    $asyncAuthHttpHandler,
+                    cache: $defaultAuthCache
+                ), $asyncAuthHttpHandler),
             ],
             [
                 ['enableCaching' => false],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, null)),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    httpHandler: $authHttpHandler
+                )),
             ],
             [
                 ['authCacheOptions' => $authCacheOptions],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, $authCacheOptions, $defaultAuthCache)),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    httpHandler: $authHttpHandler,
+                    cacheConfig: $authCacheOptions,
+                    cache: $defaultAuthCache
+                )),
             ],
             [
                 ['authCache' => $authCache],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, $authCache)),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    httpHandler: $authHttpHandler,
+                    cache: $authCache
+                )),
             ],
             [
                 ['quotaProject' => $quotaProject],
-                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(null, $authHttpHandler, null, $defaultAuthCache, $quotaProject)),
+                new CredentialsWrapper(ApplicationDefaultCredentials::getCredentials(
+                    httpHandler: $authHttpHandler,
+                    cache: $defaultAuthCache,
+                    quotaProject: $quotaProject
+                )),
             ],
         ];
 
@@ -194,8 +218,11 @@ class CredentialsWrapperTest extends TestCase
     /**
      * @dataProvider provideCheckUniverseDomainFails
      */
-    public function testCheckUniverseDomainFails(?string $universeDomain, ?string $credentialsUniverse, ?string $message = null)
-    {
+    public function testCheckUniverseDomainFails(
+        ?string $universeDomain,
+        ?string $credentialsUniverse,
+        ?string $message = null
+    ) {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage($message ?: sprintf(
             'The configured universe domain (%s) does not match the credential universe domain (%s)',
@@ -260,7 +287,7 @@ class CredentialsWrapperTest extends TestCase
             ['googleapis.com', ''],
             ['', 'googleapis.com', 'The universe domain cannot be empty'],
             [null, 'foo.com'], // null in CredentialsWrapper will default to "googleapis.com"
-            ['foo.com', null], // Credentials not implementing GetUniverseDomainInterface will default to "googleapis.com"
+            ['foo.com', null], // Credentials not implementing GetUniverseDomainInterface will default to googleapis.com
         ];
     }
 
@@ -319,15 +346,55 @@ class CredentialsWrapperTest extends TestCase
 
     /**
      * @dataProvider getBearerStringData
+     * @runInSeparateProcess
      */
-    public function testGetBearerString($fetcher, $expectedBearerString)
+    public function testGetBearerString(string $fetcherFunc, $expectedBearerString)
     {
+        $fetcher = $this->$fetcherFunc();
         $credentialsWrapper = new CredentialsWrapper($fetcher);
         $bearerString = $credentialsWrapper->getBearerString();
         $this->assertSame($expectedBearerString, $bearerString);
     }
 
     public function getBearerStringData()
+    {
+        return [
+            ['getExpiredFetcher', 'Bearer 456'],
+            ['getEagerExpiredFetcher', 'Bearer 456'],
+            ['getUnexpiredFetcher', 'Bearer 123'],
+            ['getInsecureFetcher', ''],
+            ['getNullFetcher', ''],
+        ];
+    }
+
+    /**
+     * @dataProvider getAuthorizationHeaderCallbackData
+     * @runInSeparateProcess
+     */
+    public function testGetAuthorizationHeaderCallback(string $fetcherFunc, $expectedCallbackResponse)
+    {
+        $fetcher = $this->$fetcherFunc();
+        $httpHandler = function () {
+        };
+        $credentialsWrapper = new CredentialsWrapper($fetcher, $httpHandler);
+        $callback = $credentialsWrapper->getAuthorizationHeaderCallback('audience');
+        $actualResponse = $callback();
+        $this->assertSame($expectedCallbackResponse, $actualResponse);
+    }
+
+    public function getAuthorizationHeaderCallbackData()
+    {
+        return [
+            ['getExpiredFetcher', ['authorization' => ['Bearer 456']]],
+            ['getExpiredInvalidFetcher', []],
+            ['getUnexpiredFetcher', ['authorization' => ['Bearer 123']]],
+            ['getInsecureFetcher', []],
+            ['getNullFetcher', []],
+            ['getCustomFetcher', ['authorization' => ['Bearer 123']]],
+        ];
+    }
+
+    private function getExpiredFetcher()
     {
         $expiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $expiredFetcher->getLastReceivedToken()
@@ -340,6 +407,24 @@ class CredentialsWrapperTest extends TestCase
                 'access_token' => 456,
                 'expires_at' => time() + 1000
             ]);
+        return $expiredFetcher->reveal();
+    }
+
+    private function getExpiredInvalidFetcher()
+    {
+        $expiredInvalidFetcher = $this->prophesize(FetchAuthTokenInterface::class);
+        $expiredInvalidFetcher->getLastReceivedToken()
+            ->willReturn([
+                'access_token' => 123,
+                'expires_at' => time() - 1
+            ]);
+        $expiredInvalidFetcher->fetchAuthToken(Argument::any())
+            ->willReturn(['not-a' => 'valid-token']);
+        return $expiredInvalidFetcher->reveal();
+    }
+
+    private function getEagerExpiredFetcher()
+    {
         $eagerExpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $eagerExpiredFetcher->getLastReceivedToken()
             ->willReturn([
@@ -351,104 +436,54 @@ class CredentialsWrapperTest extends TestCase
                 'access_token' => 456,
                 'expires_at' => time() + 10 // within 10 second eager threshold
             ]);
+        return $eagerExpiredFetcher->reveal();
+    }
+
+    private function getUnexpiredFetcher()
+    {
         $unexpiredFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $unexpiredFetcher->getLastReceivedToken()
             ->willReturn([
                 'access_token' => 123,
                 'expires_at' => time() + 100,
             ]);
+        $unexpiredFetcher->fetchAuthToken(Argument::any())
+            ->shouldNotBeCalled();
+        return $unexpiredFetcher->reveal();
+    }
+
+    private function getInsecureFetcher()
+    {
         $insecureFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $insecureFetcher->getLastReceivedToken()->willReturn(null);
         $insecureFetcher->fetchAuthToken(Argument::any())
             ->willReturn([
                 'access_token' => '',
             ]);
+        return $insecureFetcher->reveal();
+    }
+
+    private function getNullFetcher()
+    {
         $nullFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $nullFetcher->getLastReceivedToken()->willReturn(null);
         $nullFetcher->fetchAuthToken(Argument::any())
             ->willReturn([
                 'access_token' => null,
             ]);
-        return [
-            [$expiredFetcher->reveal(), 'Bearer 456'],
-            [$eagerExpiredFetcher->reveal(), 'Bearer 456'],
-            [$unexpiredFetcher->reveal(), 'Bearer 123'],
-            [$insecureFetcher->reveal(), ''],
-            [$nullFetcher->reveal(), '']
-        ];
+        return $nullFetcher->reveal();
     }
 
-    /**
-     * @dataProvider getAuthorizationHeaderCallbackData
-     */
-    public function testGetAuthorizationHeaderCallback($fetcher, $expectedCallbackResponse)
+    private function getCustomFetcher()
     {
-        $httpHandler = function () {
-        };
-        $credentialsWrapper = new CredentialsWrapper($fetcher, $httpHandler);
-        $callback = $credentialsWrapper->getAuthorizationHeaderCallback('audience');
-        $actualResponse = $callback();
-        $this->assertSame($expectedCallbackResponse, $actualResponse);
-    }
-
-    public function getAuthorizationHeaderCallbackData()
-    {
-        $expiredFetcher = $this->prophesize();
-        $expiredFetcher->willImplement(FetchAuthTokenInterface::class);
-        $expiredFetcher->willImplement(UpdateMetadataInterface::class);
-        $expiredFetcher->getLastReceivedToken()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() - 1
-            ]);
-        $expiredFetcher->updateMetadata(Argument::any(), 'audience', Argument::type('callable'))
-            ->willReturn(['authorization' => ['Bearer 456']]);
-        $expiredInvalidFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $expiredInvalidFetcher->getLastReceivedToken()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() - 1
-            ]);
-        $expiredInvalidFetcher->fetchAuthToken(Argument::any())
-            ->willReturn(['not-a' => 'valid-token']);
-        $unexpiredFetcher = $this->prophesize();
-        $unexpiredFetcher->willImplement(FetchAuthTokenInterface::class);
-        $unexpiredFetcher->getLastReceivedToken()
-            ->willReturn([
-                'access_token' => 123,
-                'expires_at' => time() + 100,
-            ]);
-
-        $insecureFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $insecureFetcher->getLastReceivedToken()->willReturn(null);
-        $insecureFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => '',
-            ]);
-        $nullFetcher = $this->prophesize(FetchAuthTokenInterface::class);
-        $nullFetcher->getLastReceivedToken()->willReturn(null);
-        $nullFetcher->fetchAuthToken(Argument::any())
-            ->willReturn([
-                'access_token' => null,
-            ]);
-
-        $customFetcher = $this->prophesize();
-        $customFetcher->willImplement(FetchAuthTokenInterface::class);
+        $customFetcher = $this->prophesize(FetchAuthTokenInterface::class);
         $customFetcher->getLastReceivedToken()->willReturn(null);
         $customFetcher->fetchAuthToken(Argument::any())
             ->willReturn([
                 'access_token' => 123,
                 'expires_at' => time() + 100,
             ]);
-
-        return [
-            [$expiredFetcher->reveal(), ['authorization' => ['Bearer 456']]],
-            [$expiredInvalidFetcher->reveal(), []],
-            [$unexpiredFetcher->reveal(), ['authorization' => ['Bearer 123']]],
-            [$insecureFetcher->reveal(), []],
-            [$nullFetcher->reveal(), []],
-            [$customFetcher->reveal(), ['authorization' => ['Bearer 123']]],
-        ];
+        return $customFetcher->reveal();
     }
 
     /**
@@ -477,7 +512,6 @@ class CredentialsWrapperTest extends TestCase
         ]);
         $reflectionClass = new \ReflectionClass($wrapper);
         $reflectionProperty = $reflectionClass->getProperty('credentialsFetcher');
-        $reflectionProperty->setAccessible(true);
         $this->assertInstanceOf(GCECredentials::class, $reflectionProperty->getValue($wrapper)->getFetcher());
     }
 
@@ -537,7 +571,6 @@ class CredentialsWrapperTest extends TestCase
         ]);
         $reflectionClass = new \ReflectionClass($wrapper);
         $reflectionProperty = $reflectionClass->getProperty('credentialsFetcher');
-        $reflectionProperty->setAccessible(true);
         $this->assertInstanceOf(GCECredentials::class, $reflectionProperty->getValue($wrapper)->getFetcher());
     }
 
