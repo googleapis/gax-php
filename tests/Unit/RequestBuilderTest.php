@@ -46,11 +46,11 @@ class RequestBuilderTest extends TestCase
     {
         $this->builder = new RequestBuilder(
             'www.example.com',
-            __DIR__ . '/testdata/test_service_rest_client_config.php'
+            __DIR__ . '/testdata/resources/test_service_rest_client_config.php'
         );
         $this->numericEnumsBuilder = new RequestBuilder(
             'www.example.com',
-            __DIR__ . '/testdata/test_numeric_enums_rest_client_config.php'
+            __DIR__ . '/testdata/resources/test_numeric_enums_rest_client_config.php'
         );
     }
 
@@ -447,7 +447,10 @@ class RequestBuilderTest extends TestCase
 
     public function testMethodWithNumericEnumsQueryParam()
     {
-        $request = $this->numericEnumsBuilder->build(self::SERVICE_NAME . '/MethodWithNumericEnumsQueryParam', new MockRequestBody());
+        $request = $this->numericEnumsBuilder->build(
+            self::SERVICE_NAME . '/MethodWithNumericEnumsQueryParam',
+            new MockRequestBody()
+        );
         $query = Query::parse($request->getUri()->getQuery());
 
         $this->assertEquals('json;enum-encoding=int', $query['$alt']);
@@ -459,7 +462,9 @@ class RequestBuilderTest extends TestCase
         $message->setName('invalid/name/format');
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Could not map bindings for test.interface.v1.api/MethodWithAdditionalBindings to any Uri template.');
+        $this->expectExceptionMessage(
+            'Could not map bindings for test.interface.v1.api/MethodWithAdditionalBindings to any Uri template.'
+        );
 
         $this->builder->build(self::SERVICE_NAME . '/MethodWithAdditionalBindings', $message);
     }
@@ -469,7 +474,9 @@ class RequestBuilderTest extends TestCase
         $message = new MockRequestBody();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Failed to build request, as the provided path (myResource/doesntExist) was not found in the configuration.');
+        $this->expectExceptionMessage(
+            'Failed to build request, as the provided path (myResource/doesntExist) was not found in the configuration.'
+        );
 
         $this->builder->build('myResource/doesntExist', $message);
     }
