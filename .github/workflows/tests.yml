@@ -11,12 +11,12 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php: [ "8.0", "8.1", "8.2", "8.3" ]
+                php: [ "7.4", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5" ]
                 extensions: [""]
                 tools: [""]
                 composerflags: [""]
                 include:
-                  - php: "8.0"
+                  - php: "7.4"
                     extensions: "protobuf,grpc"
                     tools: "pecl"
                   - php: "8.3"
