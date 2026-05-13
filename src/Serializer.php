@@ -90,7 +90,7 @@ class Serializer
         $messageTypeTransformers = [],
         $decodeFieldTransformers = [],
         $decodeMessageTypeTransformers = [],
-        $customEncoders = [],
+        $customEncoders = []
     ) {
         $this->fieldTransformers = $fieldTransformers;
         $this->messageTypeTransformers = $messageTypeTransformers;
