@@ -44,5 +44,10 @@
         "test": "./vendor/bin/phpunit",
         "cs-lint": "vendor/bin/phpcs --standard=./ruleset.xml",
         "cs-fix": "vendor/bin/phpcbf --standard=./ruleset.xml"
+    },
+    "config": {
+        "audit": {
+            "block-insecure": false
+        }
     }
 }
