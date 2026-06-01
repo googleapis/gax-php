@@ -495,7 +495,7 @@ class Serializer
         if (method_exists($field, 'getLabel')) {
             return $field->getLabel() === GPBLabel::REPEATED;
         }
-        throw new \LogicException('unable to check field repeated');
+        throw new \Exception('No field repeated method avaialble');
     }
 
     /**
