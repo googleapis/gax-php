@@ -700,15 +700,14 @@ trait GapicClientTrait
 
         $callStack = new TransportCallMiddleware($this->transport, $this->transportCallMethods);
 
-        $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
             'timeoutMillis',
             'transportOptions',
             'metadataCallback',
             'audience',
-            'metadataReturnType'
+            'metadataReturnType',
+            'credentialsWrapper'
         ]);
 
         foreach ($this->prependMiddlewareCallables as $fn) {
@@ -716,6 +715,7 @@ trait GapicClientTrait
             $callStack = $fn($callStack);
         }
 
+        $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
         $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
         $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
         $callStack = new RequestAutoPopulationMiddleware(
