@@ -700,18 +700,8 @@ trait GapicClientTrait
 
         $callStack = new TransportCallMiddleware($this->transport, $this->transportCallMethods);
 
-        foreach ($this->prependMiddlewareCallables as $fn) {
-            /** @var MiddlewareInterface $callStack */
-            $callStack = $fn($callStack);
-        }
-
         $callStack = new CredentialsWrapperMiddleware($callStack, $this->credentialsWrapper);
-        $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
-        $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
-        $callStack = new RequestAutoPopulationMiddleware(
-            $callStack,
-            $callConstructionOptions['autoPopulationSettings'],
-        );
+
         $callStack = new OptionsFilterMiddleware($callStack, [
             'headers',
             'timeoutMillis',
@@ -720,6 +710,18 @@ trait GapicClientTrait
             'audience',
             'metadataReturnType'
         ]);
+
+        foreach ($this->prependMiddlewareCallables as $fn) {
+            /** @var MiddlewareInterface $callStack */
+            $callStack = $fn($callStack);
+        }
+
+        $callStack = new FixedHeaderMiddleware($callStack, $fixedHeaders, true);
+        $callStack = new RetryMiddleware($callStack, $callConstructionOptions['retrySettings']);
+        $callStack = new RequestAutoPopulationMiddleware(
+            $callStack,
+            $callConstructionOptions['autoPopulationSettings'],
+        );
 
         foreach (\array_reverse($this->middlewareCallables) as $fn) {
             /** @var MiddlewareInterface $callStack */
