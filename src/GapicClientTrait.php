@@ -700,16 +700,6 @@ trait GapicClientTrait
 
         $callStack = new TransportCallMiddleware($this->transport, $this->transportCallMethods);
 
-        $callStack = new OptionsFilterMiddleware($callStack, [
-            'headers',
-            'timeoutMillis',
-            'transportOptions',
-            'metadataCallback',
-            'audience',
-            'metadataReturnType',
-            'credentialsWrapper'
-        ]);
-
         foreach ($this->prependMiddlewareCallables as $fn) {
             /** @var MiddlewareInterface $callStack */
             $callStack = $fn($callStack);
@@ -722,6 +712,15 @@ trait GapicClientTrait
             $callStack,
             $callConstructionOptions['autoPopulationSettings'],
         );
+        $callStack = new OptionsFilterMiddleware($callStack, [
+            'headers',
+            'timeoutMillis',
+            'transportOptions',
+            'metadataCallback',
+            'audience',
+            'metadataReturnType',
+            'middlewareOptions'
+        ]);
 
         foreach (\array_reverse($this->middlewareCallables) as $fn) {
             /** @var MiddlewareInterface $callStack */
