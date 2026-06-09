@@ -164,7 +164,7 @@ class GapicClientTraitTest extends TestCase
             ->willReturn($this->prophesize(PromiseInterface::class)->reveal());
 
         $credentialsWrapper = CredentialsWrapper::build([
-            'keyFile' => __DIR__ . '/testdata/json-key-file.json'
+            'keyFile' => __DIR__ . '/testdata/creds/json-key-file.json'
         ]);
 
         $client = new StubGapicClient();
